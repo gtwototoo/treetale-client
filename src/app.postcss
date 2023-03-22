@@ -1,0 +1,14 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body > div {
+	@apply contents;
+}
+
+@layer utilities {
+	.inherit-align {
+		text-align: inherit;
+	}
+}
