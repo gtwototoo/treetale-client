@@ -26,7 +26,7 @@
 	on:outclick={() => (focused = false)}
 >
 	{#if $$slots.button}
-		<button class="childs:h-full flex h-full" on:click={handleClick}>
+		<button class="flex h-full childs:h-full" on:click={handleClick}>
 			<slot name="button" {focused} />
 		</button>
 	{:else}

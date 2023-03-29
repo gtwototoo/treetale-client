@@ -14,26 +14,34 @@
 	export let icon: typeof SvelteComponent | undefined = undefined;
 	export let required = false;
 
-	let focused: boolean = false;
+	const handleFocus = () => {
+		focused = true;
+	};
+
+	const handleBlur = () => {
+		focused = false;
+	};
+
+	let focused = false;
 </script>
 
 <div
 	class={clsx(
 		'input',
 		{ disabled },
-		classes,
-		required && !value ? 'ring-red' : focused ? 'ring-blue-500' : 'ring-gray-200'
+		required && !value ? 'ring-red-500' : focused ? 'ring-blue-500' : 'ring-gray-200',
+		classes
 	)}
 >
 	{#if icon}
 		<Icon type={icon} class="absolute mx-4" />
 	{/if}
 	<input
-		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, size)}
 		{...$$props}
+		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, size)}
 		bind:value
-		on:focus={() => (focused = true)}
-		on:blur={() => (focused = false)}
+		on:focus={handleFocus}
+		on:blur={handleBlur}
 		on:input
 		on:change
 		use:enableControl={{ f: onlyDigits, enabled: number }}

@@ -1,3 +1,4 @@
+import Avatar from './Avatar.svelte';
 import Button from './Button.svelte';
 import ButtonSplit from './ButtonSplit.svelte';
 import Card from './Card.svelte';
@@ -14,6 +15,7 @@ import Photo from './Photo.svelte';
 import Popover from './Popover.svelte';
 import Selector from './Selector/index.svelte';
 import SelectorItem from './Selector/Item.svelte';
+import Tag from './Tag.svelte';
 import Textarea from './Textarea.svelte';
 
 export {
@@ -34,4 +36,6 @@ export {
 	Card,
 	Photo,
 	FormList,
+	Tag,
+	Avatar
 };

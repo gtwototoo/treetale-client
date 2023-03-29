@@ -69,7 +69,7 @@
 {#if ready}
 	<div
 		class={clsx(
-			'childs:shrink-0 relative flex items-center justify-center overflow-hidden',
+			'relative flex items-center justify-center overflow-hidden childs:shrink-0',
 			classes
 		)}
 		in:fade
@@ -81,7 +81,7 @@
 					draggable="false"
 					src={empty}
 					alt="Загрузка..."
-					class="rounded-inherit h-full w-full"
+					class="h-full w-full rounded-inherit"
 				/>
 			</div>
 		{:then}
@@ -89,21 +89,21 @@
 				src={newSrc}
 				{alt}
 				draggable="false"
-				class={clsx('rounded-inherit h-full w-full', cover ? 'object-cover' : 'object-contain')}
+				class={clsx('h-full w-full rounded-inherit', cover ? 'object-cover' : 'object-contain')}
 			/>
 		{:catch}
 			<div class="absolute">
 				{#if $$slots.error}
 					<slot name="error" />
 				{:else}
-					<Icon type={PhotoIcon} class="text-red" />
+					<Icon type={PhotoIcon} class="text-red-600" />
 				{/if}
 			</div>
 			<img
 				draggable="false"
 				src={empty}
 				alt="Ошибка загрузки"
-				class="rounded-inherit h-full w-full"
+				class="h-full w-full rounded-inherit"
 			/>
 		{/await}
 	</div>

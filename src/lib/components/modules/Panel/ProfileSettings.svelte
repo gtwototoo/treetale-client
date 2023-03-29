@@ -1,0 +1,75 @@
+<script lang="ts">
+	import { page } from '$app/stores';
+	import { DEFAULT_COLOR } from '$lib/constants';
+	import { updateProfile } from '$lib/requests/user';
+	import { mainColor } from '$lib/stores/story';
+	import { Textarea } from '$UI';
+	import Button from '$UI/Button.svelte';
+	import ColorPicker from '$UI/ColorPicker.svelte';
+	import Input from '$UI/Input.svelte';
+	import clsx from 'clsx';
+
+	let light: number = 80;
+	let saturate: number = 90;
+	let saveInfo: string = 'Ожидание изменений';
+	let errored = false;
+	let loading = false;
+
+	let name = $page.data.session.name;
+	let description = $page.data.session.description;
+	let color = $page.data.session.color;
+
+	const setColor = ({ detail }: CustomEvent) => {
+		$mainColor = detail.color;
+
+		color = detail.color;
+	};
+
+	const saveProfile = async () => {
+		errored = false;
+
+		if (!name) return;
+
+		loading = true;
+
+		const { error, response } = await updateProfile(name, description, color);
+
+		loading = false;
+
+		errored = !!error;
+		saveInfo = error
+			? Object.hasOwn(response, 'message')
+				? response.message
+				: 'Ошибка сохранения'
+			: 'Изменения сохранены';
+	};
+</script>
+
+<div class="flex flex-col gap-2">
+	<div class="flex gap-2">
+		<Input placeholder="Псевдоним" class="w-full" bind:value={name} required />
+		<ColorPicker
+			lightRange={[10, 80]}
+			saturateRange={[10, 90]}
+			color={color && color.length ? color : DEFAULT_COLOR}
+			{saturate}
+			{light}
+			on:change={setColor}
+		/>
+	</div>
+	<Textarea placeholder="Описание" bind:value={description} />
+
+	<Button class="justify-center" on:click={saveProfile} {loading} disabled={!name}>
+		<p>Сохранить изменения</p>
+	</Button>
+</div>
+{#if saveInfo}
+	<div
+		class={clsx(
+			'pointer-events-none flex select-none justify-center text-xs',
+			errored ? 'text-red-600' : 'text-gray-500'
+		)}
+	>
+		{saveInfo}
+	</div>
+{/if}

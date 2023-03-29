@@ -20,11 +20,13 @@ const contrast = (rgb1: RGB, rgb2: RGB) => {
 	return (brightest + 0.05) / (darkest + 0.05);
 };
 
-const contrastText = (rgb: RGB, compare1: RGB = [0, 0, 0], compare2: RGB = [255, 255, 255]) => {
+export const contrastText = (
+	rgb: RGB,
+	compare1: RGB = [0, 0, 0],
+	compare2: RGB = [255, 255, 255]
+) => {
 	const contrasts = [contrast(rgb, compare1), contrast(rgb, compare2)];
 	const max = Math.max(...contrasts);
 
 	return contrasts.indexOf(max);
 };
-
-export default contrastText;

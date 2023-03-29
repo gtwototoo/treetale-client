@@ -7,8 +7,18 @@ body > div {
 	@apply contents;
 }
 
-@layer utilities {
-	.inherit-align {
-		text-align: inherit;
-	}
+body {
+	@apply overflow-auto bg-main transition-colors;
+}
+
+h1 {
+	@apply text-3xl font-bold;
+}
+
+h2 {
+	@apply text-xl font-bold;
+}
+
+* {
+	@apply bg-inherit no-underline outline-none outline-0;
 }

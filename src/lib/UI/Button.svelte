@@ -7,11 +7,11 @@
 
 	const dispatch = createEventDispatcher();
 
-	let styles: string = '';
-	export { styles as class };
+	let classes: string = '';
+	export { classes as class };
 	export let style: string | undefined = undefined;
 	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' = 'secondary';
-	export let size: 'small' | 'default' | 'big' = 'default';
+	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let disabled: boolean = false;
 	export let loading: boolean = false;
 	export let element: HTMLButtonElement | undefined = undefined;
@@ -33,9 +33,16 @@
 
 <button
 	bind:this={element}
-	class={clsx('childs:bg-transparent', { disabled: disabled || loading }, size, variant, styles, {
-		'childs:invisible text-transparent': loading
-	})}
+	class={clsx(
+		'childs:bg-transparent',
+		{ disabled: disabled || loading },
+		`size-${size}`,
+		variant,
+		classes,
+		{
+			'text-transparent childs:invisible': loading
+		}
+	)}
 	{style}
 	on:click={handleClick}
 	on:holdclick={handleHoldClick}
@@ -56,14 +63,17 @@
 	button {
 		@apply relative flex items-center whitespace-nowrap rounded-lg duration-500;
 	}
-	.big {
-		@apply px-8 py-4 text-base;
+	.size-xl {
+		@apply px-8 py-4 text-xl font-medium;
 	}
-	.default {
+	.size-lg {
+		@apply px-6 py-3 text-base font-medium;
+	}
+	.size-base {
 		@apply px-4 py-2 text-sm;
 	}
-	.small {
-		@apply p-2 text-sm;
+	.size-sm {
+		@apply p-2 text-xs;
 	}
 	.secondary {
 		@apply bg-gray-200 text-black transition-colors hover:bg-gray-100 hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;

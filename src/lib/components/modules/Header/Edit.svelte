@@ -1,16 +1,22 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
-	import { currentPanel } from '$lib/stores/header';
+	import { currentPanel } from '$lib/stores/main';
 	import { Button, ButtonSplit } from '$UI';
 	import { ArrowUturnLeft, ArrowUturnRight, InformationCircle, Variable } from 'svelte-heros-v2';
+	import { Variables } from '../Panel';
+	import EditingSettings from '../Panel/EditingSettings.svelte';
 	import ModeSelector from './ModeSelector.svelte';
 
-	const variablesSwitch = () => {
-		$currentPanel = 'Variables';
-	};
-	const settingsSwitch = () => {
-		$currentPanel = 'Settings';
-	};
+	const variablesSwitch = () =>
+		($currentPanel = {
+			id: 'Переменные',
+			component: Variables
+		});
+	const settingsSwitch = () =>
+		($currentPanel = {
+			id: 'Настройки',
+			component: EditingSettings
+		});
 </script>
 
 <ButtonSplit>
@@ -30,4 +36,3 @@
 	<p>Переменные</p>
 </Button>
 <ModeSelector />
-<div class="vl" />

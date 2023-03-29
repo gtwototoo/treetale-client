@@ -1,0 +1,53 @@
+<script lang="ts">
+	import type { IUser, IVariable } from '$lib/types';
+	import type { IStoryReading } from '$lib/types/reading';
+	import { variableReplace } from '$lib/utils';
+
+	import Likes from '$lib/components/Likes.svelte';
+	import ProfileLink from '$lib/components/ProfileLink.svelte';
+	import { Tag } from '$UI';
+	import clsx from 'clsx';
+
+	export let story: IStoryReading;
+	export let vars: IVariable[];
+	export let author: IUser | undefined = undefined;
+
+	$: ({ created, description, title, draft } = story);
+	$: date = new Date(created).toLocaleDateString('en-GB');
+</script>
+
+<div class="line-clamp-6 h-[6.25rem] w-full text-center xs:h-32 lg:h-40">
+	<h2 class="text-sm/4 xs:text-base/5 lg:text-xl/6 mb-1 xs:mb-3 lg:mb-4">
+		{title || 'Без названия'}
+	</h2>
+	<p
+		class={clsx(
+			'whitespace-pre-wrap',
+			description && description.length > 100
+				? 'text-xs xs:text-sm lg:text-base'
+				: 'text-sm leading-4 xs:text-base xs:leading-5 lg:text-xl lg:leading-6'
+		)}
+	>
+		{variableReplace(description, vars) || 'Без описания'}
+	</p>
+</div>
+<div class="flex w-full items-center justify-between gap-1">
+	{#if author}
+		<ProfileLink data={author} classImage="xs:h-9 xs:w-9 h-6 w-6">
+			<div class="overflow-hidden text-left">
+				<p class="hidden truncate xs:block">
+					{author.name}
+				</p>
+				<div class="flex select-none gap-1 text-xs text-gray-500">
+					<p class="hidden truncate xs:block">Опубликовано</p>
+					<p>{date}</p>
+				</div>
+			</div>
+		</ProfileLink>
+	{:else}
+		<Tag class={clsx(draft ? 'bg-gray-500 text-gray-600' : 'bg-green-500 text-green-600')}
+			>{draft ? 'Черновик' : 'Публичный'}</Tag
+		>
+	{/if}
+	<Likes info={story} />
+</div>

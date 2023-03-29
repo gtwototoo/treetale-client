@@ -12,7 +12,7 @@ export const clickHold = (node: HTMLElement): ActionReturn<null, IClickHold> => 
 	const handleDown = (e: MouseEvent) => {
 		mouseDown = true;
 
-		timer = setTimeout(() => {
+		timer = window.setTimeout(() => {
 			if (mouseDown) {
 				node.dispatchEvent(new CustomEvent('holdclick', e));
 			}

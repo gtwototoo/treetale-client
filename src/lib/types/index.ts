@@ -7,18 +7,21 @@ export interface IStoryEditableInfo {
 	draft: boolean;
 }
 
+export type IPage = 'edit' | 'reading' | 'auth' | 'profile' | 'main';
+
 export type RGB = [number, number, number];
 
 export interface IStory extends IStoryEditableInfo {
-	storyId?: number;
+	storyId: number;
 	created: number;
 }
+
 export interface IChoice {
 	choiceId: number;
 	frameId: number;
 	text: string;
 	y?: number;
-	[index: string]: number | string;
+	[index: string]: number | string | undefined;
 }
 
 export interface IFrame {
@@ -41,8 +44,8 @@ export interface ICoordinates {
 }
 
 export interface IBoundings extends ICoordinates {
-	width?: number;
-	height?: number;
+	width: number;
+	height: number;
 }
 
 export interface IProgressData {
@@ -61,4 +64,6 @@ export interface IUser {
 	name: string;
 	avatarId: string | null;
 	created: number;
+	color: RGB | null;
+	[index: string]: string | number | null | RGB;
 }

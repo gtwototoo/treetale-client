@@ -65,7 +65,7 @@
 			<div class="window" bind:offsetHeight>
 				<div class="header">
 					<p class="title px-20">{title}</p>
-					<Button class="hover:!text-red absolute !p-2" on:click={handleClick}>
+					<Button class="absolute !p-2 hover:!text-red-600" on:click={handleClick}>
 						<Icon type={XMark} />
 					</Button>
 				</div>
@@ -82,10 +82,10 @@
 		@apply fixed top-0 left-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
 	}
 	.window {
-		@apply childs:w-full m-4 flex flex-col rounded-2xl bg-white p-2;
+		@apply m-4 flex flex-col rounded-2xl bg-white p-2 childs:w-full;
 	}
 	.window > .header {
-		@apply childs:flex flex items-center justify-end p-4;
+		@apply flex items-center justify-end p-4 childs:flex;
 	}
 	.header > .title {
 		@apply min-h-[2.5rem] w-full items-center justify-center text-center text-xl;

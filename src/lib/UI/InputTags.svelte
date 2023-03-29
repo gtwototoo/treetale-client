@@ -2,7 +2,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { autoWidth } from '$lib/hooks';
 
-	import { Button } from '$UI';
+	import { Button, Tag } from '$UI';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 	import { XMark } from 'svelte-heros-v2';
@@ -84,17 +84,17 @@
 	on:keydown={handleKeydown}
 >
 	{#each tags as tag}
-		<div class="tag edit">
+		<Tag class="inline-flex items-stretch p-0">
 			<p class="pl-2 !leading-6">{tag}</p>
 			<Button
-				size="small"
+				size="sm"
 				variant="transparent"
-				class="hover:!text-red !py-1"
+				class="!py-1 hover:!text-red-600"
 				on:click={() => removeTag(tag)}
 			>
 				<Icon type={XMark} class="h-3 max-h-full w-3" />
 			</Button>
-		</div>
+		</Tag>
 	{/each}
 	<input
 		bind:value
@@ -116,8 +116,5 @@
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
-	}
-	.tag.edit {
-		@apply inline-flex items-stretch !p-0;
 	}
 </style>

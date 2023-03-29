@@ -6,14 +6,11 @@
 	export let style = '';
 </script>
 
-<div class={clsx('card', classes)} {style}>
+<div class={clsx('flex flex-col items-center rounded-xl bg-white xs:rounded-2xl', classes)} {style}>
 	<slot />
 </div>
 
 <style lang="postcss">
-	.card {
-		@apply xs:rounded-2xl flex flex-col items-center rounded-xl bg-white;
-	}
 	:global(.cardButtons) {
 		@apply flex w-full flex-col items-start gap-2 bg-transparent;
 	}

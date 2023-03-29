@@ -9,10 +9,10 @@ export interface IFrameCreate extends IFrame, IBoundings {
 export interface IConnect {
 	active: boolean;
 	connector: {
-		from: { frameId: number; choiceId: number };
-		to: number;
-		prevOutput: number;
-		mouseCoords: ICoordinates;
+		from: { frameId: number; choiceId: number } | null;
+		to: number | null;
+		prevOutput: number | null;
+		mouseCoords: ICoordinates | null;
 	};
 }
 
@@ -30,6 +30,6 @@ export interface IStoryCreate extends IStory {
 	grabbingOffsets: ICoordinates;
 	grabbingScale: number;
 	draft: boolean;
-	timer: NodeJS.Timeout;
+	timer: number;
 	saved: boolean;
 }
