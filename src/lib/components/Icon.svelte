@@ -6,8 +6,7 @@
 
 	export let type: typeof SvelteComponent;
 	export let variation = ICON_TYPE;
-	export let style = '';
 	export { classes as class };
 </script>
 
-<svelte:component this={type} {variation} class={classes} {style} />
+<svelte:component this={type} {variation} class={classes} />

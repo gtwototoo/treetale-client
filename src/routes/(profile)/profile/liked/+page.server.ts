@@ -1,24 +1,23 @@
-import { serialize } from '$lib/helpers';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IStoryFull } from '$lib/types/reading';
+import { serialize } from '$lib/utils';
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from '../$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load = async ({ locals }) => {
 	const user = locals.session;
 
 	if (!user) throw redirect(302, '/');
 
 	const rawStories: IStoryFull[] = await StoriesModel.find({
 		likes: {
-			$in: [user.userId],
-		},
+			$in: [user.userId]
+		}
 	})
 		.select({
 			_id: 0,
 			grabbingScale: 0,
 			grabbingOffsets: 0,
-			frames: 0,
+			frames: 0
 		})
 		.lean();
 
@@ -28,19 +27,18 @@ export const load: PageServerLoad = async ({ locals }) => {
 		if (story.userId === user.userId) {
 			stories.push(story);
 		} else {
-			const author = serialize(
-				await UsersModel.findOne({
-					userId: +story.userId,
-				})
-			);
+			const author = await UsersModel.findOne({
+				userId: +story.userId
+			});
+
 			stories.push({
 				...story,
-				author: author ? author : null,
+				author: author ? serialize(author) : null
 			});
 		}
 	}
 
 	return {
-		stories,
+		stories
 	};
 };

@@ -1,13 +1,23 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type { IUser, RGB } from './lib/types';
+
 // for information about these interfaces
 declare global {
+	interface Window {
+		turnstile: any;
+	}
 	namespace App {
 		interface Error {
-			img?: string;
-			color?: import('./lib/types').RGB;
+			img: string;
+			color?: RGB;
+			message: string;
 		}
 		interface Locals {
-			session: import('./lib/types').IUser | null;
+			session: IUser | null;
+		}
+		interface Window {
+			turnstile: any;
 		}
 		// interface PageData {}
 		// interface Platform {}

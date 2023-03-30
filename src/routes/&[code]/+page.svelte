@@ -3,14 +3,14 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { notFoundVariants } from '$lib/constants';
+	import { NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signUpUser } from '$lib/requests/user';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
 	import { UserPlus } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
-	const { img: contentCardImage } = notFoundVariants.at(-2);
+	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
 
 	let name: string = '';
 	let loading: boolean = false;
@@ -71,7 +71,7 @@
 		<Button
 			variant="main"
 			type="submit"
-			class="w-full justify-center gap-4 bg-green-500"
+			class="w-full justify-center gap-4 bg-emerald-500"
 			size="xl"
 			{disabled}
 			{loading}
@@ -83,7 +83,7 @@
 			<div
 				in:fade
 				out:fade
-				class={clsx('message', message.error ? 'text-red' : 'text-green-600')}
+				class={clsx('message', message.error ? 'text-red' : 'text-emerald-600')}
 			>
 				{message.text}
 			</div>

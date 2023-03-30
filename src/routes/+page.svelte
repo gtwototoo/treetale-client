@@ -29,7 +29,7 @@
 </svelte:head>
 
 <div class="flex grow flex-col">
-	<h1 class="sticky top-[4.25rem] z-[1] my-8 w-full select-none pb-6 pt-4 text-center text-text">
+	<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
 		Список историй
 	</h1>
 	<StoriesList

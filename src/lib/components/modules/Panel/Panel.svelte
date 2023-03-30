@@ -13,7 +13,7 @@
 
 <div class="absolute right-0 mt-2 flex max-w-full bg-transparent px-2 sm:mt-4 sm:px-4">
 	<div class={clsx('panel', classes)} in:fly={{ x: 10 }} out:fly={{ x: 10 }}>
-		<Button size="small" class="!absolute top-4 left-4" on:click>
+		<Button size="sm" class="!absolute top-4 left-4" on:click>
 			<Icon type={XMark} />
 		</Button>
 		{#if title}

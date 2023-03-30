@@ -2,7 +2,7 @@ export interface IStoryEditableInfo {
 	title: string;
 	description: string;
 	tags: string[];
-	imageId?: string;
+	imageId?: string | null;
 	color: RGB;
 	draft: boolean;
 }

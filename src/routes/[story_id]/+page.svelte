@@ -6,9 +6,8 @@
 	import { infoStore } from '$lib/stores/reading';
 	import { mainColor } from '$lib/stores/story';
 	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	export let data;
 
 	let cardsRef: HTMLDivElement;
 	let current = data.progress.length;

@@ -1,9 +1,8 @@
 import { DEFAULT_COLOR } from '$lib/constants';
 import { frames as framesStore, storyInfo } from '$lib/stores/editing';
 import { mainColor } from '$lib/stores/story';
-import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ data }) => {
+export const load = async ({ data }) => {
 	const {
 		story: { frames, ...info }
 	} = data;

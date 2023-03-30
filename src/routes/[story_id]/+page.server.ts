@@ -1,12 +1,9 @@
-import { notFoundVariants } from '$lib/constants';
 import { ProgressModel, StoriesModel, UsersModel } from '$lib/server/models';
 import type { IFrame } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import type { IStoryFull } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
-import { getFrameFromId, randomArray, serialize } from '$lib/utils';
-import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { getFrameFromId, randomError, serialize } from '$lib/utils';
 
 interface IProgress {
 	frameId: number;
@@ -83,10 +80,10 @@ const readingInfo = async (
 	};
 };
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load = async ({ params, locals }) => {
 	const storyId = +params.story_id;
 
-	if (isNaN(storyId)) throw error(404, randomArray(notFoundVariants));
+	if (isNaN(storyId)) throw randomError(404);
 
 	const story: IStorySchema | null = await StoriesModel.findOne({ storyId })
 		.select({
@@ -96,7 +93,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		})
 		.lean();
 
-	if (!story) throw error(404, randomArray(notFoundVariants));
+	if (!story) throw randomError(404);
 
 	if (!locals.session) return await readingInfo(story, []);
 

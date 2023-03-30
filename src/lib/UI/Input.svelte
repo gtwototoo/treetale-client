@@ -13,6 +13,9 @@
 	export let disabled: boolean = false;
 	export let icon: typeof SvelteComponent | undefined = undefined;
 	export let required = false;
+	export let maxlength: number | undefined = undefined;
+	export let placeholder: string;
+	export let name: string | undefined = undefined;
 
 	const handleFocus = () => {
 		focused = true;
@@ -37,8 +40,11 @@
 		<Icon type={icon} class="absolute mx-4" />
 	{/if}
 	<input
-		{...$$props}
 		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, size)}
+		{name}
+		{disabled}
+		{maxlength}
+		{placeholder}
 		bind:value
 		on:focus={handleFocus}
 		on:blur={handleBlur}

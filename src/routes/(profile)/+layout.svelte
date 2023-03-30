@@ -6,9 +6,8 @@
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
-	import { storiesStore, userStore } from '$lib/stores/profile';
 	import { mainColor } from '$lib/stores/story';
-	import { collapseValue, findByPattern, pluralize } from '$lib/utils';
+	import { findByPattern } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
 	import { onDestroy } from 'svelte';
 
@@ -21,18 +20,9 @@
 		UserPlus
 	} from 'svelte-heros-v2';
 
-	interface IMetric {
-		value: number;
-		name: [string, string, string];
-	}
+	export let data;
 
-	const me = true;
-
-	console.log($page.data.session);
-
-	$: userInfo = me ? $page.data.session : $userStore;
-
-	$: console.log($storiesStore);
+	const me = $page.data.session && $page.data.session === data.user.userId;
 
 	const pageType = (path: string): 'viewed' | 'liked' | 'main' => {
 		return findByPattern(path, {
@@ -40,24 +30,6 @@
 			liked: /^\/profile\/liked$/,
 			viewed: /^\/profile\/viewed$/
 		}) as 'viewed' | 'liked' | 'main';
-	};
-
-	const getStatistic = () => {
-		const metrics: IMetric[] = [
-			{
-				value: $storiesStore.length,
-				name: ['историй', 'история', 'истории']
-			},
-			{ value: 0, name: ['подписчиков', 'подписчик', 'подписчика'] },
-			{
-				value: $storiesStore.reduce((sum, { likes }) => sum + likes.length, 0),
-				name: ['лайков', 'лайк', 'лайка']
-			}
-		];
-
-		return metrics.map(({ name, value }) =>
-			pluralize(Number(collapseValue(value).replace(/\D*/, '')), ...name).split(' ')
-		);
 	};
 
 	const handleSubscribe = () => {
@@ -80,9 +52,10 @@
 	};
 
 	$: ({ url } = $page);
+	$: ({ statistic, user } = data);
 
-	if (userInfo && userInfo.color && userInfo.color.length) {
-		mainColor.set(userInfo.color);
+	if (user && user.color && user.color.length) {
+		mainColor.set(user.color);
 	}
 
 	onDestroy(() => {
@@ -91,13 +64,13 @@
 </script>
 
 <div class="profile">
-	<ProfileAvatar {userInfo} {me} />
+	<ProfileAvatar {user} {me} />
 	<div class="info">
 		<div class="flex w-full flex-col justify-between gap-4 sm:flex-row">
 			<div class="flex flex-col items-center gap-3 px-2 sm:items-start">
-				<h1 class="leading-10">{userInfo.name}</h1>
+				<h1 class="leading-10">{user.name}</h1>
 				<div class="statistic">
-					{#each getStatistic() as [count, title]}
+					{#each statistic as [count, title]}
 						<div>
 							<p class="text-3xl font-bold leading-8">
 								{count}
@@ -118,7 +91,7 @@
 					<Icon type={InformationCircle} class="h-9 w-9" />
 				</div>
 				<p class="w-full whitespace-pre-wrap break-words px-2 text-center sm:text-right">
-					{userInfo.description || 'Не указана'}
+					{user.description || 'Не указана'}
 				</p>
 			</div>
 		</div>
@@ -162,7 +135,7 @@
 					<p class="sm:hidden">Выйти</p>
 				</Button>
 			{:else}
-				<Button variant="main" class="gap-2 bg-green-500" on:click={handleSubscribe}>
+				<Button variant="main" class="gap-2 bg-emerald-500" on:click={handleSubscribe}>
 					<Icon type={UserPlus} />
 					<p>Читать</p>
 				</Button>

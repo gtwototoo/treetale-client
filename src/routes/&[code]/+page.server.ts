@@ -1,9 +1,8 @@
 import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ fetch, params, cookies }) => {
+export const load = async ({ fetch, params, cookies }) => {
 	const { code } = params;
 
 	const request = await fetch(`${PUBLIC_TREESTORY_API_URL}/session`, {

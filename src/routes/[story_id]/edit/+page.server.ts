@@ -1,11 +1,9 @@
-import { notFoundVariants } from '$lib/constants';
 import { StoriesModel } from '$lib/server/models';
 import type { IStorySchema } from '$lib/types/schemas';
-import { randomArray, serialize } from '$lib/utils';
-import { error, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { randomError, serialize } from '$lib/utils';
+import { redirect } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load = async ({ params, locals }) => {
 	const user = locals.session;
 	const storyId = +params.story_id;
 
@@ -17,7 +15,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	});
 
 	if (!story) {
-		throw error(404, randomArray(notFoundVariants));
+		throw randomError(404);
 	}
 
 	return {

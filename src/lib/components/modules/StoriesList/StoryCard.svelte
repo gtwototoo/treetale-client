@@ -9,7 +9,7 @@
 	import { contrastText } from '$lib/utils';
 	import { Button, Card, Photo } from '$UI';
 	import clsx from 'clsx';
-	import { BookOpen, Photo as PhotoIcon } from 'svelte-heros-v2';
+	import { BookOpen } from 'svelte-heros-v2';
 	import CardBody from './CardBody.svelte';
 	import SvgGradient from './SvgGradient.svelte';
 
@@ -27,7 +27,7 @@
 </script>
 
 <Card
-	class="h-[19.25rem] border-2 border-transparent border-to-main border-from-white bg-with-border-white xs:h-[27.5rem] lg:h-[34.5rem]"
+	class="h-[19.25rem] border-2 border-transparent bg-with-border-white border-from-white border-to-main xs:h-[27.5rem] lg:h-[34.5rem]"
 	style="--color-main: {selectedColor.join(' ')}; --fill-main: url(#light-gradient-{storyId})"
 >
 	<SvgGradient {storyId} />
@@ -44,7 +44,11 @@
 				height={192}
 			>
 				<svelte:fragment slot="error">
-					<Icon type={PhotoIcon} class="h-10 w-auto xs:h-16 lg:h-24" variation="solid" />
+					<Icon
+						type={BookOpen}
+						class="h-10 w-auto childs:fill-[var(--fill-main)] xs:h-16 lg:h-24"
+						variation="solid"
+					/>
 				</svelte:fragment>
 			</Photo>
 		{:else}

@@ -45,7 +45,7 @@
 			</div>
 		</ProfileLink>
 	{:else}
-		<Tag class={clsx(draft ? 'bg-gray-500 text-gray-600' : 'bg-green-500 text-green-600')}
+		<Tag class={clsx(draft ? 'bg-gray-500 text-gray-600' : 'bg-emerald-500 text-emerald-600')}
 			>{draft ? 'Черновик' : 'Публичный'}</Tag
 		>
 	{/if}

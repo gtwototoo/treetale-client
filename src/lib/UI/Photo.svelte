@@ -10,12 +10,14 @@
 	export let src: string = '';
 	export let alt: string = '';
 	export let cover = false;
-	let classes = '';
 	export { classes as class };
 	export let width: number;
 	export let height = width;
 
 	let loaded = false;
+	let classes = '';
+	let ready = false;
+	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
 	const dispatch = createEventDispatcher();
 
@@ -35,18 +37,10 @@
 		return canvas.toDataURL();
 	};
 
-	let ready = false;
-	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-
 	onMount(() => {
 		empty = emptyImage(width, height);
 		ready = true;
 	});
-
-	$: newSrc =
-		src && !src.includes('://') && !src.startsWith('data:')
-			? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
-			: src;
 
 	const preload = (src: string) => {
 		return new Promise((resolve, reject) => {
@@ -64,6 +58,11 @@
 			};
 		});
 	};
+
+	$: newSrc =
+		src && !src.includes('://') && !src.startsWith('data:')
+			? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
+			: src;
 </script>
 
 {#if ready}

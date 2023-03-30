@@ -25,7 +25,7 @@ export interface IMove {
 export interface IStoryCreate extends IStory {
 	grabbing: boolean;
 	addFrameMode: boolean;
-	addFrameOffset: ICoordinates;
+	addFrameOffset: ICoordinates | null;
 	dragImageMode: boolean;
 	grabbingOffsets: ICoordinates;
 	grabbingScale: number;

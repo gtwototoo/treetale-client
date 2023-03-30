@@ -7,7 +7,7 @@
 	import Session from './Session.svelte';
 </script>
 
-<div class="pointer-events-none fixed top-0 z-10 w-full p-2 sm:px-4">
+<div class="pointer-events-none z-10 w-full p-2 sm:px-4">
 	<div
 		class={clsx(
 			'flex h-full w-full items-center justify-between gap-2 rounded-lg bg-white p-2 transition-opacity xs:bg-transparent xs:p-0',

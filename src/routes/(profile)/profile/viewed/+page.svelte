@@ -13,7 +13,7 @@
 	text="Пока у вас нет ни одной начатой истории, посмотрите на весь каталог различных историй"
 >
 	<Link href="/">
-		<Button size="big" class="gap-4" variant="secondaryWhite">
+		<Button size="xl" class="gap-4" variant="secondaryWhite">
 			<Icon type={Plus} />
 			<p>Смотреть все истории</p>
 		</Button>

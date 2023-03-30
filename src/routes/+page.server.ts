@@ -3,9 +3,8 @@ import type { IUser, IVariable } from '$lib/types';
 import type { IStoryFull, IStoryReading } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
 import { serialize } from '$lib/utils';
-import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load = async ({ locals }) => {
 	const user = locals.session;
 	const rawStories: IStorySchema[] = await StoriesModel.find({
 		draft: false

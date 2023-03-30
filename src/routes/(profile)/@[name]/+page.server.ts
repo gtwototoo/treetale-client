@@ -1,12 +1,10 @@
-import { notFoundVariants } from '$lib/constants';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser, IVariable } from '$lib/types';
 import type { IStoryFull, IStoryReading } from '$lib/types/reading';
-import { randomArray, serialize } from '$lib/utils';
-import { error, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { randomError, serialize } from '$lib/utils';
+import { redirect } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ locals, params }) => {
+export const load = async ({ locals, params }) => {
 	const { name } = params;
 
 	if (locals.session && locals.session.name === name) throw redirect(302, '/profile');
@@ -20,9 +18,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 		})
 		.lean();
 
-	if (!user) {
-		throw error(404, randomArray(notFoundVariants));
-	}
+	if (!user) throw randomError(404);
 
 	const rawStories = await StoriesModel.find({
 		userId: user.userId

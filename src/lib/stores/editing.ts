@@ -1,5 +1,5 @@
 import { updateFrames } from '$lib/requests/story';
-import type { ICoordinates } from '$lib/types';
+import type { ICoordinates, IVariable } from '$lib/types';
 import type { IConnect, IFrameCreate, IStoryCreate } from '$lib/types/editing';
 import { serialize } from '$lib/utils';
 import { framesCorrect } from '$lib/utils/editing';
@@ -160,3 +160,4 @@ export const frames: IOverrideFrames = framesStore();
 export const activeActions = writable<boolean>(false);
 export const changesHistory: IOverrideChanges = ChangeHistoryStore();
 export const storyInfo: IOverrideStoryInfo = storyInfoStore();
+export const vars = writable<IVariable[]>([]);

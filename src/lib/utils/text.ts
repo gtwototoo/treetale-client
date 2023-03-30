@@ -49,11 +49,14 @@ export const pluralize = (
 	gen: string,
 	nom: string,
 	plu: string,
-	empty: boolean = true
+	options = { withValue: false, emptyText: false }
 ) => {
-	if (!number && empty) return `Нет ${gen}`;
+	if (!number && options.emptyText) return [options.withValue && 'Нет', gen].join(' ');
 
 	const n = String(number);
 
-	return `${n} ${n.match(/(0|[5-9]|1[0-9])$/) ? gen : n.match(/1$/) ? nom : plu}`;
+	return [
+		options.withValue && n,
+		n.match(/(0|[5-9]|1[0-9])$/) ? gen : n.match(/1$/) ? nom : plu
+	].join(' ');
 };

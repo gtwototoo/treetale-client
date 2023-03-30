@@ -2,7 +2,7 @@
 	import DropArea from '$lib/components/DropArea.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
-	import { removeImage, saveImage } from '$lib/requests';
+	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfo } from '$lib/requests/story';
 	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
 	import { mainColor } from '$lib/stores/story';
@@ -61,7 +61,7 @@
 	$: avatar = $storyInfo.imageId || tempAvatarURL;
 
 	const preRemoveImage = async () => {
-		if (tempAvatarURL) {
+		if (tempAvatarURL || !$storyInfo.imageId) {
 			return;
 		}
 
@@ -86,6 +86,8 @@
 		reader.readAsDataURL(file);
 
 		reader.onloadend = () => {
+			if (!reader.result) return;
+
 			tempAvatarURL = reader.result.toString();
 		};
 
@@ -109,13 +111,15 @@
 		}
 	};
 
-	const setFile = (e: InputEvent) => {
-		if (e.target instanceof HTMLInputElement) {
-			preSaveImage(e.target.files);
-		}
+	const setFile = (e: Event) => {
+		if (!(e.target instanceof HTMLInputElement) || !e.target.files) return;
+
+		preSaveImage(e.target.files);
 	};
 
-	const handleDrop = (e: CustomEvent & InputEvent) => {
+	const handleDrop = (e: CustomEvent) => {
+		if (!e.dataTransfer) return;
+
 		preSaveImage(e.dataTransfer.files);
 
 		$storyInfo.dragImageMode = false;
@@ -211,7 +215,7 @@
 		</SelectorItem>
 		<SelectorItem
 			class={clsx('grow justify-center', {
-				'!text-green-600': !$storyInfo.draft
+				'!text-emerald-600': !$storyInfo.draft
 			})}
 			active={!$storyInfo.draft}
 			on:click={() => {

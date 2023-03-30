@@ -21,7 +21,7 @@
 	};
 </script>
 
-<Button class="bg-green-500" variant="main" on:click={handleClick} {loading}>
+<Button class="bg-emerald-500" variant="main" on:click={handleClick} {loading}>
 	<Icon type={Plus} />
 	<p>Добавить историю</p>
 </Button>

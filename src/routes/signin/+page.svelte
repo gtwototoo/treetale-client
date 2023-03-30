@@ -1,17 +1,15 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY } from '$env/static/public';
-	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { notFoundVariants } from '$lib/constants';
+	import { NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
 	import { onMount } from 'svelte';
-	import { Link } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
-	const [{ img: contentCardImage }] = notFoundVariants;
+	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
 
 	let value: string = '';
 	let loading: boolean = false;
@@ -39,7 +37,7 @@
 			if (status === 422) {
 				turnstileToken = undefined;
 
-				turnstile.reset(turnstileWidgetId);
+				window.turnstile.reset(turnstileWidgetId);
 			}
 
 			if (error) throw error;
@@ -63,11 +61,11 @@
 
 	const onTurnstileReset = () => {
 		turnstileToken = undefined;
-		turnstile.reset(turnstileWidgetId);
+		window.turnstile.reset(turnstileWidgetId);
 	};
 
 	const onTurnstileLoaded = () => {
-		turnstileWidgetId = turnstile.render(turnstileElement, {
+		turnstileWidgetId = window.turnstile.render(turnstileElement, {
 			sitekey: PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY,
 			callback(token: string) {
 				turnstileToken = token;
@@ -114,16 +112,15 @@
 		<Button
 			variant="main"
 			type="submit"
-			class="w-full justify-center gap-4 bg-green-500"
+			class="w-full justify-center gap-4 bg-emerald-500"
 			size="xl"
 			{disabled}
 			{loading}
 		>
-			<Icon type={Link} />
-			<p>Войти по ссылке</p>
+			Войти по ссылке
 		</Button>
 		{#if message && message.text}
-			<div in:fade class={clsx('message', message.error ? 'text-red-600' : 'text-green-600')}>
+			<div in:fade class={clsx('message', message.error ? 'text-red-600' : 'text-emerald-600')}>
 				{message.text}
 			</div>
 		{/if}

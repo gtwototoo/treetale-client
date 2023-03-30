@@ -1,7 +1,7 @@
 import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 
-import { notFoundVariants } from '$lib/constants';
+import { NOT_FOUND_VARIANTS } from '$lib/constants';
 import { mongooseConnect } from '$lib/server/mongoose';
 import { randomArray } from '$lib/utils';
 
@@ -37,5 +37,5 @@ export const handle = (async ({ event, resolve }) => {
 export const handleError = (({ event, error }) => {
 	console.error(error);
 
-	return event.route.id === null ? randomArray(notFoundVariants) : (error as Error);
+	return event.route.id === null ? randomArray(NOT_FOUND_VARIANTS) : (error as App.Error);
 }) satisfies HandleServerError;

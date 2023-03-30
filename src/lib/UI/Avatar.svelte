@@ -9,6 +9,7 @@
 	export let src: string | undefined | null = undefined;
 	export let width: number;
 	export let height = width;
+	export let size: 'sm' | 'base' | 'lg' = 'base';
 
 	const split = alt.split(' ');
 	const short = `${split[0][0]}${split.length > 1 ? split.at(-1)?.[0] : ''}`;
@@ -16,7 +17,8 @@
 
 <div
 	class={clm(
-		'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white',
+		'relative flex shrink-0 items-center justify-center rounded-full font-bold text-white',
+		`size-${size}`,
 		classes
 	)}
 >
@@ -27,3 +29,15 @@
 	{/if}
 	<slot />
 </div>
+
+<style lang="postcss">
+	.size-lg {
+		@apply h-40 w-40 text-6xl font-bold;
+	}
+	.size-base {
+		@apply h-9 w-9 text-sm;
+	}
+	.size-sm {
+		@apply h-6 w-6 text-xs;
+	}
+</style>

@@ -4,15 +4,12 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { createStory } from '$lib/requests/story';
-	import { storiesStore } from '$lib/stores/profile';
 	import { Button } from '$UI';
 	import { Plus } from 'svelte-heros-v2';
 
 	export let data;
 
 	let loading = false;
-
-	storiesStore.set(data.stories);
 
 	const handleClick = async () => {
 		loading = true;
@@ -32,7 +29,7 @@
 </svelte:head>
 
 <StoriesList
-	stories={$storiesStore}
+	stories={data.stories}
 	text="Пока у вас нет ни одной созданной истории, добавьте свою уникальную историю"
 >
 	<Button size="xl" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>

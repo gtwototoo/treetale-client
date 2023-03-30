@@ -21,7 +21,7 @@
 		}
 	];
 
-	const handleInput = (e: InputEvent | CustomEvent) => {
+	const handleInput = (e: InputEvent | Event) => {
 		dispatch('input', e);
 	};
 </script>
@@ -53,7 +53,7 @@
 			on:input={handleInput}
 		/>
 	{/if}
-	<Button on:click size="small">
+	<Button on:click size="sm">
 		<Icon type={Trash} class="text-red-600" />
 	</Button>
 </div>

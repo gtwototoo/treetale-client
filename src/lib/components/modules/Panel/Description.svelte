@@ -53,7 +53,7 @@
 						</div>
 					</ProfileLink>
 				{:else}
-					<Tag class="bg-green-500 text-green-600">Публичный</Tag>
+					<Tag class="bg-emerald-500 text-emerald-600">Публичный</Tag>
 				{/if}
 				<Likes info={$infoStore} />
 			</div>

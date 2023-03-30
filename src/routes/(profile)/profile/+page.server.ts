@@ -1,9 +1,8 @@
 import { StoriesModel } from '$lib/server/models';
 import { serialize } from '$lib/utils';
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from '../../$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load = async ({ locals }) => {
 	const user = locals.session;
 
 	if (!user) throw redirect(302, '/');

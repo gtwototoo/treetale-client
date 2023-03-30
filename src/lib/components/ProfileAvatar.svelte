@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { removeImage, saveImage } from '$lib/requests';
+	import { removeImage, saveImage } from '$lib/requests/image';
 	import type { IUser } from '$lib/types';
 	import { Avatar, Button, InputFile } from '$UI';
 
 	import { Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
 	import Icon from './Icon.svelte';
 
-	export let userInfo: IUser;
+	export let user: IUser;
 	export let me: boolean;
 
 	let imageLoading = false;
@@ -15,17 +15,17 @@
 	const action = 'avatarId';
 
 	const preRemoveImage = async () => {
-		if (tempAvatarURL || !userInfo.avatarId) {
+		if (tempAvatarURL || !user.avatarId) {
 			return;
 		}
 
 		imageLoading = true;
 
-		const request = await removeImage(userInfo.avatarId, action);
+		const request = await removeImage(user.avatarId, action);
 
 		if (request.ok) {
 			imageLoading = false;
-			userInfo.avatarId = null;
+			user.avatarId = null;
 		}
 	};
 
@@ -51,7 +51,7 @@
 
 			imageLoading = false;
 			tempAvatarURL = '';
-			userInfo.avatarId = data.imageId;
+			user.avatarId = data.imageId;
 		}
 	};
 
@@ -61,12 +61,12 @@
 		}
 	};
 
-	$: src = userInfo.avatarId || tempAvatarURL;
+	$: src = user.avatarId || tempAvatarURL;
 </script>
 
-<Avatar {src} alt={userInfo.name} width={160} class="h-40 w-40 light-gradient-main">
+<Avatar size="lg" {src} alt={user.name} width={160} class="h-40 w-40 light-gradient-main">
 	{#if me}
-		<div class="absolute right-0 bottom-0 z-[3] rounded-full bg-main p-1">
+		<div class="absolute bottom-0 right-0 z-[3] rounded-full bg-main p-1">
 			{#if src && !imageLoading}
 				<Button class="!rounded-full !p-3" variant="secondaryWhite" on:click={preRemoveImage}>
 					<Icon type={XMark} class="text-red-600" />

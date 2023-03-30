@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { defaultColor } from '$lib/constants';
+	import { DEFAULT_COLOR } from '$lib/constants';
 	import { activeActions, storyInfo } from '$lib/stores/editing';
 	import { mainColor } from '$lib/stores/story';
 
@@ -11,13 +11,8 @@
 	import Frame from '$lib/editing/Frame/index.svelte';
 	import NewFrame from '$lib/editing/NewFrame.svelte';
 	import Workspace from '$lib/editing/Workspace/index.svelte';
-	import { translate } from '$lib/helpers';
-	import {
-		changesHistory,
-		connect,
-		frames,
-		moveMode,
-	} from '$lib/stores/editing';
+	import { changesHistory, connect, frames, moveMode } from '$lib/stores/editing';
+	import { transform } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
 
@@ -43,8 +38,7 @@
 				$connect.active = true;
 				break;
 			case 'z':
-				if ($storyInfo.addFrameMode)
-					changesHistory[e.shiftKey ? 'redo' : 'undo']();
+				if ($storyInfo.addFrameMode) changesHistory[e.shiftKey ? 'redo' : 'undo']();
 				break;
 			case 'escape':
 				e.preventDefault();
@@ -71,8 +65,8 @@
 						from: null,
 						to: null,
 						prevOutput: null,
-						mouseCoords: null,
-					},
+						mouseCoords: null
+					}
 				};
 				break;
 		}
@@ -88,7 +82,7 @@
 
 	onMount(() => {
 		storyInfo.update((i) => {
-			i.saved = null;
+			i.saved = false;
 
 			return i;
 		});
@@ -100,11 +94,11 @@
 		mounted = true;
 		changesHistory.add({
 			title: 'Начальное состояние',
-			icon: Play,
+			icon: Play
 		});
 
 		return () => {
-			mainColor.set(defaultColor);
+			mainColor.set(DEFAULT_COLOR);
 		};
 	});
 </script>
@@ -139,10 +133,7 @@
 	{/if}
 	<div
 		class="absolute"
-		style={translate(
-			$storyInfo.grabbingOffsets,
-			$storyInfo.grabbingScale / 100
-		)}
+		style={transform($storyInfo.grabbingOffsets, $storyInfo.grabbingScale / 100)}
 	>
 		{#if $storyInfo.addFrameMode && !$moveMode.active && !$storyInfo.grabbing}
 			<NewFrame position={$storyInfo.addFrameOffset} />
@@ -152,12 +143,7 @@
 		{/if}
 		<div class="absolute z-[1]">
 			{#each $frames as data, key (data.frameId)}
-				<Frame
-					{key}
-					{data}
-					bind:clientHeight={data.height}
-					bind:clientWidth={data.width}
-				/>
+				<Frame {key} {data} bind:clientHeight={data.height} bind:clientWidth={data.width} />
 			{/each}
 		</div>
 		{#if mounted}

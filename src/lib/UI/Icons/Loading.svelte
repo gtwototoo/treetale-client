@@ -3,7 +3,7 @@
 <script lang="ts">
 	let styles: string = '';
 	export { styles as class };
-	export let variation: 'solid' | 'outline';
+	export let variation: 'solid' | 'outline' = 'solid';
 </script>
 
 <svg
@@ -23,10 +23,10 @@
 		rx="4"
 		ry="4"
 		class="animate-pulse"
-		fill={variation === 'solid' && 'currentColor'}
-		stroke={variation === 'outline' && 'currentColor'}
+		fill={variation === 'solid' ? 'currentColor' : ''}
+		stroke={variation === 'outline' ? 'currentColor' : ''}
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		stroke-width={variation === 'outline' && '1.5'}
+		stroke-width={variation === 'outline' ? '1.5' : ''}
 	/>
 </svg>
