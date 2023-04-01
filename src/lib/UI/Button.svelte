@@ -10,7 +10,8 @@
 	let classes: string = '';
 	export { classes as class };
 	export let style: string | undefined = undefined;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' = 'secondary';
+	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' | 'ghost' =
+		'secondary';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let disabled: boolean = false;
 	export let loading: boolean = false;
@@ -37,7 +38,7 @@
 		'childs:bg-transparent',
 		{ disabled: disabled || loading },
 		`size-${size}`,
-		variant,
+		`variant-${variant}`,
 		classes,
 		{
 			'text-transparent childs:invisible': loading
@@ -52,7 +53,7 @@
 	<slot />
 	{#if loading}
 		<div
-			class="!visible absolute top-0 left-0 flex h-full w-full items-center justify-center bg-transparent"
+			class="!visible absolute left-0 top-0 flex h-full w-full items-center justify-center bg-transparent"
 		>
 			<Icon type={Loading} />
 		</div>
@@ -61,7 +62,7 @@
 
 <style lang="postcss">
 	button {
-		@apply relative flex items-center whitespace-nowrap rounded-lg duration-500;
+		@apply relative flex select-none items-center whitespace-nowrap rounded-lg duration-500;
 	}
 	.size-xl {
 		@apply px-8 py-4 text-xl font-medium;
@@ -75,16 +76,19 @@
 	.size-sm {
 		@apply p-2 text-xs;
 	}
-	.secondary {
+	.variant-secondary {
 		@apply bg-gray-200 text-black transition-colors hover:bg-gray-100 hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;
 	}
-	.secondaryWhite {
+	.variant-secondaryWhite {
 		@apply bg-white text-black transition-colors hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;
 	}
-	.main {
+	.variant-main {
 		@apply text-white transition-[filter] hover:brightness-110 focus:brightness-110;
 	}
-	.transparent {
+	.variant-ghost {
+		@apply bg-opacity-30 transition-colors hover:bg-opacity-100;
+	}
+	.variant-transparent {
 		@apply transition-[filter] hover:brightness-90 focus:brightness-90;
 	}
 	.disabled {

@@ -17,7 +17,7 @@
 
 <div
 	class={clm(
-		'relative flex shrink-0 items-center justify-center rounded-full font-bold text-white',
+		'relative flex shrink-0 select-none items-center justify-center rounded-full font-bold text-white',
 		`size-${size}`,
 		classes
 	)}

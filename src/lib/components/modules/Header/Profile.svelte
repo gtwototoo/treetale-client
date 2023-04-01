@@ -6,7 +6,7 @@
 	import { currentPanel } from '$lib/stores/main';
 	import { Button } from '$UI';
 	import { Pencil, Plus } from 'svelte-heros-v2';
-	import ProfileSettings from '../Panel/ProfileSettings.svelte';
+	import { ProfileSettings } from '../Panel';
 
 	let loading = false;
 

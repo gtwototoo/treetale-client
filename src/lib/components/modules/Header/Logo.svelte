@@ -1,10 +1,19 @@
 <script lang="ts">
-	import Link from '../../Link.svelte';
+	import Link from '$lib/components/Link.svelte';
+	import { mainColor } from '$lib/stores/story';
+	import { contrastText } from '$lib/utils';
+	import clsx from 'clsx';
+
+	$: textColor = contrastText($mainColor) ? 'childs:from-[#FDBA74]' : 'childs:from-[#753F00]';
 </script>
 
 <Link
 	href="/"
-	class="flex items-center rounded-lg px-2 text-2xl font-extrabold uppercase leading-5 text-text md:px-4"
+	class={clsx(
+		'select-none px-2 text-2xl/9 font-extrabold uppercase text-transparent childs:bg-gradient-to-br childs:bg-clip-text childs:tracking-widest md:px-4',
+		textColor
+	)}
 >
-	Treestory
+	<p class="hidden sm:block">Treestory</p>
+	<p class="sm:hidden">TS</p>
 </Link>

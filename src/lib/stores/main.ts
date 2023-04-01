@@ -1,3 +1,4 @@
+import Main from '$lib/components/modules/Header/Main.svelte';
 import type { SvelteComponent } from 'svelte';
 import { writable, type Writable } from 'svelte/store';
 
@@ -20,7 +21,7 @@ const currentPanelCustomStore = () => {
 		clear: () => update(() => clearData),
 		set: (data: IPanel) =>
 			update((current) => {
-				data.title = data.title || data.id;
+				data.title = data.title === undefined ? data.id : data.title;
 
 				return data.id === current.id ? clearData : data;
 			}),
@@ -29,4 +30,4 @@ const currentPanelCustomStore = () => {
 };
 
 export let currentPanel = currentPanelCustomStore();
-export let currentPage = writable<string>();
+export let currentHeader = writable<typeof SvelteComponent>(Main);

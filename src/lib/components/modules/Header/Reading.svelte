@@ -1,7 +1,10 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import { currentPanel } from '$lib/stores/main';
+	import { mainColor } from '$lib/stores/story';
+	import { contrastText } from '$lib/utils';
 	import { Button } from '$UI';
+	import clsx from 'clsx';
 	import { BookOpen, Star } from 'svelte-heros-v2';
 	import { Description, Donut } from '../Panel';
 
@@ -18,11 +21,15 @@
 		});
 </script>
 
-<Button class="bg-blue-500" variant="main" on:click={descriptionSwitch}>
+<Button
+	class={clsx('gap-3 text-text', contrastText($mainColor) ? 'bg-yellow-600' : 'bg-yellow-300')}
+	variant="ghost"
+	on:click={donutSwitch}
+>
+	<Icon type={Star} />
+	<p>Поддержка</p>
+</Button>
+<Button class="gap-3 bg-contrast text-text" variant="ghost" on:click={descriptionSwitch}>
 	<Icon type={BookOpen} />
 	<p>Описание</p>
-</Button>
-<Button class="bg-yellow-500" variant="main" on:click={donutSwitch}>
-	<Icon type={Star} />
-	<p>Поддержать</p>
 </Button>

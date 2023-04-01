@@ -2,8 +2,10 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
+	import Main from '$lib/components/modules/Header/Main.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { createStory } from '$lib/requests/story';
+	import { currentHeader } from '$lib/stores/main';
 	import { Button } from '$UI';
 	import { Plus } from 'svelte-heros-v2';
 
@@ -22,6 +24,8 @@
 
 		loading = false;
 	};
+
+	$currentHeader = Main;
 </script>
 
 <svelte:head>

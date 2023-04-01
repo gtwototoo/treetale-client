@@ -11,7 +11,7 @@
 	<ProfileLink data={$page.data.session} class="shrink-0" />
 {:else}
 	<Link href="/signin">
-		<Button class="gap-2">
+		<Button class="gap-3 bg-contrast text-text" variant="ghost">
 			<Icon type={ArrowLeftOnRectangle} />
 			<p>Войти</p>
 		</Button>

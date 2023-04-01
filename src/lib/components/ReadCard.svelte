@@ -40,7 +40,7 @@
 		@apply flex w-full max-w-lg flex-col justify-center gap-2 childs:flex;
 	}
 	.photoArea {
-		@apply sticky top-[5.25rem] flex h-56 shrink-0 flex-col;
+		@apply sticky top-4 flex h-56 shrink-0 flex-col;
 	}
 	.content {
 		@apply z-[1] flex w-full flex-col justify-between gap-6 rounded-2xl bg-white p-4 text-base;

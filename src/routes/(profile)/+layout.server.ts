@@ -1,31 +1,25 @@
 // import { collapseValue, pluralize } from '$lib/utils';
 
-import { UsersModel } from '$lib/server/models';
+import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
-import { randomError } from '$lib/utils';
+import type { IStoryReading } from '$lib/types/reading';
+import { collapseValue, pluralize, randomError } from '$lib/utils';
 
-// interface IMetric {
-// 	value: number;
-// 	name: [string, string, string];
-// }
+const correctMetric = (value: number, names: [string, string, string]) => {
+	return pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...names).split(' ');
+};
 
-// const getStatistic = () => {
-// 	const metrics: IMetric[] = [
-// 		{
-// 			value: $storiesStore.length,
-// 			name: ['историй', 'история', 'истории']
-// 		},
-// 		{ value: 0, name: ['подписчиков', 'подписчик', 'подписчика'] },
-// 		{
-// 			value: $storiesStore.reduce((sum, { likes }) => sum + likes.length, 0),
-// 			name: ['лайков', 'лайк', 'лайка']
-// 		}
-// 	];
+const getStatistic = (stories: IStoryReading[]) => {
+	const likes = stories.reduce((sum, { likes }) => sum + likes.length, 0);
 
-// 	return metrics.map(({ name, value }) =>
-// 		pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...name)
-// 	);
-// };
+	const metrics: string[][] = [
+		correctMetric(stories.length, ['историй', 'история', 'истории']),
+		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика']),
+		correctMetric(likes, ['лайков', 'лайк', 'лайка'])
+	];
+
+	return metrics;
+};
 
 export const load = async ({ params, locals }) => {
 	let user: IUser | null;
@@ -46,8 +40,19 @@ export const load = async ({ params, locals }) => {
 
 	if (!user) throw randomError(404);
 
+	const stories = await StoriesModel.find({
+		userId: user.userId
+	}).select({
+		_id: 0,
+		grabbingScale: 0,
+		grabbingOffsets: 0,
+		frames: 0
+	});
+
+	if (!stories) throw randomError(404);
+
 	return {
 		user,
-		statistic: []
+		statistic: getStatistic(stories)
 	};
 };

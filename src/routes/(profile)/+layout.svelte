@@ -3,9 +3,11 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import Main from '$lib/components/modules/Header/Main.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
+	import { currentHeader } from '$lib/stores/main';
 	import { mainColor } from '$lib/stores/story';
 	import { findByPattern } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
@@ -51,6 +53,8 @@
 		}
 	};
 
+	$currentHeader = Main;
+
 	$: ({ url } = $page);
 	$: ({ statistic, user } = data);
 
@@ -64,7 +68,9 @@
 </script>
 
 <div class="profile">
-	<ProfileAvatar {user} {me} />
+	<div>
+		<ProfileAvatar {user} {me} />
+	</div>
 	<div class="info">
 		<div class="flex w-full flex-col justify-between gap-4 sm:flex-row">
 			<div class="flex flex-col items-center gap-3 px-2 sm:items-start">
@@ -88,7 +94,7 @@
 						Дополнительная{''}
 						информация
 					</p>
-					<Icon type={InformationCircle} class="h-9 w-9" />
+					<Icon type={InformationCircle} class="h-10 w-10" />
 				</div>
 				<p class="w-full whitespace-pre-wrap break-words px-2 text-center sm:text-right">
 					{user.description || 'Не указана'}
@@ -147,10 +153,10 @@
 
 <style lang="postcss">
 	.profile {
-		@apply flex flex-col items-center justify-start gap-4 p-2 text-sm sm:p-4 md:flex-row md:items-start md:gap-6;
+		@apply flex flex-col items-center justify-start gap-4 p-2 text-sm childs:p-6 sm:p-4 md:flex-row md:items-start;
 	}
 	.info {
-		@apply flex w-full flex-col gap-4 rounded-2xl bg-white p-4 childs:bg-transparent sm:w-auto sm:min-w-[32rem] sm:max-w-full md:max-w-3xl md:p-4;
+		@apply flex w-full flex-col gap-4 rounded-2xl bg-white childs:bg-transparent sm:w-auto sm:min-w-[32rem] sm:max-w-full md:max-w-3xl md:p-6;
 	}
 	.info .statistic {
 		@apply flex select-none gap-4 childs:flex childs:w-20 childs:flex-col childs:items-center sm:childs:w-auto;

@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import Frame from '$lib/components/Frame.svelte';
+	import Reading from '$lib/components/modules/Header/Reading.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { updateProgress } from '$lib/requests/progress';
+	import { currentHeader, currentPanel } from '$lib/stores/main';
 	import { infoStore } from '$lib/stores/reading';
 	import { mainColor } from '$lib/stores/story';
 	import { onMount } from 'svelte';
@@ -63,12 +65,15 @@
 
 		return () => {
 			mainColor.set(DEFAULT_COLOR);
+			currentPanel.clear();
 		};
 	});
 
 	afterNavigate(() => {
 		scrollTo(current - 1);
 	});
+
+	$currentHeader = Reading;
 
 	if (data.story.color) {
 		mainColor.set(data.story.color);
@@ -81,9 +86,10 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="flex flex-col items-center gap-2 p-2 sm:gap-3 sm:p-4" bind:this={cardsRef}>
+<div class="flex flex-col items-center gap-2 px-2 sm:gap-3 sm:px-4" bind:this={cardsRef}>
 	{#each data.frames as frame, key}
 		<Frame
+			class="pt-2 sm:pt-4"
 			vars={data.story.vars}
 			{frame}
 			{setChoice}

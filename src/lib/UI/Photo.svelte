@@ -68,7 +68,7 @@
 {#if ready}
 	<div
 		class={clsx(
-			'relative flex items-center justify-center overflow-hidden childs:shrink-0',
+			'relative flex select-none items-center justify-center overflow-hidden childs:shrink-0',
 			classes
 		)}
 		in:fade

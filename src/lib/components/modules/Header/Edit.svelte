@@ -3,8 +3,7 @@
 	import { currentPanel } from '$lib/stores/main';
 	import { Button, ButtonSplit } from '$UI';
 	import { ArrowUturnLeft, ArrowUturnRight, InformationCircle, Variable } from 'svelte-heros-v2';
-	import { Variables } from '../Panel';
-	import EditingSettings from '../Panel/EditingSettings.svelte';
+	import { EditingSettings, Variables } from '../Panel';
 	import ModeSelector from './ModeSelector.svelte';
 
 	const variablesSwitch = () =>

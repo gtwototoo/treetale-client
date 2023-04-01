@@ -9,5 +9,6 @@ export interface IStorySchema extends IStory {
 	grabbingOffsets: ICoordinates;
 	grabbingScale: number;
 	version: number;
+	imageId: string;
 	[index: string]: number | ICoordinates | unknown[] | string | boolean;
 }

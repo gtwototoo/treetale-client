@@ -9,6 +9,8 @@
 
 	export let last: boolean;
 	export let frame: IFrame;
+	let styles = '';
+	export { styles as class };
 	export let vars: IVariable[];
 	export let selectedChoiceId: number | undefined;
 	export let setChoice: (choiceId: number) => void;
@@ -27,9 +29,12 @@
 <ReadCard
 	src={frame.imageId}
 	text={text || 'Пустота...'}
-	class={clsx({
-		'pointer-events-none opacity-10': !last
-	})}
+	class={clsx(
+		{
+			'pointer-events-none opacity-10': !last
+		},
+		styles
+	)}
 >
 	{#if frame.choices.length}
 		<FormList class="w-full">
