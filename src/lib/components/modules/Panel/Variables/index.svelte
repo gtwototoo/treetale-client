@@ -1,16 +1,13 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
-	import Panel from '$lib/components/modules/Panel';
 	import { updateVars } from '$lib/requests/story';
 	import { storyInfo, vars } from '$lib/stores/editing';
 	import { correctWhitespace } from '$lib/utils';
 	import { Button } from '$UI';
 	import { Cloud, Plus, Variable } from 'svelte-heros-v2';
+	import Note from '../Note.svelte';
 	import VariableRow from './Variable.svelte';
 
-	export { classes as class };
-
-	let classes: string = '';
 	let timer: number;
 	let saveInfo: string = 'Ожидание изменений';
 
@@ -47,16 +44,15 @@
 	};
 </script>
 
-<Panel on:click title="Переменные" class={classes}>
-	<div class="flex w-full justify-center">
-		<Icon type={Variable} class="h-9 w-9 text-gray-300" />
-	</div>
-	<p class="text-center text-sm text-gray-500">
-		<span class="text-violet-500">Переменные</span>
-		{correctWhitespace(
-			' - это данные, которые можно использовать в любом месте любого текста, будь то описание, либо вариант выбора и так далее, а так же этими переменными можно как угодно манипулировать в процессе истории.'
-		)}
-	</p>
+<div class="flex flex-col items-stretch gap-4 p-4">
+	<Note icon={Variable}>
+		<div>
+			<span class="text-violet-500">Переменные</span>
+			{correctWhitespace(
+				' - это данные, которые можно использовать в любом месте любого текста, будь то описание, либо вариант выбора и так далее, а так же этими переменными можно как угодно манипулировать в процессе истории.'
+			)}
+		</div>
+	</Note>
 	<div class="flex flex-col gap-2">
 		{#each $vars as data, key}
 			<VariableRow {data} on:click={() => removeVariable(key)} on:input={checkUpdates} />
@@ -73,4 +69,4 @@
 			{saveInfo}
 		{/if}
 	</div>
-</Panel>
+</div>

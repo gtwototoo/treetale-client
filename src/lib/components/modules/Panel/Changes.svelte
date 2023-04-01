@@ -1,21 +1,17 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
-	import { correctWhitespace } from '$lib/utils';
 	import { Button, ButtonSplit } from '$UI';
 	import clsx from 'clsx';
 	import { Clock } from 'svelte-heros-v2';
+	import Note from './Note.svelte';
 </script>
 
-<div class="flex w-full justify-center">
-	<Icon type={Clock} class="h-9 w-9 text-gray-300" />
-</div>
-<p class="text-center text-sm text-gray-500">
-	{correctWhitespace(
-		'Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них'
-	)}
-</p>
-<div class="flex flex-col gap-2">
+<div class="flex flex-col items-stretch gap-4 p-4">
+	<Note
+		icon={Clock}
+		text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
+	/>
 	<ButtonSplit vertical>
 		{#each $changesHistory.stages as { title, icon }, key}
 			<Button

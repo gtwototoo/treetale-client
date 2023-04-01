@@ -86,7 +86,7 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="flex flex-col items-center gap-2 px-2 sm:gap-3 sm:px-4" bind:this={cardsRef}>
+<div class="flex flex-col items-center p-2 !pt-0 sm:p-4" bind:this={cardsRef}>
 	{#each data.frames as frame, key}
 		<Frame
 			class="pt-2 sm:pt-4"

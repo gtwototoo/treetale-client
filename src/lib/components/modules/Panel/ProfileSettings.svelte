@@ -8,6 +8,8 @@
 	import ColorPicker from '$UI/ColorPicker.svelte';
 	import Input from '$UI/Input.svelte';
 	import clsx from 'clsx';
+	import { Cog6Tooth } from 'svelte-heros-v2';
+	import Note from './Note.svelte';
 
 	let light: number = 80;
 	let saturate: number = 90;
@@ -45,7 +47,11 @@
 	};
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col items-stretch gap-4 p-4">
+	<Note
+		icon={Cog6Tooth}
+		text="Тут вы можете указать свой псевдоним и описание для своего профиля"
+	/>
 	<div class="flex gap-2">
 		<Input placeholder="Псевдоним" class="w-full" bind:value={name} required />
 		<ColorPicker
@@ -58,18 +64,17 @@
 		/>
 	</div>
 	<Textarea placeholder="Описание" bind:value={description} />
-
 	<Button class="justify-center" on:click={saveProfile} {loading} disabled={!name}>
 		<p>Сохранить изменения</p>
 	</Button>
+	{#if saveInfo}
+		<div
+			class={clsx(
+				'pointer-events-none flex select-none justify-center text-xs',
+				errored ? 'text-red-600' : 'text-gray-500'
+			)}
+		>
+			{saveInfo}
+		</div>
+	{/if}
 </div>
-{#if saveInfo}
-	<div
-		class={clsx(
-			'pointer-events-none flex select-none justify-center text-xs',
-			errored ? 'text-red-600' : 'text-gray-500'
-		)}
-	>
-		{saveInfo}
-	</div>
-{/if}

@@ -3,7 +3,7 @@
 	import Link from '$lib/components/Link.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { Button } from '$UI';
-	import { Plus } from 'svelte-heros-v2';
+	import { BookOpen } from 'svelte-heros-v2';
 
 	export let data;
 </script>
@@ -13,8 +13,8 @@
 	text="Пока у вас нет ни одной начатой истории, посмотрите на весь каталог различных историй"
 >
 	<Link href="/">
-		<Button size="xl" class="gap-4" variant="secondaryWhite">
-			<Icon type={Plus} />
+		<Button size="lg" class="gap-4" variant="secondaryWhite">
+			<Icon type={BookOpen} />
 			<p>Смотреть все истории</p>
 		</Button>
 	</Link>

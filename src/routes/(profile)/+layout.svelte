@@ -24,7 +24,7 @@
 
 	export let data;
 
-	const me = $page.data.session && $page.data.session === data.user.userId;
+	const me = $page.data.session && $page.data.session.userId === data.user.userId;
 
 	const pageType = (path: string): 'viewed' | 'liked' | 'main' => {
 		return findByPattern(path, {

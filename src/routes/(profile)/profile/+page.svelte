@@ -2,9 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
+	import Profile from '$lib/components/modules/Header/Profile.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { createStory } from '$lib/requests/story';
+	import { currentHeader, currentPanel } from '$lib/stores/main';
 	import { Button } from '$UI';
+	import { onDestroy } from 'svelte';
 	import { Plus } from 'svelte-heros-v2';
 
 	export let data;
@@ -22,6 +25,12 @@
 
 		loading = false;
 	};
+
+	$currentHeader = Profile;
+
+	onDestroy(() => {
+		currentPanel.clear();
+	});
 </script>
 
 <svelte:head>
@@ -32,7 +41,7 @@
 	stories={data.stories}
 	text="Пока у вас нет ни одной созданной истории, добавьте свою уникальную историю"
 >
-	<Button size="xl" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>
+	<Button size="lg" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>
 		<Icon type={Plus} />
 		<p>Добавить историю</p>
 	</Button>

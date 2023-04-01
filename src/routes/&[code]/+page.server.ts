@@ -4,6 +4,7 @@ import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ fetch, params, cookies }) => {
 	const { code } = params;
+	// fetchPost
 
 	const request = await fetch(`${PUBLIC_TREESTORY_API_URL}/session`, {
 		method: 'POST',

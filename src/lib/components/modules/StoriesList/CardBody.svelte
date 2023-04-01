@@ -17,7 +17,7 @@
 </script>
 
 <div class="line-clamp-6 h-[6.25rem] w-full text-center xs:h-32 lg:h-40">
-	<h2 class="text-sm/4 xs:text-base/5 lg:text-xl/6 mb-1 xs:mb-3 lg:mb-4">
+	<h2 class="mb-1 text-sm/4 xs:mb-3 xs:text-base/5 lg:mb-4 lg:text-xl/6">
 		{title || 'Без названия'}
 	</h2>
 	<p
@@ -45,9 +45,9 @@
 			</div>
 		</ProfileLink>
 	{:else}
-		<Tag class={clsx(draft ? 'bg-gray-500 text-gray-600' : 'bg-emerald-500 text-emerald-600')}
-			>{draft ? 'Черновик' : 'Публичный'}</Tag
-		>
+		<Tag class={clsx(draft ? 'bg-gray-300 text-gray-600' : 'bg-emerald-300 text-emerald-600')}>
+			{draft ? 'Черновик' : 'Публичный'}
+		</Tag>
 	{/if}
 	<Likes info={story} />
 </div>

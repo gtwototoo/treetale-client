@@ -40,7 +40,7 @@
 		stories={data.stories}
 		text="Историй не найдено, но вы можете добавить свою уникальную историю"
 	>
-		<Button size="xl" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>
+		<Button size="lg" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>
 			<Icon type={Plus} />
 			<p>Добавить историю</p>
 		</Button>

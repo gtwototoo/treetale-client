@@ -9,9 +9,9 @@
 	let loading = false;
 
 	const handleClick = async () => {
-		loading = true;
-
 		if ($page.data.session) {
+			loading = true;
+
 			await createStory();
 		} else {
 			await goto('/signin');
