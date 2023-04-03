@@ -20,7 +20,7 @@
 	import { Loading } from '$UI/Icons';
 	import clsx from 'clsx';
 	import { onDestroy } from 'svelte';
-	import { Cloud, InformationCircle, Photo as PhotoIcon, Trash, XMark } from 'svelte-heros-v2';
+	import { Cloud, Cog6Tooth, Photo as PhotoIcon, Trash, XMark } from 'svelte-heros-v2';
 	import Note from './Note.svelte';
 
 	let light: number = 80;
@@ -125,6 +125,11 @@
 		$storyInfo.dragImageMode = false;
 	};
 
+	const switchDraft = () => {
+		$storyInfo.draft = !$storyInfo.draft;
+		checkUpdates();
+	};
+
 	export { styles as class };
 
 	onDestroy(() => {
@@ -136,7 +141,7 @@
 
 <div class="flex flex-col items-stretch gap-4 p-4">
 	<Note
-		icon={InformationCircle}
+		icon={Cog6Tooth}
 		text="Тут вы можете прикрепить изображение к своей истории, дать ей название, описание и теги, которые помогут найти ее по определенной тематике"
 	/>
 	<div class="relative flex flex-col gap-2">
@@ -204,14 +209,7 @@
 			on:remove={checkUpdates}
 		/>
 		<Selector on:change={checkUpdates}>
-			<SelectorItem
-				class="grow justify-center"
-				active={$storyInfo.draft}
-				on:click={() => {
-					$storyInfo.draft = true;
-					checkUpdates();
-				}}
-			>
+			<SelectorItem class="grow justify-center" active={$storyInfo.draft} on:click={switchDraft}>
 				Черновик
 			</SelectorItem>
 			<SelectorItem
@@ -219,10 +217,7 @@
 					'!text-emerald-600': !$storyInfo.draft
 				})}
 				active={!$storyInfo.draft}
-				on:click={() => {
-					$storyInfo.draft = false;
-					checkUpdates();
-				}}
+				on:click={switchDraft}
 			>
 				Публичный
 			</SelectorItem>

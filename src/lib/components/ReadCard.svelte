@@ -5,7 +5,7 @@
 
 	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 
-	export let src: string | undefined = undefined;
+	export let src: string | null = null;
 	export let text: string;
 	let styles = '';
 	export { styles as class };

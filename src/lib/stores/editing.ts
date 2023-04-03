@@ -1,6 +1,6 @@
 import { updateFrames } from '$lib/requests/story';
 import type { ICoordinates, IVariable } from '$lib/types';
-import type { IConnect, IFrameCreate, IStoryCreate } from '$lib/types/editing';
+import type { IConnect, IFrameCreate, IMove, IStoryCreate } from '$lib/types/editing';
 import { serialize } from '$lib/utils';
 import { framesCorrect } from '$lib/utils/editing';
 import type { SvelteComponent } from 'svelte';
@@ -156,8 +156,13 @@ export const connect = writable<IConnect>({
 		mouseCoords: null
 	}
 });
+export const moveMode = writable<IMove>({
+	hovered: null,
+	active: false,
+	oneDirectionMode: false
+});
 export const frames: IOverrideFrames = framesStore();
-export const activeActions = writable<boolean>(false);
+export const activeAction = writable<string | null>();
 export const changesHistory: IOverrideChanges = ChangeHistoryStore();
 export const storyInfo: IOverrideStoryInfo = storyInfoStore();
 export const vars = writable<IVariable[]>([]);

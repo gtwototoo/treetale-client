@@ -5,7 +5,7 @@
 	let dragged: boolean = false;
 	let dispatch = createEventDispatcher();
 
-	const handleDrop = (e: MouseEvent) => {
+	const handleDrop = (e: DragEvent) => {
 		disableDragged();
 		dispatch('drop', e);
 	};

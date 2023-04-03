@@ -1,4 +1,4 @@
-import { defaultColor } from '$lib/constants';
+import { DEFAULT_COLOR } from '$lib/constants';
 import type { IStorySchema } from '$lib/types/schemas';
 import mongoose from 'mongoose';
 
@@ -7,51 +7,51 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 		storyId: Number,
 		title: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		color: {
 			type: [Number, Number, Number],
-			default: defaultColor,
+			default: DEFAULT_COLOR
 		},
 		imageId: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		version: {
 			type: Number,
-			default: 1,
+			default: 1
 		},
 		userId: {
 			type: Number,
-			required: true,
+			required: true
 		},
 		draft: {
 			type: Boolean,
-			default: true,
+			default: true
 		},
 		description: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		likes: Array,
 		tags: Array,
 		frames: Array,
 		grabbingScale: {
 			type: Number,
-			default: 100,
+			default: 100
 		},
 		vars: Array,
 		grabbingOffsets: {
 			type: Object,
-			default: { x: 0, y: 0 },
+			default: { x: 0, y: 0 }
 		},
 		created: {
 			type: Number,
-			default: Date.now,
-		},
+			default: Date.now
+		}
 	},
 	{
-		versionKey: false,
+		versionKey: false
 	}
 );
 

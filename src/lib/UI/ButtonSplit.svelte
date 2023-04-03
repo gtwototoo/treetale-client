@@ -6,11 +6,11 @@
 
 <div
 	class={clsx(
-		'childs:!rounded-none flex',
+		'flex childs:!rounded-none',
 		{ 'flex-col': vertical },
 		vertical
-			? 'first:childs:!rounded-t-lg last:childs:!rounded-b-lg'
-			: 'first:childs:!rounded-l-lg last:childs:!rounded-r-lg'
+			? 'divide-y first:childs:!rounded-t-lg last:childs:!rounded-b-lg'
+			: 'divide-x first:childs:!rounded-l-lg last:childs:!rounded-r-lg'
 	)}
 >
 	<slot />

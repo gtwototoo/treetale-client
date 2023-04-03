@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { activeActions } from '$lib/stores/editing';
+	import { activeAction } from '$lib/stores/editing';
 	import clsx from 'clsx';
 	import Logo from './Logo.svelte';
 	import Session from './Session.svelte';
@@ -7,8 +7,8 @@
 
 <div
 	class={clsx(
-		'z-10 flex w-full justify-between p-2 sm:p-4',
-		$activeActions ? 'blind' : 'childs:pointer-events-auto'
+		'pointer-events-none z-10 flex w-full justify-between p-2 sm:p-4',
+		$activeAction ? 'blind' : 'childs:pointer-events-auto'
 	)}
 >
 	<Logo />

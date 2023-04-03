@@ -77,7 +77,7 @@
 		@apply p-2 text-xs;
 	}
 	.variant-secondary {
-		@apply bg-gray-200 text-black transition-colors hover:bg-gray-100 hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;
+		@apply bg-gray-50 text-black transition-colors hover:bg-white hover:text-blue-500 focus:bg-white focus:text-blue-500;
 	}
 	.variant-secondaryWhite {
 		@apply bg-white text-black transition-colors hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;

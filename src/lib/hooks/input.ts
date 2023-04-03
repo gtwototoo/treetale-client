@@ -46,13 +46,15 @@ export const autoHeight = (node: HTMLTextAreaElement) => {
 
 export const autoWidth = (node: HTMLInputElement, overrideValue: string) => {
 	const correctWidth = () => {
+		if (!node.parentElement) return;
+
 		const element: HTMLSpanElement = document.createElement('span');
 
 		element.style.visibility = 'hidden';
 		element.style.position = 'absolute';
 		element.innerHTML = node.value;
 
-		document.insertBefore(element, node);
+		node.parentElement.insertBefore(element, node);
 
 		node.style.width = `${element.offsetWidth}px`;
 

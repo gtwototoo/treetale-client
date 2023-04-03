@@ -23,7 +23,7 @@
 		}
 	};
 
-	const text = correctWhitespace(variableReplace(frame.text, vars));
+	const text = frame.text ? correctWhitespace(variableReplace(frame.text, vars)) : '';
 </script>
 
 <ReadCard

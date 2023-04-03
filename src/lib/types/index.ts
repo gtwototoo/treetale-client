@@ -27,8 +27,8 @@ export interface IChoice {
 export interface IFrame {
 	frameId: number;
 	choices: IChoice[];
-	text: string;
-	imageId?: string;
+	text: string | null;
+	imageId: string | null;
 	[index: string]: unknown;
 }
 

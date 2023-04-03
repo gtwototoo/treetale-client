@@ -17,9 +17,15 @@ export interface IConnect {
 }
 
 export interface IMove {
-	hovered: number;
+	hovered: number | null;
 	active: boolean;
 	oneDirectionMode: boolean;
+}
+
+export interface IStartMove {
+	startMoveCoords: ICoordinates;
+	moveFrameOffset: ICoordinates;
+	moveXDirection: boolean | null;
 }
 
 export interface IStoryCreate extends IStory {

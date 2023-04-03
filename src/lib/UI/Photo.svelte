@@ -7,7 +7,7 @@
 	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
-	export let src: string = '';
+	export let src: string | null = '';
 	export let alt: string = '';
 	export let cover = false;
 	export { classes as class };
@@ -62,7 +62,7 @@
 	$: newSrc =
 		src && !src.includes('://') && !src.startsWith('data:')
 			? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
-			: src;
+			: '';
 </script>
 
 {#if ready}

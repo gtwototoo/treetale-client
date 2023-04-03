@@ -9,7 +9,7 @@ export const COOKIE_OPTIONS: CookieSerializeOptions = {
 	path: '/',
 	priority: 'high',
 	sameSite: 'lax',
-	secure: !dev,
+	secure: !dev
 };
 
 if (!dev) {

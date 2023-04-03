@@ -16,7 +16,9 @@
 		<Icon type={XMark} />
 	</Button>
 	{#if title}
-		<p class="min-h-[2.5rem] w-full p-4 px-20 text-center text-lg font-medium">{title}</p>
+		<p class="min-h-[2.5rem] w-full select-none p-4 px-20 text-center text-lg font-medium">
+			{title}
+		</p>
 	{/if}
 	<div class="bg-transparent">
 		<slot />

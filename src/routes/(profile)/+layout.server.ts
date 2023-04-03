@@ -3,7 +3,7 @@
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
 import type { IStoryReading } from '$lib/types/reading';
-import { collapseValue, pluralize, randomError } from '$lib/utils';
+import { collapseValue, pluralize, randomError, serialize } from '$lib/utils';
 
 const correctMetric = (value: number, names: [string, string, string]) => {
 	return pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...names).split(' ');
@@ -53,6 +53,6 @@ export const load = async ({ params, locals }) => {
 
 	return {
 		user,
-		statistic: getStatistic(stories)
+		statistic: getStatistic(serialize(stories))
 	};
 };
