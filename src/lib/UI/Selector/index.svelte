@@ -7,7 +7,7 @@
 
 <div
 	class={clsx(
-		'selector childs:bg-transparent first:childs:!rounded-l-lg last:childs:!rounded-r-lg childelem-[button]:!rounded-none flex',
+		'selector flex childs:bg-transparent first:childs:!rounded-l-lg last:childs:!rounded-r-lg childelem-[button]:!rounded-none',
 		classes
 	)}
 >
@@ -16,6 +16,6 @@
 
 <style lang="postcss">
 	.selector {
-		@apply flex rounded-lg bg-white text-black ring-1 ring-gray-200;
+		@apply flex rounded-lg bg-white text-black;
 	}
 </style>

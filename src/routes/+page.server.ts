@@ -5,7 +5,6 @@ import type { IStorySchema } from '$lib/types/schemas';
 import { serialize } from '$lib/utils';
 
 export const load = async ({ locals }) => {
-	const session = locals.session;
 	const rawStories: IStorySchema[] = await StoriesModel.find({
 		draft: false
 	})

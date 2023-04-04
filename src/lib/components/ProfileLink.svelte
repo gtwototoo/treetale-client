@@ -10,12 +10,10 @@
 
 	export { classes as class };
 	export let data: IUser;
-	export let classImage: string = '';
 	export let align: 'left' | 'right' = 'left';
+	export let created: number;
 
-	const split = data.name.split(' ');
-	const short = `${split[0][0]}${split.length > 1 ? split.at(-1)?.[0] : ''}`;
-
+	$: date = new Date(created).toLocaleDateString('en-GB');
 	$: selectedColor = data.color && data.color.length ? data.color : DEFAULT_COLOR;
 </script>
 
@@ -24,18 +22,27 @@
 	class="contents bg-transparent"
 >
 	<Button
-		style="--color-main: {selectedColor.join(' ')}"
 		class={clsx(classes, 'min-w-0 gap-2 !p-0', {
 			'flex-row-reverse': align === 'right'
 		})}
 		variant="transparent"
 	>
 		<Avatar
-			class={clsx('light-gradient-main', classImage)}
+			style="--color-main: {selectedColor.join(' ')}"
+			class="light-gradient-main xs:!h-9 xs:!w-9 xs:!text-sm"
+			size="sm"
 			width={36}
 			src={data.avatarId}
 			alt={data.name}
 		/>
-		<slot />
+		<div class="overflow-hidden text-left">
+			<p class="hidden truncate xs:block">
+				{data.name}
+			</p>
+			<div class="flex select-none gap-1 text-xs text-gray-500">
+				<p class="hidden truncate xs:block">Опубликовано</p>
+				<p>{date}</p>
+			</div>
+		</div>
 	</Button>
 </Link>

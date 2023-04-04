@@ -1,6 +1,6 @@
 import Main from '$lib/components/modules/Header/Main.svelte';
 import type { SvelteComponent } from 'svelte';
-import { writable, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 interface IPanel {
 	title?: string;
@@ -9,12 +9,12 @@ interface IPanel {
 }
 
 const currentPanelCustomStore = () => {
-	const clearData = {
+	const clearData: IPanel = {
 		title: '',
 		id: '',
 		component: undefined
 	};
-	const { subscribe, update }: Writable<IPanel> = writable<IPanel>(clearData);
+	const { subscribe, update } = writable<IPanel>(clearData);
 
 	return {
 		subscribe,

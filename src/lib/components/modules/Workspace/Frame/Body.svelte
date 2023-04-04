@@ -1,12 +1,12 @@
 <script lang="ts">
-	import className from '$lib/classnames';
 	import DropArea from '$lib/components/DropArea.svelte';
-	import { iconsType } from '$lib/constants';
-	import { removeImage, saveImage } from '$lib/requests';
+	import Icon from '$lib/components/Icon.svelte';
+	import { removeImage, saveImage } from '$lib/requests/image';
 	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
 	import type { IFrame } from '$lib/types';
 	import { Button, InputFile, Photo, Textarea } from '$UI';
 	import { Loading } from '$UI/Icons';
+	import clsx from 'clsx';
 	import { Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
 
 	export let data: IFrame;
@@ -23,12 +23,7 @@
 
 		imageLoading = true;
 
-		const request = await removeImage(
-			avatarId,
-			action,
-			$storyInfo.storyId,
-			data.frameId
-		);
+		const request = await removeImage(avatarId, action, $storyInfo.storyId, data.frameId);
 
 		if (request.ok) {
 			imageLoading = false;
@@ -36,7 +31,7 @@
 
 			changesHistory.add({
 				title: 'Удаление изображения',
-				icon: XMark,
+				icon: XMark
 			});
 		}
 	};
@@ -68,12 +63,12 @@
 
 			changesHistory.add({
 				title: 'Добавление изображения',
-				icon: PhotoIcon,
+				icon: PhotoIcon
 			});
 		}
 	};
 
-	const setFile = (e: InputEvent) => {
+	const setFile = (e: Event) => {
 		if (e.target instanceof HTMLInputElement) {
 			preSaveImage(e.target.files);
 		}
@@ -87,9 +82,9 @@
 </script>
 
 <div
-	class={className('pointer-events-auto relative flex flex-col gap-2', {
+	class={clsx('pointer-events-auto relative flex flex-col gap-2', {
 		'childs:invisible': $storyInfo.dragImageMode,
-		'!pointer-events-none': $storyInfo.grabbingScale <= 20,
+		'!pointer-events-none': $storyInfo.grabbingScale <= 20
 	})}
 >
 	{#if $storyInfo.dragImageMode}
@@ -99,7 +94,7 @@
 		<div>
 			{#if !imageLoading && $connect.active}
 				<Button class="!absolute z-[2] mr-2 !p-2" on:click={preRemoveImage}>
-					<XMark variation={iconsType} class="h-3 w-3 text-red" />
+					<Icon type={XMark} class="text-red h-3 w-3" />
 				</Button>
 			{/if}
 			<div class="relative">
@@ -107,15 +102,12 @@
 					<div
 						class="absolute z-[2] flex h-full w-full items-center justify-center rounded-lg bg-black bg-opacity-40"
 					>
-						<Loading
-							variation={iconsType}
-							class="bg-transparent text-white"
-						/>
+						<Icon type={Loading} />
 					</div>
 				{/if}
 				<Photo
-					class={className('max-h-20 w-full rounded-lg', {
-						blind: $connect.active,
+					class={clsx('max-h-20 w-full rounded-lg', {
+						blind: $connect.active
 					})}
 					src={avatarId}
 					alt="Иллюстрация текста"
@@ -125,18 +117,10 @@
 			</div>
 		</div>
 	{:else}
-		<InputFile
-			class="w-full gap-4"
-			disabled={$connect.active}
-			on:change={setFile}
-		>
-			<PhotoIcon variation={iconsType} />
+		<InputFile class="w-full gap-4" disabled={$connect.active} on:change={setFile}>
+			<Icon type={PhotoIcon} />
 			<p>Изображение</p>
 		</InputFile>
 	{/if}
-	<Textarea
-		bind:value={data.text}
-		placeholder="Текст"
-		disabled={$connect.active}
-	/>
+	<Textarea bind:value={data.text} placeholder="Текст" disabled={$connect.active} />
 </div>

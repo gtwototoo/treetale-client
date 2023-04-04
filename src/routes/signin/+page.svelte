@@ -19,10 +19,9 @@
 	let turnstileElement: HTMLDivElement | undefined = undefined;
 	let turnstileWidgetId: string | undefined = undefined;
 	let turnstileToken: string | undefined = undefined;
+	let mounted = false;
 
 	$: disabled = !value;
-
-	let mounted = false;
 
 	const handleSignIn = async () => {
 		if (!turnstileToken || disabled || loading) {

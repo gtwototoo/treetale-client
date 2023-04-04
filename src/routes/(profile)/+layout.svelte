@@ -25,6 +25,7 @@
 	export let data;
 
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
+	const user = me ? $page.data.session : data.user;
 
 	const pageType = (path: string): 'viewed' | 'liked' | 'main' => {
 		return findByPattern(path, {
@@ -56,7 +57,7 @@
 	$currentHeader = Main;
 
 	$: ({ url } = $page);
-	$: ({ statistic, user } = data);
+	$: ({ statistic } = data);
 
 	if (user && user.color && user.color.length) {
 		mainColor.set(user.color);

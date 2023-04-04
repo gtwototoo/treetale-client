@@ -64,7 +64,7 @@
 	$: src = user.avatarId || tempAvatarURL;
 </script>
 
-<Avatar size="lg" {src} alt={user.name} width={160} class="h-40 w-40 light-gradient-main">
+<Avatar size="lg" {src} alt={user.name} width={160} class="light-gradient-main">
 	{#if me}
 		<div class="absolute bottom-0 right-0 z-[3] rounded-full bg-main p-1">
 			{#if src && !imageLoading}

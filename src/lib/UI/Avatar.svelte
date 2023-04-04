@@ -10,12 +10,14 @@
 	export let width: number;
 	export let height = width;
 	export let size: 'sm' | 'base' | 'lg' = 'base';
+	export let style: string | undefined = undefined;
 
 	const split = alt.split(' ');
 	const short = `${split[0][0]}${split.length > 1 ? split.at(-1)?.[0] : ''}`;
 </script>
 
 <div
+	{style}
 	class={clm(
 		'relative flex shrink-0 select-none items-center justify-center rounded-full font-bold text-white',
 		`size-${size}`,

@@ -8,12 +8,10 @@
 	import { Photo, Tag } from '$UI';
 	import { BookOpen } from 'svelte-heros-v2';
 	import SvgGradient from '../StoriesList/SvgGradient.svelte';
-
-	$: date = new Date($infoStore?.created).toLocaleDateString('en-GB');
 </script>
 
 {#if $infoStore}
-	{@const { title, description, imageId, tags, storyId } = $infoStore}
+	{@const { title, description, imageId, tags, storyId, created } = $infoStore}
 	<div class="flex flex-col p-4">
 		<div
 			class="relative flex h-24 w-full shrink-0 items-center justify-center bg-transparent text-main xs:h-36 lg:h-48"
@@ -54,17 +52,7 @@
 			</p>
 			<div class="flex w-full items-center justify-between gap-1">
 				{#if $infoStore.author}
-					<ProfileLink data={$infoStore.author} classImage="xs:!h-9 xs:!w-9 !h-6 !w-6">
-						<div class="overflow-hidden text-left">
-							<p class="hidden truncate xs:block">
-								{$infoStore.author.name}
-							</p>
-							<div class="flex select-none gap-1 text-xs text-gray-500">
-								<p class="hidden truncate xs:block">Опубликовано</p>
-								<p>{date}</p>
-							</div>
-						</div>
-					</ProfileLink>
+					<ProfileLink data={$infoStore.author} {created} />
 				{:else}
 					<Tag class="bg-emerald-500 text-emerald-600">Публичный</Tag>
 				{/if}

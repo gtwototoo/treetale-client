@@ -7,7 +7,7 @@
 
 <div
 	class={clsx(
-		'pointer-events-none z-10 flex w-full justify-between p-2 sm:p-4',
+		'pointer-events-none z-10 flex w-full justify-between bg-transparent p-2 sm:p-4',
 		$activeAction ? 'blind' : 'childs:pointer-events-auto'
 	)}
 >

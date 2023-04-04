@@ -33,17 +33,7 @@
 </div>
 <div class="flex w-full items-center justify-between gap-1">
 	{#if author}
-		<ProfileLink data={author} classImage="xs:h-9 xs:w-9 h-6 w-6">
-			<div class="overflow-hidden text-left">
-				<p class="hidden truncate xs:block">
-					{author.name}
-				</p>
-				<div class="flex select-none gap-1 text-xs text-gray-500">
-					<p class="hidden truncate xs:block">Опубликовано</p>
-					<p>{date}</p>
-				</div>
-			</div>
-		</ProfileLink>
+		<ProfileLink data={author} {created} />
 	{:else}
 		<Tag class={clsx(draft ? 'bg-gray-300 text-gray-600' : 'bg-emerald-300 text-emerald-600')}>
 			{draft ? 'Черновик' : 'Публичный'}

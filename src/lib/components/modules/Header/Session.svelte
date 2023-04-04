@@ -2,13 +2,23 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import ProfileLink from '$lib/components/ProfileLink.svelte';
-	import { Button } from '$UI';
+	import { DEFAULT_COLOR } from '$lib/constants';
+	import { Avatar, Button } from '$UI';
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
+
+	$: selectedColor = $page.data?.session?.color?.length ? $page.data.session.color : DEFAULT_COLOR;
 </script>
 
 {#if $page.data.session}
-	<ProfileLink data={$page.data.session} class="shrink-0" />
+	<Link href="/profile" class="contents">
+		<Avatar
+			style="--color-main: {selectedColor.join(' ')}"
+			alt={$page.data.session.name}
+			src={$page.data.session.avatarId}
+			width={36}
+			class="light-gradient-main"
+		/>
+	</Link>
 {:else}
 	<Link href="/signin">
 		<Button class="gap-3 bg-contrast text-text" variant="ghost">

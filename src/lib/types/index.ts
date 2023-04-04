@@ -7,8 +7,6 @@ export interface IStoryEditableInfo {
 	draft: boolean;
 }
 
-export type IPage = 'edit' | 'reading' | 'auth' | 'profile' | 'main';
-
 export type RGB = [number, number, number];
 
 export interface IStory extends IStoryEditableInfo {

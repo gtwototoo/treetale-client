@@ -7,6 +7,10 @@
 	export { classes as class };
 </script>
 
-<Button variant="secondary" class={clsx(classes, { '!bg-transparent': !active })} on:click>
+<Button
+	variant={active ? 'main' : 'secondary'}
+	class={clsx(classes, { '!bg-blue-500': active })}
+	on:click
+>
 	<slot />
 </Button>

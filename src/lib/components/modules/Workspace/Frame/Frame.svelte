@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Rivet from '$lib/editing/Rivet.svelte';
 	import { connect, frames, moveMode } from '$lib/stores/editing';
 	import type { IFrameCreate } from '$lib/types/editing';
 	import { transform } from '$lib/utils';
 	import clsx from 'clsx';
+	import Rivet from '../Rivet.svelte';
 	import Body from './Body.svelte';
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
