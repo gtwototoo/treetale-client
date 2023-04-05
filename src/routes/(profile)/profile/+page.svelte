@@ -10,6 +10,8 @@
 	import { onDestroy } from 'svelte';
 	import { Plus } from 'svelte-heros-v2';
 
+	$currentHeader = Profile;
+
 	export let data;
 
 	let loading = false;
@@ -25,8 +27,6 @@
 
 		loading = false;
 	};
-
-	$currentHeader = Profile;
 
 	onDestroy(() => {
 		currentPanel.clear();

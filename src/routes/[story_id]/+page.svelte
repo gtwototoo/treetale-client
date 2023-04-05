@@ -9,6 +9,8 @@
 	import { mainColor } from '$lib/stores/story';
 	import { onMount } from 'svelte';
 
+	$currentHeader = Reading;
+
 	export let data;
 
 	let cardsRef: HTMLDivElement;
@@ -72,8 +74,6 @@
 	afterNavigate(() => {
 		scrollTo(current - 1);
 	});
-
-	$currentHeader = Reading;
 
 	if (data.story.color) {
 		mainColor.set(data.story.color);

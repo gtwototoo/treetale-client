@@ -1,4 +1,3 @@
-import Main from '$lib/components/modules/Header/Main.svelte';
 import type { SvelteComponent } from 'svelte';
 import { writable } from 'svelte/store';
 
@@ -30,4 +29,4 @@ const currentPanelCustomStore = () => {
 };
 
 export let currentPanel = currentPanelCustomStore();
-export let currentHeader = writable<typeof SvelteComponent>(Main);
+export let currentHeader = writable<typeof SvelteComponent>();

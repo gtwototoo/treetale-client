@@ -1,9 +1,7 @@
 import type { IVariable } from '$lib/types';
 
 export const correctWhitespace = (text: string) => {
-	if (!text) {
-		return text;
-	}
+	if (!text) return text;
 
 	const triggers = {
 		metrics: 'мм|см|м|км|г|кг|б|кб|мб|гб|dpi|px',

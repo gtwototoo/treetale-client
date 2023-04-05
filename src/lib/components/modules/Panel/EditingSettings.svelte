@@ -139,7 +139,7 @@
 	});
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-4">
+<div class="flex flex-col items-stretch gap-4 p-6">
 	<Note
 		icon={Cog6Tooth}
 		text="Тут вы можете прикрепить изображение к своей истории, дать ей название, описание и теги, которые помогут найти ее по определенной тематике"

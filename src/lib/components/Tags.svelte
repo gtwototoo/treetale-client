@@ -19,7 +19,7 @@
 		{/each}
 	</div>
 {:else}
-	<p class={clsx('select-none text-xs leading-5 text-gray-500 xs:leading-6', classes)}>
+	<p class={clsx('select-none text-center text-xs leading-5 text-gray-500 xs:leading-6', classes)}>
 		Теги не указаны
 	</p>
 {/if}

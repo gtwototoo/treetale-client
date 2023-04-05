@@ -44,7 +44,7 @@
 	};
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-4">
+<div class="flex flex-col items-stretch gap-4 p-6">
 	<Note icon={Variable}>
 		<div>
 			<span class="text-violet-500">Переменные</span>

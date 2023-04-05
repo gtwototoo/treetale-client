@@ -23,7 +23,6 @@
 
 	const setColor = ({ detail }: CustomEvent) => {
 		$mainColor = detail.color;
-
 		color = detail.color;
 	};
 
@@ -47,7 +46,7 @@
 	};
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-4">
+<div class="flex flex-col items-stretch gap-4 p-6">
 	<Note
 		icon={Cog6Tooth}
 		text="Тут вы можете указать свой псевдоним и описание для своего профиля"

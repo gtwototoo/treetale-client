@@ -12,7 +12,6 @@
 	import { findByPattern } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
 	import { onDestroy } from 'svelte';
-
 	import {
 		ArrowRightOnRectangle,
 		Eye,
@@ -21,6 +20,8 @@
 		Pencil,
 		UserPlus
 	} from 'svelte-heros-v2';
+
+	$currentHeader = Main;
 
 	export let data;
 
@@ -53,8 +54,6 @@
 			});
 		}
 	};
-
-	$currentHeader = Main;
 
 	$: ({ url } = $page);
 	$: ({ statistic } = data);

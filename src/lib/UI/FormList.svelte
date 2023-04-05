@@ -5,7 +5,7 @@
 	export { classes as class };
 </script>
 
-<div class={clsx('form divide-y rounded-xl ring-1 ring-gray-200', classes)}>
+<div class={clsx('form rounded-xl ring-1 ring-gray-200', classes)}>
 	<slot />
 </div>
 

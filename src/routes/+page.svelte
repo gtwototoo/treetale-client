@@ -9,6 +9,8 @@
 	import { Button } from '$UI';
 	import { Plus } from 'svelte-heros-v2';
 
+	$currentHeader = Main;
+
 	export let data;
 
 	let loading = false;
@@ -24,8 +26,6 @@
 
 		loading = false;
 	};
-
-	$currentHeader = Main;
 </script>
 
 <svelte:head>

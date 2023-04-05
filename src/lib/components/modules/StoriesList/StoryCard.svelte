@@ -46,7 +46,7 @@
 				<svelte:fragment slot="error">
 					<Icon
 						type={BookOpen}
-						class="h-10 w-auto childs:fill-[var(--fill-main)] xs:h-16 lg:h-24"
+						class="h-10 w-auto childs:fill-[--fill-main] xs:h-16 lg:h-24"
 						variation="solid"
 					/>
 				</svelte:fragment>
@@ -54,7 +54,7 @@
 		{:else}
 			<Icon
 				type={BookOpen}
-				class="h-10 w-auto childs:fill-[var(--fill-main)] xs:h-16 lg:h-24"
+				class="h-10 w-auto childs:fill-[--fill-main] xs:h-16 lg:h-24"
 				variation="solid"
 			/>
 		{/if}

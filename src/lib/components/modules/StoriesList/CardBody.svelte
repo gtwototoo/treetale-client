@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
-	import { variableReplace } from '$lib/utils';
+	import { correctWhitespace, variableReplace } from '$lib/utils';
 
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
@@ -13,7 +13,6 @@
 	export let author: IUser | undefined = undefined;
 
 	$: ({ created, description, title, draft } = story);
-	$: date = new Date(created).toLocaleDateString('en-GB');
 </script>
 
 <div class="line-clamp-6 h-[6.25rem] w-full text-center xs:h-32 lg:h-40">
@@ -25,10 +24,10 @@
 			'whitespace-pre-wrap',
 			description && description.length > 100
 				? 'text-xs xs:text-sm lg:text-base'
-				: 'text-sm leading-4 xs:text-base xs:leading-5 lg:text-xl lg:leading-6'
+				: 'text-sm/4 xs:text-base/4 lg:text-xl/6'
 		)}
 	>
-		{variableReplace(description, vars) || 'Без описания'}
+		{correctWhitespace(variableReplace(description || 'Без описания...', vars))}
 	</p>
 </div>
 <div class="flex w-full items-center justify-between gap-1">
