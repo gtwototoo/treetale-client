@@ -7,8 +7,8 @@
 	import StateMode from './StateMode.svelte';
 </script>
 
-<div class={clsx('area', $activeAction ? 'blind' : 'childs:pointer-events-auto')}>
-	<div class="footer">
+<div class="area">
+	<div class={clsx('footer', $activeAction ? 'blind' : 'pointer-events-auto')}>
 		<Radar />
 		<div class="info">
 			<div>

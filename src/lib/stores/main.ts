@@ -29,4 +29,3 @@ const currentPanelCustomStore = () => {
 };
 
 export let currentPanel = currentPanelCustomStore();
-export let currentHeader = writable<typeof SvelteComponent>();

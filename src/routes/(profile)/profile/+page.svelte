@@ -2,15 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
-	import Profile from '$lib/components/modules/Header/Profile.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { createStory } from '$lib/requests/story';
-	import { currentHeader, currentPanel } from '$lib/stores/main';
+	import { currentPanel } from '$lib/stores/main';
 	import { Button } from '$UI';
 	import { onDestroy } from 'svelte';
 	import { Plus } from 'svelte-heros-v2';
-
-	$currentHeader = Profile;
 
 	export let data;
 

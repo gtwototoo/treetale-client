@@ -43,10 +43,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<Button
-	class="pointer-events-auto h-9 w-9 items-center justify-center !rounded-full"
-	on:click={setDefaultCoordinates}
->
+<Button class="h-9 w-9 items-center justify-center !rounded-full" on:click={setDefaultCoordinates}>
 	<ViewArea
 		class={clsx('absolute', {
 			'!text-gray-400': Math.abs(coordinates.x) > 6 || Math.abs(coordinates.y) > 6

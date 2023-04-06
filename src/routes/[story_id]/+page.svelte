@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import Frame from '$lib/components/Frame.svelte';
-	import Reading from '$lib/components/modules/Header/Reading.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { updateProgress } from '$lib/requests/progress';
-	import { currentHeader, currentPanel } from '$lib/stores/main';
+	import { currentPanel } from '$lib/stores/main';
 	import { infoStore } from '$lib/stores/reading';
 	import { rootStyle } from '$lib/utils/custom_colors.js';
 	import { onMount } from 'svelte';
-
-	$currentHeader = Reading;
 
 	export let data;
 
@@ -77,7 +74,7 @@
 
 <svelte:head>
 	<title>{data.story.title}</title>
-	{@html rootStyle(DEFAULT_COLOR)}
+	{@html rootStyle(data.story.color || DEFAULT_COLOR)}
 </svelte:head>
 
 <svelte:window on:keydown={handleKeydown} />

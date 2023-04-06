@@ -3,10 +3,8 @@
 	import { storyInfo } from '$lib/stores/editing';
 
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
-	import Editing from '$lib/components/modules/Header/Editing.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { changesHistory, frames } from '$lib/stores/editing';
-	import { currentHeader } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
@@ -21,15 +19,13 @@
 			icon: Play
 		});
 	});
-
-	$currentHeader = Editing;
 </script>
 
 <svelte:head>
 	<title>
 		Редактирование "{$storyInfo.title || 'Без названия'}"
 	</title>
-	{@html rootStyle($storyInfo.color || DEFAULT_COLOR)}
+	{@html rootStyle($storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR)}
 </svelte:head>
 
 <Workspace />

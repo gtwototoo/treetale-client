@@ -3,11 +3,9 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import Main from '$lib/components/modules/Header/Main.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
-	import { currentHeader } from '$lib/stores/main';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
 	import {
@@ -18,8 +16,6 @@
 		Pencil,
 		UserPlus
 	} from 'svelte-heros-v2';
-
-	$currentHeader = Main;
 
 	export let data;
 
@@ -131,7 +127,7 @@
 					variant="transparent"
 					on:click={handleSignOut}
 				>
-					<Icon type={ArrowRightOnRectangle} class="xs:hidden" />
+					<Icon type={ArrowRightOnRectangle} />
 					<p class="sm:hidden">Выйти</p>
 				</Button>
 			{:else}

@@ -1,8 +1,7 @@
-import { DEFAULT_COLOR } from '$lib/constants';
+import Editing from '$lib/components/modules/Header/Editing.svelte';
 import { frames as framesStore, storyInfo } from '$lib/stores/editing';
-import { mainColor } from '$lib/stores/story';
 
-export const load = async ({ data }) => {
+export const load = ({ data }) => {
 	const {
 		story: { frames, ...info }
 	} = data;
@@ -17,5 +16,9 @@ export const load = async ({ data }) => {
 		timer: null,
 		saved: true
 	});
-	mainColor.set(info.color.length ? info.color : DEFAULT_COLOR);
+
+	return {
+		...data,
+		header: Editing
+	};
 };
