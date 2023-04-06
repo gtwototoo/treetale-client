@@ -4,8 +4,10 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Main from '$lib/components/modules/Header/Main.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { createStory } from '$lib/requests/story';
 	import { currentHeader } from '$lib/stores/main';
+	import { rootStyle } from '$lib/utils/custom_colors.js';
 	import { Button } from '$UI';
 	import { Plus } from 'svelte-heros-v2';
 
@@ -30,6 +32,7 @@
 
 <svelte:head>
 	<title>TreeStory</title>
+	{@html rootStyle(DEFAULT_COLOR)}
 </svelte:head>
 
 <div class="flex grow flex-col">

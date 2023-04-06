@@ -2,24 +2,19 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
-	import { mainColor } from '$lib/stores/story';
+	import { rootStyle } from '$lib/utils';
 	import { Button } from '$UI';
-	import { onDestroy } from 'svelte';
 	import { ArrowPath, Home } from 'svelte-heros-v2';
 
 	$: ({ status, error } = $page);
 	$: isNotFound = status === 404;
 
 	const handleClick = () => (isNotFound ? location.replace('/') : location.reload());
-
-	onDestroy(() => {
-		mainColor.set(DEFAULT_COLOR);
-	});
 </script>
 
 <svelte:head>
 	<title>{isNotFound ? 'Страница не найдена' : 'Произошла ошибка'}</title>
+	{@html rootStyle(error.color)}
 </svelte:head>
 
 {#if error}

@@ -27,6 +27,6 @@
 
 <style lang="postcss">
 	.panel {
-		@apply absolute right-4 top-16 z-20 flex max-h-[calc(100vh-5.75rem)] w-96 flex-col rounded-lg bg-gray-100 shadow childs:w-full childs:bg-transparent;
+		@apply absolute right-4 top-16 z-20 flex max-h-[calc(100vh-5.75rem)] w-96 flex-col rounded-xl bg-gray-100 shadow childs:w-full childs:bg-transparent;
 	}
 </style>

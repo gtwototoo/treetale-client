@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { storyInfo } from '$lib/stores/editing';
-	import { mainColor } from '$lib/stores/story';
 
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
 	import Editing from '$lib/components/modules/Header/Editing.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { changesHistory, frames } from '$lib/stores/editing';
 	import { currentHeader } from '$lib/stores/main';
+	import { rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
 
@@ -20,10 +20,6 @@
 			title: 'Начальное состояние',
 			icon: Play
 		});
-
-		return () => {
-			mainColor.set(DEFAULT_COLOR);
-		};
 	});
 
 	$currentHeader = Editing;
@@ -33,6 +29,7 @@
 	<title>
 		Редактирование "{$storyInfo.title || 'Без названия'}"
 	</title>
+	{@html rootStyle($storyInfo.color || DEFAULT_COLOR)}
 </svelte:head>
 
 <Workspace />

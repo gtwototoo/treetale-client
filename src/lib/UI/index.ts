@@ -1,10 +1,9 @@
 import Avatar from './Avatar.svelte';
 import Button from './Button.svelte';
-import ButtonSplit from './ButtonSplit.svelte';
 import Card from './Card.svelte';
 import Carousel from './Carousel.svelte';
 import ColorPicker from './ColorPicker.svelte';
-import FormList from './FormList.svelte';
+import FormSplit from './FormSplit.svelte';
 import Input from './Input.svelte';
 import InputFile from './InputFile.svelte';
 import InputRange from './InputRange.svelte';
@@ -30,12 +29,11 @@ export {
 	Popover,
 	Listbox,
 	Textarea,
-	ButtonSplit,
+	FormSplit,
 	Carousel,
 	ColorPicker,
 	Card,
 	Photo,
-	FormList,
 	Tag,
 	Avatar
 };

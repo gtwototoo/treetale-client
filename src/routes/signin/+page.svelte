@@ -2,8 +2,9 @@
 	import { browser } from '$app/environment';
 	import { PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY } from '$env/static/public';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { NOT_FOUND_VARIANTS } from '$lib/constants';
+	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
+	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
 	import { onMount } from 'svelte';
@@ -98,6 +99,7 @@
 			async
 		></script>
 	{/if}
+	{@html rootStyle(DEFAULT_COLOR)}
 </svelte:head>
 
 <ReadCard

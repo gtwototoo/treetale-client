@@ -8,10 +8,8 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
 	import { currentHeader } from '$lib/stores/main';
-	import { mainColor } from '$lib/stores/story';
-	import { findByPattern } from '$lib/utils';
+	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
-	import { onDestroy } from 'svelte';
 	import {
 		ArrowRightOnRectangle,
 		Eye,
@@ -57,15 +55,11 @@
 
 	$: ({ url } = $page);
 	$: ({ statistic } = data);
-
-	if (user && user.color && user.color.length) {
-		mainColor.set(user.color);
-	}
-
-	onDestroy(() => {
-		mainColor.set(DEFAULT_COLOR);
-	});
 </script>
+
+<svelte:head>
+	{@html rootStyle(user.color || DEFAULT_COLOR)}
+</svelte:head>
 
 <div class="profile">
 	<div>

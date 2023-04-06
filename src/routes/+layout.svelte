@@ -3,15 +3,12 @@
 	import Panel from '$lib/components/modules/Panel';
 	import { activeAction } from '$lib/stores/editing';
 	import { currentHeader, currentPanel } from '$lib/stores/main';
-	import { mainColor } from '$lib/stores/story';
-	import { rootStyle } from '$lib/utils';
 	import clsx from 'clsx';
 	import '../app.postcss';
 </script>
 
 <svelte:head>
 	<title>TreeStory</title>
-	{@html rootStyle($mainColor)}
 </svelte:head>
 
 <div class="flex flex-col text-black">

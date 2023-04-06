@@ -6,7 +6,7 @@
 	import { updateProgress } from '$lib/requests/progress';
 	import { currentHeader, currentPanel } from '$lib/stores/main';
 	import { infoStore } from '$lib/stores/reading';
-	import { mainColor } from '$lib/stores/story';
+	import { rootStyle } from '$lib/utils/custom_colors.js';
 	import { onMount } from 'svelte';
 
 	$currentHeader = Reading;
@@ -66,7 +66,6 @@
 		scrollTo(current - 1);
 
 		return () => {
-			mainColor.set(DEFAULT_COLOR);
 			currentPanel.clear();
 		};
 	});
@@ -74,14 +73,11 @@
 	afterNavigate(() => {
 		scrollTo(current - 1);
 	});
-
-	if (data.story.color) {
-		mainColor.set(data.story.color);
-	}
 </script>
 
 <svelte:head>
 	<title>{data.story.title}</title>
+	{@html rootStyle(DEFAULT_COLOR)}
 </svelte:head>
 
 <svelte:window on:keydown={handleKeydown} />

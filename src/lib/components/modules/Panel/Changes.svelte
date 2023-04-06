@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
-	import { Button, ButtonSplit } from '$UI';
 	import clsx from 'clsx';
 	import { Clock } from 'svelte-heros-v2';
 	import Note from './Note.svelte';
@@ -12,7 +12,7 @@
 		icon={Clock}
 		text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
 	/>
-	<ButtonSplit vertical>
+	<FormSplit vertical>
 		{#each $changesHistory.stages as { title, icon }, key}
 			<Button
 				on:click={() => changesHistory.to(key)}
@@ -24,5 +24,5 @@
 				<p>{title}</p>
 			</Button>
 		{/each}
-	</ButtonSplit>
+	</FormSplit>
 </div>

@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanel } from '$lib/stores/main';
-	import { Button, ButtonSplit } from '$UI';
 	import { ArrowUturnLeft, ArrowUturnRight, Cog6Tooth, Variable } from 'svelte-heros-v2';
 	import { Changes, EditingSettings, Variables } from '../Panel';
 
@@ -23,7 +23,7 @@
 		});
 </script>
 
-<ButtonSplit>
+<FormSplit>
 	<Button
 		on:click={changesHistory.undo}
 		disabled={$changesHistory.currentStageId === 0}
@@ -38,7 +38,7 @@
 	>
 		<Icon type={ArrowUturnRight} />
 	</Button>
-</ButtonSplit>
+</FormSplit>
 <Button class="gap-3 bg-contrast text-text" variant="ghost" on:click={settingsSwitch}>
 	<Icon type={Cog6Tooth} />
 	<p>Настройки</p>

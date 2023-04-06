@@ -4,7 +4,7 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import type { IFrame, IVariable } from '$lib/types';
 	import { correctWhitespace, variableReplace } from '$lib/utils';
-	import { Button, FormList } from '$UI';
+	import { Button, FormSplit } from '$UI';
 	import clsx from 'clsx';
 
 	export let last: boolean;
@@ -37,7 +37,7 @@
 	)}
 >
 	{#if frame.choices.length}
-		<FormList class="w-full">
+		<FormSplit vertical>
 			{#each frame.choices as choice (choice.choiceId)}
 				{@const active = selectedChoiceId === choice.choiceId}
 				{@const choiceText = correctWhitespace(variableReplace(choice.text, vars))}
@@ -53,7 +53,7 @@
 					</Button>
 				{/if}
 			{/each}
-		</FormList>
+		</FormSplit>
 	{/if}
 </ReadCard>
 

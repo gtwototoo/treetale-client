@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { Photo, Tag } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
 	import { infoStore } from '$lib/stores/reading';
 	import { correctWhitespace, variableReplace } from '$lib/utils';
-	import { Photo, Tag } from '$UI';
 	import clsx from 'clsx';
 	import { BookOpen } from 'svelte-heros-v2';
 	import SvgGradient from '../StoriesList/SvgGradient.svelte';
@@ -16,14 +16,13 @@
 <SvgGradient {storyId} />
 <div class="flex flex-col" style="--fill-main: url(#light-gradient-{storyId})">
 	<div
-		class="relative flex h-24 w-full shrink-0 items-center justify-center bg-transparent text-main xs:h-36 lg:h-48"
-		style="--fill-main: url(#light-gradient-{storyId})"
+		class="relative flex h-48 w-full shrink-0 items-center justify-center rounded-t-xl bg-white text-main"
 	>
 		{#if imageId}
 			<Photo
 				alt={title || 'Иллюстрация истории'}
 				cover
-				class="h-full w-full rounded-t-xl xs:rounded-t-2xl"
+				class="h-full w-full rounded-t-xl"
 				src={imageId}
 				width={320}
 				height={192}
@@ -31,17 +30,13 @@
 				<svelte:fragment slot="error">
 					<Icon
 						type={BookOpen}
-						class="h-10 w-auto childs:fill-[--fill-main] xs:h-16 lg:h-24"
+						class="h-24 w-auto childs:fill-[--fill-main]"
 						variation="solid"
 					/>
 				</svelte:fragment>
 			</Photo>
 		{:else}
-			<Icon
-				type={BookOpen}
-				class="h-10 w-auto childs:fill-[--fill-main] xs:h-16 lg:h-24"
-				variation="solid"
-			/>
+			<Icon type={BookOpen} class="h-24 w-auto childs:fill-[--fill-main]" variation="solid" />
 		{/if}
 	</div>
 	<div class="flex flex-col items-stretch gap-4 p-6">

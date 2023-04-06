@@ -3,8 +3,9 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { NOT_FOUND_VARIANTS } from '$lib/constants';
+	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signUpUser } from '$lib/requests/user';
+	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
 	import { UserPlus } from 'svelte-heros-v2';
@@ -55,6 +56,7 @@
 
 <svelte:head>
 	<title>Завершение регистрации</title>
+	{@html rootStyle(DEFAULT_COLOR)}
 </svelte:head>
 
 <ReadCard
