@@ -1,6 +1,7 @@
-import type { IUser } from '$lib/types';
+import type { IUser, RGB } from '$lib/types';
 import type { IStoryFull } from '$lib/types/reading';
-import { writable, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
-export const storiesStore: Writable<IStoryFull[]> = writable([]);
-export const userStore: Writable<IUser> = writable();
+export const storiesStore = writable<IStoryFull[]>([]);
+export const userStore = writable<IUser>();
+export const colorStore = writable<RGB>();

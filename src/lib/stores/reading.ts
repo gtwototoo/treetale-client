@@ -1,7 +1,7 @@
 import type { IProgressData, IUser } from '$lib/types';
 import type { IStoryFull } from '$lib/types/reading';
-import { writable, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
-export const infoStore: Writable<IStoryFull> = writable();
-export const framesStore: Writable<IUser> = writable();
-export const progressStore: Writable<IProgressData[]> = writable();
+export const infoStore = writable<IStoryFull>();
+export const framesStore = writable<IUser>();
+export const progressStore = writable<IProgressData[]>();

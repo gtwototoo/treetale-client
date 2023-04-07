@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { DEFAULT_COLOR } from '$lib/constants';
-	import { updateProfile } from '$lib/requests/user';
-	import { mainColor } from '$lib/stores/story';
 	import { Textarea } from '$UI';
 	import Button from '$UI/Button.svelte';
 	import ColorPicker from '$UI/ColorPicker.svelte';
 	import Input from '$UI/Input.svelte';
+
+	import { page } from '$app/stores';
+	import { DEFAULT_COLOR } from '$lib/constants';
+	import { updateProfile } from '$lib/requests/user';
+	import { colorStore } from '$lib/stores/profile';
 	import clsx from 'clsx';
 	import { Cog6Tooth } from 'svelte-heros-v2';
 	import Note from './Note.svelte';
@@ -22,21 +23,16 @@
 	let color = $page.data.session.color;
 
 	const setColor = ({ detail }: CustomEvent) => {
-		$mainColor = detail.color;
-		color = detail.color;
+		$colorStore = detail.color;
 	};
 
 	const saveProfile = async () => {
 		errored = false;
-
-		if (!name) return;
-
 		loading = true;
 
 		const { error, response } = await updateProfile(name, description, color);
 
 		loading = false;
-
 		errored = !!error;
 		saveInfo = error
 			? Object.hasOwn(response, 'message')
@@ -56,7 +52,7 @@
 		<ColorPicker
 			lightRange={[10, 80]}
 			saturateRange={[10, 90]}
-			color={color && color.length ? color : DEFAULT_COLOR}
+			color={$colorStore || color || DEFAULT_COLOR}
 			{saturate}
 			{light}
 			on:change={setColor}

@@ -27,10 +27,10 @@
 <Popover align={popoverAlign}>
 	<svelte:fragment slot="button" let:focused>
 		<div class={clsx('picker', focused ? 'ring-blue-500' : 'ring-gray-200', { disabled })}>
-			<div class="h-5 w-5 rounded" style:background={`rgb(${color.join(' ')})`} />
+			<div class="h-5 w-5 rounded transition-colors" style:background="rgb({color.join(' ')})" />
 		</div>
 	</svelte:fragment>
-	<div class="childs:w-40 flex flex-col gap-2 bg-transparent p-2">
+	<div class="flex flex-col gap-2 bg-transparent p-2 childs:w-40">
 		<div class="flex items-center gap-2">
 			<div class="h-3 w-3 rounded bg-gray-700" />
 			<InputRange min={lightRange[0]} max={lightRange[1]} bind:value={light} class="min-w-0" />

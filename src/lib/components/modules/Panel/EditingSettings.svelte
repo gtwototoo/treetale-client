@@ -1,11 +1,4 @@
 <script lang="ts">
-	import DropArea from '$lib/components/DropArea.svelte';
-	import Icon from '$lib/components/Icon.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
-	import { removeImage, saveImage } from '$lib/requests/image';
-	import { deleteStory, updateInfo } from '$lib/requests/story';
-	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
-	import { mainColor } from '$lib/stores/story';
 	import {
 		Button,
 		ColorPicker,
@@ -18,6 +11,12 @@
 		Textarea
 	} from '$UI';
 	import { Loading } from '$UI/Icons';
+	import DropArea from '$lib/components/DropArea.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants';
+	import { removeImage, saveImage } from '$lib/requests/image';
+	import { deleteStory, updateInfo } from '$lib/requests/story';
+	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
 	import clsx from 'clsx';
 	import { onDestroy } from 'svelte';
 	import { Cloud, Cog6Tooth, Photo as PhotoIcon, Trash, XMark } from 'svelte-heros-v2';
@@ -29,7 +28,6 @@
 	let saveInfo: string = 'Ожидание изменений';
 
 	const setColor = ({ detail }: CustomEvent) => {
-		$mainColor = detail.color;
 		$storyInfo.color = detail.color;
 
 		checkUpdates();
@@ -171,7 +169,7 @@
 						src={avatar}
 						alt="Иллюстрация текста"
 						width={352}
-						height={160}
+						height={192}
 					/>
 				</div>
 			</div>

@@ -6,6 +6,7 @@
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
+	import { colorStore } from '$lib/stores/profile';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
 	import {
@@ -54,7 +55,7 @@
 </script>
 
 <svelte:head>
-	{@html rootStyle(user.color || DEFAULT_COLOR)}
+	{@html rootStyle($colorStore || user.color || DEFAULT_COLOR)}
 </svelte:head>
 
 <div class="profile">
