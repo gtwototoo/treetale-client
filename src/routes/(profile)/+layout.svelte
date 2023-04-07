@@ -7,6 +7,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
 	import { colorStore } from '$lib/stores/profile';
+	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
 	import {
@@ -21,7 +22,7 @@
 	export let data;
 
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
-	const user = me ? $page.data.session : data.user;
+	const user: IUser = me ? $page.data.session : data.user;
 
 	const pageType = (path: string): 'viewed' | 'liked' | 'main' => {
 		return findByPattern(path, {
@@ -55,6 +56,7 @@
 </script>
 
 <svelte:head>
+	<title>{me ? 'Профиль' : user.name}</title>
 	{@html rootStyle($colorStore || user.color || DEFAULT_COLOR)}
 </svelte:head>
 

@@ -9,10 +9,6 @@
 	import '../app.postcss';
 </script>
 
-<svelte:head>
-	<title>TreeStory</title>
-</svelte:head>
-
 <div class="flex flex-col text-black">
 	<Header>
 		<svelte:component this={$page.data.header || Main} />

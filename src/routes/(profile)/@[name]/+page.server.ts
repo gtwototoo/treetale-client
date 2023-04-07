@@ -1,6 +1,6 @@
 import { StoriesModel, UsersModel } from '$lib/server/models';
-import type { IUser, IVariable } from '$lib/types';
-import type { IStoryFull, IStoryReading } from '$lib/types/reading';
+import type { IUser } from '$lib/types';
+import type { IStoryFull } from '$lib/types/reading';
 import { randomError, serialize } from '$lib/utils';
 import { redirect } from '@sveltejs/kit';
 
@@ -30,29 +30,12 @@ export const load = async ({ locals, params }) => {
 		})
 		.lean();
 
-	const stories: IStoryFull[] = [];
-
-	for (const story of rawStories) {
-		const author = await UsersModel.findOne({
-			userId: story.userId
-		})
-			.select({
-				_id: 0,
-				sessionId: 0
-			})
-			.lean();
-
-		stories.push({
-			...story,
-			author: author ? serialize(author) : null
-		} satisfies IStoryReading & {
-			vars: IVariable[];
-			author: IUser;
-		});
-	}
+	const stories: IStoryFull[] = rawStories.map((story) => ({
+		...story,
+		author: serialize(user)
+	}));
 
 	return {
-		user: serialize(user),
 		stories: serialize(stories)
 	};
 };
