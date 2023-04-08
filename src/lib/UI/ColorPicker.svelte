@@ -1,8 +1,9 @@
 <script lang="ts">
+	import Icon from '$lib/components/Icon.svelte';
 	import type { RGB } from '$lib/types';
-	import { InputRange, Popover } from '$UI';
-	import { clsx } from 'clsx';
+	import { Button, InputRange, Popover } from '$UI';
 	import { createEventDispatcher } from 'svelte';
+	import { ChevronDown } from 'svelte-heros-v2';
 
 	export let disabled: boolean = false;
 	export let popoverAlign: 'left' | 'right' = 'right';
@@ -25,12 +26,23 @@
 </script>
 
 <Popover align={popoverAlign}>
-	<svelte:fragment slot="button" let:focused>
-		<div class={clsx('picker', focused ? 'ring-blue-500' : 'ring-gray-200', { disabled })}>
-			<div class="h-5 w-5 rounded transition-colors" style:background="rgb({color.join(' ')})" />
+	<svelte:fragment slot="button">
+		<div class="p-1.5 pl-0">
+			<Button
+				variant="main"
+				class="gap-1 bg-main !text-text transition-colors"
+				size="sm"
+				{disabled}
+			>
+				<p>Цвет</p>
+				<Icon type={ChevronDown} class="h-4 w-4" />
+			</Button>
 		</div>
 	</svelte:fragment>
-	<div class="flex flex-col gap-2 bg-transparent p-2 childs:w-40">
+	<div
+		class="flex flex-col gap-2 bg-transparent p-2 childs:w-40"
+		style="--color-main: {color.join(' ')}"
+	>
 		<div class="flex items-center gap-2">
 			<div class="h-3 w-3 rounded bg-gray-700" />
 			<InputRange min={lightRange[0]} max={lightRange[1]} bind:value={light} class="min-w-0" />
@@ -57,12 +69,3 @@
 		</div>
 	</div>
 </Popover>
-
-<style lang="postcss">
-	.picker {
-		@apply flex w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500 focus:mr-4;
-	}
-	.disabled {
-		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
-	}
-</style>

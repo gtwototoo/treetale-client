@@ -185,15 +185,16 @@
 				class="w-full"
 				bind:value={$storyInfo.title}
 				on:input={checkUpdates}
-			/>
-			<ColorPicker
-				lightRange={[10, 80]}
-				saturateRange={[10, 90]}
-				color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
-				{saturate}
-				{light}
-				on:change={setColor}
-			/>
+			>
+				<ColorPicker
+					lightRange={[10, 80]}
+					saturateRange={[10, 90]}
+					color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
+					{saturate}
+					{light}
+					on:change={setColor}
+				/>
+			</Input>
 		</div>
 		<Textarea
 			placeholder="Описание"

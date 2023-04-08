@@ -50,9 +50,9 @@
 
 <style lang="postcss">
 	.content {
-		@apply absolute z-[4] rounded-lg bg-white text-black shadow-md;
+		@apply absolute z-[4] rounded-lg bg-white text-black shadow;
 	}
 	.popover {
-		@apply relative;
+		@apply relative bg-transparent;
 	}
 </style>

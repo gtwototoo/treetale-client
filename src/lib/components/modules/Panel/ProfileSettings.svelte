@@ -48,15 +48,16 @@
 		text="Тут вы можете указать свой псевдоним и описание для своего профиля"
 	/>
 	<div class="flex gap-2">
-		<Input placeholder="Псевдоним" class="w-full" bind:value={name} required />
-		<ColorPicker
-			lightRange={[10, 80]}
-			saturateRange={[10, 90]}
-			color={$colorStore || color || DEFAULT_COLOR}
-			{saturate}
-			{light}
-			on:change={setColor}
-		/>
+		<Input placeholder="Псевдоним" class="w-full" bind:value={name} required>
+			<ColorPicker
+				lightRange={[10, 80]}
+				saturateRange={[10, 90]}
+				color={$colorStore || color || DEFAULT_COLOR}
+				{saturate}
+				{light}
+				on:change={setColor}
+			/>
+		</Input>
 	</div>
 	<Textarea placeholder="Описание" bind:value={description} />
 	<Button class="justify-center" on:click={saveProfile} {loading} disabled={!name}>

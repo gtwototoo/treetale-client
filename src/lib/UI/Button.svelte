@@ -62,19 +62,19 @@
 
 <style lang="postcss">
 	button {
-		@apply relative flex select-none items-center whitespace-nowrap rounded-lg duration-500;
+		@apply relative flex select-none items-center whitespace-nowrap duration-500;
 	}
 	.size-xl {
-		@apply px-8 py-4 text-xl font-medium;
+		@apply rounded-2xl px-8 py-4 text-xl font-medium;
 	}
 	.size-lg {
-		@apply px-6 py-3 text-base font-medium;
+		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.size-base {
-		@apply px-4 py-2 text-sm;
+		@apply rounded-lg px-4 py-2 text-sm;
 	}
 	.size-sm {
-		@apply p-2 text-xs;
+		@apply rounded px-2 py-1 text-xs;
 	}
 	.variant-secondary {
 		@apply bg-gray-50 text-black transition-colors hover:bg-white hover:text-blue-500 focus:bg-white focus:text-blue-500;

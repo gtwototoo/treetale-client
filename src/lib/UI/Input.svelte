@@ -52,6 +52,7 @@
 		on:change
 		use:enableControl={{ f: onlyDigits, enabled: number }}
 	/>
+	<slot />
 </div>
 
 <style lang="postcss">
@@ -68,7 +69,7 @@
 		@apply p-2 text-sm;
 	}
 	.input {
-		@apply relative flex items-center overflow-hidden rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500;
+		@apply relative flex items-center rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
