@@ -25,7 +25,8 @@ export const load = async ({ locals }) => {
 	for (const story of rawStories) {
 		const author = await UsersModel.findOne({
 			userId: +story.userId
-		});
+		}).lean();
+
 		stories.push({
 			...story,
 			author: author ? serialize(author) : null

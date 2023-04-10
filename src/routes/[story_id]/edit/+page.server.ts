@@ -14,11 +14,12 @@ export const load = async ({ params, locals }) => {
 		userId: user.userId
 	});
 
-	if (!story) {
-		throw randomError(404);
-	}
+	if (!story) throw randomError(404);
+
+	const { frames, ...info } = serialize(story);
 
 	return {
-		story: serialize(story)
+		frames,
+		info
 	};
 };

@@ -1,6 +1,6 @@
 import objectPath from 'object-path';
 
-export const serialize = (object: Record<string, unknown> | unknown[]) => {
+export const serialize = <T>(object: T): T => {
 	return JSON.parse(JSON.stringify(object));
 };
 

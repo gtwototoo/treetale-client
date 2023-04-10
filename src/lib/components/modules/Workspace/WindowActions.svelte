@@ -7,7 +7,7 @@
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		switch (e.key.toLowerCase()) {
-			case 'control':
+			case 'm':
 				e.preventDefault();
 				$storyInfo.addFrameMode = true;
 				break;
@@ -16,7 +16,7 @@
 				$oneDirectionMode = true;
 				$connect.active = false;
 				break;
-			case !e.shiftKey && 'alt':
+			case !e.shiftKey && 'c':
 				e.preventDefault();
 				$connect.active = true;
 				break;

@@ -1,5 +1,5 @@
-import { changesHistory, connect, frames, moveMode, storyInfo } from '$lib/stores/editing';
-import { activeAction, selectedFrame } from '$lib/stores/newediting';
+import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing';
+import { activeAction, oneDirectionMode, selectedFrame } from '$lib/stores/newediting';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 import { Plus, Share, XMark } from 'svelte-heros-v2';
@@ -130,8 +130,9 @@ export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => {
 	const { moveFrameOffset, startMoveCoords } = startMoveData;
 	const framesStore = get(frames);
-	const moveModeStore = get(moveMode);
-	const frameIndex = framesStore.findIndex(({ frameId }) => frameId === moveModeStore.hovered);
+	const oneDirectionModeStore = get(oneDirectionMode);
+	const selectedFrameStore = get(selectedFrame);
+	const frameIndex = framesStore.findIndex(({ frameId }) => frameId === selectedFrameStore);
 
 	if (frameIndex === -1) return null;
 
@@ -141,7 +142,7 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 		y: y - moveFrameOffset.y
 	};
 
-	if (moveModeStore.oneDirectionMode) {
+	if (oneDirectionModeStore) {
 		const startDifference =
 			Math.abs(newCoords.y - startMoveCoords.y) - Math.abs(newCoords.x - startMoveCoords.x);
 

@@ -25,7 +25,7 @@ export const load = async ({ locals }) => {
 		} else {
 			const author = await UsersModel.findOne({
 				userId: +story.userId
-			});
+			}).lean();
 
 			stories.push({
 				...story,

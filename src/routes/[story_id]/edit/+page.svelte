@@ -9,6 +9,18 @@
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
 
+	export let data;
+
+	frames.init(data.frames);
+	storyInfo.set({
+		...data.info,
+		dragImageMode: false,
+		addFrameMode: false,
+		addFrameOffset: null,
+		timer: null,
+		saved: true
+	});
+
 	onMount(() => {
 		if ($frames.length === 1 && $frames[0].x === 0 && $frames[0].y === 0) {
 			$frames[0].x = window.innerWidth / 2 - $frames[0].width / 2;

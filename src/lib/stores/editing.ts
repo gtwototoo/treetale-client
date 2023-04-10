@@ -41,9 +41,13 @@ const framesStore = () => {
 		set,
 		update,
 		init: (data: IFrameCreate[]) => {
-			for (const i in frames) {
-				Object.assign(frames[i], { width: 0, height: 0 });
-			}
+			data.map((frame) => {
+				const width = 256;
+				const height = 144 + 37 * (frame.choices.length + 1) - 1;
+
+				return Object.assign(frame, { width, height });
+			});
+
 			set(data);
 		}
 	};
