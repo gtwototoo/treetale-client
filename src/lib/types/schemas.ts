@@ -6,8 +6,8 @@ export interface IStorySchema extends IStory {
 	vars: IVariable[];
 	userId: number;
 	likes: number[];
-	grabbingOffsets: ICoordinates;
-	grabbingScale: number;
+	offset: ICoordinates;
+	scale: number;
 	version: number;
 	imageId: string;
 	[index: string]: number | ICoordinates | unknown[] | string | boolean;

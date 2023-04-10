@@ -9,7 +9,6 @@ export const load = ({ data }) => {
 	framesStore.init(frames);
 	storyInfo.set({
 		...info,
-		grabbing: false,
 		dragImageMode: false,
 		addFrameMode: false,
 		addFrameOffset: null,

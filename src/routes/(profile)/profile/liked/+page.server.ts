@@ -1,3 +1,4 @@
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IStoryFull } from '$lib/types/reading';
 import { serialize } from '$lib/utils';
@@ -13,12 +14,7 @@ export const load = async ({ locals }) => {
 			$in: [user.userId]
 		}
 	})
-		.select({
-			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0,
-			frames: 0
-		})
+		.select(USER_WITHOUT_WORKSPACE)
 		.lean();
 
 	const stories: IStoryFull[] = [];

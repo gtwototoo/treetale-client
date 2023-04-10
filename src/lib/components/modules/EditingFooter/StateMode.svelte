@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import { ICON_TYPE } from '$lib/constants';
-	import { activeAction, storyInfo } from '$lib/stores/editing';
+	import { storyInfo } from '$lib/stores/editing';
+	import { activeAction } from '$lib/stores/newediting';
 	import { Tag } from '$UI';
 	import clsx from 'clsx';
 	import { Cloud } from 'svelte-heros-v2';

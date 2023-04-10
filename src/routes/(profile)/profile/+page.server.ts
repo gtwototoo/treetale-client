@@ -1,3 +1,4 @@
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel } from '$lib/server/models';
 import { serialize } from '$lib/utils';
 import { redirect } from '@sveltejs/kit';
@@ -9,12 +10,7 @@ export const load = async ({ locals }) => {
 
 	const stories = await StoriesModel.find({
 		userId: user.userId
-	}).select({
-		_id: 0,
-		grabbingScale: 0,
-		grabbingOffsets: 0,
-		frames: 0
-	});
+	}).select(USER_WITHOUT_WORKSPACE);
 
 	return {
 		stories: serialize(stories)

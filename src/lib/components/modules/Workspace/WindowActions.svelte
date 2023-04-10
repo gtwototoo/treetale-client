@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { activeAction, changesHistory, connect, moveMode, storyInfo } from '$lib/stores/editing';
+	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
+	import { activeAction, oneDirectionMode } from '$lib/stores/newediting';
 
 	let innerHeight: number;
 	let innerWidth: number;
@@ -12,7 +13,7 @@
 				break;
 			case 'shift':
 				e.preventDefault();
-				$moveMode.oneDirectionMode = true;
+				$oneDirectionMode = true;
 				$connect.active = false;
 				break;
 			case !e.shiftKey && 'alt':
@@ -32,15 +33,15 @@
 
 	const handleKeyup = (e: KeyboardEvent) => {
 		switch (e.key.toLowerCase()) {
-			case 'control':
+			case 'm':
 				$storyInfo.addFrameMode = false;
 				$storyInfo.addFrameOffset = null;
 				$activeAction = null;
 				break;
 			case 'shift':
-				$moveMode.oneDirectionMode = false;
+				$oneDirectionMode = false;
 				break;
-			case 'alt':
+			case 'c':
 				$connect = {
 					active: false,
 					connector: {

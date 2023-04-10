@@ -1,5 +1,6 @@
 // import { collapseValue, pluralize } from '$lib/utils';
 
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
 import type { IStoryReading } from '$lib/types/reading';
@@ -42,12 +43,7 @@ export const load = async ({ params, locals }) => {
 
 	const stories = await StoriesModel.find({
 		userId: user.userId
-	}).select({
-		_id: 0,
-		grabbingScale: 0,
-		grabbingOffsets: 0,
-		frames: 0
-	});
+	}).select(USER_WITHOUT_WORKSPACE);
 
 	if (!stories) throw randomError(404);
 

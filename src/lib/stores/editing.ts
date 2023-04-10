@@ -116,14 +116,14 @@ const storyInfoStore = () => {
 		saveArea: () => {
 			update((data: IStoryCreate) => {
 				data.timer = window.setTimeout(async () => {
-					const { grabbingOffsets, grabbingScale, storyId } = get(storyInfo);
+					const { offset, scale, storyId } = get(storyInfo);
 					const framesList: IFrameCreate[] = get(frames);
 
 					const { response } = await updateFrames(
 						storyId,
 						framesCorrect(framesList),
-						grabbingOffsets,
-						grabbingScale
+						offset,
+						scale
 					);
 
 					update((data: IStoryCreate) => {
@@ -138,11 +138,11 @@ const storyInfoStore = () => {
 			});
 		},
 		scaleCorrect: (coords: ICoordinates) => {
-			const { grabbingOffsets, grabbingScale } = get(storyInfo);
+			const { offset, scale } = get(storyInfo);
 
 			return {
-				x: (coords.x - grabbingOffsets.x) / (grabbingScale / 100),
-				y: (coords.y - grabbingOffsets.y) / (grabbingScale / 100)
+				x: (coords.x - offset.x) / (scale / 100),
+				y: (coords.y - offset.y) / (scale / 100)
 			};
 		}
 	};
@@ -162,7 +162,6 @@ export const moveMode = writable<IMove>({
 	oneDirectionMode: false
 });
 export const frames: IOverrideFrames = framesStore();
-export const activeAction = writable<string | null>();
 export const changesHistory: IOverrideChanges = ChangeHistoryStore();
 export const storyInfo: IOverrideStoryInfo = storyInfoStore();
 export const vars = writable<IVariable[]>([]);

@@ -36,12 +36,12 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 		likes: Array,
 		tags: Array,
 		frames: Array,
-		grabbingScale: {
+		scale: {
 			type: Number,
 			default: 100
 		},
 		vars: Array,
-		grabbingOffsets: {
+		offset: {
 			type: Object,
 			default: { x: 0, y: 0 }
 		},

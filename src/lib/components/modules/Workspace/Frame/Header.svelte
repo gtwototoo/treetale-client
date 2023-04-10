@@ -1,17 +1,13 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory, connect, frames } from '$lib/stores/editing';
+	import { changesHistory, frames } from '$lib/stores/editing';
+	import { removeMode } from '$lib/stores/newediting';
 	import type { IFrame } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 	import { Button } from '$UI';
-	import clsx from 'clsx';
 	import { ChevronDown, ChevronUp, Trash } from 'svelte-heros-v2';
 
-	export let first: boolean;
 	export let data: IFrameCreate;
-	export let updateData: () => void;
-	let styles: string = '';
-	export { styles as class };
 
 	const outputCorrect = (frame: IFrame) => {
 		const outputOnFirstOrRemovedFrame = frame.choices.find(
@@ -37,29 +33,22 @@
 
 	const minimizeFrame = () => {
 		data.hidden = !data.hidden;
-		updateData();
 	};
 </script>
 
-<div class={clsx('header', { 'text-emerald-600': first }, styles)}>
-	<p>{first ? 'Начало' : data.title}</p>
-	<div class="pointer-events-auto flex gap-2 text-black">
-		{#if $connect.active}
+<div class="flex items-center justify-between gap-4">
+	<slot />
+	<div class="flex gap-2 text-black">
+		{#if $removeMode}
 			{#if $frames.length !== 1}
 				<Button size="sm" on:click={removeFrame}>
-					<Icon type={Trash} class="text-red h-3 w-3" />
+					<Icon type={Trash} class="text-red-600 h-4 w-4" />
 				</Button>
 			{/if}
 		{:else}
 			<Button size="sm" on:click={minimizeFrame}>
-				<Icon type={data.hidden ? ChevronUp : ChevronDown} class="h-3 w-3" />
+				<Icon type={data.hidden ? ChevronUp : ChevronDown} class="h-4 w-4" />
 			</Button>
 		{/if}
 	</div>
 </div>
-
-<style lang="postcss">
-	.header {
-		@apply flex min-h-[1.75rem] items-center justify-between gap-4;
-	}
-</style>

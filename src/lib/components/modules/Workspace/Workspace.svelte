@@ -1,20 +1,16 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import {
-		activeAction,
-		changesHistory,
-		connect,
-		frames,
-		moveMode,
-		storyInfo
-	} from '$lib/stores/editing';
+	import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing';
+	import { activeAction, selectedFrame } from '$lib/stores/newediting';
 	import type { ICoordinates } from '$lib/types';
 	import type { IStartMove } from '$lib/types/editing';
 	import clsx from 'clsx';
 	import { pinch } from 'svelte-gestures';
 	import { Square2Stack } from 'svelte-heros-v2';
+	import ConnectionsLayer from './ConnectionsLayer.svelte';
 	import CreateText from './CreateText.svelte';
-	import Frame from './Frame/Frame.svelte';
+	import FramesLayer from './FramesLayer.svelte';
+	import MovingArea from './MovingArea.svelte';
+	import WindowActions from './WindowActions.svelte';
 	import {
 		addFrame,
 		connectorLogic,
@@ -25,7 +21,6 @@
 		startGrab,
 		startMoveFrame
 	} from './methods';
-	import WindowActions from './WindowActions.svelte';
 
 	let workspace: HTMLDivElement;
 	let startPinch = 0;
@@ -34,57 +29,42 @@
 		moveFrameOffset: { x: 0, y: 0 },
 		moveXDirection: null
 	};
-	let startGrabbingOffsets: ICoordinates = { x: 0, y: 0 };
+	let startOffset: ICoordinates = { x: 0, y: 0 };
 
 	const handleMouseMove = (e: MouseEvent | TouchEvent) => {
-		const { x, y }: ICoordinates =
-			e instanceof MouseEvent
-				? {
-						x: e.clientX,
-						y: e.clientY
-				  }
-				: {
-						x: e.touches[0].clientX,
-						y: e.touches[0].clientY
-				  };
+		const isMouse = e instanceof MouseEvent;
+		const coordinates = isMouse ? e : e.touches[0];
+		const { clientX: x, clientY: y } = coordinates;
 
-		if ($moveMode.hovered !== null && $moveMode.active)
+		if ($activeAction === 'movingFrame') {
 			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
-		if ($storyInfo.grabbing) grabbingArea({ x, y }, startGrabbingOffsets);
+		}
+		if ($activeAction === 'movingArea') grabbingArea({ x, y }, startOffset);
 		if ($connect.connector.from !== null) moveRivet({ x, y });
 		if ($storyInfo.addFrameMode) cursorFollow({ x, y });
 	};
 
 	const handleMouseDown = (e: MouseEvent | TouchEvent) => {
-		const { x, y }: ICoordinates =
-			e instanceof MouseEvent
-				? {
-						x: e.clientX,
-						y: e.clientY
-				  }
-				: {
-						x: e.touches[0].clientX,
-						y: e.touches[0].clientY
-				  };
+		const isMouse = e instanceof MouseEvent;
+		const coordinates = isMouse ? e : e.touches[0];
+		const { clientX: x, clientY: y } = coordinates;
 
-		if (!(e instanceof MouseEvent) || e.button === 1 || e.detail === 2)
-			startGrabbingOffsets = startGrab({ x, y });
-		if (e instanceof MouseEvent && e.button === 0 && $moveMode.hovered !== null) {
+		if (!isMouse || e.button === 1 || e.detail === 2) startOffset = startGrab({ x, y });
+		if (isMouse && e.button === 0 && $selectedFrame) {
 			startMoveData = startMoveFrame({ x, y });
 		}
 	};
 
 	const handleMouseUp = () => {
-		if ($moveMode.active) {
+		if ($activeAction === 'movingFrame') {
 			changesHistory.add({
 				title: 'Перемещение фрейма',
 				icon: Square2Stack
 			});
 		}
 
-		$storyInfo.grabbing = false;
-		$moveMode.active = false;
-		$activeAction = 'Перемещение';
+		$selectedFrame = null;
+		$activeAction = 'view';
 
 		connectorLogic();
 		storyInfo.saveArea();
@@ -100,38 +80,36 @@
 
 	const handleWheel = ({ deltaY }: WheelEvent) => {
 		if (deltaY < 0) {
-			if ($storyInfo.grabbingScale < 300) {
-				$storyInfo.grabbingScale += 10;
+			if ($storyInfo.scale < 300) {
+				$storyInfo.scale += 10;
 			}
 		} else {
-			if ($storyInfo.grabbingScale > 10) {
-				$storyInfo.grabbingScale -= 10;
+			if ($storyInfo.scale > 10) {
+				$storyInfo.scale -= 10;
 			}
 		}
 	};
 
 	const handlePinch = ({ detail }: CustomEvent) => {
 		if (detail.scale - startPinch > 0) {
-			if ($storyInfo.grabbingScale < 300) {
-				$storyInfo.grabbingScale += 5;
+			if ($storyInfo.scale < 300) {
+				$storyInfo.scale += 5;
 			}
 		} else {
-			if ($storyInfo.grabbingScale > 10) {
-				$storyInfo.grabbingScale -= 5;
+			if ($storyInfo.scale > 10) {
+				$storyInfo.scale -= 5;
 			}
 		}
 		startPinch = detail.scale;
 	};
-
-	$: ({ error, url } = $page);
 </script>
 
 <WindowActions {workspace} />
 <div
 	class={clsx(
-		'w-full grow select-none overflow-hidden',
-		{ 'cursor-grabbing': $storyInfo.grabbing },
-		{ 'cursor-move': $moveMode.active && $moveMode.hovered }
+		'absolute h-full w-full select-none overflow-hidden',
+		{ 'cursor-grabbing': $activeAction === 'movingArea' },
+		{ 'cursor-move': $activeAction === 'movingFrame' }
 	)}
 	bind:this={workspace}
 	use:pinch
@@ -146,10 +124,11 @@
 	on:mousemove={handleMouseMove}
 	on:click={handleClick}
 >
-	{#each $frames as data, key (data.frameId)}
-		<Frame {key} {data} bind:clientHeight={data.height} bind:clientWidth={data.width} />
-	{/each}
 	{#if $frames.length === 1}
 		<CreateText />
 	{/if}
+	<MovingArea>
+		<FramesLayer />
+		<ConnectionsLayer />
+	</MovingArea>
 </div>

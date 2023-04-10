@@ -88,8 +88,8 @@ export const load = async ({ params, locals }) => {
 	const story: IStorySchema | null = await StoriesModel.findOne({ storyId })
 		.select({
 			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0
+			scale: 0,
+			offset: 0
 		})
 		.lean();
 
@@ -104,7 +104,5 @@ export const load = async ({ params, locals }) => {
 		readerId
 	});
 
-	if (!progress) return await readingInfo(story, []);
-
-	return await readingInfo(story, progress.choices);
+	return await readingInfo(story, progress?.choices || []);
 };

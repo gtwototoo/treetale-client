@@ -29,12 +29,11 @@ export interface IStartMove {
 }
 
 export interface IStoryCreate extends IStory {
-	grabbing: boolean;
 	addFrameMode: boolean;
 	addFrameOffset: ICoordinates | null;
 	dragImageMode: boolean;
-	grabbingOffsets: ICoordinates;
-	grabbingScale: number;
+	offset: ICoordinates;
+	scale: number;
 	draft: boolean;
 	timer: number;
 	saved: boolean;

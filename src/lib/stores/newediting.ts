@@ -1,0 +1,8 @@
+import { writable } from 'svelte/store';
+
+type IAction = 'movingFrame' | 'view' | 'binding' | 'movingArea' | 'adding';
+
+export const selectedFrame = writable<number>();
+export const oneDirectionMode = writable<boolean>();
+export const activeAction = writable<IAction>('view');
+export const removeMode = writable<boolean>(false);

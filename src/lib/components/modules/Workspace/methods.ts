@@ -1,11 +1,5 @@
-import {
-	activeAction,
-	changesHistory,
-	connect,
-	frames,
-	moveMode,
-	storyInfo
-} from '$lib/stores/editing';
+import { changesHistory, connect, frames, moveMode, storyInfo } from '$lib/stores/editing';
+import { activeAction, selectedFrame } from '$lib/stores/newediting';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 import { Plus, Share, XMark } from 'svelte-heros-v2';
@@ -89,30 +83,28 @@ export const connectorLogic = () => {
 export const startGrab = ({ x, y }: ICoordinates): ICoordinates => {
 	const storyInfoStore = get(storyInfo);
 
-	storyInfo.update((data) => Object.assign(data, { grabbing: true }));
-	activeAction.set('Перемещение');
+	activeAction.set('movingArea');
 
 	return {
-		x: x - storyInfoStore.grabbingOffsets.x,
-		y: y - storyInfoStore.grabbingOffsets.y
+		x: x - storyInfoStore.offset.x,
+		y: y - storyInfoStore.offset.y
 	};
 };
 
-export const grabbingArea = ({ x, y }: ICoordinates, startGrabbingOffsets: ICoordinates) => {
+export const grabbingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) => {
 	storyInfo.update((data) =>
 		Object.assign(data, {
-			grabbingOffsets: {
-				x: x - startGrabbingOffsets.x,
-				y: y - startGrabbingOffsets.y
+			offset: {
+				x: x - startOffset.x,
+				y: y - startOffset.y
 			}
 		})
 	);
 };
-
 export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 	const framesStore = get(frames);
-	const moveModeStore = get(moveMode);
-	const frame = framesStore.find(({ frameId }) => frameId === moveModeStore.hovered);
+	const selectedFrameStore = get(selectedFrame);
+	const frame = framesStore.find(({ frameId }) => frameId === selectedFrameStore);
 
 	if (!frame)
 		return {
@@ -123,8 +115,7 @@ export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 
 	const { x, y } = storyInfo.scaleCorrect(coords);
 
-	moveMode.update((data) => Object.assign(data, { active: true }));
-	activeAction.set('Перемещение');
+	activeAction.set('movingFrame');
 
 	return {
 		moveFrameOffset: { x: x - frame.x, y: y - frame.y },
@@ -223,5 +214,5 @@ export const cursorFollow = (coords: ICoordinates) => {
 	const cursorCoords = storyInfo.scaleCorrect(coords);
 
 	storyInfo.update((data) => Object.assign(data, { addFrameOffset: cursorCoords }));
-	activeAction.set('Перемещение');
+	activeAction.set('adding');
 };

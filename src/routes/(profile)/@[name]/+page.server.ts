@@ -1,3 +1,4 @@
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
 import type { IStoryFull } from '$lib/types/reading';
@@ -23,11 +24,7 @@ export const load = async ({ locals, params }) => {
 	const rawStories = await StoriesModel.find({
 		userId: user.userId
 	})
-		.select({
-			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0
-		})
+		.select(USER_WITHOUT_WORKSPACE)
 		.lean();
 
 	const stories: IStoryFull[] = rawStories.map((story) => ({

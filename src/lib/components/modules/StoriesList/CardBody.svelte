@@ -15,20 +15,22 @@
 	$: ({ created, description, title, draft } = story);
 </script>
 
-<div class="line-clamp-6 h-[6.25rem] w-full text-center xs:h-32 lg:h-40">
-	<h2 class="mb-1 text-sm/4 xs:mb-3 xs:text-base/5 lg:mb-4 lg:text-xl/6">
-		{title || 'Без названия'}
-	</h2>
-	<p
-		class={clsx(
-			'whitespace-pre-wrap',
-			description && description.length > 100
-				? 'text-xs xs:text-sm lg:text-base'
-				: 'text-sm/4 xs:text-base/4 lg:text-xl/6'
-		)}
-	>
-		{correctWhitespace(variableReplace(description || 'Без описания...', vars))}
-	</p>
+<div class="flex h-[6.25rem] items-center xs:h-32 lg:h-40">
+	<div class="line-clamp-6 w-full text-center">
+		<h2 class="mb-1 text-sm/4 xs:mb-3 xs:text-base/5 lg:mb-4 lg:text-xl/6">
+			{title || 'Без названия'}
+		</h2>
+		<p
+			class={clsx(
+				'whitespace-pre-wrap',
+				description && description.length > 100
+					? 'text-xs xs:text-sm lg:text-base'
+					: 'text-sm/4 xs:text-base/4 lg:text-xl/6'
+			)}
+		>
+			{correctWhitespace(variableReplace(description || 'Без описания...', vars))}
+		</p>
+	</div>
 </div>
 <div class="flex w-full items-center justify-between gap-1">
 	{#if author}

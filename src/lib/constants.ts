@@ -6,6 +6,13 @@ export const DEFAULT_COLOR: RGB = [254, 215, 170];
 export const WHITE_COLOR: RGB = [255, 255, 255];
 export const ICON_TYPE = 'outline';
 
+export const USER_WITHOUT_WORKSPACE = {
+	_id: 0,
+	scale: 0,
+	offset: 0,
+	frames: 0
+};
+
 export const NOT_FOUND_VARIANTS: App.Error[] = [
 	{
 		message:

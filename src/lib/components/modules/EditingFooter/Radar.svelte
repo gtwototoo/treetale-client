@@ -34,11 +34,11 @@
 	};
 
 	const setDefaultCoordinates = () => {
-		$storyInfo.grabbingOffsets = { x: 0, y: 0 };
-		$storyInfo.grabbingScale = 100;
+		$storyInfo.offset = { x: 0, y: 0 };
+		$storyInfo.scale = 100;
 	};
 
-	$: setCoordinates($storyInfo.grabbingOffsets);
+	$: setCoordinates($storyInfo.offset);
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -51,6 +51,6 @@
 	/>
 	<div
 		class="h-2 w-2 shrink-0 rounded-full !bg-gray-400"
-		style={transform(coordinates, $storyInfo.grabbingScale / 100)}
+		style={transform(coordinates, $storyInfo.scale / 100)}
 	/>
 </Button>

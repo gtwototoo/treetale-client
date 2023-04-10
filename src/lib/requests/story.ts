@@ -5,11 +5,7 @@ import type { IFrameCreate } from '$lib/types/editing';
 import { fetchPost } from '.';
 
 export const addLike = async (storyId: number) => {
-	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/like`,
-		undefined,
-		'PUT'
-	);
+	return await fetchPost(`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/like`, undefined, 'PUT');
 };
 
 export const updateInfo = async (storyId: number, info: IStoryEditableInfo) => {
@@ -22,26 +18,20 @@ export const updateInfo = async (storyId: number, info: IStoryEditableInfo) => {
 export const updateFrames = async (
 	storyId: number,
 	frames: IFrameCreate[],
-	grabbingOffsets: ICoordinates,
-	grabbingScale: number
+	offset: ICoordinates,
+	scale: number
 ) => {
-	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=area`,
-		{
-			frames,
-			grabbingOffsets,
-			grabbingScale,
-		}
-	);
+	return await fetchPost(`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=area`, {
+		frames,
+		offset,
+		scale
+	});
 };
 
 export const updateVars = async (storyId: number, vars: IVariable[]) => {
-	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=vars`,
-		{
-			vars,
-		}
-	);
+	return await fetchPost(`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=vars`, {
+		vars
+	});
 };
 
 export const searchStories = async (row: string) => {
@@ -50,7 +40,7 @@ export const searchStories = async (row: string) => {
 
 	return {
 		error: !request.ok,
-		response,
+		response
 	};
 };
 
@@ -60,7 +50,7 @@ export const createStory = async () => {
 	try {
 		request = await fetch(`${PUBLIC_TREESTORY_API_URL}/story/create`, {
 			method: 'PUT',
-			credentials: 'include',
+			credentials: 'include'
 		});
 	} catch (e) {
 		console.error(e);
@@ -81,7 +71,7 @@ export const createStory = async () => {
 export const deleteStory = async (id: number) => {
 	await fetch(`${PUBLIC_TREESTORY_API_URL}/story/${id}`, {
 		method: 'DELETE',
-		credentials: 'include',
+		credentials: 'include'
 	});
 
 	return goto(`/profile`);
