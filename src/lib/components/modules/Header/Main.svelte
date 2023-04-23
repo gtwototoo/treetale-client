@@ -21,7 +21,12 @@
 	};
 </script>
 
-<Button class="gap-3 bg-emerald-400 text-text" variant="ghost" on:click={handleClick} {loading}>
+<Button
+	class="headerButton bg-emerald-400 text-text"
+	variant="ghost"
+	on:click={handleClick}
+	{loading}
+>
 	<Icon type={Plus} />
 	<p>Добавить историю</p>
 </Button>

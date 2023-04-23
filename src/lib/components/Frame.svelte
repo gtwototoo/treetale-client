@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import type { IFrame, IVariable } from '$lib/types';
-	import { correctWhitespace, variableReplace } from '$lib/utils';
+	import { correctVariableReplace } from '$lib/utils';
 	import { Button, FormSplit } from '$UI';
 	import clsx from 'clsx';
 
@@ -22,13 +22,11 @@
 			goto('/signin');
 		}
 	};
-
-	const text = frame.text ? correctWhitespace(variableReplace(frame.text, vars)) : '';
 </script>
 
 <ReadCard
 	src={frame.imageId}
-	text={text || 'Пустота...'}
+	text={correctVariableReplace(frame.text, vars) || 'Пустота...'}
 	class={clsx(
 		{
 			'pointer-events-none opacity-10': !last
@@ -40,25 +38,18 @@
 		<FormSplit vertical>
 			{#each frame.choices as choice (choice.choiceId)}
 				{@const active = selectedChoiceId === choice.choiceId}
-				{@const choiceText = correctWhitespace(variableReplace(choice.text, vars))}
 				{#if choice.frameId}
 					<Button
 						on:click={() => handleClick(choice.choiceId)}
 						variant={active ? 'main' : 'secondary'}
-						class={clsx('choice', {
+						class={clsx('!whitespace-normal text-left !text-sm sm:!text-base lg:!text-lg', {
 							'bg-main !text-text': active
 						})}
 					>
-						{choiceText}
+						{correctVariableReplace(choice.text, vars) || 'Неожиданный поворот'}
 					</Button>
 				{/if}
 			{/each}
 		</FormSplit>
 	{/if}
 </ReadCard>
-
-<style lang="postcss">
-	:global(.choice) {
-		@apply w-full justify-start overflow-hidden text-ellipsis !whitespace-normal text-left !text-sm sm:!text-base lg:!text-lg;
-	}
-</style>

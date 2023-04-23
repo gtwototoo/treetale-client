@@ -30,6 +30,12 @@ export const variableReplace = (text: string, vars: IVariable[]) => {
 	return text;
 };
 
+export const correctVariableReplace = (text: string | undefined, vars: IVariable[]) => {
+	if (!text) return '';
+
+	return correctWhitespace(variableReplace(text, vars));
+};
+
 export const cutText = (text: string, vars: IVariable[], maxLength: number = 200) => {
 	const newText = variableReplace(text, vars);
 

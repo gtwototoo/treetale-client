@@ -5,6 +5,7 @@
 	import { updateProgress } from '$lib/requests/progress';
 	import { currentPanel } from '$lib/stores/main';
 	import { infoStore } from '$lib/stores/reading';
+	import { bodyColor } from '$lib/stores/story.js';
 	import { rootStyle } from '$lib/utils/custom_colors.js';
 	import { onMount } from 'svelte';
 
@@ -70,11 +71,13 @@
 	afterNavigate(() => {
 		scrollTo(current - 1);
 	});
+
+	$bodyColor = data.story.color || DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>{data.story.title}</title>
-	{@html rootStyle(data.story.color || DEFAULT_COLOR)}
+	{@html rootStyle($bodyColor)}
 </svelte:head>
 
 <svelte:window on:keydown={handleKeydown} />

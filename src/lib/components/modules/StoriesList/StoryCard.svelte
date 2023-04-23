@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button, Card, Photo } from '$UI';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -7,7 +8,6 @@
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
 	import { contrastText } from '$lib/utils';
-	import { Button, Card, Photo } from '$UI';
 	import clsx from 'clsx';
 	import { BookOpen } from 'svelte-heros-v2';
 	import CardBody from './CardBody.svelte';
@@ -30,7 +30,7 @@
 	class="h-[19.25rem] border-2 border-transparent bg-with-border-white border-from-white border-to-main xs:h-[27.5rem] lg:h-[34.5rem]"
 	style="--color-main: {selectedColor.join(' ')}; --fill-main: url(#light-gradient-{storyId})"
 >
-	<SvgGradient {storyId} />
+	<SvgGradient id={storyId} />
 	<div
 		class="relative flex h-24 w-full shrink-0 items-center justify-center bg-transparent text-main xs:h-36 lg:h-48"
 	>

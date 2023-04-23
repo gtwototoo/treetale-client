@@ -6,7 +6,7 @@
 	let value: string;
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-6">
+<div class="flex flex-col items-stretch gap-4 p-3">
 	<Note
 		icon={Star}
 		text="Поддержите своего любимого автора, чтобы мотивировать его создавать новые истории"

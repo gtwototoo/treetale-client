@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { autoHeight } from '$lib/hooks';
-	import { clsx } from 'clsx';
+	import { clm } from '$lib/utils';
 
 	let classes: string = '';
 	let focused: boolean = false;
@@ -18,7 +18,7 @@
 	export let disabled: boolean = false;
 </script>
 
-<div class={clsx(classes, 'textarea', { disabled }, focused ? 'ring-blue-500' : 'ring-gray-200')}>
+<div class={clm('textarea', { disabled, '!bg-blue-50': focused }, classes)}>
 	<textarea
 		bind:value
 		{disabled}
@@ -36,7 +36,7 @@
 		@apply flex w-full resize-none overflow-hidden break-all bg-transparent px-4 py-2 text-sm text-black inherit-align placeholder:whitespace-nowrap;
 	}
 	.textarea {
-		@apply overflow-hidden rounded-lg bg-white leading-0 ring-1 transition-[box-shadow] hover:ring-blue-500;
+		@apply overflow-hidden rounded-lg bg-white leading-0 transition-colors hover:bg-blue-50;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

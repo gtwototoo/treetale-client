@@ -3,8 +3,10 @@
 	import { storyInfo } from '$lib/stores/editing';
 
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
+	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { changesHistory, frames } from '$lib/stores/editing';
+	import { bodyColor } from '$lib/stores/story.js';
 	import { rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
@@ -31,14 +33,17 @@
 			icon: Play
 		});
 	});
+
+	$: $bodyColor = $storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>
 		Редактирование "{$storyInfo.title || 'Без названия'}"
 	</title>
-	{@html rootStyle($storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR)}
+	{@html rootStyle($bodyColor)}
 </svelte:head>
 
+<SvgGradient id={$storyInfo.storyId} />
 <Workspace />
 <EditingFooter />

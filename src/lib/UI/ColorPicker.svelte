@@ -34,7 +34,7 @@
 				size="sm"
 				{disabled}
 			>
-				<p>Цвет</p>
+				Цвет
 				<Icon type={ChevronDown} class="h-4 w-4" />
 			</Button>
 		</div>

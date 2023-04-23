@@ -12,7 +12,7 @@
 </script>
 
 <div class={clsx('panel', classes)} in:fly={{ x: 10 }} out:fly={{ x: 10 }}>
-	<Button size="sm" class="!absolute right-3 top-3 z-[2]" on:click>
+	<Button size="sm" class="!absolute right-3 top-3 z-[2] !p-2" on:click>
 		<Icon type={XMark} />
 	</Button>
 	{#if title}

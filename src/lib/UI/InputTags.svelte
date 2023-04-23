@@ -75,12 +75,7 @@
 </script>
 
 <div
-	class={clsx(
-		'input',
-		{ disabled, 'p-1.5': tags.length },
-		classes,
-		focused ? 'ring-blue-500' : 'ring-gray-200'
-	)}
+	class={clsx('input', { disabled, 'p-1.5': tags.length, focused: 'bg-blue-50' }, classes)}
 	on:keydown={handleKeydown}
 >
 	{#each tags as tag}
@@ -112,7 +107,7 @@
 		@apply w-full flex-grow bg-transparent px-4 py-2 text-sm text-black placeholder:select-none;
 	}
 	.input {
-		@apply flex flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500;
+		@apply flex flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-white transition-colors hover:bg-blue-50;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

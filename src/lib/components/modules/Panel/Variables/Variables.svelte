@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateVars } from '$lib/requests/story';
 	import { storyInfo, vars } from '$lib/stores/editing';
 	import { correctWhitespace } from '$lib/utils';
-	import { Button } from '$UI';
 	import { Cloud, Plus, Variable } from 'svelte-heros-v2';
 	import Note from '../Note.svelte';
 	import VariableRow from './Variable.svelte';
@@ -39,12 +39,13 @@
 			const { error } = await updateVars($storyInfo.storyId, $vars);
 
 			saveInfo = error ? 'Ошибка сохранения' : 'Изменения сохранены';
+
 			clearTimeout(timer);
 		}, 3000);
 	};
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-6">
+<div class="flex flex-col items-stretch gap-4 p-3">
 	<Note icon={Variable}>
 		<div>
 			<span class="text-violet-500">Переменные</span>

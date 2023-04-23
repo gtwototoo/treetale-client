@@ -4,6 +4,7 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
+	import { bodyColor } from '$lib/stores/story';
 	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
@@ -88,6 +89,8 @@
 			onTurnstileLoaded();
 		}
 	});
+
+	$bodyColor = DEFAULT_COLOR;
 </script>
 
 <svelte:head>
@@ -99,7 +102,7 @@
 			async
 		></script>
 	{/if}
-	{@html rootStyle(DEFAULT_COLOR)}
+	{@html rootStyle($bodyColor)}
 </svelte:head>
 
 <ReadCard
@@ -108,7 +111,7 @@
 	text="Если вы новый пользователь, введите свою почту, чтобы получить ссылку на регистрацию. Если вы уже зарегистированы, можете ввести как почту, так и свой псевдоним и к вам на почту придет ссылка на вход."
 >
 	<form class="cardButtons relative" method="POST" on:submit|preventDefault={handleSignIn}>
-		<Input placeholder="Псевдоним или почта" class="w-full text-center" size="big" bind:value />
+		<Input placeholder="Псевдоним или почта" class="w-full text-center" size="lg" bind:value />
 		<div bind:this={turnstileElement} />
 		<Button
 			variant="main"

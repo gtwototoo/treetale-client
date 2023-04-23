@@ -51,7 +51,7 @@ const config = {
 				'&::-moz-range-track',
 				'&::-ms-track'
 			]);
-			matchVariant('childelem', (value) => {
+			matchVariant('child', (value) => {
 				return `& ${value}`;
 			});
 			addUtilities({

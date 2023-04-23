@@ -4,6 +4,7 @@
 	import ColorPicker from '$UI/ColorPicker.svelte';
 	import Input from '$UI/Input.svelte';
 
+	import FormSplit from '$UI/FormSplit.svelte';
 	import { page } from '$app/stores';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { updateProfile } from '$lib/requests/user';
@@ -14,7 +15,7 @@
 
 	let light: number = 80;
 	let saturate: number = 90;
-	let saveInfo: string = 'Ожидание изменений';
+	let saveInfo: string = 'Ожидание сохранения';
 	let errored = false;
 	let loading = false;
 
@@ -47,7 +48,7 @@
 		icon={Cog6Tooth}
 		text="Тут вы можете указать свой псевдоним и описание для своего профиля"
 	/>
-	<div class="flex gap-2">
+	<FormSplit vertical>
 		<Input placeholder="Псевдоним" class="w-full" bind:value={name} required>
 			<ColorPicker
 				lightRange={[10, 80]}
@@ -58,10 +59,10 @@
 				on:change={setColor}
 			/>
 		</Input>
-	</div>
-	<Textarea placeholder="Описание" bind:value={description} />
+		<Textarea placeholder="Описание" bind:value={description} />
+	</FormSplit>
 	<Button class="justify-center" on:click={saveProfile} {loading} disabled={!name}>
-		<p>Сохранить изменения</p>
+		Сохранить изменения
 	</Button>
 	{#if saveInfo}
 		<div

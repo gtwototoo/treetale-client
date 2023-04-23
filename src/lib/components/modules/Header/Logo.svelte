@@ -1,16 +1,16 @@
 <script lang="ts">
 	import Link from '$lib/components/Link.svelte';
-	import { mainColor } from '$lib/stores/story';
+	import { bodyColor } from '$lib/stores/story';
 	import { contrastText } from '$lib/utils';
 	import clsx from 'clsx';
 
-	$: textColor = contrastText($mainColor) ? 'childs:from-[#FDBA74]' : 'childs:from-[#753F00]';
+	$: textColor = contrastText($bodyColor) ? 'childs:from-[#FDBA74]' : 'childs:from-[#753F00]';
 </script>
 
 <Link
 	href="/"
 	class={clsx(
-		'select-none px-2 text-2xl/9 font-extrabold uppercase text-transparent childs:bg-gradient-to-br childs:bg-clip-text childs:tracking-widest md:px-4',
+		'select-none px-2 text-2xl/9 font-extrabold uppercase text-transparent childs:bg-gradient-to-br childs:bg-clip-text md:px-4',
 		textColor
 	)}
 >

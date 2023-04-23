@@ -10,7 +10,7 @@
 <div
 	class={clsx(
 		classes,
-		'flex childs:!rounded-none',
+		'flex divide-gray-100 childs:!rounded-none',
 		vertical
 			? 'flex-col divide-y first:childs:!rounded-t-lg last:childs:!rounded-b-lg'
 			: 'divide-x first:childs:!rounded-l-lg last:childs:!rounded-r-lg'

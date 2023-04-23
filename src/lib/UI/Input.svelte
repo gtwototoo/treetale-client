@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import { enableControl, onlyDigits } from '$lib/hooks';
+	import { clm } from '$lib/utils';
 	import { clsx } from 'clsx';
 	import type { SvelteComponent } from 'svelte';
 
@@ -9,7 +10,7 @@
 	export let coreClass: string = '';
 	export let value: string = '';
 	export let number: boolean = false;
-	export let size: 'small' | 'default' | 'big' = 'default';
+	export let size: 'sm' | 'base' | 'lg' = 'base';
 	export let disabled: boolean = false;
 	export let icon: typeof SvelteComponent | undefined = undefined;
 	export let required = false;
@@ -29,10 +30,9 @@
 </script>
 
 <div
-	class={clsx(
+	class={clm(
 		'input',
-		{ disabled },
-		required && !value ? 'ring-red-500' : focused ? 'ring-blue-500' : 'ring-gray-200',
+		{ disabled, '!bg-red-100': required && !value, '!bg-blue-50': focused },
 		classes
 	)}
 >
@@ -40,7 +40,7 @@
 		<Icon type={icon} class="absolute mx-4" />
 	{/if}
 	<input
-		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, size)}
+		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, `size-${size}`)}
 		{name}
 		{disabled}
 		{maxlength}
@@ -59,17 +59,17 @@
 	input {
 		@apply w-full bg-transparent text-black inherit-align placeholder:select-none;
 	}
-	.big {
+	.size-sm {
 		@apply px-8 py-4 text-base;
 	}
-	.default {
+	.size-base {
 		@apply px-4 py-2 text-sm;
 	}
-	.small {
+	.size-lg {
 		@apply p-2 text-sm;
 	}
 	.input {
-		@apply relative flex items-center rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500;
+		@apply relative flex items-center rounded-lg bg-white transition-colors hover:bg-blue-50;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import type { IVariable } from '$lib/types';
-	import { Button, Input, Listbox } from '$UI';
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import { Trash } from 'svelte-heros-v2';
+	import { ChevronDown } from 'svelte-heros-v2';
 
 	export let data: IVariable;
 
@@ -27,33 +27,41 @@
 </script>
 
 <div class="flex items-center gap-2">
-	<Input bind:value={data.name} placeholder="Название" class="w-full" on:input={handleInput} />
-	<Listbox
-		bind:value={data.expect}
-		placeholder="Тип"
-		class="w-24 shrink-0"
-		list={types}
-		on:input={handleInput}
-	/>
-	<p>=</p>
-	{#if data.expect === 'Да/Нет'}
-		<Listbox
-			bind:value={data.value}
-			placeholder="Значение"
-			class="w-full"
-			list={[{ text: 'Да' }, { text: 'Нет' }]}
-			on:input={handleInput}
-		/>
-	{:else}
-		<Input
-			bind:value={data.value}
-			placeholder="Значение"
-			class="w-full"
-			number={data.expect !== 'Строка'}
-			on:input={handleInput}
-		/>
-	{/if}
-	<Button on:click size="sm">
+	<FormSplit class="w-full">
+		<Input bind:value={data.name} placeholder="Название" class="w-[30rem]" on:input={handleInput}>
+			<Listbox
+				size="sm"
+				bind:value={data.expect}
+				placeholder="Тип"
+				list={types}
+				on:input={handleInput}
+				let:value
+			>
+				<Button class="m-1.5 ml-0 gap-1" size="sm">
+					{value}
+					<Icon type={ChevronDown} class="h-4 w-4" />
+				</Button>
+			</Listbox>
+		</Input>
+		{#if data.expect === 'Да/Нет'}
+			<Listbox
+				bind:value={data.value}
+				placeholder="Значение"
+				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
+				list={[{ text: 'Да' }, { text: 'Нет' }]}
+				on:input={handleInput}
+			/>
+		{:else}
+			<Input
+				bind:value={data.value}
+				placeholder="Значение"
+				class="w-full"
+				number={data.expect !== 'Строка'}
+				on:input={handleInput}
+			/>
+		{/if}
+	</FormSplit>
+	<!-- <Button on:click size="sm">
 		<Icon type={Trash} class="text-red-600" />
-	</Button>
+	</Button> -->
 </div>

@@ -7,7 +7,7 @@
 
 <div
 	class={clsx(
-		'selector flex childs:bg-transparent first:childs:!rounded-l-lg last:childs:!rounded-r-lg childelem-[button]:!rounded-none',
+		'selector flex childs:bg-transparent first:childs:!rounded-l-lg last:childs:!rounded-r-lg child-[button]:!rounded-none',
 		classes
 	)}
 >

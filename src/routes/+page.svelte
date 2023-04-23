@@ -5,6 +5,7 @@
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { createStory } from '$lib/requests/story';
+	import { bodyColor } from '$lib/stores/story.js';
 	import { rootStyle } from '$lib/utils/custom_colors.js';
 	import { Button } from '$UI';
 	import { Plus } from 'svelte-heros-v2';
@@ -24,11 +25,13 @@
 
 		loading = false;
 	};
+
+	$bodyColor = DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>TreeStory</title>
-	{@html rootStyle(DEFAULT_COLOR)}
+	{@html rootStyle($bodyColor)}
 </svelte:head>
 
 <div class="flex grow flex-col">

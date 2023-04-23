@@ -5,7 +5,7 @@
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
 	import { infoStore } from '$lib/stores/reading';
-	import { correctWhitespace, variableReplace } from '$lib/utils';
+	import { correctVariableReplace } from '$lib/utils';
 	import clsx from 'clsx';
 	import { BookOpen } from 'svelte-heros-v2';
 	import SvgGradient from '../StoriesList/SvgGradient.svelte';
@@ -13,7 +13,7 @@
 	$: ({ title, description, imageId, tags, storyId, created } = $infoStore);
 </script>
 
-<SvgGradient {storyId} />
+<SvgGradient id={storyId} />
 <div class="flex flex-col" style="--fill-main: url(#light-gradient-{storyId})">
 	<div
 		class="relative flex h-48 w-full shrink-0 items-center justify-center rounded-t-xl bg-white text-main"
@@ -39,7 +39,7 @@
 			<Icon type={BookOpen} class="h-24 w-auto childs:fill-[--fill-main]" variation="solid" />
 		{/if}
 	</div>
-	<div class="flex flex-col items-stretch gap-4 p-6">
+	<div class="flex flex-col items-stretch gap-4 p-3">
 		<Tags {tags} />
 		<div class="flex flex-col gap-2 text-center">
 			<h1 class="text-2xl">
@@ -48,7 +48,7 @@
 			<p
 				class={clsx('w-full', description && description.length > 100 ? 'text-lg' : 'text-2xl')}
 			>
-				{correctWhitespace(variableReplace(description || 'Без описания...', $infoStore.vars))}
+				{correctVariableReplace(description, $infoStore.vars) || 'Без описания'}
 			</p>
 		</div>
 		<div class="flex w-full items-center justify-between gap-1">

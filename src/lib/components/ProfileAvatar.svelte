@@ -68,12 +68,12 @@
 	{#if me}
 		<div class="absolute bottom-0 right-0 z-[3] rounded-full bg-main p-1">
 			{#if src && !imageLoading}
-				<Button class="!rounded-full !p-3" variant="secondaryWhite" on:click={preRemoveImage}>
+				<Button class="!rounded-full !p-2" variant="secondaryWhite" on:click={preRemoveImage}>
 					<Icon type={XMark} class="text-red-600" />
 				</Button>
 			{:else}
 				<InputFile
-					class="!rounded-full !p-3"
+					class="!rounded-full !p-2"
 					variant="secondaryWhite"
 					disabled={imageLoading}
 					on:change={setFile}

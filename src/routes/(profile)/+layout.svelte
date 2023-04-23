@@ -7,6 +7,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
 	import { colorStore } from '$lib/stores/profile';
+	import { bodyColor } from '$lib/stores/story.js';
 	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Button, Selector, SelectorItem } from '$UI';
@@ -53,11 +54,12 @@
 
 	$: ({ url } = $page);
 	$: ({ statistic } = data);
+	$: $bodyColor = $colorStore || user.color || DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>{me ? 'Профиль' : user.name}</title>
-	{@html rootStyle($colorStore || user.color || DEFAULT_COLOR)}
+	{@html rootStyle($bodyColor)}
 </svelte:head>
 
 <div class="profile">

@@ -7,7 +7,7 @@
 	import Note from './Note.svelte';
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-6">
+<div class="flex flex-col items-stretch gap-4 p-3">
 	<Note
 		icon={Clock}
 		text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"

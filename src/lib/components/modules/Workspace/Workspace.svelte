@@ -78,7 +78,9 @@
 		}
 	};
 
-	const handleWheel = ({ deltaY }: WheelEvent) => {
+	const handleWheel = ({ deltaY, x, y }: WheelEvent) => {
+		const scaledCoords = storyInfo.scaleCorrect({ x, y });
+
 		if (deltaY < 0) {
 			if ($storyInfo.scale < 300) {
 				$storyInfo.scale += 10;
@@ -88,6 +90,11 @@
 				$storyInfo.scale -= 10;
 			}
 		}
+
+		$storyInfo.offset = {
+			x: Math.round(x - scaledCoords.x * ($storyInfo.scale / 100)),
+			y: Math.round(y - scaledCoords.y * ($storyInfo.scale / 100))
+		};
 	};
 
 	const handlePinch = ({ detail }: CustomEvent) => {

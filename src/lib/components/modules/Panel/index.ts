@@ -4,7 +4,7 @@ import Donut from './Donut.svelte';
 import EditingSettings from './EditingSettings.svelte';
 import Panel from './Panel.svelte';
 import ProfileSettings from './ProfileSettings.svelte';
-import Variables from './Variables/index.svelte';
+import Variables from './Variables/Variables.svelte';
 
 export { Changes, EditingSettings, ProfileSettings, Donut, Description, Variables };
 

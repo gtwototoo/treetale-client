@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
-	import { correctWhitespace, variableReplace } from '$lib/utils';
+	import { correctVariableReplace } from '$lib/utils';
 
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
@@ -28,7 +28,7 @@
 					: 'text-sm/4 xs:text-base/4 lg:text-xl/6'
 			)}
 		>
-			{correctWhitespace(variableReplace(description || 'Без описания...', vars))}
+			{correctVariableReplace(description, vars) || 'Без описания'}
 		</p>
 	</div>
 </div>
