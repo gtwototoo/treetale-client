@@ -27,7 +27,7 @@
 		};
 	};
 
-	const removeMovingFrame = () => {
+	const unsetMovingFrame = () => {
 		if ($activeAction === 'movingFrame') return;
 
 		$selectedFrame = null;
@@ -36,12 +36,12 @@
 
 <button
 	class={clsx(
-		'absolute z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-gray-100 p-2 text-sm/4 transition-shadow hover:shadow',
-		{ shadow: $selectedFrame === data.frameId }
+		'absolute z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-gray-100 p-2 text-sm/4 transition-shadow hover:shadow-lg',
+		{ 'shadow-lg': $selectedFrame === data.frameId }
 	)}
-	style="{transform({ x: data.x, y: data.y })}; z-index: {data.frameId}"
+	style="{transform({ x: data.x, y: data.y })};z-index: {data.frameId}"
 	on:mouseenter={setMovingFrame}
-	on:mouseleave={removeMovingFrame}
+	on:mouseleave={unsetMovingFrame}
 	on:click={setCurrentFrame}
 >
 	<Header {data}>

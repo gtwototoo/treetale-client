@@ -1,29 +1,21 @@
 <script lang="ts">
-	import {
-		Button,
-		ColorPicker,
-		Input,
-		InputTags,
-		Photo,
-		Selector,
-		SelectorItem,
-		Textarea
-	} from '$UI';
+	import { Button, ColorPicker, Input, InputTags, Selector, SelectorItem, Textarea } from '$UI';
 	import FormSplit from '$UI/FormSplit.svelte';
-	import DropBlock from '$lib/components/DropBlock.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfo } from '$lib/requests/story';
-	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
+	import { changesHistory, storyInfo } from '$lib/stores/editing';
 	import clsx from 'clsx';
 	import { onDestroy } from 'svelte';
-	import { BookOpen, Cloud, Photo as PhotoIcon, Trash, XMark } from 'svelte-heros-v2';
+	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
 
 	let light: number = 80;
 	let saturate: number = 90;
 	let timer: number;
 	let saveInfo: string = 'Ожидание изменений';
+	let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
 
 	const setColor = ({ detail }: CustomEvent) => {
 		$storyInfo.color = detail.color;
@@ -49,25 +41,17 @@
 		}, 500);
 	};
 
-	let imageLoading = false;
-	let tempAvatarURL = '';
-
 	const action = 'storyImageId';
 
-	$: avatar = $storyInfo.imageId || tempAvatarURL;
-
 	const preRemoveImage = async () => {
-		if (tempAvatarURL || !$storyInfo.imageId) {
-			return;
-		}
-
-		imageLoading = true;
+		if (!$storyInfo.imageId) return;
 
 		const request = await removeImage($storyInfo.imageId, action, $storyInfo.storyId);
 
 		if (request.ok) {
-			imageLoading = false;
 			$storyInfo.imageId = null;
+
+			state = undefined;
 
 			changesHistory.add({
 				title: 'Удаление изображения',
@@ -77,28 +61,14 @@
 	};
 
 	const preSaveImage = async (file: File): Promise<void> => {
-		const reader = new FileReader();
-
-		reader.readAsDataURL(file);
-
-		reader.onloadend = () => {
-			if (!reader.result) return;
-
-			tempAvatarURL = reader.result.toString();
-		};
-
-		reader.onloadstart = () => {
-			imageLoading = true;
-		};
-
 		const request = await saveImage(file, action, `&storyId=${$storyInfo.storyId}`);
 
 		if (request.ok) {
 			const data = await request.json();
 
-			imageLoading = false;
-			tempAvatarURL = '';
 			$storyInfo.imageId = data.imageId;
+
+			state = undefined;
 
 			changesHistory.add({
 				title: 'Добавление изображения',
@@ -107,10 +77,10 @@
 		}
 	};
 
-	const setFile = (e: CustomEvent<{ files: FileList }>) => {
-		const { files } = e.detail;
+	const setFile = (e: CustomEvent<{ file: File }>) => {
+		const { file } = e.detail;
 
-		preSaveImage(files[0]);
+		preSaveImage(file);
 	};
 
 	const switchDraft = () => {
@@ -131,28 +101,16 @@
 	class="flex flex-col items-stretch gap-4 p-3"
 	style="--fill-main: url(#light-gradient-{$storyInfo.storyId})"
 >
-	{#if avatar}
-		<div class="relative">
-			<Button size="sm" on:click={preRemoveImage} class="!absolute right-1.5 top-1.5 z-[2]">
-				<Icon type={Trash} class="h-4 w-4 !text-red-600" />
-			</Button>
-			<Photo
-				cover
-				class={clsx('rounded-lg', {
-					blind: $connect.active
-				})}
-				src={avatar}
-				alt="Иллюстрация текста"
-				width={360}
-				height={192}
-			/>
-		</div>
-	{:else}
-		<DropBlock on:change={setFile} class="h-48 gap-2">
-			<Icon type={BookOpen} class="h-24 w-auto childs:fill-[--fill-main]" variation="solid" />
-		</DropBlock>
-	{/if}
-
+	<Image
+		src={$storyInfo.imageId}
+		height={192}
+		width={360}
+		bind:state
+		class="h-48"
+		alt="Иллюстрация текста"
+		on:loading={setFile}
+		on:remove={preRemoveImage}
+	/>
 	<FormSplit vertical>
 		<Input
 			placeholder="Название"

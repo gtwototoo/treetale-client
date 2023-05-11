@@ -6,6 +6,11 @@ export interface IFrameCreate extends IFrame, IBoundings {
 	title: string;
 }
 
+export interface IPath {
+	line: string;
+	connectId: string;
+}
+
 export interface IConnect {
 	active: boolean;
 	connector: {

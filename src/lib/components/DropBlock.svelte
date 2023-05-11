@@ -32,7 +32,7 @@
 
 		if (dragged) disableDragged();
 
-		dispatch('change', { ...e, files });
+		dispatch('change', { files });
 	};
 
 	onMount(() => {

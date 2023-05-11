@@ -3,6 +3,8 @@
 	import Frame from './Frame/Frame.svelte';
 </script>
 
-{#each $frames as data, key (data.frameId)}
-	<Frame {key} {data} />
-{/each}
+<div>
+	{#each $frames as data, key (data.frameId)}
+		<Frame {key} {data} />
+	{/each}
+</div>

@@ -5,7 +5,7 @@
 	let classes: string = '';
 
 	export let type: typeof SvelteComponent;
-	export let variation = ICON_TYPE;
+	export let variation: 'solid' | 'outline' = ICON_TYPE;
 	export { classes as class };
 </script>
 

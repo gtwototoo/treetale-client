@@ -14,8 +14,7 @@ const availableFrames = (progress: IProgress[], frames: IFrameCreate[]) => {
 	const available: IFrame[] = [];
 
 	for (const stage of progress) {
-		const frame = frames.find(({ frameId }) => frameId === stage.frameId);
-
+		const frame = getFrameFromId(frames, stage.frameId).frame;
 		if (!frame) continue;
 
 		const { frameId, text, choices, imageId } = frame;
@@ -44,7 +43,7 @@ const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
 		const { frameId, choiceId } = progress[key];
 		const data = getFrameFromId(frames, frameId, choiceId);
 
-		if (!data?.choice) break;
+		if (!data.choice) break;
 
 		progress.push({
 			frameId: data.choice.frameId

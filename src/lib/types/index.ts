@@ -18,7 +18,6 @@ export interface IChoice {
 	choiceId: number;
 	frameId: number;
 	text: string;
-	y?: number;
 	[index: string]: number | string | undefined;
 }
 

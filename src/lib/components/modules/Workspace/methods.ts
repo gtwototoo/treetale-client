@@ -2,6 +2,7 @@ import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing'
 import { activeAction, oneDirectionMode, selectedFrame } from '$lib/stores/newediting';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
+import { getFrameFromId } from '$lib/utils';
 import { Plus, Share, XMark } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
 
@@ -46,13 +47,9 @@ export const connectorLogic = () => {
 	if (!connectStore.active || connectStore.connector.from === null) return;
 
 	const { to, from, prevOutput } = connectStore.connector;
-	const frame = framesStore.find(({ frameId }) => frameId === from.frameId);
+	const frame = getFrameFromId(framesStore, from.frameId, from.choiceId);
 
-	if (!frame) return;
-
-	const choice = frame.choices.find(({ choiceId }) => choiceId === from.choiceId);
-
-	if (!choice) return;
+	if (!frame.frame || !frame.choice) return;
 
 	if (to === null && prevOutput !== null) {
 		changesHistory.add({
@@ -62,7 +59,7 @@ export const connectorLogic = () => {
 	}
 
 	if (to !== null) {
-		choice.frameId = to;
+		frame.choice.frameId = to;
 		changesHistory.add({
 			title: 'Добавление связи',
 			icon: Share
@@ -104,7 +101,7 @@ export const grabbingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) 
 export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 	const framesStore = get(frames);
 	const selectedFrameStore = get(selectedFrame);
-	const frame = framesStore.find(({ frameId }) => frameId === selectedFrameStore);
+	const frame = getFrameFromId(framesStore, selectedFrameStore).frame;
 
 	if (!frame)
 		return {
