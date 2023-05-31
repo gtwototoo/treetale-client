@@ -33,6 +33,7 @@
 	class={clm(
 		'input',
 		{ disabled, '!bg-red-100': required && !value, '!bg-blue-50': focused },
+		`size-${size}`,
 		classes
 	)}
 >
@@ -40,7 +41,7 @@
 		<Icon type={icon} class="absolute mx-4" />
 	{/if}
 	<input
-		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, `size-${size}`)}
+		class={clsx(coreClass, { '!pl-[3.25rem]': icon })}
 		{name}
 		{disabled}
 		{maxlength}
@@ -60,16 +61,16 @@
 		@apply w-full bg-transparent text-black inherit-align placeholder:select-none;
 	}
 	.size-sm {
-		@apply px-8 py-4 text-base;
+		@apply rounded px-2 py-1 text-xs;
 	}
 	.size-base {
-		@apply px-4 py-2 text-sm;
+		@apply rounded-lg px-4 py-2 text-sm;
 	}
 	.size-lg {
-		@apply p-2 text-sm;
+		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply relative flex items-center rounded-lg bg-white transition-colors hover:bg-blue-50;
+		@apply relative flex items-center bg-white transition-colors hover:bg-blue-50;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

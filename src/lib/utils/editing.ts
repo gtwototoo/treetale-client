@@ -1,3 +1,4 @@
+import { DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 import type { IBoundings, IChoice, ICoordinates } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
 import { exclude } from './serialize';
@@ -29,11 +30,14 @@ export const getFrameFromId = (frames: IFrameCreate[], frameId: number, choiceId
 	return findData;
 };
 
+export const getChoicePosition = (index: number) => {
+	return DEFAULT_FRAME_HEIGHT + 37 * index - 1;
+};
+
 export const createConnections = (frames: IFrameCreate[]) => {
 	const paths: IPath[] = [];
 	const area: IBoundings = getAreaBoundings(frames);
 	const { width, height, x, y } = area;
-	const DEFAULT_FRAME_HEIGHT = 156;
 
 	for (const fromFrame of frames) {
 		for (const choice of fromFrame.choices) {
@@ -49,7 +53,7 @@ export const createConnections = (frames: IFrameCreate[]) => {
 					fromFrame.y +
 					(fromFrame.hidden
 						? fromFrame.height / 2
-						: DEFAULT_FRAME_HEIGHT + 36 * fromFrame.choices.indexOf(choice))
+						: getChoicePosition(fromFrame.choices.indexOf(choice)))
 			};
 			const toPoint = {
 				x: toFrame.x,
@@ -105,12 +109,6 @@ export const framesCorrect = (frames: IFrameCreate[]) => {
 
 	for (const frame of frames) {
 		const frameCorrect: IFrameCreate = exclude(frame, ['width', 'height']);
-
-		frameCorrect.choices = [];
-
-		for (const choice of frame.choices) {
-			frameCorrect.choices.push(exclude(choice, 'y'));
-		}
 
 		correct.push(frameCorrect);
 	}

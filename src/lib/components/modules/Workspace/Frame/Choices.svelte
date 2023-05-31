@@ -1,30 +1,27 @@
 <script lang="ts">
 	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory } from '$lib/stores/editing';
 	import { removeMode } from '$lib/stores/newediting';
-	import type { IFrameCreate } from '$lib/types/editing';
+	import type { IChoice } from '$lib/types';
 	import clsx from 'clsx';
-	import { Plus, Trash, XMark } from 'svelte-heros-v2';
+	import { createEventDispatcher } from 'svelte';
+	import { Trash } from 'svelte-heros-v2';
 
-	export let data: IFrameCreate;
+	export let choices: IChoice[];
+
+	const dispatch = createEventDispatcher();
 
 	const addChoice = () => {
-		const choiceId = data.choices.length ? data.choices.at(-1).choiceId + 1 : 0;
+		const choiceId = choices.length ? choices.at(-1).choiceId + 1 : 0;
 
-		data.choices = [
-			...data.choices,
+		dispatch('change', [
+			...choices,
 			{
 				text: null,
 				frameId: null,
 				choiceId
 			}
-		];
-
-		changesHistory.add({
-			title: 'Добавление выбора',
-			icon: Plus
-		});
+		]);
 	};
 
 	const handleClick = (choiceId: number) => {
@@ -32,17 +29,15 @@
 	};
 
 	const removeChoice = (choiceId: number) => {
-		data.choices = data.choices.filter((choice) => choice.choiceId !== choiceId);
-
-		changesHistory.add({
-			title: 'Удаление выбора',
-			icon: XMark
-		});
+		dispatch(
+			'change',
+			choices.filter((choice) => choice.choiceId !== choiceId)
+		);
 	};
 </script>
 
 <FormSplit vertical>
-	{#each data.choices as choice (choice.choiceId)}
+	{#each choices as choice (choice.choiceId)}
 		<Button
 			on:click={() => handleClick(choice.choiceId)}
 			class={clsx('gap-4', {

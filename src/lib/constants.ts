@@ -6,6 +6,8 @@ export const DEFAULT_COLOR: RGB = [254, 215, 170];
 export const WHITE_COLOR: RGB = [255, 255, 255];
 export const ICON_TYPE = 'outline';
 
+export const DEFAULT_FRAME_HEIGHT = 156;
+
 export const USER_WITHOUT_WORKSPACE = {
 	_id: 0,
 	scale: 0,

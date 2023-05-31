@@ -1,38 +1,21 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory, frames } from '$lib/stores/editing';
+	import { frames } from '$lib/stores/editing';
 	import { removeMode } from '$lib/stores/newediting';
-	import type { IFrame } from '$lib/types';
-	import type { IFrameCreate } from '$lib/types/editing';
 	import { Button } from '$UI';
+	import { createEventDispatcher } from 'svelte';
 	import { ChevronDown, ChevronUp, Trash } from 'svelte-heros-v2';
 
-	export let data: IFrameCreate;
+	export let hidden: boolean;
 
-	const outputCorrect = (frame: IFrame) => {
-		const outputOnFirstOrRemovedFrame = frame.choices.find(
-			({ frameId }) => frameId === $frames[0].frameId || frameId === data.frameId
-		);
+	const dispatch = createEventDispatcher();
 
-		if (outputOnFirstOrRemovedFrame) {
-			outputOnFirstOrRemovedFrame.frameId = null;
-		}
-	};
 	const removeFrame = () => {
-		$frames = $frames.filter(({ frameId }) => frameId !== data.frameId);
-
-		for (const frame of $frames) {
-			outputCorrect(frame);
-		}
-
-		changesHistory.add({
-			title: 'Удаление фрейма',
-			icon: Trash
-		});
+		dispatch('remove');
 	};
 
-	const minimizeFrame = () => {
-		data.hidden = !data.hidden;
+	const hideFrame = () => {
+		dispatch('hide');
 	};
 </script>
 
@@ -42,12 +25,12 @@
 		{#if $removeMode}
 			{#if $frames.length !== 1}
 				<Button size="sm" on:click={removeFrame}>
-					<Icon type={Trash} class="text-red-600 h-4 w-4" />
+					<Icon type={Trash} class="h-4 w-4 text-red-600" />
 				</Button>
 			{/if}
 		{:else}
-			<Button size="sm" on:click={minimizeFrame}>
-				<Icon type={data.hidden ? ChevronUp : ChevronDown} class="h-4 w-4" />
+			<Button size="sm" on:click={hideFrame}>
+				<Icon type={hidden ? ChevronUp : ChevronDown} class="h-4 w-4" />
 			</Button>
 		{/if}
 	</div>
