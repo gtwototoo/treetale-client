@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { changesHistory, frames } from '$lib/stores/editing';
-	import { currentPanel } from '$lib/stores/main';
-	import { activeAction, panelFrame, selectedFrame } from '$lib/stores/newediting';
+	import { currentPanelStore } from '$lib/stores/main';
+	import { activeActionStore, panelFrameStore, selectedFrameStore } from '$lib/stores/newediting';
 	import type { IChoice, IFrame } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 	import { transform } from '$lib/utils';
@@ -18,15 +18,15 @@
 	export let clientWidth = undefined;
 
 	const setMovingFrame = () => {
-		if ($activeAction === 'movingFrame') return;
+		if ($activeActionStore === 'movingFrame') return;
 
-		$selectedFrame = data.frameId;
+		$selectedFrameStore = data.frameId;
 	};
 
 	const setCurrentFrame = () => {
-		$panelFrame = data;
+		$panelFrameStore = data;
 
-		$currentPanel = {
+		$currentPanelStore = {
 			id: String(data.frameId),
 			title: !key ? 'Начало' : data.title,
 			component: FrameSettings
@@ -60,9 +60,9 @@
 	};
 
 	const unsetMovingFrame = () => {
-		if ($activeAction === 'movingFrame') return;
+		if ($activeActionStore === 'movingFrame') return;
 
-		$selectedFrame = null;
+		$selectedFrameStore = null;
 	};
 
 	const setVisible = () => {
@@ -87,7 +87,7 @@
 	<button
 		class={clsx(
 			'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-gray-100 p-2 text-sm/4 transition-shadow hover:shadow-lg',
-			{ 'shadow-lg': $selectedFrame === data.frameId }
+			{ 'shadow-lg': $selectedFrameStore === data.frameId }
 		)}
 		on:mouseenter={setMovingFrame}
 		on:mouseleave={unsetMovingFrame}

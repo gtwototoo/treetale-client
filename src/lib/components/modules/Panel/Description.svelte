@@ -4,13 +4,13 @@
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
-	import { infoStore } from '$lib/stores/reading';
+	import { storyStore } from '$lib/stores/reading';
 	import { correctVariableReplace } from '$lib/utils';
 	import clsx from 'clsx';
 	import { BookOpen } from 'svelte-heros-v2';
 	import SvgGradient from '../StoriesList/SvgGradient.svelte';
 
-	$: ({ title, description, imageId, tags, storyId, created } = $infoStore);
+	$: ({ title, description, imageId, tags, storyId, created } = $storyStore);
 </script>
 
 <SvgGradient id={storyId} />
@@ -48,16 +48,16 @@
 			<p
 				class={clsx('w-full', description && description.length > 100 ? 'text-lg' : 'text-2xl')}
 			>
-				{correctVariableReplace(description, $infoStore.vars) || 'Без описания'}
+				{correctVariableReplace(description, $storyStore.vars) || 'Без описания'}
 			</p>
 		</div>
 		<div class="flex w-full items-center justify-between gap-1">
-			{#if $infoStore.author}
-				<ProfileLink data={$infoStore.author} {created} />
+			{#if $storyStore.author}
+				<ProfileLink data={$storyStore.author} {created} />
 			{:else}
 				<Tag class="bg-emerald-500 text-emerald-600">Публичный</Tag>
 			{/if}
-			<Likes info={$infoStore} />
+			<Likes info={$storyStore} />
 		</div>
 	</div>
 </div>

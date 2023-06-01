@@ -1,5 +1,9 @@
 import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing';
-import { activeAction, oneDirectionMode, selectedFrame } from '$lib/stores/newediting';
+import {
+	activeActionStore,
+	oneDirectionModeStore,
+	selectedFrameStore
+} from '$lib/stores/newediting';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 import { getFrameFromId } from '$lib/utils';
@@ -80,7 +84,7 @@ export const connectorLogic = () => {
 export const startGrab = ({ x, y }: ICoordinates): ICoordinates => {
 	const storyInfoStore = get(storyInfo);
 
-	activeAction.set('movingArea');
+	activeActionStore.set('movingArea');
 
 	return {
 		x: x - storyInfoStore.offset.x,
@@ -100,8 +104,8 @@ export const grabbingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) 
 };
 export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 	const framesStore = get(frames);
-	const selectedFrameStore = get(selectedFrame);
-	const frame = getFrameFromId(framesStore, selectedFrameStore).frame;
+	const getSelectedFrameStore = get(selectedFrameStore);
+	const frame = getFrameFromId(framesStore, getSelectedFrameStore).frame;
 
 	if (!frame)
 		return {
@@ -112,7 +116,7 @@ export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 
 	const { x, y } = storyInfo.scaleCorrect(coords);
 
-	activeAction.set('movingFrame');
+	activeActionStore.set('movingFrame');
 
 	return {
 		moveFrameOffset: { x: x - frame.x, y: y - frame.y },
@@ -127,9 +131,9 @@ export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => {
 	const { moveFrameOffset, startMoveCoords } = startMoveData;
 	const framesStore = get(frames);
-	const oneDirectionModeStore = get(oneDirectionMode);
-	const selectedFrameStore = get(selectedFrame);
-	const frameIndex = framesStore.findIndex(({ frameId }) => frameId === selectedFrameStore);
+	const getOneDirectionModeStore = get(oneDirectionModeStore);
+	const getSelectedFrameStore = get(selectedFrameStore);
+	const frameIndex = framesStore.findIndex(({ frameId }) => frameId === getSelectedFrameStore);
 
 	if (frameIndex === -1) return null;
 
@@ -139,7 +143,7 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 		y: y - moveFrameOffset.y
 	};
 
-	if (oneDirectionModeStore) {
+	if (getOneDirectionModeStore) {
 		const startDifference =
 			Math.abs(newCoords.y - startMoveCoords.y) - Math.abs(newCoords.x - startMoveCoords.x);
 
@@ -212,5 +216,5 @@ export const cursorFollow = (coords: ICoordinates) => {
 	const cursorCoords = storyInfo.scaleCorrect(coords);
 
 	storyInfo.update((data) => Object.assign(data, { addFrameOffset: cursorCoords }));
-	activeAction.set('adding');
+	activeActionStore.set('adding');
 };

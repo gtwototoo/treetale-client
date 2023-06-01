@@ -1,7 +1,6 @@
 import { DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 import type { IBoundings, IChoice, ICoordinates } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
-import { exclude } from './serialize';
 
 export const transform = (coords: ICoordinates, scale?: number): string => {
 	let styleRow = 'transform:';
@@ -102,16 +101,4 @@ const getAreaBoundings = (frames: IFrameCreate[]) => {
 		width: maxX - minX,
 		height: maxY - minY
 	};
-};
-
-export const framesCorrect = (frames: IFrameCreate[]) => {
-	const correct: IFrameCreate[] = [];
-
-	for (const frame of frames) {
-		const frameCorrect: IFrameCreate = exclude(frame, ['width', 'height']);
-
-		correct.push(frameCorrect);
-	}
-
-	return correct;
 };

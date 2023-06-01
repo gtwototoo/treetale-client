@@ -4,13 +4,13 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { saveImage } from '$lib/requests/image';
 	import { changesHistory, storyInfo } from '$lib/stores/editing';
-	import { panelFrame } from '$lib/stores/newediting';
+	import { panelFrameStore } from '$lib/stores/newediting';
 	import { Photo, RectangleStack } from 'svelte-heros-v2';
 
 	const action = 'storyFrameImageId';
 
 	let imageLoading = false;
-	let avatarId = $panelFrame.imageId;
+	let avatarId = $panelFrameStore.imageId;
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		const reader = new FileReader();
@@ -28,7 +28,7 @@
 		const request = await saveImage(
 			file,
 			action,
-			`&storyId=${$storyInfo.storyId}&frameId=${$panelFrame.frameId}`
+			`&storyId=${$storyInfo.storyId}&frameId=${$panelFrameStore.frameId}`
 		);
 
 		if (request.ok) {

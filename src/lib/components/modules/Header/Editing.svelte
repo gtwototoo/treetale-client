@@ -2,22 +2,22 @@
 	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
-	import { currentPanel } from '$lib/stores/main';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { ArrowUturnLeft, ArrowUturnRight, Cog6Tooth, Variable } from 'svelte-heros-v2';
 	import { Changes, EditingSettings, Variables } from '../Panel';
 
 	const variablesSwitch = () =>
-		($currentPanel = {
+		($currentPanelStore = {
 			id: 'Переменные',
 			component: Variables
 		});
 	const settingsSwitch = () =>
-		($currentPanel = {
+		($currentPanelStore = {
 			id: 'Настройки',
 			component: EditingSettings
 		});
 	const historySwitch = () =>
-		($currentPanel = {
+		($currentPanelStore = {
 			id: 'История изменений',
 			component: Changes
 		});

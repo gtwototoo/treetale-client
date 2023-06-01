@@ -6,7 +6,7 @@
 	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { changesHistory, frames } from '$lib/stores/editing';
-	import { bodyColor } from '$lib/stores/story.js';
+	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
@@ -34,14 +34,14 @@
 		});
 	});
 
-	$: $bodyColor = $storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR;
+	$: $bodyColorStore = $storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>
 		Редактирование "{$storyInfo.title || 'Без названия'}"
 	</title>
-	{@html rootStyle($bodyColor)}
+	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
 <SvgGradient id={$storyInfo.storyId} />

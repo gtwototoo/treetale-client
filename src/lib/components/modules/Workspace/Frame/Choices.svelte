@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { removeMode } from '$lib/stores/newediting';
+	import { removeModeStore } from '$lib/stores/newediting';
 	import type { IChoice } from '$lib/types';
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
@@ -25,7 +25,7 @@
 	};
 
 	const handleClick = (choiceId: number) => {
-		if ($removeMode) removeChoice(choiceId);
+		if ($removeModeStore) removeChoice(choiceId);
 	};
 
 	const removeChoice = (choiceId: number) => {
@@ -41,14 +41,14 @@
 		<Button
 			on:click={() => handleClick(choice.choiceId)}
 			class={clsx('gap-4', {
-				'!text-gray-400': !choice.text && !$removeMode,
-				'!text-red-600': $removeMode
+				'!text-gray-400': !choice.text && !$removeModeStore,
+				'!text-red-600': $removeModeStore
 			})}
 		>
 			<p class="w-full truncate text-left">
-				{choice.text || ($removeMode ? 'Удалить выбор' : 'Вариант выбора')}
+				{choice.text || ($removeModeStore ? 'Удалить выбор' : 'Вариант выбора')}
 			</p>
-			{#if $removeMode}
+			{#if $removeModeStore}
 				<Icon type={Trash} class="shrink-0" />
 			{/if}
 		</Button>

@@ -2,7 +2,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { ICON_TYPE } from '$lib/constants';
 	import { storyInfo } from '$lib/stores/editing';
-	import { activeAction } from '$lib/stores/newediting';
+	import { activeActionStore } from '$lib/stores/newediting';
 	import { Tag } from '$UI';
 	import clsx from 'clsx';
 	import { Cloud } from 'svelte-heros-v2';
@@ -21,5 +21,5 @@
 	)}
 >
 	<Icon type={Cloud} variation={$storyInfo.timer ? ICON_TYPE : 'solid'} class={clsx('h-4 w-4')} />
-	{$activeAction || 'Просмотр'}
+	{$activeActionStore || 'Просмотр'}
 </Tag>

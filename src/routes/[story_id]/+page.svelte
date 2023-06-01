@@ -3,10 +3,9 @@
 	import Frame from '$lib/components/Frame.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { updateProgress } from '$lib/requests/progress';
-	import { currentPanel } from '$lib/stores/main';
-	import { infoStore } from '$lib/stores/reading';
-	import { bodyColor } from '$lib/stores/story.js';
-	import { rootStyle } from '$lib/utils/custom_colors.js';
+	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { storyStore } from '$lib/stores/reading';
+	import { rootStyle } from '$lib/utils/custom_colors';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -59,12 +58,12 @@
 	};
 
 	onMount(() => {
-		infoStore.set(data.story);
+		$storyStore = data.story;
 
 		scrollTo(current - 1);
 
 		return () => {
-			currentPanel.clear();
+			currentPanelStore.clear();
 		};
 	});
 
@@ -72,12 +71,12 @@
 		scrollTo(current - 1);
 	});
 
-	$bodyColor = data.story.color || DEFAULT_COLOR;
+	$bodyColorStore = data.story.color || DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>{data.story.title}</title>
-	{@html rootStyle($bodyColor)}
+	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
 <svelte:window on:keydown={handleKeydown} />

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { storyInfo } from '$lib/stores/editing';
-	import { activeAction } from '$lib/stores/newediting';
+	import { activeActionStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';
 	import Radar from './Radar.svelte';
 	import StateMode from './StateMode.svelte';
 </script>
 
 <div class="area">
-	<div class={clsx('footer', $activeAction !== 'view' ? 'blind' : 'pointer-events-auto')}>
+	<div class={clsx('footer', $activeActionStore !== 'view' ? 'blind' : 'pointer-events-auto')}>
 		<Radar />
 		<div class="info">
 			<p>

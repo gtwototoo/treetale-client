@@ -5,7 +5,7 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signUpUser } from '$lib/requests/user';
-	import { bodyColor } from '$lib/stores/story';
+	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
@@ -54,12 +54,12 @@
 
 	$: disabled = !name;
 
-	$bodyColor = DEFAULT_COLOR;
+	$bodyColorStore = DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>Завершение регистрации</title>
-	{@html rootStyle($bodyColor)}
+	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
 <ReadCard

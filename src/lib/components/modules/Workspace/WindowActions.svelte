@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
-	import { activeAction, oneDirectionMode } from '$lib/stores/newediting';
+	import { activeActionStore, oneDirectionModeStore } from '$lib/stores/newediting';
 
 	let innerHeight: number;
 	let innerWidth: number;
@@ -13,7 +13,7 @@
 				break;
 			case 'shift':
 				e.preventDefault();
-				$oneDirectionMode = true;
+				$oneDirectionModeStore = true;
 				$connect.active = false;
 				break;
 			case !e.shiftKey && 'c':
@@ -36,10 +36,10 @@
 			case 'm':
 				$storyInfo.addFrameMode = false;
 				$storyInfo.addFrameOffset = null;
-				$activeAction = null;
+				$activeActionStore = null;
 				break;
 			case 'shift':
-				$oneDirectionMode = false;
+				$oneDirectionModeStore = false;
 				break;
 			case 'c':
 				$connect = {

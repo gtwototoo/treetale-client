@@ -10,7 +10,9 @@ export const load = async ({ locals }) => {
 
 	const stories = await StoriesModel.find({
 		userId: user.userId
-	}).select(USER_WITHOUT_WORKSPACE);
+	})
+		.select(USER_WITHOUT_WORKSPACE)
+		.lean();
 
 	return {
 		stories: serialize(stories)

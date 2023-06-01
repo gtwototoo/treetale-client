@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing';
-	import { activeAction, selectedFrame } from '$lib/stores/newediting';
+	import { activeActionStore, selectedFrameStore } from '$lib/stores/newediting';
 	import type { ICoordinates } from '$lib/types';
 	import type { IStartMove } from '$lib/types/editing';
 	import clsx from 'clsx';
@@ -36,10 +36,10 @@
 		const coordinates = isMouse ? e : e.touches[0];
 		const { clientX: x, clientY: y } = coordinates;
 
-		if ($activeAction === 'movingFrame') {
+		if ($activeActionStore === 'movingFrame') {
 			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
 		}
-		if ($activeAction === 'movingArea') grabbingArea({ x, y }, startOffset);
+		if ($activeActionStore === 'movingArea') grabbingArea({ x, y }, startOffset);
 		if ($connect.connector.from !== null) moveRivet({ x, y });
 		if ($storyInfo.addFrameMode) cursorFollow({ x, y });
 	};
@@ -50,21 +50,21 @@
 		const { clientX: x, clientY: y } = coordinates;
 
 		if (!isMouse || e.button === 1 || e.detail === 2) startOffset = startGrab({ x, y });
-		if (isMouse && e.button === 0 && $selectedFrame) {
+		if (isMouse && e.button === 0 && $selectedFrameStore) {
 			startMoveData = startMoveFrame({ x, y });
 		}
 	};
 
 	const handleMouseUp = () => {
-		if ($activeAction === 'movingFrame') {
+		if ($activeActionStore === 'movingFrame') {
 			changesHistory.add({
 				title: 'Перемещение фрейма',
 				icon: Square2Stack
 			});
 		}
 
-		$selectedFrame = null;
-		$activeAction = 'view';
+		$selectedFrameStore = null;
+		$activeActionStore = 'view';
 
 		connectorLogic();
 		storyInfo.saveArea();
@@ -115,8 +115,8 @@
 <div
 	class={clsx(
 		'absolute h-full w-full select-none overflow-hidden',
-		{ 'cursor-grabbing': $activeAction === 'movingArea' },
-		{ 'cursor-move': $activeAction === 'movingFrame' }
+		{ 'cursor-grabbing': $activeActionStore === 'movingArea' },
+		{ 'cursor-move': $activeActionStore === 'movingFrame' }
 	)}
 	bind:this={workspace}
 	use:pinch

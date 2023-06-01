@@ -3,8 +3,8 @@
 	import Header from '$lib/components/modules/Header';
 	import Main from '$lib/components/modules/Header/Main.svelte';
 	import Panel from '$lib/components/modules/Panel';
-	import { currentPanel } from '$lib/stores/main';
-	import { activeAction } from '$lib/stores/newediting';
+	import { currentPanelStore } from '$lib/stores/main';
+	import { activeActionStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';
 	import '../app.postcss';
 </script>
@@ -13,16 +13,16 @@
 	<Header>
 		<svelte:component this={$page.data.header || Main} />
 	</Header>
-	{#if $currentPanel.component}
+	{#if $currentPanelStore.component}
 		<Panel
-			on:click={currentPanel.clear}
+			on:click={currentPanelStore.clear}
 			class={clsx(
 				'transition-opacity',
-				$activeAction !== 'view' ? 'blind' : 'pointer-events-auto'
+				$activeActionStore !== 'view' ? 'blind' : 'pointer-events-auto'
 			)}
-			title={$currentPanel.title}
+			title={$currentPanelStore.title}
 		>
-			<svelte:component this={$currentPanel.component} />
+			<svelte:component this={$currentPanelStore.component} />
 		</Panel>
 	{/if}
 	<slot />

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button, Selector, SelectorItem } from '$UI';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
@@ -6,11 +7,10 @@
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signOutUser } from '$lib/requests/user';
+	import { bodyColorStore } from '$lib/stores/main';
 	import { colorStore } from '$lib/stores/profile';
-	import { bodyColor } from '$lib/stores/story.js';
 	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
-	import { Button, Selector, SelectorItem } from '$UI';
 	import {
 		ArrowRightOnRectangle,
 		Eye,
@@ -54,12 +54,12 @@
 
 	$: ({ url } = $page);
 	$: ({ statistic } = data);
-	$: $bodyColor = $colorStore || user.color || DEFAULT_COLOR;
+	$: $bodyColorStore = $colorStore || user.color || DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>{me ? 'Профиль' : user.name}</title>
-	{@html rootStyle($bodyColor)}
+	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
 <div class="profile">

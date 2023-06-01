@@ -4,7 +4,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { createStory } from '$lib/requests/story';
-	import { currentPanel } from '$lib/stores/main';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { Button } from '$UI';
 	import { onDestroy } from 'svelte';
 	import { Plus } from 'svelte-heros-v2';
@@ -26,7 +26,7 @@
 	};
 
 	onDestroy(() => {
-		currentPanel.clear();
+		currentPanelStore.clear();
 	});
 </script>
 

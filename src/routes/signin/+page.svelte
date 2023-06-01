@@ -4,7 +4,7 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
-	import { bodyColor } from '$lib/stores/story';
+	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
@@ -90,7 +90,7 @@
 		}
 	});
 
-	$bodyColor = DEFAULT_COLOR;
+	$bodyColorStore = DEFAULT_COLOR;
 </script>
 
 <svelte:head>
@@ -102,7 +102,7 @@
 			async
 		></script>
 	{/if}
-	{@html rootStyle($bodyColor)}
+	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
 <ReadCard

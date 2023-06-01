@@ -2,14 +2,14 @@
 	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { createStory } from '$lib/requests/story';
-	import { currentPanel } from '$lib/stores/main';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { Pencil, Plus } from 'svelte-heros-v2';
 	import { ProfileSettings } from '../Panel';
 
 	let loading = false;
 
 	const settingsSwitch = () =>
-		($currentPanel = {
+		($currentPanelStore = {
 			id: 'Настройки профиля',
 			component: ProfileSettings
 		});

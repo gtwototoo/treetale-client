@@ -2,7 +2,6 @@ import { updateFrames } from '$lib/requests/story';
 import type { ICoordinates, IVariable } from '$lib/types';
 import type { IConnect, IFrameCreate, IMove, IStoryCreate } from '$lib/types/editing';
 import { serialize } from '$lib/utils';
-import { framesCorrect } from '$lib/utils/editing';
 import type { SvelteComponent } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
 
@@ -123,12 +122,7 @@ const storyInfoStore = () => {
 					const { offset, scale, storyId } = get(storyInfo);
 					const framesList: IFrameCreate[] = get(frames);
 
-					const { response } = await updateFrames(
-						storyId,
-						framesCorrect(framesList),
-						offset,
-						scale
-					);
+					const { response } = await updateFrames(storyId, framesList, offset, scale);
 
 					update((data: IStoryCreate) => {
 						clearTimeout(data.timer);
