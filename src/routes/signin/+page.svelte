@@ -1,29 +1,31 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { Button, Input } from '$UI';
 	import { PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY } from '$env/static/public';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
-	import { Button, Input } from '$UI';
 	import clsx from 'clsx';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import Turnstile from './Turnstile.svelte';
 
-	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
+	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
 
 	let value: string = '';
 	let loading: boolean = false;
 	let message: { error: boolean; text: string } | null = null;
 
-	let turnstileLoaded = browser ? Object.hasOwn(window, 'turnstile') : false;
-	let turnstileElement: HTMLDivElement | undefined = undefined;
-	let turnstileWidgetId: string | undefined = undefined;
+	let reset: () => void | undefined;
 	let turnstileToken: string | undefined = undefined;
-	let mounted = false;
 
 	$: disabled = !value;
+
+	const handleCallback = ({ detail }: CustomEvent<{ token: string }>) => {
+		turnstileToken = detail.token;
+		message = null;
+	};
 
 	const handleSignIn = async () => {
 		if (!turnstileToken || disabled || loading) {
@@ -34,11 +36,12 @@
 			loading = true;
 
 			const { error, response, status } = await signInUser(value, turnstileToken);
+			console.log(error, response, status);
 
 			if (status === 422) {
 				turnstileToken = undefined;
 
-				window.turnstile.reset(turnstileWidgetId);
+				reset();
 			}
 
 			if (error) throw error;
@@ -60,34 +63,11 @@
 		}
 	};
 
-	const onTurnstileReset = () => {
-		turnstileToken = undefined;
-		window.turnstile.reset(turnstileWidgetId);
-	};
-
-	const onTurnstileLoaded = () => {
-		turnstileWidgetId = window.turnstile.render(turnstileElement, {
-			sitekey: PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY,
-			callback(token: string) {
-				turnstileToken = token;
-				message = null;
-			},
-			'expired-callback': onTurnstileReset,
-			'error-callback': onTurnstileReset
-		});
-
+	onMount(() => {
 		message = {
 			error: true,
 			text: 'Проверяем, что вы человек'
 		};
-	};
-
-	onMount(() => {
-		mounted = true;
-
-		if (turnstileLoaded) {
-			onTurnstileLoaded();
-		}
 	});
 
 	$bodyColorStore = DEFAULT_COLOR;
@@ -95,13 +75,6 @@
 
 <svelte:head>
 	<title>Авторизация</title>
-	{#if !turnstileLoaded && mounted}
-		<script
-			src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-			on:load={onTurnstileLoaded}
-			async
-		></script>
-	{/if}
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
@@ -112,7 +85,11 @@
 >
 	<form class="cardButtons relative" method="POST" on:submit|preventDefault={handleSignIn}>
 		<Input placeholder="Псевдоним или почта" class="w-full text-center" size="lg" bind:value />
-		<div bind:this={turnstileElement} />
+		<Turnstile
+			siteKey={PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY}
+			on:turnstile-callback={handleCallback}
+			bind:reset
+		/>
 		<Button
 			variant="main"
 			type="submit"
