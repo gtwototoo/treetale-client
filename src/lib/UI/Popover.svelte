@@ -6,14 +6,14 @@
 	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
-	export let disabled: boolean = false;
+	export let disabled = false;
 	export let align: 'left' | 'right' = 'left';
-	export let value: string = '';
-	export let placeholder: string = '';
+	export let value = '';
+	export let placeholder = '';
 
-	let focused: boolean = false;
+	let focused = false;
 
 	const handleClick = () => {
 		focused = !focused;
@@ -26,9 +26,7 @@
 	on:outclick={() => (focused = false)}
 >
 	{#if $$slots.button}
-		<button class="flex h-full childs:h-full" on:click={handleClick}>
-			<slot name="button" {focused} />
-		</button>
+		<slot name="button" {focused} click={handleClick} />
 	{:else}
 		<Button class="w-full" on:click={handleClick}>
 			<p

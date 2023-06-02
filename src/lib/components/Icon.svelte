@@ -2,7 +2,7 @@
 	import { ICON_TYPE } from '$lib/constants';
 	import type { SvelteComponent } from 'svelte';
 
-	let classes: string = '';
+	let classes = '';
 
 	export let type: typeof SvelteComponent;
 	export let variation: 'solid' | 'outline' = ICON_TYPE;

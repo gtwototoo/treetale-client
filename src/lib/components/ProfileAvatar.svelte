@@ -21,11 +21,12 @@
 
 		imageLoading = true;
 
-		const request = await removeImage(user.avatarId, action);
+		try {
+			await removeImage(user.avatarId, action);
 
-		if (request.ok) {
-			imageLoading = false;
 			user.avatarId = null;
+		} finally {
+			imageLoading = false;
 		}
 	};
 
@@ -44,14 +45,14 @@
 			imageLoading = true;
 		};
 
-		const request = await saveImage(file, action);
+		try {
+			const response = await saveImage(file, action);
 
-		if (request.ok) {
-			const data = await request.json();
-
+			user.avatarId = response.imageId;
 			imageLoading = false;
 			tempAvatarURL = '';
-			user.avatarId = data.imageId;
+		} catch (e) {
+			console.error(e);
 		}
 	};
 

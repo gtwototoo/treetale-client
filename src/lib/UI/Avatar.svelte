@@ -2,7 +2,7 @@
 	import { clm } from '$lib/utils';
 	import { Photo } from '$UI';
 
-	let classes: string = '';
+	let classes = '';
 
 	export { classes as class };
 	export let alt: string;

@@ -1,33 +1,31 @@
 import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
+import { fetchPost } from '$lib/requests/index.js';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
-import { redirect } from '@sveltejs/kit';
+import { HttpError, redirect } from '@sveltejs/kit';
 
-export const load = async ({ fetch, params, cookies }) => {
+export const load = async ({ params, cookies }) => {
 	const { code } = params;
-	// fetchPost
 
-	const request = await fetch(`${PUBLIC_TREESTORY_API_URL}/session`, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			code
-		})
-	});
+	try {
+		const response = await fetchPost<{ sessionId: string }>(
+			`${PUBLIC_TREESTORY_API_URL}/session`,
+			{
+				code
+			}
+		);
 
-	if (request.status === 404) {
+		if (!response.sessionId) {
+			return {};
+		}
+
+		cookies.set('sessionId', response.sessionId, COOKIE_OPTIONS);
+
 		throw redirect(302, '/');
+	} catch (e) {
+		const error = e as HttpError;
+
+		if (error.status === 404) {
+			throw redirect(302, '/');
+		}
 	}
-
-	const { sessionId } = await request.json();
-
-	if (!sessionId) {
-		return {};
-	}
-
-	cookies.set('sessionId', sessionId, COOKIE_OPTIONS);
-
-	throw redirect(302, '/');
 };

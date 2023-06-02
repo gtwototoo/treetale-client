@@ -9,7 +9,7 @@
 	import VariableRow from './Variable.svelte';
 
 	let timer: number;
-	let saveInfo: string = 'Ожидание изменений';
+	let saveInfo = 'Ожидание изменений';
 
 	const addVariable = () => {
 		$vars = [
@@ -36,9 +36,13 @@
 		clearTimeout(timer);
 
 		timer = window.setTimeout(async () => {
-			const { error } = await updateVars($storyInfo.storyId, $vars);
+			try {
+				await updateVars($storyInfo.storyId, $vars);
 
-			saveInfo = error ? 'Ошибка сохранения' : 'Изменения сохранены';
+				saveInfo = 'Изменения сохранены';
+			} catch {
+				saveInfo = 'Ошибка сохранения';
+			}
 
 			clearTimeout(timer);
 		}, 3000);

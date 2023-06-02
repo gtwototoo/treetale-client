@@ -5,12 +5,12 @@
 	import { createEventDispatcher } from 'svelte';
 	import { ChevronDown } from 'svelte-heros-v2';
 
-	export let disabled: boolean = false;
+	export let disabled = false;
 	export let popoverAlign: 'left' | 'right' = 'right';
 	export let lightRange: number[] = [0, 100];
 	export let saturateRange: number[] = [0, 100];
-	export let light: number = 0;
-	export let saturate: number = 0;
+	export let light = 0;
+	export let saturate = 0;
 	export let color: RGB = [0, 0, 0];
 
 	const dispatch = createEventDispatcher();
@@ -25,19 +25,18 @@
 	};
 </script>
 
-<Popover align={popoverAlign}>
-	<svelte:fragment slot="button">
-		<div class="p-1.5 pl-0">
-			<Button
-				variant="main"
-				class="gap-1 bg-main !text-text transition-colors"
-				size="sm"
-				{disabled}
-			>
-				Цвет
-				<Icon type={ChevronDown} class="h-4 w-4" />
-			</Button>
-		</div>
+<Popover align={popoverAlign} class="-mr-2.5">
+	<svelte:fragment slot="button" let:click>
+		<Button
+			variant="main"
+			class="-my-0.5 ml-2 gap-1 bg-main !text-text transition-colors"
+			size="sm"
+			{disabled}
+			on:click={click}
+		>
+			Цвет
+			<Icon type={ChevronDown} class="h-4 w-4" />
+		</Button>
 	</svelte:fragment>
 	<div
 		class="flex flex-col gap-2 bg-transparent p-2 childs:w-40"

@@ -8,44 +8,33 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
+	import type { HttpError } from '@sveltejs/kit';
 	import clsx from 'clsx';
 	import { UserPlus } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
 	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
 
-	let name: string = '';
-	let loading: boolean = false;
+	let name = '';
+	let loading = false;
 	let message: { error: boolean; text: string } | null = null;
 
 	const handleSignUp = async () => {
+		loading = true;
+
 		try {
-			loading = true;
+			await signUpUser(name, $page.params.code);
 
-			const { error, response } = await signUpUser(name, $page.params.code);
+			goto('/profile', {
+				replaceState: true,
+				invalidateAll: true
+			});
+		} catch (e) {
+			const error = e as HttpError;
 
-			if (error) throw error;
-			if (response) {
-				if (!response.error) {
-					goto('/profile', {
-						replaceState: true,
-						invalidateAll: true
-					});
-
-					return;
-				}
-
-				message = {
-					error: response.error,
-					text: response.message
-				};
-			} else {
-				location.reload();
-			}
-		} catch ({ body }) {
 			message = {
-				error: body.error,
-				text: body.message
+				error: true,
+				text: error.body.message
 			};
 		} finally {
 			loading = false;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
 	export let style = '';
 </script>

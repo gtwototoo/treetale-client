@@ -10,7 +10,6 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"strictNullChecks": false,
-		"types": ["turnstile-types"]
+		"strictNullChecks": false
 	}
 }

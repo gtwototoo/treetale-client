@@ -9,13 +9,14 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { updateProfile } from '$lib/requests/user';
 	import { colorStore } from '$lib/stores/profile';
+	import type { HttpError } from '@sveltejs/kit';
 	import clsx from 'clsx';
 	import { Cog6Tooth } from 'svelte-heros-v2';
 	import Note from './Note.svelte';
 
-	let light: number = 80;
-	let saturate: number = 90;
-	let saveInfo: string = 'Ожидание сохранения';
+	let light = 80;
+	let saturate = 90;
+	let saveInfo = 'Ожидание сохранения';
 	let errored = false;
 	let loading = false;
 
@@ -31,15 +32,19 @@
 		errored = false;
 		loading = true;
 
-		const { error, response } = await updateProfile(name, description, color);
+		try {
+			await updateProfile(name, description, color);
 
-		loading = false;
-		errored = !!error;
-		saveInfo = error
-			? Object.hasOwn(response, 'message')
-				? response.message
-				: 'Ошибка сохранения'
-			: 'Изменения сохранены';
+			saveInfo = 'Изменения сохранены';
+		} catch (e) {
+			const error = e as HttpError;
+
+			errored = true;
+
+			saveInfo = error.body.message || 'Ошибка сохранения';
+		} finally {
+			loading = false;
+		}
 	};
 </script>
 

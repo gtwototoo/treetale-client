@@ -2,8 +2,12 @@
 	import { autoHeight } from '$lib/hooks';
 	import { clm } from '$lib/utils';
 
-	let classes: string = '';
-	let focused: boolean = false;
+	let classes = '';
+	export { classes as class };
+	export let value = '';
+	export let disabled = false;
+
+	let focused = false;
 
 	const handleFocus = () => {
 		focused = true;
@@ -12,10 +16,6 @@
 	const handleBlur = () => {
 		focused = false;
 	};
-
-	export { classes as class };
-	export let value: string = '';
-	export let disabled: boolean = false;
 </script>
 
 <div class={clm('textarea', { disabled, '!bg-blue-50': focused }, classes)}>

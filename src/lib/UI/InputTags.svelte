@@ -7,15 +7,16 @@
 	import { createEventDispatcher } from 'svelte';
 	import { XMark } from 'svelte-heros-v2';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
 	export let placeholder: string;
 	export let tags: string[] = [];
-	export let disabled: boolean = false;
-	export let value: string = '';
-	export let maxLength: number = 20;
+	export let disabled = false;
+	export let value = '';
+	export let maxLength = 20;
 
-	let focused: boolean = false;
+	let focused = false;
+
 	const dispatch = createEventDispatcher();
 
 	const removeTag = (name: string) => {

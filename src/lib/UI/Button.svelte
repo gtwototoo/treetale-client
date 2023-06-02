@@ -7,14 +7,14 @@
 
 	const dispatch = createEventDispatcher();
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
 	export let style: string | undefined = undefined;
 	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' | 'ghost' =
 		'secondary';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
-	export let disabled: boolean = false;
-	export let loading: boolean = false;
+	export let disabled = false;
+	export let loading = false;
 	export let element: HTMLButtonElement | undefined = undefined;
 	export let value: string | undefined = undefined;
 	export let type: 'button' | 'submit' | 'reset' | undefined = 'button';

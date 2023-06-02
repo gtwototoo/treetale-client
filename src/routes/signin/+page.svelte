@@ -6,15 +6,16 @@
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
+	import type { HttpError } from '@sveltejs/kit';
 	import clsx from 'clsx';
 	import { onMount } from 'svelte';
+	import { Turnstile } from 'svelte-turnstile';
 	import { fade } from 'svelte/transition';
-	import Turnstile from './Turnstile.svelte';
 
 	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
 
-	let value: string = '';
-	let loading: boolean = false;
+	let value = '';
+	let loading = false;
 	let message: { error: boolean; text: string } | null = null;
 
 	let reset: () => void | undefined;
@@ -32,31 +33,30 @@
 			return;
 		}
 
+		loading = true;
+
 		try {
-			loading = true;
+			const response = await signInUser(value, turnstileToken);
 
-			const { error, response, status } = await signInUser(value, turnstileToken);
-			console.log(error, response, status);
+			if (response) {
+				message = {
+					error: false,
+					text: response.message
+				};
+			} else {
+				location.reload();
+			}
+		} catch (e) {
+			const error = e as HttpError;
 
-			if (status === 422) {
+			if (error.status === 422) {
 				turnstileToken = undefined;
-
 				reset();
 			}
 
-			if (error) throw error;
-			if (response)
-				message = {
-					error: response.error,
-					text: response.message
-				};
-			else {
-				location.reload();
-			}
-		} catch ({ body }) {
 			message = {
-				error: body.error,
-				text: body.message
+				error: true,
+				text: error.body.message
 			};
 		} finally {
 			loading = false;

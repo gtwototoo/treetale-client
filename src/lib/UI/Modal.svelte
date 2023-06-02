@@ -7,9 +7,9 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
-	export let title: string = '';
+	export let title = '';
 	export let active: boolean;
 
 	let isMounted = false;
@@ -79,7 +79,7 @@
 
 <style lang="postcss">
 	.modal {
-		@apply fixed top-0 left-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
+		@apply fixed left-0 top-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
 	}
 	.window {
 		@apply m-4 flex flex-col rounded-2xl bg-white p-2 childs:w-full;

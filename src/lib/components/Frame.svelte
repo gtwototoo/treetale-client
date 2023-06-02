@@ -9,8 +9,8 @@
 
 	export let last: boolean;
 	export let frame: IFrame;
-	let styles = '';
-	export { styles as class };
+	let classes = '';
+	export { classes as class };
 	export let vars: IVariable[];
 	export let selectedChoiceId: number | undefined;
 	export let setChoice: (choiceId: number) => void;
@@ -31,7 +31,7 @@
 		{
 			'pointer-events-none opacity-10': !last
 		},
-		styles
+		classes
 	)}
 >
 	{#if frame.choices.length}

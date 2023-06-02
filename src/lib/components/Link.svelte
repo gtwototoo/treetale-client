@@ -1,6 +1,5 @@
 <script lang="ts">
-	let classes: string = '';
-
+	let classes = '';
 	export let href: string;
 	export { classes as class };
 </script>

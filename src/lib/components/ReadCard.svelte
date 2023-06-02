@@ -7,12 +7,12 @@
 
 	export let src: string | null = null;
 	export let text: string;
-	let styles = '';
-	export { styles as class };
+	let classes = '';
+	export { classes as class };
 	export let alt = 'Иллюстрация';
 </script>
 
-<div class={clsx('card', styles)}>
+<div class={clsx('card', classes)}>
 	<div class="photoArea">
 		<Photo {src} {alt} class="img bg-white" cover width={480}>
 			<svelte:fragment slot="error">

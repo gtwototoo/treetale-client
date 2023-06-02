@@ -19,28 +19,32 @@
 		e.preventDefault();
 
 		switch (e.key) {
-			case 'ArrowUp':
+			case 'ArrowUp': {
 				if (current > 1) current -= 1;
 				break;
-			case 'ArrowDown':
+			}
+			case 'ArrowDown': {
 				if (current < data.progress.length) current += 1;
 				break;
-			case 'Space':
+			}
+			case 'Space': {
 				const lastFrameChoices = data.frames.at(-1)?.choices;
 
 				if (lastFrameChoices && lastFrameChoices.length === 1)
 					setChoice(lastFrameChoices[0].choiceId);
 				break;
+			}
 		}
 	};
 
 	const setChoice = async (id: number) => {
-		const response = await updateProgress(data.story.storyId, id);
-
-		if (!response.error) {
+		try {
+			await updateProgress(data.story.storyId, id);
 			await invalidateAll();
 
 			current = data.progress.length;
+		} catch (e) {
+			console.error(e);
 		}
 	};
 

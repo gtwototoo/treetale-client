@@ -42,13 +42,15 @@
 	};
 
 	const handleSignOut = async () => {
-		const { response } = await signOutUser();
+		try {
+			await signOutUser();
 
-		if (!response.error) {
 			goto('/', {
 				replaceState: true,
 				invalidateAll: true
 			});
+		} catch (e) {
+			console.error(e);
 		}
 	};
 

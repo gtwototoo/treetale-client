@@ -5,7 +5,7 @@ import type { IStoryFull, IStoryReading } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
 import { serialize } from '$lib/utils';
 
-export const load = async ({ locals }) => {
+export const load = async () => {
 	const rawStories: IStorySchema[] = await StoriesModel.find({
 		draft: false
 	})

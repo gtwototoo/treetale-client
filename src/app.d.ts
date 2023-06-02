@@ -4,7 +4,7 @@ import type { IUser, RGB } from './lib/types';
 declare global {
 	namespace App {
 		interface Error {
-			img: string;
+			img?: string;
 			color?: RGB;
 			message: string;
 		}

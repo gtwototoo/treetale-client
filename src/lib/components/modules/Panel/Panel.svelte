@@ -5,7 +5,7 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes: string = '';
+	let classes = '';
 
 	export { classes as class };
 	export let title: string | undefined = undefined;

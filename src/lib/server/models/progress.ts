@@ -9,11 +9,11 @@ const progressSchema = new mongoose.Schema<IProgressData>(
 		choices: Array,
 		started: {
 			type: Number,
-			default: Date.now,
-		},
+			default: Date.now
+		}
 	},
 	{
-		versionKey: false,
+		versionKey: false
 	}
 );
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { clm } from '$lib/utils';
 
-	let classes: string = '';
+	let classes = '';
 
 	export { classes as class };
 </script>

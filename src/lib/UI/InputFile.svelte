@@ -6,9 +6,9 @@
 
 	let fileInput: HTMLInputElement;
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
-	export let disabled: boolean = false;
+	export let disabled = false;
 	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' = 'secondary';
 
 	const handleClick = (e: CustomEvent) => {

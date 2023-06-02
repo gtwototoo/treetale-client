@@ -1,28 +1,19 @@
 import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
+import { fetchDelete, fetchPost } from '.';
+
+interface IResponse {
+	imageId: string;
+}
 
 export const removeImage = async (id: string, actions = '', storyId?: number, frameId?: number) => {
-	const options: Record<string, number> = {};
+	const body: Record<string, number> = {};
 
-	if (storyId) {
-		options.storyId = storyId;
-	}
-
-	if (frameId) {
-		options.frameId = frameId;
-	}
-
-	return fetch(`${PUBLIC_TREESTORY_API_URL}/images`, {
-		method: 'DELETE',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json'
-		},
-		credentials: 'include',
-		body: JSON.stringify({
-			id,
-			actions,
-			...options
-		})
+	return await fetchDelete<IResponse>(`${PUBLIC_TREESTORY_API_URL}/images`, {
+		id,
+		actions,
+		storyId,
+		frameId,
+		...body
 	});
 };
 
@@ -31,9 +22,8 @@ export const saveImage = async (file: File, actions = '', args = '') => {
 
 	body.append('image', file);
 
-	return fetch(`${PUBLIC_TREESTORY_API_URL}/images?actions=${actions}${args}`, {
-		method: 'POST',
-		credentials: 'include',
+	return await fetchPost<IResponse>(
+		`${PUBLIC_TREESTORY_API_URL}/images?actions=${actions}${args}`,
 		body
-	});
+	);
 };

@@ -16,16 +16,16 @@
 	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
-	export let disabled: boolean = false;
+	export let disabled = false;
 	export let align: 'left' | 'right' = 'left';
-	export let value: string = '';
+	export let value = '';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let placeholder: string;
 	export let list: IList[];
 
-	let focused: boolean = false;
+	let focused = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -49,9 +49,7 @@
 	on:outclick={() => (focused = false)}
 >
 	{#if $$slots.default}
-		<button on:click={handleClick} class="bg-transparent">
-			<slot value={value || placeholder} />
-		</button>
+		<slot value={value || placeholder} click={handleClick} />
 	{:else}
 		<Button class="w-full" {size} on:click={handleClick}>
 			<p class={clsx('pr-5', { 'text-gray-200': !value })}>

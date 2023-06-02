@@ -2,12 +2,12 @@
 	import { clsx } from 'clsx';
 	import { onMount } from 'svelte';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
-	export let current: number = 0;
+	export let current = 0;
 
 	let carouselRef: HTMLDivElement;
-	let ready: boolean = false;
+	let ready = false;
 
 	const toItem = (key: number) => {
 		if (!carouselRef) return;
@@ -53,6 +53,6 @@
 
 <style lang="postcss">
 	.carousel {
-		@apply scrollbar-none flex snap-x snap-mandatory items-center overflow-x-auto;
+		@apply flex snap-x snap-mandatory items-center overflow-x-auto scrollbar-none;
 	}
 </style>

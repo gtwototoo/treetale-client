@@ -34,10 +34,12 @@
 				bind:value={data.expect}
 				placeholder="Тип"
 				list={types}
+				class="-mr-2.5 ml-2"
 				on:input={handleInput}
 				let:value
+				let:click
 			>
-				<Button class="m-1.5 ml-0 gap-1" size="sm">
+				<Button class="-my-0.5 gap-1" size="sm" on:click={click}>
 					{value}
 					<Icon type={ChevronDown} class="h-4 w-4" />
 				</Button>

@@ -7,8 +7,8 @@
 	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
-	export let src: string = '';
-	export let alt: string = '';
+	export let src = '';
+	export let alt = '';
 	export let cover = false;
 	export { classes as class };
 	export let width: number;

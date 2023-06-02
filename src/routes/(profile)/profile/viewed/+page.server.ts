@@ -1,3 +1,4 @@
+import type { IStoryFull } from '$lib/types/reading.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
@@ -6,6 +7,6 @@ export const load = async ({ locals }) => {
 	if (!user) throw redirect(302, '/');
 
 	return {
-		stories: []
+		stories: [] as IStoryFull[]
 	};
 };

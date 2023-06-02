@@ -5,13 +5,13 @@
 	import { clsx } from 'clsx';
 	import type { SvelteComponent } from 'svelte';
 
-	let classes: string = '';
+	let classes = '';
 	export { classes as class };
-	export let coreClass: string = '';
-	export let value: string = '';
-	export let number: boolean = false;
+	export let coreClass = '';
+	export let value = '';
+	export let number = false;
 	export let size: 'sm' | 'base' | 'lg' = 'base';
-	export let disabled: boolean = false;
+	export let disabled = false;
 	export let icon: typeof SvelteComponent | undefined = undefined;
 	export let required = false;
 	export let maxlength: number | undefined = undefined;

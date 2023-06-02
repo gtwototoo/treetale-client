@@ -11,10 +11,10 @@
 	import { onDestroy } from 'svelte';
 	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
 
-	let light: number = 80;
-	let saturate: number = 90;
+	let light = 80;
+	let saturate = 90;
 	let timer: number;
-	let saveInfo: string = 'Ожидание изменений';
+	let saveInfo = 'Ожидание изменений';
 	let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
 
 	const setColor = ({ detail }: CustomEvent) => {
@@ -28,15 +28,21 @@
 
 		timer = window.setTimeout(async () => {
 			const { title, tags, color, description, storyId, draft } = $storyInfo;
-			const { error } = await updateInfo(storyId, {
-				title,
-				tags,
-				color,
-				description,
-				draft
-			});
 
-			saveInfo = error ? 'Ошибка сохранения' : 'Изменения сохранены';
+			try {
+				await updateInfo(storyId, {
+					title,
+					tags,
+					color,
+					description,
+					draft
+				});
+
+				saveInfo = 'Изменения сохранены';
+			} catch {
+				saveInfo = 'Ошибка сохранения';
+			}
+
 			clearTimeout(timer);
 		}, 500);
 	};
@@ -46,34 +52,34 @@
 	const preRemoveImage = async () => {
 		if (!$storyInfo.imageId) return;
 
-		const request = await removeImage($storyInfo.imageId, action, $storyInfo.storyId);
+		try {
+			await removeImage($storyInfo.imageId, action, $storyInfo.storyId);
 
-		if (request.ok) {
 			$storyInfo.imageId = null;
-
 			state = undefined;
 
 			changesHistory.add({
 				title: 'Удаление изображения',
 				icon: XMark
 			});
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
 	const preSaveImage = async (file: File): Promise<void> => {
-		const request = await saveImage(file, action, `&storyId=${$storyInfo.storyId}`);
+		try {
+			const response = await saveImage(file, action, `&storyId=${$storyInfo.storyId}`);
 
-		if (request.ok) {
-			const data = await request.json();
-
-			$storyInfo.imageId = data.imageId;
-
+			$storyInfo.imageId = response.imageId;
 			state = undefined;
 
 			changesHistory.add({
 				title: 'Добавление изображения',
 				icon: PhotoIcon
 			});
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
@@ -87,8 +93,6 @@
 		$storyInfo.draft = !$storyInfo.draft;
 		checkUpdates();
 	};
-
-	export { styles as class };
 
 	onDestroy(() => {
 		if (timer) {

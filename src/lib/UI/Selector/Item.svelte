@@ -2,7 +2,7 @@
 	import { Button } from '$UI';
 	import { clsx } from 'clsx';
 
-	export let active: boolean = false;
+	export let active = false;
 	let classes = '';
 	export { classes as class };
 </script>

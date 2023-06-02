@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 
-	let classes: string = '';
+	let classes = '';
 
-	export let vertical: boolean = false;
+	export let vertical = false;
 	export { classes as class };
 </script>
 

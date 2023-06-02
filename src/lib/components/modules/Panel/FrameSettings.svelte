@@ -25,22 +25,22 @@
 			imageLoading = true;
 		};
 
-		const request = await saveImage(
-			file,
-			action,
-			`&storyId=${$storyInfo.storyId}&frameId=${$panelFrameStore.frameId}`
-		);
+		try {
+			const response = await saveImage(
+				file,
+				action,
+				`&storyId=${$storyInfo.storyId}&frameId=${$panelFrameStore.frameId}`
+			);
 
-		if (request.ok) {
-			const data = await request.json();
-
+			avatarId = response.imageId;
 			imageLoading = false;
-			avatarId = data.imageId;
 
 			changesHistory.add({
 				title: 'Добавление изображения',
 				icon: Photo
 			});
+		} catch (e) {
+			console.error(e);
 		}
 	};
 

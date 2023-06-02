@@ -3,12 +3,12 @@
 	import type { IFrameCreate } from '$lib/types/editing';
 	import clsx from 'clsx';
 
-	let styles: string = '';
-	export { styles as class };
-	export let active: boolean = false;
+	let classes = '';
+	export { classes as class };
+	export let active = false;
 	export let style: string | undefined = undefined;
 	export let frame: IFrameCreate | undefined = undefined;
-	export let choiceId: number = 0;
+	export let choiceId: number;
 
 	const setRivetY = (node: HTMLDivElement, frame: IFrameCreate) => {
 		if (!frame) return;
@@ -33,7 +33,7 @@
 
 <div
 	use:setRivetY={frame}
-	class={clsx('rivet', styles, {
+	class={clsx('rivet', classes, {
 		connect: $connect.active,
 		'after:!bg-emerald-500': active
 	})}
