@@ -17,7 +17,7 @@ type IOverrideStoryInfo = Writable<IStoryCreate> & {
 type IChange = {
 	data?: IFrameCreate[];
 	title: string;
-	icon: typeof SvelteComponent;
+	icon: typeof SvelteComponent<never>;
 };
 
 type IChanges = {

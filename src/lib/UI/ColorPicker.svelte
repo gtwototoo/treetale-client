@@ -13,7 +13,7 @@
 	export let saturate = 0;
 	export let color: RGB = [0, 0, 0];
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ change: { color: RGB} }>();
 
 	const handleClick = (e: MouseEvent) => {
 		if (disabled || !(e.target instanceof HTMLButtonElement)) return;
@@ -21,7 +21,8 @@
 		const newColor = e.target.style.background.replace(/rgb\((\d*), (\d*), (\d*)\)/, '$1 $2 $3');
 
 		color = newColor.split(' ').map((v) => +v) as RGB;
-		dispatch('change', { ...e, color });
+
+		dispatch('change', { color });
 	};
 </script>
 

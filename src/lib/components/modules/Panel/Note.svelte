@@ -4,7 +4,7 @@
 	import type { SvelteComponent } from 'svelte';
 
 	export let text: string | undefined = undefined;
-	export let icon: typeof SvelteComponent;
+	export let icon: typeof SvelteComponent<any>;
 </script>
 
 <div class="flex select-none flex-col items-center gap-2 px-4 pb-4 text-center text-sm">

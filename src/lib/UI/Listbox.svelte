@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	export interface IList {
 		click?: (e: CustomEvent) => void;
-		icon?: typeof SvelteComponent;
+		icon?: typeof SvelteComponent<any>;
 		text: string;
 	}
 </script>

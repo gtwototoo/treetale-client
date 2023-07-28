@@ -17,7 +17,6 @@
 	};
 
 	const handleDragEnter = (e: DragEvent) => {
-		console.log(e);
 		e.dataTransfer.dropEffect = 'copy';
 		dragged = true;
 	};

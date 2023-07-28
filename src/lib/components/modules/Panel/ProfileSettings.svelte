@@ -22,7 +22,8 @@
 
 	let name = $page.data.session.name;
 	let description = $page.data.session.description;
-	let color = $page.data.session.color;
+
+	$: $colorStore = $page.data.session.color;
 
 	const setColor = ({ detail }: CustomEvent) => {
 		$colorStore = detail.color;
@@ -33,7 +34,7 @@
 		loading = true;
 
 		try {
-			await updateProfile(name, description, color);
+			await updateProfile(name, description, $colorStore);
 
 			saveInfo = 'Изменения сохранены';
 		} catch (e) {
@@ -58,7 +59,7 @@
 			<ColorPicker
 				lightRange={[10, 80]}
 				saturateRange={[10, 90]}
-				color={$colorStore || color || DEFAULT_COLOR}
+				color={$colorStore || DEFAULT_COLOR}
 				{saturate}
 				{light}
 				on:change={setColor}

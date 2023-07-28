@@ -12,7 +12,7 @@
 	export let number = false;
 	export let size: 'sm' | 'base' | 'lg' = 'base';
 	export let disabled = false;
-	export let icon: typeof SvelteComponent | undefined = undefined;
+	export let icon: typeof SvelteComponent<any> | undefined = undefined;
 	export let required = false;
 	export let maxlength: number | undefined = undefined;
 	export let placeholder: string;

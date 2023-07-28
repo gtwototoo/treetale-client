@@ -75,7 +75,7 @@
 	};
 </script>
 
-<div
+<button
 	class={clsx('input', { disabled, 'p-1.5': tags.length, focused: 'bg-blue-50' }, classes)}
 	on:keydown={handleKeydown}
 >
@@ -101,7 +101,7 @@
 		on:blur={() => (focused = false)}
 		use:autoWidth={value}
 	/>
-</div>
+</button>
 
 <style lang="postcss">
 	input {
