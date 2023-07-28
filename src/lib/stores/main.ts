@@ -6,7 +6,7 @@ import { writable } from 'svelte/store';
 interface IPanel {
 	title?: string;
 	id: string;
-	component?: typeof SvelteComponent<never>;
+	component?: typeof SvelteComponent<unknown>;
 }
 
 const currentPanelCustomStore = () => {
