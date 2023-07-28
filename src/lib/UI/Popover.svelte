@@ -40,7 +40,7 @@
 		</Button>
 	{/if}
 	{#if focused}
-		<div in:fly|local={{ y: 10 }} class={clsx('content', `${align}-0`)} use:correctPosition>
+		<div in:fly={{ y: 10 }} class={clsx('content', `${align}-0`)} use:correctPosition>
 			<slot />
 		</div>
 	{/if}

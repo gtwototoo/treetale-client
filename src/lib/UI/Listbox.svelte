@@ -62,7 +62,7 @@
 		</Button>
 	{/if}
 	{#if focused}
-		<div in:fly|local={{ y: 10 }} class={clsx('list', `${align}-0`)} use:correctPosition>
+		<div in:fly={{ y: 10 }} class={clsx('list', `${align}-0`)} use:correctPosition>
 			{#each list as item}
 				<Button
 					on:click={(e) => handleSelect(e, item)}

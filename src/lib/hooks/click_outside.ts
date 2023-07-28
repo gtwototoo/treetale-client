@@ -6,9 +6,16 @@ interface IClickOutside {
 
 export const clickOutside = (node: HTMLElement): ActionReturn<null, IClickOutside> => {
 	const handleClick = (e: MouseEvent) => {
-		if (e.target instanceof Element && node.contains(e.target)) return;
+		if (
+			e.target instanceof HTMLElement &&
+			(node.contains(e.target) || node.contains(e.target.offsetParent))
+		) {
+			return;
+		}
 
-		node.dispatchEvent(new CustomEvent('outclick', e));
+		setTimeout(() => {
+			node.dispatchEvent(new CustomEvent('outclick', e));
+		});
 	};
 
 	document.addEventListener('click', handleClick, true);

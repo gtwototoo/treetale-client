@@ -3,7 +3,7 @@
 	import { fade } from 'svelte/transition';
 </script>
 
-<div class="pointer-events-none absolute top-24 flex w-full justify-center" out:fade|local>
+<div class="pointer-events-none absolute top-24 flex w-full justify-center" out:fade>
 	<div class="plug gap-4">
 		<h2>Начало</h2>
 		<p>
