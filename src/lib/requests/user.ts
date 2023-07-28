@@ -1,10 +1,9 @@
 import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
 import { fetchPost } from '.';
 
-export const signInUser = async (value: string, token: string) => {
+export const signInUser = async (value: string) => {
 	return await fetchPost(`${PUBLIC_TREESTORY_API_URL}/sign-in`, {
 		value,
-		token
 	});
 };
 

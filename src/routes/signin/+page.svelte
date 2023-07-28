@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Button, Input } from '$UI';
-	import { PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY } from '$env/static/public';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
@@ -8,8 +7,6 @@
 	import { rootStyle } from '$lib/utils';
 	import type { HttpError } from '@sveltejs/kit';
 	import clsx from 'clsx';
-	import { onMount } from 'svelte';
-	import { Turnstile } from 'svelte-turnstile';
 	import { fade } from 'svelte/transition';
 
 	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
@@ -18,25 +15,17 @@
 	let loading = false;
 	let message: { error: boolean; text: string } | null = null;
 
-	let reset: () => void | undefined;
-	let turnstileToken: string | undefined = undefined;
-
 	$: disabled = !value;
 
-	const handleCallback = ({ detail }: CustomEvent<{ token: string }>) => {
-		turnstileToken = detail.token;
-		message = null;
-	};
-
 	const handleSignIn = async () => {
-		if (!turnstileToken || disabled || loading) {
+		if (disabled || loading) {
 			return;
 		}
 
 		loading = true;
 
 		try {
-			const response = await signInUser(value, turnstileToken);
+			const response = await signInUser(value);
 
 			if (response) {
 				message = {
@@ -49,11 +38,6 @@
 		} catch (e) {
 			const error = e as HttpError;
 
-			if (error.status === 422) {
-				turnstileToken = undefined;
-				reset();
-			}
-
 			message = {
 				error: true,
 				text: error.body.message
@@ -62,13 +46,6 @@
 			loading = false;
 		}
 	};
-
-	onMount(() => {
-		message = {
-			error: true,
-			text: 'Проверяем, что вы человек'
-		};
-	});
 
 	$bodyColorStore = DEFAULT_COLOR;
 </script>
@@ -85,11 +62,6 @@
 >
 	<form class="cardButtons relative" method="POST" on:submit|preventDefault={handleSignIn}>
 		<Input placeholder="Псевдоним или почта" class="w-full text-center" size="lg" bind:value />
-		<Turnstile
-			siteKey={PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY}
-			on:turnstile-callback={handleCallback}
-			bind:reset
-		/>
 		<Button
 			variant="main"
 			type="submit"
