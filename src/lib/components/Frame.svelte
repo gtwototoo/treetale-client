@@ -7,10 +7,11 @@
 	import { Button, FormSplit } from '$UI';
 	import clsx from 'clsx';
 
-	export let last: boolean;
-	export let frame: IFrame;
 	let className = '';
 	export { className as class };
+
+	export let last: boolean;
+	export let frame: IFrame;
 	export let vars: IVariable[];
 	export let selectedChoiceId: number | undefined;
 	export let setChoice: (choiceId: number) => void;

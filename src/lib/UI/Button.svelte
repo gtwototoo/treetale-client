@@ -9,6 +9,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let style: string | undefined = undefined;
 	export let variant: 'secondary' | 'main' | 'transparent' | 'secondary-white' | 'ghost' =
 		'secondary';

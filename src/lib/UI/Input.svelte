@@ -7,6 +7,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let coreClass = '';
 	export let value = '';
 	export let number = false;

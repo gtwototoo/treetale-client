@@ -3,6 +3,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let min: number;
 	export let max: number;
 	export let value = 0;

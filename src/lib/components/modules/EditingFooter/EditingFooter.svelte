@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$UI/Button.svelte';
 	import { storyInfo } from '$lib/stores/editing';
 	import { activeActionStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';
@@ -18,6 +19,7 @@
 			</p>
 		</div>
 	</div>
+	<Button class="w-64 bg-green-300">Новый фрейм</Button>
 	<StateMode />
 </div>
 

@@ -9,6 +9,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let placeholder: string;
 	export let tags: string[] = [];
 	export let disabled = false;

@@ -2,10 +2,10 @@
 	import clsx from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
 
+	let className = '';
 	export { className as class };
 
 	let dragged = false;
-	let className = '';
 	let fileInput: HTMLInputElement;
 
 	const dispatch = createEventDispatcher();

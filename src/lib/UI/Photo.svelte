@@ -7,15 +7,16 @@
 	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
+	let className = '';
+	export { className as class };
+
 	export let src = '';
 	export let alt = '';
 	export let cover = false;
-	export { className as class };
 	export let width: number;
 	export let height = width;
 
 	let loaded = false;
-	let className = '';
 	let ready = false;
 	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 

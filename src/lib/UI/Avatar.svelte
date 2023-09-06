@@ -3,8 +3,8 @@
 	import { Photo } from '$UI';
 
 	let className = '';
-
 	export { className as class };
+
 	export let alt: string;
 	export let src: string | undefined | null = undefined;
 	export let width: number;

@@ -29,7 +29,7 @@
 <Header class={clsx($activeActionStore !== 'view' ? 'blind' : 'childs:pointer-events-auto')}>
 	<FormSplit>
 		<Button
-			class="headerButton"
+			class="header-button"
 			on:click={changesHistory.undo}
 			disabled={$changesHistory.currentStageId === 0}
 			on:holdclick={historySwitch}
@@ -37,7 +37,7 @@
 			<Icon type={ArrowUturnLeft} />
 		</Button>
 		<Button
-			class="headerButton"
+			class="header-button"
 			on:click={changesHistory.redo}
 			disabled={$changesHistory.currentStageId + 1 >= $changesHistory.stages.length}
 			on:holdclick={historySwitch}
@@ -45,11 +45,11 @@
 			<Icon type={ArrowUturnRight} />
 		</Button>
 	</FormSplit>
-	<Button class="headerButton bg-contrast text-text" variant="ghost" on:click={settingsSwitch}>
+	<Button class="header-button bg-contrast text-text" variant="ghost" on:click={settingsSwitch}>
 		<Icon type={Cog6Tooth} />
 		<p>Настройки</p>
 	</Button>
-	<Button class="headerButton bg-contrast text-text" variant="ghost" on:click={variablesSwitch}>
+	<Button class="header-button bg-contrast text-text" variant="ghost" on:click={variablesSwitch}>
 		<Icon type={Variable} />
 		<p>Переменные</p>
 	</Button>

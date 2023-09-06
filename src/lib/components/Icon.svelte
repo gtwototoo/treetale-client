@@ -3,10 +3,10 @@
 	import type { SvelteComponent } from 'svelte';
 
 	let className = '';
+	export { className as class };
 
 	export let type: typeof SvelteComponent<any>;
 	export let variation: 'solid' | 'outline' = ICON_TYPE;
-	export { className as class };
 </script>
 
 <svelte:component this={type} {variation} class={className} />

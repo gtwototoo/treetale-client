@@ -5,10 +5,11 @@
 
 	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 
-	export let src: string | null = null;
-	export let text: string;
 	let className = '';
 	export { className as class };
+
+	export let src: string | null = null;
+	export let text: string;
 	export let alt = 'Иллюстрация';
 </script>
 

@@ -2,9 +2,10 @@
 	import { Button } from '$UI';
 	import { clsx } from 'clsx';
 
-	export let active = false;
 	let className = '';
 	export { className as class };
+
+	export let active = false;
 </script>
 
 <Button

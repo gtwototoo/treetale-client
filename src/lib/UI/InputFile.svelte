@@ -4,12 +4,13 @@
 
 	const dispatch = createEventDispatcher();
 
-	let fileInput: HTMLInputElement;
-
 	let className = '';
 	export { className as class };
+
 	export let disabled = false;
 	export let variant: 'secondary' | 'main' | 'transparent' | 'secondary-white' = 'secondary';
+
+	let fileInput: HTMLInputElement;
 
 	const handleClick = (e: CustomEvent) => {
 		fileInput.click();

@@ -8,14 +8,15 @@
 	import DropBlock from './DropBlock.svelte';
 	import Icon from './Icon.svelte';
 
+	let className = '';
 	export { className as class };
+
 	export let src: string;
 	export let alt: string;
 	export let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
 	export let width: number;
 	export let height = width;
 
-	let className = '';
 	let preloadImage: string;
 
 	const dispatch = createEventDispatcher();

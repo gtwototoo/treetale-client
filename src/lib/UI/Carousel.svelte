@@ -4,6 +4,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let current = 0;
 
 	let carouselRef: HTMLDivElement;

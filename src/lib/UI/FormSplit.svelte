@@ -2,9 +2,9 @@
 	import { clsx } from 'clsx';
 
 	let className = '';
+	export { className as class };
 
 	export let vertical = false;
-	export { className as class };
 </script>
 
 <div

@@ -18,6 +18,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let disabled = false;
 	export let align: 'left' | 'right' = 'left';
 	export let value = '';

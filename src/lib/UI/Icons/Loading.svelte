@@ -3,6 +3,7 @@
 <script lang="ts">
 	let className = '';
 	export { className as class };
+
 	export let variation: 'solid' | 'outline' = 'solid';
 </script>
 

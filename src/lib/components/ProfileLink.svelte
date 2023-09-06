@@ -8,6 +8,7 @@
 
 	let className = '';
 	export { className as class };
+
 	export let data: IUser;
 	export let align: 'left' | 'right' = 'left';
 	export let created: number;

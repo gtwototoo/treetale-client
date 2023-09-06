@@ -24,7 +24,7 @@
 <Header>
 	<Button
 		class={clsx(
-			'headerButton text-text',
+			'header-button text-text',
 			contrastText($bodyColorStore) ? 'bg-yellow-600' : 'bg-yellow-300'
 		)}
 		variant="ghost"
@@ -33,7 +33,7 @@
 		<Icon type={Star} />
 		<p>Поддержка</p>
 	</Button>
-	<Button class="headerButton bg-contrast text-text" variant="ghost" on:click={descriptionSwitch}>
+	<Button class="header-button bg-contrast text-text" variant="ghost" on:click={descriptionSwitch}>
 		<Icon type={BookOpen} />
 		<p>Описание</p>
 	</Button>

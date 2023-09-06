@@ -2,7 +2,6 @@
 	import { clm } from '$lib/utils';
 
 	let className = '';
-
 	export { className as class };
 </script>
 

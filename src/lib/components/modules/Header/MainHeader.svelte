@@ -24,13 +24,13 @@
 
 <Header>
 	<Button
-		class="headerButton bg-emerald-400 text-text"
+		class="header-button bg-emerald-400 text-text"
 		variant="ghost"
 		on:click={handleClick}
 		{loading}
 		size="lg"
 	>
 		<Icon type={Plus} class="w-6 h-6" />
-		<p>Добавить историю</p>
+		<p class="mr-1">Добавить историю</p>
 	</Button>
 </Header>

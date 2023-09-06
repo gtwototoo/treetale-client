@@ -1,6 +1,7 @@
 <script lang="ts">
 	let className = '';
 	export { className as class };
+
 	export let face = false;
 </script>
 

@@ -14,7 +14,7 @@
 	)}
 >
 	<Logo />
-	<div class="flex gap-2">
+	<div class="flex gap-4">
 		<slot />
 		<Session />
 	</div>
