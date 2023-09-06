@@ -7,8 +7,8 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let title = '';
 	export let active: boolean;
 
@@ -69,7 +69,7 @@
 						<Icon type={XMark} />
 					</Button>
 				</div>
-				<div class={clsx('flex p-4', classes)}>
+				<div class={clsx('flex p-4', className)}>
 					<slot />
 				</div>
 			</div>

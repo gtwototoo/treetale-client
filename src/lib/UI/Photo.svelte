@@ -10,12 +10,12 @@
 	export let src = '';
 	export let alt = '';
 	export let cover = false;
-	export { classes as class };
+	export { className as class };
 	export let width: number;
 	export let height = width;
 
 	let loaded = false;
-	let classes = '';
+	let className = '';
 	let ready = false;
 	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
@@ -69,7 +69,7 @@
 	<div
 		class={clsx(
 			'relative flex select-none items-center justify-center overflow-hidden childs:shrink-0',
-			classes
+			className
 		)}
 		in:fade
 	>

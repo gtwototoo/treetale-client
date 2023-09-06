@@ -1,12 +1,12 @@
 <svelte:options namespace="svg" />
 
 <script lang="ts">
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 </script>
 
 <svg
-	class={classes}
+	class={className}
 	width="28"
 	height="28"
 	viewBox="0 0 28 28"

@@ -1,6 +1,10 @@
 export const onlyDigits = (node: HTMLInputElement) => {
 	const formatted = () => {
 		node.value = node.value.replace(/[^\d]/g, '');
+
+		if (node.value.length !== 1 && node.value[0] === '0') {
+			node.value = node.value.substring(1);
+		}
 	};
 
 	node.addEventListener('input', formatted);

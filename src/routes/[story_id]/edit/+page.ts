@@ -1,8 +1,8 @@
-import Editing from '$lib/components/modules/Header/Editing.svelte';
+import EditingHeader from '$lib/components/modules/Header/EditingHeader.svelte';
 
 export const load = ({ data }) => {
 	return {
 		...data,
-		header: Editing
+		header: EditingHeader
 	};
 };

@@ -1,8 +1,8 @@
-import Reading from '$lib/components/modules/Header/Reading.svelte';
+import ReadingHeader from '$lib/components/modules/Header/ReadingHeader.svelte';
 
 export const load = ({ data }) => {
 	return {
 		...data,
-		header: Reading
+		header: ReadingHeader
 	};
 };

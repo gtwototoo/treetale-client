@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { ICON_TYPE } from '$lib/constants';
 	import type { SvelteComponent } from 'svelte';
-	
-	let classes = '';
 
-	export let type: typeof SvelteComponent<any>
+	let className = '';
+
+	export let type: typeof SvelteComponent<any>;
 	export let variation: 'solid' | 'outline' = ICON_TYPE;
-	export { classes as class };
+	export { className as class };
 </script>
 
-<svelte:component this={type} {variation} class={classes} />
+<svelte:component this={type} {variation} class={className} />

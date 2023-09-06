@@ -6,8 +6,8 @@
 	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let disabled = false;
 	export let align: 'left' | 'right' = 'left';
 	export let value = '';
@@ -21,7 +21,7 @@
 </script>
 
 <div
-	class={clsx('popover', { disabled }, classes)}
+	class={clsx('popover', { disabled }, className)}
 	use:clickOutside
 	on:outclick={() => (focused = false)}
 >

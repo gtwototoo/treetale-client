@@ -8,14 +8,14 @@
 	import DropBlock from './DropBlock.svelte';
 	import Icon from './Icon.svelte';
 
-	export { classes as class };
+	export { className as class };
 	export let src: string;
 	export let alt: string;
 	export let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
 	export let width: number;
 	export let height = width;
 
-	let classes = '';
+	let className = '';
 	let preloadImage: string;
 
 	const dispatch = createEventDispatcher();
@@ -65,7 +65,7 @@
 	$: preload(newSrc);
 </script>
 
-<div class={clsx('relative', classes)}>
+<div class={clsx('relative', className)}>
 	{#if state}
 		{#if state === 'loaded'}
 			<div class="h-full w-full">

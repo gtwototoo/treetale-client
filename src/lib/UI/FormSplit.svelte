@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 
-	let classes = '';
+	let className = '';
 
 	export let vertical = false;
-	export { classes as class };
+	export { className as class };
 </script>
 
 <div
 	class={clsx(
-		classes,
+		className,
 		'flex divide-gray-100 childs:!rounded-none',
 		vertical
 			? 'flex-col divide-y first:childs:!rounded-t-lg last:childs:!rounded-b-lg'

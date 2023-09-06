@@ -2,8 +2,8 @@
 	import { clsx } from 'clsx';
 	import { onMount } from 'svelte';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let current = 0;
 
 	let carouselRef: HTMLDivElement;
@@ -42,7 +42,7 @@
 </script>
 
 <div
-	class={clsx('carousel childs:shrink-0 childs:snap-center', classes, {
+	class={clsx('carousel childs:shrink-0 childs:snap-center', className, {
 		invisible: !ready
 	})}
 	bind:this={carouselRef}

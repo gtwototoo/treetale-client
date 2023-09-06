@@ -6,10 +6,10 @@
 
 	let fileInput: HTMLInputElement;
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let disabled = false;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' = 'secondary';
+	export let variant: 'secondary' | 'main' | 'transparent' | 'secondary-white' = 'secondary';
 
 	const handleClick = (e: CustomEvent) => {
 		fileInput.click();
@@ -18,7 +18,7 @@
 	};
 </script>
 
-<Button class={classes} on:click={handleClick} {disabled} {variant}>
+<Button class={className} on:click={handleClick} {disabled} {variant}>
 	<slot />
 	<input bind:this={fileInput} class="hidden" type="file" accept="image/*" on:change />
 </Button>

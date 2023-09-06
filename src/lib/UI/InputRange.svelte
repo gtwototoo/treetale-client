@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let min: number;
 	export let max: number;
 	export let value = 0;
 </script>
 
-<input class={clsx('range', classes)} type="range" {min} {max} bind:value />
+<input class={clsx('range', className)} type="range" {min} {max} bind:value />
 
 <style lang="postcss">
 	.range {

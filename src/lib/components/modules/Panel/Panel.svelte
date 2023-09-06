@@ -5,13 +5,13 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes = '';
+	let className = '';
 
-	export { classes as class };
+	export { className as class };
 	export let title: string | undefined = undefined;
 </script>
 
-<div class={clsx('panel', classes)} in:fly={{ x: 10 }} out:fly={{ x: 10 }}>
+<div class={clsx('panel', className)} in:fly={{ x: 10 }} out:fly={{ x: 10 }}>
 	<Button size="sm" class="!absolute right-3 top-3 z-[2] !p-2" on:click>
 		<Icon type={XMark} />
 	</Button>

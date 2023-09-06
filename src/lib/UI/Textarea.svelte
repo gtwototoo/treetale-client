@@ -2,8 +2,8 @@
 	import { autoHeight } from '$lib/hooks';
 	import { clm } from '$lib/utils';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let value = '';
 	export let disabled = false;
 
@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class={clm('textarea', { disabled, '!bg-blue-50': focused }, classes)}>
+<div class={clm('textarea', { disabled, '!bg-blue-50': focused }, className)}>
 	<textarea
 		bind:value
 		{disabled}

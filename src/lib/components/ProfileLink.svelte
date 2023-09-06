@@ -6,8 +6,8 @@
 	import clsx from 'clsx';
 	import Link from './Link.svelte';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let data: IUser;
 	export let align: 'left' | 'right' = 'left';
 	export let created: number;
@@ -21,7 +21,7 @@
 	class="contents bg-transparent"
 >
 	<Button
-		class={clsx(classes, 'min-w-0 gap-2 !p-0', {
+		class={clsx(className, 'min-w-0 gap-2 !p-0', {
 			'flex-row-reverse': align === 'right'
 		})}
 		variant="transparent"

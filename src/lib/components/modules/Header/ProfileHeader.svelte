@@ -5,6 +5,7 @@
 	import { currentPanelStore } from '$lib/stores/main';
 	import { Pencil, Plus } from 'svelte-heros-v2';
 	import { ProfileSettings } from '../Panel';
+	import Header from './Header.svelte';
 
 	let loading = false;
 
@@ -23,17 +24,20 @@
 	};
 </script>
 
-<Button class="headerButton bg-contrast text-text" variant="ghost" on:click={settingsSwitch}>
-	<Icon type={Pencil} />
-	<p>Настройка профиля</p>
-</Button>
+<Header>
+	<Button class="headerButton bg-contrast text-text" variant="ghost" on:click={settingsSwitch}>
+		<Icon type={Pencil} />
+		<p>Настройка профиля</p>
+	</Button>
 
-<Button
-	class="headerButton bg-emerald-400 text-text"
-	variant="ghost"
-	on:click={handleClick}
-	{loading}
->
-	<Icon type={Plus} />
-	<p>Добавить историю</p>
-</Button>
+	<Button
+		class="headerButton bg-emerald-400 text-text"
+		variant="ghost"
+		on:click={handleClick}
+		{loading}
+		size="lg"
+	>
+		<Icon type={Plus} class="w-6 h-6" />
+		<p>Добавить историю</p>
+	</Button>
+</Header>

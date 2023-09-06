@@ -1,14 +1,14 @@
 <script>
 	import { clsx } from 'clsx';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 </script>
 
 <div
 	class={clsx(
 		'selector flex childs:bg-transparent first:childs:!rounded-l-lg last:childs:!rounded-r-lg child-[button]:!rounded-none',
-		classes
+		className
 	)}
 >
 	<slot />

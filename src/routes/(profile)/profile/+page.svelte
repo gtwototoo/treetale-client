@@ -38,8 +38,8 @@
 	stories={data.stories}
 	text="Пока у вас нет ни одной созданной истории, добавьте свою уникальную историю"
 >
-	<Button size="lg" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>
-		<Icon type={Plus} />
+	<Button size="lg" class="gap-4" variant="secondary-white" on:click={handleClick} {loading}>
+		<Icon type={Plus} class="w-6 h-6" />
 		<p>Добавить историю</p>
 	</Button>
 </StoriesList>

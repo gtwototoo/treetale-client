@@ -3,8 +3,8 @@
 	import type { IFrameCreate } from '$lib/types/editing';
 	import clsx from 'clsx';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let active = false;
 	export let style: string | undefined = undefined;
 	export let frame: IFrameCreate | undefined = undefined;
@@ -33,7 +33,7 @@
 
 <div
 	use:setRivetY={frame}
-	class={clsx('rivet', classes, {
+	class={clsx('rivet', className, {
 		connect: $connect.active,
 		'after:!bg-emerald-500': active
 	})}

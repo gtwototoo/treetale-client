@@ -1,7 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import Header from '$lib/components/modules/Header';
-	import Main from '$lib/components/modules/Header/Main.svelte';
+	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
 	import Panel from '$lib/components/modules/Panel';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { activeActionStore } from '$lib/stores/newediting';
@@ -10,9 +9,7 @@
 </script>
 
 <div class="flex flex-col text-black">
-	<Header>
-		<svelte:component this={$page.data.header || Main} />
-	</Header>
+	<svelte:component this={$page.data.header || MainHeader} />
 	{#if $currentPanelStore.component}
 		<Panel
 			on:click={currentPanelStore.clear}

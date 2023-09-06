@@ -13,7 +13,7 @@
 	text="У данного пользователя пока нету ни одной опубликованной истории"
 >
 	<Link href="/">
-		<Button size="lg" class="gap-4" variant="secondaryWhite">
+		<Button size="lg" class="gap-4" variant="secondary-white">
 			<Icon type={BookOpen} />
 			<p>Смотреть все истории</p>
 		</Button>

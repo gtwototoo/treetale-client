@@ -2,9 +2,9 @@
 	import { clm } from '$lib/utils';
 	import { Photo } from '$UI';
 
-	let classes = '';
+	let className = '';
 
-	export { classes as class };
+	export { className as class };
 	export let alt: string;
 	export let src: string | undefined | null = undefined;
 	export let width: number;
@@ -21,7 +21,7 @@
 	class={clm(
 		'relative flex shrink-0 select-none items-center justify-center rounded-full font-bold text-white',
 		`size-${size}`,
-		classes
+		className
 	)}
 >
 	{#if src}

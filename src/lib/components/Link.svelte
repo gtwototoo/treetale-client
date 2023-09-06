@@ -1,9 +1,9 @@
 <script lang="ts">
-	let classes = '';
+	let className = '';
 	export let href: string;
-	export { classes as class };
+	export { className as class };
 </script>
 
-<a {href} draggable="false" class={classes}>
+<a {href} draggable="false" class={className}>
 	<slot />
 </a>

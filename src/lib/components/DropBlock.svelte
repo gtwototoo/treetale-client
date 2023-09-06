@@ -2,10 +2,10 @@
 	import clsx from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	export { classes as class };
+	export { className as class };
 
 	let dragged = false;
-	let classes = '';
+	let className = '';
 	let fileInput: HTMLInputElement;
 
 	const dispatch = createEventDispatcher();
@@ -47,7 +47,7 @@
 	class={clsx(
 		'flex select-none flex-col items-center justify-center rounded-lg bg-gray-50 p-6 text-center text-sm text-gray-400 transition-colors hover:bg-white childs:pointer-events-none',
 		{ '!bg-blue-50': dragged },
-		classes
+		className
 	)}
 	on:click|preventDefault={handleClick}
 	on:dragenter={handleDragEnter}

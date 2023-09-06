@@ -1,10 +1,10 @@
 <script lang="ts">
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let face = false;
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" class={classes} viewBox="0 0 229 295">
+<svg xmlns="http://www.w3.org/2000/svg" class={className} viewBox="0 0 229 295">
 	<path
 		fill="currentColor"
 		d="M22 39c60-17 194-7 206 8 7 10-19 103-21 154-3 52 7 78 1 81-3 1-61-6-61-6L3 80s5-37 19-41Z"

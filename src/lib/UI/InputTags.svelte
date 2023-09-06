@@ -7,8 +7,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import { XMark } from 'svelte-heros-v2';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let placeholder: string;
 	export let tags: string[] = [];
 	export let disabled = false;
@@ -76,7 +76,7 @@
 </script>
 
 <button
-	class={clsx('input', { disabled, 'p-1.5': tags.length, focused: 'bg-blue-50' }, classes)}
+	class={clsx('input', { disabled, 'p-1.5': tags.length, focused: 'bg-blue-50' }, className)}
 	on:keydown={handleKeydown}
 >
 	{#each tags as tag}

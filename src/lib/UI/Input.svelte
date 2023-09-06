@@ -5,8 +5,8 @@
 	import { clsx } from 'clsx';
 	import type { SvelteComponent } from 'svelte';
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let coreClass = '';
 	export let value = '';
 	export let number = false;
@@ -34,7 +34,7 @@
 		'input',
 		{ disabled, '!bg-red-100': required && !value, '!bg-blue-50': focused },
 		`size-${size}`,
-		classes
+		className
 	)}
 >
 	{#if icon}

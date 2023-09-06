@@ -1,13 +1,13 @@
 <svelte:options namespace="svg" />
 
 <script lang="ts">
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let variation: 'solid' | 'outline' = 'solid';
 </script>
 
 <svg
-	class={classes}
+	class={className}
 	xmlns="http://www.w3.org/2000/svg"
 	width="24"
 	height="24"

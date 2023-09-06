@@ -3,13 +3,13 @@
 	import { clsx } from 'clsx';
 
 	export let active = false;
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 </script>
 
 <Button
 	variant={active ? 'main' : 'secondary'}
-	class={clsx(classes, { '!bg-blue-500': active })}
+	class={clsx(className, { '!bg-blue-500': active })}
 	on:click
 >
 	<slot />

@@ -7,10 +7,10 @@
 
 	const dispatch = createEventDispatcher();
 
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
 	export let style: string | undefined = undefined;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' | 'ghost' =
+	export let variant: 'secondary' | 'main' | 'transparent' | 'secondary-white' | 'ghost' =
 		'secondary';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let disabled = false;
@@ -39,7 +39,7 @@
 		{ disabled: disabled || loading },
 		`size-${size}`,
 		`variant-${variant}`,
-		classes,
+		className,
 		{
 			'text-transparent childs:invisible': loading
 		}
@@ -79,7 +79,7 @@
 	.variant-secondary {
 		@apply bg-gray-50 text-black transition-colors hover:bg-white hover:text-blue-500 focus:bg-white focus:text-blue-500;
 	}
-	.variant-secondaryWhite {
+	.variant-secondary-white {
 		@apply bg-white text-black transition-colors hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;
 	}
 	.variant-main {
