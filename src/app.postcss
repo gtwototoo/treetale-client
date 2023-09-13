@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+	@apply h-full;
+}
+
 body {
 	@apply overflow-auto bg-main transition-colors;
 }
@@ -37,7 +42,7 @@ svg {
 }
 
 .header-button {
-	@apply gap-3 max-xs:!px-2;
+	@apply gap-3 max-xs:!px-3;
 }
 .header-button > p {
 	@apply hidden md:block;

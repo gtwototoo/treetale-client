@@ -32,7 +32,7 @@
 		</p>
 	</div>
 </div>
-<div class="flex w-full items-center justify-between gap-1">
+<div class="flex w-full items-center justify-between gap-4">
 	{#if author}
 		<ProfileLink data={author} {created} />
 	{:else}

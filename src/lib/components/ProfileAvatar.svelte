@@ -3,11 +3,12 @@
 	import type { IUser } from '$lib/types';
 	import { Avatar, Button, InputFile } from '$UI';
 
-	import { Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
+	import { PencilSquare, XMark } from 'svelte-heros-v2';
+	import { fade } from 'svelte/transition';
 	import Icon from './Icon.svelte';
 
 	export let user: IUser;
-	export let me: boolean;
+	export let editMode: boolean;
 
 	let imageLoading = false;
 	let tempAvatarURL = '';
@@ -66,20 +67,23 @@
 </script>
 
 <Avatar size="lg" {src} alt={user.name} width={160} class="light-gradient-main">
-	{#if me}
-		<div class="absolute bottom-0 right-0 z-[3] rounded-full bg-main p-1">
+	{#if editMode}
+		<div
+			class="absolute bottom-0 right-0 z-[3] rounded-full bg-white p-1"
+			in:fade={{ duration: 150 }}
+		>
 			{#if src && !imageLoading}
-				<Button class="!rounded-full !p-2" variant="secondary-white" on:click={preRemoveImage}>
-					<Icon type={XMark} class="text-red-600" />
+				<Button class="!rounded-full !p-3" variant="secondary" on:click={preRemoveImage}>
+					<Icon type={XMark} class="text-red-600 w-6 h-6" />
 				</Button>
 			{:else}
 				<InputFile
-					class="!rounded-full !p-2"
-					variant="secondary-white"
+					class="!rounded-full !p-3"
+					variant="secondary"
 					disabled={imageLoading}
 					on:change={setFile}
 				>
-					<Icon type={PhotoIcon} />
+					<Icon type={PencilSquare} class="w-6 h-6" />
 				</InputFile>
 			{/if}
 		</div>

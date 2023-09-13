@@ -14,9 +14,9 @@ const getStatistic = (stories: IStoryReading[]) => {
 	const likes = stories.reduce((sum, { likes }) => sum + likes.length, 0);
 
 	const metrics: string[][] = [
+		correctMetric(likes, ['лайков', 'лайк', 'лайка']),
 		correctMetric(stories.length, ['историй', 'история', 'истории']),
-		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика']),
-		correctMetric(likes, ['лайков', 'лайк', 'лайка'])
+		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика'])
 	];
 
 	return metrics;

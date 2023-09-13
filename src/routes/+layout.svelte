@@ -5,7 +5,7 @@
 	import '../app.postcss';
 </script>
 
-<div class="flex flex-col text-black">
+<div class="flex flex-col text-black h-full">
 	<svelte:component this={$page.data.header || MainHeader} />
 	<slot />
 </div>

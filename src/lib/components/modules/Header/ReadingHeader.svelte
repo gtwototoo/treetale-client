@@ -1,24 +1,11 @@
 <script lang="ts">
 	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { bodyColorStore } from '$lib/stores/main';
 	import { contrastText } from '$lib/utils';
 	import clsx from 'clsx';
-	import { BookOpen, Star } from 'svelte-heros-v2';
-	import { Description, Donut } from '../Panel';
+	import { Star } from 'svelte-heros-v2';
 	import Header from './Header.svelte';
-
-	const descriptionSwitch = () =>
-		($currentPanelStore = {
-			id: 'Описание',
-			title: '',
-			component: Description
-		});
-	const donutSwitch = () =>
-		($currentPanelStore = {
-			id: 'Поддержка',
-			component: Donut
-		});
 </script>
 
 <Header>
@@ -28,13 +15,9 @@
 			contrastText($bodyColorStore) ? 'bg-yellow-600' : 'bg-yellow-300'
 		)}
 		variant="ghost"
-		on:click={donutSwitch}
+		size="lg"
 	>
-		<Icon type={Star} />
-		<p>Поддержка</p>
-	</Button>
-	<Button class="header-button bg-contrast text-text" variant="ghost" on:click={descriptionSwitch}>
-		<Icon type={BookOpen} />
-		<p>Описание</p>
+		<Icon type={Star} class="w-6 h-6" />
+		<p class="mr-1">Поддержать</p>
 	</Button>
 </Header>

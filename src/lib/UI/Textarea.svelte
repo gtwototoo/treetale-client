@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { autoHeight } from '$lib/hooks';
 	import { clm } from '$lib/utils';
 
 	let className = '';
@@ -7,8 +6,25 @@
 
 	export let value = '';
 	export let disabled = false;
+	export let readonly = false;
 
 	let focused = false;
+	let ref: HTMLTextAreaElement;
+
+	const autoHeight = (value: string) => {
+		if (!ref) return;
+
+		if (value) {
+			value.replace(/ {2,}/, ' ');
+		}
+
+		ref.style.height = `${ref.scrollHeight}px`;
+
+		setTimeout(() => {
+			ref.style.height = 'auto';
+			ref.style.height = `${ref.scrollHeight}px`;
+		}, 0);
+	};
 
 	const handleFocus = () => {
 		focused = true;
@@ -17,13 +33,16 @@
 	const handleBlur = () => {
 		focused = false;
 	};
+
+	$: autoHeight(value);
 </script>
 
 <div class={clm('textarea', { disabled, '!bg-blue-50': focused }, className)}>
 	<textarea
+		bind:this={ref}
 		bind:value
 		{disabled}
-		use:autoHeight
+		{readonly}
 		on:focus={handleFocus}
 		on:blur={handleBlur}
 		on:input

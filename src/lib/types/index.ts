@@ -58,6 +58,7 @@ export interface IUser {
 	userId: number;
 	sessionId: string | null;
 	email: string;
+	description: string;
 	name: string;
 	avatarId: string | null;
 	created: number;
