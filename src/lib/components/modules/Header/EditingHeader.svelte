@@ -45,12 +45,22 @@
 			<Icon type={ArrowUturnRight} />
 		</Button>
 	</FormSplit>
-	<Button class="header-button bg-contrast text-text" variant="ghost" on:click={settingsSwitch}>
-		<Icon type={Cog6Tooth} />
-		<p>Настройки</p>
+	<Button
+		class="header-button bg-contrast text-text"
+		variant="ghost"
+		size="lg"
+		on:click={settingsSwitch}
+	>
+		<Icon type={Cog6Tooth} class="w-6 h-6" />
+		<p class="mr-1">Настройки</p>
 	</Button>
-	<Button class="header-button bg-contrast text-text" variant="ghost" on:click={variablesSwitch}>
-		<Icon type={Variable} />
-		<p>Переменные</p>
+	<Button
+		class="header-button bg-contrast text-text"
+		variant="ghost"
+		size="lg"
+		on:click={variablesSwitch}
+	>
+		<Icon type={Variable} class="w-6 h-6" />
+		<p class="mr-1">Переменные</p>
 	</Button>
 </Header>

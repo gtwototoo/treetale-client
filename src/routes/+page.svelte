@@ -1,30 +1,11 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import Icon from '$lib/components/Icon.svelte';
+	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
-	import { createStory } from '$lib/requests/story';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils/custom_colors.js';
-	import { Button } from '$UI';
-	import { Plus } from 'svelte-heros-v2';
 
 	export let data;
-
-	let loading = false;
-
-	const handleClick = async () => {
-		loading = true;
-
-		if ($page.data.session) {
-			await createStory();
-		} else {
-			await goto('/signin');
-		}
-
-		loading = false;
-	};
 
 	$bodyColorStore = DEFAULT_COLOR;
 </script>
@@ -42,9 +23,6 @@
 		stories={data.stories}
 		text="Историй не найдено, но вы можете добавить свою уникальную историю"
 	>
-		<Button size="lg" class="gap-3 bg-white" variant="ghost" on:click={handleClick} {loading}>
-			<Icon type={Plus} class="w-6 h-6" />
-			<p class="mr-1">Добавить историю</p>
-		</Button>
+		<AddStoryButton class="gap-3 bg-white" />
 	</StoriesList>
 </div>

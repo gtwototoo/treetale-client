@@ -9,7 +9,7 @@
 	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
-	import UserInformation from './UserInformation.svelte';
+	import UserInformation from '../../lib/components/UserInformation.svelte';
 
 	export let data;
 

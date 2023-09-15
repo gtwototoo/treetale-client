@@ -19,7 +19,7 @@
 			</p>
 		</div>
 	</div>
-	<Button class="w-64 bg-green-300">Новый фрейм</Button>
+	<Button variant="ghost" size="lg" class="w-64 bg-green-300">Новый фрейм</Button>
 	<StateMode />
 </div>
 

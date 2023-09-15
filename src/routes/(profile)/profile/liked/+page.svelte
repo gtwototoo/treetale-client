@@ -14,7 +14,7 @@
 >
 	<Link href="/">
 		<Button size="lg" class="gap-3 bg-white" variant="ghost">
-			<Icon type={BookOpen} />
+			<Icon type={BookOpen} class="w-6 h-6" />
 			<p class="mr-1">Смотреть все истории</p>
 		</Button>
 	</Link>
