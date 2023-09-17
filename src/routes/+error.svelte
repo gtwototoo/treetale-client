@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
+	import { ADAPTIVE_FONT, ADAPTIVE_PADDING } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button } from '$UI';
-	import { ArrowPath, Home } from 'svelte-heros-v2';
+	import clsx from 'clsx';
 
 	$: isNotFound = $page.status === 404;
 	$: $bodyColorStore = $page.error?.color;
 
-	const handleClick = () => (isNotFound ? location.replace('/') : location.reload());
+	const handleClick = () => (isNotFound ? goto('/', { replaceState: true }) : location.reload());
 </script>
 
 <svelte:head>
@@ -19,12 +20,17 @@
 </svelte:head>
 
 {#if $page.error}
-	<ReadCard src={$page.error.img} alt="Ошибка" text={$page.error.message}>
-		<div class="cardButtons">
-			<Button class="w-full justify-center gap-4" size="xl" on:click={handleClick}>
-				<Icon type={isNotFound ? Home : ArrowPath} />
-				<p>{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}</p>
-			</Button>
+	<div class="flex w-full h-full justify-center items-start px-12">
+		<div class="flex min-h-full items-center py-12">
+			<ReadCard src={$page.error.img} alt="Ошибка" text={$page.error.message}>
+				<Button
+					class={clsx('w-full bg-main !text-text', ADAPTIVE_FONT, ADAPTIVE_PADDING)}
+					variant="main"
+					on:click={handleClick}
+				>
+					{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}
+				</Button>
+			</ReadCard>
 		</div>
-	</ReadCard>
+	</div>
 {/if}

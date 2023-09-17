@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$UI/Button.svelte';
+	import { Button } from '$UI';
 	import { storyInfo } from '$lib/stores/editing';
 	import { activeActionStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';

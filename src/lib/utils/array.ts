@@ -1,7 +1,7 @@
 import objectPath from 'object-path';
 
 export const serialize = <T>(object: T): T => {
-	return JSON.parse(JSON.stringify(object));
+	return JSON.parse(JSON.stringify(object)) as T;
 };
 
 export const exclude = (object: Record<string, unknown>, keys: string[] | string) => {
@@ -16,4 +16,8 @@ export const exclude = (object: Record<string, unknown>, keys: string[] | string
 	}
 
 	return serialized;
+};
+
+export const last = <T>(array: Array<T>) => {
+	return array?.[array.length - 1];
 };

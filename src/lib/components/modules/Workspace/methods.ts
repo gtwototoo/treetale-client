@@ -6,7 +6,7 @@ import {
 } from '$lib/stores/newediting';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
-import { getFrameFromId } from '$lib/utils';
+import { getFrameFromId, last } from '$lib/utils';
 import { Plus, Share, XMark } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
 
@@ -14,7 +14,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 	const framesStore = get(frames);
 
 	if (!framesStore) return;
-	const frameId = framesStore.at(-1)?.frameId;
+	const frameId = last(framesStore)?.frameId;
 
 	if (!frameId) return;
 

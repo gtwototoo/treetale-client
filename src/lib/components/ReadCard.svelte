@@ -1,79 +1,51 @@
 <script lang="ts">
+	import { ADAPTIVE_FONT, ADAPTIVE_FONT_UPPER, ADAPTIVE_PADDING } from '$lib/constants';
 	import { correctWhitespace } from '$lib/utils';
-	import { Photo } from '$UI';
+	import { Card, Photo } from '$UI';
 	import clsx from 'clsx';
-
-	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 
 	let className = '';
 	export { className as class };
 
+	let errorLoad = false;
+
+	export let classCard = '';
 	export let src: string | null = null;
 	export let text: string;
 	export let alt = 'Иллюстрация';
+
+	const handleError = () => {
+		errorLoad = true;
+	};
 </script>
 
 <div class={clsx('card', className)}>
-	<div class="photoArea">
-		<Photo {src} {alt} class="img bg-white" cover width={480}>
-			<svelte:fragment slot="error">
-				<PhotoIcon class="h-10 w-auto xs:h-16 lg:h-24" variation="solid" />
-			</svelte:fragment>
-		</Photo>
-	</div>
-	<div class="content">
+	{#if src && !errorLoad}
+		<Photo
+			{src}
+			{alt}
+			class="bg-white w-full h-[23rem] rounded-2xl"
+			cover
+			on:error={handleError}
+			width={480}
+			height={368}
+		/>
+	{/if}
+	<Card class={clsx('p-8 gap-8 max-hd:p-6 max-hd:gap-6', classCard)}>
 		<div
 			class={clsx(
-				'p-4',
-				text && text.length > 100
-					? 'text-sm sm:text-base lg:text-lg'
-					: 'text-base sm:text-xl lg:text-2xl'
+				text && text.length > 50 ? ADAPTIVE_FONT : ADAPTIVE_FONT_UPPER,
+				ADAPTIVE_PADDING
 			)}
 		>
 			{correctWhitespace(text)}
 		</div>
 		<slot />
-	</div>
+	</Card>
 </div>
 
 <style lang="postcss">
 	.card {
-		@apply flex w-full max-w-lg flex-col justify-center gap-2 childs:flex;
-	}
-	.photoArea {
-		@apply sticky top-4 flex h-56 shrink-0 flex-col;
-	}
-	.content {
-		@apply z-[1] flex w-full flex-col justify-between gap-6 rounded-2xl bg-white p-4 text-base;
-	}
-	.content > :global(*) {
-		@apply bg-transparent;
-	}
-	.card :global(.img) {
-		@apply h-full w-full rounded-2xl opacity-80;
-	}
-
-	@screen sm {
-		.content {
-			@apply rounded-xl p-6;
-		}
-		.photoArea {
-			@apply h-80 w-80;
-		}
-		.card {
-			@apply max-w-4xl flex-row;
-		}
-		.card :global(.img) {
-			@apply rounded-xl;
-		}
-	}
-
-	@screen lg {
-		.photoArea {
-			@apply h-[30rem] w-[30rem];
-		}
-		.card {
-			@apply max-w-6xl;
-		}
+		@apply flex w-full max-w-[36rem] flex-col justify-center gap-2;
 	}
 </style>

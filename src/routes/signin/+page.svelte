@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { Button, Input } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
+	import {
+		ADAPTIVE_FONT,
+		ADAPTIVE_PADDING,
+		DEFAULT_COLOR,
+		NOT_FOUND_VARIANTS
+	} from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
@@ -9,13 +14,11 @@
 	import clsx from 'clsx';
 	import { fade } from 'svelte/transition';
 
-	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
-
 	let value = '';
 	let loading = false;
 	let message: { error: boolean; text: string } | null = null;
 
-	$: disabled = !value;
+	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
 
 	const handleSignIn = async () => {
 		if (disabled || loading) {
@@ -48,6 +51,8 @@
 	};
 
 	$bodyColorStore = DEFAULT_COLOR;
+
+	$: disabled = !value;
 </script>
 
 <svelte:head>
@@ -55,30 +60,45 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<ReadCard
-	src={contentCardImage}
-	alt="Авторизация"
-	text="Если вы новый пользователь, введите свою почту, чтобы получить ссылку на регистрацию. Если вы уже зарегистированы, можете ввести как почту, так и свой псевдоним и к вам на почту придет ссылка на вход."
->
-	<form class="cardButtons relative" method="POST" on:submit|preventDefault={handleSignIn}>
-		<Input placeholder="Псевдоним или почта" class="w-full text-center" size="lg" bind:value />
-		<Button
-			variant="main"
-			type="submit"
-			class="w-full justify-center gap-4 bg-emerald-500"
-			size="xl"
-			{disabled}
-			{loading}
+<div class="flex w-full h-full justify-center items-start px-12">
+	<div class="flex min-h-full items-center py-12">
+		<ReadCard
+			src={contentCardImage}
+			alt="Авторизация"
+			text="Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением"
+			classCard="!bg-gray-50"
 		>
-			Войти по ссылке
-		</Button>
-		{#if message && message.text}
-			<div in:fade class={clsx('message', message.error ? 'text-red-600' : 'text-emerald-600')}>
-				{message.text}
-			</div>
-		{/if}
-	</form>
-</ReadCard>
+			<form
+				method="POST"
+				on:submit|preventDefault={handleSignIn}
+				class="flex flex-col gap-3 w-full"
+			>
+				<Input
+					placeholder="Почта или логин"
+					class={clsx('w-full', ADAPTIVE_FONT, ADAPTIVE_PADDING)}
+					bind:value
+				/>
+				<Button
+					variant="main"
+					type="submit"
+					class={clsx('w-full bg-emerald-300', ADAPTIVE_FONT, ADAPTIVE_PADDING)}
+					{disabled}
+					{loading}
+				>
+					Войти по ссылке
+				</Button>
+				{#if message && message.text}
+					<div
+						in:fade
+						class={clsx('message', message.error ? 'text-red-600' : 'text-emerald-600')}
+					>
+						{message.text}
+					</div>
+				{/if}
+			</form>
+		</ReadCard>
+	</div>
+</div>
 
 <style lang="postcss">
 	.message {

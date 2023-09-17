@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import Textarea from '$UI/Textarea.svelte';
+	import { Button, Textarea } from '$UI';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';

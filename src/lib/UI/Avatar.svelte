@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clm } from '$lib/utils';
+	import { clm, last } from '$lib/utils';
 	import { Photo } from '$UI';
 
 	let className = '';
@@ -13,7 +13,7 @@
 	export let style: string | undefined = undefined;
 
 	const split = alt.split(' ');
-	const short = `${split[0][0]}${split.length > 1 ? split.at(-1)?.[0] : ''}`;
+	const short = `${split[0][0]}${split.length > 1 ? last(split)?.[0] : ''}`;
 </script>
 
 <div

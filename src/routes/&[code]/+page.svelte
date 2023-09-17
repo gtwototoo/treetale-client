@@ -20,6 +20,10 @@
 	let message: { error: boolean; text: string } | null = null;
 
 	const handleSignUp = async () => {
+		if (disabled || loading) {
+			return;
+		}
+
 		loading = true;
 
 		try {
@@ -51,39 +55,42 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<ReadCard
-	src={contentCardImage}
-	alt="Завершение регистрации"
-	text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте."
->
-	<form
-		class="cardButtons relative"
-		method="POST"
-		on:submit|preventDefault={() => !(disabled || loading) && handleSignUp()}
-	>
-		<Input placeholder="Псевдоним" class="w-full text-center" size="lg" bind:value={name} />
-		<Button
-			variant="main"
-			type="submit"
-			class="w-full justify-center gap-4 bg-emerald-500"
-			size="xl"
-			{disabled}
-			{loading}
+<div class="flex w-full h-full justify-center items-start px-12">
+	<div class="flex min-h-full items-center py-12">
+		<ReadCard
+			src={contentCardImage}
+			alt="Завершение регистрации"
+			text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте"
 		>
-			<Icon type={UserPlus} />
-			<p>Завершить регистрацию</p>
-		</Button>
-		{#if message && message.text}
-			<div
-				in:fade
-				out:fade
-				class={clsx('message', message.error ? 'text-red' : 'text-emerald-600')}
+			<form
+				class="flex flex-col gap-3 w-full"
+				method="POST"
+				on:submit|preventDefault={handleSignUp}
 			>
-				{message.text}
-			</div>
-		{/if}
-	</form>
-</ReadCard>
+				<Input placeholder="Псевдоним" class="w-full text-center" size="lg" bind:value={name} />
+				<Button
+					variant="main"
+					type="submit"
+					class="w-full justify-center gap-4 bg-emerald-300"
+					size="lg"
+					{disabled}
+					{loading}
+				>
+					<Icon type={UserPlus} />
+					<p>Завершить регистрацию</p>
+				</Button>
+				{#if message && message.text}
+					<div
+						in:fade
+						class={clsx('message', message.error ? 'text-red' : 'text-emerald-600')}
+					>
+						{message.text}
+					</div>
+				{/if}
+			</form>
+		</ReadCard>
+	</div>
+</div>
 
 <style lang="postcss">
 	.message {

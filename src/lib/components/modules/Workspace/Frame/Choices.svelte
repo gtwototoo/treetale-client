@@ -3,6 +3,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { removeModeStore } from '$lib/stores/newediting';
 	import type { IChoice } from '$lib/types';
+	import { last } from '$lib/utils';
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 	import { Trash } from 'svelte-heros-v2';
@@ -12,7 +13,7 @@
 	const dispatch = createEventDispatcher();
 
 	const addChoice = () => {
-		const choiceId = choices.length ? choices.at(-1).choiceId + 1 : 0;
+		const choiceId = choices.length ? last(choices).choiceId + 1 : 0;
 
 		dispatch('change', [
 			...choices,

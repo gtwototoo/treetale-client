@@ -3,7 +3,7 @@
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { rootStyle } from '$lib/utils/custom_colors.js';
+	import { rootStyle } from '$lib/utils';
 
 	export let data;
 

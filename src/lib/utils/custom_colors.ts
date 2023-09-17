@@ -1,5 +1,6 @@
 import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
 import type { RGB } from '$lib/types';
+import { alphaToRgb } from './alpha_to_rgb';
 import { contrastText } from './contrast';
 
 const varStyle = (extend: object = {}) => {
@@ -13,6 +14,7 @@ export const rootStyle = (color: RGB) => {
 
 	return `<${'style'} type="text/css">:root{${varStyle({
 		'color-main': color,
+		'color-main-30': alphaToRgb(color, 0.3),
 		'color-text': contrast ? WHITE_COLOR : BLACK_COLOR,
 		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR
 	})}}</style>`;

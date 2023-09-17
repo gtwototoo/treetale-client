@@ -1,6 +1,6 @@
 const plugin = require('tailwindcss/plugin');
 
-const colorsList = ['main', 'text', 'contrast'];
+const colorsList = ['main', 'main-30', 'text', 'contrast'];
 
 function withOpacityValue(variable) {
 	return ({ opacityValue = 1 }) => {

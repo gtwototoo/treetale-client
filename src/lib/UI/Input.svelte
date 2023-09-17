@@ -33,7 +33,7 @@
 <div
 	class={clm(
 		'input',
-		{ disabled, '!bg-red-100': required && !value, '!bg-blue-50': focused },
+		{ disabled, '!bg-red-100': required && !value, '!bg-main-30': focused },
 		`size-${size}`,
 		className
 	)}
@@ -71,7 +71,7 @@
 		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply relative flex items-center bg-white transition-colors hover:bg-blue-50;
+		@apply hover:bg-main-30 relative flex items-center bg-white transition-colors;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

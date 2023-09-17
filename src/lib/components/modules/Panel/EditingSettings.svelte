@@ -1,6 +1,14 @@
 <script lang="ts">
-	import { Button, ColorPicker, Input, InputTags, Selector, SelectorItem, Textarea } from '$UI';
-	import FormSplit from '$UI/FormSplit.svelte';
+	import {
+		Button,
+		ColorPicker,
+		FormSplit,
+		Input,
+		InputTags,
+		Selector,
+		SelectorItem,
+		Textarea
+	} from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';

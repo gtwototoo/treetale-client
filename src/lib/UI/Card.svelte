@@ -13,9 +13,3 @@
 >
 	<slot />
 </div>
-
-<style lang="postcss">
-	:global(.cardButtons) {
-		@apply flex w-full flex-col items-start gap-2 bg-transparent;
-	}
-</style>

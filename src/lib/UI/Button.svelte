@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickHold } from '$lib/hooks';
+	import { clm } from '$lib/utils';
 	import { Loading } from '$UI/Icons';
-	import { clsx } from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -35,15 +35,13 @@
 
 <button
 	bind:this={element}
-	class={clsx(
+	class={clm(
 		'childs:bg-transparent',
-		{ disabled: disabled || loading },
 		`size-${size}`,
 		`variant-${variant}`,
-		className,
-		{
-			'text-transparent childs:invisible': loading
-		}
+		loading && 'text-transparent childs:invisible',
+		(disabled || loading) && 'disabled',
+		className
 	)}
 	{style}
 	on:click={handleClick}

@@ -1,10 +1,5 @@
 <script lang="ts">
-	import { Textarea } from '$UI';
-	import Button from '$UI/Button.svelte';
-	import ColorPicker from '$UI/ColorPicker.svelte';
-	import Input from '$UI/Input.svelte';
-
-	import FormSplit from '$UI/FormSplit.svelte';
+	import { Button, ColorPicker, FormSplit, Input, Textarea } from '$UI';
 	import { page } from '$app/stores';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { updateProfile } from '$lib/requests/user';
