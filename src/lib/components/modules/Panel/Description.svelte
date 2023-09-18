@@ -10,7 +10,7 @@
 	import { BookOpen } from 'svelte-heros-v2';
 	import SvgGradient from '../StoriesList/SvgGradient.svelte';
 
-	$: ({ title, description, imageId, tags, storyId, created } = $storyStore);
+	$: ({ storyId, title, description, imageId, tags, created, likes, vars, author } = $storyStore);
 </script>
 
 <SvgGradient id={storyId} />
@@ -48,16 +48,16 @@
 			<p
 				class={clsx('w-full', description && description.length > 100 ? 'text-lg' : 'text-2xl')}
 			>
-				{correctVariableReplace(description, $storyStore.vars) || 'Без описания'}
+				{correctVariableReplace(description, vars) || 'Без описания'}
 			</p>
 		</div>
 		<div class="flex w-full items-center justify-between gap-1">
-			{#if $storyStore.author}
-				<ProfileLink data={$storyStore.author} {created} />
+			{#if author}
+				<ProfileLink data={author} {created} />
 			{:else}
 				<Tag class="bg-emerald-500 text-emerald-600">Публичный</Tag>
 			{/if}
-			<Likes info={$storyStore} />
+			<Likes {storyId} {likes} />
 		</div>
 	</div>
 </div>

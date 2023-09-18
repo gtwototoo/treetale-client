@@ -1,12 +1,7 @@
 <script lang="ts">
 	import { Button, Input } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import {
-		ADAPTIVE_FONT,
-		ADAPTIVE_PADDING,
-		DEFAULT_COLOR,
-		NOT_FOUND_VARIANTS
-	} from '$lib/constants';
+	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
@@ -75,13 +70,13 @@
 			>
 				<Input
 					placeholder="Почта или логин"
-					class={clsx('w-full', ADAPTIVE_FONT, ADAPTIVE_PADDING)}
+					class={clsx('w-full adaptive-font adaptive-padding')}
 					bind:value
 				/>
 				<Button
 					variant="main"
 					type="submit"
-					class={clsx('w-full bg-emerald-300', ADAPTIVE_FONT, ADAPTIVE_PADDING)}
+					class={clsx('w-full bg-emerald-300 adaptive-font adaptive-padding')}
 					{disabled}
 					{loading}
 				>

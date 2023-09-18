@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ADAPTIVE_FONT, ADAPTIVE_FONT_UPPER, ADAPTIVE_PADDING } from '$lib/constants';
 	import { correctWhitespace } from '$lib/utils';
 	import { Card, Photo } from '$UI';
 	import clsx from 'clsx';
@@ -11,7 +10,7 @@
 
 	export let classCard = '';
 	export let src: string | null = null;
-	export let text: string;
+	export let text: string | undefined = undefined;
 	export let alt = 'Иллюстрация';
 
 	const handleError = () => {
@@ -32,14 +31,18 @@
 		/>
 	{/if}
 	<Card class={clsx('p-8 gap-8 max-hd:p-6 max-hd:gap-6', classCard)}>
-		<div
-			class={clsx(
-				text && text.length > 50 ? ADAPTIVE_FONT : ADAPTIVE_FONT_UPPER,
-				ADAPTIVE_PADDING
-			)}
-		>
-			{correctWhitespace(text)}
-		</div>
+		{#if text}
+			<div
+				class={clsx(
+					'adaptive-padding',
+					text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
+				)}
+			>
+				{correctWhitespace(text)}
+			</div>
+		{:else}
+			<slot name="body" />
+		{/if}
 		<slot />
 	</Card>
 </div>

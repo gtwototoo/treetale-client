@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { PUBLIC_TIMAGES_DELIVERY_URL } from '$env/static/public';
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$UI/Icons';
 	import { clsx } from 'clsx';
@@ -60,10 +59,11 @@
 		});
 	};
 
-	$: newSrc =
-		src && !src.includes('://') && !src.startsWith('data:')
-			? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
-			: '';
+	// $: newSrc =
+	// 	src && !src.includes('://') && !src.startsWith('data:')
+	// 		? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
+	// 		: '';
+	$: newSrc = src;
 </script>
 
 {#if ready}

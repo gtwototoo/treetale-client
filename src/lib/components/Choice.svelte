@@ -2,7 +2,6 @@
 	import { Button } from '$UI';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { ADAPTIVE_FONT, ADAPTIVE_PADDING } from '$lib/constants';
 	import clsx from 'clsx';
 
 	export let setChoice: (choiceId: number) => void;
@@ -22,10 +21,8 @@
 	on:click={handleClick}
 	variant={active ? 'main' : 'secondary'}
 	class={clsx(
-		'whitespace-normal text-left',
-		active && 'bg-main text-text',
-		ADAPTIVE_FONT,
-		ADAPTIVE_PADDING
+		'whitespace-normal text-left adaptive-font adaptive-padding',
+		active && 'bg-main text-text'
 	)}
 >
 	<slot />

@@ -45,9 +45,15 @@ svg {
 	@apply gap-3 max-xs:!px-3;
 }
 .header-button > p {
-	@apply hidden md:block;
+	@apply max-md:hidden;
 }
 
-.point {
-	@apply absolute flex items-center justify-center bg-gray-100 after:absolute after:h-3 after:w-3 after:rounded-full after:bg-inherit after:transition-[width,height,background];
+.adaptive-font {
+	@apply !text-2xl max-hd:!text-xl max-xl:!text-lg max-sm:!text-base;
+}
+.adaptive-font-upper {
+	@apply !text-4xl max-hd:!text-3xl max-xl:!text-2xl max-sm:!text-xl;
+}
+.adaptive-padding {
+	@apply !px-8 !py-4 max-hd:!px-6 max-hd:!py-3;
 }

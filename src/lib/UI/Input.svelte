@@ -1,19 +1,16 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
 	import { enableControl, onlyDigits } from '$lib/hooks';
 	import { clm } from '$lib/utils';
-	import { clsx } from 'clsx';
-	import type { SvelteComponent } from 'svelte';
+
+	let inputRef: HTMLInputElement;
 
 	let className = '';
 	export { className as class };
 
-	export let coreClass = '';
 	export let value = '';
 	export let number = false;
 	export let size: 'sm' | 'base' | 'lg' = 'base';
 	export let disabled = false;
-	export let icon: typeof SvelteComponent<any> | undefined = undefined;
 	export let required = false;
 	export let maxlength: number | undefined = undefined;
 	export let placeholder: string;
@@ -27,22 +24,27 @@
 		focused = false;
 	};
 
+	const handleClick = () => {
+		inputRef.focus();
+	};
+
 	let focused = false;
 </script>
 
-<div
+<button
 	class={clm(
 		'input',
-		{ disabled, '!bg-red-100': required && !value, '!bg-main-30': focused },
 		`size-${size}`,
+		required && !value && '!bg-red-100',
+		focused && '!bg-main-30',
+		{ disabled },
 		className
 	)}
+	on:click={handleClick}
 >
-	{#if icon}
-		<Icon type={icon} class="absolute mx-4" />
-	{/if}
+	<slot name="left" />
 	<input
-		class={clsx(coreClass, { '!pl-[3.25rem]': icon })}
+		bind:this={inputRef}
 		{name}
 		{disabled}
 		{maxlength}
@@ -55,7 +57,7 @@
 		use:enableControl={{ f: onlyDigits, enabled: number }}
 	/>
 	<slot />
-</div>
+</button>
 
 <style lang="postcss">
 	input {
@@ -71,7 +73,7 @@
 		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply hover:bg-main-30 relative flex items-center bg-white transition-colors;
+		@apply relative flex cursor-text items-center bg-white text-left transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

@@ -116,3 +116,9 @@
 		<div class="point left-0 top-1/2" />
 	</div>
 </div>
+
+<style lang="postcss">
+	.point {
+		@apply absolute flex items-center justify-center bg-gray-100 after:absolute after:h-3 after:w-3 after:rounded-full after:bg-inherit after:transition-[width,height,background];
+	}
+</style>

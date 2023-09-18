@@ -12,7 +12,7 @@
 	export let vars: IVariable[];
 	export let author: IUser | undefined = undefined;
 
-	$: ({ created, description, title, draft } = story);
+	$: ({ storyId, created, description, title, draft, likes } = story);
 </script>
 
 <div class="flex h-[6.25rem] items-center xs:h-32 lg:h-40">
@@ -40,5 +40,5 @@
 			{draft ? 'Черновик' : 'Публичный'}
 		</Tag>
 	{/if}
-	<Likes info={story} />
+	<Likes {storyId} {likes} />
 </div>

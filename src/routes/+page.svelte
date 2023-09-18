@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { Input } from '$UI';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
+	import { MagnifyingGlass } from 'svelte-heros-v2';
 
 	export let data;
 
@@ -16,9 +19,21 @@
 </svelte:head>
 
 <div class="flex grow flex-col">
-	<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
-		Список историй
-	</h1>
+	{#if data.stories.length}
+		<div class="flex flex-col gap-8 w-full items-center">
+			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
+				Список историй
+			</h1>
+			<Input placeholder="Поиск" size="lg" class="w-full max-w-lg">
+				<svelte:fragment slot="left">
+					<Icon
+						type={MagnifyingGlass}
+						class="w-6 h-6 mr-5 pointer-events-none text-gray-800"
+					/>
+				</svelte:fragment>
+			</Input>
+		</div>
+	{/if}
 	<StoriesList
 		stories={data.stories}
 		text="Историй не найдено, но вы можете добавить свою уникальную историю"

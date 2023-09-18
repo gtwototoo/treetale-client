@@ -2,11 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { ADAPTIVE_FONT, ADAPTIVE_PADDING } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button } from '$UI';
-	import clsx from 'clsx';
 
 	$: isNotFound = $page.status === 404;
 	$: $bodyColorStore = $page.error?.color;
@@ -24,7 +22,7 @@
 		<div class="flex min-h-full items-center py-12">
 			<ReadCard src={$page.error.img} alt="Ошибка" text={$page.error.message}>
 				<Button
-					class={clsx('w-full bg-main !text-text', ADAPTIVE_FONT, ADAPTIVE_PADDING)}
+					class="w-full bg-main !text-text adaptive-font adaptive-padding"
 					variant="main"
 					on:click={handleClick}
 				>

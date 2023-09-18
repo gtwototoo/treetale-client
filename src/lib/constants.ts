@@ -1,6 +1,5 @@
 import { PUBLIC_TREESTORY_CLIENT_URL } from '$env/static/public';
 import type { RGB } from '$lib/types';
-import clsx from 'clsx';
 
 export const BLACK_COLOR: RGB = [0, 0, 0];
 export const DEFAULT_COLOR: RGB = [254, 215, 170];
@@ -36,9 +35,3 @@ export const NOT_FOUND_VARIANTS: App.Error[] = [
 		color: [30, 47, 49]
 	}
 ];
-
-export const ADAPTIVE_FONT = clsx('!text-2xl max-hd:!text-xl max-xl:!text-lg max-sm:!text-base');
-export const ADAPTIVE_FONT_UPPER = clsx(
-	'!text-4xl max-hd:!text-3xl max-xl:!text-2xl max-sm:!text-xl'
-);
-export const ADAPTIVE_PADDING = clsx('!px-8 !py-4 max-hd:!px-6 max-hd:!py-3');
