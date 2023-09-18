@@ -30,7 +30,12 @@
 			height={368}
 		/>
 	{/if}
-	<Card class={clsx('p-8 gap-8 max-hd:p-6 max-hd:gap-6', classCard)}>
+	<Card
+		class={clsx(
+			'p-8 gap-8 max-hd:p-6 max-hd:gap-6 bg-opacity-70 childs:bg-transparent',
+			classCard
+		)}
+	>
 		{#if text}
 			<div
 				class={clsx(

@@ -15,6 +15,7 @@ export const rootStyle = (color: RGB) => {
 	return `<${'style'} type="text/css">:root{${varStyle({
 		'color-main': color,
 		'color-main-30': alphaToRgb(color, 0.3),
+		'color-main-20': alphaToRgb(color, 0.2),
 		'color-text': contrast ? WHITE_COLOR : BLACK_COLOR,
 		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR
 	})}}</style>`;

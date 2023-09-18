@@ -36,7 +36,7 @@
 		'input',
 		`size-${size}`,
 		required && !value && '!bg-red-100',
-		focused && '!bg-main-30',
+		focused && '!bg-main-20',
 		{ disabled },
 		className
 	)}
@@ -73,7 +73,7 @@
 		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply relative flex cursor-text items-center bg-white text-left transition-colors hover:bg-main-30;
+		@apply relative flex cursor-text items-center bg-white text-left transition-colors hover:bg-main-20;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

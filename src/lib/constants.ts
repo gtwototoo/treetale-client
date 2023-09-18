@@ -20,18 +20,21 @@ export const NOT_FOUND_VARIANTS: App.Error[] = [
 		message:
 			'Вы забрели в темный уголок, откуда не видно света, вам придется вернуться назад и найти другой путь.',
 		img: `${PUBLIC_TREESTORY_CLIENT_URL}/compressed/404_boy@1024x1024.png`,
-		color: [209, 209, 198]
+		color: [209, 209, 198],
+		theme: 'light'
 	},
 	{
 		message:
 			'Эта дорога уходит далеко за горизонт и впереди только пустота, думаю дальше будет тоже самое.',
 		img: `${PUBLIC_TREESTORY_CLIENT_URL}/compressed/404_road@1024x1024.png`,
-		color: [123, 85, 58]
+		color: [123, 85, 58],
+		theme: 'light'
 	},
 	{
 		message:
 			'Вы прогуливались по полю и вдруг увидели страшный заброшенный дом и в далеке слышился вой волков, думаю стоит вернуться обратно...',
 		img: `${PUBLIC_TREESTORY_CLIENT_URL}/compressed/404_house@1024x1024.png`,
-		color: [30, 47, 49]
+		color: [30, 47, 49],
+		theme: 'dark'
 	}
 ];

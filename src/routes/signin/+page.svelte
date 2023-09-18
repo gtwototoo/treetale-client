@@ -61,7 +61,6 @@
 			src={contentCardImage}
 			alt="Авторизация"
 			text="Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением"
-			classCard="!bg-gray-50"
 		>
 			<form
 				method="POST"
