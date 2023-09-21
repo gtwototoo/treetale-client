@@ -37,7 +37,7 @@
 		@apply h-40 w-40 text-6xl font-bold;
 	}
 	.size-base {
-		@apply h-9 w-9 text-sm;
+		@apply h-12 w-12 text-base;
 	}
 	.size-sm {
 		@apply h-6 w-6 text-xs;

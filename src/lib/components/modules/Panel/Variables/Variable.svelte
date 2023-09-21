@@ -28,7 +28,12 @@
 
 <div class="flex items-center gap-2">
 	<FormSplit class="w-full">
-		<Input bind:value={data.name} placeholder="Название" class="w-[30rem]" on:input={handleInput}>
+		<Input
+			bind:value={data.name}
+			placeholder="Название"
+			class="w-[13rem] shrink-0"
+			on:input={handleInput}
+		>
 			<Listbox
 				size="sm"
 				bind:value={data.expect}

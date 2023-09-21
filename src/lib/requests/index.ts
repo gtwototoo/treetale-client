@@ -12,6 +12,8 @@ const fetchCore = async <T>(url: RequestInfo | URL, options?: RequestInit) => {
 
 	const response = (await request.json()) as DefaultResponse;
 
+	console.log(response);
+
 	if (!request.ok) {
 		throw error(request.status, response.message && { message: response.message });
 	}

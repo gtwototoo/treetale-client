@@ -7,18 +7,21 @@
 	import { ViewArea } from '$UI/Icons';
 	import clsx from 'clsx';
 
+	export let viewArea: HTMLElement;
+
+	let element: HTMLButtonElement;
 	let coordinates: ICoordinates = {
 		x: 0,
 		y: 0
 	};
-	let innerWidth: number;
-	let innerHeight: number;
 
 	const setCoordinates = (offset: ICoordinates) => {
-		const radius = 18;
+		if (!element) return;
+
+		const radius = element.clientHeight / 2;
 		const formattedCoordinates: ICoordinates = {
-			x: -(offset.x / (innerWidth / radius)),
-			y: -(offset.y / (innerHeight / radius))
+			x: -(offset.x / (viewArea.clientWidth / radius)),
+			y: -(offset.y / (viewArea.clientHeight / radius))
 		};
 
 		const len = Math.hypot(formattedCoordinates.x, formattedCoordinates.y);
@@ -41,16 +44,19 @@
 	$: setCoordinates($storyInfo.offset);
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
-
-<Button class="h-9 w-9 items-center justify-center !rounded-full" on:click={setDefaultCoordinates}>
+<Button
+	bind:element
+	size="lg"
+	class="items-center !p-4 justify-center !rounded-full"
+	on:click={setDefaultCoordinates}
+>
 	<ViewArea
-		class={clsx('absolute', {
+		class={clsx('absolute w-6 h-6', {
 			'!text-gray-400': Math.abs(coordinates.x) > 6 || Math.abs(coordinates.y) > 6
 		})}
 	/>
 	<div
-		class="h-2 w-2 shrink-0 rounded-full !bg-gray-400"
+		class="h-3 w-3 shrink-0 rounded-full !bg-gray-400"
 		style={transform(coordinates, $storyInfo.scale / 100)}
 	/>
 </Button>

@@ -32,7 +32,7 @@
 				classCard={clsx(theme === 'dark' && 'bg-zinc-950 text-gray-100')}
 			>
 				<Button
-					class="w-full bg-main !text-text adaptive-font adaptive-padding"
+					class="w-full !bg-main !text-text adaptive-font adaptive-padding"
 					variant="main"
 					on:click={handleClick}
 				>

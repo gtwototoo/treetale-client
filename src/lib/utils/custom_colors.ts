@@ -12,11 +12,15 @@ const varStyle = (extend: object = {}) => {
 export const rootStyle = (color: RGB) => {
 	const contrast = contrastText(color);
 
-	return `<${'style'} type="text/css">:root{${varStyle({
+	const additionalColors: Record<string, RGB> = {
 		'color-main': color,
-		'color-main-30': alphaToRgb(color, 0.3),
-		'color-main-20': alphaToRgb(color, 0.2),
 		'color-text': contrast ? WHITE_COLOR : BLACK_COLOR,
 		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR
-	})}}</style>`;
+	};
+
+	for (const i in new Array(8).fill(undefined)) {
+		additionalColors[`color-main-${+i + 1}0`] = alphaToRgb(color, (+i + 1) / 10);
+	}
+
+	return `<${'style'} type="text/css">:root{${varStyle(additionalColors)}}</style>`;
 };

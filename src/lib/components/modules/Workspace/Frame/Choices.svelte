@@ -54,5 +54,5 @@
 			{/if}
 		</Button>
 	{/each}
-	<Button on:click={addChoice}>Добавить выбор</Button>
+	<Button on:click={addChoice}>Добавить вариант</Button>
 </FormSplit>

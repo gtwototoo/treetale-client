@@ -2,9 +2,6 @@
 	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
 	import { activeActionStore, oneDirectionModeStore } from '$lib/stores/newediting';
 
-	let innerHeight: number;
-	let innerWidth: number;
-
 	const handleKeydown = (e: KeyboardEvent) => {
 		switch (e.key.toLowerCase()) {
 			case 'm':
@@ -73,8 +70,6 @@
 </script>
 
 <svelte:window
-	bind:innerHeight
-	bind:innerWidth
 	on:keypress|stopPropagation
 	on:keydown={handleKeydown}
 	on:keyup|preventDefault={handleKeyup}

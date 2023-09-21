@@ -36,6 +36,8 @@
 		} catch (e) {
 			const error = e as HttpError;
 
+			console.log(error);
+
 			message = {
 				error: true,
 				text: error.body.message
@@ -69,7 +71,7 @@
 			>
 				<Input
 					placeholder="Почта или логин"
-					class={clsx('w-full adaptive-font adaptive-padding')}
+					class="w-full adaptive-font adaptive-padding"
 					bind:value
 				/>
 				<Button

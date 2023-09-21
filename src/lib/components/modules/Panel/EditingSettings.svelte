@@ -166,7 +166,7 @@
 		</SelectorItem>
 	</Selector>
 	<Button
-		class="mt-4 justify-center gap-4 !text-red-600"
+		class="mt-4 justify-center !text-red-500 !bg-red-50"
 		on:click={() => deleteStory($storyInfo.storyId)}
 	>
 		Удалить историю

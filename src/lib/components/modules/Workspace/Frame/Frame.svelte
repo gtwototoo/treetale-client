@@ -86,7 +86,7 @@
 <div class="absolute" style="{transform({ x: data.x, y: data.y })};z-index: {data.frameId}">
 	<button
 		class={clsx(
-			'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-gray-100 p-2 text-sm/4 transition-shadow hover:shadow-lg',
+			'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-shadow hover:shadow-lg',
 			{ 'shadow-lg': $selectedFrameStore === data.frameId }
 		)}
 		on:mouseenter={setMovingFrame}
@@ -119,6 +119,6 @@
 
 <style lang="postcss">
 	.point {
-		@apply absolute flex items-center justify-center bg-gray-100 after:absolute after:h-3 after:w-3 after:rounded-full after:bg-inherit after:transition-[width,height,background];
+		@apply absolute flex items-center justify-center bg-white after:absolute after:h-3 after:w-3 after:rounded-full after:bg-inherit after:transition-[width,height,background];
 	}
 </style>

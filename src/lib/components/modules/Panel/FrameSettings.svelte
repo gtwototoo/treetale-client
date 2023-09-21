@@ -63,4 +63,5 @@
 		<Input placeholder="Вариант выбора" />
 		<Button>Добавить вариант</Button>
 	</FormSplit>
+	<Button class="mt-4 justify-center !text-red-500 !bg-red-50">Удалить фрейм</Button>
 </div>

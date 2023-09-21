@@ -16,7 +16,7 @@
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
 	const user: IUser = me ? $page.data.session : data.user;
 
-	const pageType = (path: string): 'viewed' | 'liked' | 'main' => {
+	const getPageType = (path: string): 'viewed' | 'liked' | 'main' => {
 		return findByPattern(path, {
 			main: /^\/profile$/,
 			liked: /^\/profile\/liked$/,
@@ -24,7 +24,7 @@
 		}) as 'viewed' | 'liked' | 'main';
 	};
 
-	$: ({ url } = $page);
+	$: pageType = getPageType($page.url.pathname);
 	$: ({ statistic } = data);
 	$: $bodyColorStore = $colorStore || user.color || DEFAULT_COLOR;
 </script>
@@ -34,34 +34,25 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<div class="flex gap-8 screen-sm items-start screen-md p-16 screen-hd screen-xl">
+<div class="flex gap-8 screen-sm items-start screen-md p-16 screen-hd screen-xl grow">
 	<UserInformation {user} {me} {statistic} />
-	<div class="flex flex-col w-full items-center gap-8">
+	<div class="flex flex-col w-full items-center gap-8 min-h-full">
 		{#if me}
 			<Selector class="overflow-hidden">
 				<Link href="/profile">
-					<SelectorItem
-						active={pageType(url.pathname) === 'main'}
-						class="w-20 justify-center xs:w-auto"
-					>
+					<SelectorItem active={pageType === 'main'} class="w-20 justify-center xs:w-auto">
 						<Icon type={Pencil} class="xs:hidden" />
 						<p class="hidden xs:block">Созданные</p>
 					</SelectorItem>
 				</Link>
 				<Link href="/profile/liked">
-					<SelectorItem
-						active={pageType(url.pathname) === 'liked'}
-						class="w-20 justify-center xs:w-auto"
-					>
+					<SelectorItem active={pageType === 'liked'} class="w-20 justify-center xs:w-auto">
 						<Icon type={Heart} class="xs:hidden" />
 						<p class="hidden xs:block">Понравившиеся</p>
 					</SelectorItem>
 				</Link>
 				<Link href="/profile/viewed">
-					<SelectorItem
-						active={pageType(url.pathname) === 'viewed'}
-						class="w-20 justify-center xs:w-auto"
-					>
+					<SelectorItem active={pageType === 'viewed'} class="w-20 justify-center xs:w-auto">
 						<Icon type={Eye} class="xs:hidden" />
 						<p class="hidden xs:block">Просмотренные</p>
 					</SelectorItem>

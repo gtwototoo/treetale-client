@@ -10,7 +10,6 @@
 	import CreateText from './CreateText.svelte';
 	import FramesLayer from './FramesLayer.svelte';
 	import MovingArea from './MovingArea.svelte';
-	import WindowActions from './WindowActions.svelte';
 	import {
 		addFrame,
 		connectorLogic,
@@ -22,7 +21,8 @@
 		startMoveFrame
 	} from './methods';
 
-	let workspace: HTMLDivElement;
+	export let workspace: HTMLDivElement;
+
 	let startPinch = 0;
 	let startMoveData: IStartMove = {
 		startMoveCoords: { x: 0, y: 0 },
@@ -111,7 +111,7 @@
 	};
 </script>
 
-<WindowActions {workspace} />
+<!-- <WindowActions {workspace} /> -->
 <div
 	class={clsx(
 		'absolute h-full w-full select-none overflow-hidden',

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signUpUser } from '$lib/requests/user';
@@ -10,7 +9,6 @@
 	import { Button, Input } from '$UI';
 	import type { HttpError } from '@sveltejs/kit';
 	import clsx from 'clsx';
-	import { UserPlus } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
 	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
@@ -67,17 +65,19 @@
 				method="POST"
 				on:submit|preventDefault={handleSignUp}
 			>
-				<Input placeholder="Псевдоним" class="w-full text-center" size="lg" bind:value={name} />
+				<Input
+					placeholder="Псевдоним"
+					class="w-full adaptive-font adaptive-padding"
+					bind:value={name}
+				/>
 				<Button
 					variant="main"
 					type="submit"
-					class="w-full justify-center gap-4 bg-emerald-300"
-					size="lg"
+					class={clsx('w-full bg-emerald-300 adaptive-font adaptive-padding')}
 					{disabled}
 					{loading}
 				>
-					<Icon type={UserPlus} />
-					<p>Завершить регистрацию</p>
+					Завершить регистрацию
 				</Button>
 				{#if message && message.text}
 					<div

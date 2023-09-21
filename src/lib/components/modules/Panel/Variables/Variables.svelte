@@ -4,7 +4,7 @@
 	import { updateVars } from '$lib/requests/story';
 	import { storyInfo, vars } from '$lib/stores/editing';
 	import { correctWhitespace } from '$lib/utils';
-	import { Cloud, Plus, Variable } from 'svelte-heros-v2';
+	import { Cloud, Variable } from 'svelte-heros-v2';
 	import Note from '../Note.svelte';
 	import VariableRow from './Variable.svelte';
 
@@ -62,10 +62,7 @@
 		{#each $vars as data, key}
 			<VariableRow {data} on:click={() => removeVariable(key)} on:input={checkUpdates} />
 		{/each}
-		<Button class="gap-4" on:click={addVariable}>
-			<Icon type={Plus} />
-			<p>Добавить переменную</p>
-		</Button>
+		<Button on:click={addVariable} class="justify-center">Добавить переменную</Button>
 	</div>
 	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 		{#if timer}

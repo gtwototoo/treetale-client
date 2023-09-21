@@ -13,6 +13,8 @@
 
 	export let data;
 
+	let workspace: HTMLDivElement;
+
 	frames.init(data.frames);
 	storyInfo.set({
 		...data.info,
@@ -25,8 +27,8 @@
 
 	onMount(() => {
 		if ($frames.length === 1 && $frames[0].x === 0 && $frames[0].y === 0) {
-			$frames[0].x = window.innerWidth / 2 - $frames[0].width / 2;
-			$frames[0].y = window.innerHeight / 2 - $frames[0].height / 2;
+			$frames[0].x = workspace.clientWidth / 2 - $frames[0].width / 2;
+			$frames[0].y = workspace.clientHeight / 2 - $frames[0].height / 2;
 		}
 		changesHistory.add({
 			title: 'Начальное состояние',
@@ -45,5 +47,5 @@
 </svelte:head>
 
 <SvgGradient id={$storyInfo.storyId} />
-<Workspace />
-<EditingFooter />
+<Workspace bind:workspace />
+<EditingFooter viewArea={workspace} />

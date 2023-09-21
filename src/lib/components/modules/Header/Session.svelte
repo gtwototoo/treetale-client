@@ -15,7 +15,7 @@
 			style="--color-main: {selectedColor.join(' ')}"
 			alt={$page.data.session.name}
 			src={$page.data.session.avatarId}
-			width={36}
+			width={48}
 			class="light-gradient-main"
 		/>
 	</Link>

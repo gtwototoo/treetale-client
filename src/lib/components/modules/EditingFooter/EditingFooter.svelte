@@ -5,11 +5,18 @@
 	import clsx from 'clsx';
 	import Radar from './Radar.svelte';
 	import StateMode from './StateMode.svelte';
+
+	export let viewArea: HTMLDivElement;
 </script>
 
 <div class="area">
-	<div class={clsx('footer', $activeActionStore !== 'view' ? 'blind' : 'pointer-events-auto')}>
-		<Radar />
+	<div
+		class={clsx(
+			'flex items-center',
+			$activeActionStore !== 'view' ? 'blind' : 'pointer-events-auto'
+		)}
+	>
+		<Radar {viewArea} />
 		<div class="info">
 			<p>
 				{$storyInfo.offset.x}, {$storyInfo.offset.y}
@@ -19,18 +26,24 @@
 			</p>
 		</div>
 	</div>
-	<Button variant="ghost" size="lg" class="w-64 bg-green-300">Новый фрейм</Button>
+	<Button
+		variant="ghost"
+		size="lg"
+		class="w-64 bg-emerald-300 text-emerald-500 pointer-events-auto justify-center"
+	>
+		Новый фрейм
+	</Button>
 	<StateMode />
 </div>
 
 <style lang="postcss">
 	.area {
-		@apply pointer-events-none fixed bottom-0 flex w-full items-end justify-between bg-transparent p-2 transition-opacity sm:p-4;
+		@apply pointer-events-none absolute bottom-0 flex w-full items-center justify-between bg-transparent p-2 transition-opacity sm:p-4;
 	}
 	.footer {
 		@apply flex items-center gap-1;
 	}
 	.info {
-		@apply flex select-none flex-col rounded-lg bg-main px-2 py-1 text-xs text-text;
+		@apply flex select-none flex-col rounded-lg bg-main py-1 pl-2 text-xs text-text;
 	}
 </style>
