@@ -76,7 +76,7 @@
 		@apply rounded px-2 py-1 text-xs;
 	}
 	.variant-secondary {
-		@apply bg-gray-50 text-black transition-colors hover:bg-white hover:text-blue-500 focus:bg-white focus:text-blue-500;
+		@apply bg-gray-50 text-black transition-colors hover:bg-main-20 hover:text-text focus:bg-main-20 focus:text-text;
 	}
 	.variant-secondary-white {
 		@apply bg-white text-black transition-colors hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;

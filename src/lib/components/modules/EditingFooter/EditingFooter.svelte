@@ -44,6 +44,6 @@
 		@apply flex items-center gap-1;
 	}
 	.info {
-		@apply flex select-none flex-col rounded-lg bg-main py-1 pl-2 text-xs text-text;
+		@apply flex select-none flex-col rounded-lg bg-main px-2 py-1 text-sm text-text;
 	}
 </style>

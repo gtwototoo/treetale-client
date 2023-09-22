@@ -109,73 +109,66 @@
 	});
 </script>
 
-<div
-	class="flex flex-col items-stretch gap-4 p-3"
-	style="--fill-main: url(#light-gradient-{$storyInfo.storyId})"
->
-	<Image
-		src={$storyInfo.imageId}
-		height={192}
-		width={360}
-		bind:state
-		class="h-48"
-		alt="Иллюстрация текста"
-		on:loading={setFile}
-		on:remove={preRemoveImage}
-	/>
-	<FormSplit vertical>
-		<Input
-			placeholder="Название"
-			class="w-full"
-			bind:value={$storyInfo.title}
-			on:input={checkUpdates}
-		>
-			<ColorPicker
-				lightRange={[10, 80]}
-				saturateRange={[10, 90]}
-				color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
-				{saturate}
-				{light}
-				on:change={setColor}
-			/>
-		</Input>
-		<Textarea
-			placeholder="Описание"
-			bind:value={$storyInfo.description}
-			on:input={checkUpdates}
-		/>
-		<InputTags
-			placeholder={$storyInfo.tags.length ? '' : 'Теги'}
-			bind:tags={$storyInfo.tags}
-			on:add={checkUpdates}
-			on:remove={checkUpdates}
-		/>
-	</FormSplit>
-	<Selector on:change={checkUpdates}>
-		<SelectorItem class="grow justify-center" active={$storyInfo.draft} on:click={switchDraft}>
-			Черновик
-		</SelectorItem>
-		<SelectorItem
-			class={clsx('grow justify-center', {
-				'!bg-emerald-500': !$storyInfo.draft
-			})}
-			active={!$storyInfo.draft}
-			on:click={switchDraft}
-		>
-			Публичный
-		</SelectorItem>
-	</Selector>
-	<Button
-		class="mt-4 justify-center !text-red-500 !bg-red-50"
-		on:click={() => deleteStory($storyInfo.storyId)}
+<svelte:head></svelte:head>
+
+<Image
+	src={$storyInfo.imageId}
+	height={192}
+	width={360}
+	bind:state
+	class="h-48"
+	alt="Иллюстрация текста"
+	on:loading={setFile}
+	on:remove={preRemoveImage}
+/>
+<FormSplit vertical>
+	<Input
+		placeholder="Название"
+		class="w-full"
+		bind:value={$storyInfo.title}
+		on:input={checkUpdates}
 	>
-		Удалить историю
-	</Button>
-	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-		{#if timer}
-			<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
-		{:else}
-			{saveInfo}
-		{/if}
-	</div>
+		<ColorPicker
+			lightRange={[10, 80]}
+			saturateRange={[10, 90]}
+			color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
+			{saturate}
+			{light}
+			on:change={setColor}
+		/>
+	</Input>
+	<Textarea placeholder="Описание" bind:value={$storyInfo.description} on:input={checkUpdates} />
+	<InputTags
+		placeholder={$storyInfo.tags.length ? '' : 'Теги'}
+		bind:tags={$storyInfo.tags}
+		on:add={checkUpdates}
+		on:remove={checkUpdates}
+	/>
+</FormSplit>
+<Selector on:change={checkUpdates}>
+	<SelectorItem class="grow justify-center" active={$storyInfo.draft} on:click={switchDraft}>
+		Черновик
+	</SelectorItem>
+	<SelectorItem
+		class={clsx('grow justify-center', {
+			'!bg-emerald-500': !$storyInfo.draft
+		})}
+		active={!$storyInfo.draft}
+		on:click={switchDraft}
+	>
+		Публичный
+	</SelectorItem>
+</Selector>
+<Button
+	class="mt-4 justify-center !text-red-500 !bg-red-50"
+	on:click={() => deleteStory($storyInfo.storyId)}
+>
+	Удалить историю
+</Button>
+<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+	{#if timer}
+		<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
+	{:else}
+		{saveInfo}
+	{/if}
 </div>

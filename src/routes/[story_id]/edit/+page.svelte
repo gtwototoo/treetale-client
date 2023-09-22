@@ -43,7 +43,9 @@
 	<title>
 		Редактирование "{$storyInfo.title || 'Без названия'}"
 	</title>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle($bodyColorStore, {
+		'fill-gradient': `url(#light-gradient-${$storyInfo.storyId})`
+	})}
 </svelte:head>
 
 <SvgGradient id={$storyInfo.storyId} />

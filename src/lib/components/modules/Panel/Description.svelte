@@ -8,13 +8,11 @@
 	import { correctVariableReplace } from '$lib/utils';
 	import clsx from 'clsx';
 	import { BookOpen } from 'svelte-heros-v2';
-	import SvgGradient from '../StoriesList/SvgGradient.svelte';
 
 	$: ({ storyId, title, description, imageId, tags, created, likes, vars, author } = $storyStore);
 </script>
 
-<SvgGradient id={storyId} />
-<div class="flex flex-col" style="--fill-main: url(#light-gradient-{storyId})">
+<div class="flex flex-col">
 	<div
 		class="relative flex h-48 w-full shrink-0 items-center justify-center rounded-t-xl bg-white text-main"
 	>
@@ -28,15 +26,11 @@
 				height={192}
 			>
 				<svelte:fragment slot="error">
-					<Icon
-						type={BookOpen}
-						class="h-24 w-auto childs:fill-[--fill-main]"
-						variation="solid"
-					/>
+					<Icon type={BookOpen} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 				</svelte:fragment>
 			</Photo>
 		{:else}
-			<Icon type={BookOpen} class="h-24 w-auto childs:fill-[--fill-main]" variation="solid" />
+			<Icon type={BookOpen} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 		{/if}
 	</div>
 	<div class="flex flex-col items-stretch gap-4 p-3">

@@ -27,9 +27,11 @@
 </script>
 
 <Header class={clsx($activeActionStore !== 'view' ? 'blind' : 'childs:pointer-events-auto')}>
-	<FormSplit>
+	<FormSplit class="!divide-main">
 		<Button
-			class="header-button"
+			class="header-button bg-contrast text-text"
+			variant="ghost"
+			size="lg"
 			on:click={changesHistory.undo}
 			disabled={$changesHistory.currentStageId === 0}
 			on:holdclick={historySwitch}
@@ -37,7 +39,9 @@
 			<Icon type={ArrowUturnLeft} />
 		</Button>
 		<Button
-			class="header-button"
+			class="header-button bg-contrast text-text"
+			variant="ghost"
+			size="lg"
 			on:click={changesHistory.redo}
 			disabled={$changesHistory.currentStageId + 1 >= $changesHistory.stages.length}
 			on:holdclick={historySwitch}

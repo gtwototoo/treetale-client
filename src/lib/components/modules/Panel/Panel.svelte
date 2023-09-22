@@ -1,32 +1,22 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { Button } from '$UI';
-	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
-	import { fly } from 'svelte/transition';
-
-	let className = '';
-
-	export { className as class };
-	export let title: string | undefined = undefined;
 </script>
 
-<div class={clsx('panel', className)} in:fly={{ x: 10 }} out:fly={{ x: 10 }}>
-	<Button size="sm" class="!absolute right-3 top-3 z-[2] !p-2" on:click>
-		<Icon type={XMark} />
+<div class="w-96 bg-gray-100 shrink-0 p-4 flex flex-col gap-4">
+	<Button size="lg" class="!absolute right-4 top-4 z-[2] !p-3" on:click>
+		<Icon type={XMark} class="w-6 h-6" />
 	</Button>
-	{#if title}
-		<p class="min-h-[2.5rem] w-full select-none p-4 px-20 text-center text-lg font-medium">
-			{title}
+	{#if $currentPanelStore.title}
+		<p
+			class="min-h-[3rem] w-full select-none flex justify-center items-center px-16 text-center text-lg font-medium"
+		>
+			{$currentPanelStore.title}
 		</p>
 	{/if}
-	<div class="bg-transparent">
-		<slot />
-	</div>
+	{#if $currentPanelStore.component}
+		<svelte:component this={$currentPanelStore.component} />
+	{/if}
 </div>
-
-<style lang="postcss">
-	.panel {
-		@apply absolute right-4 top-16 z-20 flex max-h-[calc(100vh-5.75rem)] w-96 flex-col rounded-xl bg-gray-100 shadow childs:w-full childs:bg-transparent;
-	}
-</style>

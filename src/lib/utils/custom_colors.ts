@@ -3,13 +3,19 @@ import type { RGB } from '$lib/types';
 import { alphaToRgb } from './alpha_to_rgb';
 import { contrastText } from './contrast';
 
-const varStyle = (extend: object = {}) => {
+export const varColors = (extend: Record<string, RGB> = {}) => {
 	return Object.entries(extend)
 		.map(([key, value]) => `--${key}:${value.join(' ')}`)
 		.join(';');
 };
 
-export const rootStyle = (color: RGB) => {
+export const varStyles = (extend: Record<string, string> = {}) => {
+	return Object.entries(extend)
+		.map(([key, value]) => `--${key}:${value}`)
+		.join(';');
+};
+
+const generateMainColors = (color: RGB) => {
 	const contrast = contrastText(color);
 
 	const additionalColors: Record<string, RGB> = {
@@ -22,5 +28,11 @@ export const rootStyle = (color: RGB) => {
 		additionalColors[`color-main-${+i + 1}0`] = alphaToRgb(color, (+i + 1) / 10);
 	}
 
-	return `<${'style'} type="text/css">:root{${varStyle(additionalColors)}}</style>`;
+	return varColors(additionalColors);
+};
+
+export const rootStyle = (mainColor: RGB, additionalStyles?: Record<string, string>) => {
+	const styles = [generateMainColors(mainColor), varStyles(additionalStyles)].join(';');
+
+	return `<${'style'} type="text/css">:root{${styles}}</style>`;
 };

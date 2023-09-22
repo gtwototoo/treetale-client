@@ -97,7 +97,7 @@
 		{/if}
 	{:else}
 		<DropBlock on:change={handleChange} class="h-48 gap-2">
-			<Icon type={BookOpen} class="h-24 w-auto childs:fill-[--fill-main]" variation="solid" />
+			<Icon type={BookOpen} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 		</DropBlock>
 	{/if}
 </div>

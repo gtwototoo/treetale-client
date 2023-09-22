@@ -51,12 +51,13 @@
 	};
 </script>
 
-<div
-	class="flex flex-col items-stretch gap-4 p-3"
-	style="--fill-main: url(#light-gradient-{$storyInfo.storyId})"
->
+<div class="flex flex-col items-stretch gap-4">
+	<FormSplit class="w-full">
+		<Input value={'222'} placeholder="x" class="flex-1 !text-center" number />
+		<Input value={'222'} placeholder="y" class="flex-1 !text-center" number />
+	</FormSplit>
 	<DropBlock on:change={setFile} class="h-48 gap-2">
-		<Icon type={RectangleStack} class="h-24 w-auto childs:fill-[--fill-main]" variation="solid" />
+		<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 	</DropBlock>
 	<Textarea placeholder="Описание" />
 	<FormSplit vertical>

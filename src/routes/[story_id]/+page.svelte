@@ -6,6 +6,7 @@
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
+	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
 	import { last, rootStyle } from '$lib/utils';
@@ -50,11 +51,14 @@
 
 <svelte:head>
 	<title>{title}</title>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle($bodyColorStore, {
+		'fill-gradient': `url(#light-gradient-${storyId})`
+	})}
 </svelte:head>
 
 <svelte:window on:keydown={handleKeydown} />
 
+<SvgGradient id={storyId} />
 <div class="flex grow bg-transparent">
 	<Carousel class="w-full min-h-full p-4" {current}>
 		<div class="plug max-md:!hidden">

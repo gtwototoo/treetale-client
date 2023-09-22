@@ -31,7 +31,9 @@
 >
 	<Card
 		class="h-[19.25rem] border-2 border-transparent bg-with-border-white border-from-white border-to-main xs:h-[27.5rem] lg:h-[34.5rem]"
-		style="--color-main: {selectedColor.join(' ')}; --fill-main: url(#light-gradient-{storyId})"
+		style="--color-main: {selectedColor.join(
+			' '
+		)}; --fill-gradient: url(#light-gradient-{storyId})"
 	>
 		<SvgGradient id={storyId} />
 		<div
@@ -49,7 +51,7 @@
 					<svelte:fragment slot="error">
 						<Icon
 							type={BookOpen}
-							class="h-10 w-auto childs:fill-[--fill-main] xs:h-16 lg:h-36"
+							class="h-10 w-auto childs:fill-gradient xs:h-16 lg:h-36"
 							variation="solid"
 						/>
 					</svelte:fragment>
@@ -57,7 +59,7 @@
 			{:else}
 				<Icon
 					type={BookOpen}
-					class="h-10 w-auto childs:fill-[--fill-main] xs:h-16 lg:h-36"
+					class="h-10 w-auto childs:fill-gradient xs:h-16 lg:h-36"
 					variation="solid"
 				/>
 			{/if}

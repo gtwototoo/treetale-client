@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
-	import { currentPanelStore } from '$lib/stores/main';
+	import Panel from '$lib/components/modules/Panel/Panel.svelte';
 	import { findByPattern } from '$lib/utils';
 
 	import '../app.postcss';
@@ -20,11 +20,7 @@
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>
-	{#if pageType === 'edit'}
-		<div class="w-96 bg-gray-100 shrink-0">
-			{#if $currentPanelStore.component}
-				<svelte:component this={$currentPanelStore.component} />
-			{/if}
-		</div>
+	{#if pageType === 'edit' && !$page.error}
+		<Panel />
 	{/if}
 </div>

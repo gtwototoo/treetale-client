@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { clm } from '$lib/utils';
+	import { onMount } from 'svelte';
 
 	let className = '';
 	export { className as class };
@@ -33,6 +34,10 @@
 	const handleBlur = () => {
 		focused = false;
 	};
+
+	onMount(() => {
+		autoHeight(value);
+	});
 
 	$: autoHeight(value);
 </script>

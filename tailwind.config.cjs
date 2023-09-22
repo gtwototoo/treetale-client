@@ -60,6 +60,9 @@ const config = {
 				return `& ${value}`;
 			});
 			addUtilities({
+				'.fill-gradient': {
+					fill: 'var(--fill-gradient)'
+				},
 				'.scrollbar-none': {
 					'-ms-overflow-style': 'none',
 					'scrollbar-width': 'none'

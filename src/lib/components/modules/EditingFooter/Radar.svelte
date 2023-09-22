@@ -47,16 +47,17 @@
 <Button
 	bind:element
 	size="lg"
-	class="items-center !p-4 justify-center !rounded-full"
+	variant="ghost"
+	class="items-center !p-3 justify-center !rounded-full bg-contrast"
 	on:click={setDefaultCoordinates}
 >
 	<ViewArea
-		class={clsx('absolute w-6 h-6', {
+		class={clsx('text-text w-6 h-6', {
 			'!text-gray-400': Math.abs(coordinates.x) > 6 || Math.abs(coordinates.y) > 6
 		})}
 	/>
 	<div
-		class="h-3 w-3 shrink-0 rounded-full !bg-gray-400"
+		class="h-3 w-3 shrink-0 rounded-full absolute !bg-text"
 		style={transform(coordinates, $storyInfo.scale / 100)}
 	/>
 </Button>
