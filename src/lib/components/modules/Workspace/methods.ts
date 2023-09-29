@@ -1,4 +1,4 @@
-import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing';
+import { changesHistory, connect, frames, offset, storyInfo } from '$lib/stores/editing';
 import {
 	activeActionStore,
 	oneDirectionModeStore,
@@ -6,7 +6,7 @@ import {
 } from '$lib/stores/newediting';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
-import { getFrameFromId, last } from '$lib/utils';
+import { getChoiceFromId, getFrameFromId, last } from '$lib/utils';
 import { Plus, Share, XMark } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
 
@@ -36,10 +36,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 		return data;
 	});
 
-	changesHistory.add({
-		title: 'Добавление фрейма',
-		icon: Plus
-	});
+	changesHistory.add('Добавление фрейма', Plus);
 
 	return frameId;
 };
@@ -51,23 +48,18 @@ export const connectorLogic = () => {
 	if (!connectStore.active || connectStore.connector.from === null) return;
 
 	const { to, from, prevOutput } = connectStore.connector;
-	const frame = getFrameFromId(framesStore, from.frameId, from.choiceId);
+	const frame = getFrameFromId(framesStore, from.frameId);
+	const choice = getChoiceFromId(frame, from.choiceId);
 
-	if (!frame.frame || !frame.choice) return;
+	if (!frame || !choice) return;
 
 	if (to === null && prevOutput !== null) {
-		changesHistory.add({
-			title: 'Удаление связи',
-			icon: XMark
-		});
+		changesHistory.add('Удаление связи', XMark);
 	}
 
 	if (to !== null) {
-		frame.choice.frameId = to;
-		changesHistory.add({
-			title: 'Добавление связи',
-			icon: Share
-		});
+		choice.frameId = to;
+		changesHistory.add('Добавление связи', Share);
 	}
 
 	connect.update((data) =>
@@ -82,37 +74,34 @@ export const connectorLogic = () => {
 };
 
 export const startGrab = ({ x, y }: ICoordinates): ICoordinates => {
-	const storyInfoStore = get(storyInfo);
+	const offsetStore = get(offset);
 
 	activeActionStore.set('movingArea');
 
 	return {
-		x: x - storyInfoStore.offset.x,
-		y: y - storyInfoStore.offset.y
+		x: x - offsetStore.x,
+		y: y - offsetStore.y
 	};
 };
 
 export const grabbingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) => {
-	storyInfo.update((data) =>
-		Object.assign(data, {
-			offset: {
-				x: x - startOffset.x,
-				y: y - startOffset.y
-			}
-		})
-	);
+	offset.update(() => ({
+		x: x - startOffset.x,
+		y: y - startOffset.y
+	}));
 };
 export const startMoveFrame = (coords: ICoordinates): IStartMove => {
 	const framesStore = get(frames);
 	const getSelectedFrameStore = get(selectedFrameStore);
-	const frame = getFrameFromId(framesStore, getSelectedFrameStore).frame;
+	const frame = getFrameFromId(framesStore, getSelectedFrameStore);
 
-	if (!frame)
+	if (!frame) {
 		return {
 			startMoveCoords: { x: 0, y: 0 },
 			moveFrameOffset: { x: 0, y: 0 },
 			moveXDirection: null
 		};
+	}
 
 	const { x, y } = storyInfo.scaleCorrect(coords);
 

@@ -1,128 +1,115 @@
 <script lang="ts">
-	import { changesHistory, connect, frames, storyInfo } from '$lib/stores/editing';
-	import { activeActionStore, selectedFrameStore } from '$lib/stores/newediting';
+	import { activeActionStore } from '$lib/stores/newediting';
 	import type { ICoordinates } from '$lib/types';
-	import type { IStartMove } from '$lib/types/editing';
-	import clsx from 'clsx';
-	import { pinch } from 'svelte-gestures';
-	import { Square2Stack } from 'svelte-heros-v2';
 	import ConnectionsLayer from './ConnectionsLayer.svelte';
-	import CreateText from './CreateText.svelte';
-	import FramesLayer from './FramesLayer.svelte';
 	import MovingArea from './MovingArea.svelte';
-	import {
-		addFrame,
-		connectorLogic,
-		cursorFollow,
-		grabbingArea,
-		moveRivet,
-		movingFrame,
-		startGrab,
-		startMoveFrame
-	} from './methods';
+	import WindowActions from './WindowActions.svelte';
+
+	import clsx from 'clsx';
+	import { createEventDispatcher, setContext } from 'svelte';
+	import { pinch } from 'svelte-gestures';
+	import { writable, type Writable } from 'svelte/store';
 
 	export let workspace: HTMLDivElement;
 
+	export let zoom: Writable<number>;
+	export let offset: Writable<ICoordinates>;
+
+	const zoomStore = zoom || writable(100);
+	const offsetStore = offset || writable({ x: 0, y: 0 });
+
+	setContext('zoom', zoomStore);
+	setContext('offset', offsetStore);
+
 	let startPinch = 0;
-	let startMoveData: IStartMove = {
-		startMoveCoords: { x: 0, y: 0 },
-		moveFrameOffset: { x: 0, y: 0 },
-		moveXDirection: null
+
+	const dispatch = createEventDispatcher<{
+		mousedown: { doubleClick: boolean; button: number; isMouse: boolean } & ICoordinates;
+		mousemove: ICoordinates;
+		click: ICoordinates;
+		zoom: { zoom: number; offset: ICoordinates };
+		mouseup: null;
+	}>();
+
+	const scaleCorrect = (coordinates: ICoordinates) => {
+		return {
+			x: (coordinates.x - $offsetStore.x) / ($zoomStore / 100),
+			y: (coordinates.y - $offsetStore.y) / ($zoomStore / 100)
+		};
 	};
-	let startOffset: ICoordinates = { x: 0, y: 0 };
 
 	const handleMouseMove = (e: MouseEvent | TouchEvent) => {
 		const isMouse = e instanceof MouseEvent;
-		const coordinates = isMouse ? e : e.touches[0];
-		const { clientX: x, clientY: y } = coordinates;
+		const event = isMouse ? e : e.touches[0];
+		const { clientX: x, clientY: y } = event;
 
-		if ($activeActionStore === 'movingFrame') {
-			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
-		}
-		if ($activeActionStore === 'movingArea') grabbingArea({ x, y }, startOffset);
-		if ($connect.connector.from !== null) moveRivet({ x, y });
-		if ($storyInfo.addFrameMode) cursorFollow({ x, y });
+		dispatch('mousemove', { x, y });
 	};
 
 	const handleMouseDown = (e: MouseEvent | TouchEvent) => {
 		const isMouse = e instanceof MouseEvent;
-		const coordinates = isMouse ? e : e.touches[0];
-		const { clientX: x, clientY: y } = coordinates;
+		const event = isMouse ? e : e.touches[0];
+		const { clientX: x, clientY: y } = event;
 
-		if (!isMouse || e.button === 1 || e.detail === 2) startOffset = startGrab({ x, y });
-		if (isMouse && e.button === 0 && $selectedFrameStore) {
-			startMoveData = startMoveFrame({ x, y });
-		}
+		dispatch('mousedown', {
+			doubleClick: isMouse && e.detail === 2,
+			button: isMouse && e.button,
+			isMouse,
+			x,
+			y
+		});
 	};
 
 	const handleMouseUp = () => {
-		if ($activeActionStore === 'movingFrame') {
-			changesHistory.add({
-				title: 'Перемещение фрейма',
-				icon: Square2Stack
-			});
-		}
-
-		$selectedFrameStore = null;
-		$activeActionStore = 'view';
-
-		connectorLogic();
-		storyInfo.saveArea();
+		dispatch('mouseup');
 	};
 
 	const handleClick = ({ x, y }: MouseEvent) => {
-		if ($storyInfo.addFrameMode && $storyInfo.addFrameOffset) {
-			const addCoords = storyInfo.scaleCorrect({ x, y });
-
-			addFrame({ x: addCoords.x - 128, y: addCoords.y - 112 });
-		}
+		dispatch('click', { x, y });
 	};
 
-	const handleWheel = ({ deltaY, x, y }: WheelEvent) => {
-		const scaledCoords = storyInfo.scaleCorrect({ x, y });
+	const handleZoom = (e: WheelEvent | CustomEvent<{ center: ICoordinates; scale: number }>) => {
+		const isWheel = e instanceof WheelEvent;
+		const { x, y } = isWheel ? e : e.detail.center;
+		const upscale = isWheel ? e.deltaY < 0 : e.detail.scale - startPinch > 0;
 
-		if (deltaY < 0) {
-			if ($storyInfo.scale < 300) {
-				$storyInfo.scale += 10;
+		const scaledCoords = scaleCorrect({ x, y });
+
+		if (upscale) {
+			if ($zoomStore < 300) {
+				$zoomStore += 10;
 			}
 		} else {
-			if ($storyInfo.scale > 10) {
-				$storyInfo.scale -= 10;
+			if ($zoomStore > 10) {
+				$zoomStore -= 10;
 			}
 		}
 
-		$storyInfo.offset = {
-			x: Math.round(x - scaledCoords.x * ($storyInfo.scale / 100)),
-			y: Math.round(y - scaledCoords.y * ($storyInfo.scale / 100))
+		$offsetStore = {
+			x: Math.round(x - scaledCoords.x * ($zoomStore / 100)),
+			y: Math.round(y - scaledCoords.y * ($zoomStore / 100))
 		};
-	};
 
-	const handlePinch = ({ detail }: CustomEvent) => {
-		if (detail.scale - startPinch > 0) {
-			if ($storyInfo.scale < 300) {
-				$storyInfo.scale += 5;
-			}
-		} else {
-			if ($storyInfo.scale > 10) {
-				$storyInfo.scale -= 5;
-			}
-		}
-		startPinch = detail.scale;
+		if (!isWheel) startPinch = e.detail.scale;
+
+		dispatch('zoom', { zoom: $zoomStore, offset: $offsetStore });
 	};
 </script>
 
-<!-- <WindowActions {workspace} /> -->
+<WindowActions {workspace} />
 <div
+	role="treegrid"
+	tabindex="0"
 	class={clsx(
-		'absolute h-full w-full select-none overflow-hidden',
-		{ 'cursor-grabbing': $activeActionStore === 'movingArea' },
-		{ 'cursor-move': $activeActionStore === 'movingFrame' }
+		'h-full w-full select-none relative overflow-hidden bg-transparent',
+		$activeActionStore === 'movingArea' && 'cursor-grabbing',
+		$activeActionStore === 'movingFrame' && 'cursor-move'
 	)}
 	bind:this={workspace}
 	use:pinch
+	on:pinch={handleZoom}
 	on:keypress|stopPropagation
-	on:pinch={handlePinch}
-	on:wheel|preventDefault={handleWheel}
+	on:wheel|preventDefault={handleZoom}
 	on:mouseup={handleMouseUp}
 	on:mousedown={handleMouseDown}
 	on:touchstart={handleMouseDown}
@@ -131,11 +118,10 @@
 	on:mousemove={handleMouseMove}
 	on:click={handleClick}
 >
-	{#if $frames.length === 1}
-		<CreateText />
-	{/if}
 	<MovingArea>
-		<FramesLayer />
+		<div>
+			<slot />
+		</div>
 		<ConnectionsLayer />
 	</MovingArea>
 </div>

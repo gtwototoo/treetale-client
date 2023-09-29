@@ -2,7 +2,7 @@ import Avatar from './Avatar.svelte';
 import Button from './Button.svelte';
 import Card from './Card.svelte';
 import Carousel from './Carousel.svelte';
-import ColorPicker from './ColorPicker.svelte';
+import ColorPicker from './ColorPicker/index.svelte';
 import FormSplit from './FormSplit.svelte';
 import Input from './Input.svelte';
 import InputFile from './InputFile.svelte';
@@ -18,22 +18,22 @@ import Tag from './Tag.svelte';
 import Textarea from './Textarea.svelte';
 
 export {
-	Selector,
-	SelectorItem,
+	Avatar,
 	Button,
-	Input,
-	InputFile,
-	InputTags,
-	InputRange,
-	Modal,
-	Popover,
-	Listbox,
-	Textarea,
-	FormSplit,
+	Card,
 	Carousel,
 	ColorPicker,
-	Card,
+	FormSplit,
+	Input,
+	InputFile,
+	InputRange,
+	InputTags,
+	Listbox,
+	Modal,
 	Photo,
+	Popover,
+	Selector,
+	SelectorItem,
 	Tag,
-	Avatar
+	Textarea
 };

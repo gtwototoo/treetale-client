@@ -5,7 +5,7 @@
 	import { currentPanelStore } from '$lib/stores/main';
 	import { activeActionStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';
-	import { ArrowUturnLeft, ArrowUturnRight, Cog6Tooth, Variable } from 'svelte-heros-v2';
+	import { ArrowUturnLeft, ArrowUturnRight, Variable } from 'svelte-heros-v2';
 	import { Changes, EditingSettings, Variables } from '../Panel';
 	import Header from './Header.svelte';
 
@@ -16,7 +16,7 @@
 		});
 	const settingsSwitch = () =>
 		($currentPanelStore = {
-			id: 'Настройки',
+			id: 'Основная информация',
 			component: EditingSettings
 		});
 	const historySwitch = () =>
@@ -49,15 +49,6 @@
 			<Icon type={ArrowUturnRight} />
 		</Button>
 	</FormSplit>
-	<Button
-		class="header-button bg-contrast text-text"
-		variant="ghost"
-		size="lg"
-		on:click={settingsSwitch}
-	>
-		<Icon type={Cog6Tooth} class="w-6 h-6" />
-		<p class="mr-1">Настройки</p>
-	</Button>
 	<Button
 		class="header-button bg-contrast text-text"
 		variant="ghost"

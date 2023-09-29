@@ -37,7 +37,7 @@
 			>
 				{value || placeholder}
 			</p>
-			<Icon type={ChevronDown} class="absolute right-0 mx-2" />
+			<Icon type={ChevronDown} class={clsx('absolute right-0 mx-2', focused && 'rotate-180')} />
 		</Button>
 	{/if}
 	{#if focused}

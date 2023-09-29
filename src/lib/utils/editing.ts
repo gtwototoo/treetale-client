@@ -1,5 +1,5 @@
 import { DEFAULT_FRAME_HEIGHT } from '$lib/constants';
-import type { IBoundings, IChoice, ICoordinates } from '$lib/types';
+import type { IBoundings, ICoordinates } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
 
 export const transform = (coords: ICoordinates, scale?: number): string => {
@@ -13,20 +13,18 @@ export const transform = (coords: ICoordinates, scale?: number): string => {
 	return styleRow;
 };
 
-export const getFrameFromId = (frames: IFrameCreate[], frameId: number, choiceId?: number) => {
+export const getFrameFromId = (frames: IFrameCreate[], frameId: number) => {
 	const frame = frames.find((frame) => frame.frameId === frameId);
 
-	const findData: { frame: IFrameCreate; choice?: IChoice } = {
-		frame
-	};
+	return frame;
+};
 
-	if (choiceId !== undefined && frame) {
-		const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
+export const getChoiceFromId = (frame: IFrameCreate, choiceId: number) => {
+	if (!frame) return;
 
-		findData.choice = choice;
-	}
+	const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
 
-	return findData;
+	return choice;
 };
 
 export const getChoicePosition = (index: number) => {
@@ -42,7 +40,7 @@ export const createConnections = (frames: IFrameCreate[]) => {
 		for (const choice of fromFrame.choices) {
 			if (choice.frameId === null) continue;
 
-			const toFrame = getFrameFromId(frames, choice.frameId).frame;
+			const toFrame = getFrameFromId(frames, choice.frameId);
 
 			if (!toFrame) continue;
 

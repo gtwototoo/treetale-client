@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
-	import { activeActionStore, oneDirectionModeStore } from '$lib/stores/newediting';
+	import {
+		activeActionStore,
+		movingFrameStore,
+		oneDirectionModeStore
+	} from '$lib/stores/newediting';
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		switch (e.key.toLowerCase()) {
@@ -66,12 +70,18 @@
 		}
 	};
 
+	const handleMouseUp = () => {
+		$movingFrameStore = null;
+		$activeActionStore = 'view';
+	};
+
 	export let workspace: HTMLDivElement;
 </script>
 
 <svelte:window
 	on:keypress|stopPropagation
 	on:keydown={handleKeydown}
+	on:mouseup={handleMouseUp}
 	on:keyup|preventDefault={handleKeyup}
 	on:drop|preventDefault|stopPropagation={disableDragMode}
 	on:dragover|preventDefault

@@ -14,6 +14,6 @@
 		textColor
 	)}
 >
-	<p class="hidden sm:block">Treestory</p>
-	<p class="sm:hidden">TS</p>
+	<p class="hidden sm:block">Treetale</p>
+	<p class="sm:hidden">TT</p>
 </Link>

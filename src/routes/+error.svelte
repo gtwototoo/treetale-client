@@ -26,9 +26,9 @@
 	<div class="flex w-full h-full justify-center items-start px-12">
 		<div class="flex min-h-full items-center py-12">
 			<ReadCard
-				src={$page.error.img}
+				src={img}
 				alt="Ошибка"
-				text={$page.error.message}
+				text={message}
 				classCard={clsx(theme === 'dark' && 'bg-zinc-950 text-gray-100')}
 			>
 				<Button

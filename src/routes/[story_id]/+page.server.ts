@@ -3,7 +3,7 @@ import type { IFrame } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import type { IStoryFull } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
-import { getFrameFromId, randomError, serialize } from '$lib/utils';
+import { getChoiceFromId, getFrameFromId, randomError, serialize } from '$lib/utils';
 
 interface IProgress {
 	frameId: number;
@@ -14,7 +14,7 @@ const availableFrames = (progress: IProgress[], frames: IFrameCreate[]) => {
 	const available: IFrame[] = [];
 
 	for (const stage of progress) {
-		const frame = getFrameFromId(frames, stage.frameId).frame;
+		const frame = getFrameFromId(frames, stage.frameId);
 		if (!frame) continue;
 
 		const { frameId, text, choices, imageId } = frame;
@@ -41,12 +41,13 @@ const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
 		progress[key].choiceId = choices[key];
 
 		const { frameId, choiceId } = progress[key];
-		const data = getFrameFromId(frames, frameId, choiceId);
+		const frame = getFrameFromId(frames, frameId);
+		const choice = getChoiceFromId(frame, choiceId);
 
-		if (!data.choice) break;
+		if (!choice) break;
 
 		progress.push({
-			frameId: data.choice.frameId
+			frameId: choice.frameId
 		});
 	}
 

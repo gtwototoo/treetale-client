@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$UI';
-	import { clsx } from 'clsx';
+	import { clm } from '$lib/utils';
 
 	let className = '';
 	export { className as class };
@@ -10,7 +10,7 @@
 
 <Button
 	variant={active ? 'main' : 'secondary'}
-	class={clsx(className, { '!bg-blue-500': active })}
+	class={clm({ '!bg-blue-500': active }, className)}
 	on:click
 >
 	<slot />

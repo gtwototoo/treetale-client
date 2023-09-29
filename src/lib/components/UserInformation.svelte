@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Button, Textarea } from '$UI';
+	import { Button, ColorPicker, Textarea } from '$UI';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
-	import { signOutUser } from '$lib/requests/user';
+	import { signOutUser, updateProfile } from '$lib/requests/user';
+	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types';
 	import clsx from 'clsx';
 
@@ -15,6 +16,9 @@
 	export let statistic: string[][];
 
 	let editMode = false;
+	let light = 80;
+	let saturate = 90;
+	let loading = false;
 
 	const handleSubscribe = () => {
 		if ($page.data.session) {
@@ -22,6 +26,10 @@
 		} else {
 			goto('/signin');
 		}
+	};
+
+	const setColor = ({ detail }: CustomEvent) => {
+		$bodyColorStore = detail.color;
 	};
 
 	const handleSignOut = async () => {
@@ -34,6 +42,17 @@
 			});
 		} catch (e) {
 			console.error(e);
+		}
+	};
+
+	const saveProfile = async () => {
+		loading = true;
+
+		try {
+			await updateProfile(user.name, user.description, $bodyColorStore);
+		} finally {
+			loading = false;
+			editMode = false;
 		}
 	};
 </script>
@@ -53,7 +72,7 @@
 				<div
 					class={clsx(
 						'items-center flex flex-col px-4 py-2 childs:bg-transparent rounded-xl',
-						editMode ? 'bg-main/30' : 'bg-white/20'
+						editMode ? 'bg-main/30' : 'bg-contrast/20 text-text'
 					)}
 				>
 					<p class="text-3xl font-bold leading-8">
@@ -68,21 +87,35 @@
 		<Textarea
 			placeholder={user.name}
 			readonly={!editMode}
-			class={clsx('!text-4xl font-bold !bg-transparent', !editMode && '!opacity-100')}
+			class={clsx('!text-4xl font-bold !bg-transparent', !editMode && '!opacity-100 !text-text')}
 			value={user.name}
 		/>
 		<Textarea
 			placeholder="Добавьте описание"
 			value={!editMode && !user.description ? 'Описание отсутствует' : user.description}
-			class={clsx('w-full !text-lg !bg-transparent', !editMode && '!opacity-100')}
+			class={clsx('w-full !text-lg !bg-transparent', !editMode && '!opacity-100 !text-text')}
 			readonly={!editMode}
 		/>
 	</div>
-	<div class="flex gap-2">
+	<div class="flex gap-2 bg-transparent">
 		{#if me}
 			{#if editMode}
-				<Button size="lg" variant="secondary" on:click={() => (editMode = false)}>
-					Сохранить изменения
+				<ColorPicker
+					popoverAlign="left"
+					lightRange={[10, 80]}
+					saturateRange={[10, 90]}
+					color={$bodyColorStore}
+					{saturate}
+					{light}
+					on:change={setColor}
+					let:click
+				>
+					<Button size="lg" variant="main" on:click={click} class="bg-main !text-text">
+						Цвет
+					</Button>
+				</ColorPicker>
+				<Button size="lg" variant="secondary" on:click={saveProfile} {loading}>
+					Сохранить
 				</Button>
 				<Button
 					class="!text-red-500"
@@ -95,7 +128,7 @@
 			{:else}
 				<Button
 					size="lg"
-					class="gap-3 bg-white"
+					class="gap-3 bg-contrast text-text"
 					variant="ghost"
 					on:click={() => (editMode = true)}
 				>
@@ -103,7 +136,7 @@
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
 				<Button
-					class="text-red-500 bg-white"
+					class="text-red-500 bg-contrast"
 					size="lg"
 					variant="ghost"
 					on:click={handleSignOut}

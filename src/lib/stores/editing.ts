@@ -26,7 +26,7 @@ type IChanges = {
 };
 
 type IOverrideChanges = Writable<IChanges> & {
-	add: (stage: IChange) => void;
+	add: (title: string, icon: typeof SvelteComponent<unknown>) => void;
 	undo: () => void;
 	redo: () => void;
 	to: (stageId: number) => void;
@@ -62,13 +62,14 @@ const ChangeHistoryStore = () => {
 		subscribe,
 		set,
 		update,
-		add: (stage: IChange) =>
+		add: (title: string, icon: typeof SvelteComponent<unknown>) =>
 			update((data: IChanges) => {
 				data.stages = data.stages.slice(0, data.currentStageId + 1);
 
 				data.stages.push({
 					data: serialize(get(frames)),
-					...stage
+					title,
+					icon
 				});
 
 				if (data.stages.length > 20) data.stages.shift();
@@ -163,3 +164,6 @@ export const frames: IOverrideFrames = framesStore();
 export const changesHistory: IOverrideChanges = ChangeHistoryStore();
 export const storyInfo: IOverrideStoryInfo = storyInfoStore();
 export const vars = writable<IVariable[]>([]);
+
+export let zoom = writable<number>(100);
+export let offset = writable<ICoordinates>({ x: 0, y: 0 });

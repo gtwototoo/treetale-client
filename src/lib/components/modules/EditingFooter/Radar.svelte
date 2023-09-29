@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { storyInfo } from '$lib/stores/editing';
+	import { offset, zoom } from '$lib/stores/editing';
 	import { transform } from '$lib/utils';
 
 	import type { ICoordinates } from '$lib/types';
@@ -37,11 +37,11 @@
 	};
 
 	const setDefaultCoordinates = () => {
-		$storyInfo.offset = { x: 0, y: 0 };
-		$storyInfo.scale = 100;
+		$zoom = 100;
+		$offset = { x: 0, y: 0 };
 	};
 
-	$: setCoordinates($storyInfo.offset);
+	$: setCoordinates($offset);
 </script>
 
 <Button
@@ -58,6 +58,6 @@
 	/>
 	<div
 		class="h-3 w-3 shrink-0 rounded-full absolute !bg-text"
-		style={transform(coordinates, $storyInfo.scale / 100)}
+		style={transform(coordinates, $zoom / 100)}
 	/>
 </Button>

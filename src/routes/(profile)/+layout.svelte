@@ -5,7 +5,6 @@
 	import Link from '$lib/components/Link.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { colorStore } from '$lib/stores/profile';
 	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
@@ -26,7 +25,7 @@
 
 	$: pageType = getPageType($page.url.pathname);
 	$: ({ statistic } = data);
-	$: $bodyColorStore = $colorStore || user.color || DEFAULT_COLOR;
+	$: $bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;
 </script>
 
 <svelte:head>

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { changesHistory, frames } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
-	import { activeActionStore, panelFrameStore, selectedFrameStore } from '$lib/stores/newediting';
-	import type { IChoice, IFrame } from '$lib/types';
+	import { activeActionStore, movingFrameStore, selectedFrameStore } from '$lib/stores/newediting';
+	import type { IChoice } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 	import { transform } from '$lib/utils';
 	import { getChoicePosition } from '$lib/utils/editing';
 	import clsx from 'clsx';
-	import { Plus, Trash, XMark } from 'svelte-heros-v2';
+	import { Plus, XMark } from 'svelte-heros-v2';
 	import FrameSettings from '../../Panel/FrameSettings.svelte';
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
@@ -20,74 +20,47 @@
 	const setMovingFrame = () => {
 		if ($activeActionStore === 'movingFrame') return;
 
-		$selectedFrameStore = data.frameId;
+		$movingFrameStore = data.frameId;
 	};
 
 	const setCurrentFrame = () => {
-		$panelFrameStore = data;
+		if ($currentPanelStore.id === `frame-${data.frameId}`) return;
+
+		$selectedFrameStore = data.frameId;
 
 		$currentPanelStore = {
-			id: String(data.frameId),
+			id: `frame-${data.frameId}`,
 			title: !key ? 'Начало' : data.title,
 			component: FrameSettings
 		};
 	};
 
 	const setChoices = (e: CustomEvent<IChoice[]>) => {
-		changesHistory.add(
-			e.detail > data.choices
-				? {
-						title: 'Добавление выбора',
-						icon: Plus
-				  }
-				: {
-						title: 'Удаление выбора',
-						icon: XMark
-				  }
-		);
+		if (e.detail > data.choices) {
+			changesHistory.add('Добавление выбора', Plus);
+		} else {
+			changesHistory.add('Удаление выбора', XMark);
+		}
 
 		data.choices = e.detail;
-	};
-
-	const outputCorrect = (frame: IFrame) => {
-		const outputOnFirstOrRemovedFrame = frame.choices.find(
-			({ frameId }) => frameId === $frames[0].frameId || frameId === data.frameId
-		);
-
-		if (outputOnFirstOrRemovedFrame) {
-			outputOnFirstOrRemovedFrame.frameId = null;
-		}
 	};
 
 	const unsetMovingFrame = () => {
 		if ($activeActionStore === 'movingFrame') return;
 
-		$selectedFrameStore = null;
+		$movingFrameStore = null;
 	};
 
 	const setVisible = () => {
 		data.hidden = !data.hidden;
 	};
-
-	const removeFrame = () => {
-		$frames = $frames.filter(({ frameId }) => frameId !== data.frameId);
-
-		for (const frame of $frames) {
-			outputCorrect(frame);
-		}
-
-		changesHistory.add({
-			title: 'Удаление фрейма',
-			icon: Trash
-		});
-	};
 </script>
 
-<div class="absolute" style="{transform({ x: data.x, y: data.y })};z-index: {data.frameId}">
+<div class="absolute" style="{transform({ x: data.x, y: data.y })}; z-index: {data.frameId}">
 	<button
 		class={clsx(
 			'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-shadow hover:shadow-lg',
-			{ 'shadow-lg': $selectedFrameStore === data.frameId }
+			{ 'shadow-lg': $movingFrameStore === data.frameId }
 		)}
 		on:mouseenter={setMovingFrame}
 		on:mouseleave={unsetMovingFrame}
@@ -95,8 +68,8 @@
 		bind:clientHeight
 		bind:clientWidth
 	>
-		<Header hidden={data.hidden} on:hide={setVisible} on:remove={removeFrame}>
-			<p class={clsx('py-1 pl-4', { 'text-emerald-600': !key })}>
+		<Header hidden={data.hidden} on:hide={setVisible}>
+			<p class={clsx('py-1 pl-4', { 'text-emerald-500': !key })}>
 				{!key ? 'Начало' : data.title}
 			</p>
 		</Header>

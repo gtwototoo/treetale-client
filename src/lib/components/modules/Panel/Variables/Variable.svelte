@@ -3,10 +3,12 @@
 	import type { IVariable } from '$lib/types';
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
+	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
-	import { ChevronDown } from 'svelte-heros-v2';
+	import { ChevronDown, XMark } from 'svelte-heros-v2';
 
 	export let data: IVariable;
+	export let removeMode: boolean;
 
 	const dispatch = createEventDispatcher();
 
@@ -31,7 +33,8 @@
 		<Input
 			bind:value={data.name}
 			placeholder="Название"
-			class="w-[13rem] shrink-0"
+			class={clsx('shrink-0', removeMode ? 'w-full' : 'w-[13rem]')}
+			disabled={removeMode}
 			on:input={handleInput}
 		>
 			<Listbox
@@ -50,25 +53,29 @@
 				</Button>
 			</Listbox>
 		</Input>
-		{#if data.expect === 'Да/Нет'}
-			<Listbox
-				bind:value={data.value}
-				placeholder="Значение"
-				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
-				list={[{ text: 'Да' }, { text: 'Нет' }]}
-				on:input={handleInput}
-			/>
-		{:else}
-			<Input
-				bind:value={data.value}
-				placeholder="Значение"
-				class="w-full"
-				number={data.expect !== 'Строка'}
-				on:input={handleInput}
-			/>
+		{#if !removeMode}
+			{#if data.expect === 'Да/Нет'}
+				<Listbox
+					bind:value={data.value}
+					placeholder="Значение"
+					class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
+					list={[{ text: 'Да' }, { text: 'Нет' }]}
+					on:input={handleInput}
+				/>
+			{:else}
+				<Input
+					bind:value={data.value}
+					placeholder="Значение"
+					class="w-full"
+					number={data.expect !== 'Строка'}
+					on:input={handleInput}
+				/>
+			{/if}
 		{/if}
 	</FormSplit>
-	<!-- <Button on:click size="sm">
-		<Icon type={Trash} class="text-red-600" />
-	</Button> -->
+	{#if removeMode}
+		<Button on:click class="!text-red-500 !bg-red-50">
+			<Icon type={XMark} />
+		</Button>
+	{/if}
 </div>

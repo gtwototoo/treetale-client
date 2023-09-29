@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$UI';
-	import { storyInfo } from '$lib/stores/editing';
+	import { offset, zoom } from '$lib/stores/editing';
 	import { activeActionStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';
 	import Radar from './Radar.svelte';
@@ -19,10 +19,10 @@
 		<Radar {viewArea} />
 		<div class="info">
 			<p>
-				{$storyInfo.offset.x}, {$storyInfo.offset.y}
+				{$offset.x}, {$offset.y}
 			</p>
 			<p>
-				{($storyInfo.scale / 100).toFixed(1)}x
+				{($zoom / 100).toFixed(1)}x
 			</p>
 		</div>
 	</div>

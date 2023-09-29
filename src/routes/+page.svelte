@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>TreeStory</title>
+	<title>TREETALE</title>
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 

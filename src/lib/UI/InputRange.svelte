@@ -13,25 +13,25 @@
 
 <style lang="postcss">
 	.range {
-		@apply grow appearance-none rngthumb:h-4 rngthumb:w-4 rngthumb:appearance-none rngthumb:rounded-lg rngthumb:!bg-gray-200 rngthumb:transition-colors rngtrack:h-4 rngtrack:appearance-none rngtrack:rounded-lg rngtrack:bg-white rngtrack:ring-1 rngtrack:ring-gray-200 rngtrack:transition-[box-shadow] rngtrack:focus:ring-blue-500;
+		@apply grow appearance-none rngthumb:h-4 rngthumb:w-4 rngthumb:appearance-none rngthumb:rounded-lg rngthumb:!bg-gray-200 rngthumb:transition-colors rngtrack:h-4 rngtrack:appearance-none rngtrack:rounded-lg rngtrack:bg-white rngtrack:ring-1 rngtrack:ring-gray-200 rngtrack:transition-[box-shadow] rngtrack:focus:ring-main;
 	}
 	input[type='range']::-webkit-slider-thumb:hover {
-		@apply !bg-blue-500;
+		@apply !bg-main;
 	}
 	input[type='range']::-moz-range-thumb:hover {
-		@apply !bg-blue-500;
+		@apply !bg-main;
 	}
 	input[type='range']::-ms-thumb:hover {
-		@apply !bg-blue-500;
+		@apply !bg-main;
 	}
 
 	input[type='range']::-webkit-slider-runnable-track:hover {
-		@apply ring-blue-500;
+		@apply ring-main;
 	}
 	input[type='range']::-moz-range-track:hover {
-		@apply ring-blue-500;
+		@apply ring-main;
 	}
 	input[type='range']::-ms-track:hover {
-		@apply ring-blue-500;
+		@apply ring-main;
 	}
 </style>

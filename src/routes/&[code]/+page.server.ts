@@ -1,4 +1,4 @@
-import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { fetchPost } from '$lib/requests/index.js';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
 import { HttpError, redirect } from '@sveltejs/kit';
@@ -8,7 +8,7 @@ export const load = async ({ params, cookies }) => {
 
 	try {
 		const response = await fetchPost<{ sessionId: string }>(
-			`${PUBLIC_TREESTORY_API_URL}/session`,
+			`${PUBLIC_TREETALE_API_URL}/session`,
 			{
 				code
 			}

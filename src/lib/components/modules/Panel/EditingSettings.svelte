@@ -66,10 +66,7 @@
 			$storyInfo.imageId = null;
 			state = undefined;
 
-			changesHistory.add({
-				title: 'Удаление изображения',
-				icon: XMark
-			});
+			changesHistory.add('Удаление изображения', XMark);
 		} catch (e) {
 			console.error(e);
 		}
@@ -82,10 +79,7 @@
 			$storyInfo.imageId = response.imageId;
 			state = undefined;
 
-			changesHistory.add({
-				title: 'Добавление изображения',
-				icon: PhotoIcon
-			});
+			changesHistory.add('Добавление изображения', PhotoIcon);
 		} catch (e) {
 			console.error(e);
 		}
@@ -109,8 +103,6 @@
 	});
 </script>
 
-<svelte:head></svelte:head>
-
 <Image
 	src={$storyInfo.imageId}
 	height={192}
@@ -127,22 +119,23 @@
 		class="w-full"
 		bind:value={$storyInfo.title}
 		on:input={checkUpdates}
-	>
-		<ColorPicker
-			lightRange={[10, 80]}
-			saturateRange={[10, 90]}
-			color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
-			{saturate}
-			{light}
-			on:change={setColor}
-		/>
-	</Input>
+	/>
 	<Textarea placeholder="Описание" bind:value={$storyInfo.description} on:input={checkUpdates} />
 	<InputTags
 		placeholder={$storyInfo.tags.length ? '' : 'Теги'}
 		bind:tags={$storyInfo.tags}
 		on:add={checkUpdates}
 		on:remove={checkUpdates}
+	/>
+</FormSplit>
+<FormSplit vertical>
+	<ColorPicker
+		lightRange={[10, 80]}
+		saturateRange={[10, 90]}
+		color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
+		{saturate}
+		{light}
+		on:change={setColor}
 	/>
 </FormSplit>
 <Selector on:change={checkUpdates}>

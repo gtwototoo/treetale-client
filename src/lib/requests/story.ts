@@ -1,5 +1,5 @@
 import { goto } from '$app/navigation';
-import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { ICoordinates, IStoryEditableInfo, IVariable } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
@@ -9,12 +9,12 @@ export const addLike = async (storyId: number) => {
 		liked: boolean;
 	}
 
-	return await fetchPut<IResponse>(`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/like`);
+	return await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/like`);
 };
 
 export const updateInfo = async (storyId: number, info: IStoryEditableInfo) => {
 	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=information`,
+		`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=information`,
 		info
 	);
 };
@@ -25,7 +25,7 @@ export const updateFrames = async (
 	offset: ICoordinates,
 	scale: number
 ) => {
-	return await fetchPost(`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=area`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=area`, {
 		frames,
 		offset,
 		scale
@@ -33,7 +33,7 @@ export const updateFrames = async (
 };
 
 export const updateVars = async (storyId: number, vars: IVariable[]) => {
-	return await fetchPost(`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=vars`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=vars`, {
 		vars
 	});
 };
@@ -48,7 +48,7 @@ export const createStory = async () => {
 	}
 
 	try {
-		const response = await fetchPut<IResponse>(`${PUBLIC_TREESTORY_API_URL}/story/create`);
+		const response = await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/create`);
 
 		return goto(`/${response.storyId}/edit`);
 	} catch (e) {
@@ -58,7 +58,7 @@ export const createStory = async () => {
 
 export const deleteStory = async (id: number) => {
 	try {
-		await fetchDelete(`${PUBLIC_TREESTORY_API_URL}/story/${id}`);
+		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/story/${id}`);
 
 		return goto(`/profile`);
 	} catch (e) {

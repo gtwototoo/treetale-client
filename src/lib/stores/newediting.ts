@@ -19,6 +19,8 @@ interface IWorkspaceFrame extends IBoundings {
 }
 
 export const selectedFrameStore = writable<number>();
+export const movingFrameStore = writable<number>();
+
 export const oneDirectionModeStore = writable<boolean | null>();
 export const activeActionStore = writable<IAction>('view');
 export const removeModeStore = writable<boolean>(false);

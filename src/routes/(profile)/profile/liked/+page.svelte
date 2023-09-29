@@ -13,7 +13,7 @@
 	text="Пока у вас нет ни одной понравившейся истории, но вы можете их добавить"
 >
 	<Link href="/">
-		<Button size="lg" class="gap-3 bg-white" variant="ghost">
+		<Button size="lg" class="gap-3 bg-contrast text-text" variant="ghost">
 			<Icon type={BookOpen} class="w-6 h-6" />
 			<p class="mr-1">Смотреть все истории</p>
 		</Button>
