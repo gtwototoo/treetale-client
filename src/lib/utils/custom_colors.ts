@@ -25,7 +25,11 @@ const generateMainColors = (color: RGB) => {
 	};
 
 	for (const i in new Array(8).fill(undefined)) {
-		additionalColors[`color-main-${+i + 1}0`] = alphaToRgb(color, (+i + 1) / 10);
+		additionalColors[`color-main-${+i + 1}0`] = alphaToRgb(
+			color,
+			(+i + 1) / 10,
+			contrast ? BLACK_COLOR : WHITE_COLOR
+		);
 	}
 
 	return varColors(additionalColors);

@@ -3,6 +3,7 @@
 	import { connect, offset, storyInfo, zoom } from '$lib/stores/editing';
 
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
+	import FrameSettings from '$lib/components/modules/Panel/FrameSettings.svelte';
 	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
 	import Frame from '$lib/components/modules/Workspace/Frame/Frame.svelte';
@@ -18,11 +19,15 @@
 		startMoveFrame
 	} from '$lib/components/modules/Workspace/methods.js';
 	import { changesHistory, frames } from '$lib/stores/editing';
-	import { bodyColorStore } from '$lib/stores/main';
-	import { activeActionStore, movingFrameStore } from '$lib/stores/newediting.js';
+	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import {
+		activeActionStore,
+		movingFrameStore,
+		selectedFrameStore
+	} from '$lib/stores/newediting.js';
 	import type { IStartMove } from '$lib/types/editing.js';
 	import type { ICoordinates } from '$lib/types/index.js';
-	import { rootStyle } from '$lib/utils';
+	import { getFrameFromId, rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play, Square2Stack } from 'svelte-heros-v2';
 
@@ -63,8 +68,21 @@
 		const { x, y, isMouse, button, doubleClick } = e.detail;
 
 		if (!isMouse || button === 1 || doubleClick) startOffset = startGrab({ x, y });
+
 		if (isMouse && button === 0 && $movingFrameStore) {
 			startMoveData = startMoveFrame({ x, y });
+
+			const frame = getFrameFromId($frames, $movingFrameStore);
+
+			if ($currentPanelStore.id === `frame-${frame.frameId}`) return;
+
+			$selectedFrameStore = frame.frameId;
+
+			$currentPanelStore = {
+				id: `frame-${frame.frameId}`,
+				title: frame.title,
+				component: FrameSettings
+			};
 		}
 	};
 
@@ -87,7 +105,7 @@
 		$activeActionStore = 'view';
 
 		connectorLogic();
-		storyInfo.saveArea();
+		// storyInfo.saveArea();
 	};
 
 	onMount(() => {

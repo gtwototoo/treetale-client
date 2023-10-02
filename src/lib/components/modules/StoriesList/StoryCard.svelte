@@ -30,7 +30,7 @@
 	on:click={() => (openStoryLoading = true)}
 >
 	<Card
-		class="h-[19.25rem] border-2 border-transparent bg-with-border-white border-from-white border-to-main xs:h-[27.5rem] lg:h-[34.5rem]"
+		class="h-[19.25rem] bg-contrast/80 text-text xs:h-[27.5rem] lg:h-[34.5rem]"
 		style="--color-main: {selectedColor.join(
 			' '
 		)}; --fill-gradient: url(#light-gradient-{storyId})"

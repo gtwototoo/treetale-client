@@ -11,8 +11,13 @@
 	export { className as class };
 
 	export let style: string | undefined = undefined;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'secondary-white' | 'ghost' =
-		'secondary';
+	export let variant:
+		| 'secondary'
+		| 'main'
+		| 'transparent'
+		| 'secondary-white'
+		| 'ghost'
+		| 'custom' = 'secondary';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let disabled = false;
 	export let loading = false;

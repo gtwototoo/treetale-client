@@ -7,9 +7,6 @@
 	export let style = '';
 </script>
 
-<div
-	class={clsx('flex flex-col items-center rounded-xl bg-white xs:rounded-2xl', className)}
-	{style}
->
+<div class={clsx('flex flex-col items-center rounded-xl xs:rounded-2xl', className)} {style}>
 	<slot />
 </div>

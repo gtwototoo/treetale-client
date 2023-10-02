@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { changesHistory } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
-	import { activeActionStore, movingFrameStore, selectedFrameStore } from '$lib/stores/newediting';
+	import { movingFrameStore } from '$lib/stores/newediting';
 	import type { IChoice } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 	import { transform } from '$lib/utils';
 	import { getChoicePosition } from '$lib/utils/editing';
 	import clsx from 'clsx';
 	import { Plus, XMark } from 'svelte-heros-v2';
-	import FrameSettings from '../../Panel/FrameSettings.svelte';
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
@@ -18,21 +16,7 @@
 	export let clientWidth = undefined;
 
 	const setMovingFrame = () => {
-		if ($activeActionStore === 'movingFrame') return;
-
 		$movingFrameStore = data.frameId;
-	};
-
-	const setCurrentFrame = () => {
-		if ($currentPanelStore.id === `frame-${data.frameId}`) return;
-
-		$selectedFrameStore = data.frameId;
-
-		$currentPanelStore = {
-			id: `frame-${data.frameId}`,
-			title: !key ? 'Начало' : data.title,
-			component: FrameSettings
-		};
 	};
 
 	const setChoices = (e: CustomEvent<IChoice[]>) => {
@@ -43,12 +27,6 @@
 		}
 
 		data.choices = e.detail;
-	};
-
-	const unsetMovingFrame = () => {
-		if ($activeActionStore === 'movingFrame') return;
-
-		$movingFrameStore = null;
 	};
 
 	const setVisible = () => {
@@ -62,9 +40,7 @@
 			'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-shadow hover:shadow-lg',
 			{ 'shadow-lg': $movingFrameStore === data.frameId }
 		)}
-		on:mouseenter={setMovingFrame}
-		on:mouseleave={unsetMovingFrame}
-		on:click={setCurrentFrame}
+		on:mousedown={setMovingFrame}
 		bind:clientHeight
 		bind:clientWidth
 	>

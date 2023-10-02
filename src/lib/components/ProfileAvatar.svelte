@@ -69,17 +69,17 @@
 <Avatar size="lg" {src} alt={user.name} width={160} class="light-gradient-main">
 	{#if editMode}
 		<div
-			class="absolute bottom-0 right-0 z-[3] rounded-full bg-white p-1"
+			class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"
 			in:fade={{ duration: 150 }}
 		>
 			{#if src && !imageLoading}
 				<Button class="!rounded-full !p-3" variant="secondary" on:click={preRemoveImage}>
-					<Icon type={XMark} class="text-red-600 w-6 h-6" />
+					<Icon type={XMark} class="text-red-500 w-6 h-6" />
 				</Button>
 			{:else}
 				<InputFile
-					class="!rounded-full !p-3"
-					variant="secondary"
+					class="!rounded-full !p-3 text-text bg-main"
+					variant="ghost"
 					disabled={imageLoading}
 					on:change={setFile}
 				>

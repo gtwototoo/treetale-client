@@ -59,8 +59,8 @@
 
 <div
 	class={clsx(
-		'flex w-[36rem] sticky screen-md screen-xl screen-hd screen-sm top-8 flex-col gap-12 items-center shrink-0 rounded-3xl transition-colors p-9',
-		editMode ? 'bg-white' : 'bg-transparent'
+		'flex w-[36rem] sticky screen-md screen-xl screen-hd screen-sm top-8 flex-col gap-12 items-center shrink-0 rounded-3xl transition-colors p-9 select-none',
+		editMode ? 'bg-main-20' : 'bg-transparent'
 	)}
 >
 	<div class="flex flex-col gap-2 items-center bg-transparent">
@@ -71,8 +71,8 @@
 			{#each statistic as [count, title]}
 				<div
 					class={clsx(
-						'items-center flex flex-col px-4 py-2 childs:bg-transparent rounded-xl',
-						editMode ? 'bg-main/30' : 'bg-contrast/20 text-text'
+						'items-center flex flex-col px-4 py-2 text-text childs:bg-transparent rounded-xl',
+						editMode ? 'bg-main/50' : 'bg-contrast/20'
 					)}
 				>
 					<p class="text-3xl font-bold leading-8">
@@ -87,13 +87,13 @@
 		<Textarea
 			placeholder={user.name}
 			readonly={!editMode}
-			class={clsx('!text-4xl font-bold !bg-transparent', !editMode && '!opacity-100 !text-text')}
+			class={clsx('!text-4xl font-bold !bg-transparent !text-text', !editMode && '!opacity-100')}
 			value={user.name}
 		/>
 		<Textarea
 			placeholder="Добавьте описание"
 			value={!editMode && !user.description ? 'Описание отсутствует' : user.description}
-			class={clsx('w-full !text-lg !bg-transparent', !editMode && '!opacity-100 !text-text')}
+			class={clsx('w-full !text-lg !bg-transparent !text-text', !editMode && '!opacity-100')}
 			readonly={!editMode}
 		/>
 	</div>
@@ -114,13 +114,19 @@
 						Цвет
 					</Button>
 				</ColorPicker>
-				<Button size="lg" variant="secondary" on:click={saveProfile} {loading}>
+				<Button
+					size="lg"
+					variant="ghost"
+					class="bg-main text-text"
+					on:click={saveProfile}
+					{loading}
+				>
 					Сохранить
 				</Button>
 				<Button
-					class="!text-red-500"
+					class="!text-red-500 bg-main"
 					size="lg"
-					variant="secondary"
+					variant="ghost"
 					on:click={() => (editMode = false)}
 				>
 					Отмена

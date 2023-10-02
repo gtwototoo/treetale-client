@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Selector, SelectorItem } from '$UI';
+	import Button from '$UI/Button.svelte';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -7,6 +7,7 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
+	import clsx from 'clsx';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import UserInformation from '../../lib/components/UserInformation.svelte';
 
@@ -37,26 +38,47 @@
 	<UserInformation {user} {me} {statistic} />
 	<div class="flex flex-col w-full items-center gap-8 min-h-full">
 		{#if me}
-			<Selector class="overflow-hidden">
+			<div class="flex gap-2">
 				<Link href="/profile">
-					<SelectorItem active={pageType === 'main'} class="w-20 justify-center xs:w-auto">
-						<Icon type={Pencil} class="xs:hidden" />
-						<p class="hidden xs:block">Созданные</p>
-					</SelectorItem>
+					<Button
+						size="lg"
+						variant="custom"
+						class={clsx(
+							'!text-text hover:bg-contrast !transition-colors',
+							pageType === 'main' && 'bg-contrast/20'
+						)}
+					>
+						<Icon type={Pencil} class="max-xs:block hidden" />
+						<p class="max-xs:hidden">Созданные</p>
+					</Button>
 				</Link>
 				<Link href="/profile/liked">
-					<SelectorItem active={pageType === 'liked'} class="w-20 justify-center xs:w-auto">
-						<Icon type={Heart} class="xs:hidden" />
-						<p class="hidden xs:block">Понравившиеся</p>
-					</SelectorItem>
+					<Button
+						size="lg"
+						variant="custom"
+						class={clsx(
+							'!text-text hover:bg-contrast transition-colors',
+							pageType === 'liked' && 'bg-contrast/20'
+						)}
+					>
+						<Icon type={Heart} class="max-xs:block hidden" />
+						<p class="max-xs:hidden">Понравившиеся</p>
+					</Button>
 				</Link>
 				<Link href="/profile/viewed">
-					<SelectorItem active={pageType === 'viewed'} class="w-20 justify-center xs:w-auto">
-						<Icon type={Eye} class="xs:hidden" />
-						<p class="hidden xs:block">Просмотренные</p>
-					</SelectorItem>
+					<Button
+						size="lg"
+						variant="custom"
+						class={clsx(
+							'!text-text hover:bg-contrast transition-colors',
+							pageType === 'viewed' && 'bg-contrast/20'
+						)}
+					>
+						<Icon type={Eye} class="max-xs:block hidden" />
+						<p class="max-xs:hidden">Просмотренные</p>
+					</Button>
 				</Link>
-			</Selector>
+			</div>
 		{:else}
 			<h1>Список историй</h1>
 		{/if}
