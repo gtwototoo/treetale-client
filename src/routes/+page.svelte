@@ -5,7 +5,7 @@
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { rootStyle } from '$lib/utils';
+	import { correctWhitespace, rootStyle } from '$lib/utils';
 	import { MagnifyingGlass } from 'svelte-heros-v2';
 
 	export let data;
@@ -34,10 +34,10 @@
 			</Input>
 		</div>
 	{/if}
-	<StoriesList
-		stories={data.stories}
-		text="Историй не найдено, но вы можете добавить свою уникальную историю"
-	>
+	<StoriesList stories={data.stories}>
+		<p>
+			{correctWhitespace('Историй не найдено, но вы можете добавить свою уникальную историю')}
+		</p>
 		<AddStoryButton class="gap-3 bg-white" />
 	</StoriesList>
 </div>

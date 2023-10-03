@@ -3,9 +3,9 @@
 	import { BookOpen } from 'svelte-heros-v2';
 </script>
 
-<Card class="h-[19.25rem] items-center justify-center bg-contrast/20 xs:h-[27.5rem] lg:h-[34.5rem]">
+<Card class="h-full items-center relative justify-center bg-contrast/20 overflow-hidden">
 	<BookOpen
 		variation="solid"
-		class="h-44 max-hd:h-36 max-xl:h-28 w-auto bg-transparent text-main transition-colors"
+		class="h-44 absolute max-hd:h-36 max-xl:h-28 w-auto bg-transparent text-main transition-colors"
 	/>
 </Card>

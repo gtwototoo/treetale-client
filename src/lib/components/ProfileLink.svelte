@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import type { IUser } from '$lib/types';
+	import { RGB } from '$lib/utils';
 	import clsx from 'clsx';
 	import Link from './Link.svelte';
 
@@ -28,7 +29,7 @@
 		variant="transparent"
 	>
 		<Avatar
-			style="--color-main: {selectedColor.join(' ')}"
+			style="--color-main: {RGB(selectedColor)}"
 			class="light-gradient-main xs:!h-9 xs:!w-9 xs:!text-sm"
 			size="sm"
 			width={36}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Popover } from '$UI';
-	import type { RGB } from '$lib/types';
+	import type { TRGB } from '$lib/types';
 	import Picker from './Picker.svelte';
 
 	export let disabled = false;
@@ -9,7 +9,7 @@
 	export let saturateRange: number[] = [0, 100];
 	export let light = 0;
 	export let saturate = 0;
-	export let color: RGB = [0, 0, 0];
+	export let color: TRGB = [0, 0, 0];
 </script>
 
 {#if $$slots.default}

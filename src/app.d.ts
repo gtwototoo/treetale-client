@@ -1,11 +1,11 @@
 import '@total-typescript/ts-reset';
-import type { IUser, RGB } from './lib/types';
+import type { IUser, TRGB } from './lib/types';
 
 declare global {
 	namespace App {
 		interface Error {
 			img?: string;
-			color?: RGB;
+			color?: TRGB;
 			message: string;
 			theme: 'light' | 'dark';
 		}

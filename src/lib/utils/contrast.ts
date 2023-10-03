@@ -1,6 +1,6 @@
-import type { RGB } from '$lib/types';
+import type { TRGB } from '$lib/types';
 
-const luminance = (rgb: RGB) => {
+const luminance = (rgb: TRGB) => {
 	const a = rgb.map((v) => {
 		v /= 255;
 
@@ -11,7 +11,7 @@ const luminance = (rgb: RGB) => {
 };
 
 // minimal recommended contrast ratio is 4.5, or 3 for larger font-sizes
-const contrast = (rgb1: RGB, rgb2: RGB) => {
+const contrast = (rgb1: TRGB, rgb2: TRGB) => {
 	const lum1 = luminance(rgb1);
 	const lum2 = luminance(rgb2);
 	const brightest = Math.max(lum1, lum2);
@@ -21,9 +21,9 @@ const contrast = (rgb1: RGB, rgb2: RGB) => {
 };
 
 export const contrastText = (
-	rgb: RGB,
-	compare1: RGB = [0, 0, 0],
-	compare2: RGB = [255, 255, 255]
+	rgb: TRGB,
+	compare1: TRGB = [0, 0, 0],
+	compare2: TRGB = [255, 255, 255]
 ) => {
 	const contrasts = [contrast(rgb, compare1), contrast(rgb, compare2)];
 	const max = Math.max(...contrasts);

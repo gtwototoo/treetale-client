@@ -3,11 +3,11 @@ export interface IStoryEditableInfo {
 	description: string;
 	tags: string[];
 	imageId?: string | null;
-	color: RGB;
+	color: TRGB;
 	draft: boolean;
 }
 
-export type RGB = [number, number, number];
+export type TRGB = [number, number, number];
 
 export interface IStory extends IStoryEditableInfo {
 	storyId: number;
@@ -62,6 +62,6 @@ export interface IUser {
 	name: string;
 	avatarId: string | null;
 	created: number;
-	color: RGB | null;
-	[index: string]: string | number | null | RGB;
+	color: TRGB | null;
+	[index: string]: string | number | null | TRGB;
 }

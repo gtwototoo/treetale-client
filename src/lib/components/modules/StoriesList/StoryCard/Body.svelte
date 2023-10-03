@@ -36,7 +36,7 @@
 	{#if author}
 		<ProfileLink data={author} {created} />
 	{:else}
-		<Tag class={clsx(draft ? 'bg-gray-300 text-gray-600' : 'bg-emerald-300 text-emerald-600')}>
+		<Tag class={clsx('!bg-main-70', draft ? 'text-text' : 'text-emerald-500')}>
 			{draft ? 'Черновик' : 'Публичный'}
 		</Tag>
 	{/if}

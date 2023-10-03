@@ -7,16 +7,15 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
+	import { RGB } from '$lib/utils';
 	import { BookOpen } from 'svelte-heros-v2';
-	import CardBody from './CardBody.svelte';
-	import SvgGradient from './SvgGradient.svelte';
+	import SvgGradient from '../SvgGradient.svelte';
+	import Body from './Body.svelte';
 
 	export let story: IStoryReading;
 	export let vars: IVariable[];
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
-
-	let openStoryLoading = false;
 
 	$: ({ imageId, title, tags, storyId, color, userId } = story);
 
@@ -24,20 +23,14 @@
 	$: edit = !author && $page.data.session && $page.data.session.userId === userId;
 </script>
 
-<Link
-	href={`${storyId}${edit ? '/edit' : ''}`}
-	class="w-full"
-	on:click={() => (openStoryLoading = true)}
->
+<Link href={`${storyId}${edit ? '/edit' : ''}`} class="w-full">
 	<Card
-		class="h-[19.25rem] bg-contrast/80 text-text xs:h-[27.5rem] lg:h-[34.5rem]"
-		style="--color-main: {selectedColor.join(
-			' '
-		)}; --fill-gradient: url(#light-gradient-{storyId})"
+		class="bg-contrast/80 text-text"
+		style="--color-main: {RGB(selectedColor)}; --fill-gradient: url(#light-gradient-{storyId})"
 	>
 		<SvgGradient id={storyId} />
 		<div
-			class="relative flex h-24 w-full shrink-0 items-center justify-center bg-transparent text-main xs:h-36 lg:h-48"
+			class="h-56 max-hd:h-48 max-xl:h-40 relative flex w-full shrink-0 items-center justify-center bg-transparent text-main"
 		>
 			{#if imageId}
 				<Photo
@@ -63,10 +56,12 @@
 					variation="solid"
 				/>
 			{/if}
-			<Tags {tags} class="absolute bottom-1 xs:bottom-3 lg:bottom-4" />
 		</div>
 		<div class="body">
-			<CardBody {story} {vars} {author} />
+			<Body {story} {vars} {author} />
+		</div>
+		<div class="p-2 w-full bg-transparent">
+			<Tags {tags} />
 		</div>
 	</Card>
 </Link>

@@ -2,7 +2,7 @@ export { alphaToRgb } from './alpha_to_rgb';
 export { exclude, last, serialize } from './array';
 export { clm } from './class_merge';
 export { contrastText } from './contrast';
-export { rootStyle } from './custom_colors';
+export { RGB, rootStyle } from './custom_colors';
 export { getChoiceFromId, getFrameFromId, transform } from './editing';
 export { sizeNamePattern } from './file';
 export { findByPattern } from './find';

@@ -1,15 +1,15 @@
 <script lang="ts">
-	import Button from '$UI/Button.svelte';
+	import { Button } from '$UI';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import clsx from 'clsx';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
-	import UserInformation from '../../lib/components/UserInformation.svelte';
 
 	export let data;
 

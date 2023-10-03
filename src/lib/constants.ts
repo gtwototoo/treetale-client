@@ -1,9 +1,9 @@
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
-import type { RGB } from '$lib/types';
+import type { TRGB } from '$lib/types';
 
-export const BLACK_COLOR: RGB = [0, 0, 0];
-export const DEFAULT_COLOR: RGB = [254, 215, 170];
-export const WHITE_COLOR: RGB = [255, 255, 255];
+export const BLACK_COLOR: TRGB = [0, 0, 0];
+export const DEFAULT_COLOR: TRGB = [254, 215, 170];
+export const WHITE_COLOR: TRGB = [255, 255, 255];
 export const ICON_TYPE = 'outline';
 
 export const DEFAULT_FRAME_HEIGHT = 156;
