@@ -7,7 +7,7 @@ export interface IStorySchema extends IStory {
 	userId: number;
 	likes: number[];
 	offset: ICoordinates;
-	scale: number;
+	zoom: number;
 	version: number;
 	imageId: string;
 	[index: string]: number | ICoordinates | unknown[] | string | boolean;

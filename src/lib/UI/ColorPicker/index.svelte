@@ -28,7 +28,7 @@
 		/>
 	</Popover>
 {:else}
-	<Popover align={popoverAlign} value="Цвет фона">
+	<Popover align={popoverAlign} {disabled} value="Цвет фона">
 		<Picker
 			bind:color
 			bind:light

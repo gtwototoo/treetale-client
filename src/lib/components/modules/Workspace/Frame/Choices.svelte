@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { removeModeStore } from '$lib/stores/newediting';
+	import { removeModeStore } from '$lib/stores/workspace';
 	import type { IChoice } from '$lib/types';
 	import { last } from '$lib/utils';
 	import clsx from 'clsx';
@@ -20,7 +20,9 @@
 			{
 				text: null,
 				frameId: null,
-				choiceId
+				choiceId,
+				mathOperations: [],
+				logicOperations: []
 			}
 		]);
 	};

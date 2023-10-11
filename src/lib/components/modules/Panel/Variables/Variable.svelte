@@ -1,16 +1,14 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
-	import type { IVariable } from '$lib/types';
+	import { currentPanelStore } from '$lib/stores/main';
+	import { variablesStore } from '$lib/stores/newediting';
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
 	import clsx from 'clsx';
-	import { createEventDispatcher } from 'svelte';
 	import { ChevronDown, XMark } from 'svelte-heros-v2';
 
-	export let data: IVariable;
-	export let removeMode: boolean;
-
-	const dispatch = createEventDispatcher();
+	export let varKey: number;
+	export let checkUpdates: () => void;
 
 	const types: IList[] = [
 		{ text: 'Строка' },
@@ -18,28 +16,39 @@
 		{
 			text: 'Да/Нет',
 			click: () => {
-				if (!['Да', 'Нет'].includes(data.value)) data.value = 'Да';
+				if (!['Да', 'Нет'].includes($variablesStore[varKey].value))
+					$variablesStore[varKey].value = 'Да';
 			}
 		}
 	];
 
-	const handleInput = (e: InputEvent | Event) => {
-		dispatch('input', e);
+	const removeVariable = () => {
+		$variablesStore.splice(varKey, 1);
+
+		$variablesStore = [...$variablesStore];
+
+		checkUpdates();
 	};
+
+	const handleInput = () => {
+		checkUpdates();
+	};
+
+	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <div class="flex items-center gap-2">
 	<FormSplit class="w-full">
 		<Input
-			bind:value={data.name}
+			bind:value={$variablesStore[varKey].name}
 			placeholder="Название"
-			class={clsx('shrink-0', removeMode ? 'w-full' : 'w-[13rem]')}
-			disabled={removeMode}
+			class={clsx('shrink-0', editMode ? 'w-full' : 'w-[13rem]')}
+			disabled={editMode}
 			on:input={handleInput}
 		>
 			<Listbox
 				size="sm"
-				bind:value={data.expect}
+				bind:value={$variablesStore[varKey].expect}
 				placeholder="Тип"
 				list={types}
 				class="-mr-2.5 ml-2"
@@ -53,10 +62,10 @@
 				</Button>
 			</Listbox>
 		</Input>
-		{#if !removeMode}
-			{#if data.expect === 'Да/Нет'}
+		{#if !editMode}
+			{#if $variablesStore[varKey].expect === 'Да/Нет'}
 				<Listbox
-					bind:value={data.value}
+					bind:value={$variablesStore[varKey].value}
 					placeholder="Значение"
 					class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
 					list={[{ text: 'Да' }, { text: 'Нет' }]}
@@ -64,17 +73,17 @@
 				/>
 			{:else}
 				<Input
-					bind:value={data.value}
+					bind:value={$variablesStore[varKey].value}
 					placeholder="Значение"
 					class="w-full"
-					number={data.expect !== 'Строка'}
+					number={$variablesStore[varKey].expect !== 'Строка'}
 					on:input={handleInput}
 				/>
 			{/if}
 		{/if}
 	</FormSplit>
-	{#if removeMode}
-		<Button on:click class="!text-red-500 !bg-red-50">
+	{#if editMode}
+		<Button on:click={removeVariable} class="!text-red-500 !bg-red-50">
 			<Icon type={XMark} />
 		</Button>
 	{/if}

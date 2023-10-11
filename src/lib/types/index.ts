@@ -1,3 +1,8 @@
+export type TRGB = [number, number, number];
+
+export type TComparisonOperator = '=' | '≥' | '≤' | '>' | '<' | '≠';
+export type TMathOperator = '+' | '-' | '/' | '*' | '=';
+
 export interface IStoryEditableInfo {
 	title: string;
 	description: string;
@@ -7,18 +12,30 @@ export interface IStoryEditableInfo {
 	draft: boolean;
 }
 
-export type TRGB = [number, number, number];
-
 export interface IStory extends IStoryEditableInfo {
 	storyId: number;
 	created: number;
+}
+
+interface IOperation {
+	variable: string;
+	value: string;
+}
+
+export interface ILogicOperation extends IOperation {
+	symbol: TComparisonOperator;
+}
+
+export interface IMathOperation extends IOperation {
+	symbol: TMathOperator;
 }
 
 export interface IChoice {
 	choiceId: number;
 	frameId: number;
 	text: string;
-	[index: string]: number | string | undefined;
+	logicOperations?: ILogicOperation[];
+	mathOperations?: IMathOperation[];
 }
 
 export interface IFrame {
@@ -40,10 +57,12 @@ export interface ICoordinates {
 	y: number;
 }
 
-export interface IBoundings extends ICoordinates {
+export interface ISize {
 	width: number;
 	height: number;
 }
+
+export type TBoundings = ISize & ICoordinates;
 
 export interface IProgressData {
 	storyId: number;

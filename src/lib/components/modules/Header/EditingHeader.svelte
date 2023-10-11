@@ -3,26 +3,24 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
-	import { activeActionStore } from '$lib/stores/newediting';
+	import { activeActionStore } from '$lib/stores/workspace';
 	import clsx from 'clsx';
 	import { ArrowUturnLeft, ArrowUturnRight, Variable } from 'svelte-heros-v2';
-	import { Changes, EditingSettings, Variables } from '../Panel';
+	import { Changes, Variables } from '../Panel';
 	import Header from './Header.svelte';
 
 	const variablesSwitch = () =>
 		($currentPanelStore = {
 			id: 'Переменные',
-			component: Variables
+			component: Variables,
+			editMode: false
 		});
-	const settingsSwitch = () =>
-		($currentPanelStore = {
-			id: 'Основная информация',
-			component: EditingSettings
-		});
+
 	const historySwitch = () =>
 		($currentPanelStore = {
 			id: 'История изменений',
-			component: Changes
+			component: Changes,
+			editMode: false
 		});
 </script>
 

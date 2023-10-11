@@ -1,13 +1,13 @@
-import { DEFAULT_FRAME_HEIGHT } from '$lib/constants';
-import type { IBoundings, ICoordinates } from '$lib/types';
+import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+import type { ICoordinates, TBoundings } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
 
-export const transform = (coords: ICoordinates, scale?: number): string => {
+export const transform = (coords: ICoordinates, zoom?: number): string => {
 	let styleRow = 'transform:';
 
 	styleRow += `translate3d(${coords?.x || 0}px,${coords?.y || 0}px,0)`;
-	if (scale) {
-		styleRow += `scale3d(${scale}, ${scale}, 1)`;
+	if (zoom) {
+		styleRow += `scale3d(${zoom}, ${zoom}, 1)`;
 	}
 
 	return styleRow;
@@ -28,12 +28,14 @@ export const getChoiceFromId = (frame: IFrameCreate, choiceId: number) => {
 };
 
 export const getChoicePosition = (index: number) => {
-	return DEFAULT_FRAME_HEIGHT + 37 * index - 1;
+	const startPosition = DEFAULT_FRAME_SIZE.height - 8 - 36 / 2;
+
+	return startPosition + 37 * index - 1;
 };
 
 export const createConnections = (frames: IFrameCreate[]) => {
 	const paths: IPath[] = [];
-	const area: IBoundings = getAreaBoundings(frames);
+	const area: TBoundings = getAreaBoundings(frames);
 	const { width, height, x, y } = area;
 
 	for (const fromFrame of frames) {

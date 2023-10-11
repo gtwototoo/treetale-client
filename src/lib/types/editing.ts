@@ -1,6 +1,6 @@
-import type { IBoundings, ICoordinates, IFrame, IStory } from '.';
+import type { ICoordinates, IFrame, TBoundings } from '.';
 
-export interface IFrameCreate extends IFrame, IBoundings {
+export interface IFrameCreate extends IFrame, TBoundings {
 	rotated: boolean;
 	hidden: boolean;
 	title: string;
@@ -21,25 +21,8 @@ export interface IConnect {
 	};
 }
 
-export interface IMove {
-	hovered: number | null;
-	active: boolean;
-	oneDirectionMode: boolean;
-}
-
 export interface IStartMove {
 	startMoveCoords: ICoordinates;
 	moveFrameOffset: ICoordinates;
 	moveXDirection: boolean | null;
-}
-
-export interface IStoryCreate extends IStory {
-	addFrameMode: boolean;
-	addFrameOffset: ICoordinates | null;
-	dragImageMode: boolean;
-	offset: ICoordinates;
-	scale: number;
-	draft: boolean;
-	timer: number;
-	saved: boolean;
 }

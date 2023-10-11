@@ -88,7 +88,7 @@ export const load = async ({ params, locals }) => {
 	const story: IStorySchema | null = await StoriesModel.findOne({ storyId })
 		.select({
 			_id: 0,
-			scale: 0,
+			zoom: 0,
 			offset: 0
 		})
 		.lean();

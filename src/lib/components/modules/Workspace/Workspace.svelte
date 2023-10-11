@@ -1,27 +1,27 @@
 <script lang="ts">
-	import { activeActionStore } from '$lib/stores/newediting';
+	import {
+		activeActionStore,
+		framesDataStore,
+		offsetStore,
+		zoomCorrect,
+		zoomStore
+	} from '$lib/stores/workspace';
 	import type { ICoordinates } from '$lib/types';
 	import ConnectionsLayer from './ConnectionsLayer.svelte';
+	import Frame from './Frame/Frame.svelte';
 	import MovingArea from './MovingArea.svelte';
 	import WindowActions from './WindowActions.svelte';
 
 	import clsx from 'clsx';
-	import { createEventDispatcher, setContext } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { pinch } from 'svelte-gestures';
-	import { writable, type Writable } from 'svelte/store';
+	import NewFrame from './NewFrame.svelte';
 
-	export let workspace: HTMLDivElement;
-
-	export let zoom: Writable<number>;
-	export let offset: Writable<ICoordinates>;
-
-	const zoomStore = zoom || writable(100);
-	const offsetStore = offset || writable({ x: 0, y: 0 });
-
-	setContext('zoom', zoomStore);
-	setContext('offset', offsetStore);
+	export let height: number;
+	export let width: number;
 
 	let startPinch = 0;
+	let workspace: HTMLDivElement;
 
 	const dispatch = createEventDispatcher<{
 		mousedown: { doubleClick: boolean; button: number; isMouse: boolean } & ICoordinates;
@@ -30,13 +30,6 @@
 		zoom: { zoom: number; offset: ICoordinates };
 		mouseup: null;
 	}>();
-
-	const scaleCorrect = (coordinates: ICoordinates) => {
-		return {
-			x: (coordinates.x - $offsetStore.x) / ($zoomStore / 100),
-			y: (coordinates.y - $offsetStore.y) / ($zoomStore / 100)
-		};
-	};
 
 	const handleMouseMove = (e: MouseEvent | TouchEvent) => {
 		const isMouse = e instanceof MouseEvent;
@@ -68,12 +61,12 @@
 		dispatch('click', { x, y });
 	};
 
-	const handleZoom = (e: WheelEvent | CustomEvent<{ center: ICoordinates; scale: number }>) => {
+	const handleZoom = (e: WheelEvent | CustomEvent<{ center: ICoordinates; zoom: number }>) => {
 		const isWheel = e instanceof WheelEvent;
 		const { x, y } = isWheel ? e : e.detail.center;
-		const upscale = isWheel ? e.deltaY < 0 : e.detail.scale - startPinch > 0;
+		const upscale = isWheel ? e.deltaY < 0 : e.detail.zoom - startPinch > 0;
 
-		const scaledCoords = scaleCorrect({ x, y });
+		const zoomedCoords = zoomCorrect({ x, y });
 
 		if (upscale) {
 			if ($zoomStore < 300) {
@@ -86,17 +79,17 @@
 		}
 
 		$offsetStore = {
-			x: Math.round(x - scaledCoords.x * ($zoomStore / 100)),
-			y: Math.round(y - scaledCoords.y * ($zoomStore / 100))
+			x: Math.round(x - zoomedCoords.x * ($zoomStore / 100)),
+			y: Math.round(y - zoomedCoords.y * ($zoomStore / 100))
 		};
 
-		if (!isWheel) startPinch = e.detail.scale;
+		if (!isWheel) startPinch = e.detail.zoom;
 
 		dispatch('zoom', { zoom: $zoomStore, offset: $offsetStore });
 	};
 </script>
 
-<WindowActions {workspace} />
+<WindowActions {workspace} on:mouseup={handleMouseUp} />
 <div
 	role="treegrid"
 	tabindex="0"
@@ -105,12 +98,13 @@
 		$activeActionStore === 'movingArea' && 'cursor-grabbing',
 		$activeActionStore === 'movingFrame' && 'cursor-move'
 	)}
+	bind:clientHeight={height}
+	bind:clientWidth={width}
 	bind:this={workspace}
 	use:pinch
 	on:pinch={handleZoom}
 	on:keypress|stopPropagation
 	on:wheel|preventDefault={handleZoom}
-	on:mouseup={handleMouseUp}
 	on:mousedown={handleMouseDown}
 	on:touchstart={handleMouseDown}
 	on:touchmove={handleMouseMove}
@@ -119,8 +113,13 @@
 	on:click={handleClick}
 >
 	<MovingArea>
+		{#if $activeActionStore === 'adding'}
+			<NewFrame />
+		{/if}
 		<div>
-			<slot />
+			{#each $framesDataStore as { frameId }, key (frameId)}
+				<Frame {frameId} {key} />
+			{/each}
 		</div>
 		<ConnectionsLayer />
 	</MovingArea>

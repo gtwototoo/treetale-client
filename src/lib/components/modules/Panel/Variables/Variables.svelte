@@ -1,21 +1,20 @@
 <script lang="ts">
-	import { Button, Selector, SelectorItem } from '$UI';
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateVars } from '$lib/requests/story';
-	import { storyInfo, vars } from '$lib/stores/editing';
+	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
 	import { correctWhitespace } from '$lib/utils';
-	import clsx from 'clsx';
 	import { Cloud, Variable } from 'svelte-heros-v2';
 	import Note from '../Note.svelte';
 	import VariableRow from './Variable.svelte';
 
 	let timer: number;
-	let removeMode = false;
+	let saving = false;
 	let saveInfo = 'Ожидание изменений';
 
 	const addVariable = () => {
-		$vars = [
-			...$vars,
+		$variablesStore = [
+			...$variablesStore,
 			{
 				name: '',
 				expect: 'Строка',
@@ -26,20 +25,13 @@
 		checkUpdates();
 	};
 
-	const removeVariable = (key: number) => {
-		$vars.splice(key, 1);
-
-		$vars = [...$vars];
-
-		checkUpdates();
-	};
-
 	const checkUpdates = () => {
 		clearTimeout(timer);
+		saving = true;
 
 		timer = window.setTimeout(async () => {
 			try {
-				await updateVars($storyInfo.storyId, $vars);
+				await updateVars($informationDataStore.storyId, $variablesStore);
 
 				saveInfo = 'Изменения сохранены';
 			} catch {
@@ -47,11 +39,8 @@
 			}
 
 			clearTimeout(timer);
+			saving = false;
 		}, 3000);
-	};
-
-	const switchMode = () => {
-		removeMode = !removeMode;
 	};
 </script>
 
@@ -64,33 +53,14 @@
 			)}
 		</div>
 	</Note>
-	<Selector on:change={checkUpdates} class="mb-4">
-		<SelectorItem class="flex-1 justify-center" active={!removeMode} on:click={switchMode}>
-			Редактирование
-		</SelectorItem>
-		<SelectorItem
-			class={clsx('flex-1 justify-center', {
-				'!text-red-500 !bg-red-300': removeMode
-			})}
-			active={removeMode}
-			on:click={switchMode}
-		>
-			Удаление
-		</SelectorItem>
-	</Selector>
 	<div class="flex flex-col gap-2">
-		{#each $vars as data, key}
-			<VariableRow
-				{data}
-				{removeMode}
-				on:click={() => removeVariable(key)}
-				on:input={checkUpdates}
-			/>
+		{#each $variablesStore as _, key}
+			<VariableRow varKey={key} {checkUpdates} />
 		{/each}
 		<Button on:click={addVariable} class="justify-center">Добавить переменную</Button>
 	</div>
 	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-		{#if timer}
+		{#if saving}
 			<Icon type={Cloud} class="h-4 animate-pulse text-gray-600" />
 		{:else}
 			{saveInfo}

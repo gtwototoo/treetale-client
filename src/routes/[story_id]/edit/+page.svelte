@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { DEFAULT_COLOR } from '$lib/constants';
-	import { connect, offset, storyInfo, zoom } from '$lib/stores/editing';
-
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
-	import FrameSettings from '$lib/components/modules/Panel/FrameSettings.svelte';
+	import Radar from '$lib/components/modules/EditingFooter/Radar.svelte';
+	import FrameSettings from '$lib/components/modules/Panel/FrameSettings/FrameSettings.svelte';
 	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
-	import Frame from '$lib/components/modules/Workspace/Frame/Frame.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
 		addFrame,
@@ -15,25 +12,36 @@
 		grabbingArea,
 		moveRivet,
 		movingFrame,
-		startGrab,
-		startMoveFrame
-	} from '$lib/components/modules/Workspace/methods.js';
-	import { changesHistory, frames } from '$lib/stores/editing';
+		startGrab
+	} from '$lib/components/modules/Workspace/methods';
+	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
+	import { updateArea } from '$lib/requests/story';
+	import { changesHistory, connect } from '$lib/stores/editing';
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { informationDataStore, stateAreaStore, variablesStore } from '$lib/stores/newediting';
 	import {
 		activeActionStore,
+		addFrameOffsetStore,
+		framesDataStore,
 		movingFrameStore,
-		selectedFrameStore
-	} from '$lib/stores/newediting.js';
-	import type { IStartMove } from '$lib/types/editing.js';
-	import type { ICoordinates } from '$lib/types/index.js';
+		offsetStore,
+		selectedFrameStore,
+		zoomCorrect,
+		zoomStore
+	} from '$lib/stores/workspace';
+
+	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
+	import type { ICoordinates } from '$lib/types/index';
 	import { getFrameFromId, rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { Play, Square2Stack } from 'svelte-heros-v2';
 
 	export let data;
 
-	let workspace: HTMLDivElement;
+	let timer: number;
+
+	let width: number;
+	let height: number;
 	let startOffset: ICoordinates = { x: 0, y: 0 };
 	let startMoveData: IStartMove = {
 		startMoveCoords: { x: 0, y: 0 },
@@ -41,15 +49,9 @@
 		moveXDirection: null
 	};
 
-	frames.init(data.frames);
-	storyInfo.set({
-		...data.info,
-		dragImageMode: false,
-		addFrameMode: false,
-		addFrameOffset: null,
-		timer: null,
-		saved: true
-	});
+	$variablesStore = data.info.vars;
+	$framesDataStore = data.frames;
+	$informationDataStore = data.info;
 
 	const handleMouseMove = (e: CustomEvent<ICoordinates>) => {
 		const { x, y } = e.detail;
@@ -57,9 +59,33 @@
 		if ($activeActionStore === 'movingFrame') {
 			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
 		}
+
 		if ($activeActionStore === 'movingArea') grabbingArea({ x, y }, startOffset);
 		if ($connect.connector.from !== null) moveRivet({ x, y });
-		if ($storyInfo.addFrameMode) cursorFollow({ x, y });
+		if ($activeActionStore === 'adding') cursorFollow({ x, y });
+	};
+
+	const startMoveFrame = (frame: IFrameCreate, coords: ICoordinates): IStartMove => {
+		if (!frame) {
+			return {
+				startMoveCoords: { x: 0, y: 0 },
+				moveFrameOffset: { x: 0, y: 0 },
+				moveXDirection: null
+			};
+		}
+
+		const { x, y } = zoomCorrect(coords);
+
+		$activeActionStore = 'movingFrame';
+
+		return {
+			moveFrameOffset: { x: x - frame.x, y: y - frame.y },
+			startMoveCoords: {
+				x: frame.x,
+				y: frame.y
+			},
+			moveXDirection: null
+		} satisfies IStartMove;
 	};
 
 	const handleMouseDown = (
@@ -70,30 +96,56 @@
 		if (!isMouse || button === 1 || doubleClick) startOffset = startGrab({ x, y });
 
 		if (isMouse && button === 0 && $movingFrameStore) {
-			startMoveData = startMoveFrame({ x, y });
-
-			const frame = getFrameFromId($frames, $movingFrameStore);
-
-			if ($currentPanelStore.id === `frame-${frame.frameId}`) return;
+			const frame = getFrameFromId($framesDataStore, $movingFrameStore);
 
 			$selectedFrameStore = frame.frameId;
 
-			$currentPanelStore = {
-				id: `frame-${frame.frameId}`,
-				title: frame.title,
-				component: FrameSettings
-			};
+			startMoveData = startMoveFrame(frame, { x, y });
+
+			if ($currentPanelStore.id !== `frame-${frame.frameId}`) {
+				$currentPanelStore = {
+					id: `frame-${frame.frameId}`,
+					title: frame.title || 'Начало',
+					component: FrameSettings,
+					editMode: false
+				};
+			}
 		}
 	};
 
 	const handleClick = (e: CustomEvent) => {
 		const { x, y } = e.detail;
 
-		if ($storyInfo.addFrameMode && $storyInfo.addFrameOffset) {
-			const addCoords = storyInfo.scaleCorrect({ x, y });
+		if ($activeActionStore === 'adding' && $addFrameOffsetStore) {
+			const newFrameCoords = zoomCorrect({ x, y });
 
-			addFrame({ x: addCoords.x - 128, y: addCoords.y - 112 });
+			addFrame({
+				x: newFrameCoords.x - DEFAULT_FRAME_SIZE.width / 2,
+				y: newFrameCoords.y - DEFAULT_FRAME_SIZE.height / 2
+			});
 		}
+	};
+
+	const saveArea = () => {
+		clearTimeout(timer);
+		$stateAreaStore = 'saving';
+
+		timer = window.setTimeout(async () => {
+			try {
+				await updateArea(
+					$informationDataStore.storyId,
+					$framesDataStore,
+					$offsetStore,
+					$zoomStore
+				);
+
+				$stateAreaStore = 'saved';
+			} catch {
+				$stateAreaStore = 'error';
+			}
+
+			clearTimeout(timer);
+		}, 3000);
 	};
 
 	const handleMouseUp = () => {
@@ -101,52 +153,58 @@
 			changesHistory.add('Перемещение фрейма', Square2Stack);
 		}
 
-		$movingFrameStore = null;
-		$activeActionStore = 'view';
+		if ($activeActionStore !== 'adding') {
+			$movingFrameStore = null;
+			$activeActionStore = 'view';
 
-		connectorLogic();
-		// storyInfo.saveArea();
+			connectorLogic();
+		}
+
+		saveArea();
 	};
 
 	onMount(() => {
 		setTimeout(() => {
-			if ($frames.length === 1 && $frames[0].x === 0 && $frames[0].y === 0) {
-				$frames[0].x = workspace.clientWidth / 2 - $frames[0].width / 2;
-				$frames[0].y = workspace.clientHeight / 2 - $frames[0].height / 2;
+			if (
+				$framesDataStore.length === 1 &&
+				$framesDataStore[0].x === 0 &&
+				$framesDataStore[0].y === 0
+			) {
+				$framesDataStore[0].x = width / 2 - $framesDataStore[0].width / 2;
+				$framesDataStore[0].y = height / 2 - $framesDataStore[0].height / 2;
 			}
 			changesHistory.add('Начальное состояние', Play);
 		}, 0);
 	});
 
-	$: $bodyColorStore = $storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR;
+	$: $bodyColorStore = $informationDataStore.color.length
+		? $informationDataStore.color
+		: DEFAULT_COLOR;
 </script>
 
 <svelte:head>
 	<title>
-		Редактирование "{$storyInfo.title || 'Без названия'}"
+		Редактирование "{$informationDataStore.title || 'Без названия'}"
 	</title>
 	{@html rootStyle($bodyColorStore, {
-		'fill-gradient': `url(#light-gradient-${$storyInfo.storyId})`
+		'fill-gradient': `url(#light-gradient-${$informationDataStore.storyId})`
 	})}
 </svelte:head>
 
-<SvgGradient id={$storyInfo.storyId} />
+<SvgGradient id={$informationDataStore.storyId} />
 <div class="absolute h-full w-full">
-	{#if $frames.length === 1}
+	{#if $framesDataStore.length === 1}
 		<CreateText />
 	{/if}
 	<Workspace
-		{zoom}
-		{offset}
-		bind:workspace
+		bind:width
+		bind:height
 		on:mousedown={handleMouseDown}
 		on:mouseup={handleMouseUp}
 		on:mousemove={handleMouseMove}
 		on:click={handleClick}
-	>
-		{#each $frames as data, key (data.frameId)}
-			<Frame {key} {data} bind:clientHeight={data.height} bind:clientWidth={data.width} />
-		{/each}
-	</Workspace>
+	/>
 </div>
-<EditingFooter viewArea={workspace} />
+<EditingFooter>
+	<Radar {width} {height} />
+</EditingFooter>

@@ -36,7 +36,7 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 		likes: Array,
 		tags: Array,
 		frames: Array,
-		scale: {
+		zoom: {
 			type: Number,
 			default: 100
 		},

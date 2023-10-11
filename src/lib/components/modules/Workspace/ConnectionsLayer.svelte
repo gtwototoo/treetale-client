@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { frames } from '$lib/stores/editing';
+	import { framesDataStore } from '$lib/stores/workspace';
 	import { createConnections } from '$lib/utils/editing';
 	import { createEventDispatcher, onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
-	$: ({ paths, ...svgData } = createConnections($frames));
+	$: ({ paths, ...svgData } = createConnections($framesDataStore));
 
 	onMount(() => dispatch('mounted'));
 </script>

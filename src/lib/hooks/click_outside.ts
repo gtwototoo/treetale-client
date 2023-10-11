@@ -7,8 +7,8 @@ interface IClickOutside {
 export const clickOutside = (node: HTMLElement): ActionReturn<null, IClickOutside> => {
 	const handleClick = (e: MouseEvent) => {
 		if (
-			e.target instanceof HTMLElement &&
-			(node.contains(e.target) || node.contains(e.target.offsetParent))
+			e.target instanceof Element &&
+			(node.contains(e.target) || node.contains((e.target as HTMLElement).offsetParent))
 		) {
 			return;
 		}

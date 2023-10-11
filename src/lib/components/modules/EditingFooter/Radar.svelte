@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { offset, zoom } from '$lib/stores/editing';
+	import { offsetStore, zoomStore } from '$lib/stores/workspace';
 	import { transform } from '$lib/utils';
 
 	import type { ICoordinates } from '$lib/types';
@@ -7,7 +7,8 @@
 	import { ViewArea } from '$UI/Icons';
 	import clsx from 'clsx';
 
-	export let viewArea: HTMLElement;
+	export let height: number;
+	export let width: number;
 
 	let element: HTMLButtonElement;
 	let coordinates: ICoordinates = {
@@ -20,8 +21,8 @@
 
 		const radius = element.clientHeight / 2;
 		const formattedCoordinates: ICoordinates = {
-			x: -(offset.x / (viewArea.clientWidth / radius)),
-			y: -(offset.y / (viewArea.clientHeight / radius))
+			x: -(offset.x / (width / radius)),
+			y: -(offset.y / (height / radius))
 		};
 
 		const len = Math.hypot(formattedCoordinates.x, formattedCoordinates.y);
@@ -37,11 +38,11 @@
 	};
 
 	const setDefaultCoordinates = () => {
-		$zoom = 100;
-		$offset = { x: 0, y: 0 };
+		$zoomStore = 100;
+		$offsetStore = { x: 0, y: 0 };
 	};
 
-	$: setCoordinates($offset);
+	$: setCoordinates($offsetStore);
 </script>
 
 <Button
@@ -58,6 +59,6 @@
 	/>
 	<div
 		class="h-3 w-3 shrink-0 rounded-full absolute !bg-text"
-		style={transform(coordinates, $zoom / 100)}
+		style={transform(coordinates, $zoomStore / 100)}
 	/>
 </Button>

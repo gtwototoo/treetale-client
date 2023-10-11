@@ -24,7 +24,7 @@
 	export let value = '';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let placeholder: string;
-	export let list: IList[];
+	export let list: IList[] | string[];
 
 	let focused = false;
 
@@ -34,13 +34,19 @@
 		focused = !focused;
 	};
 
-	const handleSelect = (e: CustomEvent, item: IList) => {
-		value = item.text;
-		if (item.click) {
-			item.click(e);
+	const handleSelect = (e: CustomEvent, item: IList | string) => {
+		if (typeof item === 'string') {
+			value = item;
+		} else {
+			value = item.text;
+			if (item.click) {
+				item.click(e);
+			}
 		}
-		dispatch('input', e);
+
 		focused = false;
+
+		dispatch('input', e);
 	};
 </script>
 
@@ -52,14 +58,11 @@
 	{#if $$slots.default}
 		<slot value={value || placeholder} click={handleClick} />
 	{:else}
-		<Button class="w-full" {size} on:click={handleClick}>
-			<p class={clsx('pr-5', { 'text-gray-200': !value })}>
+		<Button class="w-full !pr-3 gap-3" {size} on:click={handleClick}>
+			<p class={clsx('w-full text-left', !value && 'text-gray-400')}>
 				{value || placeholder}
 			</p>
-			<Icon
-				type={ChevronDown}
-				class={clsx('absolute right-0 mx-2', { 'h-3 w-auto': size === 'sm' })}
-			/>
+			<Icon type={ChevronDown} class={clsx('h-4 w-auto shrink-0', { 'h-3': size === 'sm' })} />
 		</Button>
 	{/if}
 	{#if focused}
@@ -70,10 +73,14 @@
 					class="w-full gap-4 !bg-transparent"
 					variant="secondary"
 				>
-					{#if item.icon}
-						<Icon type={item.icon} />
+					{#if typeof item === 'string'}
+						{item}
+					{:else}
+						{#if item.icon}
+							<Icon type={item.icon} />
+						{/if}
+						<p>{item.text}</p>
 					{/if}
-					<p>{item.text}</p>
 				</Button>
 			{/each}
 		</div>

@@ -21,15 +21,11 @@
 	};
 </script>
 
-<div
-	class={clsx('popover', { disabled }, className)}
-	use:clickOutside
-	on:outclick={() => (focused = false)}
->
+<div class={clsx('popover', className)} use:clickOutside on:outclick={() => (focused = false)}>
 	{#if $$slots.button}
 		<slot name="button" {focused} click={handleClick} />
 	{:else}
-		<Button class="w-full" on:click={handleClick}>
+		<Button class="w-full" {disabled} on:click={handleClick}>
 			<p
 				class={clsx('min-h-[1.25rem] pr-5', {
 					'text-gray-200': !value

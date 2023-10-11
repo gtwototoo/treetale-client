@@ -1,44 +1,47 @@
 <script lang="ts">
-	import { changesHistory, connect, storyInfo } from '$lib/stores/editing';
+	import { changesHistory, connect } from '$lib/stores/editing';
 	import {
 		activeActionStore,
-		movingFrameStore,
+		dragImageModeStore,
 		oneDirectionModeStore
-	} from '$lib/stores/newediting';
+	} from '$lib/stores/workspace';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		switch (e.key.toLowerCase()) {
 			case 'm':
 				e.preventDefault();
-				$storyInfo.addFrameMode = true;
+
+				$activeActionStore = 'adding';
+
 				break;
 			case 'shift':
 				e.preventDefault();
+
 				$oneDirectionModeStore = true;
 				$connect.active = false;
 				break;
 			case !e.shiftKey && 'c':
 				e.preventDefault();
+
 				$connect.active = true;
 				break;
 			case 'z':
-				if ($storyInfo.addFrameMode) changesHistory[e.shiftKey ? 'redo' : 'undo']();
+				if ($activeActionStore === 'adding') changesHistory[e.shiftKey ? 'redo' : 'undo']();
 				break;
 			case 'escape':
 				e.preventDefault();
-				if ($storyInfo.dragImageMode) {
-					$storyInfo.dragImageMode = false;
+
+				if ($dragImageModeStore) {
+					$dragImageModeStore = false;
 				}
 		}
 	};
 
 	const handleKeyup = (e: KeyboardEvent) => {
 		switch (e.key.toLowerCase()) {
-			case 'm':
-				$storyInfo.addFrameMode = false;
-				$storyInfo.addFrameOffset = null;
-				$activeActionStore = null;
-				break;
 			case 'shift':
 				$oneDirectionModeStore = false;
 				break;
@@ -57,11 +60,11 @@
 	};
 
 	const disableDragMode = () => {
-		$storyInfo.dragImageMode = false;
+		$dragImageModeStore = false; // попробовать переделать на $activeActionStore === 'drag';
 	};
 
 	const enableDragMode = () => {
-		$storyInfo.dragImageMode = true;
+		$dragImageModeStore = true;
 	};
 
 	const handleDragLeave = (e: DragEvent) => {
@@ -70,9 +73,8 @@
 		}
 	};
 
-	const handleMouseUp = () => {
-		$movingFrameStore = null;
-		$activeActionStore = 'view';
+	const handleMouseUp = (e: MouseEvent) => {
+		dispatch('mouseup', e);
 	};
 
 	export let workspace: HTMLDivElement;

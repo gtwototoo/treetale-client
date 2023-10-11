@@ -1,12 +1,26 @@
 <script lang="ts">
 	import { Button } from '$UI';
-	import { offset, zoom } from '$lib/stores/editing';
-	import { activeActionStore } from '$lib/stores/newediting';
+	import {
+		activeActionStore,
+		addFrameOffsetStore,
+		offsetStore,
+		zoomCorrect,
+		zoomStore
+	} from '$lib/stores/workspace';
 	import clsx from 'clsx';
-	import Radar from './Radar.svelte';
 	import StateMode from './StateMode.svelte';
 
-	export let viewArea: HTMLDivElement;
+	const cancelAddFrameMode = () => {
+		$activeActionStore = 'view';
+	};
+
+	const enableAddFrameMode = (e: CustomEvent<MouseEvent>) => {
+		const { x, y } = e.detail;
+		const cursorCoords = zoomCorrect({ x, y });
+
+		$addFrameOffsetStore = cursorCoords;
+		$activeActionStore = 'adding';
+	};
 </script>
 
 <div class="area">
@@ -16,23 +30,35 @@
 			$activeActionStore !== 'view' ? 'blind' : 'pointer-events-auto'
 		)}
 	>
-		<Radar {viewArea} />
+		<slot />
 		<div class="info">
 			<p>
-				{$offset.x}, {$offset.y}
+				{$offsetStore.x}, {$offsetStore.y}
 			</p>
 			<p>
-				{($zoom / 100).toFixed(1)}x
+				{($zoomStore / 100).toFixed(1)}x
 			</p>
 		</div>
 	</div>
-	<Button
-		variant="ghost"
-		size="lg"
-		class="w-64 bg-emerald-300 text-emerald-500 pointer-events-auto justify-center"
-	>
-		Новый фрейм
-	</Button>
+	{#if $activeActionStore === 'adding'}
+		<Button
+			on:click={cancelAddFrameMode}
+			variant="ghost"
+			size="lg"
+			class="w-64 bg-red-400 text-red-500 pointer-events-auto justify-center"
+		>
+			Отмена
+		</Button>
+	{:else}
+		<Button
+			on:click={enableAddFrameMode}
+			variant="ghost"
+			size="lg"
+			class="w-64 bg-emerald-300 text-emerald-500 pointer-events-auto justify-center"
+		>
+			Новый фрейм
+		</Button>
+	{/if}
 	<StateMode />
 </div>
 

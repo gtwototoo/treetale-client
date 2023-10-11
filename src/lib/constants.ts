@@ -1,19 +1,19 @@
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
-import type { TRGB } from '$lib/types';
+import type { ISize, TRGB } from '$lib/types';
 
 export const BLACK_COLOR: TRGB = [0, 0, 0];
 export const DEFAULT_COLOR: TRGB = [254, 215, 170];
 export const WHITE_COLOR: TRGB = [255, 255, 255];
 export const ICON_TYPE = 'outline';
 
-export const DEFAULT_FRAME_HEIGHT = 156;
-
 export const USER_WITHOUT_WORKSPACE = {
 	_id: 0,
-	scale: 0,
+	zoom: 0,
 	offset: 0,
 	frames: 0
 };
+
+export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 180 };
 
 export const NOT_FOUND_VARIANTS: App.Error[] = [
 	{

@@ -16,7 +16,6 @@ export const onlyDigits = (node: HTMLInputElement) => {
 
 export const autoHeight = (node: HTMLTextAreaElement) => {
 	const correctHeight = () => {
-		console.log(node.value);
 		node.value = node.value.replace(/ {2,}/, ' ');
 
 		const { style, parentElement } = node;

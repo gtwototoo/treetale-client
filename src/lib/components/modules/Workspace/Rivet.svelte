@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { connect, storyInfo } from '$lib/stores/editing';
+	import { connect } from '$lib/stores/editing';
+	import { zoomCorrect } from '$lib/stores/workspace';
 	import type { IFrameCreate } from '$lib/types/editing';
 	import clsx from 'clsx';
 
@@ -16,7 +17,7 @@
 		const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
 
 		const setY = () => {
-			const { y } = storyInfo.scaleCorrect(node.getBoundingClientRect());
+			const { y } = zoomCorrect(node.getBoundingClientRect());
 
 			choice.y = y - frame.y;
 		};

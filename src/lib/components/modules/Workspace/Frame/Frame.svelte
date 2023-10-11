@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { changesHistory } from '$lib/stores/editing';
-	import { movingFrameStore } from '$lib/stores/newediting';
+	import { framesDataStore, movingFrameStore } from '$lib/stores/workspace';
 	import type { IChoice } from '$lib/types';
-	import type { IFrameCreate } from '$lib/types/editing';
 	import { transform } from '$lib/utils';
 	import { getChoicePosition } from '$lib/utils/editing';
 	import clsx from 'clsx';
@@ -10,56 +9,59 @@
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
-	export let data: IFrameCreate;
+	export let frameId: number;
 	export let key: number;
-	export let clientHeight = undefined;
-	export let clientWidth = undefined;
+
+	$: frame = $framesDataStore.findIndex((frame) => frame.frameId === frameId);
+	$: ({ choices, hidden, title, text, x, y } = $framesDataStore[frame]);
 
 	const setMovingFrame = () => {
-		$movingFrameStore = data.frameId;
+		$movingFrameStore = frameId;
 	};
 
 	const setChoices = (e: CustomEvent<IChoice[]>) => {
-		if (e.detail > data.choices) {
+		if (e.detail > choices) {
 			changesHistory.add('Добавление выбора', Plus);
 		} else {
 			changesHistory.add('Удаление выбора', XMark);
 		}
 
-		data.choices = e.detail;
+		$framesDataStore[frame].choices = e.detail;
 	};
 
 	const setVisible = () => {
-		data.hidden = !data.hidden;
+		$framesDataStore[frame].hidden = !hidden;
 	};
 </script>
 
-<div class="absolute" style="{transform({ x: data.x, y: data.y })}; z-index: {data.frameId}">
+<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 	<button
 		class={clsx(
 			'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-shadow hover:shadow-lg',
-			{ 'shadow-lg': $movingFrameStore === data.frameId }
+			{ 'shadow-lg': $movingFrameStore === frameId }
 		)}
 		on:mousedown={setMovingFrame}
-		bind:clientHeight
-		bind:clientWidth
+		bind:clientHeight={$framesDataStore[frame].height}
+		bind:clientWidth={$framesDataStore[frame].width}
 	>
-		<Header hidden={data.hidden} on:hide={setVisible}>
+		<Header {hidden} on:hide={setVisible}>
 			<p class={clsx('py-1 pl-4', { 'text-emerald-500': !key })}>
-				{!key ? 'Начало' : data.title}
+				{!key ? 'Начало' : title}
 			</p>
 		</Header>
-		{#if !data.hidden}
+		{#if !hidden}
 			<div
-				class={clsx('flex h-20 items-center px-4 text-center', { 'text-gray-400': !data.text })}
+				class={clsx('flex h-20 items-center px-4 text-center', {
+					'text-gray-400': !text
+				})}
 			>
-				<p class="line-clamp-5 w-full">{data.text || 'Описание истории'}</p>
+				<p class="line-clamp-5 w-full">{text || 'Описание истории'}</p>
 			</div>
-			<Choices choices={data.choices} on:change={setChoices} />
+			<Choices {choices} on:change={setChoices} />
 		{/if}
 	</button>
 	<div class="absolute inset-0">
-		{#each data.choices as _, key}
+		{#each choices as _, key}
 			<div class="point right-0" style="top: {getChoicePosition(key)}px" />
 		{/each}
 		<div class="point left-0 top-1/2" />

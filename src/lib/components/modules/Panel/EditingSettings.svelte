@@ -13,8 +13,10 @@
 	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
-	import { deleteStory, updateInfo } from '$lib/requests/story';
-	import { changesHistory, storyInfo } from '$lib/stores/editing';
+	import { deleteStory, updateInfomation } from '$lib/requests/story';
+	import { changesHistory } from '$lib/stores/editing';
+	import { currentPanelStore } from '$lib/stores/main';
+	import { informationDataStore } from '$lib/stores/newediting';
 	import clsx from 'clsx';
 	import { onDestroy } from 'svelte';
 	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
@@ -22,23 +24,25 @@
 	let light = 80;
 	let saturate = 90;
 	let timer: number;
+	let saving = false;
 	let saveInfo = 'Ожидание изменений';
 	let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
 
 	const setColor = ({ detail }: CustomEvent) => {
-		$storyInfo.color = detail.color;
+		$informationDataStore.color = detail.color;
 
 		checkUpdates();
 	};
 
 	const checkUpdates = () => {
 		clearTimeout(timer);
+		saving = true;
 
 		timer = window.setTimeout(async () => {
-			const { title, tags, color, description, storyId, draft } = $storyInfo;
+			const { title, tags, color, description, storyId, draft } = $informationDataStore;
 
 			try {
-				await updateInfo(storyId, {
+				await updateInfomation(storyId, {
 					title,
 					tags,
 					color,
@@ -52,18 +56,19 @@
 			}
 
 			clearTimeout(timer);
-		}, 500);
+			saving = false;
+		}, 3000);
 	};
 
 	const action = 'storyImageId';
 
 	const preRemoveImage = async () => {
-		if (!$storyInfo.imageId) return;
+		if (!$informationDataStore.imageId) return;
 
 		try {
-			await removeImage($storyInfo.imageId, action, $storyInfo.storyId);
+			await removeImage($informationDataStore.imageId, action, $informationDataStore.storyId);
 
-			$storyInfo.imageId = null;
+			$informationDataStore.imageId = null;
 			state = undefined;
 
 			changesHistory.add('Удаление изображения', XMark);
@@ -74,9 +79,13 @@
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
-			const response = await saveImage(file, action, `&storyId=${$storyInfo.storyId}`);
+			const response = await saveImage(
+				file,
+				action,
+				`&storyId=${$informationDataStore.storyId}`
+			);
 
-			$storyInfo.imageId = response.imageId;
+			$informationDataStore.imageId = response.imageId;
 			state = undefined;
 
 			changesHistory.add('Добавление изображения', PhotoIcon);
@@ -92,7 +101,7 @@
 	};
 
 	const switchDraft = () => {
-		$storyInfo.draft = !$storyInfo.draft;
+		$informationDataStore.draft = !$informationDataStore.draft;
 		checkUpdates();
 	};
 
@@ -104,7 +113,7 @@
 </script>
 
 <Image
-	src={$storyInfo.imageId}
+	src={$informationDataStore.imageId}
 	height={192}
 	width={360}
 	bind:state
@@ -117,13 +126,20 @@
 	<Input
 		placeholder="Название"
 		class="w-full"
-		bind:value={$storyInfo.title}
+		bind:value={$informationDataStore.title}
+		on:input={checkUpdates}
+		disabled={$currentPanelStore.editMode}
+	/>
+	<Textarea
+		disabled={$currentPanelStore.editMode}
+		placeholder="Описание"
+		bind:value={$informationDataStore.description}
 		on:input={checkUpdates}
 	/>
-	<Textarea placeholder="Описание" bind:value={$storyInfo.description} on:input={checkUpdates} />
 	<InputTags
-		placeholder={$storyInfo.tags.length ? '' : 'Теги'}
-		bind:tags={$storyInfo.tags}
+		disabled={$currentPanelStore.editMode}
+		placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
+		bind:tags={$informationDataStore.tags}
 		on:add={checkUpdates}
 		on:remove={checkUpdates}
 	/>
@@ -132,34 +148,42 @@
 	<ColorPicker
 		lightRange={[10, 80]}
 		saturateRange={[10, 90]}
-		color={$storyInfo.color.length ? $storyInfo.color : DEFAULT_COLOR}
+		color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
 		{saturate}
 		{light}
 		on:change={setColor}
+		disabled={$currentPanelStore.editMode}
 	/>
 </FormSplit>
-<Selector on:change={checkUpdates}>
-	<SelectorItem class="grow justify-center" active={$storyInfo.draft} on:click={switchDraft}>
-		Черновик
-	</SelectorItem>
-	<SelectorItem
-		class={clsx('grow justify-center', {
-			'!bg-emerald-500': !$storyInfo.draft
-		})}
-		active={!$storyInfo.draft}
-		on:click={switchDraft}
+{#if $currentPanelStore.editMode}
+	<Button
+		class="justify-center !text-red-500 !bg-red-50"
+		on:click={() => deleteStory($informationDataStore.storyId)}
 	>
-		Публичный
-	</SelectorItem>
-</Selector>
-<Button
-	class="mt-4 justify-center !text-red-500 !bg-red-50"
-	on:click={() => deleteStory($storyInfo.storyId)}
->
-	Удалить историю
-</Button>
+		Удалить историю
+	</Button>
+{:else}
+	<Selector on:change={checkUpdates}>
+		<SelectorItem
+			class="grow justify-center"
+			active={$informationDataStore.draft}
+			on:click={switchDraft}
+		>
+			Черновик
+		</SelectorItem>
+		<SelectorItem
+			class={clsx('grow justify-center', {
+				'!bg-emerald-500': !$informationDataStore.draft
+			})}
+			active={!$informationDataStore.draft}
+			on:click={switchDraft}
+		>
+			Публичный
+		</SelectorItem>
+	</Selector>
+{/if}
 <div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-	{#if timer}
+	{#if saving}
 		<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
 	{:else}
 		{saveInfo}

@@ -12,23 +12,23 @@ export const addLike = async (storyId: number) => {
 	return await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/like`);
 };
 
-export const updateInfo = async (storyId: number, info: IStoryEditableInfo) => {
+export const updateInfomation = async (storyId: number, info: IStoryEditableInfo) => {
 	return await fetchPost(
 		`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=information`,
 		info
 	);
 };
 
-export const updateFrames = async (
+export const updateArea = async (
 	storyId: number,
 	frames: IFrameCreate[],
 	offset: ICoordinates,
-	scale: number
+	zoom: number
 ) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=area`, {
 		frames,
 		offset,
-		scale
+		zoom
 	});
 };
 
