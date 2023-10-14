@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, FormSplit, Textarea } from '$UI';
+	import { Button, FormSplit } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 	import Input from '$UI/Input.svelte';
 	import Listbox from '$UI/Listbox.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -49,12 +50,14 @@
 			...$framesDataStore[frameKey].choices[choiceKey].mathOperations
 		];
 	};
+
+	// ЗАМЕНИТЬ ТЕКСТАРЕЮ
 </script>
 
 <FormSplit vertical>
-	<Textarea
+	<Contenteditable
 		placeholder="Вариант выбора"
-		bind:value={$framesDataStore[frameKey].choices[choiceKey].text}
+		bind:html={$framesDataStore[frameKey].choices[choiceKey].text}
 	>
 		<svelte:fragment slot="left">
 			<Button
@@ -73,24 +76,26 @@
 				{/if}
 			</Button>
 		</svelte:fragment>
-		<Button
-			size="sm"
-			class={clsx(
-				'!px-1 gap-1',
-				($framesDataStore[frameKey].choices[choiceKey].mathOperations.length ||
-					active === 'math') &&
-					'!bg-violet-100'
-			)}
-			on:click={() => setActiveOperation('math')}
-		>
-			<Icon class="w-4 h-4" type={Variable} />
-			{#if $framesDataStore[frameKey].choices[choiceKey].mathOperations.length}
-				<p class="pr-1">
-					{$framesDataStore[frameKey].choices[choiceKey].mathOperations.length}
-				</p>
-			{/if}
-		</Button>
-	</Textarea>
+		<svelte:fragment slot="right">
+			<Button
+				size="sm"
+				class={clsx(
+					'!px-1 gap-1',
+					($framesDataStore[frameKey].choices[choiceKey].mathOperations.length ||
+						active === 'math') &&
+						'!bg-violet-100'
+				)}
+				on:click={() => setActiveOperation('math')}
+			>
+				<Icon class="w-4 h-4" type={Variable} />
+				{#if $framesDataStore[frameKey].choices[choiceKey].mathOperations.length}
+					<p class="pr-1">
+						{$framesDataStore[frameKey].choices[choiceKey].mathOperations.length}
+					</p>
+				{/if}
+			</Button>
+		</svelte:fragment>
+	</Contenteditable>
 	{#if active === 'logic'}
 		<div class="bg-orange-100 relative p-2 rounded-lg gap-2 text-sm items-center flex flex-col">
 			<p class="text-sm/10 select-none">Условия появления</p>

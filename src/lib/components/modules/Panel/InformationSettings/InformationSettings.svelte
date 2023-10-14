@@ -1,14 +1,6 @@
 <script lang="ts">
-	import {
-		Button,
-		ColorPicker,
-		FormSplit,
-		Input,
-		InputTags,
-		Selector,
-		SelectorItem,
-		Textarea
-	} from '$UI';
+	import { Button, ColorPicker, FormSplit, Input, InputTags } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
@@ -17,9 +9,10 @@
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore } from '$lib/stores/newediting';
-	import clsx from 'clsx';
+	import { correctWhitespace } from '$lib/utils';
 	import { onDestroy } from 'svelte';
 	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
+	import Shortcuts from './Shortcuts.svelte';
 
 	let light = 80;
 	let saturate = 90;
@@ -130,10 +123,10 @@
 		on:input={checkUpdates}
 		disabled={$currentPanelStore.editMode}
 	/>
-	<Textarea
+	<Contenteditable
 		disabled={$currentPanelStore.editMode}
 		placeholder="Описание"
-		bind:value={$informationDataStore.description}
+		bind:html={$informationDataStore.description}
 		on:input={checkUpdates}
 	/>
 	<InputTags
@@ -157,30 +150,37 @@
 </FormSplit>
 {#if $currentPanelStore.editMode}
 	<Button
-		class="justify-center !text-red-500 !bg-red-50"
+		variant="main"
+		class="justify-center !text-red-500 !bg-red-100"
 		on:click={() => deleteStory($informationDataStore.storyId)}
 	>
 		Удалить историю
 	</Button>
+{:else if $informationDataStore.draft}
+	<Button
+		variant="main"
+		class="!bg-emerald-200 !text-emerald-500 justify-center"
+		on:click={switchDraft}
+	>
+		Опубликовать
+	</Button>
 {:else}
-	<Selector on:change={checkUpdates}>
-		<SelectorItem
-			class="grow justify-center"
-			active={$informationDataStore.draft}
+	<div
+		class="p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none bg-orange-50 text-orange-500"
+	>
+		<p>
+			{correctWhitespace(
+				'История находится на модерации. Проверка занимает обычно от часу до суток в зависимости от размера созданной или измененной истории.'
+			)}
+		</p>
+		<Button
+			variant="main"
+			class="!text-red-500 !bg-red-100 justify-center"
 			on:click={switchDraft}
 		>
-			Черновик
-		</SelectorItem>
-		<SelectorItem
-			class={clsx('grow justify-center', {
-				'!bg-emerald-500': !$informationDataStore.draft
-			})}
-			active={!$informationDataStore.draft}
-			on:click={switchDraft}
-		>
-			Публичный
-		</SelectorItem>
-	</Selector>
+			Отменить публикацию
+		</Button>
+	</div>
 {/if}
 <div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 	{#if saving}
@@ -189,3 +189,4 @@
 		{saveInfo}
 	{/if}
 </div>
+<Shortcuts />

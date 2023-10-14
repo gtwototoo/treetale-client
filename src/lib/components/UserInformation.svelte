@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, ColorPicker, Textarea } from '$UI';
+	import { Button, ColorPicker } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
@@ -83,19 +84,23 @@
 			{/each}
 		</div>
 	</div>
-	<div class="flex flex-col items-center text-center w-full bg-transparent">
-		<Textarea
-			placeholder={user.name}
-			readonly={!editMode}
-			class={clsx('!text-4xl font-bold !bg-transparent !text-text', !editMode && '!opacity-100')}
-			value={user.name}
-		/>
-		<Textarea
+	<div class="flex flex-col items-center w-full bg-transparent">
+		<Contenteditable
+			bind:html={user.name}
 			placeholder="Добавьте описание"
-			value={!editMode && !user.description ? 'Описание отсутствует' : user.description}
-			class={clsx('w-full !text-lg !bg-transparent !text-text', !editMode && '!opacity-100')}
+			class="text-4xl font-bold !bg-transparent text-center text-text"
 			readonly={!editMode}
 		/>
+		{#if editMode || user.description}
+			<Contenteditable
+				bind:html={user.description}
+				placeholder="Добавьте описание"
+				class="w-full text-lg !bg-transparent text-center text-text"
+				readonly={!editMode}
+			/>
+		{:else}
+			<p class="px-4 py-2 text-lg">Описание отсутствует</p>
+		{/if}
 	</div>
 	<div class="flex gap-2 bg-transparent">
 		{#if me}

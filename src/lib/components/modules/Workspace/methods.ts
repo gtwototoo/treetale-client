@@ -79,7 +79,7 @@ export const connectorLogic = () => {
 	);
 };
 
-export const startGrab = ({ x, y }: ICoordinates): ICoordinates => {
+export const startMoveArea = ({ x, y }: ICoordinates): ICoordinates => {
 	const offset = get(offsetStore);
 
 	activeActionStore.set('movingArea');
@@ -90,7 +90,7 @@ export const startGrab = ({ x, y }: ICoordinates): ICoordinates => {
 	};
 };
 
-export const grabbingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) => {
+export const movingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) => {
 	offsetStore.update(() => ({
 		x: x - startOffset.x,
 		y: y - startOffset.y
@@ -163,14 +163,14 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 	return startMoveData.moveXDirection;
 };
 
-export const checkConnectorEndFrame = (grabCoords: ICoordinates) => {
+export const checkConnectorEndFrame = (moveAreaCoords: ICoordinates) => {
 	const framesData = get(framesDataStore);
 	const connectStore = get(connect);
 
 	for (const frame of framesData) {
 		if (
-			Math.abs(frame.x - grabCoords.x) <= 12 &&
-			Math.abs(grabCoords.y - (frame.y + frame.height / 2)) <= 12
+			Math.abs(frame.x - moveAreaCoords.x) <= 12 &&
+			Math.abs(moveAreaCoords.y - (frame.y + frame.height / 2)) <= 12
 		) {
 			if (connectStore.connector.from && frame.frameId !== connectStore.connector.from.frameId) {
 				connect.update((data) => {
@@ -197,14 +197,14 @@ export const checkConnectorEndFrame = (grabCoords: ICoordinates) => {
 };
 
 export const moveRivet = (coords: ICoordinates) => {
-	const grabCoords = zoomCorrect(coords);
+	const moveAreaCoords = zoomCorrect(coords);
 
 	connect.update((data) => {
-		data.connector.mouseCoords = grabCoords;
+		data.connector.mouseCoords = moveAreaCoords;
 
 		return data;
 	});
-	checkConnectorEndFrame(grabCoords);
+	checkConnectorEndFrame(moveAreaCoords);
 };
 
 export const cursorFollow = (coords: ICoordinates) => {

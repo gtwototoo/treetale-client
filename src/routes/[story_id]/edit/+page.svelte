@@ -1,7 +1,7 @@
 <script lang="ts">
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
 	import Radar from '$lib/components/modules/EditingFooter/Radar.svelte';
-	import FrameSettings from '$lib/components/modules/Panel/FrameSettings/FrameSettings.svelte';
+	import { FrameSettings } from '$lib/components/modules/Panel';
 	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
@@ -9,10 +9,10 @@
 		addFrame,
 		connectorLogic,
 		cursorFollow,
-		grabbingArea,
 		moveRivet,
+		movingArea,
 		movingFrame,
-		startGrab
+		startMoveArea
 	} from '$lib/components/modules/Workspace/methods';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
@@ -60,7 +60,7 @@
 			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
 		}
 
-		if ($activeActionStore === 'movingArea') grabbingArea({ x, y }, startOffset);
+		if ($activeActionStore === 'movingArea') movingArea({ x, y }, startOffset);
 		if ($connect.connector.from !== null) moveRivet({ x, y });
 		if ($activeActionStore === 'adding') cursorFollow({ x, y });
 	};
@@ -93,7 +93,7 @@
 	) => {
 		const { x, y, isMouse, button, doubleClick } = e.detail;
 
-		if (!isMouse || button === 1 || doubleClick) startOffset = startGrab({ x, y });
+		if (!isMouse || button === 1 || doubleClick) startOffset = startMoveArea({ x, y });
 
 		if (isMouse && button === 0 && $movingFrameStore) {
 			const frame = getFrameFromId($framesDataStore, $movingFrameStore);

@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { Button, FormSplit, Input, Textarea } from '$UI';
+	import { Button, FormSplit, Input } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 	import DropBlock from '$lib/components/DropBlock.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { saveImage } from '$lib/requests/image';
 	import { changesHistory } from '$lib/stores/editing';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore, panelFrameStore } from '$lib/stores/newediting';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
@@ -120,13 +122,20 @@
 <DropBlock on:change={setFile} class="h-48 gap-2">
 	<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 </DropBlock>
-<Textarea placeholder="Описание" value={$framesDataStore[frameKey].text} />
+<Contenteditable placeholder="Описание" bind:html={$framesDataStore[frameKey].text} />
 <div class="flex flex-col gap-2">
 	{#each choices as { choiceId } (choiceId)}
 		<Choice {choiceId} {frameKey} />
 	{/each}
-	<Button on:click={addChoice} class="justify-center">Добавить вариант</Button>
+	{#if $currentPanelStore.editMode}
+		<Button
+			variant="main"
+			class="justify-center !text-red-500 !bg-red-100"
+			on:click={removeFrame}
+		>
+			Удалить фрейм
+		</Button>
+	{:else}
+		<Button on:click={addChoice} class="justify-center">Добавить вариант</Button>
+	{/if}
 </div>
-<Button class="mt-4 justify-center !text-red-500 !bg-red-50" on:click={removeFrame}>
-	Удалить фрейм
-</Button>

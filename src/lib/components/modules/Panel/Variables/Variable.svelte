@@ -83,7 +83,7 @@
 		{/if}
 	</FormSplit>
 	{#if editMode}
-		<Button on:click={removeVariable} class="!text-red-500 !bg-red-50">
+		<Button on:click={removeVariable} class="!text-red-500 !bg-red-100">
 			<Icon type={XMark} />
 		</Button>
 	{/if}

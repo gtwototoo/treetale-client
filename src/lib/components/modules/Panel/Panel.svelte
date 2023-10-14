@@ -4,7 +4,7 @@
 	import { currentPanelStore } from '$lib/stores/main';
 	import clsx from 'clsx';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
-	import EditingSettings from './EditingSettings.svelte';
+	import { InformationSettings } from '.';
 
 	const closePanel = () => {
 		currentPanelStore.clear();
@@ -33,5 +33,5 @@
 	>
 		{$currentPanelStore.title || 'Основная информация'}
 	</p>
-	<svelte:component this={$currentPanelStore.component || EditingSettings} />
+	<svelte:component this={$currentPanelStore.component || InformationSettings} />
 </div>

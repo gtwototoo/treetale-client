@@ -3,7 +3,7 @@ import type { ICoordinates, TBoundings } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import { derived, get, writable, type Writable } from 'svelte/store';
 
-type IAction = 'movingFrame' | 'view' | 'binding' | 'movingArea' | 'adding';
+type IAction = 'movingFrame' | 'view' | 'binding' | 'movingArea' | 'adding' | 'dragImage';
 
 interface IWorkspaceFrame extends TBoundings {
 	frameId: number;
@@ -35,7 +35,6 @@ const framesCustomStore = (): Writable<IFrameCreate[]> => {
 
 export const selectedFrameStore = writable<number>();
 export const movingFrameStore = writable<number>();
-export const dragImageModeStore = writable<boolean>(false);
 
 export const workspaceDataStore = writable<IWorkspaceFrame[]>([]);
 export const framesDataStore = framesCustomStore();

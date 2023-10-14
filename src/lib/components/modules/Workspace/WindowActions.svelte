@@ -1,43 +1,54 @@
 <script lang="ts">
 	import { changesHistory, connect } from '$lib/stores/editing';
-	import {
-		activeActionStore,
-		dragImageModeStore,
-		oneDirectionModeStore
-	} from '$lib/stores/workspace';
+	import { activeActionStore, oneDirectionModeStore } from '$lib/stores/workspace';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
 	const handleKeydown = (e: KeyboardEvent) => {
-		switch (e.key.toLowerCase()) {
-			case 'm':
-				e.preventDefault();
+		const { code, shiftKey } = e;
 
-				$activeActionStore = 'adding';
+		const inputFocus =
+			document.hasFocus() &&
+			(document.activeElement instanceof HTMLInputElement ||
+				(document.activeElement as HTMLDivElement).isContentEditable);
 
-				break;
-			case 'shift':
-				e.preventDefault();
+		const switchAddFrameMode = () => {
+			$activeActionStore = $activeActionStore === 'adding' ? 'view' : 'adding';
+		};
 
-				$oneDirectionModeStore = true;
-				$connect.active = false;
-				break;
-			case !e.shiftKey && 'c':
-				e.preventDefault();
+		const enableOneDirectionMode = () => {
+			$oneDirectionModeStore = true;
+		};
 
-				$connect.active = true;
-				break;
-			case 'z':
-				if ($activeActionStore === 'adding') changesHistory[e.shiftKey ? 'redo' : 'undo']();
-				break;
-			case 'escape':
-				e.preventDefault();
+		const enableConnectMode = () => {
+			if (shiftKey) return;
 
-				if ($dragImageModeStore) {
-					$dragImageModeStore = false;
-				}
-		}
+			$activeActionStore = 'binding';
+		};
+
+		const historyManipulate = () => {
+			changesHistory[shiftKey ? 'redo' : 'undo']();
+		};
+
+		const cancelModes = () => {
+			$activeActionStore = 'view';
+		};
+
+		const actions: Record<string, () => void> = {
+			KeyF: switchAddFrameMode,
+			ShiftLeft: enableOneDirectionMode,
+			ShiftRight: enableOneDirectionMode,
+			KeyC: enableConnectMode,
+			KeyZ: historyManipulate,
+			Escape: cancelModes
+		};
+
+		if (!(code in actions) || inputFocus) return;
+
+		e.preventDefault();
+
+		actions[code]();
 	};
 
 	const handleKeyup = (e: KeyboardEvent) => {
@@ -60,11 +71,11 @@
 	};
 
 	const disableDragMode = () => {
-		$dragImageModeStore = false; // попробовать переделать на $activeActionStore === 'drag';
+		$activeActionStore = 'view';
 	};
 
 	const enableDragMode = () => {
-		$dragImageModeStore = true;
+		$activeActionStore = 'dragImage';
 	};
 
 	const handleDragLeave = (e: DragEvent) => {

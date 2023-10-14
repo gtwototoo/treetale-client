@@ -29,7 +29,7 @@ export const mongooseConnect = async () => {
 				autoIndex: dev
 			})
 			.then((mongoose) => {
-				console.log('mongoose started.');
+				console.info('mongoose started.');
 
 				return mongoose;
 			});
