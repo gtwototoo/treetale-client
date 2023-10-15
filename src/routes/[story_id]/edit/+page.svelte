@@ -9,14 +9,13 @@
 		addFrame,
 		connectorLogic,
 		cursorFollow,
-		moveRivet,
 		movingArea,
 		movingFrame,
 		startMoveArea
 	} from '$lib/components/modules/Workspace/methods';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
-	import { changesHistory, connect } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/editing';
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore, stateAreaStore, variablesStore } from '$lib/stores/newediting';
 	import {
@@ -59,10 +58,12 @@
 		if ($activeActionStore === 'movingFrame') {
 			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
 		}
-
-		if ($activeActionStore === 'movingArea') movingArea({ x, y }, startOffset);
-		if ($connect.connector.from !== null) moveRivet({ x, y });
-		if ($activeActionStore === 'adding') cursorFollow({ x, y });
+		if ($activeActionStore === 'movingArea') {
+			movingArea({ x, y }, startOffset);
+		}
+		if ($activeActionStore === 'adding') {
+			cursorFollow({ x, y });
+		}
 	};
 
 	const startMoveFrame = (frame: IFrameCreate, coords: ICoordinates): IStartMove => {
@@ -106,8 +107,7 @@
 				$currentPanelStore = {
 					id: `frame-${frame.frameId}`,
 					title: frame.title || 'Начало',
-					component: FrameSettings,
-					editMode: false
+					component: FrameSettings
 				};
 			}
 		}
@@ -153,8 +153,9 @@
 			changesHistory.add('Перемещение фрейма', Square2Stack);
 		}
 
+		$movingFrameStore = null;
+
 		if ($activeActionStore !== 'adding') {
-			$movingFrameStore = null;
 			$activeActionStore = 'view';
 
 			connectorLogic();

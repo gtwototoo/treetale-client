@@ -100,6 +100,6 @@
 
 <style lang="postcss">
 	.disabled {
-		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
+		@apply pointer-events-none cursor-default opacity-40;
 	}
 </style>

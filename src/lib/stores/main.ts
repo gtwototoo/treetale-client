@@ -7,7 +7,8 @@ interface IPanel {
 	title?: string;
 	id: string;
 	component?: typeof SvelteComponent<unknown>;
-	editMode: boolean;
+	editMode?: boolean;
+	hasEditButton?: boolean;
 }
 
 const currentPanelCustomStore = () => {
@@ -15,7 +16,8 @@ const currentPanelCustomStore = () => {
 		title: '',
 		id: '',
 		component: undefined,
-		editMode: false
+		editMode: false,
+		hasEditButton: true
 	};
 	const { subscribe, update } = writable<IPanel>(clearData);
 
@@ -23,7 +25,7 @@ const currentPanelCustomStore = () => {
 		update((current) => {
 			data.title = data.title === undefined ? data.id : data.title;
 
-			return data.id === current.id ? clearData : data;
+			return data.id === current.id ? clearData : { ...clearData, ...data };
 		});
 	};
 

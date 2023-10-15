@@ -98,6 +98,8 @@
 		checkUpdates();
 	};
 
+	const removeStory = () => deleteStory($informationDataStore.storyId);
+
 	onDestroy(() => {
 		if (timer) {
 			clearTimeout(timer);
@@ -125,7 +127,7 @@
 	/>
 	<Contenteditable
 		disabled={$currentPanelStore.editMode}
-		placeholder="Описание"
+		placeholder="Описание истории"
 		bind:html={$informationDataStore.description}
 		on:input={checkUpdates}
 	/>
@@ -149,11 +151,7 @@
 	/>
 </FormSplit>
 {#if $currentPanelStore.editMode}
-	<Button
-		variant="main"
-		class="justify-center !text-red-500 !bg-red-100"
-		on:click={() => deleteStory($informationDataStore.storyId)}
-	>
+	<Button variant="main" class="justify-center !text-red-500 !bg-red-100" on:click={removeStory}>
 		Удалить историю
 	</Button>
 {:else if $informationDataStore.draft}
@@ -170,7 +168,7 @@
 	>
 		<p>
 			{correctWhitespace(
-				'История находится на модерации. Проверка занимает обычно от часу до суток в зависимости от размера созданной или измененной истории.'
+				'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории.'
 			)}
 		</p>
 		<Button

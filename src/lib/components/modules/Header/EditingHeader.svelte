@@ -12,15 +12,14 @@
 	const variablesSwitch = () =>
 		($currentPanelStore = {
 			id: 'Переменные',
-			component: Variables,
-			editMode: false
+			component: Variables
 		});
 
 	const historySwitch = () =>
 		($currentPanelStore = {
 			id: 'История изменений',
 			component: Changes,
-			editMode: false
+			hasEditButton: false
 		});
 </script>
 

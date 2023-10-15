@@ -1,21 +1,19 @@
 <script lang="ts">
 	import { Button, FormSplit } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import { removeModeStore } from '$lib/stores/workspace';
-	import type { IChoice } from '$lib/types';
+	import { changesHistory } from '$lib/stores/editing';
+	import { framesDataStore } from '$lib/stores/workspace';
 	import { last } from '$lib/utils';
 	import clsx from 'clsx';
-	import { createEventDispatcher } from 'svelte';
-	import { Trash } from 'svelte-heros-v2';
+	import { Plus } from 'svelte-heros-v2';
 
-	export let choices: IChoice[];
+	export let frameKey: number;
 
-	const dispatch = createEventDispatcher();
+	$: ({ choices } = $framesDataStore[frameKey]);
 
 	const addChoice = () => {
 		const choiceId = choices.length ? last(choices).choiceId + 1 : 0;
 
-		dispatch('change', [
+		$framesDataStore[frameKey].choices = [
 			...choices,
 			{
 				text: null,
@@ -24,36 +22,15 @@
 				mathOperations: [],
 				logicOperations: []
 			}
-		]);
-	};
-
-	const handleClick = (choiceId: number) => {
-		if ($removeModeStore) removeChoice(choiceId);
-	};
-
-	const removeChoice = (choiceId: number) => {
-		dispatch(
-			'change',
-			choices.filter((choice) => choice.choiceId !== choiceId)
-		);
+		];
+		changesHistory.add('Добавление выбора', Plus);
 	};
 </script>
 
 <FormSplit vertical>
-	{#each choices as choice (choice.choiceId)}
-		<Button
-			on:click={() => handleClick(choice.choiceId)}
-			class={clsx('gap-4', {
-				'!text-gray-400': !choice.text && !$removeModeStore,
-				'!text-red-600': $removeModeStore
-			})}
-		>
-			<p class="w-full truncate text-left">
-				{choice.text || ($removeModeStore ? 'Удалить выбор' : 'Вариант выбора')}
-			</p>
-			{#if $removeModeStore}
-				<Icon type={Trash} class="shrink-0" />
-			{/if}
+	{#each choices as { text, choiceId } (choiceId)}
+		<Button class={clsx('gap-4 truncate', !text && '!text-gray-400')}>
+			{text || 'Вариант выбора'}
 		</Button>
 	{/each}
 	<Button on:click={addChoice}>Добавить вариант</Button>

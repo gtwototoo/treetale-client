@@ -34,8 +34,8 @@ export interface IChoice {
 	choiceId: number;
 	frameId: number;
 	text: string;
-	logicOperations?: ILogicOperation[];
-	mathOperations?: IMathOperation[];
+	logicOperations: ILogicOperation[];
+	mathOperations: IMathOperation[];
 }
 
 export interface IFrame {

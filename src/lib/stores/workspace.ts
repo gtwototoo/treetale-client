@@ -42,7 +42,6 @@ export const framesDataStore = framesCustomStore();
 export const addFrameOffsetStore = writable<ICoordinates>();
 
 export const activeActionStore = writable<IAction>('view');
-export const removeModeStore = writable<boolean>(false);
 export const oneDirectionModeStore = writable<boolean>(false);
 export const zoomStore = writable<number>(100);
 export const offsetStore = writable<ICoordinates>({ x: 0, y: 0 });

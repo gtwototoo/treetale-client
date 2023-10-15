@@ -6,17 +6,19 @@
 	import { saveImage } from '$lib/requests/image';
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
-	import { informationDataStore, panelFrameStore } from '$lib/stores/newediting';
+	import { informationDataStore } from '$lib/stores/newediting';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
 	import { last } from '$lib/utils';
-	import { Photo, RectangleStack, Trash } from 'svelte-heros-v2';
+	import { onDestroy } from 'svelte';
+	import { Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
 	import Choice from './Choice.svelte';
 
 	const action = 'storyFrameImageId';
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
 	$: ({ x, y, choices, imageId } = $framesDataStore[frameKey]);
+	$: editMode = $currentPanelStore.editMode;
 
 	let imageLoading = false;
 	let avatarId = imageId;
@@ -38,7 +40,7 @@
 			const response = await saveImage(
 				file,
 				action,
-				`&storyId=${$informationDataStore.storyId}&frameId=${$panelFrameStore.frameId}`
+				`&storyId=${$informationDataStore.storyId}&frameId=${$selectedFrameStore}`
 			);
 
 			avatarId = response.imageId;
@@ -57,9 +59,8 @@
 	};
 
 	const outputCorrect = (frame: IFrame) => {
-		const outputOnFirstOrRemovedFrame = $panelFrameStore.choices.find(
-			({ frameId }) =>
-				frameId === $framesDataStore[0].frameId || frameId === $panelFrameStore.frameId
+		const outputOnFirstOrRemovedFrame = $framesDataStore[frameKey].choices.find(
+			({ frameId }) => frameId === $framesDataStore[0].frameId || frameId === frame.frameId
 		);
 
 		if (outputOnFirstOrRemovedFrame) {
@@ -68,13 +69,15 @@
 	};
 
 	const removeFrame = () => {
-		$framesDataStore = $framesDataStore.filter(
-			({ frameId }) => frameId !== $panelFrameStore.frameId
-		);
+		currentPanelStore.clear();
 
-		for (const frame of $framesDataStore) {
-			outputCorrect(frame);
-		}
+		console.log($selectedFrameStore);
+
+		$framesDataStore = $framesDataStore.filter(({ frameId }) => frameId !== $selectedFrameStore);
+		// console.log($framesDataStore);
+		// for (const frame of $framesDataStore) {
+		// 	outputCorrect(frame);
+		// }
 
 		changesHistory.add('Удаление фрейма', Trash);
 	};
@@ -100,7 +103,13 @@
 				logicOperations: []
 			}
 		];
+
+		changesHistory.add('Добавление выбора', Plus);
 	};
+
+	onDestroy(() => {
+		$selectedFrameStore = null;
+	});
 </script>
 
 <FormSplit class="w-full">
@@ -122,12 +131,16 @@
 <DropBlock on:change={setFile} class="h-48 gap-2">
 	<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 </DropBlock>
-<Contenteditable placeholder="Описание" bind:html={$framesDataStore[frameKey].text} />
+<Contenteditable
+	disabled={editMode}
+	placeholder="Описание фрейма"
+	bind:html={$framesDataStore[frameKey].text}
+/>
 <div class="flex flex-col gap-2">
 	{#each choices as { choiceId } (choiceId)}
 		<Choice {choiceId} {frameKey} />
 	{/each}
-	{#if $currentPanelStore.editMode}
+	{#if editMode}
 		<Button
 			variant="main"
 			class="justify-center !text-red-500 !bg-red-100"

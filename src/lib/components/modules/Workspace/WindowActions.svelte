@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { changesHistory, connect } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/editing';
 	import { activeActionStore, oneDirectionModeStore } from '$lib/stores/workspace';
 	import { createEventDispatcher } from 'svelte';
 
@@ -21,10 +21,10 @@
 			$oneDirectionModeStore = true;
 		};
 
-		const enableConnectMode = () => {
+		const switchConnectMode = () => {
 			if (shiftKey) return;
 
-			$activeActionStore = 'binding';
+			$activeActionStore = $activeActionStore === 'binding' ? 'view' : 'binding';
 		};
 
 		const historyManipulate = () => {
@@ -39,7 +39,7 @@
 			KeyF: switchAddFrameMode,
 			ShiftLeft: enableOneDirectionMode,
 			ShiftRight: enableOneDirectionMode,
-			KeyC: enableConnectMode,
+			KeyC: switchConnectMode,
 			KeyZ: historyManipulate,
 			Escape: cancelModes
 		};
@@ -52,22 +52,33 @@
 	};
 
 	const handleKeyup = (e: KeyboardEvent) => {
-		switch (e.key.toLowerCase()) {
-			case 'shift':
-				$oneDirectionModeStore = false;
-				break;
-			case 'c':
-				$connect = {
-					active: false,
-					connector: {
-						from: null,
-						to: null,
-						prevOutput: null,
-						mouseCoords: null
-					}
-				};
-				break;
-		}
+		const { code } = e;
+
+		const disableOneDirectionMode = () => {
+			$oneDirectionModeStore = false;
+		};
+
+		const actions: Record<string, () => void> = {
+			ShiftLeft: disableOneDirectionMode,
+			ShiftRight: disableOneDirectionMode
+		};
+
+		if (!(code in actions)) return;
+
+		e.preventDefault();
+
+		actions[code]();
+
+		// $connect = {
+		// 	active: false,
+		// 	connector: {
+		// 		from: null,
+		// 		to: null,
+		// 		prevOutput: null,
+		// 		mouseCoords: null
+		// 	}
+		// };
+		// break;
 	};
 
 	const disableDragMode = () => {

@@ -76,6 +76,6 @@
 		@apply relative flex cursor-text items-center bg-white text-left transition-colors hover:bg-main-30;
 	}
 	.disabled {
-		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
+		@apply pointer-events-none cursor-default opacity-40;
 	}
 </style>

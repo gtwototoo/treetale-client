@@ -60,7 +60,9 @@ export const deleteStory = async (id: number) => {
 	try {
 		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/story/${id}`);
 
-		return goto(`/profile`);
+		return goto(`/profile`, {
+			invalidateAll: true
+		});
 	} catch (e) {
 		console.error(e);
 	}
