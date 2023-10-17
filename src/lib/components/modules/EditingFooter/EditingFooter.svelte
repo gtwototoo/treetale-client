@@ -2,6 +2,7 @@
 	import { Button } from '$UI';
 	import {
 		activeActionStore,
+		activeModeStore,
 		addFrameOffsetStore,
 		offsetStore,
 		zoomCorrect,
@@ -11,7 +12,7 @@
 	import StateMode from './StateMode.svelte';
 
 	const cancelAddFrameMode = () => {
-		$activeActionStore = 'view';
+		$activeModeStore = 'view';
 	};
 
 	const enableAddFrameMode = (e: CustomEvent<MouseEvent>) => {
@@ -19,17 +20,12 @@
 		const cursorCoords = zoomCorrect({ x, y });
 
 		$addFrameOffsetStore = cursorCoords;
-		$activeActionStore = 'adding';
+		$activeModeStore = 'adding';
 	};
 </script>
 
 <div class="area">
-	<div
-		class={clsx(
-			'flex items-center',
-			$activeActionStore !== 'view' ? 'blind' : 'pointer-events-auto'
-		)}
-	>
+	<div class={clsx('flex items-center', $activeActionStore ? 'blind' : 'pointer-events-auto')}>
 		<slot />
 		<div class="info">
 			<p>
@@ -40,7 +36,7 @@
 			</p>
 		</div>
 	</div>
-	{#if $activeActionStore === 'adding'}
+	{#if $activeModeStore === 'adding'}
 		<Button
 			on:click={cancelAddFrameMode}
 			variant="ghost"

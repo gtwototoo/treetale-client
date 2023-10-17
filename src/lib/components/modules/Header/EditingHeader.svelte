@@ -23,7 +23,7 @@
 		});
 </script>
 
-<Header class={clsx($activeActionStore !== 'view' ? 'blind' : 'childs:pointer-events-auto')}>
+<Header class={clsx($activeActionStore ? 'blind' : 'childs:pointer-events-auto')}>
 	<FormSplit class="!divide-main">
 		<Button
 			class="header-button bg-contrast text-text"

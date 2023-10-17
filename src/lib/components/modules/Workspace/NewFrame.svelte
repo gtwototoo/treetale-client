@@ -16,8 +16,8 @@
 
 <div class="absolute flex justify-center items-center">
 	<div
-		style:width={width + 'px'}
-		style:height={height + 'px'}
+		style:width="{width}px"
+		style:height="{height}px"
 		style={transform($addFrameOffsetStore)}
 		class={clsx(
 			'bg-emerald-300/30 text-emerald-500 flex justify-center absolute items-center rounded-lg z-40 transition-[width,height]',

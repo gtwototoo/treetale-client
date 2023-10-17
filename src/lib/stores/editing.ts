@@ -1,4 +1,4 @@
-import type { IConnect, IFrameCreate } from '$lib/types/editing';
+import type { IFrameCreate } from '$lib/types/editing';
 import { serialize } from '$lib/utils';
 import type { SvelteComponent } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
@@ -88,13 +88,4 @@ const ChangeHistoryStore = () => {
 	};
 };
 
-export const connect = writable<IConnect>({
-	active: false,
-	connector: {
-		from: null,
-		prevOutput: null,
-		to: null,
-		mouseCoords: null
-	}
-});
 export const changesHistory: IOverrideChanges = ChangeHistoryStore();

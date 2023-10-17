@@ -56,11 +56,11 @@ export const createConnections = (frames: IFrameCreate[]) => {
 			};
 			const toPoint = {
 				x: toFrame.x,
-				y: toFrame.y + toFrame.height / 2
+				y: toFrame.y + 20 // расстояние от верха
 			};
 
 			paths.push({
-				connectId: `${fromFrame.frameId}-${toFrame.frameId}`,
+				connectId: `${fromFrame.frameId}:${choice.choiceId}-${toFrame.frameId}`,
 				line: createLine(fromPoint, toPoint)
 			});
 		}

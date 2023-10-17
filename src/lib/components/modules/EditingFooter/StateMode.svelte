@@ -2,10 +2,38 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { ICON_TYPE } from '$lib/constants';
 	import { stateAreaStore } from '$lib/stores/newediting';
-	import { activeActionStore } from '$lib/stores/workspace';
+	import {
+		activeActionStore,
+		activeModeStore,
+		type IAction,
+		type IMode
+	} from '$lib/stores/workspace';
 	import { Tag } from '$UI';
+	import Photo from '$UI/Photo.svelte';
 	import clsx from 'clsx';
-	import { Cloud } from 'svelte-heros-v2';
+	import type { SvelteComponent } from 'svelte';
+	import {
+		ArrowRightOnRectangle,
+		ArrowsPointingOut,
+		Cloud,
+		Eye,
+		Map,
+		Share,
+		Square3Stack3d
+	} from 'svelte-heros-v2';
+
+	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
+		binding: Share,
+		view: Eye,
+		adding: Square3Stack3d
+	};
+
+	const iconsActions: Record<IAction, typeof SvelteComponent<unknown>> = {
+		movingArea: Map,
+		movingFrame: ArrowsPointingOut,
+		dragImage: Photo,
+		connectTo: ArrowRightOnRectangle
+	};
 </script>
 
 <Tag
@@ -25,5 +53,8 @@
 		variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
 		class={clsx('h-4 w-4')}
 	/>
-	{$activeActionStore || 'Просмотр'}
+	<Icon type={iconsModes[$activeModeStore]} class="w-4 h-4" />
+	{#if $activeActionStore}
+		<Icon type={iconsActions[$activeActionStore]} class="w-4 h-4" />
+	{/if}
 </Tag>

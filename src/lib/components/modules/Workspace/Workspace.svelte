@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		activeActionStore,
+		activeModeStore,
 		framesDataStore,
 		offsetStore,
 		zoomCorrect,
@@ -113,7 +114,7 @@
 	on:click={handleClick}
 >
 	<MovingArea>
-		{#if $activeActionStore === 'adding'}
+		{#if $activeModeStore === 'adding'}
 			<NewFrame />
 		{/if}
 		<div>

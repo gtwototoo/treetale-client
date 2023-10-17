@@ -1,8 +1,15 @@
 <script lang="ts">
-	import { framesDataStore, movingFrameStore } from '$lib/stores/workspace';
+	import { changesHistory } from '$lib/stores/editing';
+	import {
+		activeModeStore,
+		connectionStore,
+		framesDataStore,
+		movingFrameStore
+	} from '$lib/stores/workspace';
 	import { transform } from '$lib/utils';
 	import { getChoicePosition } from '$lib/utils/editing';
 	import clsx from 'clsx';
+	import { Share } from 'svelte-heros-v2';
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
@@ -18,6 +25,27 @@
 	const setVisible = () => {
 		$framesDataStore[frameKey].hidden = !$framesDataStore[frameKey].hidden;
 	};
+
+	const createConnection = () => {
+		if (
+			$activeModeStore !== 'binding' ||
+			!$connectionStore ||
+			$connectionStore.frameId === frameId
+		)
+			return;
+
+		const { frameId: fromFrameId, choiceId } = $connectionStore;
+
+		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === fromFrameId);
+		const fromChoiceKey = $framesDataStore[fromFrameKey].choices.findIndex(
+			(choice) => choice.choiceId === choiceId
+		);
+
+		$framesDataStore[fromFrameKey].choices[fromChoiceKey].frameId = frameId;
+		$connectionStore = null;
+
+		changesHistory.add('Добавление связи', Share);
+	};
 </script>
 
 {#if frameKey !== -1}
@@ -25,10 +53,16 @@
 	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 		<button
 			class={clsx(
-				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-shadow hover:shadow-lg',
-				{ 'shadow-lg': $movingFrameStore === frameId }
+				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-[box-shadow,background-color] hover:shadow-lg childs:bg-transparent',
+				$movingFrameStore === frameId && 'shadow-lg',
+				$activeModeStore === 'binding' && '!bg-main-60',
+				$activeModeStore === 'binding' &&
+					$connectionStore &&
+					$connectionStore.frameId !== frameId &&
+					'hover:!bg-emerald-100'
 			)}
 			on:mousedown={setMovingFrame}
+			on:click={createConnection}
 			bind:clientHeight={$framesDataStore[frameKey].height}
 			bind:clientWidth={$framesDataStore[frameKey].width}
 		>
@@ -47,18 +81,32 @@
 				</div>
 				<Choices {frameKey} />
 			{/if}
+			{#if $activeModeStore === 'binding'}
+				<div
+					class={clsx(
+						'w-6 h-6 rounded-l-full absolute -left-3 !bg-inherit',
+						hidden ? 'top-1/2' : 'top-2'
+					)}
+				/>
+			{/if}
 		</button>
-		<div class="absolute inset-0">
-			{#each choices as _, key}
-				<div class="point right-0" style:top="{getChoicePosition(key)}px" />
-			{/each}
-			<div class="point left-0 top-1/2" />
-		</div>
+		{#if $activeModeStore !== 'binding'}
+			<div class="absolute inset-0 pointer-events-none">
+				{#if hidden}
+					<div class="point right-0 top-1/2" />
+				{:else}
+					{#each choices as _, key}
+						<div class="point right-0" style:top="{getChoicePosition(key)}px" />
+					{/each}
+				{/if}
+				<div class={clsx('point left-0', hidden ? 'top-1/2' : 'top-5')} />
+			</div>
+		{/if}
 	</div>
 {/if}
 
 <style lang="postcss">
 	.point {
-		@apply absolute flex items-center justify-center bg-white after:absolute after:h-3 after:w-3 after:rounded-full after:bg-inherit after:transition-[width,height,background];
+		@apply absolute flex items-center justify-center bg-white after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit after:transition-[width,height,background];
 	}
 </style>

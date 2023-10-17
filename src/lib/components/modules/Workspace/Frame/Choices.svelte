@@ -1,14 +1,20 @@
 <script lang="ts">
 	import { Button, FormSplit } from '$UI';
 	import { changesHistory } from '$lib/stores/editing';
-	import { framesDataStore } from '$lib/stores/workspace';
-	import { last } from '$lib/utils';
-	import clsx from 'clsx';
+	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
+	import { clm, last } from '$lib/utils';
 	import { Plus } from 'svelte-heros-v2';
 
 	export let frameKey: number;
 
-	$: ({ choices } = $framesDataStore[frameKey]);
+	$: ({ choices, frameId } = $framesDataStore[frameKey]);
+
+	const handleClick = (choiceId: number) => {
+		$connectionStore = {
+			frameId,
+			choiceId
+		};
+	};
 
 	const addChoice = () => {
 		const choiceId = choices.length ? last(choices).choiceId + 1 : 0;
@@ -28,9 +34,25 @@
 </script>
 
 <FormSplit vertical>
-	{#each choices as { text, choiceId } (choiceId)}
-		<Button class={clsx('gap-4 truncate', !text && '!text-gray-400')}>
+	{#each choices as { text, choiceId, frameId: toFrameId } (choiceId)}
+		<Button
+			class={clm(
+				'gap-4 truncate !overflow-visible',
+				!text && '!text-gray-400',
+				$activeModeStore === 'binding' && 'hover:!bg-emerald-100',
+				$activeModeStore === 'binding' && toFrameId && '!bg-orange-100',
+				$activeModeStore === 'binding' &&
+					$connectionStore &&
+					$connectionStore.frameId === frameId &&
+					$connectionStore.choiceId === choiceId &&
+					'!bg-emerald-100'
+			)}
+			on:click={() => handleClick(choiceId)}
+		>
 			{text || 'Вариант выбора'}
+			{#if $activeModeStore === 'binding'}
+				<div class="w-6 h-6 rounded-r-full absolute -right-5 !bg-inherit" />
+			{/if}
 		</Button>
 	{/each}
 	<Button on:click={addChoice}>Добавить вариант</Button>

@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { changesHistory } from '$lib/stores/editing';
-	import { activeActionStore, oneDirectionModeStore } from '$lib/stores/workspace';
+	import {
+		activeActionStore,
+		activeModeStore,
+		oneDirectionModeStore
+	} from '$lib/stores/workspace';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -14,7 +18,7 @@
 				(document.activeElement as HTMLDivElement).isContentEditable);
 
 		const switchAddFrameMode = () => {
-			$activeActionStore = $activeActionStore === 'adding' ? 'view' : 'adding';
+			$activeModeStore = $activeModeStore === 'adding' ? 'view' : 'adding';
 		};
 
 		const enableOneDirectionMode = () => {
@@ -24,7 +28,7 @@
 		const switchConnectMode = () => {
 			if (shiftKey) return;
 
-			$activeActionStore = $activeActionStore === 'binding' ? 'view' : 'binding';
+			$activeModeStore = $activeModeStore === 'binding' ? 'view' : 'binding';
 		};
 
 		const historyManipulate = () => {
@@ -32,7 +36,7 @@
 		};
 
 		const cancelModes = () => {
-			$activeActionStore = 'view';
+			$activeModeStore = 'view';
 		};
 
 		const actions: Record<string, () => void> = {
@@ -82,7 +86,7 @@
 	};
 
 	const disableDragMode = () => {
-		$activeActionStore = 'view';
+		$activeActionStore = null;
 	};
 
 	const enableDragMode = () => {

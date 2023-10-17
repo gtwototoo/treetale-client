@@ -7,7 +7,6 @@
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
 		addFrame,
-		connectorLogic,
 		cursorFollow,
 		movingArea,
 		movingFrame,
@@ -20,6 +19,7 @@
 	import { informationDataStore, stateAreaStore, variablesStore } from '$lib/stores/newediting';
 	import {
 		activeActionStore,
+		activeModeStore,
 		addFrameOffsetStore,
 		framesDataStore,
 		movingFrameStore,
@@ -31,9 +31,9 @@
 
 	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 	import type { ICoordinates } from '$lib/types/index';
-	import { getFrameFromId, rootStyle } from '$lib/utils';
+	import { exclude, getFrameFromId, rootStyle } from '$lib/utils';
 	import { onMount } from 'svelte';
-	import { Play, Square2Stack } from 'svelte-heros-v2';
+	import { Play } from 'svelte-heros-v2';
 
 	export let data;
 
@@ -51,6 +51,8 @@
 	$variablesStore = data.info.vars;
 	$framesDataStore = data.frames;
 	$informationDataStore = data.info;
+	$zoomStore = data.info.zoom;
+	$offsetStore = data.info.offset;
 
 	const handleMouseMove = (e: CustomEvent<ICoordinates>) => {
 		const { x, y } = e.detail;
@@ -61,7 +63,7 @@
 		if ($activeActionStore === 'movingArea') {
 			movingArea({ x, y }, startOffset);
 		}
-		if ($activeActionStore === 'adding') {
+		if ($activeModeStore === 'adding') {
 			cursorFollow({ x, y });
 		}
 	};
@@ -116,7 +118,7 @@
 	const handleClick = (e: CustomEvent) => {
 		const { x, y } = e.detail;
 
-		if ($activeActionStore === 'adding' && $addFrameOffsetStore) {
+		if ($activeModeStore === 'adding' && $addFrameOffsetStore) {
 			const newFrameCoords = zoomCorrect({ x, y });
 
 			addFrame({
@@ -132,9 +134,13 @@
 
 		timer = window.setTimeout(async () => {
 			try {
+				const correctFrames = $framesDataStore.map((frame) =>
+					exclude(frame, ['width', 'height'])
+				);
+
 				await updateArea(
 					$informationDataStore.storyId,
-					$framesDataStore,
+					correctFrames,
 					$offsetStore,
 					$zoomStore
 				);
@@ -149,16 +155,9 @@
 	};
 
 	const handleMouseUp = () => {
-		if ($activeActionStore === 'movingFrame') {
-			changesHistory.add('Перемещение фрейма', Square2Stack);
-		}
-
-		$movingFrameStore = null;
-
-		if ($activeActionStore !== 'adding') {
-			$activeActionStore = 'view';
-
-			connectorLogic();
+		if ($activeActionStore) {
+			$activeActionStore = null;
+			$movingFrameStore = null;
 		}
 
 		saveArea();
@@ -171,8 +170,8 @@
 				$framesDataStore[0].x === 0 &&
 				$framesDataStore[0].y === 0
 			) {
-				$framesDataStore[0].x = width / 2 - $framesDataStore[0].width / 2;
-				$framesDataStore[0].y = height / 2 - $framesDataStore[0].height / 2;
+				$framesDataStore[0].x = width / 2 - DEFAULT_FRAME_SIZE.width / 2;
+				$framesDataStore[0].y = height / 2 - DEFAULT_FRAME_SIZE.height / 2;
 			}
 			changesHistory.add('Начальное состояние', Play);
 		}, 0);

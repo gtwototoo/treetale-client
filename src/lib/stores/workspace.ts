@@ -1,13 +1,13 @@
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 import type { ICoordinates, TBoundings } from '$lib/types';
-import type { IFrameCreate } from '$lib/types/editing';
+import type { IConnect, IFrameCreate } from '$lib/types/editing';
 import { derived, get, writable, type Writable } from 'svelte/store';
 
-type IAction = 'movingFrame' | 'view' | 'binding' | 'movingArea' | 'adding' | 'dragImage';
+export type IAction = 'movingFrame' | 'movingArea' | 'dragImage' | 'connectTo';
+export type IMode = 'view' | 'binding' | 'adding';
 
 interface IWorkspaceFrame extends TBoundings {
 	frameId: number;
-	rotated: boolean;
 	hidden: boolean;
 	title: string;
 }
@@ -41,7 +41,9 @@ export const framesDataStore = framesCustomStore();
 
 export const addFrameOffsetStore = writable<ICoordinates>();
 
-export const activeActionStore = writable<IAction>('view');
+export const activeModeStore = writable<IMode>('view');
+export const activeActionStore = writable<IAction>();
+
 export const oneDirectionModeStore = writable<boolean>(false);
 export const zoomStore = writable<number>(100);
 export const offsetStore = writable<ICoordinates>({ x: 0, y: 0 });
@@ -56,3 +58,5 @@ export const zoomCorrect = (coordinates: ICoordinates) => {
 		})
 	);
 };
+
+export const connectionStore = writable<IConnect>();

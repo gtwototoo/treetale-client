@@ -10,7 +10,7 @@
 	onMount(() => dispatch('mounted'));
 </script>
 
-<svg class="absolute h-auto w-auto select-none bg-transparent stroke-text stroke-2" {...svgData}>
+<svg class="absolute h-auto w-auto select-none bg-transparent stroke-main-60 stroke-2" {...svgData}>
 	{#each paths as path (path.connectId)}
 		<path d={path.line} />
 	{/each}

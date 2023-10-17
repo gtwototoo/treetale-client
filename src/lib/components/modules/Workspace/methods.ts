@@ -1,4 +1,4 @@
-import { changesHistory, connect } from '$lib/stores/editing';
+import { changesHistory } from '$lib/stores/editing';
 
 import {
 	activeActionStore,
@@ -11,8 +11,8 @@ import {
 } from '$lib/stores/workspace';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
-import { getChoiceFromId, getFrameFromId, last } from '$lib/utils';
-import { Plus, Share, XMark } from 'svelte-heros-v2';
+import { getFrameFromId, last } from '$lib/utils';
+import { Plus } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
 
 export const addFrame = ({ x, y }: ICoordinates) => {
@@ -33,7 +33,6 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 			y,
 			text: null,
 			hidden: false,
-			rotated: false,
 			choices: [],
 			width: 0,
 			height: 0
@@ -45,38 +44,6 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 	changesHistory.add('Добавление фрейма', Plus);
 
 	return frameId;
-};
-
-export const connectorLogic = () => {
-	const connectStore = get(connect);
-	const framesData = get(framesDataStore);
-
-	if (!connectStore.active || connectStore.connector.from === null) return;
-
-	const { to, from, prevOutput } = connectStore.connector;
-	const frame = getFrameFromId(framesData, from.frameId);
-	const choice = getChoiceFromId(frame, from.choiceId);
-
-	if (!frame || !choice) return;
-
-	if (to === null && prevOutput !== null) {
-		changesHistory.add('Удаление связи', XMark);
-	}
-
-	if (to !== null) {
-		choice.frameId = to;
-		changesHistory.add('Добавление связи', Share);
-	}
-
-	connect.update((data) =>
-		Object.assign(data, {
-			connector: {
-				from: null,
-				to: null,
-				mouseCoords: null
-			}
-		})
-	);
 };
 
 export const startMoveArea = ({ x, y }: ICoordinates): ICoordinates => {
@@ -161,50 +128,6 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 	}
 
 	return startMoveData.moveXDirection;
-};
-
-export const checkConnectorEndFrame = (moveAreaCoords: ICoordinates) => {
-	const framesData = get(framesDataStore);
-	const connectStore = get(connect);
-
-	for (const frame of framesData) {
-		if (
-			Math.abs(frame.x - moveAreaCoords.x) <= 12 &&
-			Math.abs(moveAreaCoords.y - (frame.y + frame.height / 2)) <= 12
-		) {
-			if (connectStore.connector.from && frame.frameId !== connectStore.connector.from.frameId) {
-				connect.update((data) => {
-					data.connector = Object.assign(data.connector, {
-						to: frame.frameId,
-						mouseCoords: {
-							x: frame.x,
-							y: frame.y + frame.height / 2
-						}
-					});
-
-					return data;
-				});
-			}
-
-			break;
-		}
-		connect.update((data) => {
-			data.connector.to = null;
-
-			return data;
-		});
-	}
-};
-
-export const moveRivet = (coords: ICoordinates) => {
-	const moveAreaCoords = zoomCorrect(coords);
-
-	connect.update((data) => {
-		data.connector.mouseCoords = moveAreaCoords;
-
-		return data;
-	});
-	checkConnectorEndFrame(moveAreaCoords);
 };
 
 export const cursorFollow = (coords: ICoordinates) => {
