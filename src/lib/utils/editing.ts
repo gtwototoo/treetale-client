@@ -47,7 +47,7 @@ export const createConnections = (frames: IFrameCreate[]) => {
 			if (!toFrame) continue;
 
 			const fromPoint = {
-				x: fromFrame.x + fromFrame.width,
+				x: fromFrame.x + DEFAULT_FRAME_SIZE.width,
 				y:
 					fromFrame.y +
 					(fromFrame.hidden
@@ -81,10 +81,10 @@ const createLine = (from: ICoordinates, to: ICoordinates): string => {
 
 const getAreaBoundings = (frames: IFrameCreate[]) => {
 	const { minX, minY, maxX, maxY } = frames.reduce(
-		(acc, { x, y, width, height }) => ({
+		(acc, { x, y, height }) => ({
 			minX: Math.min(acc.minX, x),
 			minY: Math.min(acc.minY, y),
-			maxX: Math.max(acc.maxX, x + width),
+			maxX: Math.max(acc.maxX, x + DEFAULT_FRAME_SIZE.width),
 			maxY: Math.max(acc.maxY, y + height)
 		}),
 		{

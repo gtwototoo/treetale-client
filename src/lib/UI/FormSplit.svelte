@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
+	import { clm } from '$lib/utils';
 
 	let className = '';
 	export { className as class };
@@ -8,7 +8,7 @@
 </script>
 
 <div
-	class={clsx(
+	class={clm(
 		className,
 		'flex divide-gray-100 form-split',
 		vertical ? 'flex-col divide-y vertical' : 'divide-x horizontal'

@@ -41,7 +41,7 @@
 
 <FormSplit vertical={!editMode}>
 	<Contenteditable
-		class="grow"
+		class="grow shrink"
 		placeholder="Вариант выбора"
 		disabled={editMode}
 		bind:html={$framesDataStore[frameKey].choices[choiceKey].text}

@@ -1,6 +1,6 @@
 import type { ICoordinates, IFrame, TBoundings } from '.';
 
-export interface IFrameCreate extends IFrame, TBoundings {
+export interface IFrameCreate extends IFrame, Omit<TBoundings, 'width'> {
 	hidden: boolean;
 	title: string;
 }

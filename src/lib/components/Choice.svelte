@@ -21,7 +21,7 @@
 	on:click={handleClick}
 	variant={active ? 'main' : 'secondary'}
 	class={clsx(
-		'whitespace-normal text-left adaptive-font adaptive-padding',
+		'!whitespace-normal text-left adaptive-font adaptive-padding',
 		active && 'bg-main text-text'
 	)}
 >

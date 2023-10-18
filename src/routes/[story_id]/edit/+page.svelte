@@ -49,7 +49,7 @@
 	};
 
 	$variablesStore = data.info.vars;
-	$framesDataStore = data.frames;
+	framesDataStore.init(data.frames);
 	$informationDataStore = data.info;
 	$zoomStore = data.info.zoom;
 	$offsetStore = data.info.offset;
@@ -134,9 +134,7 @@
 
 		timer = window.setTimeout(async () => {
 			try {
-				const correctFrames = $framesDataStore.map((frame) =>
-					exclude(frame, ['width', 'height'])
-				);
+				const correctFrames = $framesDataStore.map((frame) => exclude(frame, ['height']));
 
 				await updateArea(
 					$informationDataStore.storyId,

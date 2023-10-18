@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, ColorPicker } from '$UI';
 	import Contenteditable from '$UI/Contenteditable.svelte';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
@@ -33,6 +33,11 @@
 		$bodyColorStore = detail.color;
 	};
 
+	const cancelEdit = () => {
+		$bodyColorStore = user.color;
+		editMode = false;
+	};
+
 	const handleSignOut = async () => {
 		try {
 			await signOutUser();
@@ -51,6 +56,9 @@
 
 		try {
 			await updateProfile(user.name, user.description, $bodyColorStore);
+			invalidateAll();
+		} catch (e) {
+			console.error(e);
 		} finally {
 			loading = false;
 			editMode = false;
@@ -128,12 +136,7 @@
 				>
 					Сохранить
 				</Button>
-				<Button
-					class="!text-red-500 bg-main"
-					size="lg"
-					variant="ghost"
-					on:click={() => (editMode = false)}
-				>
+				<Button class="!text-red-500 bg-main" size="lg" variant="ghost" on:click={cancelEdit}>
 					Отмена
 				</Button>
 			{:else}

@@ -6,7 +6,6 @@
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { IUser } from '$lib/types/index.js';
 	import { findByPattern, rootStyle } from '$lib/utils';
 	import clsx from 'clsx';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
@@ -14,7 +13,6 @@
 	export let data;
 
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
-	const user: IUser = me ? $page.data.session : data.user;
 
 	const getPageType = (path: string): 'viewed' | 'liked' | 'main' => {
 		return findByPattern(path, {
@@ -24,6 +22,7 @@
 		}) as 'viewed' | 'liked' | 'main';
 	};
 
+	$: user = me ? $page.data.session : data.user;
 	$: pageType = getPageType($page.url.pathname);
 	$: ({ statistic } = data);
 	$: $bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;

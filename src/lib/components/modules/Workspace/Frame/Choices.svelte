@@ -3,6 +3,7 @@
 	import { changesHistory } from '$lib/stores/editing';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { clm, last } from '$lib/utils';
+	import clsx from 'clsx';
 	import { Plus } from 'svelte-heros-v2';
 
 	export let frameKey: number;
@@ -33,11 +34,14 @@
 	};
 </script>
 
-<FormSplit vertical>
+<FormSplit
+	vertical
+	class={clsx($activeModeStore === 'binding' ? 'divide-main-60' : 'divide-white')}
+>
 	{#each choices as { text, choiceId, frameId: toFrameId } (choiceId)}
 		<Button
 			class={clm(
-				'gap-4 truncate !overflow-visible',
+				'gap-4',
 				!text && '!text-gray-400',
 				$activeModeStore === 'binding' && 'hover:!bg-emerald-100',
 				$activeModeStore === 'binding' && toFrameId && '!bg-orange-100',
@@ -49,7 +53,7 @@
 			)}
 			on:click={() => handleClick(choiceId)}
 		>
-			{text || 'Вариант выбора'}
+			<p class="truncate">{text || 'Вариант выбора'}</p>
 			{#if $activeModeStore === 'binding'}
 				<div class="w-6 h-6 rounded-r-full absolute -right-5 !bg-inherit" />
 			{/if}

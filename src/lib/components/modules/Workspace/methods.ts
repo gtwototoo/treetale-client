@@ -20,21 +20,20 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 
 	if (!framesData) return;
 
-	const frameId = last(framesData)?.frameId;
+	const lastFrameId = last(framesData)?.frameId;
 
-	if (!frameId) return;
+	if (!lastFrameId) return;
 
 	framesDataStore.update((data: IFrameCreate[]) => {
 		data.push({
 			imageId: null,
-			title: `Блок ${frameId}`,
-			frameId: frameId + 1,
+			title: `Блок ${lastFrameId}`,
+			frameId: lastFrameId + 1,
 			x,
 			y,
 			text: null,
 			hidden: false,
 			choices: [],
-			width: 0,
 			height: 0
 		} satisfies IFrameCreate);
 
@@ -43,7 +42,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 
 	changesHistory.add('Добавление фрейма', Plus);
 
-	return frameId;
+	return lastFrameId;
 };
 
 export const startMoveArea = ({ x, y }: ICoordinates): ICoordinates => {

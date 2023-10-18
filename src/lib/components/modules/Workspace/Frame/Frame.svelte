@@ -7,7 +7,7 @@
 		movingFrameStore
 	} from '$lib/stores/workspace';
 	import { transform } from '$lib/utils';
-	import { getChoicePosition } from '$lib/utils/editing';
+	import { createConnections, getChoicePosition } from '$lib/utils/editing';
 	import clsx from 'clsx';
 	import { Share } from 'svelte-heros-v2';
 	import Choices from './Choices.svelte';
@@ -24,6 +24,7 @@
 
 	const setVisible = () => {
 		$framesDataStore[frameKey].hidden = !$framesDataStore[frameKey].hidden;
+		createConnections($framesDataStore);
 	};
 
 	const createConnection = () => {
@@ -64,7 +65,6 @@
 			on:mousedown={setMovingFrame}
 			on:click={createConnection}
 			bind:clientHeight={$framesDataStore[frameKey].height}
-			bind:clientWidth={$framesDataStore[frameKey].width}
 		>
 			<Header {hidden} on:hide={setVisible}>
 				<p class={clsx('py-1 pl-4', { 'text-emerald-500': !index })}>
@@ -85,9 +85,12 @@
 				<div
 					class={clsx(
 						'w-6 h-6 rounded-l-full absolute -left-3 !bg-inherit',
-						hidden ? 'top-1/2' : 'top-2'
+						hidden ? 'top-1/2 -mt-3' : 'top-2'
 					)}
 				/>
+				{#if hidden}
+					<div class="w-6 h-6 rounded-r-full absolute -right-3 !bg-inherit top-1/2 -mt-3" />
+				{/if}
 			{/if}
 		</button>
 		{#if $activeModeStore !== 'binding'}
@@ -107,6 +110,6 @@
 
 <style lang="postcss">
 	.point {
-		@apply absolute flex items-center justify-center bg-white after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit after:transition-[width,height,background];
+		@apply absolute flex items-center justify-center bg-white after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit;
 	}
 </style>

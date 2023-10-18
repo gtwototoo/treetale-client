@@ -64,7 +64,7 @@
 		<div class="plug max-md:!hidden">
 			<div class="max-w-md min-w-[16rem]" />
 		</div>
-		<ReadCard>
+		<ReadCard class="!w-1/3">
 			<svelte:fragment slot="body">
 				<h2>{title}</h2>
 				<p>{description}</p>
