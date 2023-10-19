@@ -19,10 +19,10 @@
 
 <Button
 	on:click={handleClick}
-	variant={active ? 'main' : 'secondary'}
+	variant="main"
 	class={clsx(
-		'!whitespace-normal text-left adaptive-font adaptive-padding',
-		active && 'bg-main text-text'
+		'!whitespace-normal !text-text text-left adaptive-font bg-main adaptive-padding',
+		active && 'bg-main'
 	)}
 >
 	<slot />

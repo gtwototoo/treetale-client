@@ -22,7 +22,7 @@
 	class={clsx('text-left', !last && 'pointer-events-none opacity-10', className)}
 >
 	{#if frame.choices.length}
-		<FormSplit vertical class="w-full">
+		<FormSplit vertical class="w-full !divide-main-10">
 			{#each frame.choices as { choiceId, text } (choiceId)}
 				<Choice {choiceId} active={selectedChoiceId === choiceId} {setChoice}>
 					{correctVariableReplace(text, vars) || 'Неожиданный поворот'}

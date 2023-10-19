@@ -71,13 +71,11 @@
 	const removeFrame = () => {
 		currentPanelStore.clear();
 
-		console.log($selectedFrameStore);
-
 		$framesDataStore = $framesDataStore.filter(({ frameId }) => frameId !== $selectedFrameStore);
-		// console.log($framesDataStore);
-		// for (const frame of $framesDataStore) {
-		// 	outputCorrect(frame);
-		// }
+
+		for (const frame of $framesDataStore) {
+			outputCorrect(frame);
+		}
 
 		changesHistory.add('Удаление фрейма', Trash);
 	};

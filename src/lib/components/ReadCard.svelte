@@ -31,10 +31,7 @@
 		/>
 	{/if}
 	<Card
-		class={clsx(
-			'p-8 gap-8 max-hd:p-6 max-hd:gap-6 bg-opacity-80 childs:bg-transparent bg-white',
-			classCard
-		)}
+		class={clsx('p-8 gap-8 max-hd:p-6 max-hd:gap-6 bg-main-20 childs:bg-transparent', classCard)}
 	>
 		{#if text}
 			<div

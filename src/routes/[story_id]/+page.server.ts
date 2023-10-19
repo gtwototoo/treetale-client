@@ -100,8 +100,8 @@ export const load = async ({ params, locals }) => {
 	const readerId = locals.session.userId;
 
 	const progress = await ProgressModel.findOne({
-		storyId,
-		readerId
+		readerId,
+		storyId
 	});
 
 	return await readingInfo(story, progress?.choices || []);

@@ -5,7 +5,7 @@ const progressSchema = new mongoose.Schema<IProgressData>(
 	{
 		storyId: Number,
 		version: Number,
-		readerId: String,
+		readerId: Number,
 		choices: Array,
 		started: {
 			type: Number,
