@@ -6,7 +6,7 @@
 	import { Heart } from 'svelte-heros-v2';
 	import Icon from './Icon.svelte';
 
-	export let likes: number[];
+	export let likes: Array<number>;
 	export let storyId: number;
 
 	let loading = false;

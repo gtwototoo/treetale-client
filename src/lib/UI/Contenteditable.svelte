@@ -4,7 +4,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher<{
-		input: string;
+		input: Event & { currentTarget: EventTarget & HTMLDivElement };
 		paste: ClipboardEvent;
 	}>();
 
@@ -15,6 +15,7 @@
 	export let placeholder: string | undefined = undefined;
 	export let readonly = false;
 	export let disabled = false;
+	export let maxlength: number | undefined = undefined;
 
 	let editableRef: HTMLDivElement;
 
@@ -25,10 +26,18 @@
 
 		if (!selection.getRangeAt || !selection.rangeCount) return;
 
+		let correctText = text;
 		const range = selection.getRangeAt(0);
+		const rangeCount = range.endOffset - range.startOffset;
+
+		if (maxlength && editableRef.innerText.length - rangeCount + correctText.length > maxlength) {
+			const textLength = maxlength - (editableRef.innerText.length - rangeCount);
+
+			correctText = textLength > 0 ? text.slice(0, textLength) : '';
+		}
 
 		range.deleteContents();
-		range.insertNode(document.createTextNode(text));
+		range.insertNode(document.createTextNode(correctText));
 		range.collapse(false);
 
 		html = editableRef.innerHTML;
@@ -66,23 +75,42 @@
 		};
 	};
 
-	$: dispatch('input', html);
+	const handleInput = (e: Event & { currentTarget: EventTarget & HTMLDivElement }) => {
+		if (maxlength && editableRef.innerText.length + 1 > maxlength) {
+			const selection = window.getSelection();
+			const range = selection.getRangeAt(0);
+			const startOffset = range.startOffset;
+
+			editableRef.innerHTML = html;
+
+			const newRange = document.createRange();
+
+			newRange.setStart(editableRef.firstChild, startOffset - 1);
+			newRange.collapse(true);
+
+			selection.removeAllRanges();
+			selection.addRange(newRange);
+		}
+
+		dispatch('input', e);
+	};
 </script>
 
 <button
 	tabindex="0"
 	class={clm(
-		'bg-white pl-4 pr-4 py-2 text-left flex shrink-0 items-center cursor-text gap-2 text-sm transition-colors hover:bg-main-30 rounded-lg relative',
-		$$slots.left && 'pl-2',
-		$$slots.right && 'pr-2',
-		className,
-		{ disabled }
+		'contenteditable',
+		$$slots.left ? 'pl-2' : 'pl-4',
+		$$slots.right ? 'pr-2' : 'pr-4',
+		{ disabled },
+		className
 	)}
 	on:click={handleClick}
 >
 	<slot name="left" />
 	<div class="w-full relative">
 		<div
+			on:input={handleInput}
 			role="textbox"
 			on:paste|preventDefault={handlePaste}
 			bind:this={editableRef}
@@ -99,6 +127,9 @@
 </button>
 
 <style lang="postcss">
+	.contenteditable {
+		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-center gap-2 rounded-lg bg-white py-2 text-left text-sm transition-colors hover:bg-main-30;
+	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;
 	}

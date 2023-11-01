@@ -9,7 +9,7 @@
 	export let frameKey: number;
 	export let choiceKey: number;
 
-	const symbols: TMathOperator[] = ['+', '-', '*', '/'];
+	const symbols: Array<TMathOperator> = ['+', '-', '*', '/'];
 
 	const addMathOperation = () => {
 		$framesDataStore[frameKey].choices[choiceKey].mathOperations = [

@@ -10,8 +10,8 @@ interface IProgress {
 	choiceId?: number;
 }
 
-const availableFrames = (progress: IProgress[], frames: IFrameCreate[]) => {
-	const available: IFrame[] = [];
+const availableFrames = (progress: Array<IProgress>, frames: Array<IFrameCreate>) => {
+	const available: Array<IFrame> = [];
 
 	for (const stage of progress) {
 		const frame = getFrameFromId(frames, stage.frameId);
@@ -30,8 +30,8 @@ const availableFrames = (progress: IProgress[], frames: IFrameCreate[]) => {
 	return available;
 };
 
-const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
-	const progress: IProgress[] = [
+const formatedProgress = (choices: Array<number>, frames: Array<IFrameCreate>) => {
+	const progress: Array<IProgress> = [
 		{
 			frameId: frames[0].frameId
 		}
@@ -56,14 +56,14 @@ const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
 
 const readingInfo = async (
 	story: IStorySchema,
-	choices: number[]
+	choices: Array<number>
 ): Promise<{
 	story: IStoryFull;
-	frames: IFrame[];
-	progress: IProgress[];
+	frames: Array<IFrame>;
+	progress: Array<IProgress>;
 }> => {
 	const { frames, ...info } = story;
-	const progress: IProgress[] = formatedProgress(choices, frames);
+	const progress: Array<IProgress> = formatedProgress(choices, frames);
 	const author = await UsersModel.findOne({
 		userId: +story.userId
 	})

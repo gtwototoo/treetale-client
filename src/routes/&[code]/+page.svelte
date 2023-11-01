@@ -73,7 +73,7 @@
 				<Button
 					variant="main"
 					type="submit"
-					class={clsx('w-full bg-emerald-300 adaptive-font adaptive-padding')}
+					class={clsx('w-full bg-main !text-text adaptive-font adaptive-padding')}
 					{disabled}
 					{loading}
 				>

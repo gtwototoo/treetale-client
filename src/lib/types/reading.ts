@@ -1,8 +1,8 @@
 import type { IStory, IUser, IVariable } from '.';
 
 export interface IStoryReading extends IStory {
-	likes: number[];
+	likes: Array<number>;
 	userId: number;
 }
 
-export type IStoryFull = IStoryReading & { vars: IVariable[]; author?: IUser };
+export type IStoryFull = IStoryReading & { vars: Array<IVariable>; author?: IUser };

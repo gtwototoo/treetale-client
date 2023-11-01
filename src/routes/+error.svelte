@@ -5,7 +5,6 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button } from '$UI';
-	import clsx from 'clsx';
 
 	$: isNotFound = $page.status === 404;
 	$: $bodyColorStore = $page.error?.color;
@@ -14,7 +13,7 @@
 		isNotFound ? goto('/', { replaceState: true }) : location.reload();
 	};
 
-	$: ({ img, message, theme } = $page.error);
+	$: ({ img, message } = $page.error);
 </script>
 
 <svelte:head>
@@ -25,12 +24,7 @@
 {#if $page.error}
 	<div class="flex w-full h-full justify-center items-start px-12">
 		<div class="flex min-h-full items-center py-12">
-			<ReadCard
-				src={img}
-				alt="Ошибка"
-				text={message}
-				classCard={clsx(theme === 'dark' && 'bg-zinc-950 text-gray-100')}
-			>
+			<ReadCard src={img} alt="Ошибка" text={message}>
 				<Button
 					class="w-full !bg-main !text-text adaptive-font adaptive-padding"
 					variant="main"

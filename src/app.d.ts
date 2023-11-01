@@ -7,7 +7,6 @@ declare global {
 			img?: string;
 			color?: TRGB;
 			message: string;
-			theme: 'light' | 'dark';
 		}
 		interface Locals {
 			session: IUser | null;

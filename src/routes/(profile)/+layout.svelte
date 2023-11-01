@@ -6,21 +6,13 @@
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { findByPattern, rootStyle } from '$lib/utils';
+	import { getPageType, rootStyle } from '$lib/utils';
 	import clsx from 'clsx';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
 
 	export let data;
 
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
-
-	const getPageType = (path: string): 'viewed' | 'liked' | 'main' => {
-		return findByPattern(path, {
-			main: /^\/profile$/,
-			liked: /^\/profile\/liked$/,
-			viewed: /^\/profile\/viewed$/
-		}) as 'viewed' | 'liked' | 'main';
-	};
 
 	$: user = me ? $page.data.session : data.user;
 	$: pageType = getPageType($page.url.pathname);
@@ -44,7 +36,7 @@
 						variant="custom"
 						class={clsx(
 							'!text-text hover:bg-contrast !transition-colors',
-							pageType === 'main' && 'bg-contrast/20'
+							pageType === 'profile' && 'bg-contrast/20'
 						)}
 					>
 						<Icon type={Pencil} class="max-xs:block hidden" />

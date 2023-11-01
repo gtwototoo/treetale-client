@@ -4,7 +4,7 @@ export const serialize = <T>(object: T): T => {
 	return JSON.parse(JSON.stringify(object)) as T;
 };
 
-export const exclude = <T extends object>(object: T, keys: string[] | string) => {
+export const exclude = <T extends object>(object: T, keys: Array<string> | string) => {
 	const serialized = serialize(object);
 
 	if (keys instanceof String) {

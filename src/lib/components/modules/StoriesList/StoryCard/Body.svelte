@@ -9,7 +9,7 @@
 	import clsx from 'clsx';
 
 	export let story: IStoryReading;
-	export let vars: IVariable[];
+	export let vars: Array<IVariable>;
 	export let author: IUser | undefined = undefined;
 
 	$: ({ storyId, created, description, title, draft, likes } = story);

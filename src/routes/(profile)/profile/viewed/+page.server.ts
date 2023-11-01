@@ -7,6 +7,6 @@ export const load = async ({ locals }) => {
 	if (!user) throw redirect(302, '/');
 
 	return {
-		stories: [] as IStoryFull[]
+		stories: [] as Array<IStoryFull>
 	};
 };

@@ -3,7 +3,7 @@
 	import Empty from './Empty.svelte';
 	import StoryCard from './StoryCard/index.svelte';
 
-	export let stories: IStoryFull[];
+	export let stories: Array<IStoryFull>;
 </script>
 
 {#if stories.length}

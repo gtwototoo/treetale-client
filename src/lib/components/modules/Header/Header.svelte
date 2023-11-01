@@ -9,12 +9,12 @@
 
 <div
 	class={clsx(
-		'z-10 flex w-full justify-between items-center bg-transparent p-2 sm:p-4',
+		'z-10 flex w-full justify-between items-center bg-transparent max-sm:p-2 p-4',
 		className
 	)}
 >
 	<Logo />
-	<div class="flex gap-4">
+	<div class="flex gap-4 max-sm:gap-2">
 		<slot />
 		<Session />
 	</div>

@@ -12,7 +12,7 @@
 	export { className as class };
 
 	export let placeholder: string;
-	export let tags: string[] = [];
+	export let tags: Array<string> = [];
 	export let disabled = false;
 	export let value = '';
 	export let maxLength = 20;
@@ -50,15 +50,16 @@
 	};
 
 	const handleKeydown = (e: KeyboardEvent) => {
-		if (e.key === 'Enter' || e.key === ' ') {
-			e.preventDefault();
+		const { code } = e;
 
+		const handleAddTag = () => {
 			if (value === '') return;
 
 			addTag(value);
-		}
-		if (e.key === 'Backspace' && value === '') {
-			e.preventDefault();
+		};
+
+		const handleRemoveTag = () => {
+			if (value) return;
 
 			const lastTagValue = last(tags);
 
@@ -66,19 +67,32 @@
 
 			value = lastTagValue;
 			removeTag(lastTagValue);
+		};
 
-			return;
-		}
-		if (e.key !== 'Backspace' && value.length >= maxLength) {
+		if (code === 'Backspace' && !value) {
 			e.preventDefault();
+			handleRemoveTag();
+		}
 
-			addTag(value);
+		if (
+			code === 'Space' ||
+			code === 'Enter' ||
+			(code !== 'Backspace' && value.length >= maxLength)
+		) {
+			e.preventDefault();
+			handleAddTag();
 		}
 	};
 </script>
 
 <button
-	class={clsx('input', { disabled, 'p-1.5': tags.length, focused: 'bg-main-30' }, className)}
+	class={clsx(
+		'input',
+		focused && 'bg-main-30',
+		tags.length ? 'px-2' : 'px-4',
+		{ disabled },
+		className
+	)}
 	on:keydown={handleKeydown}
 >
 	{#each tags as tag}
@@ -96,7 +110,6 @@
 	{/each}
 	<input
 		bind:value
-		class={clsx({ '!p-0 !leading-6': tags.length })}
 		{placeholder}
 		on:paste|preventDefault={handlePaste}
 		on:focus={() => (focused = true)}
@@ -107,10 +120,10 @@
 
 <style lang="postcss">
 	input {
-		@apply w-full flex-grow bg-transparent px-4 py-2 text-sm text-black placeholder:select-none;
+		@apply w-full flex-grow bg-transparent text-sm leading-6 text-black placeholder:select-none;
 	}
 	.input {
-		@apply flex flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-white transition-colors hover:bg-main-30;
+		@apply flex min-h-[2.5rem] flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-white py-2 transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

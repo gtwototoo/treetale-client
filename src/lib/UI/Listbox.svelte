@@ -24,7 +24,7 @@
 	export let value = '';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let placeholder: string;
-	export let list: IList[] | string[];
+	export let list: Array<IList | string>;
 
 	let focused = false;
 

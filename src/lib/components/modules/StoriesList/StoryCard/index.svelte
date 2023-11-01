@@ -13,7 +13,7 @@
 	import Body from './Body.svelte';
 
 	export let story: IStoryReading;
-	export let vars: IVariable[];
+	export let vars: Array<IVariable>;
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
 

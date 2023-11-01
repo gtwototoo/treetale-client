@@ -41,6 +41,7 @@
 
 <FormSplit vertical={!editMode}>
 	<Contenteditable
+		maxlength={55}
 		class="grow shrink"
 		placeholder="Вариант выбора"
 		disabled={editMode}

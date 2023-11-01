@@ -27,7 +27,7 @@ export const load = async ({ locals, params }) => {
 		.select(USER_WITHOUT_WORKSPACE)
 		.lean();
 
-	const stories: IStoryFull[] = rawStories.map((story) => ({
+	const stories: Array<IStoryFull> = rawStories.map((story) => ({
 		...story,
 		author: serialize(user)
 	}));

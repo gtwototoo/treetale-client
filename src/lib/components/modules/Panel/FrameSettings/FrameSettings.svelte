@@ -130,6 +130,7 @@
 	<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 </DropBlock>
 <Contenteditable
+	maxlength={1500}
 	disabled={editMode}
 	placeholder="Описание фрейма"
 	bind:html={$framesDataStore[frameKey].text}

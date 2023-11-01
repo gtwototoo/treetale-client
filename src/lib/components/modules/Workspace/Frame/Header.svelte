@@ -13,9 +13,9 @@
 	};
 </script>
 
-<div class="flex items-center justify-between gap-4">
+<div class="flex items-center justify-between gap-4 z-10">
 	<slot />
-	<div class="flex gap-2 text-black">
+	<div class="flex gap-2">
 		<Button size="sm" on:click={hideFrame}>
 			<Icon type={hidden ? ChevronUp : ChevronDown} class="h-4 w-4" />
 		</Button>

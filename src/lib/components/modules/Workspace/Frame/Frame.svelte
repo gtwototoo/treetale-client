@@ -54,9 +54,9 @@
 	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 		<button
 			class={clsx(
-				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-[box-shadow,background-color] hover:shadow-lg childs:bg-transparent',
+				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
 				$movingFrameStore === frameId && 'shadow-lg',
-				$activeModeStore === 'binding' && '!bg-main-60',
+				$activeModeStore === 'binding' && '!bg-main-60 text-text',
 				$activeModeStore === 'binding' &&
 					$connectionStore &&
 					$connectionStore.frameId !== frameId &&

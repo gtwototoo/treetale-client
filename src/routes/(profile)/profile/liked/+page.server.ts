@@ -9,7 +9,7 @@ export const load = async ({ locals }) => {
 
 	if (!user) throw redirect(302, '/');
 
-	const rawStories: IStoryFull[] = await StoriesModel.find({
+	const rawStories: Array<IStoryFull> = await StoriesModel.find({
 		likes: {
 			$in: [user.userId]
 		}
@@ -17,7 +17,7 @@ export const load = async ({ locals }) => {
 		.select(USER_WITHOUT_WORKSPACE)
 		.lean();
 
-	const stories: IStoryFull[] = [];
+	const stories: Array<IStoryFull> = [];
 
 	for (const story of rawStories) {
 		if (story.userId === user.userId) {

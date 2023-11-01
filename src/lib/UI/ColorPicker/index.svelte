@@ -5,8 +5,8 @@
 
 	export let disabled = false;
 	export let popoverAlign: 'left' | 'right' = 'right';
-	export let lightRange: number[] = [0, 100];
-	export let saturateRange: number[] = [0, 100];
+	export let lightRange = [0, 100];
+	export let saturateRange = [0, 100];
 	export let light = 0;
 	export let saturate = 0;
 	export let color: TRGB = [0, 0, 0];

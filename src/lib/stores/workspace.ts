@@ -12,14 +12,14 @@ interface IWorkspaceFrame extends TBoundings {
 	title: string;
 }
 
-type IFramesCustomStore = Writable<IFrameCreate[]> & {
-	init: (data: IFrameCreate[]) => void;
+type IFramesCustomStore = Writable<Array<IFrameCreate>> & {
+	init: (data: Array<IFrameCreate>) => void;
 };
 
 const framesCustomStore = () => {
-	const { subscribe, set, update } = writable<IFrameCreate[]>([]);
+	const { subscribe, set, update } = writable<Array<IFrameCreate>>([]);
 
-	const init = (data: IFrameCreate[]) => {
+	const init = (data: Array<IFrameCreate>) => {
 		data.map((frame) => {
 			const height = DEFAULT_FRAME_SIZE.height + 37 * frame.choices.length - 1;
 
@@ -40,7 +40,7 @@ const framesCustomStore = () => {
 export const selectedFrameStore = writable<number>();
 export const movingFrameStore = writable<number>();
 
-export const workspaceDataStore = writable<IWorkspaceFrame[]>([]);
+export const workspaceDataStore = writable<Array<IWorkspaceFrame>>([]);
 export const framesDataStore: IFramesCustomStore = framesCustomStore();
 
 export const addFrameOffsetStore = writable<ICoordinates>();

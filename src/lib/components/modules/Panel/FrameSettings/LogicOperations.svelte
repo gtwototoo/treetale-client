@@ -9,7 +9,7 @@
 	export let frameKey: number;
 	export let choiceKey: number;
 
-	const symbols: TComparisonOperator[] = ['=', '≥', '≤', '>', '<', '≠'];
+	const symbols: Array<TComparisonOperator> = ['=', '≥', '≤', '>', '<', '≠'];
 
 	const addLogicOperation = () => {
 		$framesDataStore[frameKey].choices[choiceKey].logicOperations = [

@@ -5,13 +5,13 @@ import { get, writable, type Writable } from 'svelte/store';
 import { framesDataStore } from './workspace';
 
 type IChange = {
-	data?: IFrameCreate[];
+	data?: Array<IFrameCreate>;
 	title: string;
 	icon: typeof SvelteComponent<unknown>;
 };
 
 type IChanges = {
-	stages: IChange[];
+	stages: Array<IChange>;
 	currentStageId: number;
 };
 

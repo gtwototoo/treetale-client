@@ -1,7 +1,7 @@
 <script lang="ts">
 	import clsx from 'clsx';
 
-	export let tags: string[];
+	export let tags: Array<string>;
 </script>
 
 <div

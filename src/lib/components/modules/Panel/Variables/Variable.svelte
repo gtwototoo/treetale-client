@@ -10,7 +10,7 @@
 	export let varKey: number;
 	export let checkUpdates: () => void;
 
-	const types: IList[] = [
+	const types: Array<IList> = [
 		{ text: 'Строка' },
 		{ text: 'Число' },
 		{

@@ -1,5 +1,3 @@
-// import { collapseValue, pluralize } from '$lib/utils';
-
 import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
@@ -10,10 +8,10 @@ const correctMetric = (value: number, names: [string, string, string]) => {
 	return pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...names).split(' ');
 };
 
-const getStatistic = (stories: IStoryReading[]) => {
+const getStatistic = (stories: Array<IStoryReading>) => {
 	const likes = stories.reduce((sum, { likes }) => sum + likes.length, 0);
 
-	const metrics: string[][] = [
+	const metrics: Array<Array<string>> = [
 		correctMetric(likes, ['лайков', 'лайк', 'лайка']),
 		correctMetric(stories.length, ['историй', 'история', 'истории']),
 		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика'])

@@ -20,7 +20,7 @@ export const correctWhitespace = (text: string) => {
 	);
 };
 
-export const variableReplace = (text: string, vars: IVariable[]) => {
+export const variableReplace = (text: string, vars: Array<IVariable>) => {
 	if (!vars) return text;
 
 	for (const variable of vars) {
@@ -30,13 +30,13 @@ export const variableReplace = (text: string, vars: IVariable[]) => {
 	return text;
 };
 
-export const correctVariableReplace = (text: string | undefined, vars: IVariable[]) => {
+export const correctVariableReplace = (text: string | undefined, vars: Array<IVariable>) => {
 	if (!text) return '';
 
 	return correctWhitespace(variableReplace(text, vars));
 };
 
-export const cutText = (text: string, vars: IVariable[], maxLength = 200) => {
+export const cutText = (text: string, vars: Array<IVariable>, maxLength = 200) => {
 	const newText = variableReplace(text, vars);
 
 	if (newText.length < maxLength) {

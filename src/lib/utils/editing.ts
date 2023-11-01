@@ -1,5 +1,5 @@
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
-import type { ICoordinates, TBoundings } from '$lib/types';
+import type { ICoordinates, IFrame, TBoundings } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
 
 export const transform = (coords: ICoordinates, zoom?: number): string => {
@@ -13,7 +13,10 @@ export const transform = (coords: ICoordinates, zoom?: number): string => {
 	return styleRow;
 };
 
-export const getFrameFromId = (frames: IFrameCreate[], frameId: number) => {
+export const getFrameFromId = <T extends IFrameCreate | IFrame>(
+	frames: Array<T>,
+	frameId: number
+): T => {
 	const frame = frames.find((frame) => frame.frameId === frameId);
 
 	return frame;
@@ -33,8 +36,8 @@ export const getChoicePosition = (index: number) => {
 	return startPosition + 37 * index - 1;
 };
 
-export const createConnections = (frames: IFrameCreate[]) => {
-	const paths: IPath[] = [];
+export const createConnections = (frames: Array<IFrameCreate>) => {
+	const paths: Array<IPath> = [];
 	const area: TBoundings = getAreaBoundings(frames);
 	const { width, height, x, y } = area;
 
@@ -42,7 +45,7 @@ export const createConnections = (frames: IFrameCreate[]) => {
 		for (const choice of fromFrame.choices) {
 			if (choice.frameId === null) continue;
 
-			const toFrame = getFrameFromId(frames, choice.frameId);
+			const toFrame = getFrameFromId(frames, choice.frameId) as IFrameCreate;
 
 			if (!toFrame) continue;
 
@@ -79,7 +82,7 @@ const createLine = (from: ICoordinates, to: ICoordinates): string => {
 	return `M${from.x} ${from.y} L ${to.x} ${to.y}`;
 };
 
-const getAreaBoundings = (frames: IFrameCreate[]) => {
+const getAreaBoundings = (frames: Array<IFrameCreate>) => {
 	const { minX, minY, maxX, maxY } = frames.reduce(
 		(acc, { x, y, height }) => ({
 			minX: Math.min(acc.minX, x),

@@ -1,31 +1,40 @@
 <script lang="ts">
 	import { FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import type { IFrame, IVariable } from '$lib/types';
-	import { correctVariableReplace } from '$lib/utils';
+	import { framesStore, variablesStore } from '$lib/stores/reading';
+	import { correctVariableReplace, getFrameFromId } from '$lib/utils';
 	import clsx from 'clsx';
+	import { createEventDispatcher } from 'svelte';
 	import Choice from './Choice.svelte';
+
+	const dispatch = createEventDispatcher<{
+		click: { choiceId: number };
+	}>();
 
 	let className = '';
 	export { className as class };
 
-	export let last: boolean;
-	export let frame: IFrame;
-	export let vars: IVariable[];
-	export let selectedChoiceId: number | undefined;
-	export let setChoice: (choiceId: number) => void;
+	export let frameId: number;
+	export let selectedChoiceId: number;
+
+	const handleClick = (choiceId: number) => {
+		dispatch('click', { choiceId });
+	};
+
+	$: ({ imageId, text, choices } = getFrameFromId($framesStore, frameId));
 </script>
 
 <ReadCard
-	src={frame.imageId}
-	text={correctVariableReplace(frame.text, vars) || 'Пустота...'}
-	class={clsx('text-left', !last && 'pointer-events-none opacity-10', className)}
+	src={imageId}
+	text={correctVariableReplace(text, $variablesStore) || 'Пустота...'}
+	class={clsx('text-left', className)}
+	classCard="justify-between !items-start"
 >
-	{#if frame.choices.length}
+	{#if choices.length}
 		<FormSplit vertical class="w-full !divide-main-10">
-			{#each frame.choices as { choiceId, text } (choiceId)}
-				<Choice {choiceId} active={selectedChoiceId === choiceId} {setChoice}>
-					{correctVariableReplace(text, vars) || 'Неожиданный поворот'}
+			{#each choices as { choiceId, text } (choiceId)}
+				<Choice active={selectedChoiceId === choiceId} on:click={() => handleClick(choiceId)}>
+					{correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
 				</Choice>
 			{/each}
 		</FormSplit>

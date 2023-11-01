@@ -24,7 +24,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 
 	if (!lastFrameId) return;
 
-	framesDataStore.update((data: IFrameCreate[]) => {
+	framesDataStore.update((data: Array<IFrameCreate>) => {
 		data.push({
 			imageId: null,
 			title: `Блок ${lastFrameId}`,

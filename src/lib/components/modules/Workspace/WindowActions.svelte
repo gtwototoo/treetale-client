@@ -72,17 +72,6 @@
 		e.preventDefault();
 
 		actions[code]();
-
-		// $connect = {
-		// 	active: false,
-		// 	connector: {
-		// 		from: null,
-		// 		to: null,
-		// 		prevOutput: null,
-		// 		mouseCoords: null
-		// 	}
-		// };
-		// break;
 	};
 
 	const disableDragMode = () => {

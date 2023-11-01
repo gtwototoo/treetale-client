@@ -10,14 +10,7 @@
 	let className = '';
 	export { className as class };
 
-	export let style: string | undefined = undefined;
-	export let variant:
-		| 'secondary'
-		| 'main'
-		| 'transparent'
-		| 'secondary-white'
-		| 'ghost'
-		| 'custom' = 'secondary';
+	export let variant: 'secondary' | 'main' | 'transparent' | 'ghost' | 'custom' = 'secondary';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let disabled = false;
 	export let loading = false;
@@ -40,18 +33,17 @@
 
 <button
 	bind:this={element}
+	use:clickHold
+	on:click={handleClick}
+	on:holdclick={handleHoldClick}
 	class={clm(
-		'childs:bg-transparent',
+		'childs:bg-transparent transition-opacity',
 		`size-${size}`,
 		`variant-${variant}`,
 		loading && 'text-transparent childs:invisible',
 		(disabled || loading) && 'disabled',
 		className
 	)}
-	{style}
-	on:click={handleClick}
-	on:holdclick={handleHoldClick}
-	use:clickHold
 	{...{ value, type }}
 >
 	<slot />
@@ -75,25 +67,22 @@
 		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.size-base {
-		@apply rounded-lg px-4 py-2 text-sm;
+		@apply min-h-[2.5rem] rounded-lg px-4 py-2 text-sm;
 	}
 	.size-sm {
 		@apply rounded px-2 py-1 text-xs;
 	}
 	.variant-secondary {
-		@apply bg-gray-50 text-black transition-colors hover:bg-main-20 hover:text-text focus:bg-main-20 focus:text-text;
-	}
-	.variant-secondary-white {
-		@apply bg-white text-black transition-colors hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;
+		@apply bg-gray-50 text-black transition-[background-color,color,opacity] hover:bg-main-20 hover:text-text focus:bg-main-20 focus:text-text;
 	}
 	.variant-main {
-		@apply text-white transition-[filter] hover:brightness-110 focus:brightness-110;
+		@apply text-white transition-[filter,opacity] hover:brightness-110 focus:brightness-110;
 	}
 	.variant-ghost {
 		@apply bg-opacity-30 transition-colors hover:bg-opacity-100;
 	}
 	.variant-transparent {
-		@apply transition-[filter] hover:brightness-90 focus:brightness-90;
+		@apply transition-[filter,opacity] hover:brightness-90 focus:brightness-90;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

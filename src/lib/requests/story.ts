@@ -21,7 +21,7 @@ export const updateInfomation = async (storyId: number, info: IStoryEditableInfo
 
 export const updateArea = async (
 	storyId: number,
-	frames: IFrameCreate[],
+	frames: Array<IFrameCreate>,
 	offset: ICoordinates,
 	zoom: number
 ) => {
@@ -32,7 +32,7 @@ export const updateArea = async (
 	});
 };
 
-export const updateVars = async (storyId: number, vars: IVariable[]) => {
+export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=vars`, {
 		vars
 	});

@@ -6,7 +6,7 @@ export const randomInteger = (min: number, max: number): number => {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const randomArray = <T>(array: T[]): T => {
+export const randomArray = <T>(array: Array<T>): T => {
 	return array[randomInteger(0, array.length - 1)];
 };
 
@@ -19,8 +19,7 @@ export const randomError = (status: number): HttpError => {
 					message:
 						'Случилось что-то ужасное, мир схлопнулся в маленькую точку и теперь лучшие небесные кузнецы пытаются вернуть его в исходное состояние.',
 					img: `${PUBLIC_TREETALE_CLIENT_URL}/img/compressed/500_space@1024x1024.png`,
-					color: [131, 15, 7],
-					theme: 'light'
+					color: [131, 15, 7]
 			  }
 	);
 };

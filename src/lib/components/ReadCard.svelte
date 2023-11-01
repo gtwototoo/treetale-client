@@ -36,7 +36,7 @@
 		{#if text}
 			<div
 				class={clsx(
-					'adaptive-padding',
+					'adaptive-padding text-text',
 					text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
 				)}
 			>

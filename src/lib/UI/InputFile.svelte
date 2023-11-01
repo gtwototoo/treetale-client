@@ -8,8 +8,7 @@
 	export { className as class };
 
 	export let disabled = false;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'secondary-white' | 'ghost' =
-		'secondary';
+	export let variant: 'secondary' | 'main' | 'transparent' | 'ghost' = 'secondary';
 
 	let fileInput: HTMLInputElement;
 

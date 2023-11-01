@@ -2,13 +2,13 @@ import type { ICoordinates, IStory, IVariable } from '.';
 import type { IFrameCreate } from './editing';
 
 export interface IStorySchema extends IStory {
-	frames: IFrameCreate[];
-	vars: IVariable[];
+	frames: Array<IFrameCreate>;
+	vars: Array<IVariable>;
 	userId: number;
-	likes: number[];
+	likes: Array<number>;
 	offset: ICoordinates;
 	zoom: number;
 	version: number;
 	imageId: string;
-	[index: string]: number | ICoordinates | unknown[] | string | boolean;
+	[index: string]: number | ICoordinates | Array<unknown> | string | boolean;
 }

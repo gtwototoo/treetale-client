@@ -4,8 +4,8 @@
 	import { RGB } from '$lib/utils';
 	import { createEventDispatcher } from 'svelte';
 
-	export let lightRange: number[];
-	export let saturateRange: number[];
+	export let lightRange: Array<number>;
+	export let saturateRange: Array<number>;
 	export let light: number;
 	export let saturate: number;
 	export let color: TRGB;

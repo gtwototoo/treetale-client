@@ -6,7 +6,7 @@ export type TMathOperator = '+' | '-' | '/' | '*' | '=';
 export interface IStoryEditableInfo {
 	title: string;
 	description: string;
-	tags: string[];
+	tags: Array<string>;
 	imageId?: string | null;
 	color: TRGB;
 	draft: boolean;
@@ -34,13 +34,13 @@ export interface IChoice {
 	choiceId: number;
 	frameId: number;
 	text: string;
-	logicOperations: ILogicOperation[];
-	mathOperations: IMathOperation[];
+	logicOperations: Array<ILogicOperation>;
+	mathOperations: Array<IMathOperation>;
 }
 
 export interface IFrame {
 	frameId: number;
-	choices: IChoice[];
+	choices: Array<IChoice>;
 	text: string | null;
 	imageId: string | null;
 	[index: string]: unknown;
@@ -68,8 +68,8 @@ export interface IProgressData {
 	storyId: number;
 	version: number;
 	readerId: number;
-	frames: IFrame[];
-	choices: number[];
+	frames: Array<IFrame>;
+	choices: Array<number>;
 	started?: number;
 }
 

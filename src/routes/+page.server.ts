@@ -6,7 +6,7 @@ import type { IStorySchema } from '$lib/types/schemas';
 import { serialize } from '$lib/utils';
 
 export const load = async () => {
-	const rawStories: IStorySchema[] = await StoriesModel.find({
+	const rawStories: Array<IStorySchema> = await StoriesModel.find({
 		draft: false
 	})
 		.select(USER_WITHOUT_WORKSPACE)
@@ -20,7 +20,7 @@ export const load = async () => {
 		};
 	}
 
-	const stories: IStoryFull[] = [];
+	const stories: Array<IStoryFull> = [];
 
 	for (const story of rawStories) {
 		const author = await UsersModel.findOne({
@@ -31,7 +31,7 @@ export const load = async () => {
 			...story,
 			author: author ? serialize(author) : null
 		} satisfies IStoryReading & {
-			vars: IVariable[];
+			vars: Array<IVariable>;
 			author: IUser;
 		});
 	}

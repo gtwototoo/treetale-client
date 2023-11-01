@@ -14,7 +14,7 @@
 
 	export let user: IUser;
 	export let me: boolean;
-	export let statistic: string[][];
+	export let statistic: Array<Array<string>>;
 
 	let editMode = false;
 	let light = 80;
