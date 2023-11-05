@@ -1,15 +1,4 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { ICON_TYPE } from '$lib/constants';
-	import { stateAreaStore } from '$lib/stores/newediting';
-	import {
-		activeActionStore,
-		activeModeStore,
-		type IAction,
-		type IMode
-	} from '$lib/stores/workspace';
-	import { Tag } from '$UI';
-	import Photo from '$UI/Photo.svelte';
 	import clsx from 'clsx';
 	import type { SvelteComponent } from 'svelte';
 	import {
@@ -21,6 +10,18 @@
 		Share,
 		Square3Stack3d
 	} from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { ICON_TYPE } from '$lib/constants';
+	import { stateAreaStore } from '$lib/stores/newediting';
+	import {
+		activeActionStore,
+		activeModeStore,
+		type IAction,
+		type IMode
+	} from '$lib/stores/workspace';
+	import { Tag } from '$UI';
+	import Photo from '$UI/Photo.svelte';
 
 	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
 		binding: Share,

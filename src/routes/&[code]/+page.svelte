@@ -1,4 +1,8 @@
 <script lang="ts">
+	import type { HttpError } from '@sveltejs/kit';
+	import clsx from 'clsx';
+	import { fade } from 'svelte/transition';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import ReadCard from '$lib/components/ReadCard.svelte';
@@ -7,9 +11,6 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
 	import { Button, Input } from '$UI';
-	import type { HttpError } from '@sveltejs/kit';
-	import clsx from 'clsx';
-	import { fade } from 'svelte/transition';
 
 	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
 

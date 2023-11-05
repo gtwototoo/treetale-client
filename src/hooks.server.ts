@@ -1,6 +1,6 @@
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { NOT_FOUND_VARIANTS } from '$lib/constants';
 import { mongooseConnect } from '$lib/server/mongoose';
 import { randomArray } from '$lib/utils';

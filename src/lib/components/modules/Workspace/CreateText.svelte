@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { correctWhitespace } from '$lib/utils';
 	import { fade } from 'svelte/transition';
+
+	import { correctWhitespace } from '$lib/utils';
 </script>
 
 <div class="pointer-events-none absolute top-24 flex w-full justify-center" out:fade>

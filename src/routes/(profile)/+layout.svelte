@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import clsx from 'clsx';
+	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
+
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -7,8 +9,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { getPageType, rootStyle } from '$lib/utils';
-	import clsx from 'clsx';
-	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
+	import { Button } from '$UI';
 
 	export let data;
 

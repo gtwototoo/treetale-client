@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Input } from '$UI';
+	import { MagnifyingGlass } from 'svelte-heros-v2';
+
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
-	import { MagnifyingGlass } from 'svelte-heros-v2';
+	import { Input } from '$UI';
+
 
 	export let data;
 

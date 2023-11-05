@@ -7,14 +7,15 @@
 </script>
 
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-
-	import { clickOutside, correctPosition } from '$lib/hooks';
-	import { Button } from '$UI';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
-	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
+	import { ChevronDown } from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { clickOutside, correctPosition } from '$lib/hooks';
+	import { Button } from '$UI';
+
 
 	let className = '';
 	export { className as class };
@@ -50,15 +51,11 @@
 	};
 </script>
 
-<div
-	class={clsx('listbox', { disabled }, className)}
-	use:clickOutside
-	on:outclick={() => (focused = false)}
->
+<div class={clsx('listbox', className)} use:clickOutside on:outclick={() => (focused = false)}>
 	{#if $$slots.default}
 		<slot value={value || placeholder} click={handleClick} />
 	{:else}
-		<Button class="w-full !pr-3 gap-3" {size} on:click={handleClick}>
+		<Button class="w-full !pr-3 gap-3" {disabled} {size} on:click={handleClick}>
 			<p class={clsx('w-full text-left', !value && 'text-gray-400')}>
 				{value || placeholder}
 			</p>

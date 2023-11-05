@@ -1,6 +1,7 @@
+import { error, type HttpError } from '@sveltejs/kit';
+
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 import { NOT_FOUND_VARIANTS } from '$lib/constants';
-import { error, type HttpError } from '@sveltejs/kit';
 
 export const randomInteger = (min: number, max: number): number => {
 	return Math.floor(Math.random() * (max - min + 1)) + min;

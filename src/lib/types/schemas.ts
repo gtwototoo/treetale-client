@@ -1,5 +1,6 @@
-import type { ICoordinates, IStory, IVariable } from '.';
 import type { IFrameCreate } from './editing';
+
+import type { ICoordinates, IStory, IVariable } from '.';
 
 export interface IStorySchema extends IStory {
 	frames: Array<IFrameCreate>;

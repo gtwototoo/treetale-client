@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
 	import clsx from 'clsx';
 	import { PencilSquare } from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { Button } from '$UI';
 
 	let className = '';
 	export { className as class };
@@ -33,5 +34,5 @@
 			<Icon type={PencilSquare} class="w-4 h-4" />
 		</Button>
 	</div>
-	<slot />
+	<slot {editMode} />
 </div>

@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { FormSplit } from '$UI';
+	import clsx from 'clsx';
+	import { createEventDispatcher } from 'svelte';
+
+	import Choice from './Choice.svelte';
+
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, variablesStore } from '$lib/stores/reading';
 	import { correctVariableReplace, getFrameFromId } from '$lib/utils';
-	import clsx from 'clsx';
-	import { createEventDispatcher } from 'svelte';
-	import Choice from './Choice.svelte';
+	import { FormSplit } from '$UI';
 
 	const dispatch = createEventDispatcher<{
 		click: { choiceId: number };

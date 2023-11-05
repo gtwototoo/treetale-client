@@ -1,19 +1,20 @@
 <script lang="ts">
-	import Tag from '$UI/Tag.svelte';
+	import clsx from 'clsx';
+	import { BookOpen } from 'svelte-heros-v2';
+
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Frame from '$lib/components/Frame.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Likes from '$lib/components/Likes.svelte';
+	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
 	import { framesStore } from '$lib/stores/reading.js';
 	import { last, rootStyle } from '$lib/utils';
-	import clsx from 'clsx';
-	import { BookOpen } from 'svelte-heros-v2';
+	import Tag from '$UI/Tag.svelte';
 
 	export let data;
 

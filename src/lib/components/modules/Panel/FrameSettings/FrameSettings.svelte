@@ -1,6 +1,9 @@
 <script lang="ts">
-	import { Button, FormSplit, Input } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import { onDestroy } from 'svelte';
+	import { Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
+
+	import Choice from './Choice.svelte';
+
 	import DropBlock from '$lib/components/DropBlock.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { saveImage } from '$lib/requests/image';
@@ -10,9 +13,8 @@
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
 	import { last } from '$lib/utils';
-	import { onDestroy } from 'svelte';
-	import { Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
-	import Choice from './Choice.svelte';
+	import { Button, FormSplit, Input } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 
 	const action = 'storyFrameImageId';
 

@@ -1,14 +1,16 @@
 <script lang="ts">
-	import { Button, FormSplit } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import clsx from 'clsx';
+	import { Variable, XMark } from 'svelte-heros-v2';
+
+	import LogicOperations from './LogicOperations.svelte';
+	import MathOperations from './MathOperations.svelte';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { framesDataStore } from '$lib/stores/workspace';
-	import clsx from 'clsx';
-	import { Variable, XMark } from 'svelte-heros-v2';
-	import LogicOperations from './LogicOperations.svelte';
-	import MathOperations from './MathOperations.svelte';
+	import { Button, FormSplit } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 
 	type TModificator = 'logic' | 'math';
 
@@ -42,7 +44,7 @@
 <FormSplit vertical={!editMode}>
 	<Contenteditable
 		maxlength={55}
-		class="grow shrink"
+		class="grow !shrink"
 		placeholder="Вариант выбора"
 		disabled={editMode}
 		bind:html={$framesDataStore[frameKey].choices[choiceKey].text}

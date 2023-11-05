@@ -1,11 +1,12 @@
 <script lang="ts">
+	import clsx from 'clsx';
+	import { onDestroy } from 'svelte';
+	import { Plus } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { addFrameOffsetStore } from '$lib/stores/workspace';
 	import { transform } from '$lib/utils';
-	import clsx from 'clsx';
-	import { onDestroy } from 'svelte';
-	import { Plus } from 'svelte-heros-v2';
 
 	const { width, height } = DEFAULT_FRAME_SIZE;
 

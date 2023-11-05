@@ -1,7 +1,8 @@
+import { derived, get, writable, type Writable } from 'svelte/store';
+
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 import type { ICoordinates, TBoundings } from '$lib/types';
 import type { IConnect, IFrameCreate } from '$lib/types/editing';
-import { derived, get, writable, type Writable } from 'svelte/store';
 
 export type IAction = 'movingFrame' | 'movingArea' | 'dragImage' | 'connectTo';
 export type IMode = 'view' | 'binding' | 'adding';

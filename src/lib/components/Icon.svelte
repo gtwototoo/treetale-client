@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { ICON_TYPE } from '$lib/constants';
 	import type { SvelteComponent } from 'svelte';
+
+	import { ICON_TYPE } from '$lib/constants';
 
 	let className = '';
 	export { className as class };

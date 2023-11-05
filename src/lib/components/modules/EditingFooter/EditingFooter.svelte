@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import clsx from 'clsx';
+
+	import StateMode from './StateMode.svelte';
+
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -8,8 +11,7 @@
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
-	import clsx from 'clsx';
-	import StateMode from './StateMode.svelte';
+	import { Button } from '$UI';
 
 	const cancelAddFrameMode = () => {
 		$activeModeStore = 'view';

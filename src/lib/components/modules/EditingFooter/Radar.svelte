@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { offsetStore, zoomStore } from '$lib/stores/workspace';
-	import { transform } from '$lib/utils';
+	import clsx from 'clsx';
 
+	import { offsetStore, zoomStore } from '$lib/stores/workspace';
 	import type { ICoordinates } from '$lib/types';
+	import { transform } from '$lib/utils';
 	import { Button } from '$UI';
 	import { ViewArea } from '$UI/Icons';
-	import clsx from 'clsx';
 
 	export let height: number;
 	export let width: number;

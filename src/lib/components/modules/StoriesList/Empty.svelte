@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Card } from '$UI';
 	import { BookOpen } from 'svelte-heros-v2';
+
+	import { Card } from '$UI';
 </script>
 
 <Card class="h-full items-center relative justify-center bg-contrast/20 overflow-hidden">

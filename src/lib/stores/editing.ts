@@ -1,8 +1,10 @@
-import type { IFrameCreate } from '$lib/types/editing';
-import { serialize } from '$lib/utils';
 import type { SvelteComponent } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
+
 import { framesDataStore } from './workspace';
+
+import type { IFrameCreate } from '$lib/types/editing';
+import { serialize } from '$lib/utils';
 
 type IChange = {
 	data?: Array<IFrameCreate>;

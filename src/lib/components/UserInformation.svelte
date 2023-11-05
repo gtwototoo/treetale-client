@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Button, ColorPicker } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import clsx from 'clsx';
+	import { Cog6Tooth, UserPlus } from 'svelte-heros-v2';
+
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
@@ -8,9 +9,9 @@
 	import { signOutUser, updateProfile } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types';
-	import clsx from 'clsx';
+	import { Button, ColorPicker } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 
-	import { Cog6Tooth, UserPlus } from 'svelte-heros-v2';
 
 	export let user: IUser;
 	export let me: boolean;
@@ -96,14 +97,14 @@
 		<Contenteditable
 			bind:html={user.name}
 			placeholder="Добавьте описание"
-			class="text-4xl font-bold !bg-transparent text-center text-text"
+			class="!text-4xl font-bold !bg-transparent !text-center text-text"
 			readonly={!editMode}
 		/>
 		{#if editMode || user.description}
 			<Contenteditable
 				bind:html={user.description}
 				placeholder="Добавьте описание"
-				class="w-full text-lg !bg-transparent text-center text-text"
+				class="w-full !text-lg !bg-transparent !text-center text-text"
 				readonly={!editMode}
 			/>
 		{:else}

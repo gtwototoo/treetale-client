@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import { page } from '$app/stores';
-	import { addLike } from '$lib/requests/story';
 	import clsx from 'clsx';
 	import { Heart } from 'svelte-heros-v2';
+
 	import Icon from './Icon.svelte';
+
+	import { page } from '$app/stores';
+	import { addLike } from '$lib/requests/story';
+	import { Button } from '$UI';
 
 	export let likes: Array<number>;
 	export let storyId: number;

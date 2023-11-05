@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import { currentPanelStore } from '$lib/stores/main';
 	import clsx from 'clsx';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
+
 	import { InformationSettings } from '.';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { currentPanelStore } from '$lib/stores/main';
+	import { Button } from '$UI';
 </script>
 
 <div class="w-96 shrink-0 bg-transparent p-4 flex flex-col gap-4 ml-auto relative overflow-auto">

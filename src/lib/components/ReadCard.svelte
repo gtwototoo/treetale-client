@@ -1,7 +1,8 @@
 <script lang="ts">
+	import clsx from 'clsx';
+
 	import { correctWhitespace } from '$lib/utils';
 	import { Card, Photo } from '$UI';
-	import clsx from 'clsx';
 
 	let className = '';
 	export { className as class };

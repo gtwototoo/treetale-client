@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { Card, Photo } from '$UI';
+	import { BookOpen } from 'svelte-heros-v2';
+
+	import SvgGradient from '../SvgGradient.svelte';
+
+	import Body from './Body.svelte';
+
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -8,9 +13,7 @@
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
 	import { RGB } from '$lib/utils';
-	import { BookOpen } from 'svelte-heros-v2';
-	import SvgGradient from '../SvgGradient.svelte';
-	import Body from './Body.svelte';
+	import { Card, Photo } from '$UI';
 
 	export let story: IStoryReading;
 	export let vars: Array<IVariable>;

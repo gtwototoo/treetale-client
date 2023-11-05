@@ -1,7 +1,8 @@
+import mongoose from 'mongoose';
+
 import { dev } from '$app/environment';
 import { MONGODB_URI } from '$env/static/private';
 import { randomError } from '$lib/utils';
-import mongoose from 'mongoose';
 
 if (!MONGODB_URI) {
 	console.error('Please define the MONGODB_URI environment variable');

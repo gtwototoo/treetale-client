@@ -1,10 +1,11 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { Loading } from '$UI/Icons';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
+	import { Photo as PhotoIcon } from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { Loading } from '$UI/Icons';
 
 	let className = '';
 	export { className as class };

@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Button, FormSplit } from '$UI';
+	import clsx from 'clsx';
+	import { Plus } from 'svelte-heros-v2';
+
 	import { changesHistory } from '$lib/stores/editing';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { clm, last } from '$lib/utils';
-	import clsx from 'clsx';
-	import { Plus } from 'svelte-heros-v2';
+	import { Button, FormSplit } from '$UI';
 
 	export let frameKey: number;
 

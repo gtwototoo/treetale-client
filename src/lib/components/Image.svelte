@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import { Loading } from '$UI/Icons';
-	import { PUBLIC_TIMAGES_DELIVERY_URL } from '$env/static/public';
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 	import { BookOpen, Trash } from 'svelte-heros-v2';
+
 	import DropBlock from './DropBlock.svelte';
 	import Icon from './Icon.svelte';
+
+	import { PUBLIC_TIMAGES_DELIVERY_URL } from '$env/static/public';
+	import { Button } from '$UI';
+	import { Loading } from '$UI/Icons';
 
 	let className = '';
 	export { className as class };

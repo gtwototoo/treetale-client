@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { createEventDispatcher, onMount } from 'svelte';
+
 	import { framesDataStore } from '$lib/stores/workspace';
 	import { createConnections } from '$lib/utils/editing';
-	import { createEventDispatcher, onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 

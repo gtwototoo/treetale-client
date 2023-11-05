@@ -1,8 +1,9 @@
+import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
+
 import { goto } from '$app/navigation';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { ICoordinates, IStoryEditableInfo, IVariable } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
-import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
 
 export const addLike = async (storyId: number) => {
 	interface IResponse {

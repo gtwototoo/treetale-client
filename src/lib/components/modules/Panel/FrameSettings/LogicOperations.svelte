@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { Button, FormSplit, Input, Listbox } from '$UI';
+	import { XMark } from 'svelte-heros-v2';
+
+	import Modificator from './Modificator.svelte';
+
+	import Icon from '$lib/components/Icon.svelte';
 	import { variablesStore } from '$lib/stores/newediting';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import type { TComparisonOperator } from '$lib/types';
-
-	import Modificator from './Modificator.svelte';
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 
 	export let frameKey: number;
 	export let choiceKey: number;
@@ -21,24 +24,57 @@
 			...$framesDataStore[frameKey].choices[choiceKey].logicOperations
 		];
 	};
+
+	const removeLogicOperation = (key: number) => {
+		$framesDataStore[frameKey].choices[choiceKey].logicOperations.splice(key, 1);
+
+		$framesDataStore[frameKey].choices[choiceKey].logicOperations = [
+			...$framesDataStore[frameKey].choices[choiceKey].logicOperations
+		];
+	};
 </script>
 
-<Modificator class="bg-orange-100" title="Условия появления">
+<Modificator class="bg-orange-100" title="Условия появления" let:editMode>
 	<div class="flex flex-col gap-2 w-full">
-		{#each $framesDataStore[frameKey].choices[choiceKey].logicOperations as operation}
+		{#each $framesDataStore[frameKey].choices[choiceKey].logicOperations as operation, key}
 			<FormSplit>
-				<Listbox
-					placeholder="Переменная"
-					bind:value={operation.variable}
-					list={$variablesStore.map(({ name }) => name)}
-					class="flex-1 child-[button]:!rounded-none child-[button]:!rounded-l-lg"
-				/>
-				<Listbox list={symbols} placeholder="" value={operation.symbol} let:value let:click>
-					<Button on:click={click} class="!rounded-none">{value}</Button>
-				</Listbox>
-				<Input placeholder="Значение" class="flex-1" bind:value={operation.value} />
+				{#if editMode}
+					<Button disabled class="w-full gap-3">
+						<p>{operation.variable || 'Переменная'}</p>
+						<p>{operation.symbol}</p>
+						<p>{operation.value || 'Значение'}</p>
+					</Button>
+					<Button
+						variant="main"
+						on:click={() => removeLogicOperation(key)}
+						class="!text-red-500 !bg-red-100"
+					>
+						<Icon type={XMark} />
+					</Button>
+				{:else}
+					<Listbox
+						placeholder="Переменная"
+						bind:value={operation.variable}
+						list={$variablesStore.map(({ name }) => name)}
+						class="flex-1 child-[button]:!rounded-none child-[button]:!rounded-l-lg"
+					/>
+					<Listbox
+						list={symbols}
+						placeholder=""
+						bind:value={operation.symbol}
+						let:value
+						let:click
+					>
+						<Button on:click={click} class="!rounded-none">{value}</Button>
+					</Listbox>
+					<Input placeholder="Значение" class="flex-1" bind:value={operation.value} />
+				{/if}
 			</FormSplit>
 		{/each}
-		<Button class="justify-center w-full" on:click={addLogicOperation}>Добавить условие</Button>
+		{#if !editMode}
+			<Button class="justify-center w-full" on:click={addLogicOperation}>
+				Добавить условие
+			</Button>
+		{/if}
 	</div>
 </Modificator>

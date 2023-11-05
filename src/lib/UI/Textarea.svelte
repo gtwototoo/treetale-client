@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { clm } from '$lib/utils';
 	import clsx from 'clsx';
 	import { onMount } from 'svelte';
+
+	import { clm } from '$lib/utils';
 
 	let classes = '';
 	export { classes as class };

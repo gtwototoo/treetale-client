@@ -1,5 +1,6 @@
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { fetchPost } from '.';
+
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 export const signInUser = async (value: string) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-in`, {

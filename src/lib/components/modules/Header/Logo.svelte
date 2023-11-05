@@ -1,8 +1,9 @@
 <script lang="ts">
+	import clsx from 'clsx';
+
 	import Link from '$lib/components/Link.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { contrastText } from '$lib/utils';
-	import clsx from 'clsx';
 
 	$: textColor = contrastText($bodyColorStore) ? 'childs:from-[#FDBA74]' : 'childs:from-[#753F00]';
 </script>

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { clm } from '$lib/utils';
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
+
+	import { clm } from '$lib/utils';
 
 	const dispatch = createEventDispatcher<{
 		input: Event & { currentTarget: EventTarget & HTMLDivElement };
@@ -128,7 +129,7 @@
 
 <style lang="postcss">
 	.contenteditable {
-		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-center gap-2 rounded-lg bg-white py-2 text-left text-sm transition-colors hover:bg-main-30;
+		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 rounded-lg bg-white py-2 text-left text-sm transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

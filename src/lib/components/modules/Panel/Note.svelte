@@ -1,7 +1,8 @@
 <script lang="ts">
+	import type { SvelteComponent } from 'svelte';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { correctWhitespace } from '$lib/utils';
-	import type { SvelteComponent } from 'svelte';
 
 	export let text: string | undefined = undefined;
 	export let icon: typeof SvelteComponent<unknown>;

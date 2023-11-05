@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { Play } from 'svelte-heros-v2';
+
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
 	import Radar from '$lib/components/modules/EditingFooter/Radar.svelte';
 	import { FrameSettings } from '$lib/components/modules/Panel';
 	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
-	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
 		addFrame,
 		cursorFollow,
@@ -12,6 +14,7 @@
 		movingFrame,
 		startMoveArea
 	} from '$lib/components/modules/Workspace/methods';
+	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
 	import { changesHistory } from '$lib/stores/editing';
@@ -28,12 +31,9 @@
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
-
 	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 	import type { ICoordinates } from '$lib/types/index';
 	import { exclude, getFrameFromId, rootStyle } from '$lib/utils';
-	import { onMount } from 'svelte';
-	import { Play } from 'svelte-heros-v2';
 
 	export let data;
 

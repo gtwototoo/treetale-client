@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Popover } from '$UI';
-	import type { TRGB } from '$lib/types';
 	import Picker from './Picker.svelte';
+
+	import type { TRGB } from '$lib/types';
+	import { Popover } from '$UI';
 
 	export let disabled = false;
 	export let popoverAlign: 'left' | 'right' = 'right';

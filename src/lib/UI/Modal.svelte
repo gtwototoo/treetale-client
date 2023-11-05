@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { clsx } from 'clsx';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
+	import { XMark } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { createPortal } from '$lib/hooks';
 	import { Button } from '$UI';
-	import { clsx } from 'clsx';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { XMark } from 'svelte-heros-v2';
-	import { fly } from 'svelte/transition';
+
 
 	let className = '';
 	export { className as class };

@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { Button, FormSplit } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory } from '$lib/stores/editing';
 	import clsx from 'clsx';
 	import { Clock } from 'svelte-heros-v2';
+
 	import Note from './Note.svelte';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { changesHistory } from '$lib/stores/editing';
+	import { Button, FormSplit } from '$UI';
 </script>
 
 <Note

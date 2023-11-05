@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Button, Input } from '$UI';
 	import { Star } from 'svelte-heros-v2';
+
 	import Note from './Note.svelte';
+
+	import { Button, Input } from '$UI';
 
 	let value: string;
 </script>

@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import clsx from 'clsx';
+	import { Plus } from 'svelte-heros-v2';
+
+	import Icon from './Icon.svelte';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { createStory } from '$lib/requests/story';
-	import clsx from 'clsx';
-	import { Plus } from 'svelte-heros-v2';
-	import Icon from './Icon.svelte';
+	import { Button } from '$UI';
 
 	let className = '';
 	export { className as class };

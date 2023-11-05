@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { IStoryFull } from '$lib/types/reading';
 	import Empty from './Empty.svelte';
 	import StoryCard from './StoryCard/index.svelte';
+
+	import type { IStoryFull } from '$lib/types/reading';
 
 	export let stories: Array<IStoryFull>;
 </script>

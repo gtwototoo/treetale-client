@@ -1,7 +1,8 @@
+import { redirect } from '@sveltejs/kit';
+
 import { StoriesModel } from '$lib/server/models';
 import type { IStorySchema } from '$lib/types/schemas';
 import { randomError, serialize } from '$lib/utils';
-import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, locals }) => {
 	const user = locals.session;

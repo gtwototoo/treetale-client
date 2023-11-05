@@ -1,13 +1,16 @@
 <script lang="ts">
-	import { Button, FormSplit } from '$UI';
+	import clsx from 'clsx';
+	import { ArrowUturnLeft, ArrowUturnRight, Variable } from 'svelte-heros-v2';
+
+	import { Changes, Variables } from '../Panel';
+
+	import Header from './Header.svelte';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { activeActionStore } from '$lib/stores/workspace';
-	import clsx from 'clsx';
-	import { ArrowUturnLeft, ArrowUturnRight, Variable } from 'svelte-heros-v2';
-	import { Changes, Variables } from '../Panel';
-	import Header from './Header.svelte';
+	import { Button, FormSplit } from '$UI';
 
 	const variablesSwitch = () =>
 		($currentPanelStore = {

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
+
 	import Logo from './Logo.svelte';
 	import Session from './Session.svelte';
 

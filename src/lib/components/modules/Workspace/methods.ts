@@ -1,5 +1,7 @@
-import { changesHistory } from '$lib/stores/editing';
+import { get } from 'svelte/store';
+import { Plus } from 'svelte-heros-v2';
 
+import { changesHistory } from '$lib/stores/editing';
 import {
 	activeActionStore,
 	addFrameOffsetStore,
@@ -12,8 +14,6 @@ import {
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 import { getFrameFromId, last } from '$lib/utils';
-import { Plus } from 'svelte-heros-v2';
-import { get } from 'svelte/store';
 
 export const addFrame = ({ x, y }: ICoordinates) => {
 	const framesData = get(framesDataStore);

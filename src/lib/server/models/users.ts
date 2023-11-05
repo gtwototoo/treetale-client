@@ -1,5 +1,6 @@
-import type { IUser } from '$lib/types';
 import mongoose from 'mongoose';
+
+import type { IUser } from '$lib/types';
 
 const userSchema = new mongoose.Schema<IUser>(
 	{

@@ -1,7 +1,8 @@
+import { redirect, type HttpError } from '@sveltejs/kit';
+
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { fetchPost } from '$lib/requests/index.js';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
-import { HttpError, redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, cookies }) => {
 	const { code } = params;

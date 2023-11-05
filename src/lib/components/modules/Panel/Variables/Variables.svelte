@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import { Cloud, Variable } from 'svelte-heros-v2';
+
+	import Note from '../Note.svelte';
+
+	import VariableRow from './Variable.svelte';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateVars } from '$lib/requests/story';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
 	import { correctWhitespace } from '$lib/utils';
-	import { Cloud, Variable } from 'svelte-heros-v2';
-	import Note from '../Note.svelte';
-	import VariableRow from './Variable.svelte';
+	import { Button } from '$UI';
 
 	let timer: number;
 	let saving = false;
@@ -42,6 +46,8 @@
 			saving = false;
 		}, 3000);
 	};
+
+	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <div class="flex flex-col items-stretch gap-4">
@@ -57,7 +63,9 @@
 		{#each $variablesStore as _, key}
 			<VariableRow varKey={key} {checkUpdates} />
 		{/each}
-		<Button on:click={addVariable} class="justify-center">Добавить переменную</Button>
+		{#if !editMode}
+			<Button on:click={addVariable} class="justify-center">Добавить переменную</Button>
+		{/if}
 	</div>
 	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 		{#if saving}

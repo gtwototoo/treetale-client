@@ -1,4 +1,10 @@
 <script lang="ts">
+	import clsx from 'clsx';
+	import { Share } from 'svelte-heros-v2';
+
+	import Choices from './Choices.svelte';
+	import Header from './Header.svelte';
+
 	import { changesHistory } from '$lib/stores/editing';
 	import {
 		activeModeStore,
@@ -8,10 +14,6 @@
 	} from '$lib/stores/workspace';
 	import { transform } from '$lib/utils';
 	import { createConnections, getChoicePosition } from '$lib/utils/editing';
-	import clsx from 'clsx';
-	import { Share } from 'svelte-heros-v2';
-	import Choices from './Choices.svelte';
-	import Header from './Header.svelte';
 
 	export let frameId: number;
 	export let index: number;

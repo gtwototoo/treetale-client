@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { clsx } from 'clsx';
+	import { fly } from 'svelte/transition';
+	import { ChevronDown } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
 	import { Button } from '$UI';
-	import { clsx } from 'clsx';
-	import { ChevronDown } from 'svelte-heros-v2';
-	import { fly } from 'svelte/transition';
+
 
 	let className = '';
 	export { className as class };

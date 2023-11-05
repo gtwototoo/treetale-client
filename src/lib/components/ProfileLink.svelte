@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { Avatar, Button } from '$UI';
+	import clsx from 'clsx';
+
+	import Link from './Link.svelte';
+
 	import { page } from '$app/stores';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import type { IUser } from '$lib/types';
 	import { RGB } from '$lib/utils';
-	import clsx from 'clsx';
-	import Link from './Link.svelte';
+	import { Avatar, Button } from '$UI';
 
 	let className = '';
 	export { className as class };

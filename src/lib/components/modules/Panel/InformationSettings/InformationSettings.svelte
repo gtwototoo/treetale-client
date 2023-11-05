@@ -1,6 +1,9 @@
 <script lang="ts">
-	import { Button, ColorPicker, FormSplit, Input, InputTags } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import { onDestroy } from 'svelte';
+	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
+
+	import Shortcuts from './Shortcuts.svelte';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
@@ -10,9 +13,8 @@
 	import { currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore } from '$lib/stores/newediting';
 	import { correctWhitespace } from '$lib/utils';
-	import { onDestroy } from 'svelte';
-	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
-	import Shortcuts from './Shortcuts.svelte';
+	import { Button, ColorPicker, FormSplit, Input, InputTags } from '$UI';
+	import Contenteditable from '$UI/Contenteditable.svelte';
 
 	let light = 80;
 	let saturate = 90;

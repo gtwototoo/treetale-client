@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Button } from '$UI';
 	import clsx from 'clsx';
+
+	import { Button } from '$UI';
 
 	export let active: boolean;
 </script>

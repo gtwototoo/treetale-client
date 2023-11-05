@@ -1,6 +1,7 @@
 <script lang="ts">
-	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Header from './Header.svelte';
+
+	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 </script>
 
 <Header>

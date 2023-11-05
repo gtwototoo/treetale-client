@@ -1,7 +1,8 @@
-import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
-import type { TRGB } from '$lib/types';
 import { alphaToRgb } from './alpha_to_rgb';
 import { contrastText } from './contrast';
+
+import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
+import type { TRGB } from '$lib/types';
 
 export const varColors = (extend: Record<string, TRGB> = {}) => {
 	return Object.entries(extend)

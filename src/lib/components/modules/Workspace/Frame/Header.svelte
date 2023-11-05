@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { Button } from '$UI';
 	import { createEventDispatcher } from 'svelte';
 	import { ChevronDown, ChevronUp } from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { Button } from '$UI';
 
 	export let hidden: boolean;
 

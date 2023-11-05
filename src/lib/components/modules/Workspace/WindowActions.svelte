@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	import { changesHistory } from '$lib/stores/editing';
 	import {
 		activeActionStore,
 		activeModeStore,
 		oneDirectionModeStore
 	} from '$lib/stores/workspace';
-	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 

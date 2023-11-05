@@ -1,5 +1,6 @@
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { fetchDelete, fetchPost } from '.';
+
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 interface IResponse {
 	imageId: string;

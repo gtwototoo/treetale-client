@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
+	import { PencilSquare, XMark } from 'svelte-heros-v2';
+
+	import Icon from './Icon.svelte';
+
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import type { IUser } from '$lib/types';
 	import { Avatar, Button, InputFile } from '$UI';
 
-	import { PencilSquare, XMark } from 'svelte-heros-v2';
-	import { fade } from 'svelte/transition';
-	import Icon from './Icon.svelte';
+
 
 	export let user: IUser;
 	export let editMode: boolean;

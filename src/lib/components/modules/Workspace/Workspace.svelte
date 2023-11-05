@@ -1,4 +1,14 @@
 <script lang="ts">
+	import clsx from 'clsx';
+	import { createEventDispatcher } from 'svelte';
+	import { pinch } from 'svelte-gestures';
+
+	import ConnectionsLayer from './ConnectionsLayer.svelte';
+	import Frame from './Frame/Frame.svelte';
+	import MovingArea from './MovingArea.svelte';
+	import NewFrame from './NewFrame.svelte';
+	import WindowActions from './WindowActions.svelte';
+
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -8,15 +18,6 @@
 		zoomStore
 	} from '$lib/stores/workspace';
 	import type { ICoordinates } from '$lib/types';
-	import ConnectionsLayer from './ConnectionsLayer.svelte';
-	import Frame from './Frame/Frame.svelte';
-	import MovingArea from './MovingArea.svelte';
-	import WindowActions from './WindowActions.svelte';
-
-	import clsx from 'clsx';
-	import { createEventDispatcher } from 'svelte';
-	import { pinch } from 'svelte-gestures';
-	import NewFrame from './NewFrame.svelte';
 
 	export let height: number;
 	export let width: number;

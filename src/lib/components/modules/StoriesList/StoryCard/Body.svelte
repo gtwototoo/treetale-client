@@ -1,12 +1,13 @@
 <script lang="ts">
-	import type { IUser, IVariable } from '$lib/types';
-	import type { IStoryReading } from '$lib/types/reading';
-	import { correctVariableReplace } from '$lib/utils';
+	import clsx from 'clsx';
 
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
+	import type { IUser, IVariable } from '$lib/types';
+	import type { IStoryReading } from '$lib/types/reading';
+	import { correctVariableReplace } from '$lib/utils';
 	import { Tag } from '$UI';
-	import clsx from 'clsx';
+
 
 	export let story: IStoryReading;
 	export let vars: Array<IVariable>;

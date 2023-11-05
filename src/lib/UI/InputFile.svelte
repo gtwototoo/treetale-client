@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Button } from '$UI';
 	import { createEventDispatcher } from 'svelte';
+
+	import { Button } from '$UI';
 
 	const dispatch = createEventDispatcher();
 

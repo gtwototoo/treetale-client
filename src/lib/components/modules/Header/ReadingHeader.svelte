@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import clsx from 'clsx';
+	import { Star } from 'svelte-heros-v2';
+
+	import Header from './Header.svelte';
+
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { contrastText, getPageType } from '$lib/utils';
-	import clsx from 'clsx';
-	import { Star } from 'svelte-heros-v2';
-	import Header from './Header.svelte';
+	import { Button } from '$UI';
 
 	$: pageType = getPageType($page.url.pathname);
 </script>

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { InputRange } from '$UI';
+	import { createEventDispatcher } from 'svelte';
+
 	import type { TRGB } from '$lib/types';
 	import { RGB } from '$lib/utils';
-	import { createEventDispatcher } from 'svelte';
+	import { InputRange } from '$UI';
 
 	export let lightRange: Array<number>;
 	export let saturateRange: Array<number>;

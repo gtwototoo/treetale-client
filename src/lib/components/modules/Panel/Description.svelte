@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { Photo, Tag } from '$UI';
+	import clsx from 'clsx';
+	import { BookOpen } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
 	import { storyStore } from '$lib/stores/reading';
 	import { correctVariableReplace } from '$lib/utils';
-	import clsx from 'clsx';
-	import { BookOpen } from 'svelte-heros-v2';
+	import { Photo, Tag } from '$UI';
 
 	$: ({ storyId, title, description, imageId, tags, created, likes, vars, author } = $storyStore);
 </script>

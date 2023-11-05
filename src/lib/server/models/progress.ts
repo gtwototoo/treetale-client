@@ -1,5 +1,6 @@
-import type { IProgressData } from '$lib/types';
 import mongoose from 'mongoose';
+
+import type { IProgressData } from '$lib/types';
 
 const progressSchema = new mongoose.Schema<IProgressData>(
 	{

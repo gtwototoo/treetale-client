@@ -1,9 +1,10 @@
+import { redirect } from '@sveltejs/kit';
+
 import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
 import type { IStoryFull } from '$lib/types/reading';
 import { randomError, serialize } from '$lib/utils';
-import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
 	const { name } = params;

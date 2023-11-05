@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { autoWidth } from '$lib/hooks';
-	import { last } from '$lib/utils';
-
-	import { Button, Tag } from '$UI';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 	import { XMark } from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { autoWidth } from '$lib/hooks';
+	import { last } from '$lib/utils';
+	import { Button, Tag } from '$UI';
 
 	let className = '';
 	export { className as class };

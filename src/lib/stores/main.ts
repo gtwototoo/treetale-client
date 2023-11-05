@@ -1,7 +1,8 @@
-import { DEFAULT_COLOR } from '$lib/constants';
-import type { TRGB } from '$lib/types';
 import type { SvelteComponent } from 'svelte';
 import { writable } from 'svelte/store';
+
+import { DEFAULT_COLOR } from '$lib/constants';
+import type { TRGB } from '$lib/types';
 
 interface IPanel {
 	title?: string;

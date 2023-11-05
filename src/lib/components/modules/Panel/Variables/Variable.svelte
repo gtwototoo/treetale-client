@@ -1,11 +1,12 @@
 <script lang="ts">
+	import clsx from 'clsx';
+	import { ChevronDown, XMark } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { variablesStore } from '$lib/stores/newediting';
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
-	import clsx from 'clsx';
-	import { ChevronDown, XMark } from 'svelte-heros-v2';
 
 	export let varKey: number;
 	export let checkUpdates: () => void;

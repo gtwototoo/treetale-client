@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '$UI';
 	import { clm } from '$lib/utils';
+	import { Button } from '$UI';
 
 	let className = '';
 	export { className as class };
