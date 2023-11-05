@@ -38,7 +38,7 @@
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
-<FormSplit class="w-full">
+<FormSplit class="w-full divide-contrast">
 	<Input
 		bind:value={$variablesStore[varKey].name}
 		placeholder="Название"

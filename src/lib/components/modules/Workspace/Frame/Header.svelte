@@ -17,7 +17,7 @@
 <div class="flex items-center justify-between gap-4 z-10">
 	<slot />
 	<div class="flex gap-2">
-		<Button size="sm" on:click={hideFrame}>
+		<Button variant="ghost" class="bg-main" size="sm" on:click={hideFrame}>
 			<Icon type={hidden ? ChevronUp : ChevronDown} class="h-4 w-4" />
 		</Button>
 	</div>

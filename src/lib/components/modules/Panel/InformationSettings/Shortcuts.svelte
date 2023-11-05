@@ -13,7 +13,9 @@
 	];
 </script>
 
-<div class="bg-gray-50 p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none">
+<div
+	class="bg-main-30 childs:bg-transparent p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none"
+>
 	<p>Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
 		{#each shortcuts as { text, keys }}
@@ -21,7 +23,7 @@
 				<p>{text}</p>
 				<div class="flex gap-1 font-bold">
 					{#each keys as key}
-						<div class="bg-gray-100 py-1 px-2 rounded-lg min-w-[1.75rem]">{key}</div>
+						<div class="bg-main py-1 px-2 rounded-lg min-w-[1.75rem]">{key}</div>
 					{/each}
 				</div>
 			</div>

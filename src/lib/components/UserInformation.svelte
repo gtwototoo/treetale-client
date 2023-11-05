@@ -9,9 +9,7 @@
 	import { signOutUser, updateProfile } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types';
-	import { Button, ColorPicker } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
-
+	import { Button, ColorPicker, Contenteditable } from '$UI';
 
 	export let user: IUser;
 	export let me: boolean;

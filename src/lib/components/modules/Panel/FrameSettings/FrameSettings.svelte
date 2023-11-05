@@ -13,8 +13,7 @@
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
 	import { last } from '$lib/utils';
-	import { Button, FormSplit, Input } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import { Button, Contenteditable, FormSplit, Input } from '$UI';
 
 	const action = 'storyFrameImageId';
 
@@ -109,10 +108,11 @@
 
 	onDestroy(() => {
 		$selectedFrameStore = null;
+		currentPanelStore.clear();
 	});
 </script>
 
-<FormSplit class="w-full">
+<FormSplit class="w-full divide-contrast">
 	<Input
 		value={`${Math.round(x)}`}
 		on:input={setX}
@@ -150,6 +150,8 @@
 			Удалить фрейм
 		</Button>
 	{:else}
-		<Button on:click={addChoice} class="justify-center">Добавить вариант</Button>
+		<Button variant="ghost" on:click={addChoice} class="justify-center text-text bg-main">
+			Добавить вариант
+		</Button>
 	{/if}
 </div>

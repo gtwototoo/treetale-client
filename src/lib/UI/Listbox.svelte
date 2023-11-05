@@ -9,13 +9,12 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
-	import { fly } from 'svelte/transition';
 	import { ChevronDown } from 'svelte-heros-v2';
+	import { fly } from 'svelte/transition';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
 	import { Button } from '$UI';
-
 
 	let className = '';
 	export { className as class };
@@ -55,7 +54,13 @@
 	{#if $$slots.default}
 		<slot value={value || placeholder} click={handleClick} />
 	{:else}
-		<Button class="w-full !pr-3 gap-3" {disabled} {size} on:click={handleClick}>
+		<Button
+			variant="ghost"
+			class="w-full !pr-3 gap-3 bg-main"
+			{disabled}
+			{size}
+			on:click={handleClick}
+		>
 			<p class={clsx('w-full text-left', !value && 'text-gray-400')}>
 				{value || placeholder}
 			</p>
@@ -63,12 +68,16 @@
 		</Button>
 	{/if}
 	{#if focused}
-		<div in:fly={{ y: 10 }} class={clsx('list', `${align}-0`)} use:correctPosition>
+		<div
+			in:fly={{ y: 10 }}
+			class={clsx('list', align === 'left' ? '-left-1' : '-right-1')}
+			use:correctPosition
+		>
 			{#each list as item}
 				<Button
 					on:click={(e) => handleSelect(e, item)}
-					class="w-full gap-4 !bg-transparent"
-					variant="secondary"
+					class="w-full gap-4 text-text bg-main"
+					variant="ghost"
 				>
 					{#if typeof item === 'string'}
 						{item}
@@ -89,6 +98,6 @@
 		@apply relative bg-transparent;
 	}
 	.list {
-		@apply absolute z-[4] rounded-lg bg-white text-black shadow-md;
+		@apply absolute z-[4] flex flex-col gap-1 rounded-lg bg-contrast p-1 shadow-md;
 	}
 </style>

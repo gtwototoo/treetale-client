@@ -3,11 +3,11 @@
 
 	import Modificator from './Modificator.svelte';
 
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { variablesStore } from '$lib/stores/newediting';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import type { TComparisonOperator } from '$lib/types';
-	import { Button, FormSplit, Input, Listbox } from '$UI';
 
 	export let frameKey: number;
 	export let choiceKey: number;
@@ -34,10 +34,10 @@
 	};
 </script>
 
-<Modificator class="bg-orange-100" title="Условия появления" let:editMode>
+<Modificator class="bg-main-40 text-orange-400" title="Условия появления" let:editMode>
 	<div class="flex flex-col gap-2 w-full">
 		{#each $framesDataStore[frameKey].choices[choiceKey].logicOperations as operation, key}
-			<FormSplit>
+			<FormSplit class="divide-main-40">
 				{#if editMode}
 					<Button disabled class="w-full gap-3">
 						<p>{operation.variable || 'Переменная'}</p>
@@ -65,14 +65,20 @@
 						let:value
 						let:click
 					>
-						<Button on:click={click} class="!rounded-none">{value}</Button>
+						<Button on:click={click} variant="ghost" class="bg-main text-text !rounded-none">
+							{value}
+						</Button>
 					</Listbox>
 					<Input placeholder="Значение" class="flex-1" bind:value={operation.value} />
 				{/if}
 			</FormSplit>
 		{/each}
 		{#if !editMode}
-			<Button class="justify-center w-full" on:click={addLogicOperation}>
+			<Button
+				variant="ghost"
+				class="justify-center w-full bg-main text-text"
+				on:click={addLogicOperation}
+			>
 				Добавить условие
 			</Button>
 		{/if}

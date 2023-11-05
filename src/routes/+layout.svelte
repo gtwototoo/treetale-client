@@ -14,7 +14,7 @@
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>
-	<div class="fixed right-0 h-full w-96 bg-gray-100" />
+	<div class="fixed right-0 h-full w-96 bg-contrast" />
 	<Panel />
 {:else}
 	<div class="flex flex-col text-black w-full relative">

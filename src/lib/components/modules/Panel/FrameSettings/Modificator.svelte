@@ -27,8 +27,8 @@
 		<p class="text-sm/10">{title}</p>
 		<Button
 			size="sm"
-			variant={editMode ? 'main' : 'secondary'}
-			class={clsx('!absolute right-0 z-[2] !px-1', editMode && 'bg-main text-text')}
+			variant={editMode ? 'main' : 'ghost'}
+			class={clsx('!absolute right-0 z-[2] !px-1 bg-main text-text')}
 			on:click={switchEditMode}
 		>
 			<Icon type={PencilSquare} class="w-4 h-4" />

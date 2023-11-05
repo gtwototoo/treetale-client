@@ -29,7 +29,7 @@
 <Header
 	class={clsx('pointer-events-none', $activeActionStore ? 'blind' : 'childs:pointer-events-auto')}
 >
-	<FormSplit class="!divide-main">
+	<FormSplit class="divide-main">
 		<Button
 			class="header-button bg-contrast text-text"
 			variant="ghost"

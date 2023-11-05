@@ -64,7 +64,9 @@
 			<VariableRow varKey={key} {checkUpdates} />
 		{/each}
 		{#if !editMode}
-			<Button on:click={addVariable} class="justify-center">Добавить переменную</Button>
+			<Button variant="ghost" on:click={addVariable} class="justify-center bg-main text-text">
+				Добавить переменную
+			</Button>
 		{/if}
 	</div>
 	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">

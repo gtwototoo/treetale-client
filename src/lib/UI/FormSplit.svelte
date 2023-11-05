@@ -10,7 +10,7 @@
 <div
 	class={clm(
 		className,
-		'flex divide-gray-100 form-split',
+		'flex form-split',
 		vertical ? 'flex-col divide-y vertical' : 'divide-x horizontal'
 	)}
 >

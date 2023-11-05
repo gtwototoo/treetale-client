@@ -20,8 +20,7 @@
 		type IAction,
 		type IMode
 	} from '$lib/stores/workspace';
-	import { Tag } from '$UI';
-	import Photo from '$UI/Photo.svelte';
+	import { Photo, Tag } from '$UI';
 
 	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
 		binding: Share,

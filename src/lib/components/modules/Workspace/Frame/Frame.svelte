@@ -56,7 +56,7 @@
 	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 		<button
 			class={clsx(
-				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-white p-2 text-sm/4 transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
+				'relative z-10 flex w-64 cursor-move select-none flex-col text-text items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
 				$movingFrameStore === frameId && 'shadow-lg',
 				$activeModeStore === 'binding' && '!bg-main-60 text-text',
 				$activeModeStore === 'binding' &&
@@ -112,6 +112,6 @@
 
 <style lang="postcss">
 	.point {
-		@apply absolute flex items-center justify-center bg-white after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit;
+		@apply absolute flex items-center justify-center bg-contrast after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit;
 	}
 </style>

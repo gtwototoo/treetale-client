@@ -61,7 +61,7 @@
 
 <style lang="postcss">
 	input {
-		@apply w-full bg-transparent text-black inherit-align placeholder:select-none;
+		@apply w-full bg-transparent inherit-align placeholder:select-none;
 	}
 	.size-sm {
 		@apply rounded px-2 py-1 text-xs;
@@ -73,7 +73,7 @@
 		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply relative flex cursor-text items-center bg-white text-left transition-colors hover:bg-main-30;
+		@apply relative flex cursor-text items-center bg-main-20 text-left text-text transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

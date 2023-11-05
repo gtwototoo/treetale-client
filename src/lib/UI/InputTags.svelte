@@ -88,7 +88,7 @@
 <button
 	class={clsx(
 		'input',
-		focused && 'bg-main-30',
+		focused && '!bg-main-30',
 		tags.length ? 'px-2' : 'px-4',
 		{ disabled },
 		className
@@ -123,7 +123,7 @@
 		@apply w-full flex-grow bg-transparent text-sm leading-6 text-black placeholder:select-none;
 	}
 	.input {
-		@apply flex min-h-[2.5rem] flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-white py-2 transition-colors hover:bg-main-30;
+		@apply flex min-h-[2.5rem] flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-main-20 py-2 transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;

@@ -13,11 +13,12 @@
 	icon={Clock}
 	text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
 />
-<FormSplit vertical>
+<FormSplit vertical class="divide-contrast">
 	{#each $changesHistory.stages as { title, icon }, key}
 		<Button
+			variant="ghost"
 			on:click={() => changesHistory.to(key)}
-			class={clsx('gap-4', {
+			class={clsx('gap-4 text-text bg-main', {
 				'opacity-60': key > $changesHistory.currentStageId
 			})}
 		>

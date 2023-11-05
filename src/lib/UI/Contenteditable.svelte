@@ -19,6 +19,15 @@
 	export let maxlength: number | undefined = undefined;
 
 	let editableRef: HTMLDivElement;
+	let focused = false;
+
+	const handleFocus = () => {
+		focused = true;
+	};
+
+	const handleBlur = () => {
+		focused = false;
+	};
 
 	const insertText = (text: string) => {
 		if (!window.getSelection) return;
@@ -103,14 +112,17 @@
 		'contenteditable',
 		$$slots.left ? 'pl-2' : 'pl-4',
 		$$slots.right ? 'pr-2' : 'pr-4',
+		focused && '!bg-main-30',
 		{ disabled },
 		className
 	)}
 	on:click={handleClick}
 >
 	<slot name="left" />
-	<div class="w-full relative">
+	<div class="w-full relative self-center">
 		<div
+			on:focus={handleFocus}
+			on:blur={handleBlur}
 			on:input={handleInput}
 			role="textbox"
 			on:paste|preventDefault={handlePaste}
@@ -129,7 +141,7 @@
 
 <style lang="postcss">
 	.contenteditable {
-		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 rounded-lg bg-white py-2 text-left text-sm transition-colors hover:bg-main-30;
+		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 rounded-lg bg-main-20 py-2 text-left text-sm transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

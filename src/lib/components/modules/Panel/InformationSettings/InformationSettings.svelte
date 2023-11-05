@@ -10,11 +10,11 @@
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
 	import { changesHistory } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore } from '$lib/stores/newediting';
-	import { correctWhitespace } from '$lib/utils';
-	import { Button, ColorPicker, FormSplit, Input, InputTags } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import { contrastText, correctWhitespace } from '$lib/utils';
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
+	import clsx from 'clsx';
 
 	let light = 80;
 	let saturate = 90;
@@ -107,6 +107,8 @@
 			clearTimeout(timer);
 		}
 	});
+
+	$: warningColor = clsx(contrastText($bodyColorStore) ? 'bg-orange-950' : 'bg-orange-50');
 </script>
 
 <Image
@@ -119,7 +121,7 @@
 	on:loading={setFile}
 	on:remove={preRemoveImage}
 />
-<FormSplit vertical>
+<FormSplit vertical class="divide-contrast">
 	<Input
 		placeholder="Название"
 		class="w-full"
@@ -141,7 +143,7 @@
 		on:remove={checkUpdates}
 	/>
 </FormSplit>
-<FormSplit vertical>
+<FormSplit vertical class="divide-contrast">
 	<ColorPicker
 		lightRange={[10, 80]}
 		saturateRange={[10, 90]}
@@ -166,7 +168,10 @@
 	</Button>
 {:else}
 	<div
-		class="p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none bg-orange-50 text-orange-500"
+		class={clsx(
+			'p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none text-orange-500',
+			warningColor
+		)}
 	>
 		<p>
 			{correctWhitespace(

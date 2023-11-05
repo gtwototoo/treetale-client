@@ -34,10 +34,10 @@
 	};
 </script>
 
-<Modificator class="bg-violet-100" title="Изменения переменных" let:editMode>
+<Modificator class="bg-main-40 text-violet-400" title="Изменения переменных" let:editMode>
 	<div class="flex flex-col gap-2 w-full">
 		{#each $framesDataStore[frameKey].choices[choiceKey].mathOperations as operation, key}
-			<FormSplit>
+			<FormSplit class="divide-main-40">
 				{#if editMode}
 					<Button disabled class="w-full gap-3">
 						<p>{operation.variable || 'Переменная'}</p>
@@ -65,14 +65,20 @@
 						let:value
 						let:click
 					>
-						<Button on:click={click} class="!rounded-none">{value}</Button>
+						<Button on:click={click} variant="ghost" class="bg-main text-text !rounded-none">
+							{value}
+						</Button>
 					</Listbox>
 					<Input placeholder="Значение" class="flex-1" bind:value={operation.value} />
 				{/if}
 			</FormSplit>
 		{/each}
 		{#if !editMode}
-			<Button class="justify-center w-full" on:click={addMathOperation}>
+			<Button
+				variant="ghost"
+				class="justify-center w-full bg-main text-text"
+				on:click={addMathOperation}
+			>
 				Добавить изменение
 			</Button>
 		{/if}

@@ -1,9 +1,9 @@
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 import type { ISize, TRGB } from '$lib/types';
 
-export const BLACK_COLOR: TRGB = [0, 0, 0];
+export const BLACK_COLOR: TRGB = [5, 5, 5];
 export const DEFAULT_COLOR: TRGB = [254, 215, 170];
-export const WHITE_COLOR: TRGB = [255, 255, 255];
+export const WHITE_COLOR: TRGB = [250, 250, 250];
 export const ICON_TYPE = 'outline';
 
 export const USER_WITHOUT_WORKSPACE = {

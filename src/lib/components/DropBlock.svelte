@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$UI/Button.svelte';
 	import clsx from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
 
@@ -8,12 +9,15 @@
 	let dragged = false;
 	let fileInput: HTMLInputElement;
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		click: MouseEvent;
+		change: { files: FileList };
+	}>();
 
-	const handleClick = (e: MouseEvent) => {
+	const handleClick = (e: CustomEvent<MouseEvent>) => {
 		fileInput.click();
 
-		dispatch('click', e);
+		dispatch('click', e.detail);
 	};
 
 	const handleDragEnter = (e: DragEvent) => {
@@ -43,18 +47,19 @@
 	});
 </script>
 
-<button
+<Button
+	variant="ghost"
 	class={clsx(
-		'flex select-none flex-col items-center justify-center rounded-lg bg-gray-50 p-6 text-center text-sm text-gray-400 transition-colors hover:bg-white childs:pointer-events-none',
-		{ '!bg-blue-50': dragged },
+		'hover:bg-main-60 bg-main flex-col w-full !whitespace-normal !p-6',
+		{ '!bg-main-60': dragged },
 		className
 	)}
-	on:click|preventDefault={handleClick}
+	on:click={handleClick}
 	on:dragenter={handleDragEnter}
 	on:dragleave={disableDragged}
 	on:drop={addedFiles}
 >
 	<slot />
 	<p>Нажмите тут или перетащите сюда изображение</p>
-</button>
+</Button>
 <input bind:this={fileInput} class="hidden" type="file" accept="image/*" on:change={addedFiles} />

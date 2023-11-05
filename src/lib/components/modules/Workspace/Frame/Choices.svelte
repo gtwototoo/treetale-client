@@ -37,13 +37,14 @@
 
 <FormSplit
 	vertical
-	class={clsx($activeModeStore === 'binding' ? 'divide-main-60' : 'divide-white')}
+	class={clsx($activeModeStore === 'binding' ? 'divide-main-60' : 'divide-contrast')}
 >
 	{#each choices as { text, choiceId, frameId: toFrameId } (choiceId)}
 		<Button
+			variant="ghost"
 			class={clm(
-				'gap-4',
-				!text && '!text-gray-400',
+				'gap-4 bg-main',
+				!text ? '!text-gray-400' : '!text-text',
 				$activeModeStore === 'binding' && 'hover:!bg-emerald-100',
 				$activeModeStore === 'binding' && toFrameId && '!bg-orange-100',
 				$activeModeStore === 'binding' &&
@@ -60,5 +61,5 @@
 			{/if}
 		</Button>
 	{/each}
-	<Button on:click={addChoice}>Добавить вариант</Button>
+	<Button variant="ghost" class="bg-main !text-text" on:click={addChoice}>Добавить вариант</Button>
 </FormSplit>

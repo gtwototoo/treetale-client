@@ -33,7 +33,7 @@
 	classCard="justify-between !items-start"
 >
 	{#if choices.length}
-		<FormSplit vertical class="w-full !divide-main-10">
+		<FormSplit vertical class="w-full divide-main-10">
 			{#each choices as { choiceId, text } (choiceId)}
 				<Choice active={selectedChoiceId === choiceId} on:click={() => handleClick(choiceId)}>
 					{correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}

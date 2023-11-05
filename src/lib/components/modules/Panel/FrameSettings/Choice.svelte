@@ -9,8 +9,7 @@
 	import { changesHistory } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { framesDataStore } from '$lib/stores/workspace';
-	import { Button, FormSplit } from '$UI';
-	import Contenteditable from '$UI/Contenteditable.svelte';
+	import { Button, Contenteditable, FormSplit } from '$UI';
 
 	type TModificator = 'logic' | 'math';
 
@@ -41,7 +40,7 @@
 	$: ({ logicOperations, mathOperations } = $framesDataStore[frameKey].choices[choiceKey]);
 </script>
 
-<FormSplit vertical={!editMode}>
+<FormSplit vertical={!editMode} class="divide-contrast">
 	<Contenteditable
 		maxlength={55}
 		class="grow !shrink"
@@ -52,9 +51,10 @@
 		<svelte:fragment slot="left">
 			<Button
 				size="sm"
+				variant="ghost"
 				class={clsx(
-					'text-xs gap-1',
-					(logicOperations.length || active === 'logic') && '!bg-orange-100'
+					'text-xs gap-1 bg-main text-text',
+					(logicOperations.length || active === 'logic') && '!text-orange-400'
 				)}
 				on:click={() => setActiveOperation('logic')}
 			>
@@ -67,9 +67,10 @@
 		<svelte:fragment slot="right">
 			<Button
 				size="sm"
+				variant="ghost"
 				class={clsx(
-					'!px-1 gap-1',
-					(mathOperations.length || active === 'math') && '!bg-violet-100'
+					'!px-1 gap-1 bg-main text-text',
+					(mathOperations.length || active === 'math') && '!text-violet-400'
 				)}
 				on:click={() => setActiveOperation('math')}
 			>

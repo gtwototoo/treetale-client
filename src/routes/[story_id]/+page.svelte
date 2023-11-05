@@ -14,12 +14,11 @@
 	import { bodyColorStore } from '$lib/stores/main.js';
 	import { framesStore } from '$lib/stores/reading.js';
 	import { last, rootStyle } from '$lib/utils';
-	import Tag from '$UI/Tag.svelte';
+	import { Tag } from '$UI';
 
 	export let data;
 
 	let current = data.progress.length - 1;
-	let translate = 0;
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		const { code } = e;

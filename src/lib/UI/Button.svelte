@@ -37,6 +37,9 @@
 	use:clickHold
 	on:click={handleClick}
 	on:holdclick={handleHoldClick}
+	on:dragenter
+	on:dragleave
+	on:drop
 	class={clm(
 		'childs:bg-transparent transition-opacity',
 		`size-${size}`,

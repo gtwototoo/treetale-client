@@ -13,7 +13,7 @@
 
 <style lang="postcss">
 	.range {
-		@apply grow appearance-none rngthumb:h-4 rngthumb:w-4 rngthumb:appearance-none rngthumb:rounded-lg rngthumb:!bg-gray-200 rngthumb:transition-colors rngtrack:h-4 rngtrack:appearance-none rngtrack:rounded-lg rngtrack:bg-white rngtrack:ring-1 rngtrack:ring-gray-200 rngtrack:transition-[box-shadow] rngtrack:focus:ring-main;
+		@apply grow appearance-none rngthumb:h-4 rngthumb:w-4 rngthumb:appearance-none rngthumb:rounded-lg rngthumb:!bg-main rngthumb:transition-colors rngtrack:h-4 rngtrack:appearance-none rngtrack:rounded-lg rngtrack:bg-contrast rngtrack:ring-1 rngtrack:ring-main rngtrack:transition-[box-shadow] rngtrack:focus:ring-main;
 	}
 	input[type='range']::-webkit-slider-thumb:hover {
 		@apply !bg-main;
