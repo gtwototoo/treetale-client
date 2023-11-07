@@ -5,9 +5,11 @@
 
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
+	import { redColorStore } from '$lib/stores/main';
 	import { variablesStore } from '$lib/stores/newediting';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import type { TComparisonOperator } from '$lib/types';
+	import clsx from 'clsx';
 
 	export let frameKey: number;
 	export let choiceKey: number;
@@ -34,7 +36,7 @@
 	};
 </script>
 
-<Modificator class="bg-main-40 text-orange-400" title="Условия появления" let:editMode>
+<Modificator class="bg-main-40 text-orange-500" title="Условия появления" let:editMode>
 	<div class="flex flex-col gap-2 w-full">
 		{#each $framesDataStore[frameKey].choices[choiceKey].logicOperations as operation, key}
 			<FormSplit class="divide-main-40">
@@ -47,7 +49,7 @@
 					<Button
 						variant="main"
 						on:click={() => removeLogicOperation(key)}
-						class="!text-red-500 !bg-red-100"
+						class={clsx('!text-red-500', $redColorStore)}
 					>
 						<Icon type={XMark} />
 					</Button>

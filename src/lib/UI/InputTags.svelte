@@ -126,6 +126,6 @@
 		@apply flex min-h-[2.5rem] flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-main-20 py-2 transition-colors hover:bg-main-30;
 	}
 	.disabled {
-		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
+		@apply pointer-events-none cursor-default opacity-40;
 	}
 </style>

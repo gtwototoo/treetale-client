@@ -5,22 +5,22 @@
 	import LogicOperations from './LogicOperations.svelte';
 	import MathOperations from './MathOperations.svelte';
 
+	import { Button, Contenteditable, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore } from '$lib/stores/workspace';
-	import { Button, Contenteditable, FormSplit } from '$UI';
 
 	type TModificator = 'logic' | 'math';
 
 	export let choiceId: number;
 	export let frameKey: number;
 
+	let active: TModificator;
+
 	$: choiceKey = $framesDataStore[frameKey].choices.findIndex(
 		(choice) => choice.choiceId === choiceId
 	);
-
-	let active: TModificator;
 
 	const setActiveOperation = (type: TModificator) => {
 		active = type === active ? null : type;
@@ -54,7 +54,7 @@
 				variant="ghost"
 				class={clsx(
 					'text-xs gap-1 bg-main text-text',
-					(logicOperations.length || active === 'logic') && '!text-orange-400'
+					(logicOperations.length || active === 'logic') && '!text-orange-500'
 				)}
 				on:click={() => setActiveOperation('logic')}
 			>
@@ -70,7 +70,7 @@
 				variant="ghost"
 				class={clsx(
 					'!px-1 gap-1 bg-main text-text',
-					(mathOperations.length || active === 'math') && '!text-violet-400'
+					(mathOperations.length || active === 'math') && '!text-violet-500'
 				)}
 				on:click={() => setActiveOperation('math')}
 			>
@@ -84,7 +84,7 @@
 		</svelte:fragment>
 	</Contenteditable>
 	{#if editMode}
-		<Button variant="main" class="!bg-red-100 !text-red-500" on:click={removeChoice}>
+		<Button variant="main" class={clsx('!text-red-500', $redColorStore)} on:click={removeChoice}>
 			<Icon type={XMark} />
 		</Button>
 	{:else if active === 'logic'}

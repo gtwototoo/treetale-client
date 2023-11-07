@@ -6,13 +6,14 @@
 	import Header from './Header.svelte';
 
 	import { changesHistory } from '$lib/stores/editing';
+	import { bodyColorStore } from '$lib/stores/main';
 	import {
 		activeModeStore,
 		connectionStore,
 		framesDataStore,
 		movingFrameStore
 	} from '$lib/stores/workspace';
-	import { transform } from '$lib/utils';
+	import { contrastText, transform } from '$lib/utils';
 	import { createConnections, getChoicePosition } from '$lib/utils/editing';
 
 	export let frameId: number;
@@ -49,6 +50,10 @@
 
 		changesHistory.add('Добавление связи', Share);
 	};
+
+	$: greenColor = clsx(
+		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
+	);
 </script>
 
 {#if frameKey !== -1}
@@ -58,11 +63,11 @@
 			class={clsx(
 				'relative z-10 flex w-64 cursor-move select-none flex-col text-text items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
 				$movingFrameStore === frameId && 'shadow-lg',
-				$activeModeStore === 'binding' && '!bg-main-60 text-text',
+				$activeModeStore === 'binding' && '!bg-main-80 text-text',
 				$activeModeStore === 'binding' &&
 					$connectionStore &&
 					$connectionStore.frameId !== frameId &&
-					'hover:!bg-emerald-100'
+					greenColor
 			)}
 			on:mousedown={setMovingFrame}
 			on:click={createConnection}

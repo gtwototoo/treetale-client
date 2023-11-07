@@ -10,7 +10,7 @@
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
 	import { changesHistory } from '$lib/stores/editing';
-	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { informationDataStore } from '$lib/stores/newediting';
 	import { contrastText, correctWhitespace } from '$lib/utils';
 	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
@@ -109,9 +109,12 @@
 	});
 
 	$: warningColor = clsx(contrastText($bodyColorStore) ? 'bg-orange-950' : 'bg-orange-50');
+	$: greenColor = clsx(contrastText($bodyColorStore) ? '!bg-emerald-900' : '!bg-emerald-200');
+	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <Image
+	disabled={editMode}
 	src={$informationDataStore.imageId}
 	height={192}
 	width={360}
@@ -127,16 +130,16 @@
 		class="w-full"
 		bind:value={$informationDataStore.title}
 		on:input={checkUpdates}
-		disabled={$currentPanelStore.editMode}
+		disabled={editMode}
 	/>
 	<Contenteditable
-		disabled={$currentPanelStore.editMode}
+		disabled={editMode}
 		placeholder="Описание истории"
 		bind:html={$informationDataStore.description}
 		on:input={checkUpdates}
 	/>
 	<InputTags
-		disabled={$currentPanelStore.editMode}
+		disabled={editMode}
 		placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
 		bind:tags={$informationDataStore.tags}
 		on:add={checkUpdates}
@@ -145,23 +148,27 @@
 </FormSplit>
 <FormSplit vertical class="divide-contrast">
 	<ColorPicker
-		lightRange={[10, 80]}
+		lightRange={[15, 80]}
 		saturateRange={[10, 90]}
 		color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
 		{saturate}
 		{light}
 		on:change={setColor}
-		disabled={$currentPanelStore.editMode}
+		disabled={editMode}
 	/>
 </FormSplit>
-{#if $currentPanelStore.editMode}
-	<Button variant="main" class="justify-center !text-red-500 !bg-red-100" on:click={removeStory}>
+{#if editMode}
+	<Button
+		variant="main"
+		class={clsx('justify-center !text-red-500', $redColorStore)}
+		on:click={removeStory}
+	>
 		Удалить историю
 	</Button>
 {:else if $informationDataStore.draft}
 	<Button
 		variant="main"
-		class="!bg-emerald-200 !text-emerald-500 justify-center"
+		class={clsx('!text-emerald-500 justify-center', greenColor)}
 		on:click={switchDraft}
 	>
 		Опубликовать
@@ -180,7 +187,7 @@
 		</p>
 		<Button
 			variant="main"
-			class="!text-red-500 !bg-red-100 justify-center"
+			class={clsx('!text-red-500 justify-center', $redColorStore)}
 			on:click={switchDraft}
 		>
 			Отменить публикацию

@@ -2,11 +2,11 @@
 	import clsx from 'clsx';
 	import { ChevronDown, XMark } from 'svelte-heros-v2';
 
-	import Icon from '$lib/components/Icon.svelte';
-	import { currentPanelStore } from '$lib/stores/main';
-	import { variablesStore } from '$lib/stores/newediting';
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { variablesStore } from '$lib/stores/newediting';
 
 	export let varKey: number;
 	export let checkUpdates: () => void;
@@ -56,7 +56,7 @@
 			let:value
 			let:click
 		>
-			<Button class="-my-0.5 gap-1" size="sm" on:click={click}>
+			<Button class="gap-1 bg-main" variant="ghost" size="sm" on:click={click}>
 				{value}
 				<Icon type={ChevronDown} class="h-4 w-4" />
 			</Button>
@@ -82,7 +82,11 @@
 		{/if}
 	{/if}
 	{#if editMode}
-		<Button variant="main" on:click={removeVariable} class="!text-red-500 !bg-red-100">
+		<Button
+			variant="main"
+			on:click={removeVariable}
+			class={clsx('!text-red-500', $redColorStore)}
+		>
 			<Icon type={XMark} />
 		</Button>
 	{/if}

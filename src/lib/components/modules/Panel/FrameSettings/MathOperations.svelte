@@ -3,11 +3,13 @@
 
 	import Modificator from './Modificator.svelte';
 
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
+	import { redColorStore } from '$lib/stores/main';
 	import { variablesStore } from '$lib/stores/newediting';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import type { TMathOperator } from '$lib/types';
-	import { Button, FormSplit, Input, Listbox } from '$UI';
+	import clsx from 'clsx';
 
 	export let frameKey: number;
 	export let choiceKey: number;
@@ -34,7 +36,7 @@
 	};
 </script>
 
-<Modificator class="bg-main-40 text-violet-400" title="Изменения переменных" let:editMode>
+<Modificator class="bg-main-40 text-violet-500" title="Изменения переменных" let:editMode>
 	<div class="flex flex-col gap-2 w-full">
 		{#each $framesDataStore[frameKey].choices[choiceKey].mathOperations as operation, key}
 			<FormSplit class="divide-main-40">
@@ -47,7 +49,7 @@
 					<Button
 						variant="main"
 						on:click={() => removeMathOperation(key)}
-						class="!text-red-500 !bg-red-100"
+						class={clsx('!text-red-500', $redColorStore)}
 					>
 						<Icon type={XMark} />
 					</Button>

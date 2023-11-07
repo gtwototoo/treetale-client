@@ -16,5 +16,5 @@
 			'Пока у вас нет ни одной созданной истории, добавьте свою уникальную историю'
 		)}
 	</p>
-	<AddStoryButton class="gap-3 bg-white" />
+	<AddStoryButton class="gap-3 bg-contrast text-text" />
 </StoriesList>

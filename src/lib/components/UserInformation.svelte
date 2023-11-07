@@ -114,7 +114,7 @@
 			{#if editMode}
 				<ColorPicker
 					popoverAlign="left"
-					lightRange={[10, 80]}
+					lightRange={[20, 80]}
 					saturateRange={[10, 90]}
 					color={$bodyColorStore}
 					{saturate}

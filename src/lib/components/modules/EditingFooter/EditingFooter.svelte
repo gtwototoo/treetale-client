@@ -3,6 +3,8 @@
 
 	import StateMode from './StateMode.svelte';
 
+	import { Button } from '$UI';
+	import { bodyColorStore, redColorStore } from '$lib/stores/main';
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -11,7 +13,7 @@
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
-	import { Button } from '$UI';
+	import { contrastText } from '$lib/utils';
 
 	const cancelAddFrameMode = () => {
 		$activeModeStore = 'view';
@@ -24,6 +26,8 @@
 		$addFrameOffsetStore = cursorCoords;
 		$activeModeStore = 'adding';
 	};
+
+	$: greenColor = clsx(contrastText($bodyColorStore) ? 'bg-emerald-900' : 'bg-emerald-200');
 </script>
 
 <div class="area">
@@ -43,7 +47,7 @@
 			on:click={cancelAddFrameMode}
 			variant="ghost"
 			size="lg"
-			class="w-64 bg-red-400 text-red-500 pointer-events-auto justify-center"
+			class={clsx('w-64 text-red-500 pointer-events-auto justify-center', $redColorStore)}
 		>
 			Отмена
 		</Button>
@@ -52,7 +56,7 @@
 			on:click={enableAddFrameMode}
 			variant="ghost"
 			size="lg"
-			class="w-64 bg-emerald-300 text-emerald-500 pointer-events-auto justify-center"
+			class={clsx('w-64 text-emerald-500 pointer-events-auto justify-center', greenColor)}
 		>
 			Новый фрейм
 		</Button>

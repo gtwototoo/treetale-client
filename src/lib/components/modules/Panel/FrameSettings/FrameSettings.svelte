@@ -8,12 +8,13 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { saveImage } from '$lib/requests/image';
 	import { changesHistory } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { informationDataStore } from '$lib/stores/newediting';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
 	import { last } from '$lib/utils';
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
+	import clsx from 'clsx';
 
 	const action = 'storyFrameImageId';
 
@@ -108,7 +109,6 @@
 
 	onDestroy(() => {
 		$selectedFrameStore = null;
-		currentPanelStore.clear();
 	});
 </script>
 
@@ -128,7 +128,7 @@
 		number
 	/>
 </FormSplit>
-<DropBlock on:change={setFile} class="h-48 gap-2">
+<DropBlock on:change={setFile} class="h-48 gap-2" disabled={editMode}>
 	<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 </DropBlock>
 <Contenteditable
@@ -144,7 +144,7 @@
 	{#if editMode}
 		<Button
 			variant="main"
-			class="justify-center !text-red-500 !bg-red-100"
+			class={clsx('justify-center !text-red-500', $redColorStore)}
 			on:click={removeFrame}
 		>
 			Удалить фрейм

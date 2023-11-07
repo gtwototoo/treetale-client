@@ -18,6 +18,7 @@
 	export let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
 	export let width: number;
 	export let height = width;
+	export let disabled = false;
 
 	let preloadImage: string;
 
@@ -98,7 +99,7 @@
 			</div>
 		{/if}
 	{:else}
-		<DropBlock on:change={handleChange} class="h-48 gap-2">
+		<DropBlock on:change={handleChange} class="h-48 gap-2" {disabled}>
 			<Icon type={BookOpen} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 		</DropBlock>
 	{/if}

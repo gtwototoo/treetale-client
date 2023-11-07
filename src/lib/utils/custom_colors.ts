@@ -1,7 +1,7 @@
 import { alphaToRgb } from './alpha_to_rgb';
 import { contrastText } from './contrast';
 
-import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
+import { BLACK_COLOR, BLACK_TEXT_COLOR, WHITE_COLOR, WHITE_TEXT_COLOR } from '$lib/constants';
 import type { TRGB } from '$lib/types';
 
 export const varColors = (extend: Record<string, TRGB> = {}) => {
@@ -21,11 +21,11 @@ const generateMainColors = (color: TRGB) => {
 
 	const additionalColors: Record<string, TRGB> = {
 		'color-main': color,
-		'color-text': contrast ? WHITE_COLOR : BLACK_COLOR,
+		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR,
 		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR
 	};
 
-	for (const i in new Array(8).fill(undefined)) {
+	for (const i in new Array(9).fill(undefined)) {
 		additionalColors[`color-main-${+i + 1}0`] = alphaToRgb(
 			color,
 			(+i + 1) / 10,

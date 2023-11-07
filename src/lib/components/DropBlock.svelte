@@ -3,6 +3,8 @@
 	import clsx from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
 
+	export let disabled = false;
+
 	let className = '';
 	export { className as class };
 
@@ -54,6 +56,7 @@
 		{ '!bg-main-60': dragged },
 		className
 	)}
+	{disabled}
 	on:click={handleClick}
 	on:dragenter={handleDragEnter}
 	on:dragleave={disableDragged}

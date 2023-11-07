@@ -3,7 +3,9 @@ import type { ISize, TRGB } from '$lib/types';
 
 export const BLACK_COLOR: TRGB = [5, 5, 5];
 export const DEFAULT_COLOR: TRGB = [254, 215, 170];
-export const WHITE_COLOR: TRGB = [250, 250, 250];
+export const WHITE_COLOR: TRGB = [255, 255, 255];
+export const WHITE_TEXT_COLOR: TRGB = [220, 220, 220];
+export const BLACK_TEXT_COLOR: TRGB = [25, 25, 25];
 export const ICON_TYPE = 'outline';
 
 export const USER_WITHOUT_WORKSPACE = {

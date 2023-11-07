@@ -33,7 +33,7 @@
 	} from '$lib/stores/workspace';
 	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 	import type { ICoordinates } from '$lib/types/index';
-	import { exclude, getFrameFromId, rootStyle } from '$lib/utils';
+	import { contrastText, exclude, getFrameFromId, rootStyle } from '$lib/utils';
 
 	export let data;
 
@@ -173,6 +173,10 @@
 			}
 			changesHistory.add('Начальное состояние', Play);
 		}, 0);
+
+		return () => {
+			currentPanelStore.clear();
+		};
 	});
 
 	$: $bodyColorStore = $informationDataStore.color.length
@@ -185,7 +189,8 @@
 		Редактирование "{$informationDataStore.title || 'Без названия'}"
 	</title>
 	{@html rootStyle($bodyColorStore, {
-		'fill-gradient': `url(#light-gradient-${$informationDataStore.storyId})`
+		'fill-gradient': `url(#light-gradient-${$informationDataStore.storyId})`,
+		'red-custom': contrastText($bodyColorStore) ? 'rgb(127, 29, 29)' : 'rgb(254, 226, 226)'
 	})}
 </svelte:head>
 
