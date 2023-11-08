@@ -8,7 +8,6 @@
 	import { correctVariableReplace } from '$lib/utils';
 	import { Tag } from '$UI';
 
-
 	export let story: IStoryReading;
 	export let vars: Array<IVariable>;
 	export let author: IUser | undefined = undefined;
@@ -35,7 +34,7 @@
 </div>
 <div class="flex w-full items-center justify-between gap-4">
 	{#if author}
-		<ProfileLink data={author} {created} />
+		<ProfileLink {author} {created} />
 	{:else}
 		<Tag class={clsx('!bg-main-70', draft ? 'text-text' : 'text-emerald-500')}>
 			{draft ? 'Черновик' : 'Публичный'}

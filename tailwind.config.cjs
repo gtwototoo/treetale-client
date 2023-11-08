@@ -57,7 +57,7 @@ const config = {
 				'&::-ms-track'
 			]);
 			matchVariant('child', (value) => {
-				return `& ${value}`;
+				return `& > ${value}`;
 			});
 			addUtilities({
 				'.fill-gradient': {

@@ -120,7 +120,7 @@
 				<p>{description}</p>
 				<div class="flex items-center gap-4">
 					{#if author}
-						<ProfileLink data={author} {created} />
+						<ProfileLink {author} {created} />
 					{:else}
 						<Tag
 							class={clsx(

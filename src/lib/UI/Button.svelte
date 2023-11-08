@@ -11,7 +11,7 @@
 	let className = '';
 	export { className as class };
 
-	export let variant: 'secondary' | 'main' | 'transparent' | 'ghost' | 'custom' = 'secondary';
+	export let variant: 'main' | 'ghost' | 'custom';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let disabled = false;
 	export let loading = false;
@@ -43,8 +43,8 @@
 	class={clm(
 		'childs:bg-transparent transition-opacity',
 		`size-${size}`,
-		`variant-${variant}`,
 		loading && 'text-transparent childs:invisible',
+		variant !== 'custom' && `variant-${variant}`,
 		(disabled || loading) && 'disabled',
 		className
 	)}
@@ -76,17 +76,11 @@
 	.size-sm {
 		@apply rounded px-2 py-1 text-xs;
 	}
-	.variant-secondary {
-		@apply bg-gray-50 text-black transition-[background-color,color,opacity] hover:bg-main-20 hover:text-text focus:bg-main-20 focus:text-text;
-	}
 	.variant-main {
 		@apply text-white transition-[filter,opacity] hover:brightness-110 focus:brightness-110;
 	}
 	.variant-ghost {
 		@apply bg-opacity-30 transition-colors hover:bg-opacity-100;
-	}
-	.variant-transparent {
-		@apply transition-[filter,opacity] hover:brightness-90 focus:brightness-90;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

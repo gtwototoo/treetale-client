@@ -41,7 +41,7 @@
 		{#each $framesDataStore[frameKey].choices[choiceKey].mathOperations as operation, key}
 			<FormSplit class="divide-main-40">
 				{#if editMode}
-					<Button disabled class="w-full gap-3">
+					<Button variant="main" disabled class="w-full bg-main gap-3">
 						<p>{operation.variable || 'Переменная'}</p>
 						<p>{operation.symbol}</p>
 						<p>{operation.value || 'Значение'}</p>

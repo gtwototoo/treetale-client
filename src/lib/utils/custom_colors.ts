@@ -16,7 +16,7 @@ export const varStyles = (extend: Record<string, string> = {}) => {
 		.join(';');
 };
 
-const generateMainColors = (color: TRGB) => {
+export const generateMainColors = (color: TRGB) => {
 	const contrast = contrastText(color);
 
 	const additionalColors: Record<string, TRGB> = {

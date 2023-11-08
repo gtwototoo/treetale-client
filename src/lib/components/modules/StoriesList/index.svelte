@@ -7,6 +7,9 @@
 	export let stories: Array<IStoryFull>;
 </script>
 
+<ska:html class:h-full={!stories.length} />
+<svelte:body class:h-full={!stories.length} />
+
 {#if stories.length}
 	<div class="stories">
 		{#each stories as rawStory}

@@ -11,3 +11,13 @@ export const getPageType = (path: string): TPage => {
 		reading: /^\/\d+$/
 	});
 };
+
+export const setBodyFullHeight = () => {
+	document.documentElement.classList.add('h-full');
+	document.body.classList.add('h-full');
+};
+
+export const removeBodyFullHeight = () => {
+	document.documentElement.classList.remove('h-full');
+	document.body.classList.remove('h-full');
+};

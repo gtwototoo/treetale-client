@@ -48,7 +48,7 @@
 		</div>
 		<div class="flex w-full items-center justify-between gap-1">
 			{#if author}
-				<ProfileLink data={author} {created} />
+				<ProfileLink {author} {created} />
 			{:else}
 				<Tag class="bg-emerald-500 text-emerald-600">Публичный</Tag>
 			{/if}

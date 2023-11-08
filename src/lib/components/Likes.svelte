@@ -33,11 +33,15 @@
 	};
 </script>
 
-<Button class="gap-2 !px-3 hover:!text-red-600" variant="secondary" on:click={handleClick}>
+<Button
+	class="gap-2 !px-3 hover:text-red-500 bg-main text-text"
+	variant="ghost"
+	on:click={handleClick}
+>
 	<Icon
 		type={Heart}
 		variation={isLiked ? 'solid' : undefined}
-		class={clsx('h-6 w-6', isLiked && 'text-red-600')}
+		class={clsx('h-6 w-6', isLiked && 'text-red-500')}
 	/>
 	<p class="min-w-[1rem]">{likes.length}</p>
 </Button>

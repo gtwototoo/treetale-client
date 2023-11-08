@@ -6,7 +6,7 @@
 
 <div
 	class={clsx(
-		'rounded-xl text-text w-full bg-main px-4 py-2 text-sm select-none text-center',
+		'rounded-xl text-text w-full truncate bg-main px-4 py-2 text-sm select-none text-center',
 		tags.length ? 'text-text bg-main' : 'text-gray-500'
 	)}
 >

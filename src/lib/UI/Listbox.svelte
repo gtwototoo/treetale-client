@@ -15,6 +15,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
 	import { Button } from '$UI';
+	import FormSplit from './FormSplit.svelte';
 
 	let className = '';
 	export { className as class };
@@ -73,22 +74,24 @@
 			class={clsx('list', align === 'left' ? '-left-1' : '-right-1')}
 			use:correctPosition
 		>
-			{#each list as item}
-				<Button
-					on:click={(e) => handleSelect(e, item)}
-					class="w-full gap-4 text-text bg-main"
-					variant="ghost"
-				>
-					{#if typeof item === 'string'}
-						{item}
-					{:else}
-						{#if item.icon}
-							<Icon type={item.icon} />
+			<FormSplit class="divide-contrast" vertical>
+				{#each list as item}
+					<Button
+						on:click={(e) => handleSelect(e, item)}
+						class="w-full gap-4 text-text bg-main"
+						variant="ghost"
+					>
+						{#if typeof item === 'string'}
+							{item}
+						{:else}
+							{#if item.icon}
+								<Icon type={item.icon} />
+							{/if}
+							<p>{item.text}</p>
 						{/if}
-						<p>{item.text}</p>
-					{/if}
-				</Button>
-			{/each}
+					</Button>
+				{/each}
+			</FormSplit>
 		</div>
 	{/if}
 </div>

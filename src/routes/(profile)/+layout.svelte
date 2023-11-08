@@ -28,15 +28,15 @@
 
 <div class="flex gap-8 screen-sm items-start screen-md p-16 screen-hd screen-xl grow">
 	<UserInformation {user} {me} {statistic} />
-	<div class="flex flex-col w-full items-center gap-8 min-h-full">
+	<div class="flex flex-col w-full items-center gap-8 h-full">
 		{#if me}
 			<div class="flex gap-2">
-				<Link href="/profile">
+				<Link href="/profile" class="w-44">
 					<Button
 						size="lg"
 						variant="custom"
 						class={clsx(
-							'!text-text hover:bg-contrast !transition-colors',
+							'!text-text w-full justify-center hover:bg-contrast !transition-colors',
 							pageType === 'profile' && 'bg-contrast/20'
 						)}
 					>
@@ -44,12 +44,12 @@
 						<p class="max-xs:hidden">Созданные</p>
 					</Button>
 				</Link>
-				<Link href="/profile/liked">
+				<Link href="/profile/liked" class="w-44">
 					<Button
 						size="lg"
 						variant="custom"
 						class={clsx(
-							'!text-text hover:bg-contrast transition-colors',
+							'!text-text w-full justify-center hover:bg-contrast transition-colors',
 							pageType === 'liked' && 'bg-contrast/20'
 						)}
 					>
@@ -57,12 +57,12 @@
 						<p class="max-xs:hidden">Понравившиеся</p>
 					</Button>
 				</Link>
-				<Link href="/profile/viewed">
+				<Link href="/profile/viewed" class="w-44">
 					<Button
 						size="lg"
 						variant="custom"
 						class={clsx(
-							'!text-text hover:bg-contrast transition-colors',
+							'!text-text w-full justify-center hover:bg-contrast transition-colors',
 							pageType === 'viewed' && 'bg-contrast/20'
 						)}
 					>
