@@ -15,16 +15,16 @@
 	});
 </script>
 
-<div class="absolute flex justify-center items-center">
+<div class="absolute flex items-center justify-center">
 	<div
 		style:width="{width}px"
 		style:height="{height}px"
 		style={transform($addFrameOffsetStore)}
 		class={clsx(
-			'bg-emerald-300/30 text-emerald-500 flex justify-center absolute items-center rounded-lg z-40 transition-[width,height]',
-			!$addFrameOffsetStore && '!w-0 !h-0'
+			'absolute z-40 flex items-center justify-center rounded-lg bg-emerald-300/30 text-emerald-500 transition-[width,height]',
+			!$addFrameOffsetStore && '!h-0 !w-0'
 		)}
 	>
-		<Icon type={Plus} class="w-12 h-12 bg-transparent" />
+		<Icon type={Plus} class="h-12 w-12 bg-transparent" />
 	</div>
 </div>

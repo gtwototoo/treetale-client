@@ -1,7 +1,7 @@
 <script lang="ts">
 	interface IShortcut {
-		text: string;
 		keys: Array<string>;
+		text: string;
 	}
 
 	const shortcuts: Array<IShortcut> = [
@@ -14,16 +14,16 @@
 </script>
 
 <div
-	class="bg-main-30 childs:bg-transparent p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none"
+	class="flex select-none flex-col gap-4 rounded-lg bg-main-30 p-4 text-center text-sm childs:bg-transparent"
 >
 	<p>Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
-		{#each shortcuts as { text, keys }}
-			<div class="flex justify-between items-center">
+		{#each shortcuts as { keys, text }}
+			<div class="flex items-center justify-between">
 				<p>{text}</p>
 				<div class="flex gap-1 font-bold">
 					{#each keys as key}
-						<div class="bg-main py-1 px-2 rounded-lg min-w-[1.75rem]">{key}</div>
+						<div class="min-w-[1.75rem] rounded-lg bg-main px-2 py-1">{key}</div>
 					{/each}
 				</div>
 			</div>

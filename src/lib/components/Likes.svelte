@@ -34,9 +34,10 @@
 </script>
 
 <Button
-	class="gap-2 !px-3 hover:text-red-500 bg-main text-text"
+	class="gap-2 bg-main !px-3 text-text hover:text-red-500"
 	variant="ghost"
 	on:click={handleClick}
+	{loading}
 >
 	<Icon
 		type={Heart}

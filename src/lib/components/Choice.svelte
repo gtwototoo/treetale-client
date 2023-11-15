@@ -10,7 +10,7 @@
 	on:click
 	variant="main"
 	class={clsx(
-		'!whitespace-normal !text-text text-left adaptive-font bg-main adaptive-padding',
+		'adaptive-font adaptive-padding !whitespace-normal bg-main text-left !text-text',
 		active && 'bg-main'
 	)}
 >

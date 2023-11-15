@@ -12,16 +12,16 @@
 </script>
 
 <div
-	class="w-96 shrink-0 bg-transparent p-4 flex flex-col text-text gap-4 ml-auto relative overflow-auto"
+	class="relative ml-auto flex w-96 shrink-0 flex-col gap-4 overflow-auto bg-transparent p-4 text-text"
 >
 	{#if $currentPanelStore.hasEditButton}
 		<Button
 			size="lg"
 			variant={editMode ? 'main' : 'ghost'}
-			class={clsx('!absolute left-4 top-4 z-[2] !p-3 bg-main')}
+			class={clsx('!absolute left-4 top-4 z-[2] bg-main !p-3')}
 			on:click={currentPanelStore.switchEditMode}
 		>
-			<Icon type={PencilSquare} class="w-6 h-6" />
+			<Icon type={PencilSquare} class="h-6 w-6" />
 		</Button>
 	{/if}
 	{#if $currentPanelStore.component}
@@ -31,11 +31,11 @@
 			class="!absolute right-4 top-4 z-[2] bg-main !p-3"
 			on:click={currentPanelStore.clear}
 		>
-			<Icon type={XMark} class="w-6 h-6" />
+			<Icon type={XMark} class="h-6 w-6" />
 		</Button>
 	{/if}
 	<p
-		class="min-h-[3rem] w-full select-none flex justify-center items-center px-16 text-center text-lg font-medium"
+		class="flex min-h-[3rem] w-full select-none items-center justify-center px-16 text-center text-lg font-medium"
 	>
 		{$currentPanelStore.title || 'Основная информация'}
 	</p>

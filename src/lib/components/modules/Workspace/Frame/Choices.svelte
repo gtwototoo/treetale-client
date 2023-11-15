@@ -72,7 +72,7 @@
 		>
 			<p class="truncate">{text || 'Вариант выбора'}</p>
 			{#if $activeModeStore === 'binding'}
-				<div class="w-6 h-6 rounded-r-full absolute -right-5 !bg-inherit" />
+				<div class="absolute -right-5 h-6 w-6 rounded-r-full !bg-inherit" />
 			{/if}
 		</Button>
 	{/each}

@@ -43,7 +43,7 @@
 <FormSplit vertical={!editMode} class="divide-contrast">
 	<Contenteditable
 		maxlength={55}
-		class="grow !shrink"
+		class="!shrink grow"
 		placeholder="Вариант выбора"
 		disabled={editMode}
 		bind:html={$framesDataStore[frameKey].choices[choiceKey].text}
@@ -53,7 +53,7 @@
 				size="sm"
 				variant="ghost"
 				class={clsx(
-					'text-xs gap-1 bg-main text-text',
+					'gap-1 bg-main text-xs text-text',
 					(logicOperations.length || active === 'logic') && '!text-orange-500'
 				)}
 				on:click={() => setActiveOperation('logic')}
@@ -69,12 +69,12 @@
 				size="sm"
 				variant="ghost"
 				class={clsx(
-					'!px-1 gap-1 bg-main text-text',
+					'gap-1 bg-main !px-1 text-text',
 					(mathOperations.length || active === 'math') && '!text-violet-500'
 				)}
 				on:click={() => setActiveOperation('math')}
 			>
-				<Icon class="w-4 h-4" type={Variable} />
+				<Icon class="h-4 w-4" type={Variable} />
 				{#if mathOperations.length}
 					<p class="pr-1">
 						{mathOperations.length}

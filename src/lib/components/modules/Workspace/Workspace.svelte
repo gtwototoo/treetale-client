@@ -96,7 +96,7 @@
 	role="treegrid"
 	tabindex="0"
 	class={clsx(
-		'h-full w-full select-none relative overflow-hidden bg-transparent',
+		'relative h-full w-full select-none overflow-hidden bg-transparent',
 		$activeActionStore === 'movingArea' && 'cursor-grabbing',
 		$activeActionStore === 'movingFrame' && 'cursor-move'
 	)}

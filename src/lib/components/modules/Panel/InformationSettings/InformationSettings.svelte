@@ -168,7 +168,7 @@
 {:else if $informationDataStore.draft}
 	<Button
 		variant="main"
-		class={clsx('!text-emerald-500 justify-center', greenColor)}
+		class={clsx('justify-center !text-emerald-500', greenColor)}
 		on:click={switchDraft}
 	>
 		Опубликовать
@@ -176,7 +176,7 @@
 {:else}
 	<div
 		class={clsx(
-			'p-4 gap-4 text-sm flex flex-col text-center rounded-lg select-none text-orange-500',
+			'flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm text-orange-500',
 			warningColor
 		)}
 	>
@@ -187,7 +187,7 @@
 		</p>
 		<Button
 			variant="main"
-			class={clsx('!text-red-500 justify-center', $redColorStore)}
+			class={clsx('justify-center !text-red-500', $redColorStore)}
 			on:click={switchDraft}
 		>
 			Отменить публикацию

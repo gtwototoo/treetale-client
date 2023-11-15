@@ -54,7 +54,7 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<div class="flex w-full h-full justify-center items-start px-12">
+<div class="flex h-full w-full items-start justify-center px-12">
 	<div class="flex min-h-full items-center py-12">
 		<ReadCard
 			src={contentCardImage}
@@ -62,19 +62,19 @@
 			text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте"
 		>
 			<form
-				class="flex flex-col gap-3 w-full"
+				class="flex w-full flex-col gap-3"
 				method="POST"
 				on:submit|preventDefault={handleSignUp}
 			>
 				<Input
 					placeholder="Псевдоним"
-					class="w-full adaptive-font adaptive-padding"
+					class="adaptive-font adaptive-padding w-full"
 					bind:value={name}
 				/>
 				<Button
 					variant="main"
 					type="submit"
-					class={clsx('w-full bg-main !text-text adaptive-font adaptive-padding')}
+					class={clsx('adaptive-font adaptive-padding w-full bg-main !text-text')}
 					{disabled}
 					{loading}
 				>

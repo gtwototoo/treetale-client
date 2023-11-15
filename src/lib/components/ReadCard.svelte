@@ -24,7 +24,7 @@
 		<Photo
 			{src}
 			{alt}
-			class="bg-white w-full h-[23rem] rounded-2xl"
+			class="h-[23rem] w-full rounded-2xl bg-white"
 			cover
 			on:error={handleError}
 			width={480}
@@ -32,7 +32,7 @@
 		/>
 	{/if}
 	<Card
-		class={clsx('p-8 gap-8 max-hd:p-6 max-hd:gap-6 bg-main-20 childs:bg-transparent', classCard)}
+		class={clsx('gap-8 bg-main-20 p-8 childs:bg-transparent max-hd:gap-6 max-hd:p-6', classCard)}
 	>
 		{#if text}
 			<div

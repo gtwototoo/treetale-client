@@ -61,7 +61,7 @@
 	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 		<button
 			class={clsx(
-				'relative z-10 flex w-64 cursor-move select-none flex-col text-text items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
+				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
 				$movingFrameStore === frameId && 'shadow-lg',
 				$activeModeStore === 'binding' && '!bg-main-80 text-text',
 				$activeModeStore === 'binding' &&
@@ -91,17 +91,17 @@
 			{#if $activeModeStore === 'binding'}
 				<div
 					class={clsx(
-						'w-6 h-6 rounded-l-full absolute -left-3 !bg-inherit',
+						'absolute -left-3 h-6 w-6 rounded-l-full !bg-inherit',
 						hidden ? 'top-1/2 -mt-3' : 'top-2'
 					)}
 				/>
 				{#if hidden}
-					<div class="w-6 h-6 rounded-r-full absolute -right-3 !bg-inherit top-1/2 -mt-3" />
+					<div class="absolute -right-3 top-1/2 -mt-3 h-6 w-6 rounded-r-full !bg-inherit" />
 				{/if}
 			{/if}
 		</button>
 		{#if $activeModeStore !== 'binding'}
-			<div class="absolute inset-0 pointer-events-none">
+			<div class="pointer-events-none absolute inset-0">
 				{#if hidden}
 					<div class="point right-0 top-1/2" />
 				{:else}

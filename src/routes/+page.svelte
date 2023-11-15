@@ -21,7 +21,7 @@
 
 <div class="flex grow flex-col">
 	{#if data.stories.length}
-		<div class="flex flex-col gap-8 w-full items-center px-2">
+		<div class="flex w-full flex-col items-center gap-8 px-2">
 			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
 				Список историй
 			</h1>
@@ -29,7 +29,7 @@
 				<svelte:fragment slot="left">
 					<Icon
 						type={MagnifyingGlass}
-						class="w-6 h-6 mr-5 pointer-events-none text-gray-800"
+						class="pointer-events-none mr-5 h-6 w-6 text-gray-800"
 					/>
 				</svelte:fragment>
 			</Input>

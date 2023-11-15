@@ -42,10 +42,10 @@
 		$stateAreaStore === 'saving'
 			? 'animate-pulse text-gray-400'
 			: $stateAreaStore === 'saved'
-			? 'text-emerald-500'
-			: $stateAreaStore === 'error'
-			? 'text-red-500'
-			: 'text-gray-400'
+			  ? 'text-emerald-500'
+			  : $stateAreaStore === 'error'
+			    ? 'text-red-500'
+			    : 'text-gray-400'
 	)}
 >
 	<Icon
@@ -53,8 +53,8 @@
 		variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
 		class={clsx('h-4 w-4')}
 	/>
-	<Icon type={iconsModes[$activeModeStore]} class="w-4 h-4" />
+	<Icon type={iconsModes[$activeModeStore]} class="h-4 w-4" />
 	{#if $activeActionStore}
-		<Icon type={iconsActions[$activeActionStore]} class="w-4 h-4" />
+		<Icon type={iconsActions[$activeActionStore]} class="h-4 w-4" />
 	{/if}
 </Tag>

@@ -37,7 +37,7 @@
 </script>
 
 <Modificator class="bg-main-40 text-orange-500" title="Условия появления" let:editMode>
-	<div class="flex flex-col gap-2 w-full">
+	<div class="flex w-full flex-col gap-2">
 		{#each $framesDataStore[frameKey].choices[choiceKey].logicOperations as operation, key}
 			<FormSplit class="divide-main-40">
 				{#if editMode}
@@ -67,7 +67,7 @@
 						let:value
 						let:click
 					>
-						<Button on:click={click} variant="ghost" class="bg-main text-text !rounded-none">
+						<Button on:click={click} variant="ghost" class="!rounded-none bg-main text-text">
 							{value}
 						</Button>
 					</Listbox>
@@ -78,7 +78,7 @@
 		{#if !editMode}
 			<Button
 				variant="ghost"
-				class="justify-center w-full bg-main text-text"
+				class="w-full justify-center bg-main text-text"
 				on:click={addLogicOperation}
 			>
 				Добавить условие

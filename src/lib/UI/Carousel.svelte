@@ -34,8 +34,6 @@
 		}
 	};
 
-	const handleScroll = (e: UIEvent) => {};
-
 	onMount(() => {
 		toItem(current);
 		ready = true;
@@ -48,7 +46,6 @@
 	class={clsx('carousel childs:shrink-0 childs:snap-center', className, {
 		invisible: !ready
 	})}
-	on:scroll={handleScroll}
 	bind:this={carouselRef}
 	use:addIdToChilds
 >

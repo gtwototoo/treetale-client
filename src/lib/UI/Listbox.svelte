@@ -57,7 +57,7 @@
 	{:else}
 		<Button
 			variant="ghost"
-			class="w-full !pr-3 gap-3 bg-main"
+			class="w-full gap-3 bg-main !pr-3"
 			{disabled}
 			{size}
 			on:click={handleClick}
@@ -78,7 +78,7 @@
 				{#each list as item}
 					<Button
 						on:click={(e) => handleSelect(e, item)}
-						class="w-full gap-4 text-text bg-main"
+						class="w-full gap-4 bg-main text-text"
 						variant="ghost"
 					>
 						{#if typeof item === 'string'}

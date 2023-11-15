@@ -14,7 +14,7 @@
 	};
 </script>
 
-<div class="flex items-center justify-between gap-4 z-10">
+<div class="z-10 flex items-center justify-between gap-4">
 	<slot />
 	<div class="flex gap-2">
 		<Button variant="ghost" class="bg-main" size="sm" on:click={hideFrame}>

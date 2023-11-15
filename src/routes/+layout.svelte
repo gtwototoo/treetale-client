@@ -10,14 +10,14 @@
 </script>
 
 {#if pageType == 'editing'}
-	<div class="flex flex-col h-screen fixed left-0 right-96 w-auto">
+	<div class="fixed left-0 right-96 flex h-screen w-auto flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>
 	<div class="fixed right-0 h-full w-96 bg-contrast" />
 	<Panel />
 {:else}
-	<div class="flex flex-col h-full w-full relative">
+	<div class="relative flex h-full w-full flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>

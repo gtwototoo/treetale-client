@@ -52,7 +52,7 @@
 <Button
 	variant="ghost"
 	class={clsx(
-		'hover:bg-main-60 bg-main flex-col w-full !whitespace-normal !p-6',
+		'w-full flex-col !whitespace-normal bg-main !p-6 hover:bg-main-60',
 		{ '!bg-main-60': dragged },
 		className
 	)}

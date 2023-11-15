@@ -10,8 +10,8 @@
 <div
 	class={clm(
 		className,
-		'flex form-split',
-		vertical ? 'flex-col divide-y vertical' : 'divide-x horizontal'
+		'form-split flex',
+		vertical ? 'vertical flex-col divide-y' : 'horizontal divide-x'
 	)}
 >
 	<slot />

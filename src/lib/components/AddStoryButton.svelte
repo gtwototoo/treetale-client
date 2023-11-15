@@ -34,6 +34,6 @@
 	{loading}
 	size="lg"
 >
-	<Icon type={Plus} class="w-6 h-6" />
+	<Icon type={Plus} class="h-6 w-6" />
 	<p class="mr-1">Добавить историю</p>
 </Button>

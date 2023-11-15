@@ -119,7 +119,7 @@
 	on:click={handleClick}
 >
 	<slot name="left" />
-	<div class="w-full relative self-center">
+	<div class="relative w-full self-center">
 		<div
 			on:focus={handleFocus}
 			on:blur={handleBlur}
@@ -130,10 +130,10 @@
 			bind:innerHTML={html}
 			use:setReadonly={readonly || disabled}
 			contenteditable
-			class={clsx('bg-transparent w-full', !html && 'absolute')}
+			class={clsx('w-full bg-transparent', !html && 'absolute')}
 		/>
 		{#if placeholder && !html}
-			<p class="text-gray-400 w-full whitespace-nowrap">{placeholder}</p>
+			<p class="w-full whitespace-nowrap text-gray-400">{placeholder}</p>
 		{/if}
 	</div>
 	<slot name="right" />

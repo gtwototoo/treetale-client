@@ -37,11 +37,11 @@
 </script>
 
 <Modificator class="bg-main-40 text-violet-500" title="Изменения переменных" let:editMode>
-	<div class="flex flex-col gap-2 w-full">
+	<div class="flex w-full flex-col gap-2">
 		{#each $framesDataStore[frameKey].choices[choiceKey].mathOperations as operation, key}
 			<FormSplit class="divide-main-40">
 				{#if editMode}
-					<Button variant="main" disabled class="w-full bg-main gap-3">
+					<Button variant="main" disabled class="w-full gap-3 bg-main">
 						<p>{operation.variable || 'Переменная'}</p>
 						<p>{operation.symbol}</p>
 						<p>{operation.value || 'Значение'}</p>
@@ -67,7 +67,7 @@
 						let:value
 						let:click
 					>
-						<Button on:click={click} variant="ghost" class="bg-main text-text !rounded-none">
+						<Button on:click={click} variant="ghost" class="!rounded-none bg-main text-text">
 							{value}
 						</Button>
 					</Listbox>
@@ -78,7 +78,7 @@
 		{#if !editMode}
 			<Button
 				variant="ghost"
-				class="justify-center w-full bg-main text-text"
+				class="w-full justify-center bg-main text-text"
 				on:click={addMathOperation}
 			>
 				Добавить изменение

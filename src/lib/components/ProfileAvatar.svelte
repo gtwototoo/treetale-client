@@ -75,20 +75,20 @@
 		>
 			{#if src && !imageLoading}
 				<Button
-					class="!rounded-full text-text bg-main !p-3"
+					class="!rounded-full bg-main !p-3 text-text"
 					variant="ghost"
 					on:click={preRemoveImage}
 				>
-					<Icon type={XMark} class="text-red-500 w-6 h-6" />
+					<Icon type={XMark} class="h-6 w-6 text-red-500" />
 				</Button>
 			{:else}
 				<InputFile
-					class="!rounded-full !p-3 text-text bg-main"
+					class="!rounded-full bg-main !p-3 text-text"
 					variant="ghost"
 					disabled={imageLoading}
 					on:change={setFile}
 				>
-					<Icon type={PencilSquare} class="w-6 h-6" />
+					<Icon type={PencilSquare} class="h-6 w-6" />
 				</InputFile>
 			{/if}
 		</div>

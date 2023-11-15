@@ -6,8 +6,8 @@
 
 <div
 	class={clsx(
-		'rounded-xl text-text w-full truncate bg-main px-4 py-2 text-sm select-none text-center',
-		tags.length ? 'text-text bg-main' : 'text-gray-500'
+		'w-full select-none truncate rounded-xl bg-main px-4 py-2 text-center text-sm text-text',
+		tags.length ? 'bg-main text-text' : 'text-gray-500'
 	)}
 >
 	{tags.length ? tags.join(' • ') : 'Теги не указаны'}

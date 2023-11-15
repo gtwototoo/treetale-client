@@ -66,13 +66,13 @@
 		on:focus={handleFocus}
 		on:blur={handleBlur}
 		on:input
-		class={clsx(!ready && 'absolute h-full py-2 px-4 left-0')}
+		class={clsx(!ready && 'absolute left-0 h-full px-4 py-2')}
 		rows="1"
 		{...$$restProps}
 	/>
 	<div
 		bind:this={back}
-		class={clsx('w-full invisible whitespace-pre-wrap', ready && 'absolute left-0 px-4')}
+		class={clsx('invisible w-full whitespace-pre-wrap', ready && 'absolute left-0 px-4')}
 	>
 		{value}
 	</div>

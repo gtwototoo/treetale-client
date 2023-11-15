@@ -16,7 +16,6 @@
 	export let width: number;
 	export let height = width;
 
-	let loaded = false;
 	let ready = false;
 	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
@@ -49,11 +48,9 @@
 
 			image.src = src;
 			image.onload = (e) => {
-				loaded = true;
 				resolve(e);
 			};
 			image.onerror = (e) => {
-				loaded = false;
 				dispatch('error', e);
 				reject();
 			};

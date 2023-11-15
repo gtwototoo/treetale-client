@@ -4,9 +4,9 @@
 	import { Card } from '$UI';
 </script>
 
-<Card class="h-full items-center relative justify-center bg-contrast/20 overflow-hidden">
+<Card class="relative h-full items-center justify-center overflow-hidden bg-contrast/20">
 	<BookOpen
 		variation="solid"
-		class="h-44 absolute max-hd:h-36 max-xl:h-28 w-auto bg-transparent text-main transition-colors"
+		class="absolute h-44 w-auto bg-transparent text-main transition-colors max-hd:h-36 max-xl:h-28"
 	/>
 </Card>

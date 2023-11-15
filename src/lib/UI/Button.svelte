@@ -41,7 +41,7 @@
 	on:dragleave
 	on:drop
 	class={clm(
-		'childs:bg-transparent transition-opacity',
+		'transition-opacity childs:bg-transparent',
 		`size-${size}`,
 		loading && 'text-transparent childs:invisible',
 		variant !== 'custom' && `variant-${variant}`,

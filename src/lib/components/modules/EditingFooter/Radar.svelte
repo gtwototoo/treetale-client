@@ -49,16 +49,16 @@
 	bind:element
 	size="lg"
 	variant="ghost"
-	class="items-center !p-3 justify-center !rounded-full bg-contrast"
+	class="items-center justify-center !rounded-full bg-contrast !p-3"
 	on:click={setDefaultCoordinates}
 >
 	<ViewArea
-		class={clsx('text-text w-6 h-6', {
+		class={clsx('h-6 w-6 text-text', {
 			'!text-gray-400': Math.abs(coordinates.x) > 6 || Math.abs(coordinates.y) > 6
 		})}
 	/>
 	<div
-		class="h-3 w-3 shrink-0 rounded-full absolute !bg-text"
+		class="absolute h-3 w-3 shrink-0 rounded-full !bg-text"
 		style={transform(coordinates, $zoomStore / 100)}
 	/>
 </Button>

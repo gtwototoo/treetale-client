@@ -26,9 +26,9 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<div class="flex gap-8 screen-sm items-start screen-md p-16 screen-hd screen-xl grow">
+<div class="screen-sm screen-md screen-hd screen-xl flex grow items-start gap-8 p-16">
 	<UserInformation {user} {me} {statistic} />
-	<div class="flex flex-col w-full items-center gap-8 h-full">
+	<div class="flex h-full w-full flex-col items-center gap-8">
 		{#if me}
 			<div class="flex gap-2">
 				<Link href="/profile" class="w-44">
@@ -36,11 +36,11 @@
 						size="lg"
 						variant="custom"
 						class={clsx(
-							'!text-text w-full justify-center hover:bg-contrast !transition-colors',
+							'w-full justify-center !text-text !transition-colors hover:bg-contrast',
 							pageType === 'profile' && 'bg-contrast/20'
 						)}
 					>
-						<Icon type={Pencil} class="max-xs:block hidden" />
+						<Icon type={Pencil} class="hidden max-xs:block" />
 						<p class="max-xs:hidden">Созданные</p>
 					</Button>
 				</Link>
@@ -49,11 +49,11 @@
 						size="lg"
 						variant="custom"
 						class={clsx(
-							'!text-text w-full justify-center hover:bg-contrast transition-colors',
+							'w-full justify-center !text-text transition-colors hover:bg-contrast',
 							pageType === 'liked' && 'bg-contrast/20'
 						)}
 					>
-						<Icon type={Heart} class="max-xs:block hidden" />
+						<Icon type={Heart} class="hidden max-xs:block" />
 						<p class="max-xs:hidden">Понравившиеся</p>
 					</Button>
 				</Link>
@@ -62,11 +62,11 @@
 						size="lg"
 						variant="custom"
 						class={clsx(
-							'!text-text w-full justify-center hover:bg-contrast transition-colors',
+							'w-full justify-center !text-text transition-colors hover:bg-contrast',
 							pageType === 'viewed' && 'bg-contrast/20'
 						)}
 					>
-						<Icon type={Eye} class="max-xs:block hidden" />
+						<Icon type={Eye} class="hidden max-xs:block" />
 						<p class="max-xs:hidden">Просмотренные</p>
 					</Button>
 				</Link>

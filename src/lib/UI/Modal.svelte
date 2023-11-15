@@ -8,7 +8,6 @@
 	import { createPortal } from '$lib/hooks';
 	import { Button } from '$UI';
 
-
 	let className = '';
 	export { className as class };
 

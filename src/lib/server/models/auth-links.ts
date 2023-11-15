@@ -3,10 +3,10 @@ import ms from 'ms';
 
 export interface IAuthLinks {
 	_id: string;
-	email: string;
 	code: string;
-	expired: number;
 	created: number;
+	email: string;
+	expired: number;
 }
 
 export const authLinksModel =

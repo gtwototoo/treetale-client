@@ -2,7 +2,7 @@
 	export let id: number;
 </script>
 
-<svg width="0" height="0" aria-hidden="true" class="absolute invisible bg-transparent">
+<svg width="0" height="0" aria-hidden="true" class="invisible absolute bg-transparent">
 	<defs>
 		<linearGradient id="light-gradient-{id}" x1="0" x2="0" y1="0" y2="1">
 			<stop stop-opacity="60%" class="stop-main" />

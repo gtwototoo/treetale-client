@@ -6,17 +6,17 @@ export interface IFrameCreate extends IFrame, Omit<TBoundings, 'width'> {
 }
 
 export interface IPath {
-	line: string;
 	connectId: string;
+	line: string;
 }
 
 export interface IConnect {
-	frameId: number;
 	choiceId: number;
+	frameId: number;
 }
 
 export interface IStartMove {
-	startMoveCoords: ICoordinates;
 	moveFrameOffset: ICoordinates;
 	moveXDirection: boolean | null;
+	startMoveCoords: ICoordinates;
 }

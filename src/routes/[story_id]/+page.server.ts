@@ -1,13 +1,14 @@
 import { ProgressModel, StoriesModel, UsersModel } from '$lib/server/models';
+import { getChoiceFromId, getFrameFromId, randomError, serialize } from '$lib/utils';
+
 import type { IFrame } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import type { IStoryFull } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
-import { getChoiceFromId, getFrameFromId, randomError, serialize } from '$lib/utils';
 
 interface IProgress {
-	frameId: number;
 	choiceId?: number;
+	frameId: number;
 }
 
 const availableFrames = (progress: Array<IProgress>, frames: Array<IFrameCreate>) => {

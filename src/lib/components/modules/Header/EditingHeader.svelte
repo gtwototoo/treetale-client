@@ -59,7 +59,7 @@
 		size="lg"
 		on:click={variablesSwitch}
 	>
-		<Icon type={Variable} class="w-6 h-6" />
+		<Icon type={Variable} class="h-6 w-6" />
 		<p class="mr-1">Переменные</p>
 	</Button>
 </Header>

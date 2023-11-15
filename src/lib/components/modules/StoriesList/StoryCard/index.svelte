@@ -14,6 +14,7 @@
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
 	import { generateMainColors } from '$lib/utils';
+	import clsx from 'clsx';
 
 	export let story: IStoryReading;
 	export let vars: Array<IVariable>;
@@ -36,7 +37,7 @@
 		<SvgGradient id={storyId} />
 		<Card class="bg-contrast text-text">
 			<div
-				class="h-56 max-hd:h-48 max-xl:h-40 max-md:h-32 max-sm:h-24 relative flex w-full shrink-0 items-center justify-center bg-transparent text-main"
+				class="relative flex h-56 w-full shrink-0 items-center justify-center bg-transparent text-main max-hd:h-48 max-xl:h-40 max-md:h-32 max-sm:h-24"
 			>
 				{#if imageId && !errorImage}
 					<Photo
@@ -51,15 +52,15 @@
 				{:else}
 					<Icon
 						type={BookOpen}
-						class="h-44 max-hd:h-36 max-xl:h-28 max-md:h-20 w-auto childs:fill-gradient"
+						class="mt-3 h-44 w-auto childs:fill-gradient max-hd:h-36 max-xl:h-28 max-md:h-20 xs:mt-4 lg:mt-6"
 						variation="solid"
 					/>
 				{/if}
 			</div>
-			<div class="body">
+			<div class={clsx('body', !imageId && '!pt-0')}>
 				<Body {story} {vars} {author} />
 			</div>
-			<div class="p-2 w-full bg-transparent">
+			<div class="w-full bg-transparent p-2">
 				<Tags {tags} />
 			</div>
 		</Card>

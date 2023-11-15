@@ -107,13 +107,13 @@
 
 <SvgGradient id={storyId} />
 
-<div class="flex w-full justify-center px-4 h-screen items-center overflow-hidden">
+<div class="flex h-screen w-full items-center justify-center overflow-hidden px-4">
 	<div class="flex flex-col gap-6 transition-transform" use:setPosition={current}>
 		<ReadCard classCard="h-full">
 			<svelte:fragment slot="body">
 				<Icon
 					type={BookOpen}
-					class="h-44 max-hd:h-36 max-xl:h-28 w-auto childs:fill-gradient"
+					class="h-44 w-auto childs:fill-gradient max-hd:h-36 max-xl:h-28"
 					variation="solid"
 				/>
 				<h2>{title}</h2>

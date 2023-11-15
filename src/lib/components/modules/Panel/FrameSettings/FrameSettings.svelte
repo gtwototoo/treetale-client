@@ -150,7 +150,7 @@
 			Удалить фрейм
 		</Button>
 	{:else}
-		<Button variant="ghost" on:click={addChoice} class="justify-center text-text bg-main">
+		<Button variant="ghost" on:click={addChoice} class="justify-center bg-main text-text">
 			Добавить вариант
 		</Button>
 	{/if}

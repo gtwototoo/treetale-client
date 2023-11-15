@@ -60,7 +60,7 @@
 		</div>
 	</Note>
 	<div class="flex flex-col gap-2">
-		{#each $variablesStore as _, key}
+		{#each $variablesStore.keys() as key}
 			<VariableRow varKey={key} {checkUpdates} />
 		{/each}
 		{#if !editMode}

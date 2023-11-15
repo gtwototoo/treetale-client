@@ -22,11 +22,11 @@
 </svelte:head>
 
 {#if $page.error}
-	<div class="flex w-full h-full justify-center items-start px-12">
+	<div class="flex h-full w-full items-start justify-center px-12">
 		<div class="flex min-h-full items-center py-12">
 			<ReadCard src={img} alt="Ошибка" text={message}>
 				<Button
-					class="w-full !bg-main !text-text adaptive-font adaptive-padding"
+					class="adaptive-font adaptive-padding w-full !bg-main !text-text"
 					variant="main"
 					on:click={handleClick}
 				>

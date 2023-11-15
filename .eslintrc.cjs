@@ -1,17 +1,23 @@
 module.exports = {
 	root: true,
-	parser: '@typescript-eslint/parser',
 	extends: [
 		'eslint:recommended',
 		'plugin:svelte/recommended',
 		'plugin:@typescript-eslint/recommended',
-		'prettier',
-		'plugin:import/errors',
-		'plugin:import/warnings',
-		'plugin:import/typescript'
+		'prettier'
 	],
-	plugins: ['@typescript-eslint'],
-	ignorePatterns: ['*.cjs'],
+	plugins: ['perfectionist'],
+	rules: {
+		'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '_' }],
+		'perfectionist/sort-interfaces': 'error',
+		'@typescript-eslint/adjacent-overload-signatures': 'off'
+	},
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		ecmaVersion: 2020,
+		sourceType: 'module',
+		extraFileExtensions: ['.svelte']
+	},
 	overrides: [
 		{
 			files: ['*.svelte'],
@@ -21,25 +27,6 @@ module.exports = {
 			}
 		}
 	],
-	rules: {
-		'import/order': [
-			'warn',
-			{
-				alphabetize: {
-					order: 'asc',
-					caseInsensitive: true
-				},
-				'newlines-between': 'always'
-			}
-		]
-	},
-	settings: {
-		'svelte3/typescript': () => require('typescript')
-	},
-	parserOptions: {
-		sourceType: 'module',
-		ecmaVersion: 2020
-	},
 	env: {
 		browser: true,
 		es2017: true,

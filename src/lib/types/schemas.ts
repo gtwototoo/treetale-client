@@ -1,15 +1,15 @@
-import type { IFrameCreate } from './editing';
-
 import type { ICoordinates, IStory, IVariable } from '.';
 
+import type { IFrameCreate } from './editing';
+
 export interface IStorySchema extends IStory {
+	[index: string]: number | ICoordinates | Array<unknown> | string | boolean;
 	frames: Array<IFrameCreate>;
-	vars: Array<IVariable>;
-	userId: number;
+	imageId: string;
 	likes: Array<number>;
 	offset: ICoordinates;
-	zoom: number;
+	userId: number;
+	vars: Array<IVariable>;
 	version: number;
-	imageId: string;
-	[index: string]: number | ICoordinates | Array<unknown> | string | boolean;
+	zoom: number;
 }

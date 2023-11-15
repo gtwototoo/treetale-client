@@ -6,11 +6,11 @@ import type { TRGB } from '$lib/types';
 import { contrastText } from '$lib/utils';
 
 interface IPanel {
-	title: string;
-	id: string;
 	component: typeof SvelteComponent<unknown>;
 	editMode?: boolean;
 	hasEditButton?: boolean;
+	id: string;
+	title: string;
 }
 
 const currentPanelCustomStore = () => {

@@ -22,7 +22,7 @@
 		variant="ghost"
 		size="lg"
 	>
-		<Icon type={Star} class="w-6 h-6" />
+		<Icon type={Star} class="h-6 w-6" />
 		<p class="mr-1">Поддержать</p>
 	</Button>
 </Header>

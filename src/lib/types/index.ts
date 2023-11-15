@@ -4,22 +4,22 @@ export type TComparisonOperator = '=' | '≥' | '≤' | '>' | '<' | '≠';
 export type TMathOperator = '+' | '-' | '/' | '*' | '=';
 
 export interface IStoryEditableInfo {
-	title: string;
-	description: string;
-	tags: Array<string>;
-	imageId?: string | null;
 	color: TRGB;
+	description: string;
 	draft: boolean;
+	imageId?: string | null;
+	tags: Array<string>;
+	title: string;
 }
 
 export interface IStory extends IStoryEditableInfo {
-	storyId: number;
 	created: number;
+	storyId: number;
 }
 
 interface IOperation {
-	variable: string;
 	value: string;
+	variable: string;
 }
 
 export interface ILogicOperation extends IOperation {
@@ -33,22 +33,22 @@ export interface IMathOperation extends IOperation {
 export interface IChoice {
 	choiceId: number;
 	frameId: number;
-	text: string;
 	logicOperations: Array<ILogicOperation>;
 	mathOperations: Array<IMathOperation>;
+	text: string;
 }
 
 export interface IFrame {
-	frameId: number;
-	choices: Array<IChoice>;
-	text: string | null;
-	imageId: string | null;
 	[index: string]: unknown;
+	choices: Array<IChoice>;
+	frameId: number;
+	imageId: string | null;
+	text: string | null;
 }
 
 export interface IVariable {
-	name: string;
 	expect: 'Строка' | 'Число' | 'Да/Нет';
+	name: string;
 	value: string;
 }
 
@@ -58,29 +58,29 @@ export interface ICoordinates {
 }
 
 export interface ISize {
-	width: number;
 	height: number;
+	width: number;
 }
 
 export type TBoundings = ISize & ICoordinates;
 
 export interface IProgressData {
+	choices: Array<number>;
+	frames: Array<IFrame>;
+	readerId: number;
+	started?: number;
 	storyId: number;
 	version: number;
-	readerId: number;
-	frames: Array<IFrame>;
-	choices: Array<number>;
-	started?: number;
 }
 
 export interface IUser {
-	userId: number;
-	sessionId: string | null;
-	email: string;
-	description: string;
-	name: string;
-	avatarId: string | null;
-	created: number;
-	color: TRGB | null;
 	[index: string]: string | number | null | TRGB;
+	avatarId: string | null;
+	color: TRGB | null;
+	created: number;
+	description: string;
+	email: string;
+	name: string;
+	sessionId: string | null;
+	userId: number;
 }

@@ -47,7 +47,7 @@
 			on:click={cancelAddFrameMode}
 			variant="ghost"
 			size="lg"
-			class={clsx('w-64 text-red-500 pointer-events-auto justify-center', $redColorStore)}
+			class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
 		>
 			Отмена
 		</Button>
@@ -56,7 +56,7 @@
 			on:click={enableAddFrameMode}
 			variant="ghost"
 			size="lg"
-			class={clsx('w-64 text-emerald-500 pointer-events-auto justify-center', greenColor)}
+			class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
 		>
 			Новый фрейм
 		</Button>

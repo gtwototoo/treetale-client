@@ -28,7 +28,7 @@
 			alt={author.name}
 		/>
 		<div class="overflow-hidden text-left">
-			<p class="truncate max-xs:hidden text-text">
+			<p class="truncate text-text max-xs:hidden">
 				{author.name}
 			</p>
 			<div class="flex select-none gap-1 text-xs text-gray-500">

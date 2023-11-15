@@ -67,11 +67,11 @@
 
 <div
 	class={clsx(
-		'flex w-[36rem] sticky screen-md screen-xl screen-hd screen-sm top-8 flex-col gap-12 items-center shrink-0 rounded-3xl transition-colors p-9 select-none',
+		'screen-md screen-xl screen-hd screen-sm sticky top-8 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
 		editMode ? 'bg-main-20' : 'bg-transparent'
 	)}
 >
-	<div class="flex flex-col gap-2 items-center bg-transparent">
+	<div class="flex flex-col items-center gap-2 bg-transparent">
 		<div class="p-6">
 			<ProfileAvatar {user} {editMode} />
 		</div>
@@ -79,7 +79,7 @@
 			{#each statistic as [count, title]}
 				<div
 					class={clsx(
-						'items-center flex flex-col px-4 py-2 text-text childs:bg-transparent rounded-xl',
+						'flex flex-col items-center rounded-xl px-4 py-2 text-text childs:bg-transparent',
 						editMode ? 'bg-main/50' : 'bg-contrast/20'
 					)}
 				>
@@ -91,18 +91,18 @@
 			{/each}
 		</div>
 	</div>
-	<div class="flex flex-col items-center w-full bg-transparent">
+	<div class="flex w-full flex-col items-center bg-transparent">
 		<Contenteditable
 			bind:html={user.name}
 			placeholder="Добавьте описание"
-			class="!text-4xl font-bold !bg-transparent !text-center text-text"
+			class="!bg-transparent !text-center !text-4xl font-bold text-text"
 			readonly={!editMode}
 		/>
 		{#if editMode || user.description}
 			<Contenteditable
 				bind:html={user.description}
 				placeholder="Добавьте описание"
-				class="w-full !text-lg !bg-transparent !text-center text-text"
+				class="w-full !bg-transparent !text-center !text-lg text-text"
 				readonly={!editMode}
 			/>
 		{:else}
@@ -135,7 +135,7 @@
 				>
 					Сохранить
 				</Button>
-				<Button class="!text-red-500 bg-main" size="lg" variant="ghost" on:click={cancelEdit}>
+				<Button class="bg-main !text-red-500" size="lg" variant="ghost" on:click={cancelEdit}>
 					Отмена
 				</Button>
 			{:else}
@@ -145,11 +145,11 @@
 					variant="ghost"
 					on:click={() => (editMode = true)}
 				>
-					<Icon type={Cog6Tooth} class="w-6 h-6" />
+					<Icon type={Cog6Tooth} class="h-6 w-6" />
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
 				<Button
-					class="text-red-500 bg-contrast"
+					class="bg-contrast text-red-500"
 					size="lg"
 					variant="ghost"
 					on:click={handleSignOut}
@@ -159,7 +159,7 @@
 			{/if}
 		{:else}
 			<Button size="lg" variant="ghost" class="gap-3 bg-white" on:click={handleSubscribe}>
-				<Icon type={UserPlus} class="w-6 h-6" />
+				<Icon type={UserPlus} class="h-6 w-6" />
 				<p class="mr-1">Подписаться</p>
 			</Button>
 		{/if}

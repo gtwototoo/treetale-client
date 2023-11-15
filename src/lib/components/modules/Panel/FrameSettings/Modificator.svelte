@@ -19,19 +19,19 @@
 
 <div
 	class={clsx(
-		'relative p-2 rounded-lg gap-2 select-none text-sm items-center flex flex-col',
+		'relative flex select-none flex-col items-center gap-2 rounded-lg p-2 text-sm',
 		className
 	)}
 >
-	<div class="flex items-center relative w-full justify-center">
+	<div class="relative flex w-full items-center justify-center">
 		<p class="text-sm/10">{title}</p>
 		<Button
 			size="sm"
 			variant={editMode ? 'main' : 'ghost'}
-			class={clsx('!absolute right-0 z-[2] !px-1 bg-main text-text')}
+			class={clsx('!absolute right-0 z-[2] bg-main !px-1 text-text')}
 			on:click={switchEditMode}
 		>
-			<Icon type={PencilSquare} class="w-4 h-4" />
+			<Icon type={PencilSquare} class="h-4 w-4" />
 		</Button>
 	</div>
 	<slot {editMode} />
