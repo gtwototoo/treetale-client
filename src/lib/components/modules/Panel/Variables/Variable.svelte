@@ -7,11 +7,16 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { variablesStore } from '$lib/stores/newediting';
+	import type { TVariableExpects } from '$lib/types';
 
 	export let varKey: number;
 	export let checkUpdates: () => void;
 
-	const types: Array<IList> = [
+	type TExpects = IList & {
+		text: TVariableExpects;
+	};
+
+	const types: Array<TExpects> = [
 		{ text: 'Строка' },
 		{ text: 'Число' },
 		{

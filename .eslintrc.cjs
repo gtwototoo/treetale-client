@@ -10,6 +10,7 @@ module.exports = {
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '_' }],
 		'perfectionist/sort-interfaces': 'error',
+		'svelte/no-at-html-tags': 'off',
 		'@typescript-eslint/adjacent-overload-signatures': 'off'
 	},
 	parser: '@typescript-eslint/parser',

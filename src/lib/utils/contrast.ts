@@ -1,6 +1,8 @@
 import type { TRGB } from '$lib/types';
 
 const luminance = (rgb: TRGB) => {
+	if (!rgb || !rgb.length) return;
+
 	const a = rgb.map((v) => {
 		v /= 255;
 

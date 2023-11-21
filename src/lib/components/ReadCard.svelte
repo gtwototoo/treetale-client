@@ -3,6 +3,7 @@
 
 	import { correctWhitespace } from '$lib/utils';
 	import { Card, Photo } from '$UI';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	let className = '';
 	export { className as class };
@@ -32,7 +33,10 @@
 		/>
 	{/if}
 	<Card
-		class={clsx('gap-8 bg-main-20 p-8 childs:bg-transparent max-hd:gap-6 max-hd:p-6', classCard)}
+		class={clsx(
+			'gap-8 bg-main-20 p-8 text-text childs:bg-transparent max-hd:gap-6 max-hd:p-6',
+			classCard
+		)}
 	>
 		{#if text}
 			<div
@@ -41,7 +45,7 @@
 					text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
 				)}
 			>
-				{correctWhitespace(text)}
+				{@html DOMPurify.sanitize(correctWhitespace(text))}
 			</div>
 		{:else}
 			<slot name="body" />

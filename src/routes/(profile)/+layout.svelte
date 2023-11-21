@@ -31,7 +31,7 @@
 	<div class="flex h-full w-full flex-col items-center gap-8">
 		{#if me}
 			<div class="flex gap-2">
-				<Link href="/profile" class="w-44">
+				<Link href="/profile" class="w-44 max-sm:w-24">
 					<Button
 						size="lg"
 						variant="custom"
@@ -40,11 +40,11 @@
 							pageType === 'profile' && 'bg-contrast/20'
 						)}
 					>
-						<Icon type={Pencil} class="hidden max-xs:block" />
-						<p class="max-xs:hidden">Созданные</p>
+						<Icon type={Pencil} class="hidden h-6 w-6 max-sm:block" />
+						<p class="max-sm:hidden">Созданные</p>
 					</Button>
 				</Link>
-				<Link href="/profile/liked" class="w-44">
+				<Link href="/profile/liked" class="w-44 max-sm:w-24">
 					<Button
 						size="lg"
 						variant="custom"
@@ -53,11 +53,11 @@
 							pageType === 'liked' && 'bg-contrast/20'
 						)}
 					>
-						<Icon type={Heart} class="hidden max-xs:block" />
-						<p class="max-xs:hidden">Понравившиеся</p>
+						<Icon type={Heart} class="hidden h-6 w-6 max-sm:block" />
+						<p class="max-sm:hidden">Понравившиеся</p>
 					</Button>
 				</Link>
-				<Link href="/profile/viewed" class="w-44">
+				<Link href="/profile/viewed" class="w-44 max-sm:w-24">
 					<Button
 						size="lg"
 						variant="custom"
@@ -66,8 +66,8 @@
 							pageType === 'viewed' && 'bg-contrast/20'
 						)}
 					>
-						<Icon type={Eye} class="hidden max-xs:block" />
-						<p class="max-xs:hidden">Просмотренные</p>
+						<Icon type={Eye} class="hidden h-6 w-6 max-sm:block" />
+						<p class="max-sm:hidden">Просмотренные</p>
 					</Button>
 				</Link>
 			</div>
