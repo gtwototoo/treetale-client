@@ -1,8 +1,10 @@
+import { redirect } from '@sveltejs/kit';
+
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
 import type { IStoryFull } from '$lib/types/reading';
 import { randomError, serialize } from '$lib/utils';
-import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
 	const { name } = params;
@@ -23,14 +25,10 @@ export const load = async ({ locals, params }) => {
 	const rawStories = await StoriesModel.find({
 		userId: user.userId
 	})
-		.select({
-			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0
-		})
+		.select(USER_WITHOUT_WORKSPACE)
 		.lean();
 
-	const stories: IStoryFull[] = rawStories.map((story) => ({
+	const stories: Array<IStoryFull> = rawStories.map((story) => ({
 		...story,
 		author: serialize(user)
 	}));

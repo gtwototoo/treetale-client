@@ -3,18 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	@apply overflow-auto bg-main;
+}
 body > div {
 	@apply contents;
-}
-
-body {
-	@apply overflow-auto bg-main transition-colors;
 }
 
 h1 {
 	@apply text-3xl font-bold;
 }
-
 h2 {
 	@apply text-xl font-bold;
 }
@@ -36,4 +34,21 @@ svg {
 }
 .plug > p {
 	@apply max-w-xs;
+}
+
+.header-button {
+	@apply gap-3 max-xs:!px-3;
+}
+.header-button > p {
+	@apply max-md:hidden;
+}
+
+.adaptive-font {
+	@apply !text-2xl max-hd:!text-xl max-xl:!text-lg max-sm:!text-base;
+}
+.adaptive-font-upper {
+	@apply !text-4xl max-hd:!text-3xl max-xl:!text-2xl max-sm:!text-xl;
+}
+.adaptive-padding {
+	@apply !px-8 !py-4 max-hd:!px-6 max-hd:!py-3;
 }

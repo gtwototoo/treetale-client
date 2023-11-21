@@ -1,47 +1,44 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { MagnifyingGlass } from 'svelte-heros-v2';
+
+	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
-	import { createStory } from '$lib/requests/story';
-	import { rootStyle } from '$lib/utils/custom_colors.js';
-	import { Button } from '$UI';
-	import { Plus } from 'svelte-heros-v2';
+	import { bodyColorStore } from '$lib/stores/main';
+	import { correctWhitespace, rootStyle } from '$lib/utils';
+	import { Input } from '$UI';
 
 	export let data;
 
-	let loading = false;
-
-	const handleClick = async () => {
-		loading = true;
-
-		if ($page.data.session) {
-			await createStory();
-		} else {
-			await goto('/signin');
-		}
-
-		loading = false;
-	};
+	$bodyColorStore = DEFAULT_COLOR;
 </script>
 
 <svelte:head>
-	<title>TreeStory</title>
-	{@html rootStyle(DEFAULT_COLOR)}
+	<title>TREETALE</title>
+	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
 <div class="flex grow flex-col">
-	<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
-		Список историй
-	</h1>
-	<StoriesList
-		stories={data.stories}
-		text="Историй не найдено, но вы можете добавить свою уникальную историю"
-	>
-		<Button size="lg" class="gap-4" variant="secondaryWhite" on:click={handleClick} {loading}>
-			<Icon type={Plus} />
-			<p>Добавить историю</p>
-		</Button>
+	{#if data.stories.length}
+		<div class="flex w-full flex-col items-center gap-8 px-2">
+			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
+				Список историй
+			</h1>
+			<Input placeholder="Поиск" size="lg" class="w-full max-w-lg">
+				<svelte:fragment slot="left">
+					<Icon
+						type={MagnifyingGlass}
+						class="pointer-events-none mr-5 h-6 w-6 text-gray-800"
+					/>
+				</svelte:fragment>
+			</Input>
+		</div>
+	{/if}
+	<StoriesList stories={data.stories}>
+		<p>
+			{correctWhitespace('Историй не найдено, но вы можете добавить свою уникальную историю')}
+		</p>
+		<AddStoryButton class="gap-3 bg-white" />
 	</StoriesList>
 </div>

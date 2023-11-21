@@ -1,38 +1,56 @@
+export type TRGB = [number, number, number];
+
+export type TComparisonOperator = '=' | '≥' | '≤' | '>' | '<' | '≠';
+export type TMathOperator = '+' | '-' | '/' | '*' | '=';
+
+export type TVariableExpects = 'Строка' | 'Число' | 'Да/Нет';
+
 export interface IStoryEditableInfo {
-	title: string;
+	color: TRGB;
 	description: string;
-	tags: string[];
-	imageId?: string | null;
-	color: RGB;
 	draft: boolean;
+	imageId?: string | null;
+	tags: Array<string>;
+	title: string;
 }
 
-export type RGB = [number, number, number];
-
 export interface IStory extends IStoryEditableInfo {
-	storyId: number;
 	created: number;
+	storyId: number;
+}
+
+interface IOperation {
+	value: string;
+	variable: string;
+}
+
+export interface ILogicOperation extends IOperation {
+	symbol: TComparisonOperator;
+}
+
+export interface IMathOperation extends IOperation {
+	symbol: TMathOperator;
 }
 
 export interface IChoice {
 	choiceId: number;
 	frameId: number;
+	logicOperations: Array<ILogicOperation>;
+	mathOperations: Array<IMathOperation>;
 	text: string;
-	y?: number;
-	[index: string]: number | string | undefined;
 }
 
 export interface IFrame {
-	frameId: number;
-	choices: IChoice[];
-	text: string | null;
-	imageId: string | null;
 	[index: string]: unknown;
+	choices: Array<IChoice>;
+	frameId: number;
+	imageId: string | null;
+	text: string | null;
 }
 
 export interface IVariable {
+	expect: TVariableExpects;
 	name: string;
-	expect: 'Строка' | 'Число' | 'Да/Нет';
 	value: string;
 }
 
@@ -41,27 +59,30 @@ export interface ICoordinates {
 	y: number;
 }
 
-export interface IBoundings extends ICoordinates {
-	width: number;
+export interface ISize {
 	height: number;
+	width: number;
 }
 
+export type TBoundings = ISize & ICoordinates;
+
 export interface IProgressData {
+	choices: Array<number>;
+	frames: Array<IFrame>;
+	readerId: number;
+	started?: number;
 	storyId: number;
 	version: number;
-	readerId: number;
-	frames: IFrame[];
-	choices: number[];
-	started?: number;
 }
 
 export interface IUser {
-	userId: number;
-	sessionId: string | null;
+	[index: string]: string | number | null | TRGB;
+	avatarId: string | null;
+	color: TRGB | null;
+	created: number;
+	description: string;
 	email: string;
 	name: string;
-	avatarId: string | null;
-	created: number;
-	color: RGB | null;
-	[index: string]: string | number | null | RGB;
+	sessionId: string | null;
+	userId: number;
 }

@@ -1,15 +1,16 @@
 <script lang="ts">
+	import { clm } from '$lib/utils';
 	import { Button } from '$UI';
-	import { clsx } from 'clsx';
 
-	export let active: boolean = false;
-	let classes = '';
-	export { classes as class };
+	let className = '';
+	export { className as class };
+
+	export let active = false;
 </script>
 
 <Button
 	variant={active ? 'main' : 'secondary'}
-	class={clsx(classes, { '!bg-blue-500': active })}
+	class={clm({ '!bg-blue-500': active }, className)}
 	on:click
 >
 	<slot />

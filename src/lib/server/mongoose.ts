@@ -1,10 +1,12 @@
+import mongoose from 'mongoose';
+
 import { dev } from '$app/environment';
 import { MONGODB_URI } from '$env/static/private';
-import mongoose from 'mongoose';
-import { error } from '@sveltejs/kit';
+import { randomError } from '$lib/utils';
 
 if (!MONGODB_URI) {
-	throw error(500, 'Please define the MONGODB_URI environment variable');
+	console.error('Please define the MONGODB_URI environment variable');
+	throw randomError(500);
 }
 
 let cached = global.mongoose;
@@ -12,7 +14,7 @@ let cached = global.mongoose;
 if (!cached) {
 	cached = global.mongoose = {
 		connection: null,
-		promise: null,
+		promise: null
 	};
 }
 
@@ -25,10 +27,10 @@ export const mongooseConnect = async () => {
 		mongoose.set('strictQuery', false);
 		cached.promise = mongoose
 			.connect(MONGODB_URI, {
-				autoIndex: dev,
+				autoIndex: dev
 			})
 			.then((mongoose) => {
-				console.log('mongoose started.');
+				console.info('mongoose started.');
 
 				return mongoose;
 			});

@@ -1,124 +1,108 @@
-import type { IBoundings, IChoice, ICoordinates } from '$lib/types';
-import type { IConnect, IFrameCreate } from '$lib/types/editing';
-import { exclude } from './serialize';
+import type { ICoordinates, IFrame, TBoundings } from '$lib/types';
+import type { IFrameCreate, IPath } from '$lib/types/editing';
 
-export const transform = (coords: ICoordinates, scale?: number): string => {
+import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+
+export const transform = (coords: ICoordinates, zoom?: number): string => {
 	let styleRow = 'transform:';
 
 	styleRow += `translate3d(${coords?.x || 0}px,${coords?.y || 0}px,0)`;
-	if (scale) {
-		styleRow += `scale3d(${scale}, ${scale}, 1)`;
+	if (zoom) {
+		styleRow += `scale3d(${zoom}, ${zoom}, 1)`;
 	}
 
 	return styleRow;
 };
 
-export const getFrameFromId = (frames: IFrameCreate[], frameId: number, choiceId?: number) => {
+export const getFrameFromId = <T extends IFrameCreate | IFrame>(
+	frames: Array<T>,
+	frameId: number
+): T => {
 	const frame = frames.find((frame) => frame.frameId === frameId);
 
+	return frame;
+};
+
+export const getChoiceFromId = (frame: IFrameCreate | IFrame, choiceId: number) => {
 	if (!frame) return;
 
-	const findData: { frame: IFrameCreate; choice?: IChoice } = {
-		frame
-	};
+	const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
 
-	if (choiceId !== undefined) {
-		const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
+	return choice;
+};
 
-		findData.choice = choice;
+export const getChoicePosition = (index: number) => {
+	const startPosition = DEFAULT_FRAME_SIZE.height - 8 - 36 / 2;
+
+	return startPosition + 37 * index - 1;
+};
+
+export const createConnections = (frames: Array<IFrameCreate>) => {
+	const paths: Array<IPath> = [];
+	const area: TBoundings = getAreaBoundings(frames);
+	const { width, height, x, y } = area;
+
+	for (const fromFrame of frames) {
+		for (const choice of fromFrame.choices) {
+			if (choice.frameId === null) continue;
+
+			const toFrame = getFrameFromId(frames, choice.frameId) as IFrameCreate;
+
+			if (!toFrame) continue;
+
+			const fromPoint = {
+				x: fromFrame.x + DEFAULT_FRAME_SIZE.width,
+				y:
+					fromFrame.y +
+					(fromFrame.hidden
+						? fromFrame.height / 2
+						: getChoicePosition(fromFrame.choices.indexOf(choice)))
+			};
+			const toPoint = {
+				x: toFrame.x,
+				y: toFrame.y + 20 // расстояние от верха
+			};
+
+			paths.push({
+				connectId: `${fromFrame.frameId}:${choice.choiceId}-${toFrame.frameId}`,
+				line: createLine(fromPoint, toPoint)
+			});
+		}
 	}
 
-	return findData;
+	return {
+		paths,
+		viewBox: Object.values(area).join(' '),
+		width,
+		height,
+		style: transform({ x, y })
+	};
 };
 
 const createLine = (from: ICoordinates, to: ICoordinates): string => {
 	return `M${from.x} ${from.y} L ${to.x} ${to.y}`;
 };
 
-export const createCords = (frames: IFrameCreate[], connect?: IConnect) => {
-	const paths: string[] = [];
-	const min: ICoordinates = { x: null, y: null };
-	const max: ICoordinates = { x: null, y: null };
-
-	for (const frame of frames) {
-		cordsLimits(frame, min, max);
-
-		for (const choice of frame.choices) {
-			if (choice.frameId !== null) {
-				const endpoint = frames.find(({ frameId }) => frameId === choice.frameId);
-
-				if (endpoint) {
-					paths.push(createPath(frame, endpoint, choice.y));
-				}
-			}
+const getAreaBoundings = (frames: Array<IFrameCreate>) => {
+	const { minX, minY, maxX, maxY } = frames.reduce(
+		(acc, { x, y, height }) => ({
+			minX: Math.min(acc.minX, x),
+			minY: Math.min(acc.minY, y),
+			maxX: Math.max(acc.maxX, x + DEFAULT_FRAME_SIZE.width),
+			maxY: Math.max(acc.maxY, y + height)
+		}),
+		{
+			minX: Infinity,
+			minY: Infinity,
+			maxX: -Infinity,
+			maxY: -Infinity
 		}
-	}
-
-	if (connect) {
-		const {
-			from,
-			mouseCoords: { x, y }
-		} = connect.connector;
-		const startFrame: IFrameCreate = frames.find((frame) => frame.frameId === from.frameId);
-		const startRivet = startFrame.choices.find((choice) => choice.choiceId === from.choiceId);
-		const mousePoint: IBoundings = {
-			x,
-			y,
-			width: 0,
-			height: 0
-		};
-		cordsLimits(mousePoint, min, max);
-		paths.push(createPath(startFrame, mousePoint, startRivet.y));
-	}
-
-	const areaSize = {
-		left: min.x,
-		top: min.y,
-		width: max.x - min.x,
-		height: max.y - min.y
-	};
+	);
 
 	return {
-		paths,
-		min,
-		max,
-		viewBox: Object.values(areaSize).join(' '),
-		style: Object.entries(areaSize).reduce(
-			(string, [key, value]) => (string += `${key}:${value}px;`),
-			''
-		)
+		x: minX,
+		y: minY,
+		width: maxX - minX,
+		height: maxY - minY
 	};
-};
-
-export const framesCorrect = (frames: IFrameCreate[]) => {
-	const correct: IFrameCreate[] = [];
-
-	for (const frame of frames) {
-		const frameCorrect: IFrameCreate = exclude(frame, ['width', 'height']);
-
-		frameCorrect.choices = [];
-
-		for (const choice of frame.choices) {
-			frameCorrect.choices.push(exclude(choice, 'y'));
-		}
-
-		correct.push(frameCorrect);
-	}
-
-	return correct;
-};
-
-const cordsLimits = (frame: IBoundings, min: ICoordinates, max: ICoordinates) => {
-	if (min.x === null || frame.x < min.x) {
-		min.x = frame.x;
-	}
-	if (min.y === null || frame.y < min.y) {
-		min.y = frame.y;
-	}
-	if (!max.x || frame.x + frame.width > max.x) {
-		max.x = frame.x + frame.width;
-	}
-	if (!max.y || frame.y + frame.height > max.y) {
-		max.y = frame.y + frame.height;
-	}
 };

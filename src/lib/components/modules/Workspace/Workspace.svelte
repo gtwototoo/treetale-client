@@ -1,144 +1,112 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import {
-		activeAction,
-		changesHistory,
-		connect,
-		frames,
-		moveMode,
-		storyInfo
-	} from '$lib/stores/editing';
-	import type { ICoordinates } from '$lib/types';
-	import type { IStartMove } from '$lib/types/editing';
 	import clsx from 'clsx';
+	import { createEventDispatcher } from 'svelte';
 	import { pinch } from 'svelte-gestures';
-	import { Square2Stack } from 'svelte-heros-v2';
-	import CreateText from './CreateText.svelte';
+
+	import ConnectionsLayer from './ConnectionsLayer.svelte';
 	import Frame from './Frame/Frame.svelte';
-	import {
-		addFrame,
-		connectorLogic,
-		cursorFollow,
-		grabbingArea,
-		moveRivet,
-		movingFrame,
-		startGrab,
-		startMoveFrame
-	} from './methods';
+	import MovingArea from './MovingArea.svelte';
+	import NewFrame from './NewFrame.svelte';
 	import WindowActions from './WindowActions.svelte';
 
-	let workspace: HTMLDivElement;
+	import {
+		activeActionStore,
+		activeModeStore,
+		framesDataStore,
+		offsetStore,
+		zoomCorrect,
+		zoomStore
+	} from '$lib/stores/workspace';
+	import type { ICoordinates } from '$lib/types';
+
+	export let height: number;
+	export let width: number;
+
 	let startPinch = 0;
-	let startMoveData: IStartMove = {
-		startMoveCoords: { x: 0, y: 0 },
-		moveFrameOffset: { x: 0, y: 0 },
-		moveXDirection: null
-	};
-	let startGrabbingOffsets: ICoordinates = { x: 0, y: 0 };
+	let workspace: HTMLDivElement;
+
+	const dispatch = createEventDispatcher<{
+		mousedown: { doubleClick: boolean; button: number; isMouse: boolean } & ICoordinates;
+		mousemove: ICoordinates;
+		click: ICoordinates;
+		zoom: { zoom: number; offset: ICoordinates };
+		mouseup: null;
+	}>();
 
 	const handleMouseMove = (e: MouseEvent | TouchEvent) => {
-		const { x, y }: ICoordinates =
-			e instanceof MouseEvent
-				? {
-						x: e.clientX,
-						y: e.clientY
-				  }
-				: {
-						x: e.touches[0].clientX,
-						y: e.touches[0].clientY
-				  };
+		const isMouse = e instanceof MouseEvent;
+		const event = isMouse ? e : e.touches[0];
+		const { clientX: x, clientY: y } = event;
 
-		if ($moveMode.hovered !== null && $moveMode.active)
-			startMoveData.moveXDirection = movingFrame({ x, y }, startMoveData);
-		if ($storyInfo.grabbing) grabbingArea({ x, y }, startGrabbingOffsets);
-		if ($connect.connector.from !== null) moveRivet({ x, y });
-		if ($storyInfo.addFrameMode) cursorFollow({ x, y });
+		dispatch('mousemove', { x, y });
 	};
 
 	const handleMouseDown = (e: MouseEvent | TouchEvent) => {
-		const { x, y }: ICoordinates =
-			e instanceof MouseEvent
-				? {
-						x: e.clientX,
-						y: e.clientY
-				  }
-				: {
-						x: e.touches[0].clientX,
-						y: e.touches[0].clientY
-				  };
+		const isMouse = e instanceof MouseEvent;
+		const event = isMouse ? e : e.touches[0];
+		const { clientX: x, clientY: y } = event;
 
-		if (!(e instanceof MouseEvent) || e.button === 1 || e.detail === 2)
-			startGrabbingOffsets = startGrab({ x, y });
-		if (e instanceof MouseEvent && e.button === 0 && $moveMode.hovered !== null) {
-			startMoveData = startMoveFrame({ x, y });
-		}
+		dispatch('mousedown', {
+			doubleClick: isMouse && e.detail === 2,
+			button: isMouse && e.button,
+			isMouse,
+			x,
+			y
+		});
 	};
 
 	const handleMouseUp = () => {
-		if ($moveMode.active) {
-			changesHistory.add({
-				title: 'Перемещение фрейма',
-				icon: Square2Stack
-			});
-		}
-
-		$storyInfo.grabbing = false;
-		$moveMode.active = false;
-		$activeAction = 'Перемещение';
-
-		connectorLogic();
-		storyInfo.saveArea();
+		dispatch('mouseup');
 	};
 
 	const handleClick = ({ x, y }: MouseEvent) => {
-		if ($storyInfo.addFrameMode && $storyInfo.addFrameOffset) {
-			const addCoords = storyInfo.scaleCorrect({ x, y });
-
-			addFrame({ x: addCoords.x - 128, y: addCoords.y - 112 });
-		}
+		dispatch('click', { x, y });
 	};
 
-	const handleWheel = ({ deltaY }: WheelEvent) => {
-		if (deltaY < 0) {
-			if ($storyInfo.grabbingScale < 300) {
-				$storyInfo.grabbingScale += 10;
+	const handleZoom = (e: WheelEvent | CustomEvent<{ center: ICoordinates; zoom: number }>) => {
+		const isWheel = e instanceof WheelEvent;
+		const { x, y } = isWheel ? e : e.detail.center;
+		const upscale = isWheel ? e.deltaY < 0 : e.detail.zoom - startPinch > 0;
+
+		const zoomedCoords = zoomCorrect({ x, y });
+
+		if (upscale) {
+			if ($zoomStore < 300) {
+				$zoomStore += 10;
 			}
 		} else {
-			if ($storyInfo.grabbingScale > 10) {
-				$storyInfo.grabbingScale -= 10;
+			if ($zoomStore > 10) {
+				$zoomStore -= 10;
 			}
 		}
-	};
 
-	const handlePinch = ({ detail }: CustomEvent) => {
-		if (detail.scale - startPinch > 0) {
-			if ($storyInfo.grabbingScale < 300) {
-				$storyInfo.grabbingScale += 5;
-			}
-		} else {
-			if ($storyInfo.grabbingScale > 10) {
-				$storyInfo.grabbingScale -= 5;
-			}
-		}
-		startPinch = detail.scale;
-	};
+		$offsetStore = {
+			x: Math.round(x - zoomedCoords.x * ($zoomStore / 100)),
+			y: Math.round(y - zoomedCoords.y * ($zoomStore / 100))
+		};
 
-	$: ({ error, url } = $page);
+		if (!isWheel) startPinch = e.detail.zoom;
+
+		dispatch('zoom', { zoom: $zoomStore, offset: $offsetStore });
+	};
 </script>
 
-<WindowActions {workspace} />
+<WindowActions {workspace} on:mouseup={handleMouseUp} />
 <div
+	role="treegrid"
+	tabindex="0"
 	class={clsx(
-		'w-full grow select-none overflow-hidden',
-		{ 'cursor-grabbing': $storyInfo.grabbing },
-		{ 'cursor-move': $moveMode.active && $moveMode.hovered }
+		'relative h-full w-full select-none overflow-hidden bg-transparent',
+		$activeActionStore === 'movingArea' && 'cursor-grabbing',
+		$activeActionStore === 'movingFrame' && 'cursor-move'
 	)}
+	bind:clientHeight={height}
+	bind:clientWidth={width}
 	bind:this={workspace}
 	use:pinch
+	on:pinch={handleZoom}
 	on:keypress|stopPropagation
-	on:pinch={handlePinch}
-	on:wheel|preventDefault={handleWheel}
-	on:mouseup={handleMouseUp}
+	on:wheel|preventDefault={handleZoom}
 	on:mousedown={handleMouseDown}
 	on:touchstart={handleMouseDown}
 	on:touchmove={handleMouseMove}
@@ -146,10 +114,15 @@
 	on:mousemove={handleMouseMove}
 	on:click={handleClick}
 >
-	{#each $frames as data, key (data.frameId)}
-		<Frame {key} {data} bind:clientHeight={data.height} bind:clientWidth={data.width} />
-	{/each}
-	{#if $frames.length === 1}
-		<CreateText />
-	{/if}
+	<MovingArea>
+		{#if $activeModeStore === 'adding'}
+			<NewFrame />
+		{/if}
+		<div>
+			{#each $framesDataStore as { frameId }, key (frameId)}
+				<Frame {frameId} index={key} />
+			{/each}
+		</div>
+		<ConnectionsLayer />
+	</MovingArea>
 </div>

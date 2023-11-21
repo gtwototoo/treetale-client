@@ -1,8 +1,8 @@
-import Profile from '$lib/components/modules/Header/Profile.svelte';
+import ProfileHeader from '$lib/components/modules/Header/ProfileHeader.svelte';
 
 export const load = async ({ data }) => {
 	return {
 		...data,
-		header: Profile
+		header: ProfileHeader
 	};
 };

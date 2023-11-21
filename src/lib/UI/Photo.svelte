@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { PUBLIC_TIMAGES_DELIVERY_URL } from '$env/static/public';
-	import Icon from '$lib/components/Icon.svelte';
-	import { Loading } from '$UI/Icons';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
+	import { Photo as PhotoIcon } from 'svelte-heros-v2';
 
-	export let src: string = '';
-	export let alt: string = '';
+	import Icon from '$lib/components/Icon.svelte';
+	import { Loading } from '$UI/Icons';
+
+	let className = '';
+	export { className as class };
+
+	export let src = '';
+	export let alt = '';
 	export let cover = false;
-	export { classes as class };
 	export let width: number;
 	export let height = width;
 
-	let loaded = false;
-	let classes = '';
 	let ready = false;
 	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
@@ -48,28 +48,27 @@
 
 			image.src = src;
 			image.onload = (e) => {
-				loaded = true;
 				resolve(e);
 			};
 			image.onerror = (e) => {
-				loaded = false;
 				dispatch('error', e);
 				reject();
 			};
 		});
 	};
 
-	$: newSrc =
-		src && !src.includes('://') && !src.startsWith('data:')
-			? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
-			: '';
+	// $: newSrc =
+	// 	src && !src.includes('://') && !src.startsWith('data:')
+	// 		? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
+	// 		: '';
+	$: newSrc = src;
 </script>
 
 {#if ready}
 	<div
 		class={clsx(
 			'relative flex select-none items-center justify-center overflow-hidden childs:shrink-0',
-			classes
+			className
 		)}
 		in:fade
 	>

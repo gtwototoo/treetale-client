@@ -1,5 +1,4 @@
-// import { collapseValue, pluralize } from '$lib/utils';
-
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser } from '$lib/types';
 import type { IStoryReading } from '$lib/types/reading';
@@ -9,13 +8,13 @@ const correctMetric = (value: number, names: [string, string, string]) => {
 	return pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...names).split(' ');
 };
 
-const getStatistic = (stories: IStoryReading[]) => {
+const getStatistic = (stories: Array<IStoryReading>) => {
 	const likes = stories.reduce((sum, { likes }) => sum + likes.length, 0);
 
-	const metrics: string[][] = [
+	const metrics: Array<Array<string>> = [
+		correctMetric(likes, ['лайков', 'лайк', 'лайка']),
 		correctMetric(stories.length, ['историй', 'история', 'истории']),
-		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика']),
-		correctMetric(likes, ['лайков', 'лайк', 'лайка'])
+		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика'])
 	];
 
 	return metrics;
@@ -42,12 +41,9 @@ export const load = async ({ params, locals }) => {
 
 	const stories = await StoriesModel.find({
 		userId: user.userId
-	}).select({
-		_id: 0,
-		grabbingScale: 0,
-		grabbingOffsets: 0,
-		frames: 0
-	});
+	})
+		.select(USER_WITHOUT_WORKSPACE)
+		.lean();
 
 	if (!stories) throw randomError(404);
 

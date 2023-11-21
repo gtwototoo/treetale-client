@@ -1,15 +1,17 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { createPortal } from '$lib/hooks';
-	import { Button } from '$UI';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { XMark } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	let classes: string = '';
-	export { classes as class };
-	export let title: string = '';
+	import Icon from '$lib/components/Icon.svelte';
+	import { createPortal } from '$lib/hooks';
+	import { Button } from '$UI';
+
+	let className = '';
+	export { className as class };
+
+	export let title = '';
 	export let active: boolean;
 
 	let isMounted = false;
@@ -65,11 +67,16 @@
 			<div class="window" bind:offsetHeight>
 				<div class="header">
 					<p class="title px-20">{title}</p>
-					<Button class="absolute !p-2 hover:!text-red-600" on:click={handleClick}>
+					<Button
+						size="lg"
+						variant="ghost"
+						class="absolute !p-2 hover:!text-red-600"
+						on:click={handleClick}
+					>
 						<Icon type={XMark} />
 					</Button>
 				</div>
-				<div class={clsx('flex p-4', classes)}>
+				<div class={clsx('flex p-4', className)}>
 					<slot />
 				</div>
 			</div>
@@ -79,7 +86,7 @@
 
 <style lang="postcss">
 	.modal {
-		@apply fixed top-0 left-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
+		@apply fixed left-0 top-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
 	}
 	.window {
 		@apply m-4 flex flex-col rounded-2xl bg-white p-2 childs:w-full;

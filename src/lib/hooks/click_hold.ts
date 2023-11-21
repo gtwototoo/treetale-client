@@ -5,7 +5,7 @@ interface IClickHold {
 }
 
 export const clickHold = (node: HTMLElement): ActionReturn<null, IClickHold> => {
-	const holdTime: number = 500;
+	const holdTime = 500;
 	let mouseDown: boolean;
 	let timer: number;
 

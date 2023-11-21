@@ -1,19 +1,20 @@
-import type { IProgressData } from '$lib/types';
 import mongoose from 'mongoose';
+
+import type { IProgressData } from '$lib/types';
 
 const progressSchema = new mongoose.Schema<IProgressData>(
 	{
 		storyId: Number,
 		version: Number,
-		readerId: String,
+		readerId: Number,
 		choices: Array,
 		started: {
 			type: Number,
-			default: Date.now,
-		},
+			default: Date.now
+		}
 	},
 	{
-		versionKey: false,
+		versionKey: false
 	}
 );
 

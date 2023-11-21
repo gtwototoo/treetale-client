@@ -1,7 +1,8 @@
-import { dev } from '$app/environment';
-import { PUBLIC_TREESTORY_CLIENT_URL } from '$env/static/public';
 import type { CookieSerializeOptions } from 'cookie';
 import ms from 'ms';
+
+import { dev } from '$app/environment';
+import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 
 export const COOKIE_OPTIONS: CookieSerializeOptions = {
 	httpOnly: true,
@@ -13,7 +14,7 @@ export const COOKIE_OPTIONS: CookieSerializeOptions = {
 };
 
 if (!dev) {
-	const [, domain] = PUBLIC_TREESTORY_CLIENT_URL.split('//');
+	const [, domain] = PUBLIC_TREETALE_CLIENT_URL.split('//');
 
 	COOKIE_OPTIONS.domain = `.${domain}`;
 }

@@ -1,15 +1,17 @@
 <script lang="ts">
-	import type { IStoryFull } from '$lib/types/reading';
-	import { correctWhitespace } from '$lib/utils';
 	import Empty from './Empty.svelte';
-	import StoryCard from './StoryCard.svelte';
+	import StoryCard from './StoryCard/index.svelte';
 
-	export let text: string;
-	export let stories: IStoryFull[];
+	import type { IStoryFull } from '$lib/types/reading';
+
+	export let stories: Array<IStoryFull>;
 </script>
 
+<ska:html class:h-full={!stories.length} />
+<svelte:body class:h-full={!stories.length} />
+
 {#if stories.length}
-	<div class="cardGrid">
+	<div class="stories">
 		{#each stories as rawStory}
 			{@const { vars, author, ...story } = rawStory}
 			<StoryCard {story} {vars} {author} />
@@ -22,15 +24,12 @@
 	</div>
 {:else}
 	<div class="plug flex-grow gap-8">
-		<p>
-			{correctWhitespace(text)}
-		</p>
 		<slot />
 	</div>
 {/if}
 
 <style lang="postcss">
-	.cardGrid {
+	.stories {
 		@apply grid w-full items-start justify-center gap-2 p-2 grid-columns-fit-40 xs:grid-columns-fit-64 sm:gap-4 sm:p-4 lg:grid-columns-fit-72;
 	}
 </style>

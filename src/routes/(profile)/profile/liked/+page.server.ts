@@ -1,27 +1,24 @@
+import { redirect } from '@sveltejs/kit';
+
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IStoryFull } from '$lib/types/reading';
 import { serialize } from '$lib/utils';
-import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
 	const user = locals.session;
 
 	if (!user) throw redirect(302, '/');
 
-	const rawStories: IStoryFull[] = await StoriesModel.find({
+	const rawStories: Array<IStoryFull> = await StoriesModel.find({
 		likes: {
 			$in: [user.userId]
 		}
 	})
-		.select({
-			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0,
-			frames: 0
-		})
+		.select(USER_WITHOUT_WORKSPACE)
 		.lean();
 
-	const stories: IStoryFull[] = [];
+	const stories: Array<IStoryFull> = [];
 
 	for (const story of rawStories) {
 		if (story.userId === user.userId) {
@@ -29,7 +26,7 @@ export const load = async ({ locals }) => {
 		} else {
 			const author = await UsersModel.findOne({
 				userId: +story.userId
-			});
+			}).lean();
 
 			stories.push({
 				...story,

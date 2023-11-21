@@ -1,6 +1,11 @@
 const plugin = require('tailwindcss/plugin');
 
-const colorsList = ['main', 'text', 'contrast'];
+const colorsList = [
+	'main',
+	...new Array(9).fill(undefined).map((_, index) => `main-${index + 1}0`),
+	'text',
+	'contrast'
+];
 
 function withOpacityValue(variable) {
 	return ({ opacityValue = 1 }) => {
@@ -51,10 +56,13 @@ const config = {
 				'&::-moz-range-track',
 				'&::-ms-track'
 			]);
-			matchVariant('childelem', (value) => {
-				return `& ${value}`;
+			matchVariant('child', (value) => {
+				return `& > ${value}`;
 			});
 			addUtilities({
+				'.fill-gradient': {
+					fill: 'var(--fill-gradient)'
+				},
 				'.scrollbar-none': {
 					'-ms-overflow-style': 'none',
 					'scrollbar-width': 'none'

@@ -1,20 +1,36 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
+	import { clm } from '$lib/utils';
 
-	let classes: string = '';
+	let className = '';
+	export { className as class };
 
-	export let vertical: boolean = false;
-	export { classes as class };
+	export let vertical = false;
 </script>
 
 <div
-	class={clsx(
-		classes,
-		'flex childs:!rounded-none',
-		vertical
-			? 'flex-col divide-y first:childs:!rounded-t-lg last:childs:!rounded-b-lg'
-			: 'divide-x first:childs:!rounded-l-lg last:childs:!rounded-r-lg'
+	class={clm(
+		className,
+		'form-split flex',
+		vertical ? 'vertical flex-col divide-y' : 'horizontal divide-x'
 	)}
 >
 	<slot />
 </div>
+
+<style lang="postcss">
+	.form-split.vertical > :global(:first-child:not(:only-child)) {
+		@apply !rounded-b-none;
+	}
+	.form-split.vertical > :global(:last-child:not(:only-child)) {
+		@apply !rounded-t-none;
+	}
+	.form-split.horizontal > :global(:first-child:not(:only-child)) {
+		@apply !rounded-r-none;
+	}
+	.form-split.horizontal > :global(:last-child:not(:only-child)) {
+		@apply !rounded-l-none;
+	}
+	.form-split > :global(:not(:first-child):not(:last-child)) {
+		@apply !rounded-none;
+	}
+</style>

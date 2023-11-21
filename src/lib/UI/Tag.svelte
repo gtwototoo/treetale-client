@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { clm } from '$lib/utils';
 
-	let classes: string = '';
-
-	export { classes as class };
+	let className = '';
+	export { className as class };
 </script>
 
 <p
 	class={clm(
-		'select-none rounded bg-blue-500 bg-opacity-30 py-1 px-2 text-xs text-blue-600 childs:bg-transparent',
-		classes
+		'select-none rounded bg-main bg-opacity-30 px-2 py-1 text-xs text-text childs:bg-transparent',
+		className
 	)}
 >
 	<slot />

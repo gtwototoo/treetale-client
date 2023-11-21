@@ -1,13 +1,15 @@
 <script lang="ts">
+	import { PencilSquare, XMark } from 'svelte-heros-v2';
+	import { fade } from 'svelte/transition';
+
+	import Icon from './Icon.svelte';
+
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import type { IUser } from '$lib/types';
 	import { Avatar, Button, InputFile } from '$UI';
 
-	import { Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
-	import Icon from './Icon.svelte';
-
 	export let user: IUser;
-	export let me: boolean;
+	export let editMode: boolean;
 
 	let imageLoading = false;
 	let tempAvatarURL = '';
@@ -21,11 +23,12 @@
 
 		imageLoading = true;
 
-		const request = await removeImage(user.avatarId, action);
+		try {
+			await removeImage(user.avatarId, action);
 
-		if (request.ok) {
-			imageLoading = false;
 			user.avatarId = null;
+		} finally {
+			imageLoading = false;
 		}
 	};
 
@@ -44,14 +47,14 @@
 			imageLoading = true;
 		};
 
-		const request = await saveImage(file, action);
+		try {
+			const response = await saveImage(file, action);
 
-		if (request.ok) {
-			const data = await request.json();
-
+			user.avatarId = response.imageId;
 			imageLoading = false;
 			tempAvatarURL = '';
-			user.avatarId = data.imageId;
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
@@ -65,20 +68,27 @@
 </script>
 
 <Avatar size="lg" {src} alt={user.name} width={160} class="light-gradient-main">
-	{#if me}
-		<div class="absolute bottom-0 right-0 z-[3] rounded-full bg-main p-1">
+	{#if editMode}
+		<div
+			class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"
+			in:fade={{ duration: 150 }}
+		>
 			{#if src && !imageLoading}
-				<Button class="!rounded-full !p-3" variant="secondaryWhite" on:click={preRemoveImage}>
-					<Icon type={XMark} class="text-red-600" />
+				<Button
+					class="!rounded-full bg-main !p-3 text-text"
+					variant="ghost"
+					on:click={preRemoveImage}
+				>
+					<Icon type={XMark} class="h-6 w-6 text-red-500" />
 				</Button>
 			{:else}
 				<InputFile
-					class="!rounded-full !p-3"
-					variant="secondaryWhite"
+					class="!rounded-full bg-main !p-3 text-text"
+					variant="ghost"
 					disabled={imageLoading}
 					on:change={setFile}
 				>
-					<Icon type={PhotoIcon} />
+					<Icon type={PencilSquare} class="h-6 w-6" />
 				</InputFile>
 			{/if}
 		</div>

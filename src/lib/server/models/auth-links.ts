@@ -3,10 +3,10 @@ import ms from 'ms';
 
 export interface IAuthLinks {
 	_id: string;
-	email: string;
 	code: string;
-	expired: number;
 	created: number;
+	email: string;
+	expired: number;
 }
 
 export const authLinksModel =
@@ -16,19 +16,19 @@ export const authLinksModel =
 		new mongoose.Schema<IAuthLinks>({
 			email: {
 				type: String,
-				required: true,
+				required: true
 			},
 			code: {
 				type: String,
-				required: true,
+				required: true
 			},
 			expired: {
 				type: Number,
-				default: () => Date.now() + ms('1h'),
+				default: () => Date.now() + ms('1h')
 			},
 			created: {
 				type: Number,
-				default: Date.now,
-			},
+				default: Date.now
+			}
 		})
 	);

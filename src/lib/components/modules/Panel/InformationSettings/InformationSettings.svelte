@@ -1,0 +1,204 @@
+<script lang="ts">
+	import { onDestroy } from 'svelte';
+	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
+
+	import Shortcuts from './Shortcuts.svelte';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import Image from '$lib/components/Image.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants';
+	import { removeImage, saveImage } from '$lib/requests/image';
+	import { deleteStory, updateInfomation } from '$lib/requests/story';
+	import { changesHistory } from '$lib/stores/editing';
+	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { informationDataStore } from '$lib/stores/newediting';
+	import { contrastText, correctWhitespace } from '$lib/utils';
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
+	import clsx from 'clsx';
+
+	let light = 80;
+	let saturate = 90;
+	let timer: number;
+	let saving = false;
+	let saveInfo = 'Ожидание изменений';
+	let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
+
+	const setColor = ({ detail }: CustomEvent) => {
+		$informationDataStore.color = detail.color;
+
+		checkUpdates();
+	};
+
+	const checkUpdates = () => {
+		clearTimeout(timer);
+		saving = true;
+
+		timer = window.setTimeout(async () => {
+			const { title, tags, color, description, storyId, draft } = $informationDataStore;
+
+			try {
+				await updateInfomation(storyId, {
+					title,
+					tags,
+					color,
+					description,
+					draft
+				});
+
+				saveInfo = 'Изменения сохранены';
+			} catch {
+				saveInfo = 'Ошибка сохранения';
+			}
+
+			clearTimeout(timer);
+			saving = false;
+		}, 3000);
+	};
+
+	const action = 'storyImageId';
+
+	const preRemoveImage = async () => {
+		if (!$informationDataStore.imageId) return;
+
+		try {
+			await removeImage($informationDataStore.imageId, action, $informationDataStore.storyId);
+
+			$informationDataStore.imageId = null;
+			state = undefined;
+
+			changesHistory.add('Удаление изображения', XMark);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const preSaveImage = async (file: File): Promise<void> => {
+		try {
+			const response = await saveImage(
+				file,
+				action,
+				`&storyId=${$informationDataStore.storyId}`
+			);
+
+			$informationDataStore.imageId = response.imageId;
+			state = undefined;
+
+			changesHistory.add('Добавление изображения', PhotoIcon);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const setFile = (e: CustomEvent<{ file: File }>) => {
+		const { file } = e.detail;
+
+		preSaveImage(file);
+	};
+
+	const switchDraft = () => {
+		$informationDataStore.draft = !$informationDataStore.draft;
+		checkUpdates();
+	};
+
+	const removeStory = () => deleteStory($informationDataStore.storyId);
+
+	onDestroy(() => {
+		if (timer) {
+			clearTimeout(timer);
+		}
+	});
+
+	$: warningColor = clsx(contrastText($bodyColorStore) ? 'bg-orange-950' : 'bg-orange-50');
+	$: greenColor = clsx(contrastText($bodyColorStore) ? '!bg-emerald-900' : '!bg-emerald-200');
+	$: editMode = $currentPanelStore.editMode;
+</script>
+
+<Image
+	disabled={editMode}
+	src={$informationDataStore.imageId}
+	height={192}
+	width={360}
+	bind:state
+	class="h-48"
+	alt="Иллюстрация текста"
+	on:loading={setFile}
+	on:remove={preRemoveImage}
+/>
+<FormSplit vertical class="divide-contrast">
+	<Input
+		placeholder="Название"
+		class="w-full"
+		bind:value={$informationDataStore.title}
+		on:input={checkUpdates}
+		disabled={editMode}
+	/>
+	<Contenteditable
+		disabled={editMode}
+		placeholder="Описание истории"
+		bind:html={$informationDataStore.description}
+		on:input={checkUpdates}
+	/>
+	<InputTags
+		disabled={editMode}
+		placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
+		bind:tags={$informationDataStore.tags}
+		on:add={checkUpdates}
+		on:remove={checkUpdates}
+	/>
+</FormSplit>
+<FormSplit vertical class="divide-contrast">
+	<ColorPicker
+		lightRange={[15, 80]}
+		saturateRange={[10, 90]}
+		color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
+		{saturate}
+		{light}
+		on:change={setColor}
+		disabled={editMode}
+	/>
+</FormSplit>
+{#if editMode}
+	<Button
+		variant="main"
+		class={clsx('justify-center !text-red-500', $redColorStore)}
+		on:click={removeStory}
+	>
+		Удалить историю
+	</Button>
+{:else if $informationDataStore.draft}
+	<Button
+		variant="main"
+		class={clsx('justify-center !text-emerald-500', greenColor)}
+		on:click={switchDraft}
+	>
+		Опубликовать
+	</Button>
+{:else}
+	<div
+		class={clsx(
+			'flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm text-orange-500',
+			warningColor
+		)}
+	>
+		<p>
+			{correctWhitespace(
+				'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории.'
+			)}
+		</p>
+		<Button
+			variant="main"
+			class={clsx('justify-center !text-red-500', $redColorStore)}
+			on:click={switchDraft}
+		>
+			Отменить публикацию
+		</Button>
+	</div>
+{/if}
+<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+	{#if saving}
+		<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
+	{:else}
+		{saveInfo}
+	{/if}
+</div>
+<Shortcuts />

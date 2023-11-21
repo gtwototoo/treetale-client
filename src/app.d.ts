@@ -1,23 +1,15 @@
-// See https://kit.svelte.dev/docs/types#app
+import '@total-typescript/ts-reset';
+import type { IUser, TRGB } from './lib/types';
 
-import type { IUser, RGB } from './lib/types';
-
-// for information about these interfaces
 declare global {
-	interface Window {
-		turnstile: any;
-	}
 	namespace App {
 		interface Error {
-			img: string;
-			color?: RGB;
+			color?: TRGB;
+			img?: string;
 			message: string;
 		}
 		interface Locals {
 			session: IUser | null;
-		}
-		interface Window {
-			turnstile: any;
 		}
 		// interface PageData {}
 		// interface Platform {}

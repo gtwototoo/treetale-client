@@ -1,17 +1,16 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
 	import { enableControl, onlyDigits } from '$lib/hooks';
-	import { clsx } from 'clsx';
-	import type { SvelteComponent } from 'svelte';
+	import { clm } from '$lib/utils';
 
-	let classes: string = '';
-	export { classes as class };
-	export let coreClass: string = '';
-	export let value: string = '';
-	export let number: boolean = false;
-	export let size: 'small' | 'default' | 'big' = 'default';
-	export let disabled: boolean = false;
-	export let icon: typeof SvelteComponent | undefined = undefined;
+	let inputRef: HTMLInputElement;
+
+	let className = '';
+	export { className as class };
+
+	export let value = '';
+	export let number = false;
+	export let size: 'sm' | 'base' | 'lg' = 'base';
+	export let disabled = false;
 	export let required = false;
 	export let maxlength: number | undefined = undefined;
 	export let placeholder: string;
@@ -25,22 +24,27 @@
 		focused = false;
 	};
 
+	const handleClick = () => {
+		inputRef.focus();
+	};
+
 	let focused = false;
 </script>
 
-<div
-	class={clsx(
+<button
+	class={clm(
 		'input',
+		`size-${size}`,
+		required && !value && '!bg-red-100',
+		focused && '!bg-main-30',
 		{ disabled },
-		required && !value ? 'ring-red-500' : focused ? 'ring-blue-500' : 'ring-gray-200',
-		classes
+		className
 	)}
+	on:click={handleClick}
 >
-	{#if icon}
-		<Icon type={icon} class="absolute mx-4" />
-	{/if}
+	<slot name="left" />
 	<input
-		class={clsx(coreClass, { '!pl-[3.25rem]': icon }, size)}
+		bind:this={inputRef}
 		{name}
 		{disabled}
 		{maxlength}
@@ -53,25 +57,25 @@
 		use:enableControl={{ f: onlyDigits, enabled: number }}
 	/>
 	<slot />
-</div>
+</button>
 
 <style lang="postcss">
 	input {
-		@apply w-full bg-transparent text-black inherit-align placeholder:select-none;
+		@apply w-full bg-transparent inherit-align placeholder:select-none;
 	}
-	.big {
-		@apply px-8 py-4 text-base;
+	.size-sm {
+		@apply rounded px-2 py-1 text-xs;
 	}
-	.default {
-		@apply px-4 py-2 text-sm;
+	.size-base {
+		@apply min-h-[2.5rem] rounded-lg px-4 py-2 text-sm;
 	}
-	.small {
-		@apply p-2 text-sm;
+	.size-lg {
+		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply relative flex items-center rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500;
+		@apply relative flex cursor-text items-center bg-main-20 text-left text-text transition-colors hover:bg-main-30;
 	}
 	.disabled {
-		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
+		@apply pointer-events-none cursor-default opacity-40;
 	}
 </style>

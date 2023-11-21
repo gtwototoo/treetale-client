@@ -1,41 +1,22 @@
-import type { IBoundings, ICoordinates, IFrame, IStory } from '.';
+import type { ICoordinates, IFrame, TBoundings } from '.';
 
-export interface IFrameCreate extends IFrame, IBoundings {
-	rotated: boolean;
+export interface IFrameCreate extends IFrame, Omit<TBoundings, 'width'> {
 	hidden: boolean;
 	title: string;
 }
 
-export interface IConnect {
-	active: boolean;
-	connector: {
-		from: { frameId: number; choiceId: number } | null;
-		to: number | null;
-		prevOutput: number | null;
-		mouseCoords: ICoordinates | null;
-	};
+export interface IPath {
+	connectId: string;
+	line: string;
 }
 
-export interface IMove {
-	hovered: number | null;
-	active: boolean;
-	oneDirectionMode: boolean;
+export interface IConnect {
+	choiceId: number;
+	frameId: number;
 }
 
 export interface IStartMove {
-	startMoveCoords: ICoordinates;
 	moveFrameOffset: ICoordinates;
 	moveXDirection: boolean | null;
-}
-
-export interface IStoryCreate extends IStory {
-	grabbing: boolean;
-	addFrameMode: boolean;
-	addFrameOffset: ICoordinates | null;
-	dragImageMode: boolean;
-	grabbingOffsets: ICoordinates;
-	grabbingScale: number;
-	draft: boolean;
-	timer: number;
-	saved: boolean;
+	startMoveCoords: ICoordinates;
 }

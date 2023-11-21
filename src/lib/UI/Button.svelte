@@ -1,20 +1,20 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickHold } from '$lib/hooks';
+	import { clm } from '$lib/utils';
 	import { Loading } from '$UI/Icons';
-	import { clsx } from 'clsx';
-	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
-	let classes: string = '';
-	export { classes as class };
-	export let style: string | undefined = undefined;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'secondaryWhite' | 'ghost' =
-		'secondary';
+	let className = '';
+	export { className as class };
+
+	export let variant: 'main' | 'ghost' | 'custom';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
-	export let disabled: boolean = false;
-	export let loading: boolean = false;
+	export let disabled = false;
+	export let loading = false;
 	export let element: HTMLButtonElement | undefined = undefined;
 	export let value: string | undefined = undefined;
 	export let type: 'button' | 'submit' | 'reset' | undefined = 'button';
@@ -34,20 +34,20 @@
 
 <button
 	bind:this={element}
-	class={clsx(
-		'childs:bg-transparent',
-		{ disabled: disabled || loading },
-		`size-${size}`,
-		`variant-${variant}`,
-		classes,
-		{
-			'text-transparent childs:invisible': loading
-		}
-	)}
-	{style}
+	use:clickHold
 	on:click={handleClick}
 	on:holdclick={handleHoldClick}
-	use:clickHold
+	on:dragenter
+	on:dragleave
+	on:drop
+	class={clm(
+		'transition-opacity childs:bg-transparent',
+		`size-${size}`,
+		loading && 'text-transparent childs:invisible',
+		variant !== 'custom' && `variant-${variant}`,
+		(disabled || loading) && 'disabled',
+		className
+	)}
 	{...{ value, type }}
 >
 	<slot />
@@ -71,25 +71,16 @@
 		@apply rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.size-base {
-		@apply rounded-lg px-4 py-2 text-sm;
+		@apply min-h-[2.5rem] rounded-lg px-4 py-2 text-sm;
 	}
 	.size-sm {
 		@apply rounded px-2 py-1 text-xs;
 	}
-	.variant-secondary {
-		@apply bg-gray-50 text-black transition-colors hover:bg-white hover:text-blue-500 focus:bg-white focus:text-blue-500;
-	}
-	.variant-secondaryWhite {
-		@apply bg-white text-black transition-colors hover:text-blue-500 focus:bg-gray-100 focus:text-blue-500;
-	}
 	.variant-main {
-		@apply text-white transition-[filter] hover:brightness-110 focus:brightness-110;
+		@apply text-white transition-[filter,opacity] hover:brightness-110 focus:brightness-110;
 	}
 	.variant-ghost {
 		@apply bg-opacity-30 transition-colors hover:bg-opacity-100;
-	}
-	.variant-transparent {
-		@apply transition-[filter] hover:brightness-90 focus:brightness-90;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

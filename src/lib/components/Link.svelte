@@ -1,10 +1,10 @@
 <script lang="ts">
-	let classes: string = '';
+	let className = '';
+	export { className as class };
 
 	export let href: string;
-	export { classes as class };
 </script>
 
-<a {href} draggable="false" class={classes}>
+<a {href} draggable="false" class={className}>
 	<slot />
 </a>

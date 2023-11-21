@@ -1,19 +1,24 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { updateVars } from '$lib/requests/story';
-	import { storyInfo, vars } from '$lib/stores/editing';
-	import { correctWhitespace } from '$lib/utils';
-	import { Button } from '$UI';
-	import { Cloud, Plus, Variable } from 'svelte-heros-v2';
+	import { Cloud, Variable } from 'svelte-heros-v2';
+
 	import Note from '../Note.svelte';
+
 	import VariableRow from './Variable.svelte';
 
+	import Icon from '$lib/components/Icon.svelte';
+	import { updateVars } from '$lib/requests/story';
+	import { currentPanelStore } from '$lib/stores/main';
+	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
+	import { correctWhitespace } from '$lib/utils';
+	import { Button } from '$UI';
+
 	let timer: number;
-	let saveInfo: string = 'Ожидание изменений';
+	let saving = false;
+	let saveInfo = 'Ожидание изменений';
 
 	const addVariable = () => {
-		$vars = [
-			...$vars,
+		$variablesStore = [
+			...$variablesStore,
 			{
 				name: '',
 				expect: 'Строка',
@@ -24,27 +29,28 @@
 		checkUpdates();
 	};
 
-	const removeVariable = (key: number) => {
-		$vars.splice(key, 1);
-
-		$vars = [...$vars];
-
-		checkUpdates();
-	};
-
 	const checkUpdates = () => {
 		clearTimeout(timer);
+		saving = true;
 
 		timer = window.setTimeout(async () => {
-			const { error } = await updateVars($storyInfo.storyId, $vars);
+			try {
+				await updateVars($informationDataStore.storyId, $variablesStore);
 
-			saveInfo = error ? 'Ошибка сохранения' : 'Изменения сохранены';
+				saveInfo = 'Изменения сохранены';
+			} catch {
+				saveInfo = 'Ошибка сохранения';
+			}
+
 			clearTimeout(timer);
+			saving = false;
 		}, 3000);
 	};
+
+	$: editMode = $currentPanelStore.editMode;
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-6">
+<div class="flex flex-col items-stretch gap-4">
 	<Note icon={Variable}>
 		<div>
 			<span class="text-violet-500">Переменные</span>
@@ -54,16 +60,17 @@
 		</div>
 	</Note>
 	<div class="flex flex-col gap-2">
-		{#each $vars as data, key}
-			<VariableRow {data} on:click={() => removeVariable(key)} on:input={checkUpdates} />
+		{#each $variablesStore.keys() as key}
+			<VariableRow varKey={key} {checkUpdates} />
 		{/each}
-		<Button class="gap-4" on:click={addVariable}>
-			<Icon type={Plus} />
-			<p>Добавить переменную</p>
-		</Button>
+		{#if !editMode}
+			<Button variant="ghost" on:click={addVariable} class="justify-center bg-main text-text">
+				Добавить переменную
+			</Button>
+		{/if}
 	</div>
 	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-		{#if timer}
+		{#if saving}
 			<Icon type={Cloud} class="h-4 animate-pulse text-gray-600" />
 		{:else}
 			{saveInfo}

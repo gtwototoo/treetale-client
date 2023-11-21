@@ -1,65 +1,86 @@
 <script lang="ts">
-	import { activeAction, changesHistory, connect, moveMode, storyInfo } from '$lib/stores/editing';
+	import { createEventDispatcher } from 'svelte';
 
-	let innerHeight: number;
-	let innerWidth: number;
+	import { changesHistory } from '$lib/stores/editing';
+	import {
+		activeActionStore,
+		activeModeStore,
+		oneDirectionModeStore
+	} from '$lib/stores/workspace';
+
+	const dispatch = createEventDispatcher();
 
 	const handleKeydown = (e: KeyboardEvent) => {
-		switch (e.key.toLowerCase()) {
-			case 'control':
-				e.preventDefault();
-				$storyInfo.addFrameMode = true;
-				break;
-			case 'shift':
-				e.preventDefault();
-				$moveMode.oneDirectionMode = true;
-				$connect.active = false;
-				break;
-			case !e.shiftKey && 'alt':
-				e.preventDefault();
-				$connect.active = true;
-				break;
-			case 'z':
-				if ($storyInfo.addFrameMode) changesHistory[e.shiftKey ? 'redo' : 'undo']();
-				break;
-			case 'escape':
-				e.preventDefault();
-				if ($storyInfo.dragImageMode) {
-					$storyInfo.dragImageMode = false;
-				}
-		}
+		const { code, shiftKey } = e;
+
+		const inputFocus =
+			document.hasFocus() &&
+			(document.activeElement instanceof HTMLInputElement ||
+				(document.activeElement as HTMLDivElement).isContentEditable);
+
+		const switchAddFrameMode = () => {
+			$activeModeStore = $activeModeStore === 'adding' ? 'view' : 'adding';
+		};
+
+		const enableOneDirectionMode = () => {
+			$oneDirectionModeStore = true;
+		};
+
+		const switchConnectMode = () => {
+			if (shiftKey) return;
+
+			$activeModeStore = $activeModeStore === 'binding' ? 'view' : 'binding';
+		};
+
+		const historyManipulate = () => {
+			changesHistory[shiftKey ? 'redo' : 'undo']();
+		};
+
+		const cancelModes = () => {
+			$activeModeStore = 'view';
+		};
+
+		const actions: Record<string, () => void> = {
+			KeyF: switchAddFrameMode,
+			ShiftLeft: enableOneDirectionMode,
+			ShiftRight: enableOneDirectionMode,
+			KeyC: switchConnectMode,
+			KeyZ: historyManipulate,
+			Escape: cancelModes
+		};
+
+		if (!(code in actions) || inputFocus) return;
+
+		e.preventDefault();
+
+		actions[code]();
 	};
 
 	const handleKeyup = (e: KeyboardEvent) => {
-		switch (e.key.toLowerCase()) {
-			case 'control':
-				$storyInfo.addFrameMode = false;
-				$storyInfo.addFrameOffset = null;
-				$activeAction = null;
-				break;
-			case 'shift':
-				$moveMode.oneDirectionMode = false;
-				break;
-			case 'alt':
-				$connect = {
-					active: false,
-					connector: {
-						from: null,
-						to: null,
-						prevOutput: null,
-						mouseCoords: null
-					}
-				};
-				break;
-		}
+		const { code } = e;
+
+		const disableOneDirectionMode = () => {
+			$oneDirectionModeStore = false;
+		};
+
+		const actions: Record<string, () => void> = {
+			ShiftLeft: disableOneDirectionMode,
+			ShiftRight: disableOneDirectionMode
+		};
+
+		if (!(code in actions)) return;
+
+		e.preventDefault();
+
+		actions[code]();
 	};
 
 	const disableDragMode = () => {
-		$storyInfo.dragImageMode = false;
+		$activeActionStore = null;
 	};
 
 	const enableDragMode = () => {
-		$storyInfo.dragImageMode = true;
+		$activeActionStore = 'dragImage';
 	};
 
 	const handleDragLeave = (e: DragEvent) => {
@@ -68,14 +89,17 @@
 		}
 	};
 
+	const handleMouseUp = (e: MouseEvent) => {
+		dispatch('mouseup', e);
+	};
+
 	export let workspace: HTMLDivElement;
 </script>
 
 <svelte:window
-	bind:innerHeight
-	bind:innerWidth
 	on:keypress|stopPropagation
 	on:keydown={handleKeydown}
+	on:mouseup={handleMouseUp}
 	on:keyup|preventDefault={handleKeyup}
 	on:drop|preventDefault|stopPropagation={disableDragMode}
 	on:dragover|preventDefault

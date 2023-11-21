@@ -1,88 +1,70 @@
+import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
+
 import { goto } from '$app/navigation';
-import { PUBLIC_TREESTORY_API_URL } from '$env/static/public';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { ICoordinates, IStoryEditableInfo, IVariable } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
-import { fetchPost } from '.';
 
 export const addLike = async (storyId: number) => {
-	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/like`,
-		undefined,
-		'PUT'
-	);
+	interface IResponse {
+		liked: boolean;
+	}
+
+	return await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/like`);
 };
 
-export const updateInfo = async (storyId: number, info: IStoryEditableInfo) => {
+export const updateInfomation = async (storyId: number, info: IStoryEditableInfo) => {
 	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=information`,
+		`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=information`,
 		info
 	);
 };
 
-export const updateFrames = async (
+export const updateArea = async (
 	storyId: number,
-	frames: IFrameCreate[],
-	grabbingOffsets: ICoordinates,
-	grabbingScale: number
+	frames: Array<IFrameCreate>,
+	offset: ICoordinates,
+	zoom: number
 ) => {
-	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=area`,
-		{
-			frames,
-			grabbingOffsets,
-			grabbingScale,
-		}
-	);
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=area`, {
+		frames,
+		offset,
+		zoom
+	});
 };
 
-export const updateVars = async (storyId: number, vars: IVariable[]) => {
-	return await fetchPost(
-		`${PUBLIC_TREESTORY_API_URL}/story/${storyId}/edit?sections=vars`,
-		{
-			vars,
-		}
-	);
+export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=vars`, {
+		vars
+	});
 };
 
 export const searchStories = async (row: string) => {
-	const request = await fetch(`/api/story/search?row=${row}`);
-	const response = await request.json();
-
-	return {
-		error: !request.ok,
-		response,
-	};
+	return await fetchGet(`/api/story/search?row=${row}`);
 };
 
 export const createStory = async () => {
-	let request: Response | undefined = undefined;
-
-	try {
-		request = await fetch(`${PUBLIC_TREESTORY_API_URL}/story/create`, {
-			method: 'PUT',
-			credentials: 'include',
-		});
-	} catch (e) {
-		console.error(e);
+	interface IResponse {
+		storyId: number;
 	}
 
-	if (request) {
-		const response = (await request.json()) as {
-			error: boolean;
-			storyId?: number;
-		};
+	try {
+		const response = await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/create`);
 
-		if (!response.error) {
-			await goto(`/${response.storyId}/edit`);
-		}
+		return goto(`/${response.storyId}/edit`);
+	} catch (e) {
+		console.error(e);
 	}
 };
 
 export const deleteStory = async (id: number) => {
-	await fetch(`${PUBLIC_TREESTORY_API_URL}/story/${id}`, {
-		method: 'DELETE',
-		credentials: 'include',
-	});
+	try {
+		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/story/${id}`);
 
-	return goto(`/profile`);
+		return goto(`/profile`, {
+			invalidateAll: true
+		});
+	} catch (e) {
+		console.error(e);
+	}
 };

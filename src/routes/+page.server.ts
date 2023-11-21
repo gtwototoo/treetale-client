@@ -1,19 +1,15 @@
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import type { IUser, IVariable } from '$lib/types';
 import type { IStoryFull, IStoryReading } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
 import { serialize } from '$lib/utils';
 
-export const load = async ({ locals }) => {
-	const rawStories: IStorySchema[] = await StoriesModel.find({
+export const load = async () => {
+	const rawStories: Array<IStorySchema> = await StoriesModel.find({
 		draft: false
 	})
-		.select({
-			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0,
-			frames: 0
-		})
+		.select(USER_WITHOUT_WORKSPACE)
 		.skip(0)
 		.limit(10)
 		.lean();
@@ -24,17 +20,18 @@ export const load = async ({ locals }) => {
 		};
 	}
 
-	const stories: IStoryFull[] = [];
+	const stories: Array<IStoryFull> = [];
 
 	for (const story of rawStories) {
 		const author = await UsersModel.findOne({
 			userId: +story.userId
-		});
+		}).lean();
+
 		stories.push({
 			...story,
 			author: author ? serialize(author) : null
 		} satisfies IStoryReading & {
-			vars: IVariable[];
+			vars: Array<IVariable>;
 			author: IUser;
 		});
 	}

@@ -1,6 +1,7 @@
+import mongoose from 'mongoose';
+
 import { DEFAULT_COLOR } from '$lib/constants';
 import type { IStorySchema } from '$lib/types/schemas';
-import mongoose from 'mongoose';
 
 const storySchema = new mongoose.Schema<IStorySchema>(
 	{
@@ -36,12 +37,12 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 		likes: Array,
 		tags: Array,
 		frames: Array,
-		grabbingScale: {
+		zoom: {
 			type: Number,
 			default: 100
 		},
 		vars: Array,
-		grabbingOffsets: {
+		offset: {
 			type: Object,
 			default: { x: 0, y: 0 }
 		},

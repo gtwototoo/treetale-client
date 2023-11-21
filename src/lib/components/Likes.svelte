@@ -1,49 +1,48 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { addLike } from '$lib/requests/story';
-	import type { IStoryReading } from '$lib/types/reading';
-	import { Button } from '$UI';
 	import clsx from 'clsx';
 	import { Heart } from 'svelte-heros-v2';
+
 	import Icon from './Icon.svelte';
 
-	export let info: IStoryReading;
+	import { page } from '$app/stores';
+	import { addLike } from '$lib/requests/story';
+	import { Button } from '$UI';
 
-	let process = false;
-	let likes = info.likes;
-	let liked = likes.includes($page.data.session?.userId);
+	export let likes: Array<number>;
+	export let storyId: number;
+
+	let loading = false;
+	let isLiked = likes.includes($page.data.session?.userId);
 
 	const handleClick = async () => {
-		process = true;
+		loading = true;
 
-		const { error, response } = await addLike(info.storyId);
+		try {
+			const response = await addLike(storyId);
 
-		process = false;
+			if (response.liked) {
+				likes = [...likes, $page.data.session.userId];
+			} else {
+				likes = likes.filter((id) => id !== $page.data.session.userId);
+			}
 
-		if (error) return;
-
-		if (response.liked) {
-			likes = [...likes, $page.data.session.userId];
-		} else {
-			likes = likes.filter((id) => id !== $page.data.session.userId);
+			isLiked = likes.includes($page.data.session.userId);
+		} finally {
+			loading = false;
 		}
-
-		liked = likes.includes($page.data.session.userId);
 	};
 </script>
 
 <Button
-	class="gap-1 !p-1 xs:!p-2"
-	variant="transparent"
+	class="gap-2 bg-main !px-3 text-text hover:text-red-500"
+	variant="ghost"
 	on:click={handleClick}
-	disabled={process || !$page.data.session}
+	{loading}
 >
 	<Icon
 		type={Heart}
-		variation={liked ? 'solid' : undefined}
-		class={clsx({
-			'text-red-600': liked
-		})}
+		variation={isLiked ? 'solid' : undefined}
+		class={clsx('h-6 w-6', isLiked && 'text-red-500')}
 	/>
 	<p class="min-w-[1rem]">{likes.length}</p>
 </Button>

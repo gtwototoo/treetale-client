@@ -1,11 +1,18 @@
+export { alphaToRgb } from './alpha_to_rgb';
+export { exclude, last, serialize } from './array';
 export { clm } from './class_merge';
 export { contrastText } from './contrast';
-export { rootStyle } from './custom_colors';
-export { getFrameFromId, transform } from './editing';
+export { RGB, generateMainColors, rootStyle, varColors, varStyles } from './custom_colors';
+export { getChoiceFromId, getFrameFromId, transform } from './editing';
 export { sizeNamePattern } from './file';
 export { findByPattern } from './find';
 export { collapseValue } from './number';
-export { randomArray, randomInteger } from './random';
-export { randomError } from './random_error';
-export { exclude, serialize } from './serialize';
-export { correctWhitespace, cutText, pluralize, variableReplace } from './text';
+export { getPageType, removeBodyFullHeight, setBodyFullHeight } from './page';
+export { randomArray, randomError, randomInteger } from './random';
+export {
+	correctVariableReplace,
+	correctWhitespace,
+	cutText,
+	pluralize,
+	variableReplace
+} from './text';

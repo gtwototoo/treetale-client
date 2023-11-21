@@ -2,12 +2,13 @@
 	import { clsx } from 'clsx';
 	import { onMount } from 'svelte';
 
-	let classes: string = '';
-	export { classes as class };
-	export let current: number = 0;
+	let className = '';
+	export { className as class };
+
+	export let current = 0;
 
 	let carouselRef: HTMLDivElement;
-	let ready: boolean = false;
+	let ready = false;
 
 	const toItem = (key: number) => {
 		if (!carouselRef) return;
@@ -42,7 +43,7 @@
 </script>
 
 <div
-	class={clsx('carousel childs:shrink-0 childs:snap-center', classes, {
+	class={clsx('carousel childs:shrink-0 childs:snap-center', className, {
 		invisible: !ready
 	})}
 	bind:this={carouselRef}
@@ -53,6 +54,6 @@
 
 <style lang="postcss">
 	.carousel {
-		@apply scrollbar-none flex snap-x snap-mandatory items-center overflow-x-auto;
+		@apply flex snap-x snap-mandatory items-center overflow-x-auto scrollbar-none;
 	}
 </style>

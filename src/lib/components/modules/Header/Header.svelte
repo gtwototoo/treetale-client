@@ -1,18 +1,21 @@
 <script lang="ts">
-	import { activeAction } from '$lib/stores/editing';
 	import clsx from 'clsx';
+
 	import Logo from './Logo.svelte';
 	import Session from './Session.svelte';
+
+	let className = '';
+	export { className as class };
 </script>
 
 <div
 	class={clsx(
-		'pointer-events-none z-10 flex w-full justify-between bg-transparent p-2 sm:p-4',
-		$activeAction ? 'blind' : 'childs:pointer-events-auto'
+		'z-10 flex w-full items-center justify-between bg-transparent p-4 max-sm:p-2',
+		className
 	)}
 >
 	<Logo />
-	<div class="flex gap-2">
+	<div class="flex gap-4 max-sm:gap-2">
 		<slot />
 		<Session />
 	</div>

@@ -1,11 +1,13 @@
 import adapter from '@sveltejs/adapter-auto';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { preprocessor as documentPreprocessor } from '@sveltekit-addons/document';
 import preprocess from 'svelte-preprocess';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: [
 		vitePreprocess(),
+		documentPreprocessor(),
 		preprocess({
 			postcss: true
 		})
@@ -19,10 +21,8 @@ const config = {
 	},
 
 	vitePlugin: {
-		experimental: {
-			inspector: {
-				holdMode: true
-			}
+		inspector: {
+			holdMode: true
 		}
 	}
 };

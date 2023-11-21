@@ -1,21 +1,24 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { autoWidth } from '$lib/hooks';
-
-	import { Button, Tag } from '$UI';
 	import { clsx } from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 	import { XMark } from 'svelte-heros-v2';
 
-	let classes: string = '';
-	export { classes as class };
-	export let placeholder: string;
-	export let tags: string[] = [];
-	export let disabled: boolean = false;
-	export let value: string = '';
-	export let maxLength: number = 20;
+	import Icon from '$lib/components/Icon.svelte';
+	import { autoWidth } from '$lib/hooks';
+	import { last } from '$lib/utils';
+	import { Button, Tag } from '$UI';
 
-	let focused: boolean = false;
+	let className = '';
+	export { className as class };
+
+	export let placeholder: string;
+	export let tags: Array<string> = [];
+	export let disabled = false;
+	export let value = '';
+	export let maxLength = 20;
+
+	let focused = false;
+
 	const dispatch = createEventDispatcher();
 
 	const removeTag = (name: string) => {
@@ -47,39 +50,48 @@
 	};
 
 	const handleKeydown = (e: KeyboardEvent) => {
-		if (e.key === 'Enter' || e.key === ' ') {
-			e.preventDefault();
+		const { code } = e;
 
+		const handleAddTag = () => {
 			if (value === '') return;
 
 			addTag(value);
-		}
-		if (e.key === 'Backspace' && value === '') {
-			e.preventDefault();
+		};
 
-			const lastTagValue = tags.at(-1);
+		const handleRemoveTag = () => {
+			if (value) return;
+
+			const lastTagValue = last(tags);
 
 			if (!lastTagValue) return;
 
 			value = lastTagValue;
 			removeTag(lastTagValue);
+		};
 
-			return;
-		}
-		if (e.key !== 'Backspace' && value.length >= maxLength) {
+		if (code === 'Backspace' && !value) {
 			e.preventDefault();
+			handleRemoveTag();
+		}
 
-			addTag(value);
+		if (
+			code === 'Space' ||
+			code === 'Enter' ||
+			(code !== 'Backspace' && value.length >= maxLength)
+		) {
+			e.preventDefault();
+			handleAddTag();
 		}
 	};
 </script>
 
-<div
+<button
 	class={clsx(
 		'input',
-		{ disabled, 'p-1.5': tags.length },
-		classes,
-		focused ? 'ring-blue-500' : 'ring-gray-200'
+		focused && '!bg-main-30',
+		tags.length ? 'px-2' : 'px-4',
+		{ disabled },
+		className
 	)}
 	on:keydown={handleKeydown}
 >
@@ -88,7 +100,7 @@
 			<p class="pl-2 !leading-6">{tag}</p>
 			<Button
 				size="sm"
-				variant="transparent"
+				variant="ghost"
 				class="!py-1 hover:!text-red-600"
 				on:click={() => removeTag(tag)}
 			>
@@ -98,23 +110,22 @@
 	{/each}
 	<input
 		bind:value
-		class={clsx({ '!p-0 !leading-6': tags.length })}
 		{placeholder}
 		on:paste|preventDefault={handlePaste}
 		on:focus={() => (focused = true)}
 		on:blur={() => (focused = false)}
 		use:autoWidth={value}
 	/>
-</div>
+</button>
 
 <style lang="postcss">
 	input {
-		@apply w-full flex-grow bg-transparent px-4 py-2 text-sm text-black placeholder:select-none;
+		@apply w-full flex-grow bg-transparent text-sm leading-6 placeholder:select-none;
 	}
 	.input {
-		@apply flex flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-white ring-1 transition-[box-shadow] hover:ring-blue-500;
+		@apply flex min-h-[2.5rem] flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-main-20 py-2 text-text transition-colors hover:bg-main-30;
 	}
 	.disabled {
-		@apply pointer-events-none cursor-default bg-gray-100 opacity-40;
+		@apply pointer-events-none cursor-default opacity-40;
 	}
 </style>

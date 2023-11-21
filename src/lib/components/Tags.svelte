@@ -1,25 +1,14 @@
 <script lang="ts">
-	import { Tag } from '$UI';
 	import clsx from 'clsx';
 
-	let classes: string = '';
-	export { classes as class };
-	export let tags: string[];
+	export let tags: Array<string>;
 </script>
 
-{#if tags.length}
-	<div
-		class={clsx(
-			'flex w-full shrink-0 justify-center gap-2 overflow-hidden bg-transparent',
-			classes
-		)}
-	>
-		{#each tags as tag}
-			<Tag>{tag}</Tag>
-		{/each}
-	</div>
-{:else}
-	<p class={clsx('select-none text-center text-xs leading-5 text-gray-500 xs:leading-6', classes)}>
-		Теги не указаны
-	</p>
-{/if}
+<div
+	class={clsx(
+		'w-full select-none truncate rounded-xl bg-main px-4 py-2 text-center text-sm text-text',
+		tags.length ? 'bg-main text-text' : 'text-gray-500'
+	)}
+>
+	{tags.length ? tags.join(' • ') : 'Теги не указаны'}
+</div>

@@ -1,64 +1,84 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import ReadCard from '$lib/components/ReadCard.svelte';
-	import type { IFrame, IVariable } from '$lib/types';
-	import { correctWhitespace, variableReplace } from '$lib/utils';
-	import { Button, FormSplit } from '$UI';
 	import clsx from 'clsx';
+	import { createEventDispatcher } from 'svelte';
 
-	export let last: boolean;
-	export let frame: IFrame;
-	let styles = '';
-	export { styles as class };
-	export let vars: IVariable[];
-	export let selectedChoiceId: number | undefined;
-	export let setChoice: (choiceId: number) => void;
+	import Choice from './Choice.svelte';
+
+	import { FormSplit } from '$UI';
+	import ReadCard from '$lib/components/ReadCard.svelte';
+	import { framesStore, variablesStore } from '$lib/stores/reading';
+	import type { ILogicOperation, TVariableExpects } from '$lib/types';
+	import { correctVariableReplace, getFrameFromId } from '$lib/utils';
+
+	const dispatch = createEventDispatcher<{
+		click: { choiceId: number };
+	}>();
+
+	let className = '';
+	export { className as class };
+
+	export let frameId: number;
+	export let selectedChoiceId: number;
 
 	const handleClick = (choiceId: number) => {
-		if ($page.data.session) {
-			setChoice(choiceId);
-		} else {
-			goto('/signin');
-		}
+		dispatch('click', { choiceId });
 	};
 
-	const text = frame.text ? correctWhitespace(variableReplace(frame.text, vars)) : '';
+	const correctSymbol = (symbol: string, logic: boolean) => {
+		const replaces: Record<string, string> = {
+			'=': '===',
+			'≥': '>=',
+			'≤': '<=',
+			'≠': '!=='
+		};
+
+		if (logic) {
+			replaces['='] = '===';
+		}
+
+		if (!(symbol in replaces)) return symbol;
+
+		return replaces[symbol];
+	};
+
+	const correctVariable = (value: string | number, expect: TVariableExpects) => {
+		return expect === 'Число' ? value : `"${value}"`;
+	};
+
+	const checkLogic = (logicOperations: Array<ILogicOperation>) => {
+		return logicOperations
+			.map(({ variable, symbol, value }) => {
+				const getVariable = $variablesStore.find(({ name }) => name === variable);
+
+				return `${correctVariable(getVariable.value, getVariable.expect)} ${correctSymbol(
+					symbol,
+					true
+				)} ${correctVariable(value, getVariable.expect)}`;
+			})
+			.every((operation) => eval(operation));
+	};
+
+	$: ({ imageId, text, choices } = getFrameFromId($framesStore, frameId));
 </script>
 
 <ReadCard
-	src={frame.imageId}
-	text={text || 'Пустота...'}
-	class={clsx(
-		{
-			'pointer-events-none opacity-10': !last
-		},
-		styles
-	)}
+	src={imageId}
+	text={correctVariableReplace(text, $variablesStore) || 'Пустота...'}
+	class={clsx('text-left', className)}
+	classCard="justify-between !items-start"
 >
-	{#if frame.choices.length}
-		<FormSplit vertical>
-			{#each frame.choices as choice (choice.choiceId)}
-				{@const active = selectedChoiceId === choice.choiceId}
-				{@const choiceText = correctWhitespace(variableReplace(choice.text, vars))}
-				{#if choice.frameId}
-					<Button
-						on:click={() => handleClick(choice.choiceId)}
-						variant={active ? 'main' : 'secondary'}
-						class={clsx('choice', {
-							'bg-main !text-text': active
-						})}
+	{#if choices.length}
+		<FormSplit vertical class="w-full divide-main-10">
+			{#each choices as { choiceId, text, logicOperations } (choiceId)}
+				{#if !logicOperations.length || checkLogic(logicOperations)}
+					<Choice
+						active={selectedChoiceId === choiceId}
+						on:click={() => handleClick(choiceId)}
 					>
-						{choiceText}
-					</Button>
+						{correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
+					</Choice>
 				{/if}
 			{/each}
 		</FormSplit>
 	{/if}
 </ReadCard>
-
-<style lang="postcss">
-	:global(.choice) {
-		@apply w-full justify-start overflow-hidden text-ellipsis !whitespace-normal text-left !text-sm sm:!text-base lg:!text-lg;
-	}
-</style>

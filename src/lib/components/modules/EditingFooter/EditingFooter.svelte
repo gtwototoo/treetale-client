@@ -1,37 +1,77 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
-	import { activeAction, storyInfo } from '$lib/stores/editing';
 	import clsx from 'clsx';
-	import { MagnifyingGlassPlus, MapPin } from 'svelte-heros-v2';
-	import Radar from './Radar.svelte';
+
 	import StateMode from './StateMode.svelte';
+
+	import { Button } from '$UI';
+	import { bodyColorStore, redColorStore } from '$lib/stores/main';
+	import {
+		activeActionStore,
+		activeModeStore,
+		addFrameOffsetStore,
+		offsetStore,
+		zoomCorrect,
+		zoomStore
+	} from '$lib/stores/workspace';
+	import { contrastText } from '$lib/utils';
+
+	const cancelAddFrameMode = () => {
+		$activeModeStore = 'view';
+	};
+
+	const enableAddFrameMode = (e: CustomEvent<MouseEvent>) => {
+		const { x, y } = e.detail;
+		const cursorCoords = zoomCorrect({ x, y });
+
+		$addFrameOffsetStore = cursorCoords;
+		$activeModeStore = 'adding';
+	};
+
+	$: greenColor = clsx(contrastText($bodyColorStore) ? 'bg-emerald-900' : 'bg-emerald-200');
 </script>
 
 <div class="area">
-	<div class={clsx('footer', $activeAction ? 'blind' : 'pointer-events-auto')}>
-		<Radar />
+	<div class={clsx('flex items-center', $activeActionStore ? 'blind' : 'pointer-events-auto')}>
+		<slot />
 		<div class="info">
-			<div>
-				<Icon type={MapPin} class="h-4 w-4" />
-				{$storyInfo.grabbingOffsets.x}, {$storyInfo.grabbingOffsets.y}
-			</div>
-			<div>
-				<Icon type={MagnifyingGlassPlus} class="h-4 w-4" />
-				{($storyInfo.grabbingScale / 100).toFixed(1)}x
-			</div>
+			<p>
+				{$offsetStore.x}, {$offsetStore.y}
+			</p>
+			<p>
+				{($zoomStore / 100).toFixed(1)}x
+			</p>
 		</div>
 	</div>
+	{#if $activeModeStore === 'adding'}
+		<Button
+			on:click={cancelAddFrameMode}
+			variant="ghost"
+			size="lg"
+			class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
+		>
+			Отмена
+		</Button>
+	{:else}
+		<Button
+			on:click={enableAddFrameMode}
+			variant="ghost"
+			size="lg"
+			class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
+		>
+			Новый фрейм
+		</Button>
+	{/if}
 	<StateMode />
 </div>
 
 <style lang="postcss">
 	.area {
-		@apply pointer-events-none fixed bottom-0 flex w-full items-end justify-between p-2 transition-opacity sm:p-4;
+		@apply pointer-events-none absolute bottom-0 flex w-full items-center justify-between bg-transparent p-2 transition-opacity sm:p-4;
 	}
 	.footer {
-		@apply flex items-center gap-2;
+		@apply flex items-center gap-1;
 	}
 	.info {
-		@apply flex select-none flex-col gap-1 bg-transparent text-sm childs:flex childs:gap-2 childs:leading-4;
+		@apply flex select-none flex-col rounded-lg bg-main px-2 py-1 text-sm text-text;
 	}
 </style>

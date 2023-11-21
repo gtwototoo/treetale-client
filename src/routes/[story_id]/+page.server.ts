@@ -1,21 +1,21 @@
 import { ProgressModel, StoriesModel, UsersModel } from '$lib/server/models';
+import { getChoiceFromId, getFrameFromId, randomError, serialize } from '$lib/utils';
+
 import type { IFrame } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import type { IStoryFull } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
-import { getFrameFromId, randomError, serialize } from '$lib/utils';
 
 interface IProgress {
-	frameId: number;
 	choiceId?: number;
+	frameId: number;
 }
 
-const availableFrames = (progress: IProgress[], frames: IFrameCreate[]) => {
-	const available: IFrame[] = [];
+const availableFrames = (progress: Array<IProgress>, frames: Array<IFrameCreate>) => {
+	const available: Array<IFrame> = [];
 
 	for (const stage of progress) {
-		const frame = frames.find(({ frameId }) => frameId === stage.frameId);
-
+		const frame = getFrameFromId(frames, stage.frameId);
 		if (!frame) continue;
 
 		const { frameId, text, choices, imageId } = frame;
@@ -31,8 +31,8 @@ const availableFrames = (progress: IProgress[], frames: IFrameCreate[]) => {
 	return available;
 };
 
-const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
-	const progress: IProgress[] = [
+const formatedProgress = (choices: Array<number>, frames: Array<IFrameCreate>) => {
+	const progress: Array<IProgress> = [
 		{
 			frameId: frames[0].frameId
 		}
@@ -42,12 +42,13 @@ const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
 		progress[key].choiceId = choices[key];
 
 		const { frameId, choiceId } = progress[key];
-		const data = getFrameFromId(frames, frameId, choiceId);
+		const frame = getFrameFromId(frames, frameId);
+		const choice = getChoiceFromId(frame, choiceId);
 
-		if (!data?.choice) break;
+		if (!choice) break;
 
 		progress.push({
-			frameId: data.choice.frameId
+			frameId: choice.frameId
 		});
 	}
 
@@ -56,14 +57,14 @@ const formatedProgress = (choices: number[], frames: IFrameCreate[]) => {
 
 const readingInfo = async (
 	story: IStorySchema,
-	choices: number[]
+	choices: Array<number>
 ): Promise<{
 	story: IStoryFull;
-	frames: IFrame[];
-	progress: IProgress[];
+	frames: Array<IFrame>;
+	progress: Array<IProgress>;
 }> => {
 	const { frames, ...info } = story;
-	const progress: IProgress[] = formatedProgress(choices, frames);
+	const progress: Array<IProgress> = formatedProgress(choices, frames);
 	const author = await UsersModel.findOne({
 		userId: +story.userId
 	})
@@ -85,13 +86,11 @@ export const load = async ({ params, locals }) => {
 
 	if (isNaN(storyId)) throw randomError(404);
 
-	const story: IStorySchema | null = await StoriesModel.findOne({ storyId })
-		.select({
-			_id: 0,
-			grabbingScale: 0,
-			grabbingOffsets: 0
-		})
-		.lean();
+	const story: IStorySchema | null = await StoriesModel.findOne({ storyId }).select({
+		_id: 0,
+		zoom: 0,
+		offset: 0
+	});
 
 	if (!story) throw randomError(404);
 
@@ -100,11 +99,9 @@ export const load = async ({ params, locals }) => {
 	const readerId = locals.session.userId;
 
 	const progress = await ProgressModel.findOne({
-		storyId,
-		readerId
+		readerId,
+		storyId
 	});
 
-	if (!progress) return await readingInfo(story, []);
-
-	return await readingInfo(story, progress.choices);
+	return await readingInfo(serialize(story), progress?.choices || []);
 };

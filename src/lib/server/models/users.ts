@@ -1,38 +1,38 @@
-import type { IUser } from '$lib/types';
 import mongoose from 'mongoose';
+
+import type { IUser } from '$lib/types';
 
 const userSchema = new mongoose.Schema<IUser>(
 	{
 		userId: {
 			type: Number,
-			required: true,
+			required: true
 		},
 		sessionId: {
 			type: String,
-			default: null,
+			default: null
 		},
 		name: {
 			type: String,
-			required: true,
+			required: true
 		},
 		email: {
 			type: String,
-			required: true,
+			required: true
 		},
 		avatarId: {
 			type: String,
-			default: null,
+			default: null
 		},
 		created: {
 			type: Number,
-			default: Date.now,
-		},
+			default: Date.now
+		}
 	},
 	{
-		versionKey: false,
+		versionKey: false
 	}
 );
 
 export const UsersModel =
-	(mongoose.models.users as mongoose.Model<IUser>) ??
-	mongoose.model<IUser>('users', userSchema);
+	(mongoose.models.users as mongoose.Model<IUser>) ?? mongoose.model<IUser>('users', userSchema);

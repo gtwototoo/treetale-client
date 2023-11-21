@@ -1,94 +1,122 @@
 <script lang="ts">
-	import { connect, frames, moveMode } from '$lib/stores/editing';
-	import type { IFrameCreate } from '$lib/types/editing';
-	import { transform } from '$lib/utils';
 	import clsx from 'clsx';
-	import Rivet from '../Rivet.svelte';
-	import Body from './Body.svelte';
+	import { Share } from 'svelte-heros-v2';
+
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
-	export let data: IFrameCreate;
-	export let key: number;
-	export let clientHeight = undefined;
-	export let clientWidth = undefined;
+	import { changesHistory } from '$lib/stores/editing';
+	import { bodyColorStore } from '$lib/stores/main';
+	import {
+		activeModeStore,
+		connectionStore,
+		framesDataStore,
+		movingFrameStore
+	} from '$lib/stores/workspace';
+	import { contrastText, transform } from '$lib/utils';
+	import { createConnections, getChoicePosition } from '$lib/utils/editing';
 
-	let hover: boolean = false;
+	export let frameId: number;
+	export let index: number;
 
-	const startMove = (active: boolean) => {
-		hover = active;
+	$: frameKey = $framesDataStore.findIndex((frame) => frame.frameId === frameId);
 
-		if ($moveMode.active) return;
-
-		$moveMode.hovered = active ? data.frameId : null;
+	const setMovingFrame = () => {
+		$movingFrameStore = frameId;
 	};
 
-	const updateData = () => {
-		$frames = $frames;
+	const setVisible = () => {
+		$framesDataStore[frameKey].hidden = !$framesDataStore[frameKey].hidden;
+		createConnections($framesDataStore);
 	};
+
+	const createConnection = () => {
+		if (
+			$activeModeStore !== 'binding' ||
+			!$connectionStore ||
+			$connectionStore.frameId === frameId
+		)
+			return;
+
+		const { frameId: fromFrameId, choiceId } = $connectionStore;
+
+		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === fromFrameId);
+		const fromChoiceKey = $framesDataStore[fromFrameKey].choices.findIndex(
+			(choice) => choice.choiceId === choiceId
+		);
+
+		$framesDataStore[fromFrameKey].choices[fromChoiceKey].frameId = frameId;
+		$connectionStore = null;
+
+		changesHistory.add('Добавление связи', Share);
+	};
+
+	$: greenColor = clsx(
+		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
+	);
 </script>
 
-<div
-	class={clsx('frame', { 'shadow-lg': hover })}
-	style="{transform({ x: data.x, y: data.y })}; z-index: {data.frameId}"
-	bind:clientHeight
-	bind:clientWidth
->
-	<div
-		class="moveArea"
-		on:mouseenter={() => startMove(true)}
-		on:mouseleave={() => startMove(false)}
-	/>
-	<div
-		class={clsx('content childs:w-64 childs:max-w-[16rem] childs:p-4', {
-			'flex-col': !data.rotated
-		})}
-	>
-		<div
-			class={clsx(data.hidden ? 'rounded-lg' : data.rotated ? 'rounded-l-lg' : 'rounded-t-lg')}
+{#if frameKey !== -1}
+	{@const { choices, hidden, title, text, x, y } = $framesDataStore[frameKey]}
+	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
+		<button
+			class={clsx(
+				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
+				$movingFrameStore === frameId && 'shadow-lg',
+				$activeModeStore === 'binding' && '!bg-main-80 text-text',
+				$activeModeStore === 'binding' &&
+					$connectionStore &&
+					$connectionStore.frameId !== frameId &&
+					greenColor
+			)}
+			on:mousedown={setMovingFrame}
+			on:click={createConnection}
+			bind:clientHeight={$framesDataStore[frameKey].height}
 		>
-			<div class="pointer-events-none flex flex-col gap-4">
-				<Header {data} first={!key} {updateData} />
-				{#if !data.hidden}
-					<Body {data} />
+			<Header {hidden} on:hide={setVisible}>
+				<p class={clsx('py-1 pl-4', { 'text-emerald-500': !index })}>
+					{!index ? 'Начало' : title}
+				</p>
+			</Header>
+			{#if !hidden}
+				<div
+					class={clsx('flex h-20 items-center px-4 text-center', {
+						'text-gray-400': !text
+					})}
+				>
+					<p class="line-clamp-5 w-full break-words">{text || 'Описание фрейма'}</p>
+				</div>
+				<Choices {frameKey} />
+			{/if}
+			{#if $activeModeStore === 'binding'}
+				<div
+					class={clsx(
+						'absolute -left-3 h-6 w-6 rounded-l-full !bg-inherit',
+						hidden ? 'top-1/2 -mt-3' : 'top-2'
+					)}
+				/>
+				{#if hidden}
+					<div class="absolute -right-3 top-1/2 -mt-3 h-6 w-6 rounded-r-full !bg-inherit" />
 				{/if}
+			{/if}
+		</button>
+		{#if $activeModeStore !== 'binding'}
+			<div class="pointer-events-none absolute inset-0">
+				{#if hidden}
+					<div class="point right-0 top-1/2" />
+				{:else}
+					{#each choices as _, key}
+						<div class="point right-0" style:top="{getChoicePosition(key)}px" />
+					{/each}
+				{/if}
+				<div class={clsx('point left-0', hidden ? 'top-1/2' : 'top-5')} />
 			</div>
-		</div>
-		{#if !data.hidden}
-			<Choices {data} {updateData} />
 		{/if}
 	</div>
-	<div class="rivets">
-		{#if key}
-			<Rivet active={$connect.connector.to === data.frameId} />
-		{/if}
-	</div>
-	<div class="rivets right-0">
-		{#if data.choices.length && data.hidden}
-			<Rivet
-				class={clsx({
-					'connect after:!cursor-default after:!bg-white': data.choices.length > 1
-				})}
-			>
-				{#if data.choices.length > 1}
-					<p class="absolute z-[1] text-xs">{data.choices.length}</p>
-				{/if}
-			</Rivet>
-		{/if}
-	</div>
-</div>
+{/if}
 
 <style lang="postcss">
-	.frame {
-		@apply absolute w-max select-none rounded-lg bg-white text-sm transition-shadow;
-	}
-	.content {
-		@apply pointer-events-none z-[2] flex rounded-lg transition-opacity;
-	}
-	.moveArea {
-		@apply absolute h-full w-full cursor-move bg-transparent;
-	}
-	.rivets {
-		@apply absolute top-0 flex h-full items-center;
+	.point {
+		@apply absolute flex items-center justify-center bg-contrast after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit;
 	}
 </style>
