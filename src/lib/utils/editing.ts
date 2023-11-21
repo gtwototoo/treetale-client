@@ -1,6 +1,7 @@
-import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 import type { ICoordinates, IFrame, TBoundings } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
+
+import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 
 export const transform = (coords: ICoordinates, zoom?: number): string => {
 	let styleRow = 'transform:';
@@ -22,7 +23,7 @@ export const getFrameFromId = <T extends IFrameCreate | IFrame>(
 	return frame;
 };
 
-export const getChoiceFromId = (frame: IFrameCreate, choiceId: number) => {
+export const getChoiceFromId = (frame: IFrameCreate | IFrame, choiceId: number) => {
 	if (!frame) return;
 
 	const choice = frame.choices.find((choice) => choice.choiceId === choiceId);

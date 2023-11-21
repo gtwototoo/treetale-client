@@ -86,13 +86,11 @@ export const load = async ({ params, locals }) => {
 
 	if (isNaN(storyId)) throw randomError(404);
 
-	const story: IStorySchema | null = await StoriesModel.findOne({ storyId })
-		.select({
-			_id: 0,
-			zoom: 0,
-			offset: 0
-		})
-		.lean();
+	const story: IStorySchema | null = await StoriesModel.findOne({ storyId }).select({
+		_id: 0,
+		zoom: 0,
+		offset: 0
+	});
 
 	if (!story) throw randomError(404);
 
@@ -105,5 +103,5 @@ export const load = async ({ params, locals }) => {
 		storyId
 	});
 
-	return await readingInfo(story, progress?.choices || []);
+	return await readingInfo(serialize(story), progress?.choices || []);
 };

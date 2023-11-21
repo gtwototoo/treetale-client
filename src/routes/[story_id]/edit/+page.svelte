@@ -34,7 +34,6 @@
 	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 	import type { ICoordinates } from '$lib/types/index';
 	import { contrastText, exclude, getFrameFromId, rootStyle } from '$lib/utils';
-	import clsx from 'clsx';
 
 	export let data;
 

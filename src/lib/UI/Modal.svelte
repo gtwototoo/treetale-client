@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
 	import { XMark } from 'svelte-heros-v2';
+	import { fly } from 'svelte/transition';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { createPortal } from '$lib/hooks';
@@ -67,7 +67,12 @@
 			<div class="window" bind:offsetHeight>
 				<div class="header">
 					<p class="title px-20">{title}</p>
-					<Button class="absolute !p-2 hover:!text-red-600" on:click={handleClick}>
+					<Button
+						size="lg"
+						variant="ghost"
+						class="absolute !p-2 hover:!text-red-600"
+						on:click={handleClick}
+					>
 						<Icon type={XMark} />
 					</Button>
 				</div>

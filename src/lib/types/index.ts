@@ -3,6 +3,8 @@ export type TRGB = [number, number, number];
 export type TComparisonOperator = '=' | '≥' | '≤' | '>' | '<' | '≠';
 export type TMathOperator = '+' | '-' | '/' | '*' | '=';
 
+export type TVariableExpects = 'Строка' | 'Число' | 'Да/Нет';
+
 export interface IStoryEditableInfo {
 	color: TRGB;
 	description: string;
@@ -47,7 +49,7 @@ export interface IFrame {
 }
 
 export interface IVariable {
-	expect: 'Строка' | 'Число' | 'Да/Нет';
+	expect: TVariableExpects;
 	name: string;
 	value: string;
 }

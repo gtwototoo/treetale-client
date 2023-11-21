@@ -4,10 +4,11 @@
 
 	import Choice from './Choice.svelte';
 
+	import { FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, variablesStore } from '$lib/stores/reading';
+	import type { ILogicOperation, TVariableExpects } from '$lib/types';
 	import { correctVariableReplace, getFrameFromId } from '$lib/utils';
-	import { FormSplit } from '$UI';
 
 	const dispatch = createEventDispatcher<{
 		click: { choiceId: number };
@@ -23,6 +24,40 @@
 		dispatch('click', { choiceId });
 	};
 
+	const correctSymbol = (symbol: string, logic: boolean) => {
+		const replaces: Record<string, string> = {
+			'=': '===',
+			'≥': '>=',
+			'≤': '<=',
+			'≠': '!=='
+		};
+
+		if (logic) {
+			replaces['='] = '===';
+		}
+
+		if (!(symbol in replaces)) return symbol;
+
+		return replaces[symbol];
+	};
+
+	const correctVariable = (value: string | number, expect: TVariableExpects) => {
+		return expect === 'Число' ? value : `"${value}"`;
+	};
+
+	const checkLogic = (logicOperations: Array<ILogicOperation>) => {
+		return logicOperations
+			.map(({ variable, symbol, value }) => {
+				const getVariable = $variablesStore.find(({ name }) => name === variable);
+
+				return `${correctVariable(getVariable.value, getVariable.expect)} ${correctSymbol(
+					symbol,
+					true
+				)} ${correctVariable(value, getVariable.expect)}`;
+			})
+			.every((operation) => eval(operation));
+	};
+
 	$: ({ imageId, text, choices } = getFrameFromId($framesStore, frameId));
 </script>
 
@@ -34,10 +69,15 @@
 >
 	{#if choices.length}
 		<FormSplit vertical class="w-full divide-main-10">
-			{#each choices as { choiceId, text } (choiceId)}
-				<Choice active={selectedChoiceId === choiceId} on:click={() => handleClick(choiceId)}>
-					{correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
-				</Choice>
+			{#each choices as { choiceId, text, logicOperations } (choiceId)}
+				{#if !logicOperations.length || checkLogic(logicOperations)}
+					<Choice
+						active={selectedChoiceId === choiceId}
+						on:click={() => handleClick(choiceId)}
+					>
+						{correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
+					</Choice>
+				{/if}
 			{/each}
 		</FormSplit>
 	{/if}
