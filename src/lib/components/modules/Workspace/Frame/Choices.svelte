@@ -3,7 +3,7 @@
 	import { Plus } from 'svelte-heros-v2';
 
 	import { Button, FormSplit } from '$UI';
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { clm, contrastText, last } from '$lib/utils';
@@ -40,11 +40,13 @@
 		changesHistory.add('Добавление выбора', Plus);
 	};
 
-	$: greenHoverColor = clsx(
-		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
-	);
-	$: greenColor = clsx(contrastText($bodyColorStore) ? '!bg-emerald-800' : '!bg-emerald-200');
-	$: orangeColor = clsx(contrastText($bodyColorStore) ? 'bg-orange-800' : 'bg-orange-200');
+	$: greenHoverColor = contrastText($bodyColorStore)
+		? clsx('hover:!bg-emerald-800')
+		: clsx('hover:!bg-emerald-200');
+	$: greenColor = contrastText($bodyColorStore)
+		? clsx('!bg-emerald-800')
+		: clsx('!bg-emerald-200');
+	$: orangeColor = contrastText($bodyColorStore) ? clsx('bg-orange-800') : clsx('bg-orange-200');
 </script>
 
 <FormSplit
@@ -52,10 +54,12 @@
 	class={clsx($activeModeStore === 'binding' ? 'divide-main-80' : 'divide-contrast')}
 >
 	{#each choices as { text, choiceId, frameId: toFrameId } (choiceId)}
+		{@const disabled =
+			$activeModeStore === 'binding' &&
+			$connectionStore &&
+			!($connectionStore.choiceId === choiceId && $connectionStore.frameId === frameId)}
 		<Button
-			disabled={$activeModeStore === 'binding' &&
-				$connectionStore &&
-				!($connectionStore.choiceId === choiceId && $connectionStore.frameId === frameId)}
+			{disabled}
 			variant={$activeModeStore === 'binding' ? 'main' : 'ghost'}
 			class={clm(
 				'gap-4',

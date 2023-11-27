@@ -7,7 +7,7 @@
 
 	import { Button, Contenteditable, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore } from '$lib/stores/workspace';
 

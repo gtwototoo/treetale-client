@@ -6,16 +6,16 @@ import { framesDataStore } from './workspace';
 import type { IFrameCreate } from '$lib/types/editing';
 import { serialize } from '$lib/utils';
 
-type IChange = {
+interface IChange {
 	data?: Array<IFrameCreate>;
-	title: string;
 	icon: typeof SvelteComponent<unknown>;
-};
+	title: string;
+}
 
-type IChanges = {
-	stages: Array<IChange>;
+interface IChanges {
 	currentStageId: number;
-};
+	stages: Array<IChange>;
+}
 
 type IOverrideChanges = Writable<IChanges> & {
 	add: (title: string, icon: typeof SvelteComponent<unknown>) => void;

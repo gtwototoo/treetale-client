@@ -27,7 +27,7 @@
 		$activeModeStore = 'adding';
 	};
 
-	$: greenColor = clsx(contrastText($bodyColorStore) ? 'bg-emerald-900' : 'bg-emerald-200');
+	$: greenColor = contrastText($bodyColorStore) ? clsx('bg-emerald-900') : clsx('bg-emerald-200');
 </script>
 
 <div class="area">

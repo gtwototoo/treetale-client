@@ -7,12 +7,12 @@
 	import DropBlock from '$lib/components/DropBlock.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { saveImage } from '$lib/requests/image';
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { informationDataStore } from '$lib/stores/newediting';
+	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
-	import { last } from '$lib/utils';
+	import { last, variablesHighlight } from '$lib/utils';
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
 	import clsx from 'clsx';
 
@@ -132,6 +132,7 @@
 	<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 </DropBlock>
 <Contenteditable
+	pattern={(html) => variablesHighlight(html, $variablesStore)}
 	maxlength={1500}
 	disabled={editMode}
 	placeholder="Описание фрейма"

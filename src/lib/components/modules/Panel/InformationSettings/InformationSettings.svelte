@@ -9,10 +9,10 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { informationDataStore } from '$lib/stores/newediting';
-	import { contrastText, correctWhitespace } from '$lib/utils';
+	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
+	import { contrastText, correctWhitespace, variablesHighlight } from '$lib/utils';
 	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
 	import clsx from 'clsx';
 
@@ -108,8 +108,10 @@
 		}
 	});
 
-	$: warningColor = clsx(contrastText($bodyColorStore) ? 'bg-orange-950' : 'bg-orange-50');
-	$: greenColor = clsx(contrastText($bodyColorStore) ? '!bg-emerald-900' : '!bg-emerald-200');
+	$: warningColor = contrastText($bodyColorStore) ? clsx('bg-orange-950') : clsx('bg-orange-50');
+	$: greenColor = contrastText($bodyColorStore)
+		? clsx('!bg-emerald-900')
+		: clsx('!bg-emerald-200');
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
@@ -133,6 +135,7 @@
 		disabled={editMode}
 	/>
 	<Contenteditable
+		pattern={(html) => variablesHighlight(html, $variablesStore)}
 		disabled={editMode}
 		placeholder="Описание истории"
 		bind:html={$informationDataStore.description}

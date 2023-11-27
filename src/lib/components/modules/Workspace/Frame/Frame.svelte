@@ -5,7 +5,7 @@
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore } from '$lib/stores/main';
 	import {
 		activeModeStore,
@@ -15,6 +15,7 @@
 	} from '$lib/stores/workspace';
 	import { contrastText, transform } from '$lib/utils';
 	import { createConnections, getChoicePosition } from '$lib/utils/editing';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	export let frameId: number;
 	export let index: number;
@@ -84,7 +85,9 @@
 						'text-gray-400': !text
 					})}
 				>
-					<p class="line-clamp-5 w-full break-words">{text || 'Описание фрейма'}</p>
+					<div class="line-clamp-5 w-full break-words text-left">
+						{@html DOMPurify.sanitize(text || 'Описание фрейма')}
+					</div>
 				</div>
 				<Choices {frameKey} />
 			{/if}

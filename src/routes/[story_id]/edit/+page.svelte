@@ -17,7 +17,7 @@
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history.js';
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { informationDataStore, stateAreaStore, variablesStore } from '$lib/stores/newediting';
 	import {

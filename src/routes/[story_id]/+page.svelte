@@ -24,22 +24,22 @@
 	let currentElement: HTMLElement;
 	let currentTranslate: number;
 
+	const prevFrame = () => {
+		if (current >= 1) {
+			current -= 1;
+		}
+	};
+
+	const nextFrame = () => {
+		if (currentTranslate + currentElement.clientHeight + 88 > window.innerHeight) {
+			currentTranslate = currentTranslate - window.innerHeight / 2;
+		} else if (current < data.progress.length) {
+			current += 1;
+		}
+	};
+
 	const handleKeydown = (e: KeyboardEvent) => {
 		const { code } = e;
-
-		const prevFrame = () => {
-			if (current >= 1) {
-				current -= 1;
-			}
-		};
-
-		const nextFrame = () => {
-			if (currentTranslate + currentElement.clientHeight + 88 > window.innerHeight) {
-				currentTranslate = currentTranslate - window.innerHeight / 2;
-			} else if (current < data.progress.length) {
-				current += 1;
-			}
-		};
 
 		const nextZeroChoicesFrame = () => {
 			const lastFrame = last(data.frames);
@@ -136,6 +136,14 @@
 		};
 	};
 
+	const handleWheel = (e: WheelEvent) => {
+		if (e.deltaY > 0) {
+			nextFrame();
+		} else {
+			prevFrame();
+		}
+	};
+
 	$: ({ storyId, title, description, author, created, draft, likes, color } = data.story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
 	$: $framesStore = data.frames;
@@ -153,7 +161,7 @@
 
 <ska:html class="h-full" />
 <svelte:body class="h-full" />
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window on:keydown={handleKeydown} on:wheel={handleWheel} />
 
 <SvgGradient id={storyId} />
 <div class="flex h-full w-full items-start justify-center overflow-hidden px-4">
@@ -162,7 +170,7 @@
 		style:transform="translateY({currentTranslate}px)"
 		use:setPosition={current}
 	>
-		<ReadCard classCard="h-full">
+		<ReadCard classCard="h-full text-center">
 			<svelte:fragment slot="body">
 				<Icon
 					type={BookOpen}

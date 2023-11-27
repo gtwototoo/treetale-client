@@ -1,29 +1,26 @@
 <script lang="ts">
 	import clsx from 'clsx';
 
-	import Likes from '$lib/components/Likes.svelte';
-	import ProfileLink from '$lib/components/ProfileLink.svelte';
-	import type { IUser, IVariable } from '$lib/types';
-	import type { IStoryReading } from '$lib/types/reading';
+	import type { IVariable } from '$lib/types';
 	import { correctVariableReplace } from '$lib/utils';
-	import { Tag } from '$UI';
 
-	export let story: IStoryReading;
+	export let description: string;
+	export let title: string;
 	export let vars: Array<IVariable>;
-	export let author: IUser | undefined = undefined;
-
-	$: ({ storyId, created, description, title, draft, likes } = story);
 </script>
 
-<div class="flex h-[6.25rem] items-center xs:h-32 lg:h-40">
-	<div class="line-clamp-6 w-full text-center">
-		<h2 class="mb-1 text-sm/4 xs:mb-3 xs:text-base/5 lg:mb-4 lg:text-xl/6">
+<div
+	class="flex h-[6.25rem] max-w-[12rem] items-center xs:h-32 xs:max-w-[18rem] lg:h-40 lg:max-w-[20rem]
+"
+>
+	<div class="line-clamp-5 w-full text-center">
+		<h2 class="mb-1 text-sm/4 uppercase xs:mb-3 xs:text-base/5 lg:mb-4 lg:text-xl/6">
 			{title || 'Без названия'}
 		</h2>
 		<p
 			class={clsx(
 				'whitespace-pre-wrap',
-				description && description.length > 100
+				description && description.length > 50
 					? 'text-xs xs:text-sm lg:text-base'
 					: 'text-sm/4 xs:text-base/4 lg:text-xl/6'
 			)}
@@ -31,14 +28,4 @@
 			{correctVariableReplace(description, vars) || 'Без описания'}
 		</p>
 	</div>
-</div>
-<div class="flex w-full items-center justify-between gap-4">
-	{#if author}
-		<ProfileLink {author} {created} />
-	{:else}
-		<Tag class={clsx('!bg-main-70', draft ? 'text-text' : 'text-emerald-500')}>
-			{draft ? 'Черновик' : 'Публичный'}
-		</Tag>
-	{/if}
-	<Likes {storyId} {likes} />
 </div>

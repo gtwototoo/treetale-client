@@ -1,67 +1,35 @@
 <script lang="ts">
-	import { BookOpen } from 'svelte-heros-v2';
-
-	import SvgGradient from '../SvgGradient.svelte';
-
 	import Body from './Body.svelte';
 
-	import { Card, Photo } from '$UI';
+	import { Card } from '$UI';
 	import { page } from '$app/stores';
-	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import Tags from '$lib/components/Tags.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
 	import { generateMainColors } from '$lib/utils';
-	import clsx from 'clsx';
+	import Illustration from './Illustration.svelte';
+	import Info from './Info.svelte';
 
 	export let story: IStoryReading;
 	export let vars: Array<IVariable>;
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
 
-	let errorImage = false;
-
-	$: ({ imageId, title, tags, storyId, color, userId } = story);
+	$: ({ imageId, title, tags, storyId, color, userId, likes, draft, created, description } =
+		story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
 	$: edit = !author && $page.data.session && $page.data.session.userId === userId;
 </script>
 
 <Link href={`${storyId}${edit ? '/edit' : ''}`} class="w-full">
-	<div
-		class="contents"
-		style="{generateMainColors(selectedColor)}; --fill-gradient: url(#light-gradient-{storyId})"
-	>
-		<SvgGradient id={storyId} />
-		<Card class="bg-contrast text-text">
-			<div
-				class="relative flex h-56 w-full shrink-0 items-center justify-center bg-transparent text-main max-hd:h-48 max-xl:h-40 max-md:h-32 max-sm:h-24"
-			>
-				{#if imageId && !errorImage}
-					<Photo
-						on:error={() => (errorImage = true)}
-						alt={title || 'Иллюстрация истории'}
-						cover
-						class="h-full w-full rounded-t-xl xs:rounded-t-2xl"
-						src={imageId}
-						width={320}
-						height={192}
-					/>
-				{:else}
-					<Icon
-						type={BookOpen}
-						class="mt-3 h-44 w-auto childs:fill-gradient max-hd:h-36 max-xl:h-28 max-md:h-20 xs:mt-4 lg:mt-6"
-						variation="solid"
-					/>
-				{/if}
-			</div>
-			<div class={clsx('body', !imageId && '!pt-0')}>
-				<Body {story} {vars} {author} />
-			</div>
-			<div class="w-full bg-transparent p-2">
-				<Tags {tags} />
+	<div class="contents" style={generateMainColors(selectedColor)}>
+		<Card class="select-none bg-contrast bg-gradient-to-b from-main text-text">
+			<Illustration {title} {imageId} />
+			<div class="body">
+				<Body {title} {vars} {description} />
+				<Info {draft} {likes} {created} {tags} {author} />
 			</div>
 		</Card>
 	</div>
@@ -69,6 +37,6 @@
 
 <style lang="postcss">
 	.body {
-		@apply relative flex h-full w-full max-w-[12rem] flex-col items-center gap-2 bg-transparent p-3 text-xs xs:max-w-[18rem] xs:gap-4 xs:p-4 lg:max-w-[20rem] lg:gap-6 lg:p-6;
+		@apply relative flex h-full w-full flex-col items-center gap-2 bg-transparent p-5 max-lg:p-4 max-sm:p-3 xs:gap-4 lg:gap-6;
 	}
 </style>

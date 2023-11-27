@@ -19,7 +19,7 @@
 <div
 	{style}
 	class={clm(
-		'relative flex shrink-0 select-none items-center justify-center rounded-full font-bold text-white',
+		'relative flex shrink-0 select-none items-center justify-center rounded-full font-bold',
 		`size-${size}`,
 		className
 	)}
@@ -40,6 +40,6 @@
 		@apply h-12 w-12 text-base;
 	}
 	.size-sm {
-		@apply h-6 w-6 text-xs;
+		@apply h-9 w-9 text-xs;
 	}
 </style>

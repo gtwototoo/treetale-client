@@ -1,7 +1,8 @@
-import type { ICoordinates, IFrame, TBoundings } from '$lib/types';
+import type { ICoordinates, IFrame, IVariable, TBoundings } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
 
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+import clsx from 'clsx';
 
 export const transform = (coords: ICoordinates, zoom?: number): string => {
 	let styleRow = 'transform:';
@@ -105,4 +106,16 @@ const getAreaBoundings = (frames: Array<IFrameCreate>) => {
 		width: maxX - minX,
 		height: maxY - minY
 	};
+};
+
+export const variablesHighlight = (html: string, vars: Array<IVariable>) => {
+	const variableRegex = /{([a-zA-Z0-9]+)}/;
+
+	return html.replace(variableRegex, (match, variable) => {
+		const varExists = vars.some(({ name }) => name === variable);
+
+		return `<span class="${clsx(
+			varExists ? 'text-violet-500' : 'text-red-500'
+		)}">${match}</span>`;
+	});
 };

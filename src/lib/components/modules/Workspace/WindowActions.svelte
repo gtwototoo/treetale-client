@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
+	import { currentPanelStore } from '$lib/stores/main';
 	import {
 		activeActionStore,
 		activeModeStore,
-		oneDirectionModeStore
+		connectionStore,
+		framesDataStore,
+		oneDirectionModeStore,
+		selectedFrameStore
 	} from '$lib/stores/workspace';
+	import { FrameSettings } from '../Panel';
 
 	const dispatch = createEventDispatcher();
 
@@ -22,6 +27,25 @@
 			$activeModeStore = $activeModeStore === 'adding' ? 'view' : 'adding';
 		};
 
+		const switchSelectedFrame = () => {
+			if (!$selectedFrameStore) return;
+
+			const frameKey = $framesDataStore.findIndex(
+				({ frameId }) => frameId === $selectedFrameStore
+			);
+
+			const nextFrame =
+				frameKey + 1 in $framesDataStore ? $framesDataStore[frameKey + 1] : $framesDataStore[0];
+
+			$selectedFrameStore = nextFrame.frameId;
+
+			$currentPanelStore = {
+				id: `frame-${nextFrame.frameId}`,
+				title: nextFrame.title || 'Начало',
+				component: FrameSettings
+			};
+		};
+
 		const enableOneDirectionMode = () => {
 			$oneDirectionModeStore = true;
 		};
@@ -30,6 +54,7 @@
 			if (shiftKey) return;
 
 			$activeModeStore = $activeModeStore === 'binding' ? 'view' : 'binding';
+			$connectionStore = null;
 		};
 
 		const historyManipulate = () => {
@@ -46,7 +71,8 @@
 			ShiftRight: enableOneDirectionMode,
 			KeyC: switchConnectMode,
 			KeyZ: historyManipulate,
-			Escape: cancelModes
+			Escape: cancelModes,
+			Tab: switchSelectedFrame
 		};
 
 		if (!(code in actions) || inputFocus) return;

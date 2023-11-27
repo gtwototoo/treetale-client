@@ -17,6 +17,7 @@
 	export let readonly = false;
 	export let disabled = false;
 	export let maxlength: number | undefined = undefined;
+	export let pattern: (html: string) => string = undefined;
 
 	let editableRef: HTMLDivElement;
 	let focused = false;
@@ -104,6 +105,8 @@
 
 		dispatch('input', e);
 	};
+
+	$: hasPattern = pattern && html && pattern(html) !== html;
 </script>
 
 <button
@@ -130,8 +133,17 @@
 			bind:innerHTML={html}
 			use:setReadonly={readonly || disabled}
 			contenteditable
-			class={clsx('w-full bg-transparent', !html && 'absolute')}
+			class={clsx(
+				'w-full bg-transparent',
+				!html && 'absolute',
+				hasPattern && 'text-transparent caret-text'
+			)}
 		/>
+		{#if hasPattern}
+			<div class="pointer-events-none absolute top-0 h-full w-full bg-transparent">
+				{@html pattern(html)}
+			</div>
+		{/if}
 		{#if placeholder && !html}
 			<p class="w-full whitespace-nowrap text-gray-400">{placeholder}</p>
 		{/if}

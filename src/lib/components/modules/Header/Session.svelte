@@ -1,25 +1,16 @@
 <script lang="ts">
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
-	import { RGB } from '$lib/utils';
-	import { Avatar, Button } from '$UI';
-
-	$: selectedColor = $page.data?.session?.color?.length ? $page.data.session.color : DEFAULT_COLOR;
+	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 </script>
 
 {#if $page.data.session}
 	<Link href="/profile" class="contents">
-		<Avatar
-			style="--color-main: {RGB(selectedColor)}"
-			alt={$page.data.session.name}
-			src={$page.data.session.avatarId}
-			width={48}
-			class="light-gradient-main"
-		/>
+		<ProfileAvatar size="base" width={48} user={$page.data.session} />
 	</Link>
 {:else}
 	<Link href="/signin">

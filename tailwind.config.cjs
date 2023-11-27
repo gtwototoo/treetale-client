@@ -90,14 +90,6 @@ const config = {
 			);
 			matchUtilities(
 				{
-					'light-gradient': (value) => ({
-						background: `linear-gradient(#FFFFFF -125%, ${toColorValue(value)})`
-					})
-				},
-				{ values: theme('colors'), type: ['color'] }
-			);
-			matchUtilities(
-				{
 					stop: (value) => ({
 						'stop-color': toColorValue(value)
 					})

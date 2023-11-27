@@ -7,25 +7,27 @@
 	import Header from './Header.svelte';
 
 	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory } from '$lib/stores/editing';
+	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { activeActionStore } from '$lib/stores/workspace';
 	import { Button, FormSplit } from '$UI';
 
-	const variablesSwitch = () =>
-		($currentPanelStore = {
+	const variablesSwitch = () => {
+		$currentPanelStore = {
 			title: 'Переменные',
 			id: 'variables',
 			component: Variables
-		});
+		};
+	};
 
-	const historySwitch = () =>
-		($currentPanelStore = {
+	const historySwitch = () => {
+		$currentPanelStore = {
 			title: 'История изменений',
 			id: 'history',
 			component: Changes,
 			hasEditButton: false
-		});
+		};
+	};
 </script>
 
 <Header

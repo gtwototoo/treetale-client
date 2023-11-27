@@ -1,7 +1,7 @@
-import { get } from 'svelte/store';
 import { Plus } from 'svelte-heros-v2';
+import { get } from 'svelte/store';
 
-import { changesHistory } from '$lib/stores/editing';
+import { changesHistory } from '$lib/stores/history';
 import {
 	activeActionStore,
 	addFrameOffsetStore,
