@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-
 import { DEFAULT_COLOR } from '$lib/constants';
 import type { IStorySchema } from '$lib/types/schemas';
+import mongoose from 'mongoose';
 
 const storySchema = new mongoose.Schema<IStorySchema>(
 	{
@@ -14,7 +13,7 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 			type: [Number, Number, Number],
 			default: DEFAULT_COLOR
 		},
-		imageId: {
+		imageUrl: {
 			type: String,
 			default: ''
 		},

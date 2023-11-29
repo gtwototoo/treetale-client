@@ -4,7 +4,7 @@
 	import { BookOpen } from 'svelte-heros-v2';
 
 	export let title: string;
-	export let imageId: string;
+	export let imageUrl: string;
 
 	let errorImage = false;
 
@@ -16,13 +16,13 @@
 <div
 	class="relative flex h-56 w-full shrink-0 items-end justify-center bg-transparent text-main max-hd:h-48 max-xl:h-40 max-md:h-32 max-sm:h-24"
 >
-	{#if imageId && !errorImage}
+	{#if imageUrl && !errorImage}
 		<Photo
 			on:error={handleError}
 			alt={title || 'Иллюстрация истории'}
 			cover
 			class="h-full w-full rounded-t-xl xs:rounded-t-2xl"
-			src={imageId}
+			src={imageUrl}
 			width={320}
 			height={192}
 		/>

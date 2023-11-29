@@ -3,28 +3,33 @@ import { fetchDelete, fetchPost } from '.';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 interface IResponse {
-	imageId: string;
+	imageUrl: string;
 }
 
-export const removeImage = async (id: string, actions = '', storyId?: number, frameId?: number) => {
-	const body: Record<string, number> = {};
+type TFolderName = 'avatars' | 'frames' | 'stories';
 
+export const removeImage = async (
+	id: string,
+	folder: TFolderName,
+	storyId?: number,
+	frameId?: number
+) => {
 	return await fetchDelete<IResponse>(`${PUBLIC_TREETALE_API_URL}/images`, {
 		id,
-		actions,
+		folder,
 		storyId,
-		frameId,
-		...body
+		frameId
 	});
 };
 
-export const saveImage = async (file: File, actions = '', args = '') => {
+export const saveImage = async (file: File, folder: TFolderName, args?: Record<string, number>) => {
 	const body = new FormData();
+	const params = new URLSearchParams({
+		folder,
+		...args
+	}).toString();
 
 	body.append('image', file);
 
-	return await fetchPost<IResponse>(
-		`${PUBLIC_TREETALE_API_URL}/images?actions=${actions}${args}`,
-		body
-	);
+	return await fetchPost<IResponse>(`${PUBLIC_TREETALE_API_URL}/images?${params}`, body);
 };

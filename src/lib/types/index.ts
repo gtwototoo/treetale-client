@@ -9,7 +9,7 @@ export interface IStoryEditableInfo {
 	color: TRGB;
 	description: string;
 	draft: boolean;
-	imageId?: string | null;
+	imageUrl?: string | null;
 	tags: Array<string>;
 	title: string;
 }
@@ -44,7 +44,7 @@ export interface IFrame {
 	[index: string]: unknown;
 	choices: Array<IChoice>;
 	frameId: number;
-	imageId: string | null;
+	imageUrl: string | null;
 	text: string | null;
 }
 
@@ -77,11 +77,11 @@ export interface IProgressData {
 
 export interface IUser {
 	[index: string]: string | number | null | TRGB;
-	avatarId: string | null;
 	color: TRGB | null;
 	created: number;
 	description: string;
 	email: string;
+	imageUrl: string | null;
 	name: string;
 	sessionId: string | null;
 	userId: number;

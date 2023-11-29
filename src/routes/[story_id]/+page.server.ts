@@ -18,13 +18,13 @@ const availableFrames = (progress: Array<IProgress>, frames: Array<IFrameCreate>
 		const frame = getFrameFromId(frames, stage.frameId);
 		if (!frame) continue;
 
-		const { frameId, text, choices, imageId } = frame;
+		const { frameId, text, choices, imageUrl } = frame;
 
 		available.push({
 			frameId,
 			text,
 			choices,
-			imageId
+			imageUrl
 		});
 	}
 

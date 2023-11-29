@@ -58,11 +58,11 @@
 			.every((operation) => eval(operation));
 	};
 
-	$: ({ imageId, text, choices } = getFrameFromId($framesStore, frameId));
+	$: ({ imageUrl, text, choices } = getFrameFromId($framesStore, frameId));
 </script>
 
 <ReadCard
-	src={imageId}
+	src={imageUrl}
 	text={correctVariableReplace(text, $variablesStore) || 'Пустота...'}
 	class={clsx('text-left', className)}
 	classCard="justify-between !items-start"

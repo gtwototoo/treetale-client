@@ -16,7 +16,7 @@
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
 
-	$: ({ imageId, title, tags, storyId, color, userId, likes, draft, created, description } =
+	$: ({ imageUrl, title, tags, storyId, color, userId, likes, draft, created, description } =
 		story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
@@ -26,7 +26,7 @@
 <Link href={`${storyId}${edit ? '/edit' : ''}`} class="w-full">
 	<div class="contents" style={generateMainColors(selectedColor)}>
 		<Card class="select-none bg-contrast bg-gradient-to-b from-main text-text">
-			<Illustration {title} {imageId} />
+			<Illustration {title} {imageUrl} />
 			<div class="body">
 				<Body {title} {vars} {description} />
 				<Info {draft} {likes} {created} {tags} {author} />

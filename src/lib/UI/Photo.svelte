@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
 	import { Photo as PhotoIcon } from 'svelte-heros-v2';
+	import { fade } from 'svelte/transition';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$UI/Icons';
@@ -57,10 +57,6 @@
 		});
 	};
 
-	// $: newSrc =
-	// 	src && !src.includes('://') && !src.startsWith('data:')
-	// 		? `${PUBLIC_TIMAGES_DELIVERY_URL}/${src}?w=${width}&h=${height}`
-	// 		: '';
 	$: newSrc = src;
 </script>
 

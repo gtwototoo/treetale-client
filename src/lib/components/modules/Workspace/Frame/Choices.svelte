@@ -10,18 +10,50 @@
 
 	export let frameKey: number;
 
+	type HTMLContenteditable = HTMLDivElement & ElementContentEditable;
+
 	$: ({ choices, frameId } = $framesDataStore[frameKey]);
 
+	const choiceFocus = (choiceId: number) => {
+		const choiceKey = $framesDataStore[frameKey].choices.findIndex(
+			(choice) => choice.choiceId === choiceId
+		);
+		const choiceInputs: NodeListOf<HTMLContenteditable> = document
+			.getElementById('choices')
+			.querySelectorAll('[contenteditable]');
+
+		choiceInputs[choiceKey].focus();
+
+		if (choiceInputs[choiceKey].lastChild) {
+			const newRange = document.createRange();
+			const selection = window.getSelection();
+
+			newRange.setStart(
+				choiceInputs[choiceKey].firstChild,
+				choiceInputs[choiceKey].innerHTML.length
+			);
+
+			selection.removeAllRanges();
+			selection.addRange(newRange);
+		}
+	};
+
 	const handleClick = (choiceId: number) => {
-		if ($connectionStore && $connectionStore.choiceId === choiceId) {
-			$connectionStore = null;
-			return;
+		if ($activeModeStore === 'view') {
+			choiceFocus(choiceId);
 		}
 
-		$connectionStore = {
-			frameId,
-			choiceId
-		};
+		if ($activeModeStore === 'binding') {
+			if ($connectionStore && $connectionStore.choiceId === choiceId) {
+				$connectionStore = null;
+				return;
+			}
+
+			$connectionStore = {
+				frameId,
+				choiceId
+			};
+		}
 	};
 
 	const addChoice = () => {
@@ -53,7 +85,7 @@
 	vertical
 	class={clsx($activeModeStore === 'binding' ? 'divide-main-80' : 'divide-contrast')}
 >
-	{#each choices as { text, choiceId, frameId: toFrameId } (choiceId)}
+	{#each choices as { text, choiceId, frameId: toFrameId, logicOperations, mathOperations } (choiceId)}
 		{@const disabled =
 			$activeModeStore === 'binding' &&
 			$connectionStore &&
@@ -74,7 +106,13 @@
 			)}
 			on:click={() => handleClick(choiceId)}
 		>
+			{#if logicOperations.length}
+				<div class="absolute left-1 h-7 w-1 rounded-full !bg-orange-500" />
+			{/if}
 			<p class="truncate">{text || 'Вариант выбора'}</p>
+			{#if mathOperations.length}
+				<div class="absolute right-1 h-7 w-1 rounded-full !bg-violet-500" />
+			{/if}
 			{#if $activeModeStore === 'binding'}
 				<div class="absolute -right-5 h-6 w-6 rounded-r-full !bg-inherit" />
 			{/if}

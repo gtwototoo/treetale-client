@@ -18,8 +18,9 @@ export const enableControl = <T>(
 
 	return {
 		update: ({ enabled }: { enabled: boolean }) => {
-			if (enabled) activeFunction = f(node);
-			else {
+			if (enabled) {
+				activeFunction = f(node);
+			} else {
 				if (!activeFunction) return;
 
 				if (activeFunction.destroy) activeFunction.destroy();

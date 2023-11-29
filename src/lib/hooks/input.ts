@@ -7,6 +7,8 @@ export const onlyDigits = (node: HTMLInputElement) => {
 		}
 	};
 
+	formatted();
+
 	node.addEventListener('input', formatted);
 
 	return {

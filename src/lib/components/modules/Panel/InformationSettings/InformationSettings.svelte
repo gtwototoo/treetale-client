@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { Cloud, Photo as PhotoIcon, XMark } from 'svelte-heros-v2';
+	import { BookOpen, Cloud, Photo as PhotoIcon } from 'svelte-heros-v2';
 
 	import Shortcuts from './Shortcuts.svelte';
 
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
-	import { removeImage, saveImage } from '$lib/requests/image';
+	import { saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
 	import { contrastText, correctWhitespace, variablesHighlight } from '$lib/utils';
-	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
 	import clsx from 'clsx';
 
 	let light = 80;
@@ -21,7 +21,8 @@
 	let timer: number;
 	let saving = false;
 	let saveInfo = 'Ожидание изменений';
-	let state: 'loaded' | 'error' | 'loading' | undefined = undefined;
+
+	const imageFolder = 'stories';
 
 	const setColor = ({ detail }: CustomEvent) => {
 		$informationDataStore.color = detail.color;
@@ -55,33 +56,31 @@
 		}, 3000);
 	};
 
-	const action = 'storyImageId';
+	// const preRemoveImage = async () => {
+	// 	if (!$informationDataStore.imageUrl) return;
 
-	const preRemoveImage = async () => {
-		if (!$informationDataStore.imageId) return;
+	// 	try {
+	// 		await removeImage(
+	// 			$informationDataStore.imageUrl,
+	// 			imageFolder,
+	// 			$informationDataStore.storyId
+	// 		);
 
-		try {
-			await removeImage($informationDataStore.imageId, action, $informationDataStore.storyId);
+	// 		$informationDataStore.imageUrl = null;
 
-			$informationDataStore.imageId = null;
-			state = undefined;
-
-			changesHistory.add('Удаление изображения', XMark);
-		} catch (e) {
-			console.error(e);
-		}
-	};
+	// 		changesHistory.add('Удаление изображения', XMark);
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 	}
+	// };
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
-			const response = await saveImage(
-				file,
-				action,
-				`&storyId=${$informationDataStore.storyId}`
-			);
+			const { imageUrl } = await saveImage(file, imageFolder, {
+				storyId: $informationDataStore.storyId
+			});
 
-			$informationDataStore.imageId = response.imageId;
-			state = undefined;
+			$informationDataStore.imageUrl = imageUrl;
 
 			changesHistory.add('Добавление изображения', PhotoIcon);
 		} catch (e) {
@@ -89,14 +88,15 @@
 		}
 	};
 
-	const setFile = (e: CustomEvent<{ file: File }>) => {
-		const { file } = e.detail;
+	const setFile = (e: CustomEvent<File>) => {
+		const file = e.detail;
 
 		preSaveImage(file);
 	};
 
 	const switchDraft = () => {
 		$informationDataStore.draft = !$informationDataStore.draft;
+
 		checkUpdates();
 	};
 
@@ -117,14 +117,10 @@
 
 <Image
 	disabled={editMode}
-	src={$informationDataStore.imageId}
-	height={192}
-	width={360}
-	bind:state
-	class="h-48"
+	icon={BookOpen}
+	on:loadstart={setFile}
+	src={$informationDataStore.imageUrl}
 	alt="Иллюстрация текста"
-	on:loading={setFile}
-	on:remove={preRemoveImage}
 />
 <FormSplit vertical class="divide-contrast">
 	<Input

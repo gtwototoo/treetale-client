@@ -4,8 +4,8 @@
 
 	import Choice from './Choice.svelte';
 
-	import DropBlock from '$lib/components/DropBlock.svelte';
-	import Icon from '$lib/components/Icon.svelte';
+	import { Button, Contenteditable, FormSplit, Input } from '$UI';
+	import Image from '$lib/components/Image.svelte';
 	import { saveImage } from '$lib/requests/image';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
@@ -13,40 +13,22 @@
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
 	import { last, variablesHighlight } from '$lib/utils';
-	import { Button, Contenteditable, FormSplit, Input } from '$UI';
 	import clsx from 'clsx';
 
-	const action = 'storyFrameImageId';
+	const imageFolder = 'frames';
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
-	$: ({ x, y, choices, imageId } = $framesDataStore[frameKey]);
+	$: ({ x, y, choices, imageUrl } = $framesDataStore[frameKey]);
 	$: editMode = $currentPanelStore.editMode;
 
-	let imageLoading = false;
-	let avatarId = imageId;
-
 	const preSaveImage = async (file: File): Promise<void> => {
-		const reader = new FileReader();
-
-		reader.readAsDataURL(file);
-
-		reader.onloadend = () => {
-			avatarId = reader.result.toString();
-		};
-
-		reader.onloadstart = () => {
-			imageLoading = true;
-		};
-
 		try {
-			const response = await saveImage(
-				file,
-				action,
-				`&storyId=${$informationDataStore.storyId}&frameId=${$selectedFrameStore}`
-			);
+			const { imageUrl } = await saveImage(file, imageFolder, {
+				storyId: $informationDataStore.storyId,
+				frameId: $selectedFrameStore
+			});
 
-			avatarId = response.imageId;
-			imageLoading = false;
+			$framesDataStore[frameKey].imageUrl = imageUrl;
 
 			changesHistory.add('Добавление изображения', Photo);
 		} catch (e) {
@@ -54,10 +36,10 @@
 		}
 	};
 
-	const setFile = (e: CustomEvent<{ files: FileList }>) => {
-		const { files } = e.detail;
+	const setFile = (e: CustomEvent<File>) => {
+		const file = e.detail;
 
-		preSaveImage(files[0]);
+		preSaveImage(file);
 	};
 
 	const outputCorrect = (frame: IFrame) => {
@@ -128,9 +110,13 @@
 		number
 	/>
 </FormSplit>
-<DropBlock on:change={setFile} class="h-48 gap-2" disabled={editMode}>
-	<Icon type={RectangleStack} class="h-24 w-auto childs:fill-gradient" variation="solid" />
-</DropBlock>
+<Image
+	disabled={editMode}
+	icon={RectangleStack}
+	on:loadstart={setFile}
+	src={imageUrl}
+	alt="Иллюстрация текста"
+/>
 <Contenteditable
 	pattern={(html) => variablesHighlight(html, $variablesStore)}
 	maxlength={1500}
@@ -138,7 +124,7 @@
 	placeholder="Описание фрейма"
 	bind:html={$framesDataStore[frameKey].text}
 />
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2" id="choices">
 	{#each choices as { choiceId } (choiceId)}
 		<Choice {choiceId} {frameKey} />
 	{/each}

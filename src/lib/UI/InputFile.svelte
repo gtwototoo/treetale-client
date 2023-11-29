@@ -9,7 +9,7 @@
 	export { className as class };
 
 	export let disabled = false;
-	export let variant: 'secondary' | 'main' | 'transparent' | 'ghost' = 'secondary';
+	export let variant: 'main' | 'custom' | 'ghost' = 'main';
 
 	let fileInput: HTMLInputElement;
 

@@ -10,5 +10,5 @@
 		tags.length ? 'text-text' : 'text-gray-500'
 	)}
 >
-	{tags.length ? tags.join(' • ') : 'Теги не указаны'}
+	{tags.length ? tags.join(' - ') : 'Теги не указаны'}
 </div>

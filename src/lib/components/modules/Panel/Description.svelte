@@ -10,19 +10,19 @@
 	import { correctVariableReplace } from '$lib/utils';
 	import { Photo, Tag } from '$UI';
 
-	$: ({ storyId, title, description, imageId, tags, created, likes, vars, author } = $storyStore);
+	$: ({ storyId, title, description, imageUrl, tags, created, likes, vars, author } = $storyStore);
 </script>
 
 <div class="flex flex-col">
 	<div
 		class="relative flex h-48 w-full shrink-0 items-center justify-center rounded-t-xl bg-white text-main"
 	>
-		{#if imageId}
+		{#if imageUrl}
 			<Photo
 				alt={title || 'Иллюстрация истории'}
 				cover
 				class="h-full w-full rounded-t-xl"
-				src={imageId}
+				src={imageUrl}
 				width={320}
 				height={192}
 			>

@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
-
 import type { IUser } from '$lib/types';
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema<IUser>(
 	{
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema<IUser>(
 			type: String,
 			required: true
 		},
-		avatarId: {
+		imageUrl: {
 			type: String,
 			default: null
 		},

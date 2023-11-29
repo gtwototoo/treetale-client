@@ -16,27 +16,28 @@
 	export let width: number = 160;
 
 	let imageLoading = false;
-	let tempAvatarURL = '';
+	let preloadBaseImage: string = null;
+	let currentImageUrl = user.imageUrl;
 
-	const action = 'avatarId';
+	const imageFolder = 'avatars';
 
 	const preRemoveImage = async () => {
-		if (tempAvatarURL || !user.avatarId) {
+		if (preloadBaseImage || !currentImageUrl) {
 			return;
 		}
 
 		imageLoading = true;
 
 		try {
-			await removeImage(user.avatarId, action);
+			await removeImage(currentImageUrl, imageFolder);
 
-			user.avatarId = null;
+			currentImageUrl = null;
 		} finally {
 			imageLoading = false;
 		}
 	};
 
-	const preSaveImage = async ([file]: FileList): Promise<void> => {
+	const preSaveImage = async (file: File): Promise<void> => {
 		const reader = new FileReader();
 
 		reader.readAsDataURL(file);
@@ -44,7 +45,7 @@
 		reader.onloadend = () => {
 			if (!reader.result) return;
 
-			tempAvatarURL = reader.result.toString();
+			preloadBaseImage = reader.result.toString();
 		};
 
 		reader.onloadstart = () => {
@@ -52,11 +53,11 @@
 		};
 
 		try {
-			const response = await saveImage(file, action);
+			const response = await saveImage(file, imageFolder);
 
-			user.avatarId = response.imageId;
+			currentImageUrl = response.imageUrl;
 			imageLoading = false;
-			tempAvatarURL = '';
+			preloadBaseImage = null;
 		} catch (e) {
 			console.error(e);
 		}
@@ -64,11 +65,11 @@
 
 	const setFile = (e: Event) => {
 		if (e.target instanceof HTMLInputElement && e.target.files) {
-			preSaveImage(e.target.files);
+			preSaveImage(e.target.files[0]);
 		}
 	};
 
-	$: src = user.avatarId || tempAvatarURL;
+	$: src = currentImageUrl || preloadBaseImage;
 	$: color = user.color && user.color.length ? user.color : DEFAULT_COLOR;
 </script>
 

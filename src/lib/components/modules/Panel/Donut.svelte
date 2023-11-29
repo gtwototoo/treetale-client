@@ -14,5 +14,5 @@
 		text="Поддержите своего любимого автора, чтобы мотивировать его создавать новые истории"
 	/>
 	<Input placeholder="Введите сумму" bind:value number />
-	<Button class="justify-center">Поддержать</Button>
+	<Button variant="main" class="justify-center">Поддержать</Button>
 </div>

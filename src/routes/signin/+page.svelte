@@ -37,7 +37,7 @@
 		} catch (e) {
 			const error = e as HttpError;
 
-			console.log(error);
+			console.error(error);
 
 			message = {
 				error: true,
