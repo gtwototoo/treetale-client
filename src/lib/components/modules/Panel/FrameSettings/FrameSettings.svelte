@@ -6,7 +6,7 @@
 
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
 	import Image from '$lib/components/Image.svelte';
-	import { saveImage } from '$lib/requests/image';
+	import { removeImage, saveImage } from '$lib/requests/image';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
@@ -30,7 +30,24 @@
 
 			$framesDataStore[frameKey].imageUrl = imageUrl;
 
-			changesHistory.add('Добавление изображения', Photo);
+			changesHistory.add('Добавление изображения фрейма', Photo);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const preRemoveImage = async () => {
+		if (!$framesDataStore[frameKey].imageUrl) return;
+
+		try {
+			await removeImage(imageFolder, {
+				storyId: $informationDataStore.storyId,
+				frameId: $selectedFrameStore
+			});
+
+			$framesDataStore[frameKey].imageUrl = null;
+
+			changesHistory.add('Удаление изображения фрейма', Trash);
 		} catch (e) {
 			console.error(e);
 		}
@@ -114,6 +131,7 @@
 	disabled={editMode}
 	icon={RectangleStack}
 	on:loadstart={setFile}
+	on:remove={preRemoveImage}
 	src={imageUrl}
 	alt="Иллюстрация текста"
 />

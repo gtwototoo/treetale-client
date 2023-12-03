@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { enableControl, onlyDigits } from '$lib/hooks';
 	import { clm } from '$lib/utils';
+	import { createEventDispatcher } from 'svelte';
 
 	let inputRef: HTMLInputElement;
 
@@ -16,6 +16,8 @@
 	export let placeholder: string;
 	export let name: string | undefined = undefined;
 
+	const dispatch = createEventDispatcher();
+
 	const handleFocus = () => {
 		focused = true;
 	};
@@ -24,11 +26,29 @@
 		focused = false;
 	};
 
+	const handleInput = (e: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+		onlyNumbers(number);
+
+		dispatch('input', e);
+	};
+
 	const handleClick = () => {
 		inputRef.focus();
 	};
 
 	let focused = false;
+
+	const onlyNumbers = (enable: boolean) => {
+		if (!enable) return;
+
+		value = value.replace(/[^\d]/g, '');
+
+		if (value.length !== 1 && value[0] === '0') {
+			value = value.substring(1);
+		}
+	};
+
+	$: onlyNumbers(number);
 </script>
 
 <button
@@ -52,9 +72,8 @@
 		bind:value
 		on:focus={handleFocus}
 		on:blur={handleBlur}
-		on:input
+		on:input={handleInput}
 		on:change
-		use:enableControl={{ f: onlyDigits, enabled: number }}
 	/>
 	<slot />
 </button>

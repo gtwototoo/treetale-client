@@ -32,10 +32,14 @@ export const getChoiceFromId = (frame: IFrameCreate | IFrame, choiceId: number) 
 	return choice;
 };
 
-export const getChoicePosition = (index: number) => {
-	const startPosition = DEFAULT_FRAME_SIZE.height - 8 - 36 / 2;
+export const getChoicePosition = (index: number, imageUrl: string) => {
+	let startPosition = DEFAULT_FRAME_SIZE.height - 8 - 40 / 2;
 
-	return startPosition + 37 * index - 1;
+	if (imageUrl) {
+		startPosition += 156;
+	}
+
+	return startPosition + 41 * index - 1;
 };
 
 export const createConnections = (frames: Array<IFrameCreate>) => {
@@ -57,7 +61,7 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 					fromFrame.y +
 					(fromFrame.hidden
 						? fromFrame.height / 2
-						: getChoicePosition(fromFrame.choices.indexOf(choice)))
+						: getChoicePosition(fromFrame.choices.indexOf(choice), fromFrame.imageUrl))
 			};
 			const toPoint = {
 				x: toFrame.x,

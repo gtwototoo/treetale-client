@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { MagnifyingGlass } from 'svelte-heros-v2';
+	import { MagnifyingGlass, RocketLaunch } from 'svelte-heros-v2';
 
+	import { Input } from '$UI';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
+	import Category from '$lib/components/modules/Category.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
-	import { Input } from '$UI';
 
 	export let data;
 
@@ -19,9 +19,9 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<div class="flex grow flex-col">
+<div class="flex grow flex-col gap-4">
 	{#if data.stories.length}
-		<div class="flex w-full flex-col items-center gap-8 px-2">
+		<div class="flex w-full flex-col items-center gap-4 px-2">
 			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
 				Список историй
 			</h1>
@@ -34,11 +34,13 @@
 				</svelte:fragment>
 			</Input>
 		</div>
+		<Category icon={RocketLaunch} title="Новинки" stories={data.stories} />
+	{:else}
+		<div class="plug flex-grow gap-8">
+			<p>
+				{correctWhitespace('Историй не найдено, но вы можете добавить свою уникальную историю')}
+			</p>
+			<AddStoryButton class="gap-3 bg-white" />
+		</div>
 	{/if}
-	<StoriesList stories={data.stories}>
-		<p>
-			{correctWhitespace('Историй не найдено, но вы можете добавить свою уникальную историю')}
-		</p>
-		<AddStoryButton class="gap-3 bg-white" />
-	</StoriesList>
 </div>

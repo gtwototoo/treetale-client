@@ -8,17 +8,10 @@ interface IResponse {
 
 type TFolderName = 'avatars' | 'frames' | 'stories';
 
-export const removeImage = async (
-	id: string,
-	folder: TFolderName,
-	storyId?: number,
-	frameId?: number
-) => {
+export const removeImage = async (folder: TFolderName, args?: Record<string, number>) => {
 	return await fetchDelete<IResponse>(`${PUBLIC_TREETALE_API_URL}/images`, {
-		id,
 		folder,
-		storyId,
-		frameId
+		...args
 	});
 };
 

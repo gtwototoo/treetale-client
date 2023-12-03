@@ -47,7 +47,7 @@
 
 		focused = false;
 
-		dispatch('input', e);
+		dispatch('change', e);
 	};
 </script>
 

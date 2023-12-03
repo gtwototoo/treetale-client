@@ -1,6 +1,10 @@
 <script lang="ts">
+	import { redColorStore } from '$lib/stores/main';
+	import Button from '$UI/Button.svelte';
 	import { Loading } from '$UI/Icons';
+	import clsx from 'clsx';
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
+	import { Trash } from 'svelte-heros-v2';
 	import DropBlock from './DropBlock.svelte';
 	import Icon from './Icon.svelte';
 
@@ -57,6 +61,10 @@
 		};
 	};
 
+	const handleRemove = (e: CustomEvent) => {
+		dispatch('remove', e);
+	};
+
 	$: preloadImage(src);
 </script>
 
@@ -75,6 +83,14 @@
 		</div>
 	{:else if !loading && src && !loadError}
 		<img {src} {alt} class="h-full w-full rounded-lg object-cover" draggable="false" />
+		<Button
+			variant="main"
+			size="sm"
+			on:click={handleRemove}
+			class={clsx('!absolute right-1.5 top-1.5 !text-red-500', $redColorStore)}
+		>
+			<Icon type={Trash} class="h-4 w-4" />
+		</Button>
 	{:else}
 		<DropBlock on:change={handleChange} class="h-full w-full gap-2" {disabled}>
 			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />

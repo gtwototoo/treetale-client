@@ -72,11 +72,11 @@
 
 		if (upscale) {
 			if ($zoomStore < 300) {
-				$zoomStore += 10;
+				$zoomStore += 5;
 			}
 		} else {
 			if ($zoomStore > 10) {
-				$zoomStore -= 10;
+				$zoomStore -= 5;
 			}
 		}
 

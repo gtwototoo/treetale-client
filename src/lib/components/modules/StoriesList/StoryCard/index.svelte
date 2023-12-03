@@ -25,7 +25,9 @@
 
 <Link href={`${storyId}${edit ? '/edit' : ''}`} class="w-full">
 	<div class="contents" style={generateMainColors(selectedColor)}>
-		<Card class="select-none bg-contrast bg-gradient-to-b from-main text-text">
+		<Card
+			class="select-none border border-contrast bg-contrast bg-gradient-to-b from-main text-text"
+		>
 			<Illustration {title} {imageUrl} />
 			<div class="body">
 				<Body {title} {vars} {description} />

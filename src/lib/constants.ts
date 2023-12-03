@@ -1,5 +1,6 @@
-import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 import type { ISize, TRGB } from '$lib/types';
+
+import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 
 export const BLACK_COLOR: TRGB = [5, 5, 5];
 export const DEFAULT_COLOR: TRGB = [254, 215, 170];
@@ -15,7 +16,7 @@ export const USER_WITHOUT_WORKSPACE = {
 	frames: 0
 };
 
-export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 180 };
+export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 184 };
 
 export const NOT_FOUND_VARIANTS: Array<App.Error> = [
 	{

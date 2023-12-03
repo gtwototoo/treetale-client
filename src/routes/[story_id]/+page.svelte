@@ -2,18 +2,18 @@
 	import { Tag } from '$UI';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Frame from '$lib/components/Frame.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
+	import ReadFrame from '$lib/components/ReadFrame.svelte';
+	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
 	import { framesStore, variablesStore } from '$lib/stores/reading.js';
-	import type { TVariableExpects } from '$lib/types/index.js';
 	import { getChoiceFromId, getFrameFromId, last, rootStyle } from '$lib/utils';
+	import { correctToType, doMath } from '$lib/utils/variable_operations.js';
 	import clsx from 'clsx';
 	import { BookOpen } from 'svelte-heros-v2';
 
@@ -62,32 +62,21 @@
 		actions[code]();
 	};
 
-	const correctVariable = (value: string | number, expect: TVariableExpects) => {
-		return expect === 'Число' ? value : `"${value}"`;
-	};
-
 	const updateVars = (frameId: number, choiceId: number) => {
 		const frame = getFrameFromId($framesStore, frameId);
 		const choice = getChoiceFromId(frame, choiceId);
 
 		if (!choice.mathOperations.length) return;
 
-		for (const operation of choice.mathOperations) {
-			const variableId = $variablesStore.findIndex(({ name }) => name === operation.variable);
-			const variable = $variablesStore[variableId];
-			const value = $variablesStore[variableId].value;
+		for (const { symbol, variable, value } of choice.mathOperations) {
+			const variableId = $variablesStore.findIndex(({ name }) => name === variable);
+			const { expect } = $variablesStore[variableId];
+			const firstValue = $variablesStore[variableId].value;
 
-			if (operation.symbol === '=') {
-				$variablesStore[variableId].value = operation.value;
-
-				return;
-			}
-
-			$variablesStore[variableId].value = eval(
-				`${correctVariable(value, variable.expect)} ${operation.symbol} ${correctVariable(
-					operation.value,
-					variable.expect
-				)}`
+			$variablesStore[variableId].value = doMath(
+				correctToType(firstValue, expect),
+				symbol,
+				correctToType(value, expect)
 			);
 		}
 	};
@@ -196,12 +185,12 @@
 			</svelte:fragment>
 		</ReadCard>
 		{#each $framesStore as { frameId }, key}
-			{@const last = key === $framesStore.length - 1}
-			<Frame
+			{@const isLastFrame = key === $framesStore.length - 1}
+			<ReadFrame
 				{frameId}
 				on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
 				selectedChoiceId={data.progress[key].choiceId}
-				class={clsx(!last && 'pointer-events-none opacity-10')}
+				class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
 			/>
 		{/each}
 	</div>

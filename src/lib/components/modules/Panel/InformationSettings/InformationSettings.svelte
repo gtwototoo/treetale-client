@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { BookOpen, Cloud, Photo as PhotoIcon } from 'svelte-heros-v2';
+	import { BookOpen, Cloud, Photo as PhotoIcon, Trash } from 'svelte-heros-v2';
 
 	import Shortcuts from './Shortcuts.svelte';
 
@@ -8,7 +8,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
-	import { saveImage } from '$lib/requests/image';
+	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
@@ -56,23 +56,21 @@
 		}, 3000);
 	};
 
-	// const preRemoveImage = async () => {
-	// 	if (!$informationDataStore.imageUrl) return;
+	const preRemoveImage = async () => {
+		if (!$informationDataStore.imageUrl) return;
 
-	// 	try {
-	// 		await removeImage(
-	// 			$informationDataStore.imageUrl,
-	// 			imageFolder,
-	// 			$informationDataStore.storyId
-	// 		);
+		try {
+			await removeImage(imageFolder, {
+				storyId: $informationDataStore.storyId
+			});
 
-	// 		$informationDataStore.imageUrl = null;
+			$informationDataStore.imageUrl = null;
 
-	// 		changesHistory.add('Удаление изображения', XMark);
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 	}
-	// };
+			changesHistory.add('Удаление изображения истории', Trash);
+		} catch (e) {
+			console.error(e);
+		}
+	};
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
@@ -82,7 +80,7 @@
 
 			$informationDataStore.imageUrl = imageUrl;
 
-			changesHistory.add('Добавление изображения', PhotoIcon);
+			changesHistory.add('Добавление изображения истории', PhotoIcon);
 		} catch (e) {
 			console.error(e);
 		}
@@ -119,6 +117,7 @@
 	disabled={editMode}
 	icon={BookOpen}
 	on:loadstart={setFile}
+	on:remove={preRemoveImage}
 	src={$informationDataStore.imageUrl}
 	alt="Иллюстрация текста"
 />

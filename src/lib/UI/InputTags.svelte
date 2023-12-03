@@ -50,7 +50,7 @@
 	};
 
 	const handleKeydown = (e: KeyboardEvent) => {
-		const { code } = e;
+		const { code, key } = e;
 
 		const handleAddTag = () => {
 			if (value === '') return;
@@ -75,7 +75,7 @@
 		}
 
 		if (
-			code === 'Space' ||
+			/[^0-9a-zA-Zа-яА-Я-]/.test(key) ||
 			code === 'Enter' ||
 			(code !== 'Backspace' && value.length >= maxLength)
 		) {

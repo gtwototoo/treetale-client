@@ -80,6 +80,14 @@
 				</p>
 			</Header>
 			{#if !hidden}
+				{#if $framesDataStore[frameKey].imageUrl}
+					<img
+						alt="Изображение фрейма"
+						draggable="false"
+						src={$framesDataStore[frameKey].imageUrl}
+						class="h-36 w-full rounded-lg object-cover"
+					/>
+				{/if}
 				<div
 					class={clsx('flex h-20 items-center px-4 text-center', {
 						'text-gray-400': !text
@@ -109,7 +117,10 @@
 					<div class="point right-0 top-1/2" />
 				{:else}
 					{#each choices as _, key}
-						<div class="point right-0" style:top="{getChoicePosition(key)}px" />
+						<div
+							class="point right-0"
+							style:top="{getChoicePosition(key, $framesDataStore[frameKey].imageUrl)}px"
+						/>
 					{/each}
 				{/if}
 				<div class={clsx('point left-0', hidden ? 'top-1/2' : 'top-5')} />

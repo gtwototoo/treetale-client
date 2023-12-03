@@ -57,7 +57,7 @@
 			placeholder="Тип"
 			list={types}
 			class="-mr-2.5 ml-2"
-			on:input={handleInput}
+			on:change={handleInput}
 			let:value
 			let:click
 		>
@@ -74,7 +74,7 @@
 				placeholder="Значение"
 				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
 				list={[{ text: 'Да' }, { text: 'Нет' }]}
-				on:input={handleInput}
+				on:change={handleInput}
 			/>
 		{:else}
 			<Input

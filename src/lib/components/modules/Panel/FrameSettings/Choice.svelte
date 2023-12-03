@@ -42,7 +42,7 @@
 
 <FormSplit vertical={!editMode} class="divide-contrast">
 	<Contenteditable
-		maxlength={55}
+		maxlength={100}
 		class="!shrink grow"
 		placeholder="Вариант выбора"
 		disabled={editMode}

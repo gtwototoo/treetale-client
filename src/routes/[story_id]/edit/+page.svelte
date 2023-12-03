@@ -2,11 +2,12 @@
 	import { onMount } from 'svelte';
 	import { Play } from 'svelte-heros-v2';
 
+	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
 	import Radar from '$lib/components/modules/EditingFooter/Radar.svelte';
 	import { FrameSettings } from '$lib/components/modules/Panel';
-	import SvgGradient from '$lib/components/modules/StoriesList/SvgGradient.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
+	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
 		addFrame,
 		cursorFollow,
@@ -14,7 +15,6 @@
 		movingFrame,
 		startMoveArea
 	} from '$lib/components/modules/Workspace/methods';
-	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
 	import { changesHistory } from '$lib/stores/history.js';
@@ -94,9 +94,9 @@
 	const handleMouseDown = (
 		e: CustomEvent<{ doubleClick: boolean; button: number; isMouse: boolean } & ICoordinates>
 	) => {
-		const { x, y, isMouse, button, doubleClick } = e.detail;
+		const { x, y, isMouse, button } = e.detail;
 
-		if (!isMouse || button === 1 || doubleClick) startOffset = startMoveArea({ x, y });
+		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
 
 		if (isMouse && button === 0 && $movingFrameStore) {
 			const frame = getFrameFromId($framesDataStore, $movingFrameStore);

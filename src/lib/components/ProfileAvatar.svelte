@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PencilSquare, XMark } from 'svelte-heros-v2';
+	import { PencilSquare, Trash } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
 
 	import Icon from './Icon.svelte';
@@ -29,7 +29,7 @@
 		imageLoading = true;
 
 		try {
-			await removeImage(currentImageUrl, imageFolder);
+			await removeImage(imageFolder);
 
 			currentImageUrl = null;
 		} finally {
@@ -101,7 +101,7 @@
 						variant="ghost"
 						on:click={preRemoveImage}
 					>
-						<Icon type={XMark} class="h-6 w-6 text-red-500" />
+						<Icon type={Trash} class="h-6 w-6 text-red-500" />
 					</Button>
 				{:else}
 					<InputFile
