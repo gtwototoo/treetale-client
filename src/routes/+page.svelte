@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MagnifyingGlass, RocketLaunch } from 'svelte-heros-v2';
+	import { MagnifyingGlass, Moon, RocketLaunch, Sun } from 'svelte-heros-v2';
 
 	import { Input } from '$UI';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <div class="flex grow flex-col gap-4">
-	{#if data.stories.length}
+	{#if Object.keys(data.stories).length}
 		<div class="flex w-full flex-col items-center gap-4 px-2">
 			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
 				Список историй
@@ -34,7 +34,24 @@
 				</svelte:fragment>
 			</Input>
 		</div>
-		<Category icon={RocketLaunch} title="Новинки" stories={data.stories} />
+		<Category
+			icon={RocketLaunch}
+			title="Новинки"
+			stories={data.stories.newStories}
+			authors={data.authors}
+		/>
+		<Category
+			icon={Moon}
+			title="Темная тема"
+			stories={data.stories.darkStories}
+			authors={data.authors}
+		/>
+		<Category
+			icon={Sun}
+			title="Светлая тема"
+			stories={data.stories.lightStories}
+			authors={data.authors}
+		/>
 	{:else}
 		<div class="plug flex-grow gap-8">
 			<p>

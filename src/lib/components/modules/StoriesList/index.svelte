@@ -2,9 +2,11 @@
 	import Empty from './Empty.svelte';
 	import StoryCard from './StoryCard/index.svelte';
 
+	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
 
 	export let stories: Array<IStoryFull>;
+	export let authors: Array<IUser> | undefined = undefined;
 </script>
 
 <ska:html class:h-full={!stories.length} />
@@ -13,7 +15,8 @@
 {#if stories.length}
 	<div class="stories">
 		{#each stories as rawStory}
-			{@const { vars, author, ...story } = rawStory}
+			{@const { vars, ...story } = rawStory}
+			{@const author = authors && authors.find(({ userId }) => userId === story.userId)}
 			<StoryCard {story} {vars} {author} />
 		{/each}
 		{#if stories.length < 8}

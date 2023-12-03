@@ -7,7 +7,7 @@
 	export let data;
 </script>
 
-<StoriesList stories={data.stories}>
+<StoriesList stories={data.stories} authors={data.authors}>
 	<p>
 		{correctWhitespace('У данного пользователя пока нету ни одной опубликованной истории')}
 	</p>

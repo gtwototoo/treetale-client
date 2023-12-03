@@ -7,7 +7,7 @@
 	export let data;
 </script>
 
-<StoriesList stories={data.stories}>
+<StoriesList stories={data.stories} authors={data.authors}>
 	<p>
 		{correctWhitespace(
 			'Пока у вас нет ни одной начатой истории, посмотрите на весь каталог различных историй'

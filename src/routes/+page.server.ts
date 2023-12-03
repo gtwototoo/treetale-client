@@ -1,40 +1,51 @@
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
-import { StoriesModel, UsersModel } from '$lib/server/models';
-import type { IUser, IVariable } from '$lib/types';
-import type { IStoryFull, IStoryReading } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
-import { serialize } from '$lib/utils';
+import { StoriesModel } from '$lib/server/models';
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
+import { loadUsers } from '$lib/server/utils';
 
 export const load = async () => {
-	const rawStories: Array<IStorySchema> = await StoriesModel.find({
+	const newStories: Array<IStorySchema> = await StoriesModel.find({
 		draft: false
 	})
 		.select(USER_WITHOUT_WORKSPACE)
 		.skip(0)
 		.limit(10)
+		.sort({
+			created: 'desc'
+		})
 		.lean();
 
-	if (!rawStories) {
-		return {
-			stories: []
-		};
-	}
+	const darkStories: Array<IStorySchema> = await StoriesModel.find({
+		draft: false,
+		darkTheme: true
+	})
+		.select(USER_WITHOUT_WORKSPACE)
+		.skip(0)
+		.limit(10)
+		.sort({
+			created: 'desc'
+		})
+		.lean();
 
-	const stories: Array<IStoryFull> = [];
+	const lightStories: Array<IStorySchema> = await StoriesModel.find({
+		draft: false,
+		darkTheme: false
+	})
+		.select(USER_WITHOUT_WORKSPACE)
+		.skip(0)
+		.limit(10)
+		.sort({
+			created: 'desc'
+		})
+		.lean();
 
-	for (const story of rawStories) {
-		const author = await UsersModel.findOne({
-			userId: +story.userId
-		}).lean();
+	const stories: Record<string, Array<IStorySchema>> = {
+		newStories,
+		darkStories,
+		lightStories
+	};
 
-		stories.push({
-			...story,
-			author: author ? serialize(author) : null
-		} satisfies IStoryReading & {
-			vars: Array<IVariable>;
-			author: IUser;
-		});
-	}
+	const concatStories = [].concat(...Object.values(stories));
 
-	return { stories };
+	return { stories, authors: loadUsers(concatStories) };
 };

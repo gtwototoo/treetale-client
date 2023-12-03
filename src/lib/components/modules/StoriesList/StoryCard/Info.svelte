@@ -13,13 +13,14 @@
 	export let author: IUser;
 	export let created: number;
 	export let tags: Array<string>;
+	export let edit: boolean;
 
 	$: isLiked = likes?.includes($page.data.session?.userId);
 </script>
 
 <FormSplit vertical class="w-full divide-contrast bg-transparent">
 	<div class="flex w-full items-center justify-between gap-4 rounded-xl bg-main-60 p-3">
-		{#if author}
+		{#if author && !edit}
 			<ProfileLink {author} {created} />
 		{:else}
 			<div

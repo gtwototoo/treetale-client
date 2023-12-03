@@ -7,6 +7,7 @@ export type TVariableExpects = 'Строка' | 'Число' | 'Да/Нет';
 
 export interface IStoryEditableInfo {
 	color: TRGB;
+	darkTheme: boolean;
 	description: string;
 	draft: boolean;
 	imageUrl?: string | null;

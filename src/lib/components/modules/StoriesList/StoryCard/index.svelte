@@ -20,10 +20,10 @@
 		story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
-	$: edit = !author && $page.data.session && $page.data.session.userId === userId;
+	$: edit = $page.data.session && $page.data.session.userId === userId;
 </script>
 
-<Link href={`${storyId}${edit ? '/edit' : ''}`} class="w-full">
+<Link href={`/${storyId}${edit ? '/edit' : ''}`} class="w-full">
 	<div class="contents" style={generateMainColors(selectedColor)}>
 		<Card
 			class="select-none border border-contrast bg-contrast bg-gradient-to-b from-main text-text"
@@ -31,7 +31,7 @@
 			<Illustration {title} {imageUrl} />
 			<div class="body">
 				<Body {title} {vars} {description} />
-				<Info {draft} {likes} {created} {tags} {author} />
+				<Info {draft} {likes} {created} {tags} {author} {edit} />
 			</div>
 		</Card>
 	</div>
