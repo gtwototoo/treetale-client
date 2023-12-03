@@ -1,18 +1,27 @@
-FROM node:16-alpine AS deps
-RUN apk add --no-cache libc6-compat
+FROM node:18.17-alpine AS deps
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+RUN npm install --global pnpm
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
-FROM node:16-alpine AS build
+FROM node:18.17-alpine AS builder
 WORKDIR /app
+RUN npm install --global pnpm
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN npm run build
+COPY . ./
+RUN pnpm build
 
-FROM node:16-alpine AS runner
+FROM node:18.17-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=build /app .
-EXPOSE 3000
-CMD ["npm", "start"]
+RUN npm install --global pnpm
+ENV NODE_ENV production
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 sveltejs
+COPY --from=builder --chown=sveltejs:nodejs /app/build ./build
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.env ./
+COPY --from=builder /app/.env.production ./
+COPY --from=builder /app/package.json ./
+USER sveltejs
+CMD pnpm start
