@@ -49,9 +49,9 @@
 		@apply relative flex h-full w-full flex-col items-center gap-2 bg-transparent p-5 max-lg:p-4 max-sm:p-3 xs:gap-4 lg:gap-6;
 	}
 	:global(.animate-card) {
-		@apply from-50% to-100% bg-[length:100%_200%] bg-[0_-100%] transition-[background-position];
+		@apply from-50% to-100% bg-[length:100%_200%] bg-[0_-100%] transition-[background-position,transform];
 	}
 	:global(.animate-card:hover) {
-		@apply hover:bg-[0_-120%];
+		@apply -translate-y-2 bg-[0_-120%];
 	}
 </style>

@@ -23,12 +23,12 @@
 </script>
 
 {#if stories.length}
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-2 overflow-hidden">
 		<div class="sticky top-0 z-10 flex select-none items-center gap-4 py-3 pl-12">
 			<Icon type={icon} class="h-8 w-8" />
 			<h2 class="text-2xl max-md:text-xl">{title}</h2>
 		</div>
-		<div class="overflow-hidden px-2 sm:px-4" use:emblaCarouselSvelte={{ options, plugins }}>
+		<div class="px-2 sm:px-4" use:emblaCarouselSvelte={{ options, plugins }}>
 			<div class="flex justify-start gap-4">
 				{#each stories as rawStory}
 					{@const { vars, ...story } = rawStory}
