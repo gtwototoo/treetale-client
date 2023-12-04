@@ -6,7 +6,7 @@
 		"dev": "vite dev --host ::",
 		"build": "pnpm sync && pnpm lint && vite build",
 		"preview": "vite preview --host ::",
-		"start": "node ./build/index.js",
+		"start": "node -r dotenv/config build",
 		"sync": "svelte-kit sync",
 		"docker::build": "docker build --no-cache --tag treetale-client .",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -54,6 +54,7 @@
 	"type": "module",
 	"dependencies": {
 		"@types/cookie": "^0.6.0",
+		"dotenv": "^16.3.1",
 		"mongoose": "^8.0.0"
 	}
 }

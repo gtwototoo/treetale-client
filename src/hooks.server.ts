@@ -5,6 +5,7 @@ import { handle as documentHandle } from '@sveltekit-addons/document/hooks';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { NOT_FOUND_VARIANTS } from '$lib/constants';
 import { mongooseConnect } from '$lib/server/mongoose';
+import type { IUser } from '$lib/types';
 import { randomArray } from '$lib/utils';
 
 const defaultHandle = (async ({ event, resolve }) => {
@@ -23,7 +24,7 @@ const defaultHandle = (async ({ event, resolve }) => {
 		}
 
 		if (request) {
-			const json = await request.json();
+			const json = (await request.json()) as { user: IUser };
 
 			event.locals.session = json.user;
 		}

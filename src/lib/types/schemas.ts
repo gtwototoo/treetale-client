@@ -4,6 +4,7 @@ import type { IFrameCreate } from './editing';
 
 export interface IStorySchema extends IStory {
 	[index: string]: number | ICoordinates | Array<unknown> | string | boolean;
+	darkTheme: boolean;
 	frames: Array<IFrameCreate>;
 	imageUrl: string;
 	likes: Array<number>;

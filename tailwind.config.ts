@@ -1,4 +1,5 @@
-const plugin = require('tailwindcss/plugin');
+import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const colorsList = [
 	'main',
@@ -108,5 +109,4 @@ const config = {
 	]
 };
 
-/** @type {import('tailwindcss').Config} */
-module.exports = config;
+export default config satisfies Config;

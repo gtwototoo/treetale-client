@@ -9,7 +9,7 @@
 </script>
 
 <Button
-	variant={active ? 'main' : 'secondary'}
+	variant={active ? 'main' : 'ghost'}
 	class={clm({ '!bg-blue-500': active }, className)}
 	on:click
 >
