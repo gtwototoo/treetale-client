@@ -26,7 +26,7 @@
 <Link href={`/${storyId}${edit ? '/edit' : ''}`} class="w-full">
 	<div class="contents" style={generateMainColors(selectedColor)}>
 		<Card
-			class="select-none border border-contrast bg-contrast bg-gradient-to-b from-main text-text"
+			class="animate-card select-none border border-contrast bg-contrast bg-gradient-to-b from-main text-text"
 		>
 			<Illustration {title} {imageUrl} />
 			<div class="body">
@@ -40,5 +40,11 @@
 <style lang="postcss">
 	.body {
 		@apply relative flex h-full w-full flex-col items-center gap-2 bg-transparent p-5 max-lg:p-4 max-sm:p-3 xs:gap-4 lg:gap-6;
+	}
+	:global(.animate-card) {
+		@apply from-50% to-100% bg-[length:100%_200%] bg-[0_-100%] transition-[background-position,transform];
+	}
+	:global(.animate-card:hover) {
+		@apply -translate-y-2 hover:bg-[0_-120%];
 	}
 </style>

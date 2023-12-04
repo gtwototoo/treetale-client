@@ -21,7 +21,7 @@
 		<p class="truncate text-text max-xs:hidden">
 			{author.name}
 		</p>
-		<p class="text-xs text-gray-500">
+		<p class="truncate text-xs text-gray-500">
 			{date}
 		</p>
 	</div>

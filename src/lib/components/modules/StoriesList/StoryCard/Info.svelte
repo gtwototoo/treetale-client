@@ -25,14 +25,14 @@
 		{:else}
 			<div
 				class={clsx(
-					'flex items-center gap-2 text-sm',
+					'flex items-center gap-2 overflow-hidden text-sm',
 					draft ? 'text-gray-500' : 'text-emerald-500'
 				)}
 			>
 				<div class="rounded-full bg-main-30 p-2">
 					<Icon type={draft ? ArchiveBox : CheckCircle} class="h-6 w-6" />
 				</div>
-				<p>{draft ? 'Черновик' : 'Опубликовано'}</p>
+				<p class="truncate">{draft ? 'Черновик' : 'Опубликовано'}</p>
 			</div>
 		{/if}
 		<div class="mr-1 flex items-center gap-1">
