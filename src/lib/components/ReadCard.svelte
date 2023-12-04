@@ -3,7 +3,6 @@
 
 	import { correctWhitespace } from '$lib/utils';
 	import { Card, Photo } from '$UI';
-	import DOMPurify from 'isomorphic-dompurify';
 
 	let className = '';
 	export { className as class };
@@ -45,7 +44,7 @@
 					text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
 				)}
 			>
-				{@html DOMPurify.sanitize(correctWhitespace(text))}
+				{@html correctWhitespace(text)}
 			</div>
 		{:else}
 			<slot name="body" />

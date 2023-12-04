@@ -15,7 +15,6 @@
 	} from '$lib/stores/workspace';
 	import { contrastText, transform } from '$lib/utils';
 	import { createConnections, getChoicePosition } from '$lib/utils/editing';
-	import DOMPurify from 'isomorphic-dompurify';
 
 	export let frameId: number;
 	export let index: number;
@@ -94,7 +93,7 @@
 					})}
 				>
 					<div class="line-clamp-5 w-full break-words text-left">
-						{@html DOMPurify.sanitize(text || 'Описание фрейма')}
+						{@html text || 'Описание фрейма'}
 					</div>
 				</div>
 				<Choices {frameKey} />

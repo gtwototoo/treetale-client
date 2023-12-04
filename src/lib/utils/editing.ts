@@ -113,7 +113,7 @@ const getAreaBoundings = (frames: Array<IFrameCreate>) => {
 };
 
 export const variablesHighlight = (html: string, vars: Array<IVariable>) => {
-	const variableRegex = /{([a-zA-Z0-9]+)}/;
+	const variableRegex = /{([a-zA-Z0-9]+)}/g;
 
 	return html.replace(variableRegex, (match, variable) => {
 		const varExists = vars.some(({ name }) => name === variable);

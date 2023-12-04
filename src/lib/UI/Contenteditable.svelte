@@ -86,6 +86,12 @@
 		};
 	};
 
+	// const clearValue = (value: string) => {
+	// 	let encoded = value.replace(/>/g, '&gt;').replace(/</g, '&lt;');
+
+	// 	return encoded;
+	// };
+
 	const handleInput = (e: Event & { currentTarget: EventTarget & HTMLDivElement }) => {
 		if (maxlength && editableRef.innerText.length + 1 > maxlength) {
 			const selection = window.getSelection();
