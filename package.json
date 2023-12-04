@@ -7,14 +7,14 @@
 		"build": "pnpm sync && pnpm lint && vite build",
 		"preview": "vite preview --host ::",
 		"sync": "svelte-kit sync",
-		"docker::build": "docker build --no-cache -t treetale-client .",
+		"docker::build": "docker build --no-cache --tag treetale-client .",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin=prettier-plugin-svelte --plugin=prettier-plugin-tailwindcss --write . && eslint .",
 		"fix": "prettier --plugin=prettier-plugin-svelte --plugin=prettier-plugin-tailwindcss --write . && eslint . --fix"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.1.1",
+		"@sveltejs/adapter-node": "^1.3.1",
 		"@sveltejs/kit": "^1.27.6",
 		"@sveltekit-addons/document": "^1.0.1",
 		"@total-typescript/ts-reset": "^0.5.1",
