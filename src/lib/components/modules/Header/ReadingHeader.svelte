@@ -1,14 +1,25 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { Star } from 'svelte-heros-v2';
+	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
 
 	import Header from './Header.svelte';
 
+	import { Button } from '$UI';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
+	import { fullscreenStore } from '$lib/stores/reading';
 	import { contrastText, getPageType } from '$lib/utils';
-	import { Button } from '$UI';
+
+	const handleFulscreen = async () => {
+		try {
+			await document.getElementById('read-screen').requestFullscreen();
+
+			$fullscreenStore = true;
+		} catch {
+			$fullscreenStore = false;
+		}
+	};
 
 	$: pageType = getPageType($page.url.pathname);
 </script>
@@ -24,5 +35,13 @@
 	>
 		<Icon type={Star} class="h-6 w-6" />
 		<p class="mr-1">Поддержать</p>
+	</Button>
+	<Button
+		variant="ghost"
+		class="header-button bg-contrast text-text"
+		size="lg"
+		on:click={handleFulscreen}
+	>
+		<Icon type={ArrowsPointingOut} class="h-6 w-6" />
 	</Button>
 </Header>

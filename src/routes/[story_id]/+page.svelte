@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Tag } from '$UI';
+	import { Button, Tag } from '$UI';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
@@ -11,11 +11,11 @@
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
-	import { framesStore, variablesStore } from '$lib/stores/reading.js';
+	import { framesStore, fullscreenStore, variablesStore } from '$lib/stores/reading.js';
 	import { getChoiceFromId, getFrameFromId, last, rootStyle } from '$lib/utils';
 	import { correctToType, doMath } from '$lib/utils/variable_operations.js';
 	import clsx from 'clsx';
-	import { BookOpen } from 'svelte-heros-v2';
+	import { ArrowsPointingIn, BookOpen } from 'svelte-heros-v2';
 
 	export let data;
 
@@ -133,6 +133,12 @@
 		}
 	};
 
+	const handleFulscreen = async () => {
+		await document.exitFullscreen();
+
+		$fullscreenStore = false;
+	};
+
 	$: ({ storyId, title, description, author, created, draft, likes, color } = data.story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
 	$: $framesStore = data.frames;
@@ -153,7 +159,17 @@
 <svelte:window on:keydown={handleKeydown} on:wheel={handleWheel} />
 
 <SvgGradient id={storyId} />
-<div class="flex h-full w-full items-start justify-center overflow-hidden px-4">
+<div class="flex h-full w-full items-start justify-center overflow-hidden px-4" id="read-screen">
+	{#if $fullscreenStore}
+		<Button
+			variant="ghost"
+			class="header-button !fixed right-4 top-4 bg-contrast text-text"
+			size="lg"
+			on:click={handleFulscreen}
+		>
+			<Icon type={ArrowsPointingIn} class="h-6 w-6" />
+		</Button>
+	{/if}
 	<div
 		class="flex flex-col gap-6 transition-transform"
 		style:transform="translateY({currentTranslate}px)"
