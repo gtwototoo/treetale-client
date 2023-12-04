@@ -6,6 +6,7 @@
 		"dev": "vite dev --host ::",
 		"build": "pnpm sync && pnpm lint && vite build",
 		"preview": "vite preview --host ::",
+		"start": "node ./build/index.js",
 		"sync": "svelte-kit sync",
 		"docker::build": "docker build --no-cache --tag treetale-client .",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
