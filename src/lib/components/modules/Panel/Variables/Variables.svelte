@@ -35,7 +35,6 @@
 
 		timer = window.setTimeout(async () => {
 			try {
-				console.log($variablesStore);
 				await updateVars($informationDataStore.storyId, $variablesStore);
 
 				saveInfo = 'Изменения сохранены';
