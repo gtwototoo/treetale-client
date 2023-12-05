@@ -1,6 +1,4 @@
 <script lang="ts">
-	import clsx from 'clsx';
-
 	import { Button } from '$UI';
 
 	export let active: boolean;
@@ -8,11 +6,8 @@
 
 <Button
 	on:click
-	variant="main"
-	class={clsx(
-		'adaptive-font adaptive-padding !whitespace-normal bg-main/40 text-left !text-text',
-		active && 'bg-main'
-	)}
+	variant={active ? 'main' : 'ghost'}
+	class="adaptive-font adaptive-padding !whitespace-normal bg-main text-left !text-text"
 >
 	<slot />
 </Button>

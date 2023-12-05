@@ -1,8 +1,4 @@
 <script lang="ts">
-	import type { HttpError } from '@sveltejs/kit';
-	import clsx from 'clsx';
-	import { fade } from 'svelte/transition';
-
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import ReadCard from '$lib/components/ReadCard.svelte';
@@ -16,7 +12,7 @@
 
 	let name = '';
 	let loading = false;
-	let message: { error: boolean; text: string } | null = null;
+	// let message: { error: boolean; text: string } | null = null;
 
 	const handleSignUp = async () => {
 		if (disabled || loading) {
@@ -33,12 +29,11 @@
 				invalidateAll: true
 			});
 		} catch (e) {
-			const error = e as HttpError;
-
-			message = {
-				error: true,
-				text: error.body.message
-			};
+			// const error = e as HttpError;
+			// message = {
+			// 	error: true,
+			// 	text: error.body.message
+			// };
 		} finally {
 			loading = false;
 		}
@@ -54,18 +49,14 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
-<div class="flex h-full w-full items-start justify-center px-12">
-	<div class="flex min-h-full items-center py-12">
+<div class="flex h-full w-full items-start justify-center">
+	<div class="flex min-h-full items-center p-4 max-sm:p-2">
 		<ReadCard
 			src={contentCardImage}
 			alt="Завершение регистрации"
 			text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте"
 		>
-			<form
-				class="flex w-full flex-col gap-3"
-				method="POST"
-				on:submit|preventDefault={handleSignUp}
-			>
+			<form class="flex w-full flex-col" method="POST" on:submit|preventDefault={handleSignUp}>
 				<Input
 					placeholder="Псевдоним"
 					class="adaptive-font adaptive-padding w-full"
@@ -74,20 +65,12 @@
 				<Button
 					variant="main"
 					type="submit"
-					class={clsx('adaptive-font adaptive-padding w-full bg-main !text-text')}
+					class="adaptive-font adaptive-padding w-full bg-main !text-text"
 					{disabled}
 					{loading}
 				>
 					Завершить регистрацию
 				</Button>
-				{#if message && message.text}
-					<div
-						in:fade
-						class={clsx('message', message.error ? 'text-red' : 'text-emerald-600')}
-					>
-						{message.text}
-					</div>
-				{/if}
 			</form>
 		</ReadCard>
 	</div>

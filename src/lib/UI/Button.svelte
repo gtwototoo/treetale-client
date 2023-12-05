@@ -43,7 +43,7 @@
 	class={clm(
 		'transition-opacity childs:bg-transparent',
 		`size-${size}`,
-		loading && 'text-transparent childs:invisible',
+		loading && '!text-transparent childs:invisible',
 		variant !== 'custom' && `variant-${variant}`,
 		(disabled || loading) && 'disabled',
 		className
@@ -53,7 +53,7 @@
 	<slot />
 	{#if loading}
 		<div
-			class="!visible absolute left-0 top-0 flex h-full w-full items-center justify-center bg-transparent"
+			class="!visible absolute left-0 top-0 flex h-full w-full items-center justify-center bg-transparent text-text"
 		>
 			<Icon type={Loading} />
 		</div>
@@ -77,7 +77,7 @@
 		@apply rounded px-2 py-1 text-xs;
 	}
 	.variant-main {
-		@apply text-white transition-[filter,opacity] hover:brightness-110 focus:brightness-110;
+		@apply transition-[filter,opacity] hover:brightness-110 focus:brightness-110;
 	}
 	.variant-ghost {
 		@apply bg-opacity-30 transition-colors hover:bg-opacity-100;

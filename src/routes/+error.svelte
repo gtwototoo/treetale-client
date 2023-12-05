@@ -22,16 +22,18 @@
 </svelte:head>
 
 {#if $page.error}
-	<div class="flex h-full w-full items-start justify-center px-12">
-		<div class="flex min-h-full items-center py-12">
+	<div class="flex h-full w-full items-start justify-center">
+		<div class="flex min-h-full items-center p-4 max-sm:p-2">
 			<ReadCard src={img} alt="Ошибка" text={message}>
-				<Button
-					class="adaptive-font adaptive-padding w-full !bg-main !text-text"
-					variant="main"
-					on:click={handleClick}
-				>
-					{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}
-				</Button>
+				<div class="w-full">
+					<Button
+						class="adaptive-font adaptive-padding w-full bg-main !text-text"
+						variant="ghost"
+						on:click={handleClick}
+					>
+						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}
+					</Button>
+				</div>
 			</ReadCard>
 		</div>
 	</div>

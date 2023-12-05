@@ -159,7 +159,10 @@
 <svelte:window on:keydown={handleKeydown} on:wheel={handleWheel} />
 
 <SvgGradient id={storyId} />
-<div class="flex h-full w-full items-start justify-center overflow-hidden px-4" id="read-screen">
+<div
+	class="flex h-full w-full items-start justify-center overflow-hidden p-4 max-sm:p-2"
+	id="read-screen"
+>
 	{#if $fullscreenStore}
 		<Button
 			variant="ghost"
@@ -171,11 +174,11 @@
 		</Button>
 	{/if}
 	<div
-		class="flex flex-col gap-6 transition-transform"
+		class="flex w-full flex-col items-center gap-6 transition-transform"
 		style:transform="translateY({currentTranslate}px)"
 		use:setPosition={current}
 	>
-		<ReadCard classCard="h-full text-center">
+		<ReadCard classCard="h-full text-center !items-center">
 			<svelte:fragment slot="body">
 				<Icon
 					type={BookOpen}
@@ -184,7 +187,7 @@
 				/>
 				<h2>{title}</h2>
 				<p class="max-w-sm">{description}</p>
-				<div class="flex items-center gap-4">
+				<div class="flex w-full max-w-sm items-center justify-between gap-4">
 					{#if author}
 						<ProfileLink {author} {created} />
 					{:else}

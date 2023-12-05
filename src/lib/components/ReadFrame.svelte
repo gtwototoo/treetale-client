@@ -65,12 +65,7 @@
 	$: ({ imageUrl, text, choices } = getFrameFromId($framesStore, frameId));
 </script>
 
-<ReadCard
-	src={imageUrl}
-	text={dynamicText()}
-	class={clsx('text-left', className)}
-	classCard="justify-between !items-start"
->
+<ReadCard src={imageUrl} text={dynamicText()} class={clsx('text-left', className)}>
 	{#if choices.length}
 		<FormSplit vertical class="w-full divide-main-10">
 			{#each choices as { choiceId, text, logicOperations } (choiceId)}
