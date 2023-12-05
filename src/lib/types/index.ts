@@ -86,3 +86,8 @@ export interface IUser {
 	sessionId: string | null;
 	userId: number;
 }
+
+export interface IResponseResult {
+	error: boolean;
+	text: string;
+}

@@ -86,6 +86,7 @@
 </script>
 
 <button
+	type="button"
 	class={clsx(
 		'input',
 		focused && '!bg-main-30',

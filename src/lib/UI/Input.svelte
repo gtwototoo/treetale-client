@@ -52,6 +52,7 @@
 </script>
 
 <button
+	type="button"
 	class={clm(
 		'input',
 		`size-${size}`,

@@ -33,7 +33,7 @@
 	{/if}
 	<Card
 		class={clsx(
-			'items-start gap-8 bg-main-20 p-8 text-text childs:bg-transparent max-hd:gap-6 max-hd:p-6',
+			'items-start gap-8 bg-main-10 p-8 text-text childs:bg-transparent max-hd:gap-6 max-hd:p-6',
 			classCard
 		)}
 	>

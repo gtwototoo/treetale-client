@@ -116,7 +116,7 @@
 </script>
 
 <button
-	tabindex="0"
+	type="button"
 	class={clm(
 		'contenteditable',
 		$$slots.left ? 'pl-2' : 'pl-4',

@@ -5,8 +5,9 @@
 	import Icon from './Icon.svelte';
 
 	import { Avatar, Button, InputFile } from '$UI';
-	import { BLACK_COLOR, DEFAULT_COLOR, WHITE_COLOR } from '$lib/constants';
+	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
+	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types';
 	import { RGB, alphaToRgb, contrastText } from '$lib/utils';
 
@@ -70,18 +71,24 @@
 	};
 
 	$: src = currentImageUrl || preloadBaseImage;
-	$: color = user.color && user.color.length ? user.color : DEFAULT_COLOR;
+	$: colorMain50 = alphaToRgb(
+		$bodyColorStore,
+		0.5,
+		contrastText($bodyColorStore) ? BLACK_COLOR : WHITE_COLOR
+	);
+
+	$: colorMain90 = alphaToRgb(
+		$bodyColorStore,
+		0.9,
+		contrastText($bodyColorStore) ? BLACK_COLOR : WHITE_COLOR
+	);
 </script>
 
 <div
 	class="contents"
-	style:--color-main={RGB(color)}
-	style:--color-main-50={RGB(
-		alphaToRgb(color, 0.5, contrastText(color) ? BLACK_COLOR : WHITE_COLOR)
-	)}
-	style:--color-main-90={RGB(
-		alphaToRgb(color, 0.9, contrastText(color) ? BLACK_COLOR : WHITE_COLOR)
-	)}
+	style:--color-main={RGB($bodyColorStore)}
+	style:--color-main-50={RGB(colorMain50)}
+	style:--color-main-90={RGB(colorMain90)}
 >
 	<Avatar
 		{size}

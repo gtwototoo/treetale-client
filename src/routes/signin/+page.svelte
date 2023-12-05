@@ -1,18 +1,21 @@
 <script lang="ts">
 	import type { HttpError } from '@sveltejs/kit';
 	import clsx from 'clsx';
-	import { fade } from 'svelte/transition';
 
+	import { Button, Input } from '$UI';
+	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
+	import type { IResponseResult } from '$lib/types';
 	import { rootStyle } from '$lib/utils';
-	import { Button, Input } from '$UI';
+	import { Check, XMark } from 'svelte-heros-v2';
+	import { fade } from 'svelte/transition';
 
 	let value = '';
 	let loading = false;
-	let message: { error: boolean; text: string } | null = null;
+	let result: IResponseResult = null;
 
 	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
 
@@ -27,7 +30,7 @@
 			const response = await signInUser(value);
 
 			if (response) {
-				message = {
+				result = {
 					error: false,
 					text: response.message
 				};
@@ -39,7 +42,7 @@
 
 			console.error(error);
 
-			message = {
+			result = {
 				error: true,
 				text: error.body.message
 			};
@@ -75,22 +78,27 @@
 					class="adaptive-font adaptive-padding w-full"
 					bind:value
 				/>
-				<Button
-					variant="ghost"
-					type="submit"
-					class="adaptive-font adaptive-padding w-full bg-main text-text"
-					{disabled}
-					{loading}
-				>
-					Войти по ссылке
-				</Button>
-				{#if message && message.text}
+				{#if result !== null}
 					<div
 						in:fade
-						class={clsx('message', message.error ? 'text-red-600' : 'text-emerald-600')}
+						class={clsx(
+							'adaptive-font adaptive-padding flex w-full select-none items-center gap-3 rounded-lg',
+							result.error ? 'bg-red-200 text-red-500' : 'bg-emerald-200 text-emerald-500'
+						)}
 					>
-						{message.text}
+						<Icon type={result.error ? XMark : Check} class="h-6 w-6" />
+						{result.error ? result.text : 'Письмо успешно отправлено'}
 					</div>
+				{:else}
+					<Button
+						variant="ghost"
+						type="submit"
+						class="adaptive-font adaptive-padding w-full bg-main text-text"
+						{disabled}
+						{loading}
+					>
+						Войти по ссылке
+					</Button>
 				{/if}
 			</form>
 		</ReadCard>
