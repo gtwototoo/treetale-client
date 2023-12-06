@@ -28,7 +28,7 @@
 			<Icon type={icon} class="h-8 w-8" />
 			<h2 class="text-2xl max-md:text-xl">{title}</h2>
 		</div>
-		<div class="overflow-hidden px-2 pt-2 sm:px-4" use:emblaCarouselSvelte={{ options, plugins }}>
+		<div class="overflow-hidden px-2 sm:px-4" use:emblaCarouselSvelte={{ options, plugins }}>
 			<div class="flex justify-start gap-4">
 				{#each stories as rawStory}
 					{@const { vars, ...story } = rawStory}

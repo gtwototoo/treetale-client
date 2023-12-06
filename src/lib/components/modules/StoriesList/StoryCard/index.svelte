@@ -52,6 +52,6 @@
 		@apply from-50% to-100% bg-[length:100%_200%] bg-[0_-100%] transition-[background-position,transform];
 	}
 	:global(.animate-card:hover) {
-		@apply -translate-y-2 bg-[0_-120%];
+		@apply bg-[0_-120%];
 	}
 </style>
