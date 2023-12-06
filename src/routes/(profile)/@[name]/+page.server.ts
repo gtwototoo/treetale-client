@@ -1,8 +1,8 @@
 import { StoriesModel, UsersModel } from '$lib/server/models';
 import { randomError, serialize } from '$lib/utils';
 
-import type { IUser } from '$lib/types';
 import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
+import type { IUser } from '$lib/types';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
@@ -22,7 +22,8 @@ export const load = async ({ locals, params }) => {
 	if (!user) throw randomError(404);
 
 	const stories = await StoriesModel.find({
-		userId: user.userId
+		userId: user.userId,
+		draft: false
 	})
 		.select(USER_WITHOUT_WORKSPACE)
 		.lean();

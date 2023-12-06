@@ -1,7 +1,7 @@
-import type { IStoryFull } from '$lib/types/reading';
-import { StoriesModel } from '$lib/server/models';
 import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
+import { StoriesModel } from '$lib/server/models';
 import { loadUsers } from '$lib/server/utils.js';
+import type { IStoryFull } from '$lib/types/reading';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {

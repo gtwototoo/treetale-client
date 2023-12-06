@@ -1,9 +1,9 @@
-import type { IProgressData } from '$lib/types/index.js';
-import type { IStoryFull } from '$lib/types/reading.js';
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { ProgressModel } from '$lib/server/models/progress.js';
 import { StoriesModel } from '$lib/server/models/stories.js';
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { loadUsers } from '$lib/server/utils.js';
+import type { IProgressData } from '$lib/types/index.js';
+import type { IStoryFull } from '$lib/types/reading.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
