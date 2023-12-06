@@ -7,14 +7,14 @@
 	import { Avatar, Button, InputFile } from '$UI';
 	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
-	import { bodyColorStore } from '$lib/stores/main';
-	import type { IUser } from '$lib/types';
+	import type { IUser, TRGB } from '$lib/types';
 	import { RGB, alphaToRgb, contrastText } from '$lib/utils';
 
 	export let user: IUser;
 	export let editMode: boolean = false;
 	export let size: 'sm' | 'base' | 'lg' = 'lg';
 	export let width: number = 160;
+	export let color: TRGB;
 
 	let imageLoading = false;
 	let preloadBaseImage: string = null;
@@ -71,22 +71,14 @@
 	};
 
 	$: src = currentImageUrl || preloadBaseImage;
-	$: colorMain50 = alphaToRgb(
-		$bodyColorStore,
-		0.5,
-		contrastText($bodyColorStore) ? BLACK_COLOR : WHITE_COLOR
-	);
+	$: colorMain50 = alphaToRgb(color, 0.5, contrastText(color) ? BLACK_COLOR : WHITE_COLOR);
 
-	$: colorMain90 = alphaToRgb(
-		$bodyColorStore,
-		0.9,
-		contrastText($bodyColorStore) ? BLACK_COLOR : WHITE_COLOR
-	);
+	$: colorMain90 = alphaToRgb(color, 0.9, contrastText(color) ? BLACK_COLOR : WHITE_COLOR);
 </script>
 
 <div
 	class="contents"
-	style:--color-main={RGB($bodyColorStore)}
+	style:--color-main={RGB(color)}
 	style:--color-main-50={RGB(colorMain50)}
 	style:--color-main-90={RGB(colorMain90)}
 >

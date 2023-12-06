@@ -73,7 +73,7 @@
 >
 	<div class="flex flex-col items-center gap-2 bg-transparent">
 		<div class="p-6">
-			<ProfileAvatar {user} {editMode} />
+			<ProfileAvatar {user} {editMode} color={$bodyColorStore} />
 		</div>
 		<div class="flex gap-4">
 			{#each statistic as [count, title]}
