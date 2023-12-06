@@ -1,7 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
-	import { pinch } from 'svelte-gestures';
 
 	import ConnectionsLayer from './ConnectionsLayer.svelte';
 	import Frame from './Frame/Frame.svelte';
@@ -9,6 +8,7 @@
 	import NewFrame from './NewFrame.svelte';
 	import WindowActions from './WindowActions.svelte';
 
+	import { pinch } from '$lib/hooks/pinch';
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -63,10 +63,10 @@
 		dispatch('click', { x, y });
 	};
 
-	const handleZoom = (e: WheelEvent | CustomEvent<{ center: ICoordinates; zoom: number }>) => {
+	const handleZoom = (e: WheelEvent | CustomEvent<{ scale: number; center: ICoordinates }>) => {
 		const isWheel = e instanceof WheelEvent;
 		const { x, y } = isWheel ? e : e.detail.center;
-		const upscale = isWheel ? e.deltaY < 0 : e.detail.zoom - startPinch > 0;
+		const upscale = isWheel ? e.deltaY < 0 : e.detail.scale - startPinch > 0;
 
 		const zoomedCoords = zoomCorrect({ x, y });
 
@@ -85,7 +85,7 @@
 			y: Math.round(y - zoomedCoords.y * ($zoomStore / 100))
 		};
 
-		if (!isWheel) startPinch = e.detail.zoom;
+		if (!isWheel) startPinch = e.detail.scale;
 
 		dispatch('zoom', { zoom: $zoomStore, offset: $offsetStore });
 	};

@@ -90,7 +90,7 @@
 					<Button
 						variant="main"
 						type="submit"
-						class="adaptive-font adaptive-padding w-full bg-main !text-text"
+						class="adaptive-font adaptive-padding w-full bg-main text-text"
 						{disabled}
 						{loading}
 					>

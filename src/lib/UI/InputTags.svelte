@@ -124,7 +124,7 @@
 		@apply w-full flex-grow bg-transparent text-sm leading-6 placeholder:select-none;
 	}
 	.input {
-		@apply flex min-h-[2.5rem] flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-main-20 py-2 text-text transition-colors hover:bg-main-30;
+		@apply flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-main-20 py-2 text-text transition-colors hover:bg-main-30;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;
