@@ -23,8 +23,6 @@
 		const { stories, authors } = await searchStories(value);
 
 		searched = { stories, authors };
-
-		console.log(searched);
 	};
 </script>
 
@@ -54,7 +52,7 @@
 				</svelte:fragment>
 			</Input>
 		</div>
-		{#if searched && searched.stories}
+		{#if value && searched && searched.stories}
 			<Category
 				icon={MagnifyingGlass}
 				listFormat
