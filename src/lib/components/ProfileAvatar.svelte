@@ -13,7 +13,6 @@
 	export let user: IUser;
 	export let editMode: boolean = false;
 	export let size: 'sm' | 'base' | 'lg' = 'lg';
-	export let width: number = 160;
 	export let color: TRGB;
 
 	let imageLoading = false;
@@ -82,13 +81,7 @@
 	style:--color-main-50={RGB(colorMain50)}
 	style:--color-main-90={RGB(colorMain90)}
 >
-	<Avatar
-		{size}
-		{src}
-		alt={user.name}
-		{width}
-		class="bg-gradient-to-t from-main-90 to-main-50 text-main"
-	>
+	<Avatar {size} {src} alt={user.name} class="bg-gradient-to-t from-main-90 to-main-50 text-main">
 		{#if editMode}
 			<div
 				class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"

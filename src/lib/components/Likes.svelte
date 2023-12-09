@@ -12,7 +12,8 @@
 	export let storyId: number;
 
 	let loading = false;
-	let isLiked = likes.includes($page.data.session?.userId);
+
+	$: isLiked = likes.includes($page.data.session?.userId);
 
 	const handleClick = async () => {
 		loading = true;
@@ -36,12 +37,13 @@
 <Button
 	class="gap-2 bg-main !px-3 text-text hover:text-red-500"
 	variant="ghost"
+	size="lg"
 	on:click={handleClick}
 	{loading}
 >
 	<Icon
 		type={Heart}
-		variation={isLiked ? 'solid' : undefined}
+		variation={isLiked ? 'solid' : 'outline'}
 		class={clsx('h-6 w-6', isLiked && 'text-red-500')}
 	/>
 	<p class="min-w-[1rem]">{likes.length}</p>

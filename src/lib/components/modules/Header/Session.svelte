@@ -10,12 +10,7 @@
 
 {#if $page.data.session}
 	<Link href="/profile" class="contents">
-		<ProfileAvatar
-			size="base"
-			width={48}
-			user={$page.data.session}
-			color={$page.data.session.color}
-		/>
+		<ProfileAvatar size="base" user={$page.data.session} color={$page.data.session.color} />
 	</Link>
 {:else}
 	<Link href="/signin">

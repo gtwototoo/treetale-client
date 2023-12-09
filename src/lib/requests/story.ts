@@ -1,9 +1,10 @@
+import type { ICoordinates, IStoryEditableInfo, IUser, IVariable } from '$lib/types';
 import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
 
 import { goto } from '$app/navigation';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-import type { ICoordinates, IStoryEditableInfo, IVariable } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
+import type { IStorySchema } from '$lib/types/schemas';
 
 export const addLike = async (storyId: number) => {
 	interface IResponse {
@@ -40,7 +41,12 @@ export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
 };
 
 export const searchStories = async (row: string) => {
-	return await fetchGet(`/api/story/search?row=${row}`);
+	interface ISearched {
+		authors: Array<IUser>;
+		stories: Array<IStorySchema>;
+	}
+
+	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/story/search?row=${row}`);
 };
 
 export const createStory = async () => {

@@ -35,14 +35,18 @@
 				<p class="truncate">{draft ? 'Черновик' : 'Опубликовано'}</p>
 			</div>
 		{/if}
-		<div class="mr-1 flex items-center gap-1">
-			<Icon
-				type={Heart}
-				variation={isLiked ? 'solid' : undefined}
-				class={clsx('h-6 w-6', isLiked && 'text-red-500')}
-			/>
-			<p class="min-w-[1rem] text-center text-base">{likes.length}</p>
-		</div>
+		{#if $$slots.default}
+			<slot />
+		{:else}
+			<div class="mr-1 flex items-center gap-1">
+				<Icon
+					type={Heart}
+					variation={isLiked ? 'solid' : undefined}
+					class={clsx('h-6 w-6', isLiked && 'text-red-500')}
+				/>
+				<p class="min-w-[1rem] text-center text-base">{likes.length}</p>
+			</div>
+		{/if}
 	</div>
 	<Tags {tags} />
 </FormSplit>

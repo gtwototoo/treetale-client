@@ -6,12 +6,26 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Category from '$lib/components/modules/Category.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
+	import { searchStories } from '$lib/requests/story.js';
 	import { bodyColorStore } from '$lib/stores/main';
+	import type { IUser } from '$lib/types/index.js';
+	import type { IStorySchema } from '$lib/types/schemas.js';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 
 	export let data;
 
+	let value = '';
+	let searched: { stories: Array<IStorySchema>; authors: Array<IUser> };
+
 	$bodyColorStore = DEFAULT_COLOR;
+
+	const handleInput = async () => {
+		const { stories, authors } = await searchStories(value);
+
+		searched = { stories, authors };
+
+		console.log(searched);
+	};
 </script>
 
 <svelte:head>
@@ -25,7 +39,13 @@
 			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
 				Список историй
 			</h1>
-			<Input placeholder="Поиск" size="lg" class="w-full max-w-lg">
+			<Input
+				placeholder="Поиск"
+				bind:value
+				size="lg"
+				class="w-full max-w-lg"
+				on:input={handleInput}
+			>
 				<svelte:fragment slot="left">
 					<Icon
 						type={MagnifyingGlass}
@@ -34,24 +54,34 @@
 				</svelte:fragment>
 			</Input>
 		</div>
-		<Category
-			icon={RocketLaunch}
-			title="Новинки"
-			stories={data.stories.newStories}
-			authors={data.authors}
-		/>
-		<Category
-			icon={Moon}
-			title="Темная тема"
-			stories={data.stories.darkStories}
-			authors={data.authors}
-		/>
-		<Category
-			icon={Sun}
-			title="Светлая тема"
-			stories={data.stories.lightStories}
-			authors={data.authors}
-		/>
+		{#if searched && searched.stories}
+			<Category
+				icon={MagnifyingGlass}
+				listFormat
+				title="Результаты поиска"
+				stories={searched.stories}
+				authors={searched.authors}
+			/>
+		{:else}
+			<Category
+				icon={RocketLaunch}
+				title="Новинки"
+				stories={data.stories.newStories}
+				authors={data.authors}
+			/>
+			<Category
+				icon={Moon}
+				title="Темная тема"
+				stories={data.stories.darkStories}
+				authors={data.authors}
+			/>
+			<Category
+				icon={Sun}
+				title="Светлая тема"
+				stories={data.stories.lightStories}
+				authors={data.authors}
+			/>
+		{/if}
 	{:else}
 		<div class="plug flex-grow gap-8">
 			<p>

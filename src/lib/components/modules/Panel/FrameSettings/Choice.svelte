@@ -27,8 +27,6 @@
 	};
 
 	const removeChoice = () => {
-		$framesDataStore[frameKey].choices.filter((choice) => choice.choiceId !== choiceId);
-
 		$framesDataStore[frameKey].choices = $framesDataStore[frameKey].choices.filter(
 			(choice) => choice.choiceId !== choiceId
 		);

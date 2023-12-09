@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Link from '$lib/components/Link.svelte';
-	import StoriesList from '$lib/components/modules/StoriesList/index.svelte';
+	import StoriesList from '$lib/components/modules/StoriesList/StoriesList.svelte';
 	import { correctWhitespace } from '$lib/utils/text.js';
 	import { Button } from '$UI';
 

@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { clm, last } from '$lib/utils';
 	import { Photo } from '$UI';
+	import { clm, last } from '$lib/utils';
 
 	let className = '';
 	export { className as class };
 
 	export let alt: string;
 	export let src: string | undefined | null = undefined;
-	export let width: number;
-	export let height = width;
 	export let size: 'sm' | 'base' | 'lg' = 'base';
 	export let style: string | undefined = undefined;
 
@@ -25,7 +23,7 @@
 	)}
 >
 	{#if src}
-		<Photo class="h-full w-full rounded-full" cover {src} {alt} {width} {height} />
+		<Photo class="h-full w-full rounded-full" cover {src} {alt} />
 	{:else}
 		{short}
 	{/if}

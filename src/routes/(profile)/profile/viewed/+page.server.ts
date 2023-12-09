@@ -29,6 +29,6 @@ export const load = async ({ locals }) => {
 
 	return {
 		stories,
-		authors: loadUsers(stories)
+		authors: await loadUsers(stories)
 	};
 };

@@ -22,7 +22,7 @@
 				'whitespace-pre-wrap',
 				description && description.length > 50
 					? 'text-xs xs:text-sm lg:text-base'
-					: 'text-sm/4 xs:text-base/4 lg:text-xl/6'
+					: 'text-sm xs:text-base lg:text-xl'
 			)}
 		>
 			{correctVariableReplace(description, vars) || 'Без описания'}

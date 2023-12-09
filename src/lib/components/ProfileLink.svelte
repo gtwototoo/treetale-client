@@ -16,7 +16,7 @@
 </script>
 
 <Button class="min-w-0 gap-2 !p-0" variant="main" on:click={handleClick}>
-	<ProfileAvatar size="sm" width={36} user={author} color={author.color} />
+	<ProfileAvatar size="sm" user={author} color={author.color} />
 	<div class="overflow-hidden text-left">
 		<p class="truncate text-text max-xs:hidden">
 			{author.name}

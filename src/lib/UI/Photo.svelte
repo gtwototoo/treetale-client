@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { clsx } from 'clsx';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { Photo as PhotoIcon } from 'svelte-heros-v2';
+	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$UI/Icons';
+	import { Photo } from 'svelte-heros-v2';
 
 	let className = '';
 	export { className as class };
@@ -13,92 +13,49 @@
 	export let src = '';
 	export let alt = '';
 	export let cover = false;
-	export let width: number;
-	export let height = width;
-
-	let ready = false;
-	let empty = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
 	const dispatch = createEventDispatcher();
-
-	const emptyImage = (width: number, height: number) => {
-		const canvas = document.createElement('canvas');
-
-		canvas.width = width;
-		canvas.height = height || width;
-
-		const ctx = canvas.getContext('2d');
-
-		if (!ctx) return '';
-
-		ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-		return canvas.toDataURL();
-	};
-
-	onMount(() => {
-		empty = emptyImage(width, height);
-		ready = true;
-	});
 
 	const preload = (src: string) => {
 		return new Promise((resolve, reject) => {
 			const image = new Image();
 
 			image.src = src;
+
 			image.onload = (e) => {
+				dispatch('load', e);
 				resolve(e);
 			};
+
 			image.onerror = (e) => {
 				dispatch('error', e);
 				reject();
 			};
 		});
 	};
-
-	$: newSrc = src;
 </script>
 
-{#if ready}
-	<div
-		class={clsx(
-			'relative flex select-none items-center justify-center overflow-hidden childs:shrink-0',
-			className
-		)}
-		in:fade
-	>
-		{#await preload(newSrc)}
-			<div class="absolute">
-				<Icon type={Loading} />
-				<img
-					draggable="false"
-					src={empty}
-					alt="Загрузка..."
-					class="h-full w-full rounded-inherit"
-				/>
-			</div>
-		{:then}
-			<img
-				src={newSrc}
-				{alt}
-				draggable="false"
-				class={clsx('h-full w-full rounded-inherit', cover ? 'object-cover' : 'object-contain')}
-			/>
-		{:catch}
-			<div class="absolute">
-				{#if $$slots.error}
-					<slot name="error" />
-				{:else}
-					<Icon type={PhotoIcon} class="text-red-600" />
-				{/if}
-			</div>
-			<img
-				draggable="false"
-				src={empty}
-				alt="Ошибка загрузки"
-				class="h-full w-full rounded-inherit"
-			/>
-		{/await}
-	</div>
-{/if}
+<div
+	class={clsx(
+		'relative flex select-none items-center justify-center bg-transparent text-contrast',
+		className
+	)}
+	in:fade
+>
+	{#await preload(src)}
+		<Icon type={Loading} class="h-6 w-6" />
+	{:then}
+		<img
+			{src}
+			{alt}
+			draggable="false"
+			class={clsx('h-full w-full rounded-inherit', cover ? 'object-cover' : 'object-contain')}
+		/>
+	{:catch}
+		{#if $$slots.error}
+			<slot name="error" />
+		{:else}
+			<Icon type={Photo} class="h-6 w-6" />
+		{/if}
+	{/await}
+</div>

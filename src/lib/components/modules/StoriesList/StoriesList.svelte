@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Empty from './Empty.svelte';
-	import StoryCard from './StoryCard/index.svelte';
+	import StoryCard from './StoryCard/StoryCard.svelte';
 
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';

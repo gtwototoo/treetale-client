@@ -23,8 +23,6 @@
 			cover
 			class="h-full w-full rounded-t-xl xs:rounded-t-2xl"
 			src={imageUrl}
-			width={320}
-			height={192}
 		/>
 	{:else}
 		<Icon type={BookOpen} class="h-2/3 w-auto text-contrast" variation="solid" />

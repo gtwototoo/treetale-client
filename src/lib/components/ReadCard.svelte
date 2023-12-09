@@ -27,8 +27,6 @@
 			class="h-[23rem] w-full rounded-2xl bg-white"
 			cover
 			on:error={handleError}
-			width={480}
-			height={368}
 		/>
 	{/if}
 	<Card

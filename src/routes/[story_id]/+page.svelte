@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { Button, Tag } from '$UI';
+	import { Button } from '$UI';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Likes from '$lib/components/Likes.svelte';
-	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import Info from '$lib/components/modules/StoriesList/StoryCard/Info.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
@@ -139,7 +139,7 @@
 		$fullscreenStore = false;
 	};
 
-	$: ({ storyId, title, description, author, created, draft, likes, color } = data.story);
+	$: ({ storyId, title, description, author, created, draft, likes, color, tags } = data.story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
 	$: $framesStore = data.frames;
 
@@ -178,29 +178,20 @@
 		style:transform="translateY({currentTranslate}px)"
 		use:setPosition={current}
 	>
-		<ReadCard classCard="h-full text-center !items-center">
+		<ReadCard classCard="h-full text-center !items-center !gap-10">
 			<svelte:fragment slot="body">
 				<Icon
 					type={BookOpen}
 					class="h-44 w-auto childs:fill-gradient max-hd:h-36 max-xl:h-28"
 					variation="solid"
 				/>
-				<h2>{title}</h2>
-				<p class="max-w-sm">{description}</p>
-				<div class="flex w-full max-w-sm items-center justify-between gap-4">
-					{#if author}
-						<ProfileLink {author} {created} />
-					{:else}
-						<Tag
-							class={clsx(
-								draft ? 'bg-gray-300 text-gray-600' : 'bg-emerald-300 text-emerald-600'
-							)}
-						>
-							{draft ? 'Черновик' : 'Публичный'}
-						</Tag>
-					{/if}
-					<Likes {storyId} {likes} />
+				<div class="flex flex-col gap-4">
+					<h2 class="uppercase">{title}</h2>
+					<p class="max-w-sm">{description}</p>
 				</div>
+				<Info {likes} {author} {draft} {created} {tags} edit={false}>
+					<Likes {likes} {storyId} />
+				</Info>
 			</svelte:fragment>
 		</ReadCard>
 		{#each $framesStore as { frameId }, key}
