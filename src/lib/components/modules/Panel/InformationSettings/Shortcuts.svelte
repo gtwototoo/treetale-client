@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { readonlyStore } from '$lib/stores/editing';
+
 	interface IShortcut {
 		keys: Array<string>;
+		readonly?: boolean;
 		text: string;
 	}
 
@@ -9,7 +12,7 @@
 		{ text: 'Режим добавления связей', keys: ['C'] },
 		{ text: 'Отменить действие', keys: ['⌘', 'Z'] },
 		{ text: 'Вернуть действие', keys: ['SHIFT', '⌘', 'Z'] },
-		{ text: 'Переключить фрейм', keys: ['Tab'] },
+		{ text: 'Переключить фрейм', keys: ['Tab'], readonly: true },
 		{ text: 'Режим просмотра', keys: ['ESC'] }
 	];
 </script>
@@ -19,15 +22,17 @@
 >
 	<p>Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
-		{#each shortcuts as { keys, text }}
-			<div class="flex items-center justify-between">
-				<p>{text}</p>
-				<div class="flex gap-1 font-bold">
-					{#each keys as key}
-						<div class="min-w-[1.75rem] rounded-lg bg-main px-2 py-1">{key}</div>
-					{/each}
+		{#each shortcuts as { keys, text, readonly }}
+			{#if !$readonlyStore || readonly}
+				<div class="flex items-center justify-between">
+					<p>{text}</p>
+					<div class="flex gap-1 font-bold">
+						{#each keys as key}
+							<div class="min-w-[1.75rem] rounded-lg bg-main px-2 py-1">{key}</div>
+						{/each}
+					</div>
 				</div>
-			</div>
+			{/if}
 		{/each}
 	</div>
 </div>

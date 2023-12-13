@@ -1,21 +1,35 @@
 <script lang="ts">
+	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
 	import Panel from '$lib/components/modules/Panel/Panel.svelte';
+	import { currentPanelStore } from '$lib/stores/main';
 	import { getPageType } from '$lib/utils';
+	import clsx from 'clsx';
 
 	import '../app.postcss';
 
 	$: pageType = getPageType($page.url.pathname);
+
+	beforeNavigate(() => {
+		currentPanelStore.clear();
+	});
 </script>
 
-{#if pageType == 'editing'}
-	<div class="fixed left-0 right-96 flex h-screen w-auto flex-col">
+{#if pageType == 'editing' || pageType === 'reading'}
+	<div
+		class={clsx(
+			'fixed left-0 flex h-screen flex-col',
+			$currentPanelStore.component ? 'right-96' : 'right-0'
+		)}
+	>
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>
-	<div class="fixed right-0 h-full w-96 bg-contrast" />
-	<Panel />
+	{#if $currentPanelStore.component}
+		<div class="fixed right-0 h-full w-96 bg-contrast" />
+		<Panel />
+	{/if}
 {:else}
 	<div class="relative flex h-full w-full flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />

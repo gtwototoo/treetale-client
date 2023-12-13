@@ -10,6 +10,7 @@
 
 	export let icon: typeof SvelteComponent<unknown>;
 	export let disabled = false;
+	export let readonly = false;
 	export let src: string | undefined = undefined;
 	export let loadError = false;
 	export let alt: string;
@@ -71,7 +72,7 @@
 <div class="relative h-48">
 	{#if loading && !loadError}
 		<div class="flex h-full w-full items-center justify-center rounded-lg bg-main">
-			<Icon type={Loading} variation="solid" class="absolute z-10 bg-transparent" />
+			<Icon type={Loading} class="absolute z-10 bg-transparent" />
 			{#if preloadBaseImage}
 				<img
 					class="h-full w-full rounded-lg object-cover brightness-50"
@@ -83,13 +84,23 @@
 		</div>
 	{:else if !loading && src && !loadError}
 		<img {src} {alt} class="h-full w-full rounded-lg object-cover" draggable="false" />
+		{#if !readonly}
+			<Button
+				variant="main"
+				size="sm"
+				on:click={handleRemove}
+				class={clsx('!absolute right-1.5 top-1.5 !text-red-500', $redColorStore)}
+			>
+				<Icon type={Trash} class="h-4 w-4" />
+			</Button>
+		{/if}
+	{:else if readonly}
 		<Button
-			variant="main"
-			size="sm"
-			on:click={handleRemove}
-			class={clsx('!absolute right-1.5 top-1.5 !text-red-500', $redColorStore)}
+			variant="ghost"
+			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal bg-main !p-6"
 		>
-			<Icon type={Trash} class="h-4 w-4" />
+			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />
+			<p>Изображение не добавлено</p>
 		</Button>
 	{:else}
 		<DropBlock on:change={handleChange} class="h-full w-full gap-2" {disabled}>

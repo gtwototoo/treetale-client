@@ -6,14 +6,14 @@ import {
 	activeActionStore,
 	addFrameOffsetStore,
 	framesDataStore,
+	movingFrameStore,
 	offsetStore,
 	oneDirectionModeStore,
-	selectedFrameStore,
 	zoomCorrect
 } from '$lib/stores/workspace';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
-import { getFrameFromId, last } from '$lib/utils';
+import { last } from '$lib/utils';
 
 export const addFrame = ({ x, y }: ICoordinates) => {
 	const framesData = get(framesDataStore);
@@ -62,39 +62,13 @@ export const movingArea = ({ x, y }: ICoordinates, startOffset: ICoordinates) =>
 		y: y - startOffset.y
 	}));
 };
-export const startMoveFrame = (coords: ICoordinates): IStartMove => {
-	const framesData = get(framesDataStore);
-	const getSelectedFrameStore = get(selectedFrameStore);
-	const frame = getFrameFromId(framesData, getSelectedFrameStore);
-
-	if (!frame) {
-		return {
-			startMoveCoords: { x: 0, y: 0 },
-			moveFrameOffset: { x: 0, y: 0 },
-			moveXDirection: null
-		};
-	}
-
-	const { x, y } = zoomCorrect(coords);
-
-	activeActionStore.set('movingFrame');
-
-	return {
-		moveFrameOffset: { x: x - frame.x, y: y - frame.y },
-		startMoveCoords: {
-			x: frame.x,
-			y: frame.y
-		},
-		moveXDirection: null
-	} satisfies IStartMove;
-};
 
 export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => {
 	const { moveFrameOffset, startMoveCoords } = startMoveData;
 	const framesData = get(framesDataStore);
 	const getOneDirectionModeStore = get(oneDirectionModeStore);
-	const getSelectedFrameStore = get(selectedFrameStore);
-	const frameIndex = framesData.findIndex(({ frameId }) => frameId === getSelectedFrameStore);
+	const getMovingFrameStore = get(movingFrameStore);
+	const frameIndex = framesData.findIndex(({ frameId }) => frameId === getMovingFrameStore);
 
 	if (frameIndex === -1) return null;
 

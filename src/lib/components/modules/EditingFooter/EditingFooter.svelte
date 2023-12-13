@@ -4,6 +4,7 @@
 	import StateMode from './StateMode.svelte';
 
 	import { Button } from '$UI';
+	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
 	import {
 		activeActionStore,
@@ -42,24 +43,26 @@
 			</p>
 		</div>
 	</div>
-	{#if $activeModeStore === 'adding'}
-		<Button
-			on:click={cancelAddFrameMode}
-			variant="ghost"
-			size="lg"
-			class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
-		>
-			Отмена
-		</Button>
-	{:else}
-		<Button
-			on:click={enableAddFrameMode}
-			variant="ghost"
-			size="lg"
-			class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
-		>
-			Новый фрейм
-		</Button>
+	{#if !$readonlyStore}
+		{#if $activeModeStore === 'adding'}
+			<Button
+				on:click={cancelAddFrameMode}
+				variant="ghost"
+				size="lg"
+				class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
+			>
+				Отмена
+			</Button>
+		{:else}
+			<Button
+				on:click={enableAddFrameMode}
+				variant="ghost"
+				size="lg"
+				class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
+			>
+				Новый фрейм
+			</Button>
+		{/if}
 	{/if}
 	<StateMode />
 </div>

@@ -21,6 +21,7 @@
 	export { className as class };
 
 	export let disabled = false;
+	export let readonly = false;
 	export let align: 'left' | 'right' = 'left';
 	export let value = '';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
@@ -32,6 +33,8 @@
 	const dispatch = createEventDispatcher();
 
 	const handleClick = () => {
+		if (readonly) return;
+
 		focused = !focused;
 	};
 
@@ -65,7 +68,12 @@
 			<p class={clsx('w-full text-left', !value && 'text-gray-400')}>
 				{value || placeholder}
 			</p>
-			<Icon type={ChevronDown} class={clsx('h-4 w-auto shrink-0', { 'h-3': size === 'sm' })} />
+			{#if !readonly}
+				<Icon
+					type={ChevronDown}
+					class={clsx('h-4 w-auto shrink-0', { 'h-3': size === 'sm' })}
+				/>
+			{/if}
 		</Button>
 	{/if}
 	{#if focused}

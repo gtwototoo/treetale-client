@@ -6,8 +6,13 @@
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateArea } from '$lib/requests/story';
+	import {
+		informationDataStore,
+		readonlyStore,
+		stateAreaStore,
+		variablesStore
+	} from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
-	import { informationDataStore, stateAreaStore, variablesStore } from '$lib/stores/newediting';
 	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
 	import type { TMathOperator } from '$lib/types';
 	import { exclude } from '$lib/utils';
@@ -21,6 +26,10 @@
 	const symbols: Array<TMathOperator> = ['+', '-', '*', '/', '='];
 
 	const saveArea = () => {
+		if ($readonlyStore) {
+			return;
+		}
+
 		clearTimeout(timer);
 		$stateAreaStore = 'saving';
 
@@ -88,6 +97,7 @@
 				{:else}
 					<Listbox
 						placeholder="Переменная"
+						readonly={$readonlyStore}
 						bind:value={operation.variable}
 						list={$variablesStore.map(({ name }) => name)}
 						class="flex-1 child-[button]:!rounded-none child-[button]:!rounded-l-lg"
@@ -95,6 +105,7 @@
 					<Listbox
 						list={symbols}
 						placeholder=""
+						readonly={$readonlyStore}
 						bind:value={operation.symbol}
 						let:value
 						let:click
@@ -105,6 +116,7 @@
 					</Listbox>
 					<Input
 						placeholder="Значение"
+						readonly={$readonlyStore}
 						class="flex-1"
 						on:input={handleInput}
 						bind:value={operation.value}
@@ -112,7 +124,7 @@
 				{/if}
 			</FormSplit>
 		{/each}
-		{#if !editMode}
+		{#if !editMode && !$readonlyStore}
 			<Button
 				variant="ghost"
 				class="w-full justify-center bg-main text-text"

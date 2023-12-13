@@ -3,6 +3,7 @@
 	import { Plus } from 'svelte-heros-v2';
 
 	import { Button, FormSplit } from '$UI';
+	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
@@ -39,7 +40,7 @@
 	};
 
 	const handleClick = (choiceId: number) => {
-		if ($activeModeStore === 'view') {
+		if ($activeModeStore === 'view' && !$readonlyStore) {
 			choiceFocus(choiceId);
 		}
 
@@ -119,7 +120,7 @@
 		</Button>
 	{/each}
 	<Button
-		disabled={$activeModeStore === 'binding' && !!$connectionStore}
+		disabled={($activeModeStore === 'binding' && !!$connectionStore) || $readonlyStore}
 		variant={$activeModeStore === 'binding' ? 'main' : 'ghost'}
 		class={clsx('!text-text', $activeModeStore === 'binding' ? 'bg-main-60' : 'bg-main')}
 		on:click={addChoice}

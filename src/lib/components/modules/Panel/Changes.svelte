@@ -4,9 +4,9 @@
 
 	import Note from './Note.svelte';
 
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/history';
-	import { Button, FormSplit } from '$UI';
 </script>
 
 <Note

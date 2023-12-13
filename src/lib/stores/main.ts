@@ -5,9 +5,10 @@ import { DEFAULT_COLOR } from '$lib/constants';
 import type { TRGB } from '$lib/types';
 import { contrastText } from '$lib/utils';
 
-interface IPanel {
+export interface IPanel {
 	component: typeof SvelteComponent<unknown>;
 	editMode?: boolean;
+	hasCloseButton?: boolean;
 	hasEditButton?: boolean;
 	id: string;
 	title: string;
@@ -19,7 +20,8 @@ const currentPanelCustomStore = () => {
 		id: '',
 		component: undefined,
 		editMode: false,
-		hasEditButton: true
+		hasEditButton: true,
+		hasCloseButton: true
 	};
 	const { subscribe, update } = writable<IPanel>(clearData);
 

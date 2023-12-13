@@ -12,11 +12,14 @@
 	export let size: 'sm' | 'base' | 'lg' = 'base';
 	export let disabled = false;
 	export let required = false;
+	export let readonly = false;
 	export let maxlength: number | undefined = undefined;
 	export let placeholder: string;
 	export let name: string | undefined = undefined;
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		input: Event & { currentTarget: EventTarget & HTMLInputElement };
+	}>();
 
 	const handleFocus = () => {
 		focused = true;
@@ -41,7 +44,7 @@
 	const onlyNumbers = (enable: boolean) => {
 		if (!enable) return;
 
-		value = value.replace(/[^\d]/g, '');
+		value = value.replace(/[^\d-]|(?!^)[-]+/g, '');
 
 		if (value.length !== 1 && value[0] === '0') {
 			value = value.substring(1);
@@ -66,6 +69,7 @@
 	<slot name="left" />
 	<input
 		bind:this={inputRef}
+		{readonly}
 		{name}
 		{disabled}
 		{maxlength}

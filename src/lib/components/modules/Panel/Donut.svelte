@@ -3,16 +3,17 @@
 
 	import Note from './Note.svelte';
 
-	import { Button, Input } from '$UI';
+	import { Button, Input, Listbox } from '$UI';
+
+	const payments = ['Банковская карта', 'СБП'];
 
 	let value: string;
 </script>
 
-<div class="flex flex-col items-stretch gap-4 p-3">
-	<Note
-		icon={Star}
-		text="Поддержите своего любимого автора, чтобы мотивировать его создавать новые истории"
-	/>
-	<Input placeholder="Введите сумму" bind:value number />
-	<Button variant="main" class="justify-center">Поддержать</Button>
-</div>
+<Note
+	icon={Star}
+	text="Поддержите своего любимого автора, чтобы мотивировать его создавать новые интересные и захватывающие истории"
+/>
+<Input placeholder="Введите сумму" bind:value number />
+<Listbox list={payments} placeholder="Вариант оплаты" />
+<Button variant="main" class="justify-center bg-main">Внести вклад</Button>

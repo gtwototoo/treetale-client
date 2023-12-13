@@ -5,11 +5,19 @@
 	import Header from './Header.svelte';
 
 	import { Button } from '$UI';
-	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { fullscreenStore } from '$lib/stores/reading';
-	import { contrastText, getPageType } from '$lib/utils';
+	import { contrastText } from '$lib/utils';
+	import Donut from '../Panel/Donut.svelte';
+
+	const openDonutPanel = () => {
+		$currentPanelStore = {
+			id: 'donut',
+			title: 'Поддержать автора',
+			component: Donut
+		};
+	};
 
 	const handleFulscreen = async () => {
 		try {
@@ -20,11 +28,9 @@
 			$fullscreenStore = false;
 		}
 	};
-
-	$: pageType = getPageType($page.url.pathname);
 </script>
 
-<Header class={clsx(pageType === 'reading' && 'fixed')}>
+<Header>
 	<Button
 		class={clsx(
 			'header-button text-text',
@@ -32,6 +38,7 @@
 		)}
 		variant="ghost"
 		size="lg"
+		on:click={openDonutPanel}
 	>
 		<Icon type={Star} class="h-6 w-6" />
 		<p class="mr-1">Поддержать</p>

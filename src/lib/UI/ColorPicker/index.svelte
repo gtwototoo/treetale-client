@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Picker from './Picker.svelte';
 
-	import type { TRGB } from '$lib/types';
 	import { Popover } from '$UI';
+	import { readonlyStore } from '$lib/stores/editing';
+	import type { TRGB } from '$lib/types';
 
 	export let disabled = false;
 	export let popoverAlign: 'left' | 'right' = 'right';
@@ -29,7 +30,7 @@
 		/>
 	</Popover>
 {:else}
-	<Popover align={popoverAlign} {disabled} value="Цвет фона">
+	<Popover align={popoverAlign} {disabled} value="Цвет фона" readonly={$readonlyStore}>
 		<Picker
 			bind:color
 			bind:light

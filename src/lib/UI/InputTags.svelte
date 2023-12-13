@@ -16,6 +16,7 @@
 	export let disabled = false;
 	export let value = '';
 	export let maxLength = 20;
+	export let readonly = false;
 
 	let focused = false;
 
@@ -98,20 +99,23 @@
 >
 	{#each tags as tag}
 		<Tag class="inline-flex items-stretch p-0">
-			<p class="pl-2 !leading-6">{tag}</p>
-			<Button
-				size="sm"
-				variant="ghost"
-				class="!py-1 hover:!text-red-600"
-				on:click={() => removeTag(tag)}
-			>
-				<Icon type={XMark} class="h-3 max-h-full w-3" />
-			</Button>
+			<p class={clsx('pl-2 !leading-6', readonly && 'pr-2')}>{tag}</p>
+			{#if !readonly}
+				<Button
+					size="sm"
+					variant="ghost"
+					class="!py-1 hover:!text-red-600"
+					on:click={() => removeTag(tag)}
+				>
+					<Icon type={XMark} class="h-3 max-h-full w-3" />
+				</Button>
+			{/if}
 		</Tag>
 	{/each}
 	<input
 		bind:value
 		{placeholder}
+		{readonly}
 		on:paste|preventDefault={handlePaste}
 		on:focus={() => (focused = true)}
 		on:blur={() => (focused = false)}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
+	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore } from '$lib/stores/main';
 	import {
@@ -65,15 +66,23 @@
 			$activeModeStore = 'view';
 		};
 
-		const actions: Record<string, () => void> = {
-			KeyF: switchAddFrameMode,
-			ShiftLeft: enableOneDirectionMode,
-			ShiftRight: enableOneDirectionMode,
-			KeyC: switchConnectMode,
-			KeyZ: historyManipulate,
-			Escape: cancelModes,
-			Tab: switchSelectedFrame
-		};
+		let actions: Record<string, () => void>;
+
+		if ($readonlyStore) {
+			actions = {
+				Tab: switchSelectedFrame
+			};
+		} else {
+			actions = {
+				KeyF: switchAddFrameMode,
+				ShiftLeft: enableOneDirectionMode,
+				ShiftRight: enableOneDirectionMode,
+				KeyC: switchConnectMode,
+				KeyZ: historyManipulate,
+				Escape: cancelModes,
+				Tab: switchSelectedFrame
+			};
+		}
 
 		if (!(code in actions) || inputFocus) return;
 

@@ -11,6 +11,7 @@
 	export { className as class };
 
 	export let disabled = false;
+	export let readonly = false;
 	export let align: 'left' | 'right' = 'left';
 	export let value = '';
 	export let placeholder = '';
@@ -18,6 +19,8 @@
 	let focused = false;
 
 	const handleClick = () => {
+		if (readonly) return;
+
 		focused = !focused;
 	};
 </script>
@@ -34,7 +37,12 @@
 			>
 				{value || placeholder}
 			</p>
-			<Icon type={ChevronDown} class={clsx('absolute right-0 mr-3', focused && 'rotate-180')} />
+			{#if !readonly}
+				<Icon
+					type={ChevronDown}
+					class={clsx('absolute right-0 mr-3', focused && 'rotate-180')}
+				/>
+			{/if}
 		</Button>
 	{/if}
 	{#if focused}

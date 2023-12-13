@@ -5,7 +5,7 @@
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import EditingFooter from '$lib/components/modules/EditingFooter/EditingFooter.svelte';
 	import Radar from '$lib/components/modules/EditingFooter/Radar.svelte';
-	import { FrameSettings } from '$lib/components/modules/Panel';
+	import InformationSettings from '$lib/components/modules/Panel/InformationSettings/InformationSettings.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
@@ -17,9 +17,14 @@
 	} from '$lib/components/modules/Workspace/methods';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
+	import {
+		informationDataStore,
+		readonlyStore,
+		stateAreaStore,
+		variablesStore
+	} from '$lib/stores/editing.js';
 	import { changesHistory } from '$lib/stores/history.js';
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
-	import { informationDataStore, stateAreaStore, variablesStore } from '$lib/stores/newediting';
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -27,7 +32,6 @@
 		framesDataStore,
 		movingFrameStore,
 		offsetStore,
-		selectedFrameStore,
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
@@ -101,17 +105,7 @@
 		if (isMouse && button === 0 && $movingFrameStore) {
 			const frame = getFrameFromId($framesDataStore, $movingFrameStore);
 
-			$selectedFrameStore = frame.frameId;
-
 			startMoveData = startMoveFrame(frame, { x, y });
-
-			if ($currentPanelStore.id !== `frame-${frame.frameId}`) {
-				$currentPanelStore = {
-					id: `frame-${frame.frameId}`,
-					title: frame.title || 'Начало',
-					component: FrameSettings
-				};
-			}
 		}
 	};
 
@@ -129,6 +123,10 @@
 	};
 
 	const saveArea = () => {
+		if ($readonlyStore) {
+			return;
+		}
+
 		clearTimeout(timer);
 		$stateAreaStore = 'saving';
 
@@ -161,6 +159,20 @@
 		saveArea();
 	};
 
+	const clearLiberties = (readonly: boolean) => {
+		if (!readonly) return;
+
+		if ($currentPanelStore.editMode) {
+			currentPanelStore.switchEditMode();
+		}
+
+		$activeModeStore = 'view';
+
+		if ($currentPanelStore.id === 'history') {
+			currentPanelStore.clear();
+		}
+	};
+
 	onMount(() => {
 		setTimeout(() => {
 			if (
@@ -178,6 +190,17 @@
 			currentPanelStore.clear();
 		};
 	});
+
+	$: clearLiberties($readonlyStore);
+
+	$: if (!$currentPanelStore.component) {
+		$currentPanelStore = {
+			title: 'Основная информация',
+			component: InformationSettings,
+			id: 'settings',
+			hasCloseButton: false
+		};
+	}
 
 	$: $bodyColorStore = $informationDataStore.color.length
 		? $informationDataStore.color

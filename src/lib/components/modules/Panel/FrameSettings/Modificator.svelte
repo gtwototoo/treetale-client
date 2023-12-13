@@ -2,8 +2,9 @@
 	import clsx from 'clsx';
 	import { PencilSquare } from 'svelte-heros-v2';
 
-	import Icon from '$lib/components/Icon.svelte';
 	import { Button } from '$UI';
+	import Icon from '$lib/components/Icon.svelte';
+	import { readonlyStore } from '$lib/stores/editing';
 
 	let className = '';
 	export { className as class };
@@ -15,6 +16,14 @@
 	const switchEditMode = () => {
 		editMode = !editMode;
 	};
+
+	const clearLiberties = (readonly: boolean) => {
+		if (!readonly) return;
+
+		editMode = false;
+	};
+
+	$: clearLiberties($readonlyStore);
 </script>
 
 <div
@@ -25,14 +34,16 @@
 >
 	<div class="relative flex w-full items-center justify-center">
 		<p class="text-sm/10">{title}</p>
-		<Button
-			size="sm"
-			variant={editMode ? 'main' : 'ghost'}
-			class={clsx('!absolute right-0 z-[2] bg-main !px-1 text-text')}
-			on:click={switchEditMode}
-		>
-			<Icon type={PencilSquare} class="h-4 w-4" />
-		</Button>
+		{#if !$readonlyStore}
+			<Button
+				size="sm"
+				variant={editMode ? 'main' : 'ghost'}
+				class={clsx('!absolute right-0 z-[2] bg-main !px-1 text-text')}
+				on:click={switchEditMode}
+			>
+				<Icon type={PencilSquare} class="h-4 w-4" />
+			</Button>
+		{/if}
 	</div>
 	<slot {editMode} />
 </div>

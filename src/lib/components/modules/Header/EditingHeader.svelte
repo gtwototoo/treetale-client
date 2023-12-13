@@ -6,11 +6,12 @@
 
 	import Header from './Header.svelte';
 
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
+	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { activeActionStore } from '$lib/stores/workspace';
-	import { Button, FormSplit } from '$UI';
 
 	const variablesSwitch = () => {
 		$currentPanelStore = {
@@ -33,28 +34,30 @@
 <Header
 	class={clsx('pointer-events-none', $activeActionStore ? 'blind' : 'childs:pointer-events-auto')}
 >
-	<FormSplit class="divide-main">
-		<Button
-			class="header-button bg-contrast text-text"
-			variant="ghost"
-			size="lg"
-			on:click={changesHistory.undo}
-			disabled={$changesHistory.currentStageId === 0}
-			on:holdclick={historySwitch}
-		>
-			<Icon type={ArrowUturnLeft} />
-		</Button>
-		<Button
-			class="header-button bg-contrast text-text"
-			variant="ghost"
-			size="lg"
-			on:click={changesHistory.redo}
-			disabled={$changesHistory.currentStageId + 1 >= $changesHistory.stages.length}
-			on:holdclick={historySwitch}
-		>
-			<Icon type={ArrowUturnRight} />
-		</Button>
-	</FormSplit>
+	{#if !$readonlyStore}
+		<FormSplit class="divide-main">
+			<Button
+				class="header-button bg-contrast text-text"
+				variant="ghost"
+				size="lg"
+				on:click={changesHistory.undo}
+				disabled={$changesHistory.currentStageId === 0}
+				on:holdclick={historySwitch}
+			>
+				<Icon type={ArrowUturnLeft} />
+			</Button>
+			<Button
+				class="header-button bg-contrast text-text"
+				variant="ghost"
+				size="lg"
+				on:click={changesHistory.redo}
+				disabled={$changesHistory.currentStageId + 1 >= $changesHistory.stages.length}
+				on:holdclick={historySwitch}
+			>
+				<Icon type={ArrowUturnRight} />
+			</Button>
+		</FormSplit>
+	{/if}
 	<Button
 		class="header-button bg-contrast text-text"
 		variant="ghost"

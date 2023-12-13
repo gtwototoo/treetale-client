@@ -5,28 +5,46 @@
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
+	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import {
 		activeModeStore,
 		connectionStore,
 		framesDataStore,
-		movingFrameStore
+		movingFrameStore,
+		selectedFrameStore
 	} from '$lib/stores/workspace';
 	import { contrastText, transform } from '$lib/utils';
 	import { createConnections, getChoicePosition } from '$lib/utils/editing';
+	import { FrameSettings } from '../../Panel';
 
 	export let frameId: number;
 	export let index: number;
 
 	$: frameKey = $framesDataStore.findIndex((frame) => frame.frameId === frameId);
+	$: frame = frameKey !== -1 ? $framesDataStore[frameKey] : undefined;
 
-	const setMovingFrame = () => {
-		$movingFrameStore = frameId;
+	const setSelectedFrame = () => {
+		if (!frame) return;
+
+		if (!$readonlyStore) {
+			$movingFrameStore = frameId;
+		}
+		$selectedFrameStore = frameId;
+
+		if ($currentPanelStore.id !== `frame-${frame.frameId}`) {
+			$currentPanelStore = {
+				id: `frame-${frame.frameId}`,
+				title: frame.title || 'Начало',
+				component: FrameSettings
+			};
+		}
 	};
 
 	const setVisible = () => {
 		$framesDataStore[frameKey].hidden = !$framesDataStore[frameKey].hidden;
+
 		createConnections($framesDataStore);
 	};
 
@@ -56,12 +74,13 @@
 	);
 </script>
 
-{#if frameKey !== -1}
-	{@const { choices, hidden, title, text, x, y } = $framesDataStore[frameKey]}
+{#if frame}
+	{@const { choices, hidden, title, text, x, y } = frame}
 	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 		<button
 			class={clsx(
-				'relative z-10 flex w-64 cursor-move select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text transition-[box-shadow] hover:shadow-lg childs:bg-transparent',
+				!$readonlyStore && 'cursor-move transition-[box-shadow] hover:shadow-lg',
+				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text childs:bg-transparent',
 				$movingFrameStore === frameId && 'shadow-lg',
 				$activeModeStore === 'binding' && '!bg-main-80 text-text',
 				$activeModeStore === 'binding' &&
@@ -69,7 +88,7 @@
 					$connectionStore.frameId !== frameId &&
 					greenColor
 			)}
-			on:mousedown={setMovingFrame}
+			on:mousedown={setSelectedFrame}
 			on:click={createConnection}
 			bind:clientHeight={$framesDataStore[frameKey].height}
 		>

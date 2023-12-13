@@ -13,7 +13,7 @@
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { ICON_TYPE } from '$lib/constants';
-	import { stateAreaStore } from '$lib/stores/newediting';
+	import { readonlyStore, stateAreaStore } from '$lib/stores/editing';
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -48,11 +48,13 @@
 			    : 'text-gray-400'
 	)}
 >
-	<Icon
-		type={Cloud}
-		variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
-		class={clsx('h-4 w-4')}
-	/>
+	{#if !$readonlyStore}
+		<Icon
+			type={Cloud}
+			variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
+			class={clsx('h-4 w-4')}
+		/>
+	{/if}
 	<Icon type={iconsModes[$activeModeStore]} class="h-4 w-4" />
 	{#if $activeActionStore}
 		<Icon type={iconsActions[$activeActionStore]} class="h-4 w-4" />

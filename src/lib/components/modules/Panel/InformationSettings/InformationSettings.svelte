@@ -10,9 +10,9 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
+	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { informationDataStore, variablesStore } from '$lib/stores/newediting';
 	import { contrastText, correctWhitespace, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
 
@@ -115,6 +115,7 @@
 
 <Image
 	disabled={editMode}
+	readonly={$readonlyStore}
 	icon={BookOpen}
 	on:loadstart={setFile}
 	on:remove={preRemoveImage}
@@ -125,11 +126,13 @@
 	<Input
 		placeholder="Название"
 		class="w-full"
+		readonly={$readonlyStore}
 		bind:value={$informationDataStore.title}
 		on:input={checkUpdates}
 		disabled={editMode}
 	/>
 	<Contenteditable
+		readonly={$readonlyStore}
 		pattern={(html) => variablesHighlight(html, $variablesStore)}
 		disabled={editMode}
 		placeholder="Описание истории"
@@ -138,6 +141,7 @@
 	/>
 	<InputTags
 		disabled={editMode}
+		readonly={$readonlyStore}
 		placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
 		bind:tags={$informationDataStore.tags}
 		on:add={checkUpdates}
@@ -164,13 +168,15 @@
 		Удалить историю
 	</Button>
 {:else if $informationDataStore.draft}
-	<Button
-		variant="main"
-		class={clsx('justify-center !text-emerald-500', greenColor)}
-		on:click={switchDraft}
-	>
-		Опубликовать
-	</Button>
+	{#if !$readonlyStore}
+		<Button
+			variant="main"
+			class={clsx('justify-center !text-emerald-500', greenColor)}
+			on:click={switchDraft}
+		>
+			Опубликовать
+		</Button>
+	{/if}
 {:else}
 	<div
 		class={clsx(
@@ -183,20 +189,24 @@
 				'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории.'
 			)}
 		</p>
-		<Button
-			variant="main"
-			class={clsx('justify-center !text-red-500', $redColorStore)}
-			on:click={switchDraft}
-		>
-			Отменить публикацию
-		</Button>
+		{#if !$readonlyStore}
+			<Button
+				variant="main"
+				class={clsx('justify-center !text-red-500', $redColorStore)}
+				on:click={switchDraft}
+			>
+				Отменить публикацию
+			</Button>
+		{/if}
 	</div>
 {/if}
-<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-	{#if saving}
-		<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
-	{:else}
-		{saveInfo}
-	{/if}
-</div>
+{#if !$readonlyStore}
+	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+		{#if saving}
+			<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
+		{:else}
+			{saveInfo}
+		{/if}
+	</div>
+{/if}
 <Shortcuts />

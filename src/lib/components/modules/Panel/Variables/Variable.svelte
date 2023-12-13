@@ -5,8 +5,8 @@
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { variablesStore } from '$lib/stores/newediting';
 	import type { TVariableExpects } from '$lib/types';
 
 	export let varKey: number;
@@ -47,6 +47,7 @@
 	<Input
 		bind:value={$variablesStore[varKey].name}
 		placeholder="Название"
+		readonly={$readonlyStore}
 		class={clsx('shrink-0', editMode ? 'grow' : 'w-[13rem]')}
 		disabled={editMode}
 		on:input={handleInput}
@@ -56,6 +57,7 @@
 			bind:value={$variablesStore[varKey].expect}
 			placeholder="Тип"
 			list={types}
+			readonly={$readonlyStore}
 			class="-mr-2.5 ml-2"
 			on:change={handleInput}
 			let:value
@@ -63,7 +65,9 @@
 		>
 			<Button class="gap-1 bg-main" variant="ghost" size="sm" on:click={click}>
 				{value}
-				<Icon type={ChevronDown} class="h-4 w-4" />
+				{#if !$readonlyStore}
+					<Icon type={ChevronDown} class="h-4 w-4" />
+				{/if}
 			</Button>
 		</Listbox>
 	</Input>
@@ -72,6 +76,7 @@
 			<Listbox
 				bind:value={$variablesStore[varKey].value}
 				placeholder="Значение"
+				readonly={$readonlyStore}
 				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
 				list={[{ text: 'Да' }, { text: 'Нет' }]}
 				on:change={handleInput}
@@ -81,6 +86,7 @@
 				bind:value={$variablesStore[varKey].value}
 				placeholder="Значение"
 				class="w-full"
+				readonly={$readonlyStore}
 				number={$variablesStore[varKey].expect !== 'Строка'}
 				on:input={handleInput}
 			/>
