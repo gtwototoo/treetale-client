@@ -2,9 +2,11 @@
 	import { MagnifyingGlass, Moon, RocketLaunch, Sun } from 'svelte-heros-v2';
 
 	import { Input } from '$UI';
+	import Loading from '$UI/Icons/Loading.svelte';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Category from '$lib/components/modules/Category.svelte';
+	import MainFooter from '$lib/components/modules/Footer/MainFooter.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { searchStories } from '$lib/requests/story.js';
 	import { bodyColorStore } from '$lib/stores/main';
@@ -16,13 +18,20 @@
 
 	let value = '';
 	let searched: { stories: Array<IStorySchema>; authors: Array<IUser> };
+	let loading = false;
 
 	$bodyColorStore = DEFAULT_COLOR;
 
 	const handleInput = async () => {
+		if (!value) return;
+
+		loading = true;
+
 		const { stories, authors } = await searchStories(value);
 
 		searched = { stories, authors };
+
+		loading = false;
 	};
 </script>
 
@@ -46,13 +55,13 @@
 			>
 				<svelte:fragment slot="left">
 					<Icon
-						type={MagnifyingGlass}
+						type={loading ? Loading : MagnifyingGlass}
 						class="pointer-events-none mr-5 h-6 w-6 text-gray-800"
 					/>
 				</svelte:fragment>
 			</Input>
 		</div>
-		{#if value && searched && searched.stories}
+		{#if value && searched && searched.stories && !loading}
 			<Category
 				icon={MagnifyingGlass}
 				listFormat
@@ -89,3 +98,4 @@
 		</div>
 	{/if}
 </div>
+<MainFooter />
