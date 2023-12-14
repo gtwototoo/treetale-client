@@ -10,20 +10,23 @@
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { searchStories } from '$lib/requests/story.js';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { IUser } from '$lib/types/index.js';
-	import type { IStorySchema } from '$lib/types/schemas.js';
+	import type { ISearched } from '$lib/types/index.js';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 
 	export let data;
 
 	let value = '';
-	let searched: { stories: Array<IStorySchema>; authors: Array<IUser> };
+	let searched: ISearched;
 	let loading = false;
 
 	$bodyColorStore = DEFAULT_COLOR;
 
 	const handleInput = async () => {
-		if (!value) return;
+		if (!value) {
+			searched = null;
+
+			return;
+		}
 
 		loading = true;
 
@@ -59,7 +62,7 @@
 				</svelte:fragment>
 			</Input>
 		</div>
-		{#if value && searched && searched.stories && !loading}
+		{#if value && searched}
 			<Category
 				icon={MagnifyingGlass}
 				listFormat

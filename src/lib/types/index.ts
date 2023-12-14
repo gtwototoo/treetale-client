@@ -1,3 +1,5 @@
+import type { IStorySchema } from './schemas';
+
 export type TRGB = [number, number, number];
 
 export type TComparisonOperator = '=' | '≥' | '≤' | '>' | '<' | '≠';
@@ -12,6 +14,11 @@ export interface IStoryEditableInfo {
 	imageUrl?: string | null;
 	tags: Array<string>;
 	title: string;
+}
+
+export interface ISearched {
+	authors: Array<IUser>;
+	stories: Array<IStorySchema>;
 }
 
 export interface IStory extends IStoryEditableInfo {
