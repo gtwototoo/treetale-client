@@ -26,17 +26,25 @@
 		<div class="flex shrink-0 items-center gap-2">
 			<Icon type={DocumentText} class="h-10 w-10 text-black/20 max-lg:hidden" />
 			<div class="flex flex-col gap-1 max-sm:text-center">
-				<Link href="/docs/privacy_policy.pdf" class="transition-colors hover:text-main">
+				<Link
+					href="/docs/privacy_policy.pdf"
+					target="_blank"
+					class="transition-colors hover:text-main"
+				>
 					Политика конфиденциальности
 				</Link>
-				<Link href="/docs/terms_of_use.pdf" class="transition-colors hover:text-main">
+				<Link
+					href="/docs/terms_of_use.pdf"
+					target="_blank"
+					class="transition-colors hover:text-main"
+				>
 					Пользовательское соглашение
 				</Link>
 			</div>
 		</div>
 	</div>
 	<div class="flex items-center gap-6 max-sm:gap-4">
-		<Link href="tg://resolve?domain=treetale_news">
+		<Link href="tg://resolve?domain=treetale_news" target="_blank">
 			<Button variant="ghost" size="lg" class="gap-3 bg-main max-sm:!p-2">
 				<Telegram class="h-6 w-6" />
 				<p class="mr-1 max-lg:hidden max-md:block max-sm:hidden">Telegram</p>

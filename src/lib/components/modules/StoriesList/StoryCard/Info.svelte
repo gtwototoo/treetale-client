@@ -19,7 +19,7 @@
 </script>
 
 <FormSplit vertical class="w-full divide-contrast bg-transparent">
-	<div class="flex w-full items-center justify-between gap-4 rounded-xl bg-main-60 p-3">
+	<div class="flex w-full items-center justify-between gap-4 rounded-xl bg-main-60 p-3 max-md:p-2">
 		{#if author && !edit}
 			<ProfileLink {author} {created} />
 		{:else}

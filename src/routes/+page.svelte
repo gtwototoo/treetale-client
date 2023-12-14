@@ -43,9 +43,7 @@
 <div class="flex grow flex-col gap-6 py-4">
 	{#if Object.keys(data.stories).length}
 		<div class="flex w-full flex-col items-center gap-4 px-2">
-			<h1 class="sticky top-0 z-[1] w-full select-none py-4 text-center leading-9 text-text">
-				Список историй
-			</h1>
+			<h1 class="w-full select-none py-4 text-center leading-9 text-text">Список историй</h1>
 			<Input
 				placeholder="Поиск"
 				bind:value
