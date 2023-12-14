@@ -1,7 +1,9 @@
 <script lang="ts">
+	import Button from '$UI/Button.svelte';
 	import Mascot from '$UI/Icons/Mascot.svelte';
 	import Mastercard from '$UI/Icons/Mastercard.svelte';
 	import Mir from '$UI/Icons/Mir.svelte';
+	import Telegram from '$UI/Icons/Telegram.svelte';
 	import Visa from '$UI/Icons/Visa.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -11,7 +13,7 @@
 </script>
 
 <div
-	class="flex select-none items-center justify-between gap-6 bg-white/80 p-6 text-sm childs:bg-transparent max-sm:flex-col max-sm:gap-3"
+	class="flex select-none items-center justify-between gap-6 bg-white/80 p-6 text-sm childs:bg-transparent max-md:flex-col max-sm:flex-col max-sm:gap-3"
 >
 	<div class="flex items-center gap-6 max-md:gap-4 max-sm:flex-col">
 		<div class="flex items-center gap-2">
@@ -33,9 +35,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex">
-		<Mir class="h-10 w-auto opacity-60 transition-opacity hover:opacity-100" />
-		<Mastercard class="h-10 w-auto opacity-60 transition-opacity hover:opacity-100" />
-		<Visa class="h-10 w-auto opacity-60 transition-opacity hover:opacity-100" />
+	<div class="flex items-center gap-6 max-sm:gap-4">
+		<Link href="tg://resolve?domain=treetale_news">
+			<Button variant="ghost" size="lg" class="gap-3 bg-main max-sm:!p-2">
+				<Telegram class="h-6 w-6" />
+				<p class="mr-1 max-lg:hidden max-md:block max-sm:hidden">Telegram</p>
+			</Button>
+		</Link>
+		<div class="flex">
+			<Mir class="h-10 w-auto opacity-60 transition-opacity hover:opacity-100" />
+			<Mastercard class="h-10 w-auto opacity-60 transition-opacity hover:opacity-100" />
+			<Visa class="h-10 w-auto opacity-60 transition-opacity hover:opacity-100" />
+		</div>
 	</div>
 </div>
