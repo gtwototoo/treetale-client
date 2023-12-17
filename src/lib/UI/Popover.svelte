@@ -12,7 +12,7 @@
 
 	export let disabled = false;
 	export let readonly = false;
-	export let align: 'left' | 'right' = 'left';
+	export let align: 'left' | 'right' | 'inset' = 'left';
 	export let value = '';
 	export let placeholder = '';
 
@@ -46,7 +46,18 @@
 		</Button>
 	{/if}
 	{#if focused}
-		<div in:fly={{ y: 10 }} class={clsx('content', `${align}-0`)} use:correctPosition>
+		<div
+			in:fly={{ y: 10 }}
+			class={clsx(
+				'content',
+				{
+					left: '-left-1',
+					right: '-right-1',
+					inset: '-inset-x-1'
+				}[align]
+			)}
+			use:correctPosition
+		>
 			<slot />
 		</div>
 	{/if}

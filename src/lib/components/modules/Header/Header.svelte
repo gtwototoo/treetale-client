@@ -18,5 +18,6 @@
 	<div class="flex gap-4 max-sm:gap-2">
 		<slot />
 		<Session />
+		<slot name="right" />
 	</div>
 </div>

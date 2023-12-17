@@ -105,6 +105,7 @@
 					<Listbox
 						list={symbols}
 						placeholder=""
+						align="inset"
 						readonly={$readonlyStore}
 						bind:value={operation.symbol}
 						let:value

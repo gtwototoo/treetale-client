@@ -7,6 +7,7 @@
 		Cloud,
 		Eye,
 		Map,
+		Photo,
 		Share,
 		Square3Stack3d
 	} from 'svelte-heros-v2';
@@ -20,7 +21,7 @@
 		type IAction,
 		type IMode
 	} from '$lib/stores/workspace';
-	import { Photo, Tag } from '$UI';
+	import { Tag } from '$UI';
 
 	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
 		binding: Share,
@@ -38,7 +39,7 @@
 
 <Tag
 	class={clsx(
-		'flex gap-2 bg-contrast',
+		'flex flex-col gap-2 bg-contrast p-1',
 		$stateAreaStore === 'saving'
 			? 'animate-pulse text-gray-400'
 			: $stateAreaStore === 'saved'
@@ -48,15 +49,15 @@
 			    : 'text-gray-400'
 	)}
 >
+	{#if $activeActionStore}
+		<Icon type={iconsActions[$activeActionStore]} class="h-4 w-4" />
+	{/if}
+	<Icon type={iconsModes[$activeModeStore]} class="h-4 w-4" />
 	{#if !$readonlyStore}
 		<Icon
 			type={Cloud}
 			variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
 			class={clsx('h-4 w-4')}
 		/>
-	{/if}
-	<Icon type={iconsModes[$activeModeStore]} class="h-4 w-4" />
-	{#if $activeActionStore}
-		<Icon type={iconsActions[$activeActionStore]} class="h-4 w-4" />
 	{/if}
 </Tag>

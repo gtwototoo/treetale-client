@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Photo } from '$UI';
+	import { Image } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { BookOpen } from 'svelte-heros-v2';
 
@@ -17,7 +17,7 @@
 	class="relative flex h-56 w-full shrink-0 items-end justify-center bg-transparent text-main max-hd:h-48 max-xl:h-40 max-md:h-32 max-sm:h-24"
 >
 	{#if imageUrl && !errorImage}
-		<Photo
+		<Image
 			on:error={handleError}
 			alt={title || 'Иллюстрация истории'}
 			cover

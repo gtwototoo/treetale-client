@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { BookOpen, Cloud, Photo as PhotoIcon, Trash } from 'svelte-heros-v2';
+	import { BookOpen, Cloud, Photo, Trash } from 'svelte-heros-v2';
 
 	import Shortcuts from './Shortcuts.svelte';
 
 	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import Image from '$lib/components/Image.svelte';
+	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
@@ -80,7 +80,7 @@
 
 			$informationDataStore.imageUrl = imageUrl;
 
-			changesHistory.add('Добавление изображения истории', PhotoIcon);
+			changesHistory.add('Добавление изображения истории', Photo);
 		} catch (e) {
 			console.error(e);
 		}
@@ -113,7 +113,7 @@
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
-<Image
+<ImageUploader
 	disabled={editMode}
 	readonly={$readonlyStore}
 	icon={BookOpen}
@@ -150,6 +150,7 @@
 </FormSplit>
 <FormSplit vertical class="divide-contrast">
 	<ColorPicker
+		popoverAlign="inset"
 		lightRange={[15, 80]}
 		saturateRange={[10, 90]}
 		color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}

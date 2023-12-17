@@ -2,6 +2,7 @@ import { Plus } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
 
 import { changesHistory } from '$lib/stores/history';
+import { currentPanelStore } from '$lib/stores/main';
 import {
 	activeActionStore,
 	addFrameOffsetStore,
@@ -9,11 +10,13 @@ import {
 	movingFrameStore,
 	offsetStore,
 	oneDirectionModeStore,
+	selectedFrameStore,
 	zoomCorrect
 } from '$lib/stores/workspace';
 import type { ICoordinates } from '$lib/types';
 import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 import { last } from '$lib/utils';
+import { FrameSettings } from '../Panel';
 
 export const addFrame = ({ x, y }: ICoordinates) => {
 	const framesData = get(framesDataStore);
@@ -101,6 +104,51 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 	}
 
 	return startMoveData.moveXDirection;
+};
+
+export const setSelectedFrame = (frame: IFrameCreate) => {
+	selectedFrameStore.set(frame.frameId);
+
+	currentPanelStore.set({
+		id: `frame-${frame.frameId}`,
+		title: frame.title || 'Начало',
+		component: FrameSettings
+	});
+};
+
+const switchSelectedFrame = (prev?: boolean) => {
+	const getSelectedFrameStore = get(selectedFrameStore);
+	const getFramesDataStore = get(framesDataStore);
+
+	if (!getSelectedFrameStore) return;
+
+	const frameKey = getFramesDataStore.findIndex(
+		({ frameId }) => frameId === getSelectedFrameStore
+	);
+
+	let frame;
+
+	if (prev) {
+		frame =
+			frameKey - 1 in getFramesDataStore
+				? getFramesDataStore[frameKey - 1]
+				: last(getFramesDataStore);
+	} else {
+		frame =
+			frameKey + 1 in getFramesDataStore
+				? getFramesDataStore[frameKey + 1]
+				: getFramesDataStore[0];
+	}
+
+	setSelectedFrame(frame);
+};
+
+export const nextSelectedFrame = () => {
+	return switchSelectedFrame();
+};
+
+export const prevSelectedFrame = () => {
+	return switchSelectedFrame(true);
 };
 
 export const cursorFollow = (coords: ICoordinates) => {

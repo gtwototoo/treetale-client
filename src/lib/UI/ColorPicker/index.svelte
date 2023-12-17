@@ -6,7 +6,7 @@
 	import type { TRGB } from '$lib/types';
 
 	export let disabled = false;
-	export let popoverAlign: 'left' | 'right' = 'right';
+	export let popoverAlign: 'left' | 'right' | 'inset' = 'right';
 	export let lightRange = [0, 100];
 	export let saturateRange = [0, 100];
 	export let light = 0;

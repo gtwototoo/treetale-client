@@ -5,7 +5,7 @@
 	import Choice from './Choice.svelte';
 
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
-	import Image from '$lib/components/Image.svelte';
+	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
@@ -129,7 +129,7 @@
 		number
 	/>
 </FormSplit>
-<Image
+<ImageUploader
 	disabled={editMode}
 	readonly={$readonlyStore}
 	icon={RectangleStack}

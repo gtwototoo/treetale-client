@@ -25,23 +25,25 @@
 	};
 </script>
 
-<div class="flex flex-col gap-2 bg-transparent p-2 childs:w-40" style="--color-main: {RGB(color)}">
-	<div class="flex items-center gap-2">
-		<div class="h-3 w-3 rounded bg-gray-700" />
-		<InputRange min={lightRange[0]} max={lightRange[1]} bind:value={light} class="min-w-0" />
-		<div class="h-3 w-3 rounded bg-gray-100" />
+<div class="flex flex-col gap-4 bg-transparent p-4" style="--color-main: {RGB(color)}">
+	<div class="flex flex-col gap-2">
+		<div class="flex min-w-0 items-center gap-2">
+			<div class="h-3 w-3 rounded bg-gray-700" />
+			<InputRange min={lightRange[0]} max={lightRange[1]} bind:value={light} class="min-w-0" />
+			<div class="h-3 w-3 rounded bg-gray-100" />
+		</div>
+		<div class="flex min-w-0 items-center gap-2">
+			<div class="h-3 w-3 rounded bg-blue-100" />
+			<InputRange
+				min={saturateRange[0]}
+				max={saturateRange[1]}
+				bind:value={saturate}
+				class="min-w-0"
+			/>
+			<div class="h-3 w-3 rounded bg-blue-700" />
+		</div>
 	</div>
-	<div class="flex items-center gap-2">
-		<div class="h-3 w-3 rounded bg-blue-100" />
-		<InputRange
-			min={saturateRange[0]}
-			max={saturateRange[1]}
-			bind:value={saturate}
-			class="min-w-0"
-		/>
-		<div class="h-3 w-3 rounded bg-blue-700" />
-	</div>
-	<div class="flex shrink-0 flex-wrap gap-2">
+	<div class="flex shrink-0 flex-wrap justify-center gap-2">
 		{#each new Array(36) as _, key}
 			<button
 				style:background={`hsl(${key * 10 + 5} ${saturate}% ${light}%)`}

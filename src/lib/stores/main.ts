@@ -10,6 +10,7 @@ export interface IPanel {
 	editMode?: boolean;
 	hasCloseButton?: boolean;
 	hasEditButton?: boolean;
+	hidden?: boolean;
 	id: string;
 	title: string;
 }
@@ -21,7 +22,8 @@ const currentPanelCustomStore = () => {
 		component: undefined,
 		editMode: false,
 		hasEditButton: true,
-		hasCloseButton: true
+		hasCloseButton: true,
+		hidden: false
 	};
 	const { subscribe, update } = writable<IPanel>(clearData);
 
@@ -40,10 +42,18 @@ const currentPanelCustomStore = () => {
 			return current;
 		});
 
+	const switchVisible = () =>
+		update((current) => {
+			current.hidden = !current.hidden;
+
+			return current;
+		});
+
 	const clearCurrentPanel = () => update(() => clearData);
 
 	return {
 		subscribe,
+		switchVisible,
 		clear: clearCurrentPanel,
 		set: setCurrentPanel,
 		switchEditMode,

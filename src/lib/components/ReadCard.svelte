@@ -2,7 +2,7 @@
 	import clsx from 'clsx';
 
 	import { correctWhitespace } from '$lib/utils';
-	import { Card, Photo } from '$UI';
+	import { Card, Image } from '$UI';
 
 	let className = '';
 	export { className as class };
@@ -21,7 +21,7 @@
 
 <div class={clsx('card', className)}>
 	{#if src && !errorLoad}
-		<Photo
+		<Image
 			{src}
 			{alt}
 			class="h-[23rem] w-full rounded-2xl bg-white"

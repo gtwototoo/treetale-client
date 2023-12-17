@@ -1,42 +1,105 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { PencilSquare, XMark } from 'svelte-heros-v2';
+	import {
+		ArrowsPointingIn,
+		ChevronLeft,
+		ChevronRight,
+		PencilSquare,
+		XMark
+	} from 'svelte-heros-v2';
 
-	import { Button } from '$UI';
+	import { Button, FormSplit, Listbox } from '$UI';
+	import type { IList } from '$UI/Listbox.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
+	import { framesDataStore } from '$lib/stores/workspace';
+	import { nextSelectedFrame, prevSelectedFrame, setSelectedFrame } from '../Workspace/methods';
+
+	let className = '';
+	export { className as class };
+
+	const framesList: IList[] = $framesDataStore.map((frame) => {
+		return {
+			text: frame.title || 'Начало',
+			click: () => setSelectedFrame(frame)
+		};
+	});
 
 	$: editMode = $currentPanelStore.editMode;
+	$: hidden = $currentPanelStore.hidden;
+	$: framePanel = $currentPanelStore.id.includes('frame');
 </script>
 
+<div class={clsx('fixed right-0 h-full w-96 bg-contrast', hidden && 'max-lg:hidden')} />
 <div
-	class="relative ml-auto flex w-96 shrink-0 flex-col gap-4 overflow-auto bg-transparent p-4 text-text"
+	class={clsx(
+		'relative flex max-w-full shrink-0 flex-col gap-4 overflow-auto p-4 text-text max-sm:py-2 max-xs:p-2',
+		className,
+		hidden && 'max-lg:hidden'
+	)}
 >
-	{#if $currentPanelStore.hasEditButton && !$readonlyStore}
-		<Button
-			size="lg"
-			variant={editMode ? 'main' : 'ghost'}
-			class={clsx('!absolute left-4 top-4 z-[2] bg-main !p-3')}
-			on:click={currentPanelStore.switchEditMode}
-		>
-			<Icon type={PencilSquare} class="h-6 w-6" />
-		</Button>
-	{/if}
-	{#if $currentPanelStore.component && $currentPanelStore.hasCloseButton}
+	<div class="flex w-full gap-2">
+		{#if $currentPanelStore.hasEditButton && !$readonlyStore}
+			<Button
+				size="lg"
+				variant={editMode ? 'main' : 'ghost'}
+				class={clsx('z-[2] bg-main !p-3')}
+				on:click={currentPanelStore.switchEditMode}
+			>
+				<Icon type={PencilSquare} class="h-6 w-6" />
+			</Button>
+		{/if}
+		<FormSplit class="w-full divide-contrast">
+			{#if framePanel}
+				<Button size="lg" variant="ghost" class="bg-main !p-2" on:click={prevSelectedFrame}>
+					<Icon type={ChevronLeft} class="h-5 w-5" />
+				</Button>
+			{/if}
+			<Listbox
+				size="lg"
+				list={framesList}
+				placeholder="Фрейм"
+				class="w-full"
+				align="inset"
+				let:click
+			>
+				<Button
+					size="lg"
+					variant="ghost"
+					class={clsx(
+						'w-full justify-center whitespace-normal bg-main !px-2',
+						framePanel && '!rounded-none'
+					)}
+					on:click={click}
+				>
+					{$currentPanelStore.title}
+				</Button>
+			</Listbox>
+			{#if framePanel}
+				<Button size="lg" variant="ghost" class="bg-main !p-2" on:click={nextSelectedFrame}>
+					<Icon type={ChevronRight} class="h-5 w-5" />
+				</Button>
+			{/if}
+		</FormSplit>
+		{#if $currentPanelStore.component && $currentPanelStore.hasCloseButton}
+			<Button
+				size="lg"
+				variant="ghost"
+				class="bg-main !p-3 max-lg:!hidden"
+				on:click={currentPanelStore.clear}
+			>
+				<Icon type={XMark} class="h-6 w-6" />
+			</Button>
+		{/if}
 		<Button
 			size="lg"
 			variant="ghost"
-			class="!absolute right-4 top-4 z-[2] bg-main !p-3"
-			on:click={currentPanelStore.clear}
+			class="!hidden bg-main !p-3 max-lg:!block"
+			on:click={currentPanelStore.switchVisible}
 		>
-			<Icon type={XMark} class="h-6 w-6" />
+			<Icon type={ArrowsPointingIn} class="h-6 w-6" />
 		</Button>
-	{/if}
-	<p
-		class="flex min-h-[3rem] w-full select-none items-center justify-center px-16 text-center text-lg font-medium"
-	>
-		{$currentPanelStore.title}
-	</p>
+	</div>
 	<svelte:component this={$currentPanelStore.component} />
 </div>

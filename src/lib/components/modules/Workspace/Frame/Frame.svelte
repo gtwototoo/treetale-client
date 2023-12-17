@@ -5,6 +5,7 @@
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
+	import { Image } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
@@ -99,11 +100,11 @@
 			</Header>
 			{#if !hidden}
 				{#if $framesDataStore[frameKey].imageUrl}
-					<img
+					<Image
 						alt="Изображение фрейма"
-						draggable="false"
 						src={$framesDataStore[frameKey].imageUrl}
-						class="h-36 w-full rounded-lg object-cover"
+						class="h-36 w-full rounded-lg !bg-main/30 text-text"
+						cover
 					/>
 				{/if}
 				<div

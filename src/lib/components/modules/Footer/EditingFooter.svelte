@@ -4,6 +4,7 @@
 	import StateMode from './StateMode.svelte';
 
 	import { Button } from '$UI';
+	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
 	import {
@@ -15,6 +16,7 @@
 		zoomStore
 	} from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
+	import { Plus } from 'svelte-heros-v2';
 
 	const cancelAddFrameMode = () => {
 		$activeModeStore = 'view';
@@ -34,9 +36,9 @@
 <div class="area">
 	<div class={clsx('flex items-center', $activeActionStore ? 'blind' : 'pointer-events-auto')}>
 		<slot />
-		<div class="info">
+		<div class="info whitespace-nowrap">
 			<p>
-				{$offsetStore.x}, {$offsetStore.y}
+				{Math.round($offsetStore.x)}, {Math.round($offsetStore.y)}
 			</p>
 			<p>
 				{($zoomStore / 100).toFixed(1)}x
@@ -60,7 +62,8 @@
 				size="lg"
 				class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
 			>
-				Новый фрейм
+				<Icon type={Plus} class="hidden h-6 w-6 max-md:block" />
+				<p class="max-md:hidden">Новый фрейм</p>
 			</Button>
 		{/if}
 	{/if}
@@ -69,7 +72,7 @@
 
 <style lang="postcss">
 	.area {
-		@apply pointer-events-none absolute bottom-0 flex w-full items-center justify-between bg-transparent p-2 transition-opacity sm:p-4;
+		@apply pointer-events-none absolute bottom-0 flex w-full items-end justify-between gap-3 bg-transparent p-2 transition-opacity sm:p-4;
 	}
 	.footer {
 		@apply flex items-center gap-1;

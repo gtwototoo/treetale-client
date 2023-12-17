@@ -3,16 +3,13 @@
 
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { currentPanelStore } from '$lib/stores/main';
 	import {
 		activeActionStore,
 		activeModeStore,
 		connectionStore,
-		framesDataStore,
-		oneDirectionModeStore,
-		selectedFrameStore
+		oneDirectionModeStore
 	} from '$lib/stores/workspace';
-	import { FrameSettings } from '../Panel';
+	import { nextSelectedFrame } from './methods';
 
 	const dispatch = createEventDispatcher();
 
@@ -26,25 +23,6 @@
 
 		const switchAddFrameMode = () => {
 			$activeModeStore = $activeModeStore === 'adding' ? 'view' : 'adding';
-		};
-
-		const switchSelectedFrame = () => {
-			if (!$selectedFrameStore) return;
-
-			const frameKey = $framesDataStore.findIndex(
-				({ frameId }) => frameId === $selectedFrameStore
-			);
-
-			const nextFrame =
-				frameKey + 1 in $framesDataStore ? $framesDataStore[frameKey + 1] : $framesDataStore[0];
-
-			$selectedFrameStore = nextFrame.frameId;
-
-			$currentPanelStore = {
-				id: `frame-${nextFrame.frameId}`,
-				title: nextFrame.title || 'Начало',
-				component: FrameSettings
-			};
 		};
 
 		const enableOneDirectionMode = () => {
@@ -70,7 +48,7 @@
 
 		if ($readonlyStore) {
 			actions = {
-				Tab: switchSelectedFrame
+				Tab: nextSelectedFrame
 			};
 		} else {
 			actions = {
@@ -80,7 +58,7 @@
 				KeyC: switchConnectMode,
 				KeyZ: historyManipulate,
 				Escape: cancelModes,
-				Tab: switchSelectedFrame
+				Tab: nextSelectedFrame
 			};
 		}
 

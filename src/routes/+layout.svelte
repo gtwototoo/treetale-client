@@ -20,15 +20,14 @@
 	<div
 		class={clsx(
 			'fixed left-0 flex h-screen flex-col',
-			$currentPanelStore.component ? 'right-96' : 'right-0'
+			$currentPanelStore.component ? 'right-96 max-lg:right-0' : 'right-0'
 		)}
 	>
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>
 	{#if $currentPanelStore.component}
-		<div class="fixed right-0 h-full w-96 bg-contrast" />
-		<Panel />
+		<Panel class="ml-auto w-96 bg-transparent" />
 	{/if}
 {:else}
 	<div class="relative flex h-full w-full flex-col">

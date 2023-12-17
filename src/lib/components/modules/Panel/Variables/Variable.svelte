@@ -57,6 +57,7 @@
 			bind:value={$variablesStore[varKey].expect}
 			placeholder="Тип"
 			list={types}
+			align="right"
 			readonly={$readonlyStore}
 			class="-mr-2.5 ml-2"
 			on:change={handleInput}
@@ -77,6 +78,7 @@
 				bind:value={$variablesStore[varKey].value}
 				placeholder="Значение"
 				readonly={$readonlyStore}
+				align="inset"
 				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
 				list={[{ text: 'Да' }, { text: 'Нет' }]}
 				on:change={handleInput}

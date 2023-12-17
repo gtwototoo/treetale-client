@@ -1,6 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { ArrowUturnLeft, ArrowUturnRight, Variable } from 'svelte-heros-v2';
+	import { ArrowUturnLeft, ArrowUturnRight, ChevronLeft, Variable } from 'svelte-heros-v2';
 
 	import { Changes, Variables } from '../Panel';
 
@@ -65,6 +65,16 @@
 		on:click={variablesSwitch}
 	>
 		<Icon type={Variable} class="h-6 w-6" />
-		<p class="mr-1">Переменные</p>
+		<p class="mr-1 max-lg:hidden">Переменные</p>
 	</Button>
+	<svelte:fragment slot="right">
+		<Button
+			class="header-button !hidden bg-contrast text-text max-lg:!block"
+			variant="ghost"
+			size="lg"
+			on:click={currentPanelStore.switchVisible}
+		>
+			<Icon type={ChevronLeft} class="h-6 w-6" />
+		</Button>
+	</svelte:fragment>
 </Header>

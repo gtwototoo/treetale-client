@@ -21,20 +21,25 @@
 
 	$bodyColorStore = DEFAULT_COLOR;
 
-	const handleInput = async () => {
+	const handleInput = () => {
+		let timer: number;
+
 		if (!value) {
 			searched = null;
+			clearTimeout(timer);
 
 			return;
 		}
 
 		loading = true;
 
-		const { stories, authors } = await searchStories(value);
+		timer = window.setTimeout(async () => {
+			const { stories, authors } = await searchStories(value);
 
-		searched = { stories, authors };
+			searched = { stories, authors };
 
-		loading = false;
+			loading = false;
+		}, 1000);
 	};
 </script>
 

@@ -22,7 +22,7 @@
 
 	export let disabled = false;
 	export let readonly = false;
-	export let align: 'left' | 'right' = 'left';
+	export let align: 'left' | 'right' | 'inset' = 'left';
 	export let value = '';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let placeholder: string;
@@ -79,7 +79,14 @@
 	{#if focused}
 		<div
 			in:fly={{ y: 10 }}
-			class={clsx('list', align === 'left' ? '-left-1' : '-right-1')}
+			class={clsx(
+				'list',
+				{
+					left: '-left-1',
+					right: '-right-1',
+					inset: '-inset-x-1'
+				}[align]
+			)}
 			use:correctPosition
 		>
 			<FormSplit class="divide-contrast" vertical>
@@ -109,6 +116,6 @@
 		@apply relative bg-transparent;
 	}
 	.list {
-		@apply absolute z-[4] flex flex-col gap-1 rounded-lg bg-contrast p-1 shadow-md;
+		@apply absolute z-20 flex flex-col gap-1 rounded-lg bg-contrast p-1 shadow-md;
 	}
 </style>

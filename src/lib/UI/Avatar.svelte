@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Photo } from '$UI';
+	import { Image } from '$UI';
 	import { clm, last } from '$lib/utils';
 
 	let className = '';
@@ -23,7 +23,7 @@
 	)}
 >
 	{#if src}
-		<Photo class="h-full w-full rounded-full" cover {src} {alt} />
+		<Image class="h-full w-full rounded-full" cover {src} {alt} />
 	{:else}
 		{short}
 	{/if}
