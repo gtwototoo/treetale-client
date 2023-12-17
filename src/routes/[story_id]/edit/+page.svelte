@@ -207,6 +207,9 @@
 		: DEFAULT_COLOR;
 </script>
 
+<ska:html class="h-full" />
+<svelte:body class="h-full" />
+
 <svelte:head>
 	<title>
 		Редактирование "{$informationDataStore.title || 'Без названия'}"
