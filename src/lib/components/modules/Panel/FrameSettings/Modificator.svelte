@@ -1,17 +1,67 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { PencilSquare } from 'svelte-heros-v2';
+	import { PencilSquare, XMark } from 'svelte-heros-v2';
 
-	import { Button } from '$UI';
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { readonlyStore } from '$lib/stores/editing';
+	import { updateArea } from '$lib/requests/story';
+	import {
+		informationDataStore,
+		readonlyStore,
+		stateAreaStore,
+		variablesStore
+	} from '$lib/stores/editing';
+	import { redColorStore } from '$lib/stores/main';
+	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
+	import type {
+		ILogicOperation,
+		IMathOperation,
+		TComparisonOperator,
+		TMathOperator
+	} from '$lib/types';
+	import { exclude } from '$lib/utils';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	let className = '';
 	export { className as class };
 
 	export let title: string;
+	export let buttonTitle: string;
+	export let operations: Array<IMathOperation | ILogicOperation>;
+	export let symbols: Array<TComparisonOperator | TMathOperator>;
 
 	let editMode = false;
+	let timer: number;
+
+	const saveArea = () => {
+		if ($readonlyStore) {
+			return;
+		}
+
+		clearTimeout(timer);
+		$stateAreaStore = 'saving';
+
+		timer = window.setTimeout(async () => {
+			try {
+				const correctFrames = $framesDataStore.map((frame) => exclude(frame, ['height']));
+
+				await updateArea(
+					$informationDataStore.storyId,
+					correctFrames,
+					$offsetStore,
+					$zoomStore
+				);
+
+				$stateAreaStore = 'saved';
+			} catch {
+				$stateAreaStore = 'error';
+			}
+
+			clearTimeout(timer);
+		}, 3000);
+	};
 
 	const switchEditMode = () => {
 		editMode = !editMode;
@@ -23,12 +73,24 @@
 		editMode = false;
 	};
 
+	const handleChange = () => {
+		saveArea();
+	};
+
+	const handleAddModificator = () => {
+		dispatch('add');
+	};
+
+	const handleRemoveModificator = (key: number) => {
+		dispatch('remove', key);
+	};
+
 	$: clearLiberties($readonlyStore);
 </script>
 
 <div
 	class={clsx(
-		'relative flex select-none flex-col items-center gap-2 rounded-lg p-2 text-sm',
+		'relative flex select-none flex-col items-center gap-2 rounded-lg bg-main-40 p-2 text-sm',
 		className
 	)}
 >
@@ -45,5 +107,64 @@
 			</Button>
 		{/if}
 	</div>
-	<slot {editMode} />
+	<div class="flex w-full flex-col gap-2">
+		{#each operations as operation, key}
+			<FormSplit class="divide-main-40">
+				{#if editMode}
+					<Button variant="main" disabled class="w-full gap-3 bg-main">
+						<p>{operation.variable || 'Переменная'}</p>
+						<p>{operation.symbol}</p>
+						<p>{operation.value || 'Значение'}</p>
+					</Button>
+					<Button
+						variant="main"
+						on:click={() => handleRemoveModificator(key)}
+						class={clsx('!text-red-500', $redColorStore)}
+					>
+						<Icon type={XMark} />
+					</Button>
+				{:else}
+					<Listbox
+						placeholder="Переменная"
+						readonly={$readonlyStore}
+						on:change={handleChange}
+						bind:value={operation.variable}
+						list={$variablesStore.map(({ name }) => name)}
+						class="flex-1 child-[button]:!rounded-none child-[button]:!rounded-l-lg"
+					/>
+					<Listbox
+						list={symbols}
+						placeholder=""
+						align="inset"
+						on:change={handleChange}
+						readonly={$readonlyStore}
+						bind:value={operation.symbol}
+						let:value
+						let:click
+					>
+						<Button on:click={click} variant="ghost" class="!rounded-none bg-main text-text">
+							{value}
+						</Button>
+					</Listbox>
+					<Input
+						placeholder="Значение"
+						readonly={$readonlyStore}
+						class="flex-1"
+						on:input={handleChange}
+						bind:value={operation.value}
+					/>
+				{/if}
+			</FormSplit>
+		{/each}
+		<slot {editMode} />
+		{#if !editMode && !$readonlyStore}
+			<Button
+				variant="ghost"
+				class="w-full justify-center bg-main text-text"
+				on:click={handleAddModificator}
+			>
+				{buttonTitle}
+			</Button>
+		{/if}
+	</div>
 </div>

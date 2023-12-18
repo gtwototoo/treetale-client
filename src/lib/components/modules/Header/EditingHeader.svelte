@@ -69,7 +69,7 @@
 	</Button>
 	<svelte:fragment slot="right">
 		<Button
-			class="header-button !hidden bg-contrast text-text max-lg:!block"
+			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-2"
 			variant="ghost"
 			size="lg"
 			on:click={currentPanelStore.switchVisible}

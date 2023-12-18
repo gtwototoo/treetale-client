@@ -1,4 +1,4 @@
-import type { ICoordinates, IFrame, IVariable, TBoundings } from '$lib/types';
+import type { IChoice, ICoordinates, IFrame, IVariable, TBoundings } from '$lib/types';
 import type { IFrameCreate, IPath } from '$lib/types/editing';
 
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
@@ -42,6 +42,23 @@ export const getChoicePosition = (index: number, imageUrl: string) => {
 	return startPosition + 41 * index - 1;
 };
 
+const getFramesPoints = (fromFrame: IFrameCreate, choice: IChoice, toFrame: IFrameCreate) => {
+	const fromPoint = {
+		x: fromFrame.x + DEFAULT_FRAME_SIZE.width,
+		y:
+			fromFrame.y +
+			(fromFrame.hidden
+				? fromFrame.height / 2
+				: getChoicePosition(fromFrame.choices.indexOf(choice), fromFrame.imageUrl))
+	};
+	const toPoint = {
+		x: toFrame.x,
+		y: toFrame.y + 20 // расстояние от верха
+	};
+
+	return { fromPoint, toPoint };
+};
+
 export const createConnections = (frames: Array<IFrameCreate>) => {
 	const paths: Array<IPath> = [];
 	const area: TBoundings = getAreaBoundings(frames);
@@ -55,18 +72,7 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 
 			if (!toFrame) continue;
 
-			const fromPoint = {
-				x: fromFrame.x + DEFAULT_FRAME_SIZE.width,
-				y:
-					fromFrame.y +
-					(fromFrame.hidden
-						? fromFrame.height / 2
-						: getChoicePosition(fromFrame.choices.indexOf(choice), fromFrame.imageUrl))
-			};
-			const toPoint = {
-				x: toFrame.x,
-				y: toFrame.y + 20 // расстояние от верха
-			};
+			const { fromPoint, toPoint } = getFramesPoints(fromFrame, choice, toFrame);
 
 			paths.push({
 				connectId: `${fromFrame.frameId}:${choice.choiceId}-${toFrame.frameId}`,
@@ -82,6 +88,31 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 		height,
 		style: transform({ x, y })
 	};
+};
+
+export const createLineRemoveButtons = (frames: Array<IFrameCreate>) => {
+	const coords: Array<ICoordinates & { fromFrameId: number; fromChoiceId: number }> = [];
+
+	for (const fromFrame of frames) {
+		for (const choice of fromFrame.choices) {
+			if (choice.frameId === null) continue;
+
+			const toFrame = getFrameFromId(frames, choice.frameId) as IFrameCreate;
+
+			if (!toFrame) continue;
+
+			const { fromPoint, toPoint } = getFramesPoints(fromFrame, choice, toFrame);
+
+			coords.push({
+				x: (fromPoint.x + toPoint.x) / 2,
+				y: (fromPoint.y + toPoint.y) / 2,
+				fromFrameId: fromFrame.frameId,
+				fromChoiceId: choice.choiceId
+			});
+		}
+	}
+
+	return coords;
 };
 
 const createLine = (from: ICoordinates, to: ICoordinates): string => {

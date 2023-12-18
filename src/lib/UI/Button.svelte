@@ -17,6 +17,7 @@
 	export let loading = false;
 	export let element: HTMLButtonElement | undefined = undefined;
 	export let value: string | undefined = undefined;
+	export let style = '';
 	export let type: 'button' | 'submit' | 'reset' | undefined = 'button';
 
 	const handleClick = (e: MouseEvent) => {
@@ -48,7 +49,7 @@
 		(disabled || loading) && 'disabled',
 		className
 	)}
-	{...{ value, type }}
+	{...{ value, type, style }}
 >
 	<slot />
 	{#if loading}

@@ -5,7 +5,7 @@
 	import { Button, Input } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
+	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IResponseResult } from '$lib/types';
@@ -16,8 +16,6 @@
 	let value = '';
 	let loading = false;
 	let result: IResponseResult = null;
-
-	const { img: contentCardImage } = NOT_FOUND_VARIANTS[0];
 
 	const handleSignIn = async () => {
 		if (disabled || loading) {
@@ -64,7 +62,7 @@
 <div class="flex h-full w-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-2">
 		<ReadCard
-			src={contentCardImage}
+			src="/compressed/auth.jpeg"
 			alt="Авторизация"
 			text="Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением"
 		>

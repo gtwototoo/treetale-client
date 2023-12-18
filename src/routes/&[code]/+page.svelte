@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR, NOT_FOUND_VARIANTS } from '$lib/constants';
+	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signUpUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IResponseResult } from '$lib/types';
@@ -13,8 +13,6 @@
 	import clsx from 'clsx';
 	import { Check, XMark } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
-
-	const [{ img: contentCardImage }] = NOT_FOUND_VARIANTS;
 
 	let name = '';
 	let loading = false;
@@ -61,7 +59,7 @@
 <div class="flex h-full w-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-2">
 		<ReadCard
-			src={contentCardImage}
+			src="/compressed/auth.jpeg"
 			alt="Завершение регистрации"
 			text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте"
 		>

@@ -113,7 +113,7 @@
 
 <style lang="postcss">
 	.listbox {
-		@apply relative bg-transparent;
+		@apply relative bg-transparent text-text;
 	}
 	.list {
 		@apply absolute z-20 flex flex-col gap-1 rounded-lg bg-contrast p-1 shadow-md;

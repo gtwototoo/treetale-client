@@ -18,6 +18,7 @@
 		zoomStore
 	} from '$lib/stores/workspace';
 	import type { ICoordinates } from '$lib/types';
+	import LineManipulators from './LineManipulators.svelte';
 
 	export let height: number;
 	export let width: number;
@@ -124,5 +125,6 @@
 			{/each}
 		</div>
 		<ConnectionsLayer />
+		<LineManipulators />
 	</MovingArea>
 </div>

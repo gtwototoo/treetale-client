@@ -45,28 +45,30 @@
 			</p>
 		</div>
 	</div>
-	{#if !$readonlyStore}
-		{#if $activeModeStore === 'adding'}
-			<Button
-				on:click={cancelAddFrameMode}
-				variant="ghost"
-				size="lg"
-				class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
-			>
-				Отмена
-			</Button>
-		{:else}
-			<Button
-				on:click={enableAddFrameMode}
-				variant="ghost"
-				size="lg"
-				class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
-			>
-				<Icon type={Plus} class="hidden h-6 w-6 max-md:block" />
-				<p class="max-md:hidden">Новый фрейм</p>
-			</Button>
+	<div class="absolute left-0 flex w-full justify-center px-40">
+		{#if !$readonlyStore}
+			{#if $activeModeStore === 'adding'}
+				<Button
+					on:click={cancelAddFrameMode}
+					variant="ghost"
+					size="lg"
+					class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
+				>
+					Отмена
+				</Button>
+			{:else}
+				<Button
+					on:click={enableAddFrameMode}
+					variant="ghost"
+					size="lg"
+					class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
+				>
+					<Icon type={Plus} class="hidden h-6 w-6 max-md:block" />
+					<p class="max-md:hidden">Новый фрейм</p>
+				</Button>
+			{/if}
 		{/if}
-	{/if}
+	</div>
 	<StateMode />
 </div>
 

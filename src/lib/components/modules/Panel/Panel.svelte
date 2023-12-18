@@ -31,12 +31,17 @@
 	$: framePanel = $currentPanelStore.id.includes('frame');
 </script>
 
-<div class={clsx('fixed right-0 h-full w-96 bg-contrast', hidden && 'max-lg:hidden')} />
 <div
 	class={clsx(
-		'relative flex max-w-full shrink-0 flex-col gap-4 overflow-auto p-4 text-text max-sm:py-2 max-xs:p-2',
+		'fixed right-0 h-full w-96 max-w-full bg-contrast transition-transform',
+		hidden && 'max-lg:translate-x-full'
+	)}
+/>
+<div
+	class={clsx(
+		'relative flex max-w-full shrink-0 flex-col gap-4 overflow-auto p-4 text-text transition-transform max-sm:py-2 max-xs:p-2',
 		className,
-		hidden && 'max-lg:hidden'
+		hidden && 'max-lg:translate-x-full'
 	)}
 >
 	<div class="flex w-full gap-2">
