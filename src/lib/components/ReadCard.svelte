@@ -24,7 +24,7 @@
 		<Image
 			{src}
 			{alt}
-			class="h-80 w-full rounded-2xl bg-main-50 text-text"
+			class="h-80 w-full rounded-2xl bg-contrast/30 text-text max-hd:h-72 max-xl:h-64 max-md:h-56 max-sm:h-48"
 			cover
 			on:error={handleError}
 		/>

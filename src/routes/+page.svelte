@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MagnifyingGlass, Moon, RocketLaunch, Sun } from 'svelte-heros-v2';
+	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 
 	import { Input } from '$UI';
 	import Loading from '$UI/Icons/Loading.svelte';
@@ -12,6 +12,7 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { ISearched } from '$lib/types/index.js';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
+	import type { SvelteComponent } from 'svelte';
 
 	export let data;
 
@@ -20,6 +21,12 @@
 	let loading = false;
 
 	$bodyColorStore = DEFAULT_COLOR;
+
+	const icons: Record<string, typeof SvelteComponent<unknown>> = {
+		news: RocketLaunch,
+		dark_theme: Moon,
+		light_theme: Sun
+	};
 
 	const handleInput = () => {
 		let timer: number;
@@ -49,7 +56,7 @@
 </svelte:head>
 
 <div class="flex grow flex-col gap-6 py-4">
-	{#if Object.keys(data.stories).length}
+	{#if data.categories.length}
 		<div class="flex w-full flex-col items-center gap-4 px-2">
 			<h1 class="w-full select-none py-4 text-center leading-9 text-text">Список историй</h1>
 			<Input
@@ -76,24 +83,14 @@
 				authors={searched.authors}
 			/>
 		{:else}
-			<Category
-				icon={RocketLaunch}
-				title="Новинки"
-				stories={data.stories.newStories}
-				authors={data.authors}
-			/>
-			<Category
-				icon={Moon}
-				title="Темная тема"
-				stories={data.stories.darkStories}
-				authors={data.authors}
-			/>
-			<Category
-				icon={Sun}
-				title="Светлая тема"
-				stories={data.stories.lightStories}
-				authors={data.authors}
-			/>
+			{#each data.categories as { title, stories, id }}
+				<Category
+					icon={id in icons ? icons[id] : Star}
+					{title}
+					{stories}
+					authors={data.authors}
+				/>
+			{/each}
 		{/if}
 	{:else}
 		<div class="plug flex-grow gap-8">

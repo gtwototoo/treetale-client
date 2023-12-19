@@ -18,10 +18,11 @@
 	import {
 		activeActionStore,
 		activeModeStore,
+		connectionStore,
 		type IAction,
 		type IMode
 	} from '$lib/stores/workspace';
-	import { Tag } from '$UI';
+	import { Button } from '$UI';
 
 	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
 		binding: Share,
@@ -35,19 +36,25 @@
 		dragImage: Photo,
 		connectTo: ArrowRightOnRectangle
 	};
+
+	const switchConnectionMode = () => {
+		$activeModeStore = $activeModeStore === 'binding' ? 'view' : 'binding';
+		$connectionStore = null;
+	};
 </script>
 
-<Tag
+<Button
+	variant="ghost"
 	class={clsx(
-		'flex flex-col gap-2 bg-contrast p-1',
-		$stateAreaStore === 'saving'
-			? 'animate-pulse text-gray-400'
-			: $stateAreaStore === 'saved'
-			  ? 'text-emerald-500'
-			  : $stateAreaStore === 'error'
-			    ? 'text-red-500'
-			    : 'text-gray-400'
+		'pointer-events-auto flex-col gap-1 bg-contrast !p-1.5',
+		{
+			saving: 'animate-pulse text-gray-400',
+			saved: 'text-emerald-500',
+			error: 'text-red-500',
+			await: 'text-gray-400'
+		}[$stateAreaStore]
 	)}
+	on:click={switchConnectionMode}
 >
 	{#if $activeActionStore}
 		<Icon type={iconsActions[$activeActionStore]} class="h-4 w-4" />
@@ -60,4 +67,4 @@
 			class={clsx('h-4 w-4')}
 		/>
 	{/if}
-</Tag>
+</Button>
