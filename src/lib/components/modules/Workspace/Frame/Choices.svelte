@@ -57,6 +57,12 @@
 		}
 	};
 
+	const handleMouseDown = (e: MouseEvent) => {
+		if ($activeModeStore !== 'binding') return;
+
+		e.stopPropagation();
+	};
+
 	const addChoice = () => {
 		const choiceId = choices.length ? last(choices).choiceId + 1 : 0;
 
@@ -97,14 +103,19 @@
 			class={clm(
 				'gap-4',
 				!text ? '!text-gray-400' : '!text-text',
-				$activeModeStore === 'binding' ? clsx('bg-main-60', greenHoverColor) : 'bg-main',
-				$activeModeStore === 'binding' && toFrameId && orangeColor,
-				$activeModeStore === 'binding' &&
-					$connectionStore &&
-					$connectionStore.frameId === frameId &&
-					$connectionStore.choiceId === choiceId &&
-					greenColor
+				$activeModeStore === 'binding'
+					? clsx(
+							'bg-main-60',
+							greenHoverColor,
+							toFrameId && orangeColor,
+							$connectionStore &&
+								$connectionStore.frameId === frameId &&
+								$connectionStore.choiceId === choiceId &&
+								greenColor
+					  )
+					: 'bg-main'
 			)}
+			on:mousedown={handleMouseDown}
 			on:click={() => handleClick(choiceId)}
 		>
 			{#if logicOperations.length}

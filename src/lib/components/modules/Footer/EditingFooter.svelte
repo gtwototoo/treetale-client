@@ -16,7 +16,7 @@
 		zoomStore
 	} from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
-	import { Plus } from 'svelte-heros-v2';
+	import { Plus, XMark } from 'svelte-heros-v2';
 
 	const cancelAddFrameMode = () => {
 		$activeModeStore = 'view';
@@ -54,7 +54,8 @@
 					size="lg"
 					class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
 				>
-					Отмена
+					<Icon type={XMark} class="hidden h-6 w-6 max-md:block" />
+					<p class="max-md:hidden">Отмена</p>
 				</Button>
 			{:else}
 				<Button

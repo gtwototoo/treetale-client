@@ -41,6 +41,7 @@
 	on:dragenter
 	on:dragleave
 	on:drop
+	on:mousedown
 	class={clm(
 		'transition-opacity childs:bg-transparent',
 		`size-${size}`,

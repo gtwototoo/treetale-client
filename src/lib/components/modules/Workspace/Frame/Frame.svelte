@@ -29,6 +29,14 @@
 	const setSelectedFrame = () => {
 		if (!frame) return;
 
+		if (
+			$activeModeStore === 'binding' &&
+			$connectionStore &&
+			$connectionStore.frameId !== frameId
+		) {
+			return;
+		}
+
 		if (!$readonlyStore) {
 			$movingFrameStore = frameId;
 		}
