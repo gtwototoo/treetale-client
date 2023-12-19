@@ -135,6 +135,7 @@
 		variant={$activeModeStore === 'binding' ? 'main' : 'ghost'}
 		class={clsx('!text-text', $activeModeStore === 'binding' ? 'bg-main-60' : 'bg-main')}
 		on:click={addChoice}
+		on:mousedown={(e) => e.stopPropagation()}
 	>
 		Добавить вариант
 	</Button>
