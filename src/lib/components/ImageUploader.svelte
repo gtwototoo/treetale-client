@@ -1,7 +1,6 @@
 <script lang="ts">
+	import { Button, Image } from '$UI';
 	import { redColorStore } from '$lib/stores/main';
-	import { Image } from '$UI';
-	import Button from '$UI/Button.svelte';
 	import clsx from 'clsx';
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
 	import { Trash } from 'svelte-heros-v2';

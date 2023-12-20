@@ -2,6 +2,7 @@
 	import clsx from 'clsx';
 	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -9,7 +10,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { getPageType, rootStyle } from '$lib/utils';
-	import { Button } from '$UI';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -22,9 +23,10 @@
 </script>
 
 <svelte:head>
-	<title>{me ? 'Профиль' : user.name}</title>
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
+
+<MetaTags title={me ? 'Профиль' : user.name} description={user.description} />
 
 <div class="screen-sm screen-md screen-hd screen-xl flex grow items-start gap-8 p-16">
 	<UserInformation {user} {me} {statistic} />

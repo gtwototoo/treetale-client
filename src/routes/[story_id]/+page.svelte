@@ -16,6 +16,7 @@
 	import { correctToType, doMath } from '$lib/utils/variable_operations.js';
 	import clsx from 'clsx';
 	import { ArrowsPointingIn, BookOpen } from 'svelte-heros-v2';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -148,11 +149,12 @@
 </script>
 
 <svelte:head>
-	<title>{title}</title>
 	{@html rootStyle($bodyColorStore, {
 		'fill-gradient': `url(#light-gradient-${storyId})`
 	})}
 </svelte:head>
+
+<MetaTags {title} {description} />
 
 <ska:html class="h-full" />
 <svelte:body class="h-full" />

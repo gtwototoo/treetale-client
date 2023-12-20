@@ -94,6 +94,9 @@ devDependencies:
   svelte-heros-v2:
     specifier: ^0.10.12
     version: 0.10.12(svelte@4.2.8)
+  svelte-meta-tags:
+    specifier: ^3.1.0
+    version: 3.1.0(svelte@4.2.8)(typescript@5.3.2)
   svelte-preprocess:
     specifier: ^5.1.0
     version: 5.1.1(postcss-load-config@4.0.2)(postcss@8.4.32)(svelte@4.2.8)(typescript@5.3.2)
@@ -2402,6 +2405,14 @@ packages:
       rimraf: 2.7.1
     dev: true
 
+  /schema-dts@1.1.2(typescript@5.3.2):
+    resolution: {integrity: sha512-MpNwH0dZJHinVxk9bT8XUdjKTxMYrA5bLtrrGmFA6PTLwlOKnhi67XoRd6/ty+Djt6ZC0slR57qFhZDNMI6DhQ==}
+    peerDependencies:
+      typescript: '>=4.1.0'
+    dependencies:
+      typescript: 5.3.2
+    dev: true
+
   /semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
     engines: {node: '>=10'}
@@ -2569,6 +2580,17 @@ packages:
       svelte: ^3.19.0 || ^4.0.0
     dependencies:
       svelte: 4.2.8
+    dev: true
+
+  /svelte-meta-tags@3.1.0(svelte@4.2.8)(typescript@5.3.2):
+    resolution: {integrity: sha512-wFBfpktSua1R5rdvQ/aFucvXmRqzDhRYrPpMQ/pL4+KL5QHIzomPf29a5WN3yDR0reSy1PXyQ2ah0+uCYCbi0g==}
+    peerDependencies:
+      svelte: ^3.55.0 || ^4.0.0
+    dependencies:
+      schema-dts: 1.1.2(typescript@5.3.2)
+      svelte: 4.2.8
+    transitivePeerDependencies:
+      - typescript
     dev: true
 
   /svelte-parse-markup@0.1.2(svelte@4.2.8):

@@ -1,3 +1,4 @@
+import { DEFAULT_COLOR } from '$lib/constants';
 import type { IUser } from '$lib/types';
 import mongoose from 'mongoose';
 
@@ -11,17 +12,41 @@ const userSchema = new mongoose.Schema<IUser>(
 			type: String,
 			default: null
 		},
-		name: {
+		imageUrl: {
 			type: String,
-			required: true
+			default: null
 		},
 		email: {
 			type: String,
 			required: true
 		},
-		imageUrl: {
+		name: {
 			type: String,
 			default: null
+		},
+		description: {
+			type: String,
+			default: null
+		},
+		color: {
+			type: [
+				{
+					_id: false,
+					type: Number,
+					required: true
+				}
+			],
+			default: DEFAULT_COLOR
+		},
+		subscriptions: {
+			type: [
+				{
+					_id: false,
+					type: Number,
+					required: true
+				}
+			],
+			default: []
 		},
 		created: {
 			type: Number,

@@ -1,10 +1,6 @@
 <script lang="ts">
-	import Button from '$UI/Button.svelte';
-	import Mascot from '$UI/Icons/Mascot.svelte';
-	import Mastercard from '$UI/Icons/Mastercard.svelte';
-	import Mir from '$UI/Icons/Mir.svelte';
-	import Telegram from '$UI/Icons/Telegram.svelte';
-	import Visa from '$UI/Icons/Visa.svelte';
+	import { Button } from '$UI';
+	import { Mascot, Mastercard, Mir, Telegram, Visa } from '$UI/Icons';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { DocumentText } from 'svelte-heros-v2';

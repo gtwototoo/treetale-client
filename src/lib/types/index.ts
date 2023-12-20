@@ -83,7 +83,7 @@ export interface IProgressData {
 }
 
 export interface IUser {
-	[index: string]: string | number | null | TRGB;
+	[index: string]: string | number | null | TRGB | number[];
 	color: TRGB | null;
 	created: number;
 	description: string;
@@ -91,6 +91,7 @@ export interface IUser {
 	imageUrl: string | null;
 	name: string;
 	sessionId: string | null;
+	subscriptions: Array<number>;
 	userId: number;
 }
 

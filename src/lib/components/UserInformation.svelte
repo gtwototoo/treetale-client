@@ -1,12 +1,17 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { Cog6Tooth, UserPlus } from 'svelte-heros-v2';
+	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
 
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
-	import { signOutUser, updateProfile } from '$lib/requests/user';
+	import {
+		signOutUser,
+		subscribeProfile,
+		unsubscribeProfile,
+		updateProfile
+	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 	import type { IUser } from '$lib/types';
 	import { Button, ColorPicker, Contenteditable } from '$UI';
@@ -20,9 +25,30 @@
 	let saturate = 90;
 	let loading = false;
 
-	const handleSubscribe = () => {
-		if ($page.data.session) {
-			alert('Coming soon');
+	const handleUnsubscribe = async () => {
+		loading = true;
+
+		try {
+			await unsubscribeProfile(user.userId);
+			invalidateAll();
+		} catch (e) {
+			console.error(e);
+		} finally {
+			loading = false;
+		}
+	};
+	const handleSubscribe = async () => {
+		if ($page.data.session && $page.data.session.userId !== user.userId) {
+			loading = true;
+
+			try {
+				await subscribeProfile(user.userId);
+				invalidateAll();
+			} catch (e) {
+				console.error(e);
+			} finally {
+				loading = false;
+			}
 		} else {
 			goto('/signin');
 		}
@@ -157,8 +183,25 @@
 					Выйти
 				</Button>
 			{/if}
+		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
+			<Button
+				size="lg"
+				variant="ghost"
+				{loading}
+				class="gap-3 bg-white"
+				on:click={handleUnsubscribe}
+			>
+				<Icon type={UserMinus} class="h-6 w-6" />
+				<p class="mr-1">Отписаться</p>
+			</Button>
 		{:else}
-			<Button size="lg" variant="ghost" class="gap-3 bg-white" on:click={handleSubscribe}>
+			<Button
+				size="lg"
+				variant="ghost"
+				{loading}
+				class="gap-3 bg-white"
+				on:click={handleSubscribe}
+			>
 				<Icon type={UserPlus} class="h-6 w-6" />
 				<p class="mr-1">Подписаться</p>
 			</Button>

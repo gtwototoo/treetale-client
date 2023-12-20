@@ -1,20 +1,26 @@
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import { StoriesModel, UsersModel } from '$lib/server/models';
+import { collapseValue, pluralize, randomError, serialize } from '$lib/utils';
+
+import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
 import type { IUser } from '$lib/types';
 import type { IStoryReading } from '$lib/types/reading';
-import { collapseValue, pluralize, randomError, serialize } from '$lib/utils';
 
 const correctMetric = (value: number, names: [string, string, string]) => {
 	return pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...names).split(' ');
 };
 
-const getStatistic = (stories: Array<IStoryReading>) => {
+const getStatistic = async (stories: Array<IStoryReading>, user: IUser) => {
 	const likes = stories.reduce((sum, { likes }) => sum + likes.length, 0);
+	const subscribersCount = await UsersModel.find({
+		subscriptions: {
+			$in: [user.userId]
+		}
+	}).countDocuments();
 
 	const metrics: Array<Array<string>> = [
 		correctMetric(likes, ['лайков', 'лайк', 'лайка']),
 		correctMetric(stories.length, ['историй', 'история', 'истории']),
-		correctMetric(0, ['подписчиков', 'подписчик', 'подписчика'])
+		correctMetric(subscribersCount, ['подписчиков', 'подписчик', 'подписчика'])
 	];
 
 	return metrics;
@@ -49,6 +55,6 @@ export const load = async ({ params, locals }) => {
 
 	return {
 		user,
-		statistic: getStatistic(serialize(stories))
+		statistic: await getStatistic(serialize(stories), serialize(user))
 	};
 };

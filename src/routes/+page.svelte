@@ -2,7 +2,7 @@
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 
 	import { Input } from '$UI';
-	import Loading from '$UI/Icons/Loading.svelte';
+	import { Loading } from '$UI/Icons';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Category from '$lib/components/modules/Category.svelte';
@@ -13,6 +13,7 @@
 	import type { ISearched } from '$lib/types/index.js';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 	import type { SvelteComponent } from 'svelte';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -55,9 +56,14 @@
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
+<MetaTags
+	title="TREETALE"
+	description="Бесплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных нелинейных историй. Все добавленные авторами истории находятся на главном экране, что позволяет найти большее количество читателей, а добавление истории происходит с помощью создания интуитивно понятных node-схем с описанием, иллюстрациями и вариантами выбора."
+/>
+
 <div class="flex grow flex-col gap-6 py-4">
 	{#if data.categories.length}
-		<div class="flex w-full flex-col items-center gap-4 px-2">
+		<div class="flex w-full flex-col items-center gap-4 px-3">
 			<h1 class="w-full select-none py-4 text-center leading-9 text-text">Список историй</h1>
 			<Input
 				placeholder="Поиск"

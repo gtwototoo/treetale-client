@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$UI/Button.svelte';
+	import { Button } from '$UI';
 	import clsx from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
 
