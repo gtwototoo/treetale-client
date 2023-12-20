@@ -30,7 +30,7 @@
 
 		try {
 			await unsubscribeProfile(user.userId);
-			invalidateAll();
+			await invalidateAll();
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -43,7 +43,7 @@
 
 			try {
 				await subscribeProfile(user.userId);
-				invalidateAll();
+				await invalidateAll();
 			} catch (e) {
 				console.error(e);
 			} finally {
@@ -81,7 +81,7 @@
 
 		try {
 			await updateProfile(user.name, user.description, $bodyColorStore);
-			invalidateAll();
+			await invalidateAll();
 		} catch (e) {
 			console.error(e);
 		} finally {
