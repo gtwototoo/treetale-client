@@ -10,6 +10,7 @@
 
 	export let disabled = false;
 	export let variant: 'main' | 'custom' | 'ghost' = 'main';
+	export let loading = false;
 
 	let fileInput: HTMLInputElement;
 
@@ -20,7 +21,7 @@
 	};
 </script>
 
-<Button class={className} on:click={handleClick} {disabled} {variant}>
+<Button class={className} on:click={handleClick} {disabled} {variant} {loading}>
 	<slot />
 	<input bind:this={fileInput} class="hidden" type="file" accept="image/*" on:change />
 </Button>

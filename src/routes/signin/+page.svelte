@@ -60,7 +60,7 @@
 </svelte:head>
 
 <div class="flex h-full w-full items-start justify-center">
-	<div class="flex min-h-full items-center p-4 max-sm:p-2">
+	<div class="flex min-h-full items-center p-4 max-sm:p-3">
 		<ReadCard
 			src="/compressed/auth.jpeg"
 			alt="Авторизация"

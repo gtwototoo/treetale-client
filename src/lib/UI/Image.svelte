@@ -81,7 +81,7 @@
 			{#if $$slots.error}
 				<slot name="error" />
 			{:else}
-				<Icon type={Photo} class="h-6 w-6" />
+				<Icon type={Photo} class="h-1/3 min-h-[1rem] w-auto" />
 			{/if}
 		{/await}
 	{/if}

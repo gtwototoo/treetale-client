@@ -10,7 +10,7 @@
 
 <div
 	class={clsx(
-		'z-10 flex w-full items-center justify-between bg-transparent p-4 max-sm:p-2',
+		'z-10 flex w-full items-center justify-between bg-transparent p-4 max-sm:p-3',
 		className
 	)}
 >

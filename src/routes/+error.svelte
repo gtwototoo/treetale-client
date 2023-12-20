@@ -23,7 +23,7 @@
 
 {#if $page.error}
 	<div class="flex h-full w-full items-start justify-center">
-		<div class="flex min-h-full items-center p-4 max-sm:p-2">
+		<div class="flex min-h-full items-center p-4 max-sm:p-3">
 			<ReadCard src={img} alt="Ошибка" text={message}>
 				<div class="w-full">
 					<Button

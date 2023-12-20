@@ -27,8 +27,10 @@
 </script>
 
 <div class="flex h-full flex-col">
-	<div class="sticky top-0 z-10 flex select-none items-center gap-4 py-3 pl-12">
-		<Icon type={icon} class="h-8 w-8" />
+	<div
+		class="sticky top-0 z-10 flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6"
+	>
+		<Icon type={icon} class="h-8 w-8 max-sm:h-6 max-sm:w-6" />
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
 	{#if listFormat}
@@ -41,7 +43,7 @@
 			<AddStoryButton class="gap-3 bg-contrast text-text" />
 		</StoriesList>
 	{:else}
-		<div class="overflow-hidden p-2 sm:p-4" use:emblaCarouselSvelte={{ options, plugins }}>
+		<div class="overflow-hidden p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins }}>
 			<div class="flex justify-start gap-4">
 				{#each stories as rawStory}
 					{@const { vars, ...story } = rawStory}

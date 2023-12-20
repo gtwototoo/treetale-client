@@ -29,7 +29,7 @@
 					draft ? 'text-gray-500' : 'text-emerald-500'
 				)}
 			>
-				<div class="rounded-full bg-main-30 p-2">
+				<div class="rounded-full bg-main-30 p-1.5">
 					<Icon type={draft ? ArchiveBox : CheckCircle} class="h-6 w-6" />
 				</div>
 				<p class="truncate">{draft ? 'Черновик' : 'Опубликовано'}</p>

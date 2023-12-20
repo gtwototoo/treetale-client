@@ -161,7 +161,7 @@
 <div
 	role="treegrid"
 	tabindex="0"
-	class="absolute flex h-full w-full items-start justify-center overflow-hidden p-4 max-sm:p-2"
+	class="absolute flex h-full w-full items-start justify-center overflow-hidden p-4 max-sm:p-3"
 	id="read-screen"
 	on:keydown={handleKeydown}
 	on:wheel={handleWheel}

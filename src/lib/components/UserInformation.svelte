@@ -106,7 +106,7 @@
 				readonly={!editMode}
 			/>
 		{:else}
-			<p class="px-4 py-2 text-lg">Описание отсутствует</p>
+			<p class="px-4 py-2 text-lg text-text/50">Описание отсутствует</p>
 		{/if}
 	</div>
 	<div class="flex gap-2 bg-transparent">

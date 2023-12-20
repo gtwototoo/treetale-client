@@ -39,7 +39,7 @@
 />
 <div
 	class={clsx(
-		'relative flex max-w-full shrink-0 flex-col gap-4 overflow-auto p-4 text-text transition-transform max-sm:py-2 max-xs:p-2',
+		'relative flex max-w-full shrink-0 flex-col gap-4 p-4 text-text transition-transform max-sm:py-3 max-xs:p-3',
 		className,
 		hidden && 'max-lg:translate-x-full'
 	)}

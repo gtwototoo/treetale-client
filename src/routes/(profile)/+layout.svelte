@@ -89,6 +89,6 @@
 		@apply max-md:flex-col max-md:items-center;
 	}
 	.screen-sm {
-		@apply max-sm:p-2;
+		@apply max-sm:p-3;
 	}
 </style>

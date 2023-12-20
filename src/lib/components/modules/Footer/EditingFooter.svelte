@@ -75,7 +75,7 @@
 
 <style lang="postcss">
 	.area {
-		@apply pointer-events-none absolute bottom-0 flex w-full items-end justify-between gap-3 bg-transparent p-2 transition-opacity sm:p-4;
+		@apply pointer-events-none absolute bottom-0 flex w-full items-end justify-between gap-3 bg-transparent p-4 transition-opacity max-sm:p-3;
 	}
 	.footer {
 		@apply flex items-center gap-1;

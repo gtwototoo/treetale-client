@@ -33,6 +33,6 @@
 
 <style lang="postcss">
 	.stories {
-		@apply grid w-full items-start justify-center gap-2 p-2 grid-columns-fit-40 xs:grid-columns-fit-64 sm:gap-4 sm:p-4 lg:grid-columns-fit-72;
+		@apply grid w-full items-start justify-center gap-4 p-4 grid-columns-fit-40 max-sm:gap-2 max-sm:p-2 xs:grid-columns-fit-64 lg:grid-columns-fit-72;
 	}
 </style>
