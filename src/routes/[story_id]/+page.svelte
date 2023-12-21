@@ -1,13 +1,10 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import Button from '$UI/Button.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Icon from '$lib/components/Icon.svelte';
-	import Likes from '$lib/components/Likes.svelte';
-	import ReadCard from '$lib/components/ReadCard.svelte';
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
+	import StoryDescription from '$lib/components/StoryDescription.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
-	import Info from '$lib/components/modules/StoriesList/StoryCard/Info.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
@@ -15,28 +12,55 @@
 	import { getChoiceFromId, getFrameFromId, last, rootStyle } from '$lib/utils';
 	import { correctToType, doMath } from '$lib/utils/variable_operations.js';
 	import clsx from 'clsx';
-	import { ArrowsPointingIn, BookOpen } from 'svelte-heros-v2';
+	import type {
+		EmblaCarouselType,
+		EmblaOptionsType,
+		EmblaPluginType
+	} from 'embla-carousel-svelte';
+	import emblaCarouselSvelte from 'embla-carousel-svelte';
+	import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
-	let current = data.progress.length;
+	let emblaApi: EmblaCarouselType;
 
-	let currentElement: HTMLElement;
-	let currentTranslate: number;
+	const options: EmblaOptionsType = {
+		align: 'center',
+		axis: 'y',
+		containScroll: false,
+		startIndex: data.progress.length
+	};
+
+	const plugins: Array<EmblaPluginType> = [
+		WheelGesturesPlugin({
+			forceWheelAxis: 'y'
+		})
+	];
+
+	// const isFullscreen = () => {
+	// 	return (
+	// 		document.fullscreenElement ||
+	// 		document.webkitFullscreenElement ||
+	// 		document.mozFullScreenElement ||
+	// 		document.webkitIsFullScreen
+	// 	);
+	// };
+
+	const handleInit = (event: CustomEvent<EmblaCarouselType>) => {
+		emblaApi = event.detail;
+	};
 
 	const prevFrame = () => {
-		if (current >= 1) {
-			current -= 1;
-		}
+		if (!emblaApi) return;
+
+		emblaApi.scrollPrev();
 	};
 
 	const nextFrame = () => {
-		if (currentTranslate + currentElement.clientHeight + 88 > window.innerHeight) {
-			currentTranslate = currentTranslate - window.innerHeight / 2;
-		} else if (current < data.progress.length) {
-			current += 1;
-		}
+		if (!emblaApi) return;
+
+		emblaApi.scrollNext();
 	};
 
 	const handleKeydown = (e: KeyboardEvent) => {
@@ -93,54 +117,20 @@
 			updateVars(frameId, choiceId);
 
 			await invalidateAll();
-
-			current = data.progress.length;
 		} catch (e) {
 			console.error(e);
 		}
 	};
 
-	const setPosition = (node: HTMLDivElement, current: number) => {
-		const changePosition = (current: number) => {
-			const childs = Array.from(node.childNodes).filter(
-				(element) => element instanceof HTMLElement
-			) as Array<HTMLElement>;
-
-			currentElement = childs[current];
-
-			const outEdge = currentElement.clientHeight > window.innerHeight;
-
-			const translate = outEdge
-				? currentElement.offsetTop - 88
-				: currentElement.offsetTop + currentElement.clientHeight / 2 - window.innerHeight / 2;
-
-			currentTranslate = -translate;
-		};
-
-		changePosition(current);
-
-		return {
-			update(current: number) {
-				changePosition(current);
-			}
-		};
-	};
-
-	const handleWheel = (e: WheelEvent) => {
-		if (e.deltaY > 0) {
-			nextFrame();
-		} else {
-			prevFrame();
-		}
+	const handleFulscreenChange = () => {
+		$fullscreenStore = !!document.fullscreenElement;
 	};
 
 	const handleFulscreen = async () => {
 		await document.exitFullscreen();
-
-		$fullscreenStore = false;
 	};
 
-	$: ({ storyId, title, description, author, created, draft, likes, color, tags } = data.story);
+	$: ({ storyId, title, description, color } = data.story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
 	$: $framesStore = data.frames;
 
@@ -159,54 +149,35 @@
 <ska:html class="h-full" />
 <svelte:body class="h-full" />
 
+<svelte:window on:keydown={handleKeydown} on:fullscreenchange={handleFulscreenChange} />
+
 <SvgGradient id={storyId} />
-<div
-	role="treegrid"
-	tabindex="0"
-	class="absolute flex h-full w-full items-start justify-center overflow-hidden p-4 max-sm:p-3"
-	id="read-screen"
-	on:keydown={handleKeydown}
-	on:wheel={handleWheel}
->
+<div id="read-screen" class="absolute h-full w-full">
+	<div
+		class="flex h-full w-full px-4 py-20 max-sm:px-3"
+		use:emblaCarouselSvelte={{ options, plugins }}
+		on:emblaInit={handleInit}
+	>
+		<div class="flex w-full flex-col items-center gap-4">
+			<StoryDescription story={data.story} />
+			{#each $framesStore as { frameId }, key}
+				{@const isLastFrame = key === $framesStore.length - 1}
+				<ReadFrame
+					{frameId}
+					on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
+					selectedChoiceId={data.progress[key].choiceId}
+					class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
+				/>
+			{/each}
+		</div>
+	</div>
 	{#if $fullscreenStore}
 		<Button
-			variant="ghost"
-			class="header-button !fixed right-4 top-4 bg-contrast text-text"
-			size="lg"
+			variant="custom"
+			class="!fixed bottom-0 left-0 w-full justify-center !rounded-none bg-main-90 text-text text-opacity-10 hover:text-opacity-100"
 			on:click={handleFulscreen}
 		>
-			<Icon type={ArrowsPointingIn} class="h-6 w-6" />
+			Выйти
 		</Button>
 	{/if}
-	<div
-		class="flex w-full flex-col items-center gap-6 transition-transform"
-		style:transform="translateY({currentTranslate}px)"
-		use:setPosition={current}
-	>
-		<ReadCard classCard="h-full text-center !items-center !gap-10">
-			<svelte:fragment slot="body">
-				<Icon
-					type={BookOpen}
-					class="h-44 w-auto childs:fill-gradient max-hd:h-36 max-xl:h-28"
-					variation="solid"
-				/>
-				<div class="flex flex-col gap-4">
-					<h2 class="uppercase">{title}</h2>
-					<p class="max-w-sm">{description}</p>
-				</div>
-				<Info {likes} {author} {draft} {created} {tags} edit={false}>
-					<Likes {likes} {storyId} />
-				</Info>
-			</svelte:fragment>
-		</ReadCard>
-		{#each $framesStore as { frameId }, key}
-			{@const isLastFrame = key === $framesStore.length - 1}
-			<ReadFrame
-				{frameId}
-				on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
-				selectedChoiceId={data.progress[key].choiceId}
-				class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
-			/>
-		{/each}
-	</div>
 </div>

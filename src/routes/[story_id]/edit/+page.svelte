@@ -4,7 +4,6 @@
 
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import EditingFooter from '$lib/components/modules/Footer/EditingFooter.svelte';
-	import Radar from '$lib/components/modules/Footer/Radar.svelte';
 	import InformationSettings from '$lib/components/modules/Panel/InformationSettings/InformationSettings.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
 	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
@@ -234,6 +233,4 @@
 		on:click={handleClick}
 	/>
 </div>
-<EditingFooter>
-	<Radar {width} {height} />
-</EditingFooter>
+<EditingFooter bind:width bind:height />

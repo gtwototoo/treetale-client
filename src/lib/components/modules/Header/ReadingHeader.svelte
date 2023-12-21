@@ -11,6 +11,16 @@
 	import { contrastText } from '$lib/utils';
 	import Donut from '../Panel/Donut.svelte';
 
+	// const fullScreen = async (element: HTMLElement) => {
+	// 	if (element.requestFullscreen) {
+	// 		await element.requestFullscreen();
+	// 	} else if (element.webkitrequestFullscreen) {
+	// 		await element.webkitRequestFullscreen();
+	// 	} else if (element.mozRequestFullscreen) {
+	// 		await element.mozRequestFullScreen();
+	// 	}
+	// };
+
 	const openDonutPanel = () => {
 		$currentPanelStore = {
 			id: 'donut',
@@ -20,8 +30,10 @@
 	};
 
 	const handleFulscreen = async () => {
+		const readScreen = document.getElementById('read-screen') as HTMLDivElement;
+
 		try {
-			await document.getElementById('read-screen').requestFullscreen();
+			await readScreen.requestFullscreen();
 
 			$fullscreenStore = true;
 		} catch {

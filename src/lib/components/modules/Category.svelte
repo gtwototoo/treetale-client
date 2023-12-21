@@ -18,12 +18,12 @@
 	export let icon: typeof SvelteComponent<unknown>;
 	export let listFormat = false;
 
-	let options: EmblaOptionsType = {
+	const options: EmblaOptionsType = {
 		align: 'start',
 		dragFree: true
 	};
 
-	let plugins: Array<EmblaPluginType> = [];
+	const plugins: Array<EmblaPluginType> = [];
 </script>
 
 <div class="flex h-full flex-col">

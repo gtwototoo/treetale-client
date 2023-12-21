@@ -2,6 +2,7 @@
 	import { FormSplit } from '$UI';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/Icon.svelte';
+	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
 	import type { IUser } from '$lib/types';
@@ -14,12 +15,18 @@
 	export let created: number;
 	export let tags: Array<string>;
 	export let edit: boolean;
+	export let storyId: number | undefined = undefined;
 
 	$: isLiked = likes?.includes($page.data.session?.userId);
 </script>
 
 <FormSplit vertical class="w-full divide-contrast bg-transparent">
-	<div class="flex w-full items-center justify-between gap-4 rounded-xl bg-main-60 p-3 max-md:p-2">
+	<div
+		class={clsx(
+			'flex w-full items-center justify-between gap-4 rounded-xl bg-main-60 p-3 max-md:p-2',
+			!storyId && 'pointer-events-none'
+		)}
+	>
 		{#if author && !edit}
 			<ProfileLink {author} {created} />
 		{:else}
@@ -35,8 +42,8 @@
 				<p class="truncate">{draft ? 'Черновик' : 'Опубликовано'}</p>
 			</div>
 		{/if}
-		{#if $$slots.default}
-			<slot />
+		{#if storyId}
+			<Likes {likes} {storyId} />
 		{:else}
 			<div class="mr-1 flex items-center gap-1">
 				<Icon

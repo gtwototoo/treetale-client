@@ -1,6 +1,12 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { ArrowUturnLeft, ArrowUturnRight, ChevronLeft, Variable } from 'svelte-heros-v2';
+	import {
+		ArrowUturnLeft,
+		ArrowUturnRight,
+		ChevronLeft,
+		Cog6Tooth,
+		Variable
+	} from 'svelte-heros-v2';
 
 	import { Changes, Variables } from '../Panel';
 
@@ -19,6 +25,10 @@
 			id: 'variables',
 			component: Variables
 		};
+	};
+
+	const settingsSwitch = () => {
+		currentPanelStore.clear();
 	};
 
 	const historySwitch = () => {
@@ -58,18 +68,9 @@
 			</Button>
 		</FormSplit>
 	{/if}
-	<Button
-		class="header-button bg-contrast text-text"
-		variant="ghost"
-		size="lg"
-		on:click={variablesSwitch}
-	>
-		<Icon type={Variable} class="h-6 w-6" />
-		<p class="mr-1 max-lg:hidden">Переменные</p>
-	</Button>
 	<svelte:fragment slot="right">
 		<Button
-			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-2"
+			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-3"
 			variant="ghost"
 			size="lg"
 			on:click={currentPanelStore.switchVisible}
@@ -77,4 +78,25 @@
 			<Icon type={ChevronLeft} class="h-6 w-6" />
 		</Button>
 	</svelte:fragment>
+	<FormSplit
+		class="absolute right-4 top-20 divide-main max-sm:right-3 max-sm:top-[4.5rem]"
+		vertical
+	>
+		<Button
+			class="header-button bg-contrast !px-3 text-text"
+			variant="ghost"
+			size="lg"
+			on:click={variablesSwitch}
+		>
+			<Icon type={Variable} class="h-6 w-6" />
+		</Button>
+		<Button
+			class="header-button bg-contrast !px-3 text-text"
+			variant="ghost"
+			size="lg"
+			on:click={settingsSwitch}
+		>
+			<Icon type={Cog6Tooth} class="h-6 w-6" />
+		</Button>
+	</FormSplit>
 </Header>

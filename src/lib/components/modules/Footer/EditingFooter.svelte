@@ -17,6 +17,10 @@
 	} from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
 	import { Plus, XMark } from 'svelte-heros-v2';
+	import Radar from './Radar.svelte';
+
+	export let width: number;
+	export let height: number;
 
 	const cancelAddFrameMode = () => {
 		$activeModeStore = 'view';
@@ -34,9 +38,14 @@
 </script>
 
 <div class="area">
-	<div class={clsx('flex items-center', $activeActionStore ? 'blind' : 'pointer-events-auto')}>
-		<slot />
-		<div class="info whitespace-nowrap">
+	<div
+		class={clsx(
+			'flex items-center gap-2 rounded-full bg-main ring-4 ring-main',
+			$activeActionStore ? 'blind' : 'pointer-events-auto'
+		)}
+	>
+		<Radar bind:width bind:height />
+		<div class="mr-4 flex select-none flex-col whitespace-nowrap text-sm text-text">
 			<p>
 				{Math.round($offsetStore.x)}, {Math.round($offsetStore.y)}
 			</p>
@@ -79,8 +88,5 @@
 	}
 	.footer {
 		@apply flex items-center gap-1;
-	}
-	.info {
-		@apply flex select-none flex-col rounded-lg bg-main px-2 py-1 text-sm text-text;
 	}
 </style>

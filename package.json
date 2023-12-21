@@ -27,6 +27,7 @@
 		"autoprefixer": "^10.4.16",
 		"clsx": "^2.0.0",
 		"embla-carousel-svelte": "^8.0.0-rc15",
+		"embla-carousel-wheel-gestures": "8.0.0-rc05",
 		"eslint": "^8.53.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-perfectionist": "^2.3.0",
