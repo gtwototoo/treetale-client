@@ -1,22 +1,5 @@
 import type { TComparisonOperator, TMathOperator, TVariableExpects } from '$lib/types';
 
-export const correctSymbol = (symbol: string, logic: boolean) => {
-	const replaces: Record<string, string> = {
-		'=': '===',
-		'≥': '>=',
-		'≤': '<=',
-		'≠': '!=='
-	};
-
-	if (logic) {
-		replaces['='] = '===';
-	}
-
-	if (!(symbol in replaces)) return symbol;
-
-	return replaces[symbol];
-};
-
 export const correctToType = (value: string | number, expect: TVariableExpects) => {
 	return expect === 'Число' ? +value : value;
 };

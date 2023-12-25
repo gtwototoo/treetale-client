@@ -74,7 +74,8 @@
 					variant="ghost"
 					class={clsx(
 						'w-full justify-center whitespace-normal bg-main !px-2',
-						framePanel && '!rounded-none'
+						framePanel && '!rounded-none',
+						(!framePanel || !framesList) && 'pointer-events-none !bg-opacity-20'
 					)}
 					on:click={click}
 				>

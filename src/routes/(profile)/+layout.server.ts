@@ -11,11 +11,11 @@ const correctMetric = (value: number, names: [string, string, string]) => {
 
 const getStatistic = async (stories: Array<IStoryReading>, user: IUser) => {
 	const likes = stories.reduce((sum, { likes }) => sum + likes.length, 0);
-	const subscribersCount = await UsersModel.find({
+	const subscribersCount = await UsersModel.countDocuments({
 		subscriptions: {
 			$in: [user.userId]
 		}
-	}).countDocuments();
+	});
 
 	const metrics: Array<Array<string>> = [
 		correctMetric(likes, ['лайков', 'лайк', 'лайка']),

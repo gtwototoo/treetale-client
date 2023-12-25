@@ -19,7 +19,7 @@
 			variant="ghost"
 			on:click={() => changesHistory.to(key)}
 			class={clsx('gap-4 bg-main text-text', {
-				'opacity-60': key > $changesHistory.currentStageId
+				'opacity-60': key > $changesHistory.currentId
 			})}
 		>
 			<Icon type={icon} />

@@ -14,10 +14,7 @@ export const addLike = async (storyId: number) => {
 };
 
 export const updateInfomation = async (storyId: number, info: IStoryEditableInfo) => {
-	return await fetchPost(
-		`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=information`,
-		info
-	);
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/info`, info);
 };
 
 export const updateArea = async (
@@ -26,7 +23,7 @@ export const updateArea = async (
 	offset: ICoordinates,
 	zoom: number
 ) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=area`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/area`, {
 		frames,
 		offset,
 		zoom
@@ -34,13 +31,13 @@ export const updateArea = async (
 };
 
 export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit?sections=vars`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/vars`, {
 		vars
 	});
 };
 
 export const searchStories = async (row: string) => {
-	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/story/search?row=${row}`);
+	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/story/search/${row}`);
 };
 
 export const createStory = async () => {

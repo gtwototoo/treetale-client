@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/StoriesList.svelte';
-	import { correctWhitespace } from '$lib/utils/text.js';
+	import { correctWhitespace } from '$lib/utils';
 
 	export let data;
 </script>

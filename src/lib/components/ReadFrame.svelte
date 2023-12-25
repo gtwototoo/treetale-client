@@ -8,8 +8,14 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, variablesStore } from '$lib/stores/reading';
 	import type { ILogicOperation } from '$lib/types';
-	import { correctVariableReplace, getChoiceFromId, getFrameFromId } from '$lib/utils';
-	import { correctToType, doLogic, doMath } from '$lib/utils/variable_operations';
+	import {
+		correctToType,
+		correctVariableReplace,
+		doLogic,
+		doMath,
+		getChoiceFromId,
+		getFrameFromId
+	} from '$lib/utils';
 
 	const dispatch = createEventDispatcher<{
 		click: { choiceId: number };

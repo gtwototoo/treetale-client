@@ -51,7 +51,7 @@
 				variant="ghost"
 				size="lg"
 				on:click={changesHistory.undo}
-				disabled={$changesHistory.currentStageId === 0}
+				disabled={$changesHistory.currentId === 0}
 				on:holdclick={historySwitch}
 			>
 				<Icon type={ArrowUturnLeft} />
@@ -61,7 +61,7 @@
 				variant="ghost"
 				size="lg"
 				on:click={changesHistory.redo}
-				disabled={$changesHistory.currentStageId + 1 >= $changesHistory.stages.length}
+				disabled={$changesHistory.currentId + 1 >= $changesHistory.stages.length}
 				on:holdclick={historySwitch}
 			>
 				<Icon type={ArrowUturnRight} />

@@ -2,7 +2,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 
 	import { framesDataStore } from '$lib/stores/workspace';
-	import { createConnections } from '$lib/utils/editing';
+	import { createConnections } from '$lib/utils';
 
 	const dispatch = createEventDispatcher();
 

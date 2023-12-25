@@ -33,7 +33,7 @@
 	const dispatch = createEventDispatcher();
 
 	const handleClick = () => {
-		if (readonly) return;
+		if (readonly || !list.length) return;
 
 		focused = !focused;
 	};

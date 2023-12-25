@@ -51,7 +51,7 @@
 				variant="main"
 				size="sm"
 				on:click={handleRemove}
-				class={clsx('!absolute right-1.5 top-1.5 z-10 !text-red-500', $redColorStore)}
+				class={clsx('!absolute right-2 top-2 z-10 !text-red-500', $redColorStore)}
 			>
 				<Icon type={Trash} class="h-4 w-4" />
 			</Button>

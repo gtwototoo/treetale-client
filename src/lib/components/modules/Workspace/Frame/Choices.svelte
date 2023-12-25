@@ -5,7 +5,7 @@
 	import { Button, FormSplit } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { clm, contrastText, last } from '$lib/utils';
 
@@ -21,7 +21,11 @@
 		);
 		const choiceInputs: NodeListOf<HTMLContenteditable> = document
 			.getElementById('choices')
-			.querySelectorAll('[contenteditable]');
+			?.querySelectorAll('[contenteditable]');
+
+		if (!choiceInputs || $currentPanelStore.hidden) {
+			return;
+		}
 
 		choiceInputs[choiceKey].focus();
 

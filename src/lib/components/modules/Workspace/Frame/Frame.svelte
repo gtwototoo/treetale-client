@@ -16,8 +16,7 @@
 		movingFrameStore,
 		selectedFrameStore
 	} from '$lib/stores/workspace';
-	import { contrastText, transform } from '$lib/utils';
-	import { createConnections, getChoicePosition } from '$lib/utils/editing';
+	import { contrastText, createConnections, getChoicePosition, transform } from '$lib/utils';
 	import { FrameSettings } from '../../Panel';
 
 	export let frameId: number;

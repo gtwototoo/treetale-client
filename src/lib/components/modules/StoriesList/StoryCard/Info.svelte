@@ -23,8 +23,8 @@
 <FormSplit vertical class="w-full divide-contrast bg-transparent">
 	<div
 		class={clsx(
-			'flex w-full items-center justify-between gap-4 rounded-xl bg-main-60 p-3 max-md:p-2',
-			!storyId && 'pointer-events-none'
+			'flex w-full items-center justify-between gap-4 rounded-lg bg-main-60 p-3 max-md:p-2',
+			storyId === undefined && 'pointer-events-none'
 		)}
 	>
 		{#if author && !edit}
@@ -42,7 +42,7 @@
 				<p class="truncate">{draft ? 'Черновик' : 'Опубликовано'}</p>
 			</div>
 		{/if}
-		{#if storyId}
+		{#if storyId !== undefined && $page.data.session}
 			<Likes {likes} {storyId} />
 		{:else}
 			<div class="mr-1 flex items-center gap-1">

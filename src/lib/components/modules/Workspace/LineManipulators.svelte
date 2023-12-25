@@ -5,7 +5,7 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { activeModeStore, framesDataStore } from '$lib/stores/workspace';
 
-	import { createLineRemoveButtons, transform } from '$lib/utils/editing';
+	import { createLineRemoveButtons, transform } from '$lib/utils';
 	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 

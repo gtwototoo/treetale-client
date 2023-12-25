@@ -9,8 +9,14 @@
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
 	import { framesStore, fullscreenStore, variablesStore } from '$lib/stores/reading.js';
-	import { getChoiceFromId, getFrameFromId, last, rootStyle } from '$lib/utils';
-	import { correctToType, doMath } from '$lib/utils/variable_operations.js';
+	import {
+		correctToType,
+		doMath,
+		getChoiceFromId,
+		getFrameFromId,
+		last,
+		rootStyle
+	} from '$lib/utils';
 	import clsx from 'clsx';
 	import type {
 		EmblaCarouselType,
@@ -66,7 +72,7 @@
 	const handleKeydown = (e: KeyboardEvent) => {
 		const { code } = e;
 
-		const nextZeroChoicesFrame = () => {
+		const setFastChoice = () => {
 			const lastFrame = last(data.frames);
 
 			if (lastFrame?.choices && lastFrame?.choices.length === 1) {
@@ -77,7 +83,7 @@
 		const actions: Record<string, () => void> = {
 			ArrowUp: prevFrame,
 			ArrowDown: nextFrame,
-			Space: nextZeroChoicesFrame
+			Space: setFastChoice
 		};
 
 		if (!(code in actions)) return;
@@ -122,7 +128,7 @@
 		}
 	};
 
-	const handleFulscreenChange = () => {
+	const handleFullscreenChange = () => {
 		$fullscreenStore = !!document.fullscreenElement;
 	};
 
@@ -149,7 +155,7 @@
 <ska:html class="h-full" />
 <svelte:body class="h-full" />
 
-<svelte:window on:keydown={handleKeydown} on:fullscreenchange={handleFulscreenChange} />
+<svelte:window on:keydown={handleKeydown} on:fullscreenchange={handleFullscreenChange} />
 
 <SvgGradient id={storyId} />
 <div id="read-screen" class="absolute h-full w-full">

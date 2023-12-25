@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Play } from 'svelte-heros-v2';
 
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import EditingFooter from '$lib/components/modules/Footer/EditingFooter.svelte';
@@ -121,7 +120,7 @@
 		}
 	};
 
-	const saveArea = () => {
+	const saveArea = (zoom: number, offset: ICoordinates, frames: Array<IFrameCreate>) => {
 		if ($readonlyStore) {
 			return;
 		}
@@ -131,14 +130,9 @@
 
 		timer = window.setTimeout(async () => {
 			try {
-				const correctFrames = $framesDataStore.map((frame) => exclude(frame, ['height']));
+				const correctFrames = frames.map((frame) => exclude(frame, ['height']));
 
-				await updateArea(
-					$informationDataStore.storyId,
-					correctFrames,
-					$offsetStore,
-					$zoomStore
-				);
+				await updateArea($informationDataStore.storyId, correctFrames, offset, zoom);
 
 				$stateAreaStore = 'saved';
 			} catch {
@@ -154,8 +148,6 @@
 			$activeActionStore = null;
 			$movingFrameStore = null;
 		}
-
-		saveArea();
 	};
 
 	const clearLiberties = (readonly: boolean) => {
@@ -182,7 +174,7 @@
 				$framesDataStore[0].x = width / 2 - DEFAULT_FRAME_SIZE.width / 2;
 				$framesDataStore[0].y = height / 2 - DEFAULT_FRAME_SIZE.height / 2;
 			}
-			changesHistory.add('Начальное состояние', Play);
+			changesHistory.init($framesDataStore);
 		}, 0);
 
 		return () => {
@@ -200,6 +192,8 @@
 			hasCloseButton: false
 		};
 	}
+
+	$: saveArea($zoomStore, $offsetStore, $framesDataStore);
 
 	$: $bodyColorStore = $informationDataStore.color.length
 		? $informationDataStore.color

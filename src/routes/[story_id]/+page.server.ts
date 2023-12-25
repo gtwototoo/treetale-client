@@ -1,11 +1,10 @@
 import { ProgressModel, StoriesModel, UsersModel } from '$lib/server/models';
+import type { IFrame, IProgressData } from '$lib/types';
 import { getChoiceFromId, getFrameFromId, randomError, serialize } from '$lib/utils';
 
-import type { IFrame } from '$lib/types';
 import type { IFrameCreate } from '$lib/types/editing';
 import type { IStoryFull } from '$lib/types/reading';
 import type { IStorySchema } from '$lib/types/schemas';
-import { redirect } from '@sveltejs/kit';
 
 interface IProgress {
 	choiceId?: number;
@@ -86,7 +85,6 @@ export const load = async ({ params, locals }) => {
 	const storyId = +params.story_id;
 	const user = locals.session;
 
-	if (!user) throw redirect(302, '/signin');
 	if (isNaN(storyId)) throw randomError(404);
 
 	const story: IStorySchema | null = await StoriesModel.findOne({ storyId }).select({
@@ -97,10 +95,18 @@ export const load = async ({ params, locals }) => {
 
 	if (!story) throw randomError(404);
 
-	const progress = await ProgressModel.findOne({
-		readerId: user.userId,
-		storyId
-	});
+	let progress: IProgressData;
+
+	if (user) {
+		progress = await ProgressModel.findOne({
+			readerId: user.userId,
+			storyId
+		})
+			.select({
+				_id: 0
+			})
+			.lean();
+	}
 
 	return await readingInfo(serialize(story), progress?.choices || []);
 };

@@ -4,22 +4,15 @@
 
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { updateArea } from '$lib/requests/story';
-	import {
-		informationDataStore,
-		readonlyStore,
-		stateAreaStore,
-		variablesStore
-	} from '$lib/stores/editing';
+	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
-	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
+	import { framesDataStore } from '$lib/stores/workspace';
 	import type {
 		ILogicOperation,
 		IMathOperation,
 		TComparisonOperator,
 		TMathOperator
 	} from '$lib/types';
-	import { exclude } from '$lib/utils';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -33,35 +26,6 @@
 	export let symbols: Array<TComparisonOperator | TMathOperator>;
 
 	let editMode = false;
-	let timer: number;
-
-	const saveArea = () => {
-		if ($readonlyStore) {
-			return;
-		}
-
-		clearTimeout(timer);
-		$stateAreaStore = 'saving';
-
-		timer = window.setTimeout(async () => {
-			try {
-				const correctFrames = $framesDataStore.map((frame) => exclude(frame, ['height']));
-
-				await updateArea(
-					$informationDataStore.storyId,
-					correctFrames,
-					$offsetStore,
-					$zoomStore
-				);
-
-				$stateAreaStore = 'saved';
-			} catch {
-				$stateAreaStore = 'error';
-			}
-
-			clearTimeout(timer);
-		}, 3000);
-	};
 
 	const switchEditMode = () => {
 		editMode = !editMode;
@@ -74,7 +38,7 @@
 	};
 
 	const handleChange = () => {
-		saveArea();
+		$framesDataStore = $framesDataStore;
 	};
 
 	const handleAddModificator = () => {

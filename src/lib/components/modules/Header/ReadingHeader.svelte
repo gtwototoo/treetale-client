@@ -9,7 +9,10 @@
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { fullscreenStore } from '$lib/stores/reading';
 	import { contrastText } from '$lib/utils';
+	import { onMount } from 'svelte';
 	import Donut from '../Panel/Donut.svelte';
+
+	let fullscreenSupport = false;
 
 	// const fullScreen = async (element: HTMLElement) => {
 	// 	if (element.requestFullscreen) {
@@ -40,6 +43,12 @@
 			$fullscreenStore = false;
 		}
 	};
+
+	onMount(() => {
+		if (document.documentElement.requestFullscreen) {
+			fullscreenSupport = true;
+		}
+	});
 </script>
 
 <Header>
@@ -55,12 +64,14 @@
 		<Icon type={Star} class="h-6 w-6" />
 		<p class="mr-1">Поддержать</p>
 	</Button>
-	<Button
-		variant="ghost"
-		class="header-button bg-contrast text-text"
-		size="lg"
-		on:click={handleFulscreen}
-	>
-		<Icon type={ArrowsPointingOut} class="h-6 w-6" />
-	</Button>
+	{#if fullscreenSupport}
+		<Button
+			variant="ghost"
+			class="header-button bg-contrast text-text"
+			size="lg"
+			on:click={handleFulscreen}
+		>
+			<Icon type={ArrowsPointingOut} class="h-6 w-6" />
+		</Button>
+	{/if}
 </Header>
