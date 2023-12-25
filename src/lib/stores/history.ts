@@ -8,11 +8,11 @@ import type { IFrameCreate } from '$lib/types/editing';
 import { Play } from 'svelte-heros-v2';
 
 import { serialize } from '$lib/utils';
-import { applyDiff } from '$lib/utils/apply-diff';
+import { applyDiff, type IDiff } from '$lib/utils/apply-diff';
 import { diff } from 'deep-object-diff';
 
 interface IChange {
-	difference?: object;
+	difference?: IDiff;
 	icon: typeof SvelteComponent<unknown>;
 	title: string;
 }
@@ -57,7 +57,7 @@ const framesHistoryStore = () => {
 		update((data: IChanges) => {
 			data.stages = data.stages.slice(0, data.currentId + 1);
 
-			const difference = diff(data.initial, serialize(get(framesDataStore)));
+			const difference = diff(data.initial, serialize(get(framesDataStore))) as IDiff;
 
 			data.stages.push({
 				difference,

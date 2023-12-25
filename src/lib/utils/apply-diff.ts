@@ -1,6 +1,14 @@
-type TQuasiBaseType = () => unknown | Date | RegExp | string | number | boolean;
+type TQuasiBaseType = unknown | Date | RegExp | string | number | boolean;
 
-function isQuasiBaseType(value: unknown) {
+interface IElem {
+	[index: string | number]: IElem | unknown | object;
+}
+
+export interface IDiff {
+	[index: string]: IDiff | undefined | unknown;
+}
+
+const isQuasiBaseType = (value: unknown) => {
 	return (
 		value instanceof Function ||
 		value instanceof Date ||
@@ -9,50 +17,47 @@ function isQuasiBaseType(value: unknown) {
 		value instanceof Number ||
 		value instanceof Boolean
 	);
-}
+};
 
-function isLikelyPlainObject<T>(value: TQuasiBaseType | IElem | T) {
+const isLikelyPlainObject = (value: TQuasiBaseType | IElem) => {
 	return typeof value === 'object' && value !== null && !isQuasiBaseType(value);
-}
+};
 
-interface IElem {
-	[index: string]: string | IElem;
-}
+const applyDiff = <T extends IElem | Array<IElem>>(lhs: T, diff: IDiff) => {
+	if (!isLikelyPlainObject(diff) || !isLikelyPlainObject(lhs)) {
+		lhs = diff as T & IDiff;
 
-function innerApplyDiff<T>(lhs: T, diff: object) {
-	let keys: string[];
-	if (isLikelyPlainObject(diff)) {
-		keys = Object.keys(diff);
-		if (keys.length === 0) {
-			return lhs;
-		} else if (isLikelyPlainObject<T>(lhs)) {
-			for (const key of keys) {
-				if (isLikelyPlainObject(diff[key])) {
-					if (Object.keys(diff[key]).length === 0) {
-						lhs[key] = {} as object;
-					} else {
-						lhs[key] = innerApplyDiff(lhs[key] ?? {}, diff[key]);
-					}
-				} else if (diff[key] === undefined) {
-					if (lhs instanceof Array) {
-						lhs.splice(+key, 1);
-					} else {
-						delete lhs[key];
-					}
-				} else {
-					lhs[key] = diff[key];
-				}
+		return lhs;
+	}
+
+	const keys = Object.keys(diff);
+
+	if (keys.length === 0) {
+		return lhs;
+	}
+
+	for (const key of keys) {
+		if (isLikelyPlainObject(diff[key])) {
+			if (Object.keys(diff[key]).length === 0) {
+				lhs[key as unknown as number] = {};
+			} else {
+				lhs[key as unknown as number] = applyDiff(
+					(lhs[key as unknown as number] as IElem) ?? {},
+					diff[key] as IDiff
+				);
+			}
+		} else if (diff[key] === undefined) {
+			if (lhs instanceof Array) {
+				lhs.splice(+key, 1);
+			} else {
+				delete lhs[key];
 			}
 		} else {
-			lhs = diff;
+			lhs[key as unknown as number] = diff[key];
 		}
-	} else {
-		lhs = diff;
 	}
-	return lhs;
-}
 
-export function applyDiff<T extends object>(lns: T, diff: object) {
-	if (lns instanceof Object && lns?.prototype != null) Object.freeze(lns.prototype);
-	return innerApplyDiff(lns, diff);
-}
+	return lhs;
+};
+
+export { applyDiff };
