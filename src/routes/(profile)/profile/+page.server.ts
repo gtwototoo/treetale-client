@@ -12,6 +12,9 @@ export const load = async ({ locals }) => {
 		userId: user.userId
 	})
 		.select(USER_WITHOUT_WORKSPACE)
+		.sort({
+			created: 'desc'
+		})
 		.lean();
 
 	return {

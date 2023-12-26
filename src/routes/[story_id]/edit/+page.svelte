@@ -36,6 +36,7 @@
 	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 	import type { ICoordinates } from '$lib/types/index';
 	import { contrastText, exclude, getFrameFromId, rootStyle } from '$lib/utils';
+	import { ArrowsPointingIn } from 'svelte-heros-v2';
 
 	export let data;
 
@@ -144,6 +145,10 @@
 	};
 
 	const handleMouseUp = () => {
+		if ($activeActionStore === 'movingFrame') {
+			changesHistory.add('Перемещение фрейма', ArrowsPointingIn);
+		}
+
 		if ($activeActionStore) {
 			$activeActionStore = null;
 			$movingFrameStore = null;

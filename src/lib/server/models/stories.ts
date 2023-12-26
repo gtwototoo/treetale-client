@@ -25,9 +25,9 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 			type: Number,
 			required: true
 		},
-		draft: {
-			type: Boolean,
-			default: true
+		status: {
+			type: String,
+			default: 'draft'
 		},
 		description: {
 			type: String,

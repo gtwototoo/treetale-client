@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { BookOpen, Cloud, Photo, Trash } from 'svelte-heros-v2';
+	import { BookOpen, Cloud, Photo } from 'svelte-heros-v2';
 
 	import Shortcuts from './Shortcuts.svelte';
 
@@ -9,7 +9,7 @@
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
-	import { deleteStory, updateInfomation } from '$lib/requests/story';
+	import { deleteStory, publishRequestStory, updateInfomation } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
@@ -21,6 +21,7 @@
 	let timer: number;
 	let saving = false;
 	let saveInfo = 'Ожидание изменений';
+	let loading = false;
 
 	const imageFolder = 'stories';
 
@@ -35,7 +36,7 @@
 		saving = true;
 
 		timer = window.setTimeout(async () => {
-			const { title, tags, color, description, storyId, draft } = $informationDataStore;
+			const { title, tags, color, description, storyId, status } = $informationDataStore;
 
 			try {
 				await updateInfomation(storyId, {
@@ -43,7 +44,7 @@
 					tags,
 					color,
 					description,
-					draft
+					status
 				});
 
 				saveInfo = 'Изменения сохранены';
@@ -65,8 +66,6 @@
 			});
 
 			$informationDataStore.imageUrl = null;
-
-			changesHistory.add('Удаление изображения истории', Trash);
 		} catch (e) {
 			console.error(e);
 		}
@@ -92,13 +91,22 @@
 		preSaveImage(file);
 	};
 
-	const switchDraft = () => {
-		$informationDataStore.draft = !$informationDataStore.draft;
+	const switchPublish = async () => {
+		loading = true;
 
-		checkUpdates();
+		try {
+			await publishRequestStory($informationDataStore.storyId);
+
+			$informationDataStore.status =
+				$informationDataStore.status === 'draft' ? 'published' : 'draft';
+		} catch (e) {
+			console.error(e);
+		} finally {
+			loading = false;
+		}
 	};
 
-	const removeStory = () => deleteStory($informationDataStore.storyId);
+	const handleDeleteStory = () => deleteStory($informationDataStore.storyId);
 
 	onDestroy(() => {
 		if (timer) {
@@ -106,7 +114,12 @@
 		}
 	});
 
-	$: warningColor = contrastText($bodyColorStore) ? clsx('bg-orange-950') : clsx('bg-orange-50');
+	$: orangeBackground = contrastText($bodyColorStore)
+		? clsx('bg-orange-950')
+		: clsx('bg-orange-50');
+	$: greenBackground = contrastText($bodyColorStore)
+		? clsx('bg-emerald-950')
+		: clsx('bg-emerald-50');
 	$: greenColor = contrastText($bodyColorStore)
 		? clsx('!bg-emerald-900')
 		: clsx('!bg-emerald-200');
@@ -164,16 +177,17 @@
 	<Button
 		variant="main"
 		class={clsx('justify-center !text-red-500', $redColorStore)}
-		on:click={removeStory}
+		on:click={handleDeleteStory}
 	>
 		Удалить историю
 	</Button>
-{:else if $informationDataStore.draft}
+{:else if $informationDataStore.status === 'draft'}
 	{#if !$readonlyStore}
 		<Button
 			variant="main"
 			class={clsx('justify-center !text-emerald-500', greenColor)}
-			on:click={switchDraft}
+			on:click={switchPublish}
+			{loading}
 		>
 			Опубликовать
 		</Button>
@@ -181,20 +195,25 @@
 {:else}
 	<div
 		class={clsx(
-			'flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm text-orange-500',
-			warningColor
+			'flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm',
+			$informationDataStore.status === 'review'
+				? clsx('text-orange-500', orangeBackground)
+				: clsx('text-emerald-500', greenBackground)
 		)}
 	>
 		<p>
 			{correctWhitespace(
-				'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории.'
+				$informationDataStore.status === 'review'
+					? 'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории.'
+					: 'История опубликована'
 			)}
 		</p>
 		{#if !$readonlyStore}
 			<Button
 				variant="main"
 				class={clsx('justify-center !text-red-500', $redColorStore)}
-				on:click={switchDraft}
+				on:click={switchPublish}
+				{loading}
 			>
 				Отменить публикацию
 			</Button>

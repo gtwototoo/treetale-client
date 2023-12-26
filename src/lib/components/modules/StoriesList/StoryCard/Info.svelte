@@ -5,11 +5,11 @@
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
-	import type { IUser } from '$lib/types';
+	import type { IUser, TStoryStatus } from '$lib/types';
 	import clsx from 'clsx';
-	import { ArchiveBox, CheckCircle, Heart } from 'svelte-heros-v2';
+	import { ArchiveBox, CheckCircle, Clock, Heart } from 'svelte-heros-v2';
 
-	export let draft: boolean;
+	export let status: TStoryStatus;
 	export let likes: Array<number>;
 	export let author: IUser;
 	export let created: number;
@@ -17,6 +17,25 @@
 	export let edit: boolean;
 	export let storyId: number | undefined = undefined;
 
+	const statuses = {
+		draft: {
+			color: 'text-gray-500',
+			icon: ArchiveBox,
+			title: 'Черновик'
+		},
+		review: {
+			color: 'text-orange-500',
+			icon: Clock,
+			title: 'На проверке'
+		},
+		published: {
+			color: 'text-emerald-500',
+			icon: CheckCircle,
+			title: 'Опубликовано'
+		}
+	};
+
+	$: currentStatus = statuses[status];
 	$: isLiked = likes?.includes($page.data.session?.userId);
 </script>
 
@@ -30,16 +49,11 @@
 		{#if author && !edit}
 			<ProfileLink {author} {created} />
 		{:else}
-			<div
-				class={clsx(
-					'flex items-center gap-2 overflow-hidden text-sm',
-					draft ? 'text-gray-500' : 'text-emerald-500'
-				)}
-			>
+			<div class={clsx('flex items-center gap-2 overflow-hidden text-sm', currentStatus.color)}>
 				<div class="rounded-full bg-main-30 p-1.5">
-					<Icon type={draft ? ArchiveBox : CheckCircle} class="h-6 w-6" />
+					<Icon type={currentStatus.icon} class="h-6 w-6" />
 				</div>
-				<p class="truncate">{draft ? 'Черновик' : 'Опубликовано'}</p>
+				<p class="truncate">{currentStatus.title}</p>
 			</div>
 		{/if}
 		{#if storyId !== undefined && $page.data.session}

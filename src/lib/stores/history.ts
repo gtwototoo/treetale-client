@@ -58,16 +58,21 @@ const framesHistoryStore = () => {
 			data.stages = data.stages.slice(0, data.currentId + 1);
 
 			const difference = diff(data.initial, serialize(get(framesDataStore))) as IDiff;
+			const hasChanges = Object.keys(
+				diff(difference, data.stages[data.currentId].difference)
+			).length;
 
-			data.stages.push({
-				difference,
-				title,
-				icon
-			});
+			if (hasChanges) {
+				data.stages.push({
+					difference,
+					title,
+					icon
+				});
 
-			if (data.stages.length > STAGES_MAX_COUNT) data.stages.shift();
+				if (data.stages.length > STAGES_MAX_COUNT) data.stages.shift();
 
-			data.currentId = data.stages.length - 1;
+				data.currentId = data.stages.length - 1;
+			}
 
 			return data;
 		});

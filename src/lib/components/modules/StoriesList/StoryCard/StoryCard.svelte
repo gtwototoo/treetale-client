@@ -20,7 +20,7 @@
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
 
-	$: ({ imageUrl, title, tags, storyId, color, userId, likes, draft, created, description } =
+	$: ({ imageUrl, title, tags, storyId, color, userId, likes, status, created, description } =
 		story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
@@ -38,7 +38,7 @@
 			<Illustration {title} {imageUrl} />
 			<div class="body">
 				<Body {title} {vars} {description} />
-				<Info {draft} {likes} {created} {tags} {author} {edit} />
+				<Info {status} {likes} {created} {tags} {author} {edit} />
 			</div>
 		</Card>
 	</div>

@@ -43,7 +43,7 @@ export const load = async () => {
 
 	for (const { title, filter, id } of categories) {
 		const stories = await StoriesModel.find({
-			draft: false,
+			status: 'published',
 			...filter
 		})
 			.select(USER_WITHOUT_WORKSPACE)
@@ -54,7 +54,7 @@ export const load = async () => {
 			})
 			.lean();
 
-		if (!stories) continue;
+		if (!stories || !stories.length) continue;
 
 		categoryStories.push({
 			id,

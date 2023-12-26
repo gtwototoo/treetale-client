@@ -23,7 +23,7 @@ export const load = async ({ locals, params }) => {
 
 	const stories = await StoriesModel.find({
 		userId: user.userId,
-		draft: false
+		status: 'published'
 	})
 		.select(USER_WITHOUT_WORKSPACE)
 		.lean();

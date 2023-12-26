@@ -7,11 +7,13 @@ export type TMathOperator = '+' | '-' | '/' | '*' | '=';
 
 export type TVariableExpects = 'Строка' | 'Число' | 'Да/Нет';
 
+export type TStoryStatus = 'draft' | 'review' | 'published';
+
 export interface IStoryEditableInfo {
 	color: TRGB;
 	description: string;
-	draft: boolean;
 	imageUrl?: string | null;
+	status: TStoryStatus;
 	tags: Array<string>;
 	title: string;
 }

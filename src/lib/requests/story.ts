@@ -36,10 +36,6 @@ export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
 	});
 };
 
-export const searchStories = async (row: string) => {
-	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/story/search/${row}`);
-};
-
 export const createStory = async () => {
 	interface IResponse {
 		storyId: number;
@@ -54,6 +50,10 @@ export const createStory = async () => {
 	}
 };
 
+export const publishRequestStory = async (storyId: number) => {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/publish/${storyId}`);
+};
+
 export const deleteStory = async (id: number) => {
 	try {
 		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/story/${id}`);
@@ -64,4 +64,8 @@ export const deleteStory = async (id: number) => {
 	} catch (e) {
 		console.error(e);
 	}
+};
+
+export const searchStories = async (row: string) => {
+	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/story/search/${row}`);
 };

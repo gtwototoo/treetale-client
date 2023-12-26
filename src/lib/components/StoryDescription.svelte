@@ -8,7 +8,7 @@
 
 	export let story: IStoryFull;
 
-	$: ({ title, description, likes, author, draft, created, tags, storyId } = story);
+	$: ({ title, description, likes, author, status, created, tags, storyId } = story);
 </script>
 
 <ReadCard classCard="h-full text-center !items-center !gap-10">
@@ -22,6 +22,6 @@
 			<h2 class="uppercase">{title}</h2>
 			<p class="max-w-sm">{description}</p>
 		</div>
-		<Info {likes} {author} {draft} {created} {tags} {storyId} edit={false} />
+		<Info {likes} {author} {status} {created} {tags} {storyId} edit={false} />
 	</svelte:fragment>
 </ReadCard>
