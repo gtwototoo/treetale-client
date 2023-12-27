@@ -76,7 +76,7 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 
 			paths.push({
 				connectId: `${fromFrame.frameId}:${choice.choiceId}-${toFrame.frameId}`,
-				line: createLine(fromPoint, toPoint)
+				line: createBezierLine(fromPoint, toPoint)
 			});
 		}
 	}
@@ -115,8 +115,22 @@ export const createLineRemoveButtons = (frames: Array<IFrameCreate>) => {
 	return coords;
 };
 
-const createLine = (from: ICoordinates, to: ICoordinates): string => {
+export const createLine = (from: ICoordinates, to: ICoordinates): string => {
 	return `M${from.x} ${from.y} L ${to.x} ${to.y}`;
+};
+
+function getControl(from: ICoordinates, to: ICoordinates): ICoordinates {
+	const x = 0.5 * (from.x + to.x),
+		y = from.y;
+
+	return { x, y };
+}
+
+export const createBezierLine = (from: ICoordinates, to: ICoordinates): string => {
+	const fromControl = getControl(from, to);
+	const toControl = getControl(to, from);
+
+	return `M${from.x},${from.y} C${fromControl.x},${fromControl.y} ${toControl.x},${toControl.y} ${to.x},${to.y}`;
 };
 
 const getAreaBoundings = (frames: Array<IFrameCreate>) => {

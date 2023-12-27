@@ -37,6 +37,7 @@
 	import type { ICoordinates } from '$lib/types/index';
 	import { contrastText, exclude, getFrameFromId, rootStyle } from '$lib/utils';
 	import { ArrowsPointingIn } from 'svelte-heros-v2';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -209,14 +210,13 @@
 <svelte:body class="h-full" />
 
 <svelte:head>
-	<title>
-		Редактирование "{$informationDataStore.title || 'Без названия'}"
-	</title>
 	{@html rootStyle($bodyColorStore, {
 		'fill-gradient': `url(#light-gradient-${$informationDataStore.storyId})`,
 		'red-custom': contrastText($bodyColorStore) ? 'rgb(127, 29, 29)' : 'rgb(254, 226, 226)'
 	})}
 </svelte:head>
+
+<MetaTags title={`Редактирование "${$informationDataStore.title || 'Без названия'}"`} />
 
 <SvgGradient id={$informationDataStore.storyId} />
 <div class="absolute h-full w-full">
