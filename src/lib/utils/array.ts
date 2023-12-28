@@ -1,6 +1,10 @@
 import objectPath from 'object-path';
 
-export const serialize = <T>(object: T): T => {
+export const serialize = <T>(object?: T): T => {
+	if (!object) {
+		return object;
+	}
+
 	return JSON.parse(JSON.stringify(object)) as T;
 };
 

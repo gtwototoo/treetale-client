@@ -118,7 +118,7 @@
 		}
 
 		try {
-			await updateProgress(storyId, frameId, choiceId);
+			await updateProgress(storyId, choiceId);
 
 			updateVars(frameId, choiceId);
 
@@ -171,7 +171,7 @@
 				<ReadFrame
 					{frameId}
 					on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
-					selectedChoiceId={data.progress[key].choiceId}
+					selectedChoiceId={data.progress[key]?.choiceId}
 					class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
 				/>
 			{/each}

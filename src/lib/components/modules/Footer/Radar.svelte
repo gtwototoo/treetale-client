@@ -10,28 +10,25 @@
 	let element: HTMLButtonElement;
 
 	const setCoordinates = (coords: ICoordinates, offset: ICoordinates) => {
-		let coordinates;
-
 		const radius = element.clientHeight / 2;
+		const scaleY =
+			element && workspaceHeight ? element.clientHeight / workspaceHeight : undefined;
+		const scaleX = element && workspaceWidth ? element.clientWidth / workspaceWidth : undefined;
 
 		// тут или offset косячит или надо отнимать радиус
 		const formattedCoordinates: ICoordinates = {
-			x: ((coords.x + offset.x) / (workspaceWidth / radius)) * ($zoomStore / 100),
-			y: ((coords.y + offset.y) / (workspaceHeight / radius)) * ($zoomStore / 100)
+			x: ((coords.x + offset.x) * scaleX - radius) * ($zoomStore / 100),
+			y: ((coords.y + offset.y) * scaleY - radius) * ($zoomStore / 100)
 		};
 
 		const len = Math.hypot(formattedCoordinates.x, formattedCoordinates.y);
 
-		if (len > radius) {
-			coordinates = {
-				x: (formattedCoordinates.x * radius) / len,
-				y: (formattedCoordinates.y * radius) / len
-			};
-		} else {
-			coordinates = formattedCoordinates;
-		}
-
-		return coordinates;
+		return len > radius
+			? {
+					x: (formattedCoordinates.x * radius) / len,
+					y: (formattedCoordinates.y * radius) / len
+			  }
+			: formattedCoordinates;
 	};
 
 	const setDefaultCoordinates = () => {
@@ -44,8 +41,6 @@
 
 		return transform(setCoordinates(coords, offset), zoom / 100);
 	};
-
-	// $: setCoordinates($offsetStore);
 </script>
 
 <Button
@@ -60,7 +55,7 @@
 		<div
 			class={clm(
 				'absolute h-2.5 w-2.5 shrink-0 rounded-full !bg-text',
-				!key && '!bg-emerald-500'
+				!key && 'z-10 !bg-emerald-500'
 			)}
 			style={getStyle({ x, y }, $zoomStore, $offsetStore)}
 		/>

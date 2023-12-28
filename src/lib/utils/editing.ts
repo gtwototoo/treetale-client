@@ -18,7 +18,7 @@ export const transform = (coords: ICoordinates, zoom?: number): string => {
 export const getFrameFromId = <T extends IFrameCreate | IFrame>(
 	frames: Array<T>,
 	frameId: number
-): T => {
+) => {
 	const frame = frames.find((frame) => frame.frameId === frameId);
 
 	return frame;

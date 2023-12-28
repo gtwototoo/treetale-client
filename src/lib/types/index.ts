@@ -75,11 +75,16 @@ export interface ISize {
 
 export type TBoundings = ISize & ICoordinates;
 
+export interface IProgress {
+	choiceId: number;
+	frameId: number;
+	nextFrameId?: number;
+}
+
 export interface IProgressData {
-	choices: Array<number>;
-	frames: Array<IFrame>;
+	choices: Array<IProgress>;
 	readerId: number;
-	started?: number;
+	started: number;
 	storyId: number;
 	version: number;
 }
