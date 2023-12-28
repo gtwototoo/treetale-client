@@ -19,8 +19,8 @@
 	import { Plus, XMark } from 'svelte-heros-v2';
 	import Radar from './Radar.svelte';
 
-	export let width: number;
-	export let height: number;
+	export let workspaceWidth: number;
+	export let workspaceHeight: number;
 
 	const cancelAddFrameMode = () => {
 		$activeModeStore = 'view';
@@ -44,7 +44,7 @@
 			$activeActionStore ? 'blind' : 'pointer-events-auto'
 		)}
 	>
-		<Radar bind:width bind:height />
+		<Radar bind:workspaceWidth bind:workspaceHeight />
 		<div class="mr-4 flex select-none flex-col whitespace-nowrap text-sm text-text">
 			<p>
 				{Math.round($offsetStore.x)}, {Math.round($offsetStore.y)}

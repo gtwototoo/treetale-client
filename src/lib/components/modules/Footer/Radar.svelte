@@ -1,28 +1,23 @@
 <script lang="ts">
-	import clsx from 'clsx';
-
-	import { offsetStore, zoomStore } from '$lib/stores/workspace';
+	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
 	import type { ICoordinates } from '$lib/types';
-	import { transform } from '$lib/utils';
+	import { clm, transform } from '$lib/utils';
 	import { Button } from '$UI';
-	import { ViewArea } from '$UI/Icons';
 
-	export let height: number;
-	export let width: number;
+	export let workspaceHeight: number;
+	export let workspaceWidth: number;
 
 	let element: HTMLButtonElement;
-	let coordinates: ICoordinates = {
-		x: 0,
-		y: 0
-	};
 
-	const setCoordinates = (offset: ICoordinates) => {
-		if (!element) return;
+	const setCoordinates = (coords: ICoordinates, offset: ICoordinates) => {
+		let coordinates;
 
 		const radius = element.clientHeight / 2;
+
+		// тут или offset косячит или надо отнимать радиус
 		const formattedCoordinates: ICoordinates = {
-			x: -(offset.x / (width / radius)),
-			y: -(offset.y / (height / radius))
+			x: ((coords.x + offset.x) / (workspaceWidth / radius)) * ($zoomStore / 100),
+			y: ((coords.y + offset.y) / (workspaceHeight / radius)) * ($zoomStore / 100)
 		};
 
 		const len = Math.hypot(formattedCoordinates.x, formattedCoordinates.y);
@@ -35,6 +30,8 @@
 		} else {
 			coordinates = formattedCoordinates;
 		}
+
+		return coordinates;
 	};
 
 	const setDefaultCoordinates = () => {
@@ -42,23 +39,30 @@
 		$offsetStore = { x: 0, y: 0 };
 	};
 
-	$: setCoordinates($offsetStore);
+	const getStyle = (coords: ICoordinates, zoom: number, offset: ICoordinates) => {
+		if (!element) return;
+
+		return transform(setCoordinates(coords, offset), zoom / 100);
+	};
+
+	// $: setCoordinates($offsetStore);
 </script>
 
 <Button
 	bind:element
 	size="lg"
 	variant="ghost"
-	class="items-center justify-center !rounded-full bg-contrast !p-3"
+	class="h-12 w-12 items-center justify-center !rounded-full bg-contrast !p-0"
 	on:click={setDefaultCoordinates}
 >
-	<ViewArea
-		class={clsx('h-6 w-6 text-text', {
-			'!text-gray-400': Math.abs(coordinates.x) > 6 || Math.abs(coordinates.y) > 6
-		})}
-	/>
-	<div
-		class="absolute h-3 w-3 shrink-0 rounded-full !bg-text"
-		style={transform(coordinates, $zoomStore / 100)}
-	/>
+	<div class="h-6 w-6 rounded-full !bg-contrast/20" />
+	{#each $framesDataStore as { x, y }, key}
+		<div
+			class={clm(
+				'absolute h-2.5 w-2.5 shrink-0 rounded-full !bg-text',
+				!key && '!bg-emerald-500'
+			)}
+			style={getStyle({ x, y }, $zoomStore, $offsetStore)}
+		/>
+	{/each}
 </Button>

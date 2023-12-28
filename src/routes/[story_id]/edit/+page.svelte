@@ -232,4 +232,4 @@
 		on:click={handleClick}
 	/>
 </div>
-<EditingFooter bind:width bind:height />
+<EditingFooter bind:workspaceWidth={width} bind:workspaceHeight={height} />
