@@ -23,7 +23,13 @@
 		{start ? 'Начало' : title}
 	</p>
 	<div class="flex gap-2">
-		<Button variant="ghost" class="bg-main" size="sm" on:click={hideFrame}>
+		<Button
+			variant="ghost"
+			class="bg-main"
+			size="sm"
+			on:click={hideFrame}
+			on:mousedown={(e) => e.stopPropagation()}
+		>
 			<Icon type={hidden ? ChevronUp : ChevronDown} class="h-4 w-4" />
 		</Button>
 	</div>
