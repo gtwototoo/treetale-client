@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
 	import type { ICoordinates } from '$lib/types';
 	import { clm, transform } from '$lib/utils';
@@ -11,14 +12,24 @@
 
 	const setCoordinates = (coords: ICoordinates, offset: ICoordinates) => {
 		const radius = element.clientHeight / 2;
-		const scaleY =
-			element && workspaceHeight ? element.clientHeight / workspaceHeight : undefined;
-		const scaleX = element && workspaceWidth ? element.clientWidth / workspaceWidth : undefined;
+		const scale = element.clientHeight / Math.min(workspaceHeight, workspaceWidth);
+		const difference = Math.abs(workspaceWidth - workspaceHeight) / 2;
+		const squareOffset: ICoordinates =
+			workspaceWidth > workspaceHeight ? { x: difference, y: 0 } : { x: 0, y: difference };
 
-		// тут или offset косячит или надо отнимать радиус
 		const formattedCoordinates: ICoordinates = {
-			x: ((coords.x + offset.x) * scaleX - radius) * ($zoomStore / 100),
-			y: ((coords.y + offset.y) * scaleY - radius) * ($zoomStore / 100)
+			x:
+				((coords.x + DEFAULT_FRAME_SIZE.width / 2) * ($zoomStore / 100) +
+					offset.x -
+					squareOffset.x) *
+					scale -
+				radius,
+			y:
+				((coords.y + DEFAULT_FRAME_SIZE.height / 2) * ($zoomStore / 100) +
+					offset.y -
+					squareOffset.y) *
+					scale -
+				radius
 		};
 
 		const len = Math.hypot(formattedCoordinates.x, formattedCoordinates.y);
@@ -37,8 +48,6 @@
 	};
 
 	const getStyle = (coords: ICoordinates, zoom: number, offset: ICoordinates) => {
-		if (!element) return;
-
 		return transform(setCoordinates(coords, offset), zoom / 100);
 	};
 </script>
@@ -51,13 +60,15 @@
 	on:click={setDefaultCoordinates}
 >
 	<div class="h-6 w-6 rounded-full !bg-contrast/20" />
-	{#each $framesDataStore as { x, y }, key}
-		<div
-			class={clm(
-				'absolute h-2.5 w-2.5 shrink-0 rounded-full !bg-text',
-				!key && 'z-10 !bg-emerald-500'
-			)}
-			style={getStyle({ x, y }, $zoomStore, $offsetStore)}
-		/>
-	{/each}
+	{#if element && workspaceHeight}
+		{#each $framesDataStore as { x, y }, key}
+			<div
+				class={clm(
+					'absolute h-2.5 w-2.5 shrink-0 rounded-full !bg-text',
+					!key && 'z-10 !bg-emerald-500'
+				)}
+				style={getStyle({ x, y }, $zoomStore, $offsetStore)}
+			/>
+		{/each}
+	{/if}
 </Button>
