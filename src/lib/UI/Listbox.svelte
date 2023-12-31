@@ -2,7 +2,7 @@
 	export interface IList {
 		click?: (e: CustomEvent) => void;
 		icon?: typeof SvelteComponent<unknown>;
-		text: string;
+		title: string;
 	}
 </script>
 
@@ -30,7 +30,9 @@
 
 	let focused = false;
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		change: string;
+	}>();
 
 	const handleClick = () => {
 		if (readonly || !list.length) return;
@@ -42,7 +44,7 @@
 		if (typeof item === 'string') {
 			value = item;
 		} else {
-			value = item.text;
+			value = item.title;
 			if (item.click) {
 				item.click(e);
 			}
@@ -50,7 +52,7 @@
 
 		focused = false;
 
-		dispatch('change', e);
+		dispatch('change', value);
 	};
 </script>
 
@@ -102,7 +104,7 @@
 							{#if item.icon}
 								<Icon type={item.icon} />
 							{/if}
-							<p>{item.text}</p>
+							<p>{item.title}</p>
 						{/if}
 					</Button>
 				{/each}

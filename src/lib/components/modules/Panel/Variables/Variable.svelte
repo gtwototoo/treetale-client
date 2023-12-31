@@ -13,14 +13,14 @@
 	export let checkUpdates: () => void;
 
 	type TExpects = IList & {
-		text: TVariableExpects;
+		title: TVariableExpects;
 	};
 
 	const types: Array<TExpects> = [
-		{ text: 'Строка' },
-		{ text: 'Число' },
+		{ title: 'Строка' },
+		{ title: 'Число' },
 		{
-			text: 'Да/Нет',
+			title: 'Да/Нет',
 			click: () => {
 				if (!['Да', 'Нет'].includes($variablesStore[varKey].value))
 					$variablesStore[varKey].value = 'Да';
@@ -80,7 +80,7 @@
 				readonly={$readonlyStore}
 				align="inset"
 				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
-				list={[{ text: 'Да' }, { text: 'Нет' }]}
+				list={[{ title: 'Да' }, { title: 'Нет' }]}
 				on:change={handleInput}
 			/>
 		{:else}

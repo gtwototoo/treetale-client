@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 
 	import Icon from '$lib/components/Icon.svelte';
-	import { Loading } from '$UI/Icons';
+	import { Loading } from '$UI/icons';
 	import { Photo } from 'svelte-heros-v2';
 
 	let className = '';

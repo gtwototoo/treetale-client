@@ -20,8 +20,19 @@
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
 
-	$: ({ imageUrl, title, tags, storyId, color, userId, likes, status, created, description } =
-		story);
+	$: ({
+		imageUrl,
+		title,
+		tags,
+		storyId,
+		color,
+		userId,
+		likes,
+		status,
+		created,
+		description,
+		genre
+	} = story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
 	$: edit = $page.data.session && $page.data.session.userId === userId;
@@ -35,7 +46,7 @@
 				className
 			)}
 		>
-			<Illustration {title} {imageUrl} />
+			<Illustration {title} {imageUrl} {genre} />
 			<div class="body">
 				<Body {title} {vars} {description} />
 				<Info {status} {likes} {created} {tags} {author} {edit} />

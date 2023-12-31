@@ -4,7 +4,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickHold } from '$lib/hooks';
 	import { clm } from '$lib/utils';
-	import { Loading } from '$UI/Icons';
+	import { Loading } from '$UI/icons';
 
 	const dispatch = createEventDispatcher();
 

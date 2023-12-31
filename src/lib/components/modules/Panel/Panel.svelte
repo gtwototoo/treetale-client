@@ -21,7 +21,7 @@
 
 	const framesList: IList[] = $framesDataStore.map((frame) => {
 		return {
-			text: frame.title || 'Начало',
+			title: frame.title || 'Начало',
 			click: () => setSelectedFrame(frame)
 		};
 	});

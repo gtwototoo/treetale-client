@@ -1,3 +1,4 @@
+import type { GENRES_LIST } from '$lib/constants';
 import type { IStorySchema } from './schemas';
 
 export type TRGB = [number, number, number];
@@ -9,9 +10,12 @@ export type TVariableExpects = 'Строка' | 'Число' | 'Да/Нет';
 
 export type TStoryStatus = 'draft' | 'review' | 'published';
 
+export type TGenre = (typeof GENRES_LIST)[number]['id'];
+
 export interface IStoryEditableInfo {
 	color: TRGB;
 	description: string;
+	genre: TGenre;
 	imageUrl?: string | null;
 	status: TStoryStatus;
 	tags: Array<string>;

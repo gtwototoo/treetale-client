@@ -33,6 +33,10 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 			type: String,
 			default: ''
 		},
+		genre: {
+			type: String,
+			default: 'adventure'
+		},
 		likes: Array,
 		tags: Array,
 		frames: Array,

@@ -4,16 +4,16 @@
 
 	import Shortcuts from './Shortcuts.svelte';
 
-	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
+	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, publishRequestStory, updateInfomation } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { contrastText, correctWhitespace, variablesHighlight } from '$lib/utils';
+	import { contrastText, correctWhitespace, exclude, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
 
 	let light = 80;
@@ -22,6 +22,8 @@
 	let saving = false;
 	let saveInfo = 'Ожидание изменений';
 	let loading = false;
+
+	const list = exclude(GENRES_LIST, 'id');
 
 	const imageFolder = 'stories';
 
@@ -36,7 +38,7 @@
 		saving = true;
 
 		timer = window.setTimeout(async () => {
-			const { title, tags, color, description, storyId, status } = $informationDataStore;
+			const { title, tags, color, description, storyId, status, genre } = $informationDataStore;
 
 			try {
 				await updateInfomation(storyId, {
@@ -44,7 +46,8 @@
 					tags,
 					color,
 					description,
-					status
+					status,
+					genre
 				});
 
 				saveInfo = 'Изменения сохранены';
@@ -161,6 +164,16 @@
 		on:remove={checkUpdates}
 	/>
 </FormSplit>
+<Listbox
+	{list}
+	placeholder="Жанр"
+	align="inset"
+	value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
+	on:change={({ detail }) => {
+		$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
+		checkUpdates();
+	}}
+/>
 <FormSplit vertical class="divide-contrast">
 	<ColorPicker
 		popoverAlign="inset"

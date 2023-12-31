@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 
-	import { Input } from '$UI';
-	import { Loading } from '$UI/Icons';
+	import { Button, Image, Input } from '$UI';
+	import { Loading } from '$UI/icons';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Category from '$lib/components/modules/Category.svelte';
 	import MainFooter from '$lib/components/modules/Footer/MainFooter.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants.js';
+	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants.js';
 	import { searchStories } from '$lib/requests/story.js';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { ISearched } from '$lib/types/index.js';
+	import type { ISearched } from '$lib/types';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 	import type { SvelteComponent } from 'svelte';
 	import { MetaTags } from 'svelte-meta-tags';
@@ -62,6 +62,16 @@
 />
 
 <div class="flex grow flex-col gap-6 py-4">
+	<div class="flex justify-center px-4">
+		<div class="flex w-full max-w-7xl justify-center rounded-2xl bg-white/50">
+			<Image
+				src="/banner.svg"
+				alt="TREETALE"
+				class="flex h-40 w-full max-w-fit rounded-inherit"
+				cover
+			/>
+		</div>
+	</div>
 	{#if data.categories.length}
 		<div class="flex w-full flex-col items-center gap-4 px-3">
 			<h1 class="w-full select-none py-4 text-center leading-9 text-text">Список историй</h1>
@@ -79,6 +89,14 @@
 					/>
 				</svelte:fragment>
 			</Input>
+			<div class="flex flex-wrap items-center justify-center gap-3">
+				{#each GENRES_LIST as { title, icon }}
+					<Button variant="ghost" size="lg" class="h-20 w-24 flex-col gap-1 bg-white">
+						<svelte:component this={icon} class="h-8 w-8" />
+						<p class="text-xs">{title}</p>
+					</Button>
+				{/each}
+			</div>
 		</div>
 		{#if value && searched}
 			<Category

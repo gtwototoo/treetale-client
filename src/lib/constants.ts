@@ -1,5 +1,17 @@
 import type { ISize, TRGB } from '$lib/types';
 
+import Action from '$UI/icons/genres/Action.svelte';
+import Adult from '$UI/icons/genres/Adult.svelte';
+import Adventure from '$UI/icons/genres/Adventure.svelte';
+import Detective from '$UI/icons/genres/Detective.svelte';
+import Drama from '$UI/icons/genres/Drama.svelte';
+import Fantastic from '$UI/icons/genres/Fantastic.svelte';
+import Fantasy from '$UI/icons/genres/Fantasy.svelte';
+import Historical from '$UI/icons/genres/Historical.svelte';
+import Horror from '$UI/icons/genres/Horror.svelte';
+import Humor from '$UI/icons/genres/Humor.svelte';
+import Romance from '$UI/icons/genres/Romance.svelte';
+import Thriller from '$UI/icons/genres/Thriller.svelte';
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 
 export const BLACK_COLOR: TRGB = [5, 5, 5];
@@ -38,3 +50,117 @@ export const NOT_FOUND_VARIANTS: Array<App.Error> = [
 		color: [30, 47, 49]
 	}
 ];
+
+export const GENRES_LIST = [
+	{
+		title: 'Ужасы',
+		icon: Horror,
+		id: 'horror'
+	},
+	{
+		title: 'Юмор',
+		icon: Humor,
+		id: 'humor'
+	},
+	{
+		title: 'Приключение',
+		icon: Adventure,
+		id: 'adventure'
+	},
+	{
+		title: 'Фантастика',
+		icon: Fantastic,
+		id: 'fantastic'
+	},
+	{
+		title: 'История',
+		icon: Historical,
+		id: 'historical'
+	},
+	{
+		title: 'Боевик',
+		icon: Action,
+		id: 'action'
+	},
+	{
+		title: 'Фэнтези',
+		icon: Fantasy,
+		id: 'fantasy'
+	},
+	{
+		title: 'Романтика',
+		icon: Romance,
+		id: 'romance'
+	},
+	{
+		title: 'Детектив',
+		icon: Detective,
+		id: 'detective'
+	},
+	{
+		title: 'Триллер',
+		icon: Thriller,
+		id: 'thriller'
+	},
+	{
+		title: 'Взрослое',
+		icon: Adult,
+		id: 'adult'
+	},
+	{
+		title: 'Драма',
+		icon: Drama,
+		id: 'drama'
+	}
+];
+
+// export const GENRES_LIST = {
+// 	horror: {
+// 		title: 'Ужасы',
+// 		icon: Horror
+// 	},
+// 	humor: {
+// 		title: 'Юмор',
+// 		icon: Humor
+// 	},
+// 	adventure: {
+// 		title: 'Приключение',
+// 		icon: Adventure
+// 	},
+// 	fantastic: {
+// 		title: 'Фантастика',
+// 		icon: Fantastic
+// 	},
+// 	historical: {
+// 		title: 'История',
+// 		icon: Historical
+// 	},
+// 	action: {
+// 		title: 'Боевик',
+// 		icon: Action
+// 	},
+// 	fantasy: {
+// 		title: 'Фэнтези',
+// 		icon: Fantasy
+// 	},
+// 	romance: {
+// 		title: 'Романтика',
+// 		icon: Romance
+// 	},
+// 	detective: {
+// 		title: 'Детектив',
+// 		icon: Detective
+// 	},
+// 	thriller: {
+// 		title: 'Триллер',
+// 		icon: Thriller
+// 	},
+// 	adult: {
+// 		title: 'Взрослое',
+// 		icon: Adult
+// 	},
+// 	drama: {
+// 		title: 'Драма',
+// 		icon: Drama
+// 	}
+// };
