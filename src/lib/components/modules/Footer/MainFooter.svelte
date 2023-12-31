@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button } from '$UI';
-	import { Mascot, Mastercard, Mir, Telegram, Visa } from '$UI/icons';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { Mascot, Mastercard, Mir, Telegram, Visa } from '$lib/components/icons';
 	import { DocumentText } from 'svelte-heros-v2';
 
 	const currentYear = new Date().getFullYear();

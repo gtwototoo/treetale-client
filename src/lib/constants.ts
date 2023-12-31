@@ -1,18 +1,18 @@
 import type { ISize, TRGB } from '$lib/types';
 
-import Action from '$UI/icons/genres/Action.svelte';
-import Adult from '$UI/icons/genres/Adult.svelte';
-import Adventure from '$UI/icons/genres/Adventure.svelte';
-import Detective from '$UI/icons/genres/Detective.svelte';
-import Drama from '$UI/icons/genres/Drama.svelte';
-import Fantastic from '$UI/icons/genres/Fantastic.svelte';
-import Fantasy from '$UI/icons/genres/Fantasy.svelte';
-import Historical from '$UI/icons/genres/Historical.svelte';
-import Horror from '$UI/icons/genres/Horror.svelte';
-import Humor from '$UI/icons/genres/Humor.svelte';
-import Romance from '$UI/icons/genres/Romance.svelte';
-import Thriller from '$UI/icons/genres/Thriller.svelte';
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
+import Action from '$lib/components/icons/genres/Action.svelte';
+import Adult from '$lib/components/icons/genres/Adult.svelte';
+import Adventure from '$lib/components/icons/genres/Adventure.svelte';
+import Detective from '$lib/components/icons/genres/Detective.svelte';
+import Drama from '$lib/components/icons/genres/Drama.svelte';
+import Fantastic from '$lib/components/icons/genres/Fantastic.svelte';
+import Fantasy from '$lib/components/icons/genres/Fantasy.svelte';
+import Historical from '$lib/components/icons/genres/Historical.svelte';
+import Horror from '$lib/components/icons/genres/Horror.svelte';
+import Humor from '$lib/components/icons/genres/Humor.svelte';
+import Romance from '$lib/components/icons/genres/Romance.svelte';
+import Thriller from '$lib/components/icons/genres/Thriller.svelte';
 
 export const BLACK_COLOR: TRGB = [5, 5, 5];
 export const DEFAULT_COLOR: TRGB = [254, 215, 170];
