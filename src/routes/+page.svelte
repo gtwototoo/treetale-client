@@ -2,7 +2,7 @@
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 
 	import { Button, Image, Input } from '$UI';
-	import { Loading } from '$UI/icons';
+	import { Loading } from '$UI/icons/index.js';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Category from '$lib/components/modules/Category.svelte';
@@ -10,7 +10,7 @@
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants.js';
 	import { searchStories } from '$lib/requests/story.js';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { ISearched } from '$lib/types';
+	import type { ISearched } from '$lib/types/index.js';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 	import type { SvelteComponent } from 'svelte';
 	import { MetaTags } from 'svelte-meta-tags';
