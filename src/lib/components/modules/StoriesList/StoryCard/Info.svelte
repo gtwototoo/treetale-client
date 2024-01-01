@@ -49,7 +49,12 @@
 		{#if author && !edit}
 			<ProfileLink {author} {created} />
 		{:else}
-			<div class={clsx('flex items-center gap-2 overflow-hidden text-sm', currentStatus.color)}>
+			<div
+				class={clsx(
+					'flex h-10 items-center gap-2 overflow-hidden text-sm',
+					currentStatus.color
+				)}
+			>
 				<div class="rounded-full bg-main-30 p-1.5">
 					<Icon type={currentStatus.icon} class="h-6 w-6" />
 				</div>

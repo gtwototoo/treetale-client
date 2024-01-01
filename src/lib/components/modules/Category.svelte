@@ -9,6 +9,7 @@
 	import type { SvelteComponent } from 'svelte';
 	import AddStoryButton from '../AddStoryButton.svelte';
 	import Icon from '../Icon.svelte';
+	import Empty from './StoriesList/Empty.svelte';
 	import StoriesList from './StoriesList/StoriesList.svelte';
 	import StoryCard from './StoriesList/StoryCard/StoryCard.svelte';
 
@@ -27,9 +28,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-	<div
-		class="sticky top-0 z-10 flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6"
-	>
+	<div class="flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6">
 		<Icon type={icon} class="h-8 w-8 max-sm:h-6 max-sm:w-6" />
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
@@ -43,7 +42,7 @@
 			<AddStoryButton class="gap-3 bg-contrast text-text" />
 		</StoriesList>
 	{:else}
-		<div class="overflow-hidden p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins }}>
+		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins }}>
 			<div class="flex justify-start gap-4">
 				{#each stories as rawStory}
 					{@const { vars, ...story } = rawStory}
@@ -55,6 +54,11 @@
 						class="w-96 max-lg:w-80 max-md:w-72 max-xs:w-60"
 					/>
 				{/each}
+				{#if stories.length < 5}
+					{#each Array(5 - stories.length).fill(undefined) as _}
+						<Empty class="w-96 shrink-0 max-lg:w-80 max-md:w-72 max-xs:w-60" />
+					{/each}
+				{/if}
 			</div>
 		</div>
 	{/if}
