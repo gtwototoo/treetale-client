@@ -73,7 +73,7 @@
 			{#if !readonly}
 				<Icon
 					type={ChevronDown}
-					class={clsx('h-4 w-auto shrink-0', { 'h-3': size === 'sm' })}
+					class={clsx('h-5 w-auto shrink-0', { 'h-3': size === 'sm' })}
 				/>
 			{/if}
 		</Button>

@@ -27,7 +27,7 @@
 		<slot />
 	</div>
 	{#if $currentPanelStore.component}
-		<Panel class="ml-auto w-96 bg-transparent" />
+		<Panel class="ml-auto w-96" />
 	{/if}
 {:else}
 	<div class="relative flex h-full w-full flex-col">

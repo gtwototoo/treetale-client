@@ -33,13 +33,7 @@
 
 <div
 	class={clsx(
-		'fixed right-0 h-full w-96 max-w-full bg-contrast transition-transform',
-		hidden && 'max-lg:translate-x-full'
-	)}
-/>
-<div
-	class={clsx(
-		'relative flex max-w-full shrink-0 flex-col gap-4 p-4 text-text transition-transform max-sm:py-3 max-xs:p-3',
+		'relative flex min-h-full max-w-full shrink-0 flex-col gap-4 bg-contrast p-4 text-text transition-transform max-sm:py-3 max-xs:p-3',
 		className,
 		hidden && 'max-lg:translate-x-full'
 	)}
