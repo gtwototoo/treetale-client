@@ -50,7 +50,11 @@ export const createStory = async () => {
 	}
 };
 
-export const publishRequestStory = async (storyId: number) => {
+export const reviewRequestStory = async (storyId: number) => {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/review/${storyId}`);
+};
+
+export const publishStory = async (storyId: number) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/publish/${storyId}`);
 };
 

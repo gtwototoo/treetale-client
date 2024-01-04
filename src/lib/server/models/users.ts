@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema<IUser>(
 			type: String,
 			default: null
 		},
+		role: {
+			type: String,
+			default: 'member'
+		},
 		description: {
 			type: String,
 			default: null

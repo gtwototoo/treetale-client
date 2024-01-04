@@ -19,7 +19,7 @@
 	let className = '';
 	export { className as class };
 
-	const framesList: IList[] = $framesDataStore.map((frame) => {
+	const framesList: Array<IList> = $framesDataStore.map((frame) => {
 		return {
 			title: frame.title || 'Начало',
 			click: () => setSelectedFrame(frame)

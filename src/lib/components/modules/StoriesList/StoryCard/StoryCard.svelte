@@ -36,9 +36,12 @@
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
 	$: edit = $page.data.session && $page.data.session.userId === userId;
+	$: view =
+		$page.data.session &&
+		($page.data.session.role === 'admin' || $page.data.session.role === 'moderator');
 </script>
 
-<Link href={`/${storyId}${edit ? '/edit' : ''}`}>
+<Link href={`/${storyId}${edit ? '/edit' : view ? '/view' : ''}`}>
 	<div class="contents" style={generateMainColors(selectedColor)}>
 		<Card
 			class={clsx(

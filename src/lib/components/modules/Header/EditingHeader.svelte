@@ -44,7 +44,9 @@
 <Header
 	class={clsx('pointer-events-none', $activeActionStore ? 'blind' : 'childs:pointer-events-auto')}
 >
-	{#if !$readonlyStore}
+	{#if $readonlyStore}
+		<div class="select-none rounded-xl bg-contrast/10 px-6 py-3 text-base">Режим чтения</div>
+	{:else}
 		<FormSplit class="divide-main">
 			<Button
 				class="header-button bg-contrast text-text"

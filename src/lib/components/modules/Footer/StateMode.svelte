@@ -46,7 +46,7 @@
 <Button
 	variant="ghost"
 	class={clsx(
-		'pointer-events-auto flex-col gap-1 bg-contrast !p-1.5',
+		'pointer-events-auto !min-h-0 flex-col gap-1 bg-contrast !p-1.5',
 		{
 			saving: 'animate-pulse text-gray-400',
 			saved: 'text-emerald-500',

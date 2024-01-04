@@ -14,8 +14,8 @@
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
-	import { Button } from '$UI';
-	import FormSplit from './FormSplit.svelte';
+	import { clm } from '$lib/utils';
+	import { Button, FormSplit } from '$UI';
 
 	let className = '';
 	export { className as class };
@@ -62,18 +62,18 @@
 	{:else}
 		<Button
 			variant="ghost"
-			class="w-full gap-3 bg-main !pr-3"
+			class={clm('w-full gap-3 bg-main !pr-3', size === 'sm' && 'gap-1 !pr-2')}
 			{disabled}
 			{size}
 			on:click={handleClick}
 		>
-			<p class={clsx('w-full text-left', !value && 'text-gray-400')}>
+			<p class={clm('w-full text-left', !value && 'text-gray-400')}>
 				{value || placeholder}
 			</p>
 			{#if !readonly}
 				<Icon
 					type={ChevronDown}
-					class={clsx('h-5 w-auto shrink-0', { 'h-3': size === 'sm' })}
+					class={clm('h-5 w-auto shrink-0', size === 'sm' && 'h-4', focused && 'rotate-180')}
 				/>
 			{/if}
 		</Button>
@@ -81,7 +81,7 @@
 	{#if focused}
 		<div
 			in:fly={{ y: 10 }}
-			class={clsx(
+			class={clm(
 				'list',
 				{
 					left: '-left-1',

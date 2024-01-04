@@ -12,12 +12,13 @@ export type TStoryStatus = 'draft' | 'review' | 'published';
 
 export type TGenre = (typeof GENRES_LIST)[number]['id'];
 
+export type TBoundings = ISize & ICoordinates;
+
 export interface IStoryEditableInfo {
 	color: TRGB;
 	description: string;
 	genre: TGenre;
 	imageUrl?: string | null;
-	status: TStoryStatus;
 	tags: Array<string>;
 	title: string;
 }
@@ -29,6 +30,7 @@ export interface ISearched {
 
 export interface IStory extends IStoryEditableInfo {
 	created: number;
+	status: TStoryStatus;
 	storyId: number;
 }
 
@@ -77,8 +79,6 @@ export interface ISize {
 	width: number;
 }
 
-export type TBoundings = ISize & ICoordinates;
-
 export interface IProgress {
 	choiceId: number;
 	frameId: number;
@@ -93,14 +93,17 @@ export interface IProgressData {
 	version: number;
 }
 
+type IUserRole = 'member' | 'admin' | 'moderator';
+
 export interface IUser {
-	[index: string]: string | number | null | TRGB | number[];
+	[index: string]: string | number | null | TRGB | Array<number>;
 	color: TRGB | null;
 	created: number;
 	description: string;
 	email: string;
 	imageUrl: string | null;
 	name: string;
+	role: IUserRole;
 	sessionId: string | null;
 	subscriptions: Array<number>;
 	userId: number;

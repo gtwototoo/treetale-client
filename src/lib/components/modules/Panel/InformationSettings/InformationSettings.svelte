@@ -9,19 +9,19 @@
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
-	import { deleteStory, publishRequestStory, updateInfomation } from '$lib/requests/story';
+	import { deleteStory, updateInfomation } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { contrastText, correctWhitespace, exclude, variablesHighlight } from '$lib/utils';
+	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { exclude, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
+	import Publishing from './Publishing.svelte';
 
 	let light = 80;
 	let saturate = 90;
 	let timer: number;
 	let saving = false;
 	let saveInfo = 'Ожидание изменений';
-	let loading = false;
 
 	const list = exclude(GENRES_LIST, 'id');
 
@@ -38,7 +38,7 @@
 		saving = true;
 
 		timer = window.setTimeout(async () => {
-			const { title, tags, color, description, storyId, status, genre } = $informationDataStore;
+			const { title, tags, color, description, storyId, genre } = $informationDataStore;
 
 			try {
 				await updateInfomation(storyId, {
@@ -46,7 +46,6 @@
 					tags,
 					color,
 					description,
-					status,
 					genre
 				});
 
@@ -94,21 +93,6 @@
 		preSaveImage(file);
 	};
 
-	const switchPublish = async () => {
-		loading = true;
-
-		try {
-			await publishRequestStory($informationDataStore.storyId);
-
-			$informationDataStore.status =
-				$informationDataStore.status === 'draft' ? 'published' : 'draft';
-		} catch (e) {
-			console.error(e);
-		} finally {
-			loading = false;
-		}
-	};
-
 	const handleDeleteStory = () => deleteStory($informationDataStore.storyId);
 
 	onDestroy(() => {
@@ -116,16 +100,6 @@
 			clearTimeout(timer);
 		}
 	});
-
-	$: orangeBackground = contrastText($bodyColorStore)
-		? clsx('bg-orange-950')
-		: clsx('bg-orange-50');
-	$: greenBackground = contrastText($bodyColorStore)
-		? clsx('bg-emerald-950')
-		: clsx('bg-emerald-50');
-	$: greenColor = contrastText($bodyColorStore)
-		? clsx('!bg-emerald-900')
-		: clsx('!bg-emerald-200');
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
@@ -167,6 +141,7 @@
 <Listbox
 	{list}
 	placeholder="Жанр"
+	readonly={$readonlyStore}
 	align="inset"
 	value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
 	on:change={({ detail }) => {
@@ -176,6 +151,7 @@
 />
 <FormSplit vertical class="divide-contrast">
 	<ColorPicker
+		readonly={$readonlyStore}
 		popoverAlign="inset"
 		lightRange={[15, 80]}
 		saturateRange={[10, 90]}
@@ -194,44 +170,8 @@
 	>
 		Удалить историю
 	</Button>
-{:else if $informationDataStore.status === 'draft'}
-	{#if !$readonlyStore}
-		<Button
-			variant="main"
-			class={clsx('justify-center !text-emerald-500', greenColor)}
-			on:click={switchPublish}
-			{loading}
-		>
-			Опубликовать
-		</Button>
-	{/if}
 {:else}
-	<div
-		class={clsx(
-			'flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm',
-			$informationDataStore.status === 'review'
-				? clsx('text-orange-500', orangeBackground)
-				: clsx('text-emerald-500', greenBackground)
-		)}
-	>
-		<p>
-			{correctWhitespace(
-				$informationDataStore.status === 'review'
-					? 'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории.'
-					: 'История опубликована'
-			)}
-		</p>
-		{#if !$readonlyStore}
-			<Button
-				variant="main"
-				class={clsx('justify-center !text-red-500', $redColorStore)}
-				on:click={switchPublish}
-				{loading}
-			>
-				Отменить публикацию
-			</Button>
-		{/if}
-	</div>
+	<Publishing />
 {/if}
 {#if !$readonlyStore}
 	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">

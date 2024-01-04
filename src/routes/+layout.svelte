@@ -16,7 +16,7 @@
 	});
 </script>
 
-{#if pageType == 'editing' || pageType === 'reading'}
+{#if pageType == 'editing' || pageType === 'reading' || pageType === 'viewing'}
 	<div
 		class={clsx(
 			'fixed left-0 flex h-full flex-col',

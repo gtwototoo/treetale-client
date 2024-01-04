@@ -1,6 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { ChevronDown, XMark } from 'svelte-heros-v2';
+	import { XMark } from 'svelte-heros-v2';
 
 	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import type { IList } from '$UI/Listbox.svelte';
@@ -59,18 +59,9 @@
 			list={types}
 			align="right"
 			readonly={$readonlyStore}
-			class="-mr-2.5 ml-2"
+			class="-mr-2 ml-2"
 			on:change={handleInput}
-			let:value
-			let:click
-		>
-			<Button class="gap-1 bg-main" variant="ghost" size="sm" on:click={click}>
-				{value}
-				{#if !$readonlyStore}
-					<Icon type={ChevronDown} class="h-4 w-4" />
-				{/if}
-			</Button>
-		</Listbox>
+		/>
 	</Input>
 	{#if !editMode}
 		{#if $variablesStore[varKey].expect === 'Да/Нет'}
