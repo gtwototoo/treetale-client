@@ -51,6 +51,7 @@
 
 		if (!searchedGenres.length && !value) {
 			searched = null;
+			loading = false;
 
 			return;
 		}
