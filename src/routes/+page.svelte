@@ -10,7 +10,7 @@
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { searchStories } from '$lib/requests/story';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { ISearched } from '$lib/types';
+	import type { ISearched, TGenre } from '$lib/types';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 	import type { SvelteComponent } from 'svelte';
 	import { MetaTags } from 'svelte-meta-tags';
@@ -18,8 +18,11 @@
 	export let data;
 
 	let value = '';
+	let searchedGenres: Array<TGenre> = [];
 	let searched: ISearched;
 	let loading = false;
+
+	let timer: number;
 
 	$bodyColorStore = DEFAULT_COLOR;
 
@@ -29,30 +32,44 @@
 		light_theme: Sun
 	};
 
-	const handleInput = () => {
-		let timer: number;
+	const switchGenre = (id: TGenre) => {
+		if (searchedGenres.includes(id)) {
+			searchedGenres.splice(searchedGenres.indexOf(id), 1);
+		} else {
+			searchedGenres.push(id);
+		}
 
-		if (!value) {
+		searchedGenres = searchedGenres;
+
+		searching();
+	};
+
+	const searching = () => {
+		clearTimeout(timer);
+
+		loading = true;
+
+		if (!searchedGenres.length && !value) {
 			searched = null;
-			clearTimeout(timer);
 
 			return;
 		}
 
-		loading = true;
-
 		timer = window.setTimeout(async () => {
-			const { stories, authors } = await searchStories(value);
+			const { stories, authors } = await searchStories(value, searchedGenres);
 
 			searched = { stories, authors };
 
 			loading = false;
 		}, 1000);
 	};
+
+	const handleInput = () => {
+		searching();
+	};
 </script>
 
 <svelte:head>
-	<title>TREETALE</title>
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
@@ -91,11 +108,12 @@
 					</svelte:fragment>
 				</Input>
 				<div class="flex w-full flex-wrap items-center justify-center gap-3">
-					{#each GENRES_LIST as { title, icon }}
+					{#each GENRES_LIST as { title, icon, id }}
 						<Button
-							variant="ghost"
+							variant={searchedGenres.includes(id) ? 'main' : 'ghost'}
 							size="lg"
-							class="h-20 w-24 flex-1 flex-col gap-1 bg-white"
+							class="h-20 w-24 flex-col gap-1 bg-white"
+							on:click={() => switchGenre(id)}
 						>
 							<svelte:component this={icon} class="h-8 w-8" />
 							<p class="text-xs">{title}</p>
@@ -103,7 +121,7 @@
 					{/each}
 				</div>
 			</div>
-			{#if value && searched}
+			{#if (value || searchStories.length) && searched}
 				<Category
 					icon={MagnifyingGlass}
 					listFormat

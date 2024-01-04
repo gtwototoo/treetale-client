@@ -1,4 +1,4 @@
-import type { ICoordinates, ISearched, IStoryEditableInfo, IVariable } from '$lib/types';
+import type { ICoordinates, ISearched, IStoryEditableInfo, IVariable, TGenre } from '$lib/types';
 import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
 
 import { goto } from '$app/navigation';
@@ -70,6 +70,11 @@ export const deleteStory = async (id: number) => {
 	}
 };
 
-export const searchStories = async (row: string) => {
-	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/story/search/${row}`);
+export const searchStories = async (row: string, genres: Array<TGenre>) => {
+	return await fetchGet<ISearched>(
+		`${PUBLIC_TREETALE_API_URL}/story/search/?${new URLSearchParams({
+			row,
+			genres: genres.join(',')
+		}).toString()}`
+	);
 };

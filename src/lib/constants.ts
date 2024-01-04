@@ -112,7 +112,7 @@ export const GENRES_LIST = [
 		icon: Drama,
 		id: 'drama'
 	}
-];
+] as const;
 
 // export const GENRES_LIST = {
 // 	horror: {
