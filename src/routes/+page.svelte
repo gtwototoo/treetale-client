@@ -61,7 +61,7 @@
 			searched = { stories, authors };
 
 			loading = false;
-		}, 1000);
+		}, 500);
 	};
 
 	const handleInput = () => {
@@ -78,7 +78,7 @@
 	description="Бесплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных нелинейных историй. Все добавленные авторами истории находятся на главном экране, что позволяет найти большее количество читателей, а добавление истории происходит с помощью создания интуитивно понятных node-схем с описанием, иллюстрациями и вариантами выбора."
 />
 
-<div class="flex justify-center overflow-hidden">
+<div class="flex min-h-full justify-center overflow-hidden">
 	<section class="flex w-full max-w-[120rem] flex-col gap-6 py-4">
 		<div class="flex justify-center px-4">
 			<div class="flex w-full max-w-7xl justify-center rounded-2xl bg-white/50">
