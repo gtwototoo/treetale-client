@@ -109,7 +109,7 @@
 	{#if logicOperations.length}
 		<div class="absolute left-1 h-7 w-1 rounded-full !bg-orange-500" />
 	{/if}
-	<p class="truncate">{text || 'Вариант выбора'}</p>
+	<p class="truncate">{@html text || 'Вариант выбора'}</p>
 	{#if mathOperations.length}
 		<div class="absolute right-1 h-7 w-1 rounded-full !bg-violet-500" />
 	{/if}
