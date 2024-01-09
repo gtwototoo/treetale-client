@@ -1,19 +1,10 @@
 <script lang="ts">
-	import clsx from 'clsx';
-
 	import Link from '$lib/components/Link.svelte';
-	import { bodyColorStore } from '$lib/stores/main';
-	import { contrastText } from '$lib/utils';
-
-	$: textColor = contrastText($bodyColorStore) ? 'childs:from-[#FDBA74]' : 'childs:from-[#753F00]';
 </script>
 
 <Link
 	href="/"
-	class={clsx(
-		'select-none px-2 text-2xl/9 font-extrabold uppercase text-transparent childs:bg-gradient-to-br childs:bg-clip-text md:px-4',
-		textColor
-	)}
+	class="select-none px-2 text-2xl/9 font-extrabold uppercase text-transparent childs:bg-gradient-to-b childs:from-[#FDBA74] childs:to-[#FC8E4D] childs:bg-clip-text md:px-4"
 >
 	<p class="hidden sm:block">TreeTale</p>
 	<p class="sm:hidden">TT</p>
