@@ -25,7 +25,7 @@
 					: 'text-sm xs:text-base lg:text-xl'
 			)}
 		>
-			{correctVariableReplace(description, vars) || 'Без описания'}
+			{@html correctVariableReplace(description, vars) || 'Без описания'}
 		</p>
 	</div>
 </div>
