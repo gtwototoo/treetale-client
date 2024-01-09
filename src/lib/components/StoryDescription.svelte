@@ -3,12 +3,13 @@
 	import Icon from './Icon.svelte';
 
 	import type { IStoryFull } from '$lib/types/reading';
+	import { correctVariableReplace } from '$lib/utils';
 	import ReadCard from './ReadCard.svelte';
 	import Info from './modules/StoriesList/StoryCard/Info.svelte';
 
 	export let story: IStoryFull;
 
-	$: ({ title, description, likes, author, status, created, tags, storyId } = story);
+	$: ({ title, description, likes, author, status, created, tags, storyId, vars } = story);
 </script>
 
 <ReadCard classCard="h-full text-center !items-center !gap-10">
@@ -20,7 +21,7 @@
 		/>
 		<div class="flex flex-col gap-4">
 			<h2 class="uppercase">{title}</h2>
-			<p class="max-w-sm">{description}</p>
+			<p class="max-w-sm">{@html correctVariableReplace(description, vars) || 'Без описания'}</p>
 		</div>
 		<Info {likes} {author} {status} {created} {tags} {storyId} edit={false} />
 	</svelte:fragment>

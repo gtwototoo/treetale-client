@@ -2,8 +2,7 @@
 	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { Mastercard, Mir, Telegram, Visa } from '$lib/components/icons';
-	import Treetale from '$lib/components/icons/Treetale.svelte';
+	import { Mastercard, Mir, Telegram, TreetaleShort, Visa } from '$lib/components/icons';
 	import { DocumentText } from 'svelte-heros-v2';
 
 	const currentYear = new Date().getFullYear();
@@ -15,7 +14,7 @@
 	>
 		<div class="flex items-center gap-6 max-md:gap-4 max-sm:flex-col">
 			<div class="flex items-center gap-4">
-				<Treetale class="h-10 w-10 max-lg:hidden" />
+				<TreetaleShort class="h-10 w-10 max-lg:hidden" />
 				<div class="flex flex-col gap-1 max-sm:text-center">
 					<p class="font-bold uppercase">Treetale</p>
 					<p class="text-gray-700">© 2022 - {currentYear}. Все права защищены</p>
