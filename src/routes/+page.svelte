@@ -113,7 +113,7 @@
 						<Button
 							variant={searchedGenres.includes(id) ? 'main' : 'ghost'}
 							size="lg"
-							class="h-20 w-24 flex-col gap-1 bg-white"
+							class="h-20 w-24 flex-col gap-1 bg-white max-sm:flex-1"
 							on:click={() => switchGenre(id)}
 						>
 							<svelte:component this={icon} class="h-8 w-8" />

@@ -16,6 +16,22 @@
 	});
 </script>
 
+<svg width="0" height="0" aria-hidden="true" class="invisible absolute bg-transparent">
+	<defs>
+		<linearGradient
+			id="linear-logo"
+			x1="137"
+			y1="0"
+			x2="137"
+			y2="442"
+			gradientUnits="userSpaceOnUse"
+		>
+			<stop stop-color="#FDBA74" />
+			<stop offset="1" stop-color="#FC8E4D" />
+		</linearGradient>
+	</defs>
+</svg>
+
 {#if pageType == 'editing' || pageType === 'reading' || pageType === 'viewing'}
 	<div
 		class={clsx(
