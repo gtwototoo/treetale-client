@@ -1,6 +1,5 @@
 import type { ICoordinates, IStory, IVariable } from '.';
-
-import type { IFrameCreate } from './editing';
+import type { IFrameCreate, INote } from './editing';
 
 export interface IStorySchema extends IStory {
 	[index: string]: number | ICoordinates | Array<unknown> | string | boolean;
@@ -8,6 +7,7 @@ export interface IStorySchema extends IStory {
 	frames: Array<IFrameCreate>;
 	imageUrl: string;
 	likes: Array<number>;
+	notes: Array<INote>;
 	offset: ICoordinates;
 	userId: number;
 	vars: Array<IVariable>;

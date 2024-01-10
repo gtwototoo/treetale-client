@@ -7,12 +7,17 @@
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { removeImage, saveImage } from '$lib/requests/image';
-	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
+	import {
+		informationDataStore,
+		notesStore,
+		readonlyStore,
+		variablesStore
+	} from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
-	import { last, variablesHighlight } from '$lib/utils';
+	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
 
 	const imageFolder = 'frames';
@@ -30,7 +35,7 @@
 
 			$framesDataStore[frameKey].imageUrl = imageUrl;
 
-			changesHistory.add('Добавление изображения фрейма', Photo);
+			changesHistory.add('Добавление изображения блока', Photo);
 		} catch (e) {
 			console.error(e);
 		}
@@ -47,7 +52,7 @@
 
 			$framesDataStore[frameKey].imageUrl = null;
 
-			changesHistory.add('Удаление изображения фрейма', Trash);
+			changesHistory.add('Удаление изображения блока', Trash);
 		} catch (e) {
 			console.error(e);
 		}
@@ -78,7 +83,7 @@
 			outputCorrect(frame);
 		}
 
-		changesHistory.add('Удаление фрейма', Trash);
+		changesHistory.add('Удаление блока', Trash);
 	};
 
 	const setX = (e: CustomEvent<Event & { currentTarget: EventTarget & HTMLInputElement }>) => {
@@ -138,14 +143,26 @@
 	src={imageUrl}
 	alt="Иллюстрация текста"
 />
-<Contenteditable
-	pattern={(html) => variablesHighlight(html, $variablesStore)}
-	readonly={$readonlyStore}
-	maxlength={1500}
-	disabled={editMode}
-	placeholder="Описание фрейма"
-	bind:html={$framesDataStore[frameKey].text}
-/>
+<FormSplit vertical class="divide-contrast">
+	<Input
+		placeholder="Название блока"
+		bind:value={$framesDataStore[frameKey].title}
+		maxlength={25}
+	/>
+	<Contenteditable
+		pattern={(html) => {
+			const varFormattedHtml = variablesHighlight(html, $variablesStore);
+			const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
+
+			return notesFormattedHtml;
+		}}
+		readonly={$readonlyStore}
+		maxlength={1500}
+		disabled={editMode}
+		placeholder="Описание блока"
+		bind:html={$framesDataStore[frameKey].text}
+	/>
+</FormSplit>
 <div class="flex flex-col gap-2" id="choices">
 	{#each choices as { choiceId } (choiceId)}
 		<Choice {choiceId} {frameKey} />
@@ -157,7 +174,7 @@
 				class={clsx('justify-center !text-red-500', $redColorStore)}
 				on:click={removeFrame}
 			>
-				Удалить фрейм
+				Удалить блок
 			</Button>
 		{:else}
 			<Button variant="ghost" on:click={addChoice} class="justify-center bg-main text-text">

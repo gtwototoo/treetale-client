@@ -58,7 +58,7 @@
 			<Listbox
 				size="lg"
 				list={framesList}
-				placeholder="Фрейм"
+				placeholder="Блок"
 				class="w-full"
 				align="inset"
 				let:click

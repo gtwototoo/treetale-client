@@ -8,11 +8,11 @@
 	}
 
 	const shortcuts: Array<IShortcut> = [
-		{ text: 'Режим добавления фреймов', keys: ['F'] },
+		{ text: 'Режим добавления блоков', keys: ['F'] },
 		{ text: 'Режим добавления связей', keys: ['C'] },
 		{ text: 'Отменить действие', keys: ['⌘', 'Z'] },
 		{ text: 'Вернуть действие', keys: ['SHIFT', '⌘', 'Z'] },
-		{ text: 'Переключить фрейм', keys: ['Tab'], readonly: true },
+		{ text: 'Переключить блок', keys: ['Tab'], readonly: true },
 		{ text: 'Режим просмотра', keys: ['ESC'] }
 	];
 </script>

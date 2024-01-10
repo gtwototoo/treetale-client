@@ -1,5 +1,5 @@
 import type { IChoice, ICoordinates, IFrame, IVariable, TBoundings } from '$lib/types';
-import type { IFrameCreate, IPath } from '$lib/types/editing';
+import type { IFrameCreate, INote, IPath } from '$lib/types/editing';
 
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 import clsx from 'clsx';
@@ -167,4 +167,14 @@ export const variablesHighlight = (html: string, vars: Array<IVariable>) => {
 			varExists ? 'text-violet-500' : 'text-red-500'
 		)}">${match}</span>`;
 	});
+};
+
+export const notesHighlight = (html: string, notes: Array<INote>) => {
+	for (const { tags } of notes) {
+		for (const tag of tags) {
+			html = html.replaceAll(tag, `<span class="text-orange-500">${tag}</span>`);
+		}
+	}
+
+	return html;
 };

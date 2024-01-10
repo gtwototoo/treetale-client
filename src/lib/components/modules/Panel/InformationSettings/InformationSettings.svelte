@@ -10,10 +10,15 @@
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
-	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
+	import {
+		informationDataStore,
+		notesStore,
+		readonlyStore,
+		variablesStore
+	} from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { exclude, variablesHighlight } from '$lib/utils';
+	import { exclude, notesHighlight, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
 	import Publishing from './Publishing.svelte';
 
@@ -123,7 +128,12 @@
 	/>
 	<Contenteditable
 		readonly={$readonlyStore}
-		pattern={(html) => variablesHighlight(html, $variablesStore)}
+		pattern={(html) => {
+			const varFormattedHtml = variablesHighlight(html, $variablesStore);
+			const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
+
+			return notesFormattedHtml;
+		}}
 		disabled={editMode}
 		placeholder="Описание истории"
 		bind:html={$informationDataStore.description}

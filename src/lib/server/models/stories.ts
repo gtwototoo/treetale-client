@@ -45,6 +45,7 @@ const storySchema = new mongoose.Schema<IStorySchema>(
 			default: 100
 		},
 		vars: Array,
+		notes: Array,
 		offset: {
 			type: Object,
 			default: { x: 0, y: 0 }

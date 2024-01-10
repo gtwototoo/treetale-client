@@ -17,6 +17,7 @@
 	import { updateArea } from '$lib/requests/story';
 	import {
 		informationDataStore,
+		notesStore,
 		readonlyStore,
 		stateAreaStore,
 		variablesStore
@@ -53,6 +54,7 @@
 	};
 
 	$variablesStore = data.info.vars;
+	$notesStore = data.info.notes;
 	framesDataStore.init(data.frames);
 	$informationDataStore = data.info;
 	$zoomStore = data.info.zoom;
@@ -147,7 +149,7 @@
 
 	const handleMouseUp = () => {
 		if ($activeActionStore === 'movingFrame') {
-			changesHistory.add('Перемещение фрейма', ArrowsPointingIn);
+			changesHistory.add('Перемещение блока', ArrowsPointingIn);
 		}
 
 		if ($activeActionStore) {

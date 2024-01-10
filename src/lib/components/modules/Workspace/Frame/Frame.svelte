@@ -103,7 +103,7 @@
 		{#if !hidden}
 			{#if $framesDataStore[frameKey].imageUrl}
 				<Image
-					alt="Изображение фрейма"
+					alt="Изображение блока"
 					src={$framesDataStore[frameKey].imageUrl}
 					class="h-36 w-full rounded-lg !bg-main/30 text-text"
 					cover
@@ -111,7 +111,7 @@
 			{/if}
 			<div class={clsx('flex h-20 items-center px-4 text-center', !text && 'text-gray-400')}>
 				<div class="line-clamp-5 w-full break-words text-left">
-					{@html text || 'Описание фрейма'}
+					{@html text || 'Описание блока'}
 				</div>
 			</div>
 			<Choices {frameKey} />

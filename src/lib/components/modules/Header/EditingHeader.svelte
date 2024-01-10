@@ -5,6 +5,7 @@
 		ArrowUturnRight,
 		ChevronLeft,
 		Cog6Tooth,
+		DocumentText,
 		Variable
 	} from 'svelte-heros-v2';
 
@@ -18,12 +19,21 @@
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore } from '$lib/stores/main';
 	import { activeActionStore } from '$lib/stores/workspace';
+	import Notes from '../Panel/Notes/Notes.svelte';
 
 	const variablesSwitch = () => {
 		$currentPanelStore = {
 			title: 'Переменные',
 			id: 'variables',
 			component: Variables
+		};
+	};
+
+	const notesSwitch = () => {
+		$currentPanelStore = {
+			title: 'Заметки',
+			id: 'notes',
+			component: Notes
 		};
 	};
 
@@ -88,6 +98,14 @@
 			class="header-button bg-contrast !px-3 text-text"
 			variant="ghost"
 			size="lg"
+			on:click={settingsSwitch}
+		>
+			<Icon type={Cog6Tooth} class="h-6 w-6" />
+		</Button>
+		<Button
+			class="header-button bg-contrast !px-3 text-text"
+			variant="ghost"
+			size="lg"
 			on:click={variablesSwitch}
 		>
 			<Icon type={Variable} class="h-6 w-6" />
@@ -96,9 +114,9 @@
 			class="header-button bg-contrast !px-3 text-text"
 			variant="ghost"
 			size="lg"
-			on:click={settingsSwitch}
+			on:click={notesSwitch}
 		>
-			<Icon type={Cog6Tooth} class="h-6 w-6" />
+			<Icon type={DocumentText} class="h-6 w-6" />
 		</Button>
 	</FormSplit>
 </Header>

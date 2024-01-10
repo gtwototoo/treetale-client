@@ -10,6 +10,11 @@ export interface IPath {
 	line: string;
 }
 
+export interface INote {
+	tags: Array<string>;
+	text: string;
+}
+
 export interface IConnect {
 	choiceId: number;
 	frameId: number;

@@ -43,7 +43,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 		return data;
 	});
 
-	changesHistory.add('Добавление фрейма', Plus);
+	changesHistory.add('Добавление блока', Plus);
 
 	return lastFrameId;
 };

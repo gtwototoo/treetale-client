@@ -1,9 +1,9 @@
 import type { ICoordinates, ISearched, IStoryEditableInfo, IVariable, TGenre } from '$lib/types';
+import type { IFrameCreate, INote } from '$lib/types/editing';
 import { fetchDelete, fetchGet, fetchPost, fetchPut } from '.';
 
 import { goto } from '$app/navigation';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-import type { IFrameCreate } from '$lib/types/editing';
 
 export const addLike = async (storyId: number) => {
 	interface IResponse {
@@ -33,6 +33,12 @@ export const updateArea = async (
 export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/vars`, {
 		vars
+	});
+};
+
+export const updateNotes = async (storyId: number, notes: Array<INote>) => {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/notes`, {
+		notes
 	});
 };
 

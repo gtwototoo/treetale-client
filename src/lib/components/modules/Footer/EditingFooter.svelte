@@ -74,7 +74,7 @@
 					class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
 				>
 					<Icon type={Plus} class="hidden h-6 w-6 max-md:block" />
-					<p class="max-md:hidden">Новый фрейм</p>
+					<p class="max-md:hidden">Новый блок</p>
 				</Button>
 			{/if}
 		{/if}
