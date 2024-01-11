@@ -1,5 +1,7 @@
+import { StoriesModel, UsersModel } from '$lib/server/models';
+import { collapseValue, pluralize } from '$lib/utils';
+
 import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
-import { StoriesModel } from '$lib/server/models';
 import { loadUsers } from '$lib/server/utils';
 import type { IStorySchema } from '$lib/types/schemas';
 import type { FilterQuery } from 'mongoose';
@@ -14,7 +16,37 @@ interface IReadyCategory extends Omit<ICategory, 'filter'> {
 	stories: Array<IStorySchema>;
 }
 
-const LIMIT = 10;
+const STORIES_LIMIT = 10;
+
+const correctMetric = (value: number, names: [string, string, string]) => {
+	const collapsed = collapseValue(value);
+
+	return [collapsed, pluralize(Number(collapsed.match(/\d+/)?.[0]), ...names)];
+};
+
+const getStatistic = async () => {
+	const totalStories = await StoriesModel.aggregate([
+		{
+			$match: {
+				status: 'published'
+			}
+		},
+		{
+			$group: {
+				_id: null,
+				totalLikes: { $sum: { $size: '$likes' } },
+				totalStories: { $sum: 1 }
+			}
+		}
+	]);
+	const totalUsers = await UsersModel.countDocuments();
+
+	return [
+		['users', ...correctMetric(totalUsers, ['читателей', 'читатель', 'читателя'])],
+		['likes', ...correctMetric(totalStories[0].totalLikes, ['лайков', 'лайк', 'лайка'])],
+		['stories', ...correctMetric(totalStories[0].totalStories, ['историй', 'история', 'истории'])]
+	] as Array<['users' | 'stories' | 'likes', string, string]>;
+};
 
 export const load = async () => {
 	const categories: Array<ICategory> = [
@@ -48,7 +80,7 @@ export const load = async () => {
 		})
 			.select(USER_WITHOUT_WORKSPACE)
 			.skip(0)
-			.limit(LIMIT)
+			.limit(STORIES_LIMIT)
 			.sort({
 				created: 'desc'
 			})
@@ -65,5 +97,9 @@ export const load = async () => {
 
 	const concatStories = [].concat(...categoryStories.map(({ stories }) => stories));
 
-	return { categories: categoryStories, authors: await loadUsers(concatStories) };
+	return {
+		categories: categoryStories,
+		authors: await loadUsers(concatStories),
+		statistic: await getStatistic()
+	};
 };

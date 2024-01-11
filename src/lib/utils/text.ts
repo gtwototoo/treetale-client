@@ -48,16 +48,8 @@ export const cutText = (text: string, vars: Array<IVariable>, maxLength = 200) =
 	}
 };
 
-export const pluralize = (
-	number: number,
-	gen: string,
-	nom: string,
-	plu: string,
-	emptyText = true
-) => {
-	if (!number && emptyText) return ['Нет', gen].join(' ');
-
+export const pluralize = (number: number, gen: string, nom: string, plu: string) => {
 	const n = String(number);
 
-	return [n, n.match(/(0|[5-9]|1[0-9])$/) ? gen : n.match(/1$/) ? nom : plu].join(' ');
+	return n.match(/(0|[5-9]|1[0-9])$/) ? gen : n.match(/1$/) ? nom : plu;
 };

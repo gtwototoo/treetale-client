@@ -6,7 +6,9 @@ import type { IUser } from '$lib/types';
 import type { IStoryReading } from '$lib/types/reading';
 
 const correctMetric = (value: number, names: [string, string, string]) => {
-	return pluralize(Number(collapseValue(value).match(/\d+/)?.[0]), ...names).split(' ');
+	const collapsed = collapseValue(value);
+
+	return [collapsed, pluralize(Number(collapsed.match(/\d+/)?.[0]), ...names)];
 };
 
 const getStatistic = async (stories: Array<IStoryReading>, user: IUser) => {
