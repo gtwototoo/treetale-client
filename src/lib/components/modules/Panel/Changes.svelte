@@ -13,7 +13,7 @@
 	icon={Clock}
 	text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
 />
-<FormSplit vertical class="divide-contrast">
+<FormSplit vertical>
 	{#each $changesHistory.stages as { title, icon }, key}
 		<Button
 			variant="ghost"

@@ -39,7 +39,7 @@
 	$: isLiked = likes?.includes($page.data.session?.userId);
 </script>
 
-<FormSplit vertical class="w-full divide-contrast bg-transparent">
+<FormSplit vertical class="w-full bg-transparent">
 	<div
 		class={clsx(
 			'flex w-full items-center justify-between gap-4 rounded-lg bg-main-60 p-3 max-md:p-2',

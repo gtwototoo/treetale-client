@@ -30,10 +30,7 @@
 	};
 </script>
 
-<FormSplit
-	vertical
-	class={clsx($activeModeStore === 'binding' ? 'divide-main-80' : 'divide-contrast')}
->
+<FormSplit vertical>
 	{#each choices as choice (choice.choiceId)}
 		<Choice {...choice} {frameKey} />
 	{/each}

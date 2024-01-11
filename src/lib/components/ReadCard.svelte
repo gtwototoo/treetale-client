@@ -19,12 +19,12 @@
 	};
 </script>
 
-<div class={clsx('card', className)}>
+<div class={clsx('card adaptive-size', className)}>
 	{#if src && !errorLoad}
 		<Image
 			{src}
 			{alt}
-			class="h-80 w-full rounded-2xl bg-contrast/30 text-text max-hd:h-72 max-xl:h-64 max-md:h-56 max-sm:h-48"
+			class="h-[22rem] w-full rounded-2xl !bg-contrast/30 text-text max-xl:h-80 max-md:h-72"
 			cover
 			on:error={handleError}
 		/>
@@ -53,6 +53,9 @@
 
 <style lang="postcss">
 	.card {
-		@apply flex w-full max-w-[36rem] flex-col justify-center gap-2;
+		@apply flex w-full flex-col justify-center gap-2;
+	}
+	.adaptive-size {
+		@apply max-w-[36rem] max-xl:max-w-[32rem] max-md:max-w-[28rem];
 	}
 </style>

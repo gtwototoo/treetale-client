@@ -34,19 +34,19 @@ export const NOT_FOUND_VARIANTS: Array<App.Error> = [
 	{
 		message:
 			'Вы забрели в темный уголок, откуда не видно света, вам придется вернуться назад и найти другой путь.',
-		img: `${PUBLIC_TREETALE_CLIENT_URL}/compressed/404_boy@1024x1024.png`,
-		color: [209, 209, 198]
+		img: `${PUBLIC_TREETALE_CLIENT_URL}/img/boy.png`,
+		color: [189, 156, 121]
 	},
 	{
 		message:
 			'Эта дорога уходит далеко за горизонт и впереди только пустота, думаю дальше будет тоже самое.',
-		img: `${PUBLIC_TREETALE_CLIENT_URL}/compressed/404_road@1024x1024.png`,
-		color: [123, 85, 58]
+		img: `${PUBLIC_TREETALE_CLIENT_URL}/img/road.png`,
+		color: [246, 193, 179]
 	},
 	{
 		message:
-			'Вы прогуливались по полю и вдруг увидели страшный заброшенный дом и в далеке слышился вой волков, думаю стоит вернуться обратно...',
-		img: `${PUBLIC_TREETALE_CLIENT_URL}/compressed/404_house@1024x1024.png`,
+			'Вы прогуливались по лесу, не заметили как стемнело и вдруг увидели страшный заброшенный дом, а вдалеке слышался вой волков, думаю стоит вернуться...',
+		img: `${PUBLIC_TREETALE_CLIENT_URL}/img/house.png`,
 		color: [30, 47, 49]
 	}
 ];

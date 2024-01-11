@@ -73,7 +73,7 @@
 
 <ReadCard src={imageUrl} text={dynamicText()} class={clsx('text-left', className)}>
 	{#if choices.length}
-		<FormSplit vertical class="w-full divide-main-10">
+		<FormSplit vertical class="w-full">
 			{#each choices as { choiceId, text, logicOperations } (choiceId)}
 				{#if !logicOperations.length || checkLogic(logicOperations)}
 					<Choice

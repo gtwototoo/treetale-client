@@ -8,11 +8,7 @@
 </script>
 
 <div
-	class={clm(
-		className,
-		'form-split flex',
-		vertical ? 'vertical flex-col divide-y' : 'horizontal divide-x'
-	)}
+	class={clm(className, 'form-split flex gap-px', vertical ? 'vertical flex-col' : 'horizontal')}
 >
 	<slot />
 </div>

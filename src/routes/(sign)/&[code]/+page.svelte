@@ -59,7 +59,7 @@
 <div class="flex h-full w-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">
 		<ReadCard
-			src="/compressed/auth.jpeg"
+			src="/img/auth.png"
 			alt="Завершение регистрации"
 			text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте"
 		>

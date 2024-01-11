@@ -49,7 +49,7 @@
 				<Icon type={PencilSquare} class="h-6 w-6" />
 			</Button>
 		{/if}
-		<FormSplit class="w-full divide-contrast">
+		<FormSplit class="w-full">
 			{#if framePanel}
 				<Button size="lg" variant="ghost" class="bg-main !p-2" on:click={prevSelectedFrame}>
 					<Icon type={ChevronLeft} class="h-5 w-5" />

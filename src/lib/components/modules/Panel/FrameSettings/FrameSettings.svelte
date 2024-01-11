@@ -116,7 +116,7 @@
 	});
 </script>
 
-<FormSplit class="w-full divide-contrast">
+<FormSplit class="w-full">
 	<Input
 		value={`${Math.round(x)}`}
 		on:input={setX}
@@ -143,7 +143,7 @@
 	src={imageUrl}
 	alt="Иллюстрация текста"
 />
-<FormSplit vertical class="divide-contrast">
+<FormSplit vertical>
 	<Input
 		placeholder="Название блока"
 		bind:value={$framesDataStore[frameKey].title}

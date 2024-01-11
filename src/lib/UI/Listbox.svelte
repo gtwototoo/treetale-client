@@ -91,7 +91,7 @@
 			)}
 			use:correctPosition
 		>
-			<FormSplit class="divide-contrast" vertical>
+			<FormSplit vertical>
 				{#each list as item}
 					<Button
 						on:click={(e) => handleSelect(e, item)}

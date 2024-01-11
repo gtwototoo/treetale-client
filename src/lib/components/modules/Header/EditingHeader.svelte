@@ -55,9 +55,9 @@
 	class={clsx('pointer-events-none', $activeActionStore ? 'blind' : 'childs:pointer-events-auto')}
 >
 	{#if $readonlyStore}
-		<div class="select-none rounded-xl bg-contrast/10 px-6 py-3 text-base">Режим чтения</div>
+		<div class="select-none rounded-xl bg-contrast/10 px-6 py-3 text-base">Режим просмотра</div>
 	{:else}
-		<FormSplit class="divide-main">
+		<FormSplit>
 			<Button
 				class="header-button bg-contrast text-text"
 				variant="ghost"
@@ -90,10 +90,7 @@
 			<Icon type={ChevronLeft} class="h-6 w-6" />
 		</Button>
 	</svelte:fragment>
-	<FormSplit
-		class="absolute right-4 top-20 divide-main max-sm:right-3 max-sm:top-[4.5rem]"
-		vertical
-	>
+	<FormSplit class="absolute right-4 top-20 max-sm:right-3 max-sm:top-[4.5rem]" vertical>
 		<Button
 			class="header-button bg-contrast !px-3 text-text"
 			variant="ghost"

@@ -19,8 +19,8 @@ export const randomError = (status: number): HttpError => {
 			: {
 					message:
 						'Случилось что-то ужасное, мир схлопнулся в маленькую точку и теперь лучшие небесные кузнецы пытаются вернуть его в исходное состояние.',
-					img: `${PUBLIC_TREETALE_CLIENT_URL}/img/compressed/500_space@1024x1024.png`,
-					color: [131, 15, 7]
+					img: `${PUBLIC_TREETALE_CLIENT_URL}/img/universe.png`,
+					color: [0, 38, 58]
 			  }
 	);
 };

@@ -39,7 +39,7 @@
 	$: ({ logicOperations, mathOperations } = $framesDataStore[frameKey].choices[choiceKey]);
 </script>
 
-<FormSplit vertical={!editMode} class="divide-contrast">
+<FormSplit vertical={!editMode}>
 	<Contenteditable
 		maxlength={100}
 		class="!shrink grow"

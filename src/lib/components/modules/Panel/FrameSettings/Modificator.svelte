@@ -73,7 +73,7 @@
 	</div>
 	<div class="flex w-full flex-col gap-2">
 		{#each operations as operation, key}
-			<FormSplit class="divide-main-40">
+			<FormSplit>
 				{#if editMode}
 					<Button variant="main" disabled class="w-full gap-3 bg-main">
 						<p>{operation.variable || 'Переменная'}</p>

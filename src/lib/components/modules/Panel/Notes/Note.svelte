@@ -25,7 +25,7 @@
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
-<FormSplit vertical class="divide-contrast">
+<FormSplit vertical>
 	<Contenteditable
 		placeholder="Текст заметки"
 		bind:html={$notesStore[noteKey].text}

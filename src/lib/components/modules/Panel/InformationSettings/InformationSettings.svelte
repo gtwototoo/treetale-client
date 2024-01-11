@@ -117,7 +117,7 @@
 	src={$informationDataStore.imageUrl}
 	alt="Иллюстрация текста"
 />
-<FormSplit vertical class="divide-contrast">
+<FormSplit vertical>
 	<Input
 		placeholder="Название"
 		class="w-full"
@@ -159,7 +159,7 @@
 		checkUpdates();
 	}}
 />
-<FormSplit vertical class="divide-contrast">
+<FormSplit vertical>
 	<ColorPicker
 		readonly={$readonlyStore}
 		popoverAlign="inset"
