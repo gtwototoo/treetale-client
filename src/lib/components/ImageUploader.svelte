@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, Image } from '$UI';
 	import { redColorStore } from '$lib/stores/main';
+	import { clm } from '$lib/utils';
 	import clsx from 'clsx';
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
 	import { Trash } from 'svelte-heros-v2';
@@ -12,6 +13,9 @@
 	export let readonly = false;
 	export let src: string | undefined = undefined;
 	export let alt: string;
+
+	let className = '';
+	export { className as class };
 
 	const dispatch = createEventDispatcher();
 
@@ -44,7 +48,7 @@
 	};
 </script>
 
-<div class="relative h-48">
+<div class={clm('relative h-full min-h-0 rounded-lg', className)}>
 	{#if src || base64src}
 		{#if !readonly}
 			<Button
@@ -61,19 +65,19 @@
 			{src}
 			{base64src}
 			on:load={() => (base64src = null)}
-			class="h-full w-full rounded-lg !bg-main/30 text-text"
+			class="h-full w-full rounded-inherit !bg-main/30 text-text"
 			cover
 		/>
 	{:else if readonly}
 		<Button
 			variant="ghost"
-			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal bg-main !p-6"
+			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit bg-main !p-6"
 		>
 			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 			<p>Изображение не добавлено</p>
 		</Button>
 	{:else}
-		<DropBlock on:change={handleChange} class="h-full w-full gap-2" {disabled}>
+		<DropBlock on:change={handleChange} class="h-full w-full gap-2 !rounded-inherit" {disabled}>
 			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 		</DropBlock>
 	{/if}

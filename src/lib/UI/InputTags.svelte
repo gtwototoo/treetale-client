@@ -29,7 +29,7 @@
 
 	const addTag = (name: string) => {
 		value = '';
-		tags = [...tags, name];
+		tags = [...tags, name.toLowerCase()];
 		dispatch('add', { name });
 	};
 

@@ -109,6 +109,7 @@
 </script>
 
 <ImageUploader
+	class="h-48"
 	disabled={editMode}
 	readonly={$readonlyStore}
 	icon={BookOpen}

@@ -1,35 +1,15 @@
-import { StoriesModel, UsersModel } from '$lib/server/models';
-import { randomError, serialize } from '$lib/utils';
-
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
-import type { IUser } from '$lib/types';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals, params }) => {
+export const load = async ({ locals, params, fetch }) => {
 	const { name } = params;
 
-	if (locals.session && locals.session.name === name) throw redirect(302, '/profile');
+	if (locals.session && locals.session.name === name) {
+		throw redirect(302, '/profile');
+	}
 
-	const user: IUser | null = await UsersModel.findOne({
-		name
-	})
-		.select({
-			_id: 0,
-			sessionId: 0
-		})
-		.lean();
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/user/get/${name}`);
+	const userInfo = await res.json();
 
-	if (!user) throw randomError(404);
-
-	const stories = await StoriesModel.find({
-		userId: user.userId,
-		status: 'published'
-	})
-		.select(USER_WITHOUT_WORKSPACE)
-		.lean();
-
-	return {
-		stories: serialize(stories),
-		authors: [serialize(user)]
-	};
+	return userInfo;
 };

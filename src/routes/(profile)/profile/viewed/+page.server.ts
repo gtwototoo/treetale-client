@@ -1,34 +1,15 @@
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
-import { ProgressModel } from '$lib/server/models/progress.js';
-import { StoriesModel } from '$lib/server/models/stories.js';
-import { loadUsers } from '$lib/server/utils.js';
-import type { IProgressData } from '$lib/types/index.js';
-import type { IStoryFull } from '$lib/types/reading.js';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, fetch }) => {
 	const user = locals.session;
 
-	if (!user) throw redirect(302, '/');
+	if (!user) {
+		throw redirect(302, '/');
+	}
 
-	const progresses: Array<IProgressData> = await ProgressModel.find({
-		readerId: user.userId
-	})
-		.select({
-			_id: 0
-		})
-		.lean();
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/user/stories/viewed`);
+	const userViewedStories = await res.json();
 
-	const stories: Array<IStoryFull> = await StoriesModel.find({
-		storyId: {
-			$in: progresses.map(({ storyId }) => storyId)
-		}
-	})
-		.select(USER_WITHOUT_WORKSPACE)
-		.lean();
-
-	return {
-		stories,
-		authors: await loadUsers(stories)
-	};
+	return userViewedStories;
 };

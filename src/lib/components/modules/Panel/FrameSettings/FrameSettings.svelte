@@ -17,13 +17,14 @@
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
+	import type { IFrameCreate } from '$lib/types/editing';
 	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
 
 	const imageFolder = 'frames';
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
-	$: ({ x, y, choices, imageUrl } = $framesDataStore[frameKey]);
+	$: ({ x, y, choices, imageUrl, frameId } = $framesDataStore[frameKey]);
 	$: editMode = $currentPanelStore.editMode;
 
 	const preSaveImage = async (file: File): Promise<void> => {
@@ -114,6 +115,28 @@
 	onDestroy(() => {
 		$selectedFrameStore = null;
 	});
+
+	const findPrevFrame = (frames: Array<IFrameCreate>) => {
+		for (const frame of frames) {
+			const isPrevFrame = frame.choices.some((choice) => choice.frameId === frameId);
+
+			if (isPrevFrame) {
+				if (frame.imageUrl) {
+					return frame;
+				} else {
+					return null;
+				}
+			}
+		}
+
+		return null;
+	};
+
+	const addPrevImage = () => {
+		$framesDataStore[frameKey].imageUrl = prevFrameHasImage.imageUrl;
+	};
+
+	$: prevFrameHasImage = findPrevFrame($framesDataStore);
 </script>
 
 <FormSplit class="w-full">
@@ -134,15 +157,22 @@
 		number
 	/>
 </FormSplit>
-<ImageUploader
-	disabled={editMode}
-	readonly={$readonlyStore}
-	icon={RectangleStack}
-	on:loadstart={setFile}
-	on:remove={preRemoveImage}
-	src={imageUrl}
-	alt="Иллюстрация текста"
-/>
+<FormSplit vertical class="h-48">
+	<ImageUploader
+		disabled={editMode}
+		readonly={$readonlyStore}
+		icon={RectangleStack}
+		on:loadstart={setFile}
+		on:remove={preRemoveImage}
+		src={imageUrl}
+		alt="Иллюстрация текста"
+	/>
+	{#if !imageUrl && prevFrameHasImage !== null}
+		<Button variant="ghost" on:click={addPrevImage} class="justify-center bg-main text-text">
+			Вставить с предыдущего блока
+		</Button>
+	{/if}
+</FormSplit>
 <FormSplit vertical>
 	<Input
 		placeholder="Название блока"

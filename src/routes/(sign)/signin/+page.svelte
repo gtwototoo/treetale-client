@@ -62,7 +62,7 @@
 <div class="flex h-full w-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">
 		<ReadCard
-			src="/img/auth.png"
+			src="/img/writer.png"
 			alt="Авторизация"
 			text="Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением"
 		>

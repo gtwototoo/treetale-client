@@ -1,24 +1,15 @@
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
-import { StoriesModel } from '$lib/server/models';
-import { loadUsers } from '$lib/server/utils.js';
-import type { IStoryFull } from '$lib/types/reading';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, fetch }) => {
 	const user = locals.session;
 
-	if (!user) throw redirect(302, '/');
+	if (!user) {
+		throw redirect(302, '/');
+	}
 
-	const stories: Array<IStoryFull> = await StoriesModel.find({
-		likes: {
-			$in: [user.userId]
-		}
-	})
-		.select(USER_WITHOUT_WORKSPACE)
-		.lean();
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/user/stories/liked`);
+	const userLikedStories = await res.json();
 
-	return {
-		stories,
-		authors: await loadUsers(stories)
-	};
+	return userLikedStories;
 };

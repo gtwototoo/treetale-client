@@ -21,7 +21,7 @@ const STORIES_LIMIT = 10;
 const correctMetric = (value: number, names: [string, string, string]) => {
 	const collapsed = collapseValue(value);
 
-	return [collapsed, pluralize(Number(collapsed.match(/\d+/)?.[0]), ...names)];
+	return [collapsed, pluralize(+collapsed.match(/\d+/)?.[0], ...names)];
 };
 
 const getStatistic = async () => {

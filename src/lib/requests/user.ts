@@ -27,13 +27,9 @@ export const updateProfile = async (name: string, description: string, color: Ar
 };
 
 export const subscribeProfile = async (id: number) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/subscribe`, {
-		id
-	});
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/subscribe/${id}`);
 };
 
 export const unsubscribeProfile = async (id: number) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/unsubscribe`, {
-		id
-	});
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/unsubscribe/${id}`);
 };

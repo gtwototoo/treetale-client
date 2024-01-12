@@ -1,28 +1,15 @@
-import { USER_WITHOUT_WORKSPACE } from '$lib/constants.js';
-import { StoriesModel } from '$lib/server/models';
-import { serialize } from '$lib/utils';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, fetch }) => {
 	const user = locals.session;
 
-	if (!user) throw redirect(302, '/');
+	if (!user) {
+		throw redirect(302, '/');
+	}
 
-	const filter =
-		user.role === 'admin' || user.role === 'moderator'
-			? {
-					$or: [{ userId: user.userId }, { status: 'review' }]
-			  }
-			: { userId: user.userId };
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/user/stories/created`);
+	const userCreatedStories = await res.json();
 
-	const stories = await StoriesModel.find(filter)
-		.select(USER_WITHOUT_WORKSPACE)
-		.sort({
-			created: 'desc'
-		})
-		.lean();
-
-	return {
-		stories: serialize(stories)
-	};
+	return userCreatedStories;
 };
