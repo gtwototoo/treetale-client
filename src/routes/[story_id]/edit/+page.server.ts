@@ -8,6 +8,10 @@ export const load = async ({ params, locals }) => {
 	const user = locals.session;
 	const storyId = +params.story_id;
 
+	if (isNaN(storyId)) {
+		throw randomError(404);
+	}
+
 	if (!user) throw redirect(302, '/signin');
 
 	const story: IStorySchema | null = await StoriesModel.findOne({
