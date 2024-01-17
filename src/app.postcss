@@ -53,3 +53,13 @@ svg {
 .adaptive-padding {
 	@apply !px-8 !py-4 max-hd:!px-6 max-hd:!py-3;
 }
+
+.bindPoint {
+	@apply absolute h-6 w-6 !bg-inherit;
+}
+.rightBindPoint {
+	@apply bindPoint left-full -ml-1 rounded-r-full;
+}
+.leftBindPoint {
+	@apply bindPoint right-full -mr-1 rounded-l-full;
+}

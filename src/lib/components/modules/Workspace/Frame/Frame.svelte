@@ -16,7 +16,7 @@
 		movingFrameStore,
 		selectedFrameStore
 	} from '$lib/stores/workspace';
-	import { contrastText, createConnections, getChoicePosition, transform } from '$lib/utils';
+	import { contrastText, createConnections, transform } from '$lib/utils';
 	import { FrameSettings } from '../../Panel';
 
 	export let frameId: number;
@@ -77,7 +77,7 @@
 		changesHistory.add('Добавление связи', Share);
 	};
 
-	$: ({ choices, hidden, title, text, x, y } = frame);
+	$: ({ hidden, title, text, x, y } = frame);
 	$: greenColor = clsx(
 		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
 	);
@@ -99,7 +99,7 @@
 		on:click={createConnection}
 		bind:clientHeight={$framesDataStore[frameKey].height}
 	>
-		<Header {hidden} on:hide={setVisible} start={!index} {title} />
+		<Header on:hide={setVisible} {hidden} start={!index} {title} />
 		{#if !hidden}
 			{#if $framesDataStore[frameKey].imageUrl}
 				<Image
@@ -116,37 +116,5 @@
 			</div>
 			<Choices {frameKey} />
 		{/if}
-		{#if $activeModeStore === 'binding'}
-			<div
-				class={clsx(
-					'absolute -left-3 h-6 w-6 rounded-l-full !bg-inherit',
-					hidden ? 'top-1/2 -mt-3' : 'top-2'
-				)}
-			/>
-			{#if hidden}
-				<div class="absolute -right-3 top-1/2 -mt-3 h-6 w-6 rounded-r-full !bg-inherit" />
-			{/if}
-		{/if}
 	</button>
-	{#if $activeModeStore !== 'binding'}
-		<div class="pointer-events-none absolute inset-0">
-			{#if hidden}
-				<div class="point right-0 top-1/2" />
-			{:else}
-				{#each choices as _, key}
-					<div
-						class="point right-0"
-						style:top="{getChoicePosition(key, $framesDataStore[frameKey].imageUrl)}px"
-					/>
-				{/each}
-			{/if}
-			<div class={clsx('point left-0', hidden ? 'top-1/2' : 'top-5')} />
-		</div>
-	{/if}
 </div>
-
-<style lang="postcss">
-	.point {
-		@apply absolute flex items-center justify-center bg-contrast after:absolute after:h-5 after:w-5 after:rounded-full after:bg-inherit;
-	}
-</style>

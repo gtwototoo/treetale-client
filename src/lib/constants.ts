@@ -28,7 +28,7 @@ export const USER_WITHOUT_WORKSPACE = {
 	frames: 0
 };
 
-export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 184 };
+export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 200 };
 
 export const NOT_FOUND_VARIANTS: Array<App.Error> = [
 	{

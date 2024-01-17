@@ -1,30 +1,21 @@
-import { randomError, serialize } from '$lib/utils';
+import { randomError } from '$lib/utils';
 
-import { StoriesModel } from '$lib/server/models';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { IStorySchema } from '$lib/types/schemas';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ fetch, params, locals }) => {
 	const user = locals.session;
 	const storyId = +params.story_id;
+
+	if (!user) throw redirect(302, '/signin');
 
 	if (isNaN(storyId)) {
 		throw randomError(404);
 	}
 
-	if (!user) throw redirect(302, '/signin');
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/story/${storyId}`);
+	const storyInfo = await res.json();
 
-	const story: IStorySchema | null = await StoriesModel.findOne({
-		storyId,
-		userId: user.userId
-	});
-
-	if (!story) throw randomError(404);
-
-	const { frames, ...info } = serialize(story);
-
-	return {
-		frames,
-		info
-	};
+	return storyInfo as IStorySchema;
 };

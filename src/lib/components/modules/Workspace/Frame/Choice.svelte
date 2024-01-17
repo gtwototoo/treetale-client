@@ -87,7 +87,7 @@
 
 <Button
 	{disabled}
-	variant={$activeModeStore === 'binding' ? 'main' : 'ghost'}
+	variant="main"
 	class={clm(
 		'gap-4',
 		!text ? '!text-gray-400' : '!text-text',
@@ -101,7 +101,7 @@
 						$connectionStore.choiceId === choiceId &&
 						greenColor
 			  )
-			: 'bg-main'
+			: 'bg-main-40'
 	)}
 	on:mousedown={handleMouseDown}
 	on:click={handleClick}
@@ -113,7 +113,5 @@
 	{#if mathOperations.length}
 		<div class="absolute right-1 h-7 w-1 rounded-full !bg-violet-500" />
 	{/if}
-	{#if $activeModeStore === 'binding'}
-		<div class="absolute -right-5 h-6 w-6 rounded-r-full !bg-inherit" />
-	{/if}
+	<div class="rightBindPoint" />
 </Button>

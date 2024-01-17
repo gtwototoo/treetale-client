@@ -36,8 +36,8 @@
 	{/each}
 	<Button
 		disabled={($activeModeStore === 'binding' && !!$connectionStore) || $readonlyStore}
-		variant={$activeModeStore === 'binding' ? 'main' : 'ghost'}
-		class={clsx('!text-text', $activeModeStore === 'binding' ? 'bg-main-60' : 'bg-main')}
+		variant="main"
+		class={clsx('!text-text', $activeModeStore === 'binding' ? 'bg-main-60' : 'bg-main-40')}
 		on:click={addChoice}
 		on:mousedown={(e) => e.stopPropagation()}
 	>

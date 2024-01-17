@@ -1,28 +1,22 @@
-import { randomError, serialize } from '$lib/utils';
+import { randomError } from '$lib/utils';
 
-import { StoriesModel } from '$lib/server/models';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { IStorySchema } from '$lib/types/schemas';
 import { redirect } from '@sveltejs/kit';
 
 // пока тут функционал только для модераторов, дальше можно будет разбить логику и на режим просмотра
-export const load = async ({ params, locals }) => {
+export const load = async ({ fetch, params, locals }) => {
 	const user = locals.session;
 	const storyId = +params.story_id;
 
 	if (!user) throw redirect(302, '/signin');
 
-	if (user.role !== 'admin' && user.role !== 'moderator') throw randomError(404);
+	if (isNaN(storyId) || (user.role !== 'admin' && user.role !== 'moderator')) {
+		throw randomError(404);
+	}
 
-	const story: IStorySchema | null = await StoriesModel.findOne({
-		storyId
-	});
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/story/${storyId}`);
+	const storyInfo = await res.json();
 
-	if (!story) throw randomError(404);
-
-	const { frames, ...info } = serialize(story);
-
-	return {
-		frames,
-		info
-	};
+	return storyInfo as IStorySchema;
 };

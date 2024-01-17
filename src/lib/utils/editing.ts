@@ -53,7 +53,7 @@ const getFramesPoints = (fromFrame: IFrameCreate, choice: IChoice, toFrame: IFra
 	};
 	const toPoint = {
 		x: toFrame.x,
-		y: toFrame.y + 20 // расстояние от верха
+		y: toFrame.y + 28 // расстояние от верха
 	};
 
 	return { fromPoint, toPoint };
