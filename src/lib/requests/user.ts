@@ -19,17 +19,17 @@ export const signOutUser = async () => {
 };
 
 export const updateProfile = async (name: string, description: string, color: Array<number>) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/update`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/me/update`, {
 		name,
 		description,
 		color
 	});
 };
 
-export const subscribeProfile = async (id: number) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/subscribe/${id}`);
+export const subscribeProfile = async (userId: number) => {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/users/${userId}/subscribe`);
 };
 
-export const unsubscribeProfile = async (id: number) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/user/unsubscribe/${id}`);
+export const unsubscribeProfile = async (userId: number) => {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/users/${userId}/unsubscribe`);
 };

@@ -4,7 +4,7 @@
 	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import type { ILogicOperation, IMathOperation } from '$lib/types';
-	import { clm, contrastText } from '$lib/utils';
+	import { clm, contrastText, getFrameFromId } from '$lib/utils';
 	import clsx from 'clsx';
 
 	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
@@ -72,6 +72,8 @@
 		}
 	};
 
+	$: toFrame = getFrameFromId($framesDataStore, toFrameId);
+
 	$: greenHoverColor = contrastText($bodyColorStore)
 		? clsx('hover:!bg-emerald-800')
 		: clsx('hover:!bg-emerald-200');
@@ -113,5 +115,5 @@
 	{#if mathOperations.length}
 		<div class="absolute right-1 h-7 w-1 rounded-full !bg-violet-500" />
 	{/if}
-	<div class="rightBindPoint" />
+	<div class={clsx(toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint')} />
 </Button>

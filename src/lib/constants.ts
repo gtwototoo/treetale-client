@@ -21,13 +21,6 @@ export const WHITE_TEXT_COLOR: TRGB = [220, 220, 220];
 export const BLACK_TEXT_COLOR: TRGB = [25, 25, 25];
 export const ICON_TYPE = 'outline';
 
-export const USER_WITHOUT_WORKSPACE = {
-	_id: 0,
-	zoom: 0,
-	offset: 0,
-	frames: 0
-};
-
 export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 200 };
 
 export const NOT_FOUND_VARIANTS: Array<App.Error> = [

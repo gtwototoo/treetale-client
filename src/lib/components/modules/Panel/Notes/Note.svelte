@@ -10,15 +10,11 @@
 	export let noteKey: number;
 	export let checkUpdates: () => void;
 
-	const removeVariable = () => {
+	const removeNote = () => {
 		$notesStore.splice(noteKey, 1);
 
 		$notesStore = [...$notesStore];
 
-		checkUpdates();
-	};
-
-	const handleInput = () => {
 		checkUpdates();
 	};
 
@@ -29,21 +25,18 @@
 	<Contenteditable
 		placeholder="Текст заметки"
 		bind:html={$notesStore[noteKey].text}
-		on:input={handleInput}
+		on:input={checkUpdates}
 	/>
 	{#if editMode}
-		<Button
-			variant="main"
-			on:click={removeVariable}
-			class={clsx('!text-red-500', $redColorStore)}
-		>
+		<Button variant="main" on:click={removeNote} class={clsx('!text-red-500', $redColorStore)}>
 			<Icon type={XMark} />
 		</Button>
 	{:else}
 		<InputTags
 			placeholder="Ключевые слова"
 			bind:tags={$notesStore[noteKey].tags}
-			on:input={handleInput}
+			on:add={checkUpdates}
+			on:remove={checkUpdates}
 		/>
 	{/if}
 </FormSplit>

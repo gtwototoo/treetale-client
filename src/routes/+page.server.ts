@@ -13,7 +13,7 @@ interface IReadyCategory extends Omit<ICategory, 'filter'> {
 	stories: Array<IStorySchema>;
 }
 
-interface IMainInfo {
+interface IResponseMainInfo {
 	authors: Array<IUser>;
 	categories: Array<IReadyCategory>;
 	statistic: Array<['stories' | 'likes' | 'users', string, string]>;
@@ -23,5 +23,5 @@ export const load = async ({ fetch }) => {
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/main`);
 	const mainInfo = await res.json();
 
-	return mainInfo as IMainInfo;
+	return mainInfo as IResponseMainInfo;
 };

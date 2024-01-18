@@ -53,12 +53,24 @@
 		moveXDirection: null
 	};
 
-	$variablesStore = data.info.vars;
-	$notesStore = data.info.notes;
+	const { color, description, genre, imageUrl, tags, title, storyId, created, status } = data;
+
+	$variablesStore = data.vars;
+	$notesStore = data.notes;
 	framesDataStore.init(data.frames);
-	$informationDataStore = data.info;
-	$zoomStore = data.info.zoom;
-	$offsetStore = data.info.offset;
+	$informationDataStore = {
+		color,
+		description,
+		genre,
+		imageUrl,
+		tags,
+		title,
+		storyId,
+		created,
+		status
+	};
+	$zoomStore = data.zoom;
+	$offsetStore = data.offset;
 
 	const handleMouseMove = (e: CustomEvent<ICoordinates>) => {
 		const { x, y } = e.detail;

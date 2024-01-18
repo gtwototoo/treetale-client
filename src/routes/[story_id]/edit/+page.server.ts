@@ -1,7 +1,6 @@
-import { randomError } from '$lib/utils';
-
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { IStorySchema } from '$lib/types/schemas';
+import { randomError } from '$lib/utils';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ fetch, params, locals }) => {
@@ -14,7 +13,7 @@ export const load = async ({ fetch, params, locals }) => {
 		throw randomError(404);
 	}
 
-	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/story/${storyId}`);
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}`);
 	const storyInfo = await res.json();
 
 	return storyInfo as IStorySchema;

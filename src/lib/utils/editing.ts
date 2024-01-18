@@ -43,8 +43,9 @@ export const getChoicePosition = (index: number, imageUrl: string) => {
 };
 
 const getFramesPoints = (fromFrame: IFrameCreate, choice: IChoice, toFrame: IFrameCreate) => {
+	const fromFrameLeftSide = fromFrame.x < toFrame.x;
 	const fromPoint = {
-		x: fromFrame.x + DEFAULT_FRAME_SIZE.width,
+		x: fromFrameLeftSide ? fromFrame.x + DEFAULT_FRAME_SIZE.width : fromFrame.x,
 		y:
 			fromFrame.y +
 			(fromFrame.hidden

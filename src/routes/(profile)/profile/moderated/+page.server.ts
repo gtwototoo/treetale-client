@@ -9,8 +9,8 @@ export const load = async ({ locals, fetch }) => {
 		throw redirect(302, '/');
 	}
 
-	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/me/stories?type=viewed`);
-	const userViewedStories = await res.json();
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/me/stories?type=moderated`);
+	const userModeratedStories = await res.json();
 
-	return userViewedStories as IResponseStories;
+	return userModeratedStories as IResponseStories;
 };

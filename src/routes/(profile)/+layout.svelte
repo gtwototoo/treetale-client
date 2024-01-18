@@ -1,6 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { Eye, Heart, Pencil } from 'svelte-heros-v2';
+	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 
 	import { Button } from '$UI';
 	import { page } from '$app/stores';
@@ -32,7 +32,22 @@
 	<UserInformation {user} {me} {statistic} />
 	<div class="flex h-full w-full flex-col items-center gap-8">
 		{#if me}
-			<div class="flex gap-2">
+			<div class="flex flex-wrap justify-center gap-2">
+				{#if $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
+					<Link href="/profile/moderated" class="w-44 max-sm:w-24">
+						<Button
+							size="lg"
+							variant="custom"
+							class={clsx(
+								'w-full justify-center !text-text transition-colors hover:bg-contrast',
+								pageType === 'moderated' && 'bg-contrast/20'
+							)}
+						>
+							<Icon type={Clock} class="hidden h-6 w-6 max-sm:block" />
+							<p class="max-sm:hidden">Модерируемые</p>
+						</Button>
+					</Link>
+				{/if}
 				<Link href="/profile" class="w-44 max-sm:w-24">
 					<Button
 						size="lg"

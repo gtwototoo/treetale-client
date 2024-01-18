@@ -5,13 +5,10 @@ import { handle as documentHandle } from '@sveltekit-addons/document/hooks';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import { NOT_FOUND_VARIANTS } from '$lib/constants';
-import { mongooseConnect } from '$lib/server/mongoose';
 import type { IUser } from '$lib/types';
 import { randomArray } from '$lib/utils';
 
 const defaultHandle = (async ({ event, resolve }) => {
-	await mongooseConnect();
-
 	const sessionId = event.cookies.get('sessionId');
 
 	if (sessionId) {
@@ -19,7 +16,7 @@ const defaultHandle = (async ({ event, resolve }) => {
 
 		// skip errors, uptime 99.99%
 		try {
-			request = await event.fetch(`${PUBLIC_TREETALE_API_URL}/session`);
+			request = await event.fetch(`${PUBLIC_TREETALE_API_URL}/me/session`);
 		} catch (e) {
 			console.error(e);
 		}

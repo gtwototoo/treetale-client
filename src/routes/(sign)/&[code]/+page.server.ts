@@ -14,7 +14,7 @@ export const load = async ({ params, cookies }) => {
 	let response;
 
 	try {
-		response = await fetchPost<ISessionInfo>(`${PUBLIC_TREETALE_API_URL}/session`, {
+		response = await fetchPost<ISessionInfo>(`${PUBLIC_TREETALE_API_URL}/me/session`, {
 			code
 		});
 	} catch (e) {

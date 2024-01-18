@@ -165,7 +165,7 @@
 		on:emblaInit={handleInit}
 	>
 		<div class="flex w-full flex-col items-center gap-4">
-			<StoryDescription story={data.story} />
+			<StoryDescription story={data.story} author={data.author} />
 			{#each $framesStore as { frameId }, key}
 				{@const isLastFrame = key === $framesStore.length - 1}
 				<ReadFrame

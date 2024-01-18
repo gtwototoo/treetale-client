@@ -36,10 +36,6 @@
 		checkUpdates();
 	};
 
-	const handleInput = () => {
-		checkUpdates();
-	};
-
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
@@ -50,7 +46,7 @@
 		readonly={$readonlyStore}
 		class={clsx('shrink-0', editMode ? 'grow' : 'w-[13rem]')}
 		disabled={editMode}
-		on:input={handleInput}
+		on:input={checkUpdates}
 	>
 		<Listbox
 			size="sm"
@@ -60,7 +56,7 @@
 			align="right"
 			readonly={$readonlyStore}
 			class="-mr-2 ml-2"
-			on:change={handleInput}
+			on:change={checkUpdates}
 		/>
 	</Input>
 	{#if !editMode}
@@ -72,7 +68,7 @@
 				align="inset"
 				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
 				list={[{ title: 'Да' }, { title: 'Нет' }]}
-				on:change={handleInput}
+				on:change={checkUpdates}
 			/>
 		{:else}
 			<Input
@@ -81,7 +77,7 @@
 				class="w-full"
 				readonly={$readonlyStore}
 				number={$variablesStore[varKey].expect !== 'Строка'}
-				on:input={handleInput}
+				on:input={checkUpdates}
 			/>
 		{/if}
 	{/if}

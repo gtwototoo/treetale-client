@@ -1,4 +1,5 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+import type { IResponseStories } from '$lib/types/response.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals, params, fetch }) => {
@@ -8,8 +9,8 @@ export const load = async ({ locals, params, fetch }) => {
 		throw redirect(302, '/profile');
 	}
 
-	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/user/get/${name}`);
-	const userInfo = await res.json();
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/users/${name}/stories`);
+	const userStories = await res.json();
 
-	return userInfo;
+	return userStories as IResponseStories;
 };

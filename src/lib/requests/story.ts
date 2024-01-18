@@ -10,11 +10,14 @@ export const addLike = async (storyId: number) => {
 		liked: boolean;
 	}
 
-	return await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/like`);
+	return await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/like`);
 };
 
 export const updateInfomation = async (storyId: number, info: IStoryEditableInfo) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/info`, info);
+	return await fetchPost(
+		`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update?section=info`,
+		info
+	);
 };
 
 export const updateArea = async (
@@ -23,7 +26,7 @@ export const updateArea = async (
 	offset: ICoordinates,
 	zoom: number
 ) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/area`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update?section=area`, {
 		frames,
 		offset,
 		zoom
@@ -31,13 +34,13 @@ export const updateArea = async (
 };
 
 export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/vars`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update?section=vars`, {
 		vars
 	});
 };
 
 export const updateNotes = async (storyId: number, notes: Array<INote>) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/${storyId}/edit/notes`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update?section=notes`, {
 		notes
 	});
 };
@@ -48,25 +51,25 @@ export const createStory = async () => {
 	}
 
 	try {
-		const response = await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/story/create`);
+		const { storyId } = await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/stories/create`);
 
-		return goto(`/${response.storyId}/edit`);
+		return goto(`/${storyId}/edit`);
 	} catch (e) {
 		console.error(e);
 	}
 };
 
 export const reviewRequestStory = async (storyId: number) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/review/${storyId}`);
+	return await fetchPut(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/review`);
 };
 
 export const publishStory = async (storyId: number) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/story/publish/${storyId}`);
+	return await fetchPut(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/publish`);
 };
 
 export const deleteStory = async (id: number) => {
 	try {
-		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/story/${id}`);
+		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/stories/${id}`);
 
 		return goto(`/profile`, {
 			invalidateAll: true
@@ -77,10 +80,10 @@ export const deleteStory = async (id: number) => {
 };
 
 export const searchStories = async (row: string, genres: Array<TGenre>) => {
-	return await fetchGet<ISearched>(
-		`${PUBLIC_TREETALE_API_URL}/story/search/?${new URLSearchParams({
-			row,
-			genres: genres.join(',')
-		}).toString()}`
-	);
+	const query = new URLSearchParams({
+		row,
+		genres: genres.join(',')
+	}).toString();
+
+	return await fetchGet<ISearched>(`${PUBLIC_TREETALE_API_URL}/stories/search?${query}`);
 };
