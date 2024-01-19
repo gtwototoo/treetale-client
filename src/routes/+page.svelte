@@ -96,7 +96,7 @@
 					<svelte:fragment slot="left">
 						<Icon
 							type={loading ? Loading : MagnifyingGlass}
-							class="pointer-events-none mr-5 h-6 w-6 text-gray-800"
+							class="pointer-events-none h-6 w-6 shrink-0 text-gray-800"
 						/>
 					</svelte:fragment>
 				</Input>

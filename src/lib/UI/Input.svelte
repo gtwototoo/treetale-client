@@ -2,11 +2,6 @@
 	import { clm } from '$lib/utils';
 	import { createEventDispatcher } from 'svelte';
 
-	let inputRef: HTMLInputElement;
-
-	let className = '';
-	export { className as class };
-
 	export let value = '';
 	export let number = false;
 	export let size: 'sm' | 'base' | 'lg' = 'base';
@@ -16,6 +11,12 @@
 	export let maxlength: number | undefined = undefined;
 	export let placeholder: string;
 	export let name: string | undefined = undefined;
+
+	let focused = false;
+	let inputRef: HTMLInputElement;
+
+	let className = '';
+	export { className as class };
 
 	const dispatch = createEventDispatcher<{
 		input: Event & { currentTarget: EventTarget & HTMLInputElement };
@@ -39,8 +40,6 @@
 		inputRef.focus();
 	};
 
-	let focused = false;
-
 	const onlyNumbers = (enable: boolean) => {
 		if (!enable) return;
 
@@ -61,6 +60,18 @@
 		`size-${size}`,
 		required && !value && '!bg-red-100',
 		focused && '!bg-main-30',
+		$$slots.left &&
+			{
+				sm: '!pl-1',
+				base: '!pl-2',
+				lg: '!pl-3'
+			}[size],
+		$$slots.right &&
+			{
+				sm: '!pr-1',
+				base: '!pr-2',
+				lg: '!pr-3'
+			}[size],
 		{ disabled },
 		className
 	)}
@@ -80,7 +91,7 @@
 		on:input={handleInput}
 		on:change
 	/>
-	<slot />
+	<slot name="right" />
 </button>
 
 <style lang="postcss">
@@ -88,13 +99,13 @@
 		@apply w-full bg-transparent inherit-align placeholder:select-none;
 	}
 	.size-sm {
-		@apply rounded px-2 py-1 text-xs;
+		@apply gap-1 rounded px-2 py-1 text-xs;
 	}
 	.size-base {
-		@apply min-h-[2.5rem] rounded-lg px-4 py-2 text-sm;
+		@apply min-h-[2.5rem] gap-2 rounded-lg px-4 py-2 text-sm;
 	}
 	.size-lg {
-		@apply rounded-xl px-6 py-3 text-base font-medium;
+		@apply gap-3 rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
 		@apply relative flex cursor-text items-center bg-main-20 text-left text-text transition-colors hover:bg-main-30;

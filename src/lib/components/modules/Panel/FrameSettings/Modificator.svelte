@@ -2,7 +2,7 @@
 	import clsx from 'clsx';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
 
-	import { Button, FormSplit, Input, Listbox } from '$UI';
+	import { Button, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
@@ -35,6 +35,22 @@
 		if (!readonly) return;
 
 		editMode = false;
+	};
+
+	const handleSelectVariable = (key: number, variableName: string) => {
+		const variable = $variablesStore.find(({ name }) => name === variableName);
+
+		if (variable.expect === 'Да/Нет') {
+			if (!['Да', 'Нет'].includes(operations[key].value)) {
+				operations[key].value = 'Да';
+			}
+		}
+
+		if (variable.expect !== 'Число') {
+			operations[key].symbol = '=';
+		}
+
+		handleChange();
 	};
 
 	const handleChange = () => {
@@ -73,52 +89,77 @@
 	</div>
 	<div class="flex w-full flex-col gap-2">
 		{#each operations as operation, key}
-			<FormSplit>
-				{#if editMode}
-					<Button variant="main" disabled class="w-full gap-3 bg-main">
-						<p>{operation.variable || 'Переменная'}</p>
-						<p>{operation.symbol}</p>
-						<p>{operation.value || 'Значение'}</p>
-					</Button>
-					<Button
-						variant="main"
-						on:click={() => handleRemoveModificator(key)}
-						class={clsx('!text-red-500', $redColorStore)}
-					>
-						<Icon type={XMark} />
-					</Button>
-				{:else}
+			{#if editMode}
+				{@const value = `${operation.variable || 'Переменная'} ${operation.symbol} ${
+					operation.value || 'Значение'
+				}`}
+				<Input placeholder="Значение" readonly {value}>
+					<svelte:fragment slot="right">
+						<Button
+							variant="main"
+							size="sm"
+							on:click={() => handleRemoveModificator(key)}
+							class={clsx('!px-1 !text-red-500', $redColorStore)}
+						>
+							<Icon type={XMark} class="h-4 w-4" />
+						</Button>
+					</svelte:fragment>
+				</Input>
+			{:else}
+				{@const variable = $variablesStore.find(({ name }) => name === operation.variable)}
+				<div class="flex flex-wrap gap-1 rounded-lg bg-main-10 p-2">
 					<Listbox
+						size="sm"
 						placeholder="Переменная"
+						class="flex-1"
 						readonly={$readonlyStore}
-						on:change={handleChange}
+						on:change={({ detail }) => handleSelectVariable(key, detail)}
 						bind:value={operation.variable}
 						list={$variablesStore.map(({ name }) => name)}
-						class="flex-1 child-[button]:!rounded-none child-[button]:!rounded-l-lg"
 					/>
 					<Listbox
 						list={symbols}
 						placeholder=""
-						align="inset"
 						on:change={handleChange}
 						readonly={$readonlyStore}
 						bind:value={operation.symbol}
 						let:value
 						let:click
 					>
-						<Button on:click={click} variant="ghost" class="!rounded-none bg-main text-text">
+						<Button
+							size="sm"
+							disabled={variable?.expect !== 'Число'}
+							on:click={click}
+							variant="ghost"
+							class="bg-main text-text"
+						>
 							{value}
 						</Button>
 					</Listbox>
-					<Input
-						placeholder="Значение"
-						readonly={$readonlyStore}
-						class="flex-1"
-						on:input={handleChange}
-						bind:value={operation.value}
-					/>
-				{/if}
-			</FormSplit>
+					{#if variable?.expect !== 'Да/Нет'}
+						<Input
+							size="sm"
+							class="flex-1"
+							bind:value={operation.value}
+							placeholder="Значение"
+							readonly={$readonlyStore}
+							on:input={handleChange}
+							number={variable?.expect === 'Число'}
+						/>
+					{:else}
+						<Listbox
+							bind:value={operation.value}
+							class="flex-1"
+							placeholder="Значение"
+							size="sm"
+							readonly={$readonlyStore}
+							align="inset"
+							list={[{ title: 'Да' }, { title: 'Нет' }]}
+							on:change={handleChange}
+						/>
+					{/if}
+				</div>
+			{/if}
 		{/each}
 		<slot {editMode} />
 		{#if !editMode && !$readonlyStore}

@@ -19,7 +19,7 @@
 		$framesDataStore[frameKey].choices = [
 			...choices,
 			{
-				text: null,
+				text: '',
 				frameId: null,
 				choiceId,
 				mathOperations: [],

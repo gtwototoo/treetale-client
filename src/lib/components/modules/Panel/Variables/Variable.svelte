@@ -48,16 +48,17 @@
 		disabled={editMode}
 		on:input={checkUpdates}
 	>
-		<Listbox
-			size="sm"
-			bind:value={$variablesStore[varKey].expect}
-			placeholder="Тип"
-			list={types}
-			align="right"
-			readonly={$readonlyStore}
-			class="-mr-2 ml-2"
-			on:change={checkUpdates}
-		/>
+		<svelte:fragment slot="right">
+			<Listbox
+				size="sm"
+				bind:value={$variablesStore[varKey].expect}
+				placeholder="Тип"
+				list={types}
+				align="right"
+				readonly={$readonlyStore}
+				on:change={checkUpdates}
+			/>
+		</svelte:fragment>
 	</Input>
 	{#if !editMode}
 		{#if $variablesStore[varKey].expect === 'Да/Нет'}

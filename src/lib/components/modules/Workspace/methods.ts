@@ -34,7 +34,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 			frameId: lastFrameId + 1,
 			x,
 			y,
-			text: null,
+			text: '',
 			hidden: false,
 			choices: [],
 			height: 0
