@@ -1,30 +1,28 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import { Variable, XMark } from 'svelte-heros-v2';
-
-	import LogicOperations from './LogicOperations.svelte';
-	import MathOperations from './MathOperations.svelte';
+	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
 
 	import { Button, Contenteditable, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
+	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
-	import { framesDataStore } from '$lib/stores/workspace';
-
-	type TModificator = 'logic' | 'math';
+	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
+	import { addFrame } from '../../Workspace/methods';
+	import Modificators from './Modificators.svelte';
 
 	export let choiceId: number;
 	export let frameKey: number;
 
-	let active: TModificator;
+	let showModificators = false;
 
 	$: choiceKey = $framesDataStore[frameKey].choices.findIndex(
 		(choice) => choice.choiceId === choiceId
 	);
 
-	const setActiveOperation = (type: TModificator) => {
-		active = type === active ? null : type;
+	const switchShow = () => {
+		showModificators = !showModificators;
 	};
 
 	const removeChoice = () => {
@@ -35,8 +33,25 @@
 		changesHistory.add('Удаление выбора', XMark);
 	};
 
+	const gotoChoiceToFrame = () => {
+		$selectedFrameStore = frameId;
+	};
+
+	const addFrameFromChoice = () => {
+		const distance = 40;
+		const { x, y } = $framesDataStore[frameKey];
+		const lastFrameId = addFrame({
+			x: x + DEFAULT_FRAME_SIZE.width + distance,
+			y: y + (DEFAULT_FRAME_SIZE.height + distance) * choiceKey - DEFAULT_FRAME_SIZE.height / 2
+		});
+
+		$framesDataStore[frameKey].choices[choiceKey].frameId = lastFrameId + 1;
+		$selectedFrameStore = lastFrameId + 1;
+	};
+
 	$: editMode = $currentPanelStore.editMode;
-	$: ({ logicOperations, mathOperations } = $framesDataStore[frameKey].choices[choiceKey]);
+	$: ({ frameId, logicOperations, mathOperations } =
+		$framesDataStore[frameKey].choices[choiceKey]);
 </script>
 
 <FormSplit vertical={!editMode}>
@@ -53,43 +68,44 @@
 				size="sm"
 				variant="ghost"
 				class={clsx(
-					'gap-1 bg-main text-xs text-text',
-					(logicOperations.length || active === 'logic') && '!text-orange-500'
+					'gap-1 bg-main !p-1 text-xs text-text',
+					showModificators && '!bg-violet-500 !text-white',
+					!showModificators &&
+						(logicOperations.length || mathOperations.length) &&
+						'text-violet-500'
 				)}
-				on:click={() => setActiveOperation('logic')}
+				on:click={switchShow}
 			>
-				<p class="font-bold">if</p>
-				{#if logicOperations.length}
-					<p>{logicOperations.length}</p>
-				{/if}
+				<Icon class="h-4 w-4" type={Beaker} />
 			</Button>
 		</svelte:fragment>
 		<svelte:fragment slot="right">
-			<Button
-				size="sm"
-				variant="ghost"
-				class={clsx(
-					'gap-1 bg-main !px-1 text-text',
-					(mathOperations.length || active === 'math') && '!text-violet-500'
-				)}
-				on:click={() => setActiveOperation('math')}
-			>
-				<Icon class="h-4 w-4" type={Variable} />
-				{#if mathOperations.length}
-					<p class="pr-1">
-						{mathOperations.length}
-					</p>
-				{/if}
-			</Button>
+			{#if frameId}
+				<Button
+					size="sm"
+					variant="ghost"
+					class="bg-main !px-1 text-text"
+					on:click={gotoChoiceToFrame}
+				>
+					<Icon class="h-4 w-4" type={ChevronRight} />
+				</Button>
+			{:else}
+				<Button
+					size="sm"
+					variant="ghost"
+					class="bg-emerald-200 !px-1 text-emerald-500"
+					on:click={addFrameFromChoice}
+				>
+					<Icon class="h-4 w-4" type={Plus} />
+				</Button>
+			{/if}
 		</svelte:fragment>
 	</Contenteditable>
 	{#if editMode}
 		<Button variant="main" class={clsx('!text-red-500', $redColorStore)} on:click={removeChoice}>
 			<Icon type={XMark} />
 		</Button>
-	{:else if active === 'logic'}
-		<LogicOperations {frameKey} {choiceKey} />
-	{:else if active === 'math'}
-		<MathOperations {frameKey} {choiceKey} />
+	{:else if showModificators}
+		<Modificators {frameKey} {choiceKey} />
 	{/if}
 </FormSplit>

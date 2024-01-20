@@ -44,6 +44,7 @@
 		bind:value={$variablesStore[varKey].name}
 		placeholder="Название"
 		readonly={$readonlyStore}
+		maxlength={15}
 		class={clsx('shrink-0', editMode ? 'grow' : 'w-[13rem]')}
 		disabled={editMode}
 		on:input={checkUpdates}
@@ -74,6 +75,7 @@
 		{:else}
 			<Input
 				bind:value={$variablesStore[varKey].value}
+				maxlength={32}
 				placeholder="Значение"
 				class="w-full"
 				readonly={$readonlyStore}

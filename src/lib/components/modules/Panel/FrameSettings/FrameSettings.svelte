@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
+	import { ArrowLeft, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
 
 	import Choice from './Choice.svelte';
 
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
+	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { removeImage, saveImage } from '$lib/requests/image';
 	import {
@@ -112,31 +113,37 @@
 		changesHistory.add('Добавление выбора', Plus);
 	};
 
-	onDestroy(() => {
-		$selectedFrameStore = null;
-	});
-
 	const findPrevFrame = (frames: Array<IFrameCreate>) => {
+		const prevFrames: Array<IFrameCreate> = [];
+
 		for (const frame of frames) {
 			const isPrevFrame = frame.choices.some((choice) => choice.frameId === frameId);
 
 			if (isPrevFrame) {
-				if (frame.imageUrl) {
-					return frame;
-				} else {
-					return null;
-				}
+				prevFrames.push(frame);
 			}
+		}
+
+		if (prevFrames.length === 1) {
+			return prevFrames[0];
 		}
 
 		return null;
 	};
 
-	const addPrevImage = () => {
-		$framesDataStore[frameKey].imageUrl = prevFrameHasImage.imageUrl;
+	const gotoPrevFrame = () => {
+		$selectedFrameStore = onePrevFrame.frameId;
 	};
 
-	$: prevFrameHasImage = findPrevFrame($framesDataStore);
+	const addPrevImage = () => {
+		$framesDataStore[frameKey].imageUrl = onePrevFrame.imageUrl;
+	};
+
+	onDestroy(() => {
+		$selectedFrameStore = null;
+	});
+
+	$: onePrevFrame = findPrevFrame($framesDataStore);
 </script>
 
 <FormSplit class="w-full">
@@ -167,7 +174,7 @@
 		src={imageUrl}
 		alt="Иллюстрация текста"
 	/>
-	{#if !imageUrl && prevFrameHasImage !== null}
+	{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl}
 		<Button variant="ghost" on:click={addPrevImage} class="justify-center bg-main text-text">
 			Вставить с предыдущего блока
 		</Button>
@@ -193,6 +200,12 @@
 		bind:html={$framesDataStore[frameKey].text}
 	/>
 </FormSplit>
+{#if onePrevFrame !== null}
+	<Button variant="ghost" on:click={gotoPrevFrame} class="gap-3 bg-main text-text">
+		<Icon type={ArrowLeft} class="h-5 w-5" />
+		<p>К предыдущему блоку</p>
+	</Button>
+{/if}
 <div class="flex flex-col gap-2" id="choices">
 	{#each choices as { choiceId } (choiceId)}
 		<Choice {choiceId} {frameKey} />
