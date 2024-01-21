@@ -9,7 +9,6 @@
 	} from 'svelte-heros-v2';
 
 	import { Button, FormSplit, Listbox } from '$UI';
-	import type { IList } from '$UI/Listbox.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
@@ -19,16 +18,14 @@
 	let className = '';
 	export { className as class };
 
-	const framesList: Array<IList> = $framesDataStore.map((frame) => {
+	$: ({ editMode, hidden } = $currentPanelStore);
+	$: framePanel = $currentPanelStore.id.includes('frame');
+	$: framesList = $framesDataStore.map((frame) => {
 		return {
-			title: frame.title || 'Начало',
+			title: frame.title,
 			click: () => setSelectedFrame(frame)
 		};
 	});
-
-	$: editMode = $currentPanelStore.editMode;
-	$: hidden = $currentPanelStore.hidden;
-	$: framePanel = $currentPanelStore.id.includes('frame');
 </script>
 
 <div

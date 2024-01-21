@@ -9,7 +9,8 @@
 	import { changesHistory } from '$lib/stores/history';
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
-	import { addFrame } from '../../Workspace/methods';
+	import { getFrameFromId } from '$lib/utils';
+	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
 	import Modificators from './Modificators.svelte';
 
 	export let choiceId: number;
@@ -44,9 +45,11 @@
 			x: x + DEFAULT_FRAME_SIZE.width + distance,
 			y: y + (DEFAULT_FRAME_SIZE.height + distance) * choiceKey - DEFAULT_FRAME_SIZE.height / 2
 		});
+		const newFrame = getFrameFromId($framesDataStore, lastFrameId + 1);
 
-		$framesDataStore[frameKey].choices[choiceKey].frameId = lastFrameId + 1;
-		$selectedFrameStore = lastFrameId + 1;
+		$framesDataStore[frameKey].choices[choiceKey].frameId = newFrame.frameId;
+
+		setSelectedFrame(newFrame);
 	};
 
 	$: editMode = $currentPanelStore.editMode;

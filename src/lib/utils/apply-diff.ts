@@ -39,7 +39,7 @@ const applyDiff = <T extends IElem | Array<IElem>>(lhs: T, diff: IDiff) => {
 	for (const key of keys) {
 		if (isLikelyPlainObject(diff[key])) {
 			if (Object.keys(diff[key]).length === 0) {
-				lhs[key as unknown as number] = {};
+				lhs[key as unknown as number] = Array.isArray(diff[key]) ? [] : {};
 			} else {
 				lhs[key as unknown as number] = applyDiff(
 					(lhs[key as unknown as number] as IElem) ?? {},
