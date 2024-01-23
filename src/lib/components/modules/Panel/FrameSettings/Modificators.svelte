@@ -99,7 +99,7 @@
 
 <div
 	class={clsx(
-		'relative flex select-none flex-col items-center gap-2 rounded-lg bg-main-30 p-2 text-sm',
+		'bg-contrast-3 relative flex select-none flex-col items-center gap-2 rounded-lg p-2 text-sm',
 		className
 	)}
 >
@@ -107,16 +107,22 @@
 		<FormSplit>
 			<Button
 				size="sm"
-				variant={active === 'logic' ? 'main' : 'ghost'}
-				class={clsx('bg-main text-orange-500', active === 'logic' && orangeBackground)}
+				variant="ghost"
+				class={clsx(
+					'bg-contrast-9',
+					active === 'logic' && clsx(orangeBackground, 'text-orange-500')
+				)}
 				on:click={() => (active = 'logic')}
 			>
 				Условия появления
 			</Button>
 			<Button
 				size="sm"
-				variant={active === 'math' ? 'main' : 'ghost'}
-				class={clsx('bg-main text-violet-500', active === 'math' && violetBackground)}
+				variant="ghost"
+				class={clsx(
+					'bg-contrast-9',
+					active === 'math' && clsx(violetBackground, 'text-violet-500')
+				)}
 				on:click={() => (active = 'math')}
 			>
 				Изменение переменных
@@ -125,8 +131,11 @@
 		{#if !$readonlyStore}
 			<Button
 				size="sm"
-				variant={editMode ? 'main' : 'ghost'}
-				class={clsx('!absolute right-0 z-[2] bg-main !px-1 text-text')}
+				variant="ghost"
+				class={clsx(
+					'bg-contrast-9 !absolute right-0 z-[2] !px-1 text-text',
+					editMode && 'text-red-500'
+				)}
 				on:click={switchEditMode}
 			>
 				<Icon type={PencilSquare} class="h-4 w-4" />
@@ -170,6 +179,7 @@
 							on:change={handleChange}
 							readonly={$readonlyStore}
 							bind:value={operation.symbol}
+							align="center"
 							let:value
 							let:click
 						>
@@ -178,7 +188,7 @@
 								disabled={variable?.expect !== 'Число'}
 								on:click={click}
 								variant="ghost"
-								class="bg-main text-text"
+								class="bg-contrast-9 text-text"
 							>
 								{value}
 							</Button>
@@ -213,7 +223,7 @@
 		{#if !editMode && !$readonlyStore}
 			<Button
 				variant="ghost"
-				class="w-full justify-center bg-main text-text"
+				class="bg-contrast-9 w-full justify-center text-text"
 				on:click={handleAddModificator}
 			>
 				{active === 'logic' ? 'Добавить условие' : 'Добавить переменную'}

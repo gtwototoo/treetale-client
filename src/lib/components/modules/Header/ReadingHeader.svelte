@@ -27,7 +27,6 @@
 	const openDonutPanel = () => {
 		$currentPanelStore = {
 			id: 'donut',
-			title: 'Поддержать автора',
 			component: Donut
 		};
 	};

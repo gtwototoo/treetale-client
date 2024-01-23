@@ -20,6 +20,7 @@
 	import { currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { exclude, notesHighlight, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
+	import Panel from '../Panel.svelte';
 	import Publishing from './Publishing.svelte';
 
 	let light = 80;
@@ -108,89 +109,91 @@
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
-<ImageUploader
-	class="h-48"
-	disabled={editMode}
-	readonly={$readonlyStore}
-	icon={BookOpen}
-	on:loadstart={setFile}
-	on:remove={preRemoveImage}
-	src={$informationDataStore.imageUrl}
-	alt="Иллюстрация текста"
-/>
-<FormSplit vertical>
-	<Input
-		placeholder="Название"
-		class="w-full"
-		readonly={$readonlyStore}
-		bind:value={$informationDataStore.title}
-		on:input={checkUpdates}
+<Panel title="Основная информация" nonClose>
+	<ImageUploader
+		class="h-48"
 		disabled={editMode}
-	/>
-	<Contenteditable
 		readonly={$readonlyStore}
-		pattern={(html) => {
-			const varFormattedHtml = variablesHighlight(html, $variablesStore);
-			const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
+		icon={BookOpen}
+		on:loadstart={setFile}
+		on:remove={preRemoveImage}
+		src={$informationDataStore.imageUrl}
+		alt="Иллюстрация текста"
+	/>
+	<FormSplit vertical>
+		<Input
+			placeholder="Название"
+			class="w-full"
+			readonly={$readonlyStore}
+			bind:value={$informationDataStore.title}
+			on:input={checkUpdates}
+			disabled={editMode}
+		/>
+		<Contenteditable
+			readonly={$readonlyStore}
+			pattern={(html) => {
+				const varFormattedHtml = variablesHighlight(html, $variablesStore);
+				const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
 
-			return notesFormattedHtml;
+				return notesFormattedHtml;
+			}}
+			disabled={editMode}
+			placeholder="Описание истории"
+			bind:html={$informationDataStore.description}
+			on:input={checkUpdates}
+		/>
+		<InputTags
+			disabled={editMode}
+			readonly={$readonlyStore}
+			placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
+			bind:tags={$informationDataStore.tags}
+			on:add={checkUpdates}
+			on:remove={checkUpdates}
+		/>
+	</FormSplit>
+	<Listbox
+		{list}
+		placeholder="Жанр"
+		readonly={$readonlyStore}
+		align="inset"
+		value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
+		on:change={({ detail }) => {
+			$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
+			checkUpdates();
 		}}
-		disabled={editMode}
-		placeholder="Описание истории"
-		bind:html={$informationDataStore.description}
-		on:input={checkUpdates}
 	/>
-	<InputTags
-		disabled={editMode}
-		readonly={$readonlyStore}
-		placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
-		bind:tags={$informationDataStore.tags}
-		on:add={checkUpdates}
-		on:remove={checkUpdates}
-	/>
-</FormSplit>
-<Listbox
-	{list}
-	placeholder="Жанр"
-	readonly={$readonlyStore}
-	align="inset"
-	value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
-	on:change={({ detail }) => {
-		$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
-		checkUpdates();
-	}}
-/>
-<FormSplit vertical>
-	<ColorPicker
-		readonly={$readonlyStore}
-		popoverAlign="inset"
-		lightRange={[15, 80]}
-		saturateRange={[10, 90]}
-		color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
-		{saturate}
-		{light}
-		on:change={setColor}
-		disabled={editMode}
-	/>
-</FormSplit>
-{#if editMode}
-	<Button
-		variant="main"
-		class={clsx('justify-center !text-red-500', $redColorStore)}
-		on:click={handleDeleteStory}
-	>
-		Удалить историю
-	</Button>
-{:else}
-	<Publishing />
-{/if}
-{#if !$readonlyStore}
-	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-		{#if saving}
-			<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
-		{:else}
-			{saveInfo}
-		{/if}
-	</div>
-{/if}
-<Shortcuts />
+	<FormSplit vertical>
+		<ColorPicker
+			readonly={$readonlyStore}
+			popoverAlign="inset"
+			lightRange={[15, 80]}
+			saturateRange={[10, 90]}
+			color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
+			{saturate}
+			{light}
+			on:change={setColor}
+			disabled={editMode}
+		/>
+	</FormSplit>
+	{#if editMode}
+		<Button
+			variant="main"
+			class={clsx('justify-center !text-red-500', $redColorStore)}
+			on:click={handleDeleteStory}
+		>
+			Удалить историю
+		</Button>
+	{:else}
+		<Publishing />
+	{/if}
+	{#if !$readonlyStore}
+		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+			{#if saving}
+				<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
+			{:else}
+				{saveInfo}
+			{/if}
+		</div>
+	{/if}
+	<Shortcuts />
+</Panel>

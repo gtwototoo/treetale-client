@@ -21,6 +21,7 @@
 	import type { IFrameCreate } from '$lib/types/editing';
 	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
+	import Panel from '../Panel.svelte';
 
 	const imageFolder = 'frames';
 
@@ -151,84 +152,97 @@
 </script>
 
 {#if $framesDataStore[frameKey]}
-	<FormSplit class="w-full">
-		<Input
-			value={`${Math.round(x)}`}
-			on:input={setX}
-			placeholder="x"
-			readonly={$readonlyStore}
-			class="flex-1 !text-center"
-			number
-		/>
-		<Input
-			value={`${Math.round(y)}`}
-			placeholder="y"
-			readonly={$readonlyStore}
-			on:input={setY}
-			class="flex-1 !text-center"
-			number
-		/>
-	</FormSplit>
-	<FormSplit vertical class="h-48">
-		<ImageUploader
-			disabled={editMode}
-			readonly={$readonlyStore}
-			icon={RectangleStack}
-			on:loadstart={setFile}
-			on:remove={preRemoveImage}
-			src={imageUrl}
-			alt="Иллюстрация текста"
-		/>
-		{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl}
-			<Button variant="ghost" on:click={addPrevImage} class="justify-center bg-main text-text">
-				Вставить с предыдущего блока
-			</Button>
-		{/if}
-	</FormSplit>
-	<FormSplit vertical>
-		<Input
-			placeholder="Название блока"
-			bind:value={$framesDataStore[frameKey].title}
-			maxlength={25}
-		/>
-		<Contenteditable
-			pattern={(html) => {
-				const varFormattedHtml = variablesHighlight(html, $variablesStore);
-				const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
-
-				return notesFormattedHtml;
-			}}
-			readonly={$readonlyStore}
-			maxlength={1500}
-			disabled={editMode}
-			placeholder="Описание блока"
-			bind:html={$framesDataStore[frameKey].text}
-		/>
-	</FormSplit>
-	{#if onePrevFrame !== null}
-		<Button variant="ghost" on:click={gotoPrevFrame} class="gap-3 bg-main text-text">
-			<Icon type={ArrowLeft} class="h-5 w-5" />
-			<p>К предыдущему блоку</p>
-		</Button>
-	{/if}
-	<div class="flex flex-col gap-2" id="choices">
-		{#each choices as { choiceId } (choiceId)}
-			<Choice {choiceId} {frameKey} />
-		{/each}
-		{#if !$readonlyStore}
-			{#if editMode}
+	<Panel title={$framesDataStore[frameKey].title}>
+		<FormSplit class="w-full">
+			<Input
+				value={`${Math.round(x)}`}
+				on:input={setX}
+				placeholder="x"
+				readonly={$readonlyStore}
+				class="flex-1 !text-center"
+				number
+			/>
+			<Input
+				value={`${Math.round(y)}`}
+				placeholder="y"
+				readonly={$readonlyStore}
+				on:input={setY}
+				class="flex-1 !text-center"
+				number
+			/>
+		</FormSplit>
+		<FormSplit vertical class="h-48">
+			<ImageUploader
+				disabled={editMode}
+				readonly={$readonlyStore}
+				icon={RectangleStack}
+				on:loadstart={setFile}
+				on:remove={preRemoveImage}
+				src={imageUrl}
+				alt="Иллюстрация текста"
+			/>
+			{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl}
 				<Button
-					variant="main"
-					class={clsx('justify-center !text-red-500', $redColorStore)}
-					on:click={removeFrame}
+					variant="ghost"
+					on:click={addPrevImage}
+					class="bg-contrast-9 justify-center text-text"
 				>
-					Удалить блок
-				</Button>
-			{:else}
-				<Button variant="ghost" on:click={addChoice} class="justify-center bg-main text-text">
-					Добавить вариант
+					Вставить с предыдущего блока
 				</Button>
 			{/if}
+		</FormSplit>
+		<FormSplit vertical>
+			<Input
+				placeholder="Название блока"
+				disabled={editMode}
+				readonly={$readonlyStore}
+				bind:value={$framesDataStore[frameKey].title}
+				maxlength={25}
+			/>
+			<Contenteditable
+				id="description"
+				pattern={(html) => {
+					const varFormattedHtml = variablesHighlight(html, $variablesStore);
+					const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
+
+					return notesFormattedHtml;
+				}}
+				readonly={$readonlyStore}
+				maxlength={1500}
+				disabled={editMode}
+				placeholder="Описание блока"
+				bind:html={$framesDataStore[frameKey].text}
+			/>
+		</FormSplit>
+		{#if onePrevFrame !== null}
+			<Button variant="ghost" on:click={gotoPrevFrame} class="bg-contrast-9 gap-3 text-text">
+				<Icon type={ArrowLeft} class="h-5 w-5" />
+				<p>К предыдущему блоку</p>
+			</Button>
 		{/if}
-	</div>
+		<div class="flex flex-col gap-2" id="choices">
+			{#each choices as { choiceId } (choiceId)}
+				<Choice {choiceId} {frameKey} />
+			{/each}
+			{#if !$readonlyStore}
+				{#if editMode}
+					<Button
+						variant="main"
+						class={clsx('justify-center !text-red-500', $redColorStore)}
+						on:click={removeFrame}
+					>
+						Удалить блок
+					</Button>
+				{:else}
+					<Button
+						variant="ghost"
+						on:click={addChoice}
+						class="bg-contrast-9 justify-center text-text"
+					>
+						Добавить вариант
+					</Button>
+				{/if}
+			{/if}
+		</div>
+	</Panel>
 {/if}

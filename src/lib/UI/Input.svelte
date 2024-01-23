@@ -59,7 +59,7 @@
 		'input',
 		`size-${size}`,
 		required && !value && '!bg-red-100',
-		focused && '!bg-main-30',
+		focused && '!bg-contrast-5',
 		$$slots.left &&
 			{
 				sm: '!pl-1',
@@ -108,7 +108,7 @@
 		@apply gap-3 rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply relative flex cursor-text items-center bg-main-20 text-left text-text transition-colors hover:bg-main-30;
+		@apply bg-contrast-2 hover:bg-contrast-5 relative flex cursor-text items-center text-left text-text transition-colors;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

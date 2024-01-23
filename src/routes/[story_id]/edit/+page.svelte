@@ -206,10 +206,8 @@
 
 	$: if (!$currentPanelStore.component) {
 		$currentPanelStore = {
-			title: 'Основная информация',
 			component: InformationSettings,
-			id: 'settings',
-			hasCloseButton: false
+			id: 'settings'
 		};
 	}
 

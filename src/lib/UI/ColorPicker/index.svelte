@@ -30,7 +30,7 @@
 		/>
 	</Popover>
 {:else}
-	<Popover align={popoverAlign} {disabled} value="Цвет фона" {readonly}>
+	<Popover align={popoverAlign} {disabled} value="Цвет фона" btnClass="bg-main" {readonly}>
 		<Picker
 			bind:color
 			bind:light

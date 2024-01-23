@@ -16,7 +16,7 @@ interface IReadyCategory extends Omit<ICategory, 'filter'> {
 interface IResponseMainInfo {
 	authors: Array<IUser>;
 	categories: Array<IReadyCategory>;
-	statistic: Array<['stories' | 'likes' | 'users', string, string]>;
+	statistic: Array<Array<string>>;
 }
 
 export const load = async ({ fetch }) => {

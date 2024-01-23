@@ -26,6 +26,11 @@ export const generateMainColors = (color: TRGB) => {
 	};
 
 	for (const i in new Array(9).fill(undefined)) {
+		additionalColors[`color-contrast-${+i + 1}`] = alphaToRgb(
+			contrast ? WHITE_COLOR : BLACK_COLOR,
+			(+i + 1) / 100,
+			contrast ? BLACK_COLOR : WHITE_COLOR
+		);
 		additionalColors[`color-main-${+i + 1}0`] = alphaToRgb(
 			color,
 			(+i + 1) / 10,

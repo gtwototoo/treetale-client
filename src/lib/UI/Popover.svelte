@@ -3,13 +3,15 @@
 	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
-	import { Button } from '$UI';
+	import { clm } from '$lib/utils';
 
 	let className = '';
 	export { className as class };
 
+	export let btnClass = '';
 	export let disabled = false;
 	export let readonly = false;
 	export let align: 'left' | 'right' | 'inset' = 'left';
@@ -29,7 +31,12 @@
 	{#if $$slots.button}
 		<slot name="button" {focused} click={handleClick} />
 	{:else}
-		<Button variant="ghost" class="w-full bg-main" {disabled} on:click={handleClick}>
+		<Button
+			variant="ghost"
+			class={clm('bg-contrast-9 w-full', btnClass)}
+			{disabled}
+			on:click={handleClick}
+		>
 			<p
 				class={clsx('min-h-[1.25rem] pr-5', {
 					'text-gray-200': !value

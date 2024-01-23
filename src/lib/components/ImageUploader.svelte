@@ -71,7 +71,7 @@
 	{:else if readonly}
 		<Button
 			variant="ghost"
-			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit bg-main !p-6"
+			class="bg-contrast-9 pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit !p-6"
 		>
 			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />
 			<p>Изображение не добавлено</p>

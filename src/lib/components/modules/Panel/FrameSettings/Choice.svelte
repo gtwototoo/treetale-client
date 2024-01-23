@@ -7,11 +7,13 @@
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
-	import { getFrameFromId } from '$lib/utils';
+	import { contrastText, getFrameFromId } from '$lib/utils';
 	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
 	import Modificators from './Modificators.svelte';
+
+	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
 
 	export let choiceId: number;
 	export let frameKey: number;
@@ -35,7 +37,24 @@
 	};
 
 	const gotoChoiceToFrame = () => {
-		$selectedFrameStore = frameId;
+		const gotoFrame = getFrameFromId($framesDataStore, frameId);
+
+		$selectedFrameStore = gotoFrame.frameId;
+
+		setSelectedFrame(gotoFrame);
+		descriptionFocus();
+	};
+
+	const descriptionFocus = () => {
+		const descriptionInputs: NodeListOf<HTMLContentEditable> = document
+			.getElementById('description')
+			?.querySelectorAll('[contenteditable]');
+
+		if (!descriptionInputs || $currentPanelStore.hidden) {
+			return;
+		}
+
+		descriptionInputs[0].focus();
 	};
 
 	const addFrameFromChoice = () => {
@@ -50,11 +69,15 @@
 		$framesDataStore[frameKey].choices[choiceKey].frameId = newFrame.frameId;
 
 		setSelectedFrame(newFrame);
+		descriptionFocus();
 	};
 
 	$: editMode = $currentPanelStore.editMode;
 	$: ({ frameId, logicOperations, mathOperations } =
 		$framesDataStore[frameKey].choices[choiceKey]);
+	$: greenBackground = contrastText($bodyColorStore)
+		? clsx('bg-emerald-900')
+		: clsx('bg-emerald-200');
 </script>
 
 <FormSplit vertical={!editMode}>
@@ -71,7 +94,7 @@
 				size="sm"
 				variant="ghost"
 				class={clsx(
-					'gap-1 bg-main !p-1 text-xs text-text',
+					'bg-contrast-9 gap-1 !p-1 text-xs text-text',
 					showModificators && '!bg-violet-500 !text-white',
 					!showModificators &&
 						(logicOperations.length || mathOperations.length) &&
@@ -87,7 +110,7 @@
 				<Button
 					size="sm"
 					variant="ghost"
-					class="bg-main !px-1 text-text"
+					class="bg-contrast-9 !px-1 text-text"
 					on:click={gotoChoiceToFrame}
 				>
 					<Icon class="h-4 w-4" type={ChevronRight} />
@@ -96,7 +119,7 @@
 				<Button
 					size="sm"
 					variant="ghost"
-					class="bg-emerald-200 !px-1 text-emerald-500"
+					class={clsx(greenBackground, '!px-1 text-emerald-500')}
 					on:click={addFrameFromChoice}
 				>
 					<Icon class="h-4 w-4" type={Plus} />

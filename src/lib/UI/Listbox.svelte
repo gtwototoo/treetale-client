@@ -22,7 +22,7 @@
 
 	export let disabled = false;
 	export let readonly = false;
-	export let align: 'left' | 'right' | 'inset' = 'left';
+	export let align: 'left' | 'right' | 'inset' | 'center' = 'left';
 	export let value = '';
 	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
 	export let placeholder: string;
@@ -62,7 +62,7 @@
 	{:else}
 		<Button
 			variant="ghost"
-			class={clm('w-full gap-3 bg-main !pr-3', size === 'sm' && 'gap-1 !pr-2')}
+			class={clm('bg-contrast-9 w-full gap-3 !pr-3', size === 'sm' && 'gap-1 !pr-2')}
 			{disabled}
 			{size}
 			on:click={handleClick}
@@ -86,7 +86,8 @@
 				{
 					left: '-left-1',
 					right: '-right-1',
-					inset: '-inset-x-1'
+					inset: '-inset-x-1',
+					center: '-left-1/2'
 				}[align]
 			)}
 			use:correctPosition
@@ -95,7 +96,7 @@
 				{#each list as item}
 					<Button
 						on:click={(e) => handleSelect(e, item)}
-						class="w-full gap-4 bg-main text-text"
+						class="bg-contrast-9 w-full gap-4 text-text"
 						variant="ghost"
 					>
 						{#if typeof item === 'string'}

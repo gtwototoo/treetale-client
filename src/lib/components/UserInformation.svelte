@@ -101,16 +101,16 @@
 		<div class="p-6">
 			<ProfileAvatar {user} {editMode} color={$bodyColorStore} />
 		</div>
-		<div class="flex gap-4">
+		<div
+			class={clsx(
+				'flex w-full gap-2 rounded-xl p-4 text-text childs:bg-transparent',
+				!editMode && 'bg-contrast/10'
+			)}
+		>
 			{#each statistic as [count, title]}
-				<div
-					class={clsx(
-						'flex flex-col items-center rounded-xl px-4 py-2 text-text childs:bg-transparent',
-						editMode ? 'bg-main/50' : 'bg-contrast/20'
-					)}
-				>
-					<p class="text-3xl font-bold leading-8">
-						{count}
+				<div class="flex w-24 flex-col items-center">
+					<p class="text-3xl font-bold">
+						{count === '0' ? 'Нет' : count}
 					</p>
 					<p>{title}</p>
 				</div>
@@ -120,7 +120,7 @@
 	<div class="flex w-full flex-col items-center bg-transparent">
 		<Contenteditable
 			bind:html={user.name}
-			placeholder="Добавьте описание"
+			placeholder="Никнейм"
 			class="!bg-transparent !text-center !text-4xl font-bold text-text"
 			readonly={!editMode}
 		/>

@@ -90,7 +90,7 @@
 	type="button"
 	class={clsx(
 		'input',
-		focused && '!bg-main-30',
+		focused && '!bg-contrast-5',
 		tags.length ? 'px-2' : 'px-4',
 		{ disabled },
 		className
@@ -98,7 +98,7 @@
 	on:keydown={handleKeydown}
 >
 	{#each tags as tag}
-		<Tag class="inline-flex items-stretch p-0">
+		<Tag class="bg-contrast-9 inline-flex items-stretch p-0">
 			<p class={clsx('pl-2 !leading-6', readonly && 'pr-2')}>{tag}</p>
 			{#if !readonly}
 				<Button
@@ -128,7 +128,7 @@
 		@apply w-full flex-grow bg-transparent text-sm leading-6 placeholder:select-none;
 	}
 	.input {
-		@apply flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-main-20 py-2 text-text transition-colors hover:bg-main-30;
+		@apply bg-contrast-2 hover:bg-contrast-5 flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-2 overflow-hidden rounded-lg py-2 text-text transition-colors;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

@@ -37,7 +37,7 @@
 	<Button
 		disabled={($activeModeStore === 'binding' && !!$connectionStore) || $readonlyStore}
 		variant="main"
-		class={clsx('!text-text', $activeModeStore === 'binding' ? 'bg-main-60' : 'bg-main-40')}
+		class={clsx('!text-text', $activeModeStore === 'binding' ? 'bg-main-60' : 'bg-contrast-5')}
 		on:click={addChoice}
 		on:mousedown={(e) => e.stopPropagation()}
 	>

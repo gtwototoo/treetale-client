@@ -103,7 +103,7 @@
 						$connectionStore.choiceId === choiceId &&
 						greenColor
 			  )
-			: 'bg-main-40'
+			: 'bg-contrast-5'
 	)}
 	on:mousedown={handleMouseDown}
 	on:click={handleClick}

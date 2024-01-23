@@ -13,6 +13,7 @@
 	export { className as class };
 
 	export let html = '';
+	export let id: string | undefined = undefined;
 	export let placeholder: string | undefined = undefined;
 	export let readonly = false;
 	export let disabled = false;
@@ -117,11 +118,12 @@
 
 <button
 	type="button"
+	{id}
 	class={clm(
 		'contenteditable',
 		$$slots.left ? 'pl-2' : 'pl-4',
 		$$slots.right ? 'pr-2' : 'pr-4',
-		focused && '!bg-main-30',
+		focused && '!bg-contrast-5',
 		{ disabled },
 		className
 	)}
@@ -159,7 +161,7 @@
 
 <style lang="postcss">
 	.contenteditable {
-		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 rounded-lg bg-main-20 py-2 text-left text-sm transition-colors hover:bg-main-30;
+		@apply bg-contrast-2 hover:bg-contrast-5 relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 break-words rounded-lg py-2 text-left text-sm transition-colors;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

@@ -18,7 +18,7 @@
 </script>
 
 <div
-	class="flex select-none flex-col gap-4 rounded-lg bg-main-30 p-4 text-center text-sm childs:bg-transparent"
+	class="bg-contrast-2 flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm childs:bg-transparent"
 >
 	<p>Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
@@ -28,7 +28,7 @@
 					<p>{text}</p>
 					<div class="flex gap-1 font-bold">
 						{#each keys as key}
-							<div class="min-w-[1.75rem] rounded-lg bg-main px-2 py-1">{key}</div>
+							<div class="min-w-[1.75rem] rounded-lg bg-main-70 px-2 py-1">{key}</div>
 						{/each}
 					</div>
 				</div>

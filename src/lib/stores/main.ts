@@ -8,29 +8,21 @@ import { contrastText } from '$lib/utils';
 export interface IPanel {
 	component: typeof SvelteComponent<unknown>;
 	editMode?: boolean;
-	hasCloseButton?: boolean;
-	hasEditButton?: boolean;
 	hidden?: boolean;
 	id: string;
-	title: string;
 }
 
 const currentPanelCustomStore = () => {
 	const clearData: IPanel = {
-		title: '',
 		id: '',
 		component: undefined,
 		editMode: false,
-		hasEditButton: true,
-		hasCloseButton: true,
 		hidden: false
 	};
 	const { subscribe, update } = writable<IPanel>(clearData);
 
 	const setCurrentPanel = (data: IPanel) => {
 		update((current) => {
-			data.title = data.title === undefined ? data.id : data.title;
-
 			return data.id === current.id ? clearData : { ...clearData, ...data };
 		});
 	};

@@ -23,7 +23,6 @@
 
 	const variablesSwitch = () => {
 		$currentPanelStore = {
-			title: 'Переменные',
 			id: 'variables',
 			component: Variables
 		};
@@ -31,7 +30,6 @@
 
 	const notesSwitch = () => {
 		$currentPanelStore = {
-			title: 'Заметки',
 			id: 'notes',
 			component: Notes
 		};
@@ -43,10 +41,8 @@
 
 	const historySwitch = () => {
 		$currentPanelStore = {
-			title: 'История изменений',
 			id: 'history',
-			component: Changes,
-			hasEditButton: false
+			component: Changes
 		};
 	};
 </script>

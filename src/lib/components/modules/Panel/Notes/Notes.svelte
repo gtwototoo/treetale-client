@@ -8,6 +8,7 @@
 	import { updateNotes } from '$lib/requests/story';
 	import { informationDataStore, notesStore, readonlyStore } from '$lib/stores/editing';
 	import { currentPanelStore } from '$lib/stores/main';
+	import Panel from '../Panel.svelte';
 	import NoteRow from './Note.svelte';
 
 	let timer: number;
@@ -47,26 +48,28 @@
 	$: editMode = $currentPanelStore.editMode;
 </script>
 
-<Note
-	icon={DocumentText}
-	text="Тут можно сохранять определенные записи с ключевыми словами, что в свою очередь дает возможность подсветки этих ключевых слов в любом тексте, при наведении на которые эти заметки отобразятся"
-/>
-<div class="flex flex-col gap-2">
-	{#each $notesStore.keys() as key}
-		<NoteRow noteKey={key} {checkUpdates} />
-	{/each}
-	{#if !editMode && !$readonlyStore}
-		<Button variant="ghost" on:click={addNote} class="justify-center bg-main text-text">
-			Добавить заметку
-		</Button>
-	{/if}
-</div>
-{#if !$readonlyStore}
-	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
-		{#if saving}
-			<Icon type={Cloud} class="h-4 animate-pulse text-gray-600" />
-		{:else}
-			{saveInfo}
+<Panel title="Заметки">
+	<Note
+		icon={DocumentText}
+		text="Тут можно сохранять определенные записи с ключевыми словами, что в свою очередь дает возможность подсветки этих ключевых слов в любом тексте, при наведении на которые эти заметки отобразятся"
+	/>
+	<div class="flex flex-col gap-2">
+		{#each $notesStore.keys() as key}
+			<NoteRow noteKey={key} {checkUpdates} />
+		{/each}
+		{#if !editMode && !$readonlyStore}
+			<Button variant="ghost" on:click={addNote} class="bg-contrast-9 justify-center text-text">
+				Добавить заметку
+			</Button>
 		{/if}
 	</div>
-{/if}
+	{#if !$readonlyStore}
+		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+			{#if saving}
+				<Icon type={Cloud} class="h-4 animate-pulse text-gray-600" />
+			{:else}
+				{saveInfo}
+			{/if}
+		</div>
+	{/if}
+</Panel>

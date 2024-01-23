@@ -72,7 +72,7 @@
 		changesHistory.add('Добавление связи', Share);
 	};
 
-	$: ({ hidden, title, text, x, y, imageUrl } = frame || ({} as IFrameCreate));
+	$: ({ hidden, title, text, x, y, imageUrl, choices } = frame || ({} as IFrameCreate));
 	$: greenColor = clsx(
 		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
 	);
@@ -87,7 +87,7 @@
 				$movingFrameStore === frameId && 'shadow-lg',
 				$activeModeStore === 'binding' &&
 					clsx(
-						'!bg-main-80 text-text',
+						'!bg-main-70 text-text',
 						$connectionStore && $connectionStore.frameId !== frameId && greenColor
 					)
 			)}
@@ -95,7 +95,7 @@
 			on:click={createConnection}
 			bind:clientHeight={$framesDataStore[frameKey].height}
 		>
-			<Header on:hide={setVisible} {hidden} start={!index} {title} />
+			<Header on:hide={setVisible} {hidden} start={!index} {title} {choices} />
 			{#if !hidden}
 				{#if imageUrl}
 					<Image

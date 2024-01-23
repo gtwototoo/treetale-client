@@ -1,30 +1,19 @@
 <script lang="ts">
-	import { BookOpen, Bookmark, Heart, PaintBrush, Share, Star, Users } from 'svelte-heros-v2';
+	import { Bookmark, PaintBrush, Share, Star } from 'svelte-heros-v2';
 
 	import Icon from './Icon.svelte';
 	import { Treetale } from './icons';
 
-	const icons = {
-		users: Users,
-		stories: BookOpen,
-		likes: Heart
-	};
-
-	export let statistic: Array<['users' | 'stories' | 'likes', string, string]>;
+	export let statistic: Array<Array<string>>;
 </script>
 
 <div class="flex gap-6 px-4 max-lg:flex-col-reverse max-md:gap-4">
 	<div class="flex flex-col gap-[inherit] max-lg:flex-row max-sm:flex-col">
 		<div
-			class="flex flex-1 select-none items-center justify-center gap-4 rounded-3xl bg-white/20 p-6 childs:bg-transparent max-md:p-4"
+			class="flex select-none items-center justify-center gap-4 rounded-3xl bg-white/20 p-6 childs:bg-transparent max-md:p-4"
 		>
-			{#each statistic as [key, count, title]}
+			{#each statistic as [count, title]}
 				<div class="flex w-28 flex-1 flex-col items-center gap-1 max-lg:w-auto">
-					<Icon
-						variation="solid"
-						type={icons[key]}
-						class="h-16 w-16 max-md:h-12 max-md:w-12"
-					/>
 					<p class="text-5xl font-black max-sm:text-4xl">{count}</p>
 					<p class="text-base max-sm:text-xs">
 						{title}

@@ -7,23 +7,26 @@
 	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/history';
+	import Panel from './Panel.svelte';
 </script>
 
-<Note
-	icon={Clock}
-	text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
-/>
-<FormSplit vertical>
-	{#each $changesHistory.stages as { title, icon }, key}
-		<Button
-			variant="ghost"
-			on:click={() => changesHistory.to(key)}
-			class={clsx('gap-4 bg-main text-text', {
-				'opacity-60': key > $changesHistory.currentId
-			})}
-		>
-			<Icon type={icon} />
-			<p>{title}</p>
-		</Button>
-	{/each}
-</FormSplit>
+<Panel title="История изменений" nonEdit>
+	<Note
+		icon={Clock}
+		text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
+	/>
+	<FormSplit vertical>
+		{#each $changesHistory.stages as { title, icon }, key}
+			<Button
+				variant="ghost"
+				on:click={() => changesHistory.to(key)}
+				class={clsx('bg-contrast-9 gap-4 text-text', {
+					'opacity-60': key > $changesHistory.currentId
+				})}
+			>
+				<Icon type={icon} />
+				<p>{title}</p>
+			</Button>
+		{/each}
+	</FormSplit>
+</Panel>

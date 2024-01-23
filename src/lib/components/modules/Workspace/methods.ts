@@ -111,7 +111,6 @@ export const setSelectedFrame = (frame: IFrameCreate) => {
 
 	currentPanelStore.set({
 		id: `frame-${frame.frameId}`,
-		title: frame.title || 'Начало',
 		component: FrameSettings
 	});
 };
