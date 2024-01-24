@@ -9,7 +9,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateVars } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { panelEditMode } from '$lib/stores/panel';
 	import { correctWhitespace } from '$lib/utils';
 	import Panel from '../Panel.svelte';
 
@@ -47,8 +47,6 @@
 			saving = false;
 		}, 3000);
 	};
-
-	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <Panel title="Переменные">
@@ -64,7 +62,7 @@
 		{#each $variablesStore.keys() as key}
 			<VariableRow varKey={key} {checkUpdates} />
 		{/each}
-		{#if !editMode && !$readonlyStore}
+		{#if !$panelEditMode && !$readonlyStore}
 			<Button
 				variant="ghost"
 				on:click={addVariable}

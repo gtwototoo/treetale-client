@@ -2,16 +2,16 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
-	import { currentPanelStore } from '$lib/stores/main';
 	import { getPageType } from '$lib/utils';
 	import clsx from 'clsx';
 
+	import { panelStore } from '$lib/stores/panel';
 	import '../app.postcss';
 
 	$: pageType = getPageType($page.url.pathname);
 
 	beforeNavigate(() => {
-		currentPanelStore.clear();
+		panelStore.clear();
 	});
 </script>
 
@@ -35,15 +35,15 @@
 	<div
 		class={clsx(
 			'fixed left-0 flex h-full flex-col',
-			$currentPanelStore.component ? 'right-96 max-lg:right-0' : 'right-0'
+			$panelStore.component ? 'right-96 max-lg:right-0' : 'right-0'
 		)}
 	>
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>
 
-	{#if $currentPanelStore.component}
-		<svelte:component this={$currentPanelStore.component} />
+	{#if $panelStore.component}
+		<svelte:component this={$panelStore.component} />
 	{/if}
 {:else}
 	<div class="relative flex h-full w-full flex-col">

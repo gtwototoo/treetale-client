@@ -17,7 +17,8 @@
 		variablesStore
 	} from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { redColorStore } from '$lib/stores/main';
+	import { panelEditMode } from '$lib/stores/panel';
 	import { exclude, notesHighlight, variablesHighlight } from '$lib/utils';
 	import clsx from 'clsx';
 	import Panel from '../Panel.svelte';
@@ -106,13 +107,12 @@
 			clearTimeout(timer);
 		}
 	});
-	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <Panel title="Основная информация" nonClose>
 	<ImageUploader
 		class="h-48"
-		disabled={editMode}
+		disabled={$panelEditMode}
 		readonly={$readonlyStore}
 		icon={BookOpen}
 		on:loadstart={setFile}
@@ -127,7 +127,7 @@
 			readonly={$readonlyStore}
 			bind:value={$informationDataStore.title}
 			on:input={checkUpdates}
-			disabled={editMode}
+			disabled={$panelEditMode}
 		/>
 		<Contenteditable
 			readonly={$readonlyStore}
@@ -137,13 +137,13 @@
 
 				return notesFormattedHtml;
 			}}
-			disabled={editMode}
+			disabled={$panelEditMode}
 			placeholder="Описание истории"
 			bind:html={$informationDataStore.description}
 			on:input={checkUpdates}
 		/>
 		<InputTags
-			disabled={editMode}
+			disabled={$panelEditMode}
 			readonly={$readonlyStore}
 			placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
 			bind:tags={$informationDataStore.tags}
@@ -155,6 +155,7 @@
 		{list}
 		placeholder="Жанр"
 		readonly={$readonlyStore}
+		disabled={$panelEditMode}
 		align="inset"
 		value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
 		on:change={({ detail }) => {
@@ -172,10 +173,10 @@
 			{saturate}
 			{light}
 			on:change={setColor}
-			disabled={editMode}
+			disabled={$panelEditMode}
 		/>
 	</FormSplit>
-	{#if editMode}
+	{#if $panelEditMode}
 		<Button
 			variant="main"
 			class={clsx('justify-center !text-red-500', $redColorStore)}

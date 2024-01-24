@@ -6,7 +6,8 @@
 	import type { IList } from '$UI/Listbox.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore, variablesStore } from '$lib/stores/editing';
-	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { redColorStore } from '$lib/stores/main';
+	import { panelEditMode } from '$lib/stores/panel';
 	import type { TVariableExpects } from '$lib/types';
 
 	export let varKey: number;
@@ -35,8 +36,6 @@
 
 		checkUpdates();
 	};
-
-	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <FormSplit class="w-full">
@@ -45,8 +44,8 @@
 		placeholder="Название"
 		readonly={$readonlyStore}
 		maxlength={15}
-		class={clsx('shrink-0', editMode ? 'grow' : 'w-[13rem]')}
-		disabled={editMode}
+		class={clsx('shrink-0', $panelEditMode ? 'grow' : 'w-[13rem]')}
+		disabled={$panelEditMode}
 		on:input={checkUpdates}
 	>
 		<svelte:fragment slot="right">
@@ -61,7 +60,7 @@
 			/>
 		</svelte:fragment>
 	</Input>
-	{#if !editMode}
+	{#if !$panelEditMode}
 		{#if $variablesStore[varKey].expect === 'Да/Нет'}
 			<Listbox
 				bind:value={$variablesStore[varKey].value}
@@ -84,7 +83,7 @@
 			/>
 		{/if}
 	{/if}
-	{#if editMode}
+	{#if $panelEditMode}
 		<Button
 			variant="main"
 			on:click={removeVariable}

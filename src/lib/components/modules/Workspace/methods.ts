@@ -2,7 +2,7 @@ import { Plus } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
 
 import { changesHistory } from '$lib/stores/history';
-import { currentPanelStore } from '$lib/stores/main';
+import { panelStore } from '$lib/stores/panel';
 import {
 	activeActionStore,
 	addFrameOffsetStore,
@@ -109,7 +109,7 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 export const setSelectedFrame = (frame: IFrameCreate) => {
 	selectedFrameStore.set(frame.frameId);
 
-	currentPanelStore.set({
+	panelStore.set({
 		id: `frame-${frame.frameId}`,
 		component: FrameSettings
 	});

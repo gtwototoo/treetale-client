@@ -23,7 +23,8 @@
 		variablesStore
 	} from '$lib/stores/editing.js';
 	import { changesHistory } from '$lib/stores/history.js';
-	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { bodyColorStore } from '$lib/stores/main';
+	import { panelEditMode, panelStore } from '$lib/stores/panel.js';
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -175,14 +176,14 @@
 	const clearLiberties = (readonly: boolean) => {
 		if (!readonly) return;
 
-		if ($currentPanelStore.editMode) {
-			currentPanelStore.switchEditMode();
+		if ($panelEditMode) {
+			$panelEditMode = !$panelEditMode;
 		}
 
 		$activeModeStore = 'view';
 
-		if ($currentPanelStore.id === 'history') {
-			currentPanelStore.clear();
+		if ($panelStore.id === 'history') {
+			panelStore.clear();
 		}
 	};
 
@@ -200,14 +201,14 @@
 		}, 0);
 
 		return () => {
-			currentPanelStore.clear();
+			panelStore.clear();
 		};
 	});
 
 	$: clearLiberties($readonlyStore);
 
-	$: if (!$currentPanelStore.component) {
-		$currentPanelStore = {
+	$: if (!$panelStore.component) {
+		$panelStore = {
 			component: InformationSettings,
 			id: 'settings'
 		};

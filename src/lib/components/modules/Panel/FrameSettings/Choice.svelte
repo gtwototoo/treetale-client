@@ -7,7 +7,8 @@
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { bodyColorStore, currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { bodyColorStore, redColorStore } from '$lib/stores/main';
+	import { panelEditMode, panelShow } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import { contrastText, getFrameFromId } from '$lib/utils';
 	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
@@ -50,7 +51,7 @@
 			.getElementById('description')
 			?.querySelectorAll('[contenteditable]');
 
-		if (!descriptionInputs || $currentPanelStore.hidden) {
+		if (!descriptionInputs || !$panelShow) {
 			return;
 		}
 
@@ -72,7 +73,6 @@
 		descriptionFocus();
 	};
 
-	$: editMode = $currentPanelStore.editMode;
 	$: ({ frameId, logicOperations, mathOperations } =
 		$framesDataStore[frameKey].choices[choiceKey]);
 	$: greenBackground = contrastText($bodyColorStore)
@@ -80,12 +80,12 @@
 		: clsx('bg-emerald-200');
 </script>
 
-<FormSplit vertical={!editMode}>
+<FormSplit vertical={!$panelEditMode}>
 	<Contenteditable
 		maxlength={100}
 		class="!shrink grow"
 		placeholder="Вариант выбора"
-		disabled={editMode}
+		disabled={$panelEditMode}
 		readonly={$readonlyStore}
 		bind:html={$framesDataStore[frameKey].choices[choiceKey].text}
 	>
@@ -127,7 +127,7 @@
 			{/if}
 		</svelte:fragment>
 	</Contenteditable>
-	{#if editMode}
+	{#if $panelEditMode}
 		<Button variant="main" class={clsx('!text-red-500', $redColorStore)} on:click={removeChoice}>
 			<Icon type={XMark} />
 		</Button>

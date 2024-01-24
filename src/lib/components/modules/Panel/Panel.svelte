@@ -5,7 +5,7 @@
 	import { Button, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { panelEditMode, panelShow, panelStore } from '$lib/stores/panel';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import { clm } from '$lib/utils';
 	import { setSelectedFrame } from '../Workspace/methods';
@@ -17,8 +17,7 @@
 	export let nonClose = false;
 	export let nonEdit = false;
 
-	$: ({ editMode, hidden } = $currentPanelStore);
-	$: framePanel = $currentPanelStore.id.includes('frame');
+	$: framePanel = $panelStore.id.includes('frame');
 	$: framesList = $framesDataStore.map((frame) => {
 		return {
 			title: frame.title,
@@ -31,7 +30,7 @@
 	class={clm(
 		'relative ml-auto flex min-h-full w-96 max-w-full shrink-0 flex-col gap-4 bg-contrast px-4 py-4 text-text transition-transform max-sm:py-3 max-xs:px-3',
 		className,
-		hidden && 'max-lg:translate-x-full'
+		!$panelShow && 'max-lg:translate-x-full'
 	)}
 >
 	<div class="flex w-full gap-2">
@@ -39,8 +38,8 @@
 			<Button
 				size="lg"
 				variant="ghost"
-				class={clsx('bg-contrast-9 z-[2] !p-3', editMode && 'text-red-500')}
-				on:click={currentPanelStore.switchEditMode}
+				class={clsx('bg-contrast-9 z-[2] !p-3', $panelEditMode && 'text-red-500')}
+				on:click={() => ($panelEditMode = !$panelEditMode)}
 			>
 				<Icon type={PencilSquare} class="h-6 w-6" />
 			</Button>
@@ -67,12 +66,12 @@
 				{title}
 			</Button>
 		</Listbox>
-		{#if $currentPanelStore.component && !nonClose}
+		{#if $panelStore.component && !nonClose}
 			<Button
 				size="lg"
 				variant="ghost"
 				class="bg-contrast-9 !p-3 max-lg:!hidden"
-				on:click={currentPanelStore.clear}
+				on:click={panelStore.clear}
 			>
 				<Icon type={XMark} class="h-6 w-6" />
 			</Button>
@@ -83,7 +82,7 @@
 			size="lg"
 			variant="ghost"
 			class="bg-contrast-9 !hidden !p-3 max-lg:!block"
-			on:click={currentPanelStore.switchVisible}
+			on:click={() => ($panelShow = !$panelShow)}
 		>
 			<Icon type={ArrowsPointingIn} class="h-6 w-6" />
 		</Button>

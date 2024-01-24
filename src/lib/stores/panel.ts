@@ -3,37 +3,32 @@ import { writable } from 'svelte/store';
 
 export interface IPanel {
 	component: typeof SvelteComponent<unknown>;
-	hidden?: boolean;
 	id: string;
-	title: string;
 }
 
-const currentPanelCustomStore = () => {
+const panelCustomStore = () => {
 	const clearData: IPanel = {
-		title: '',
 		id: '',
 		component: undefined
 	};
 	const { subscribe, update } = writable<IPanel>(clearData);
 
-	const setCurrentPanel = (data: IPanel) => {
+	const setPanel = (data: IPanel) => {
 		update((current) => {
-			data.title = data.title || data.id;
-
 			return data.id === current.id ? clearData : { ...clearData, ...data };
 		});
 	};
 
-	const clearCurrentPanel = () => update(() => clearData);
+	const clearPanel = () => update(() => clearData);
 
 	return {
 		subscribe,
-		clear: clearCurrentPanel,
-		set: setCurrentPanel,
+		clear: clearPanel,
+		set: setPanel,
 		update
 	};
 };
 
-export const currentPanelStore = currentPanelCustomStore();
+export const panelStore = panelCustomStore();
 export const panelEditMode = writable(false);
 export const panelShow = writable(false);

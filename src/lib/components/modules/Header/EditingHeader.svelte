@@ -17,30 +17,30 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { panelShow, panelStore } from '$lib/stores/panel';
 	import { activeActionStore } from '$lib/stores/workspace';
 	import Notes from '../Panel/Notes/Notes.svelte';
 
 	const variablesSwitch = () => {
-		$currentPanelStore = {
+		$panelStore = {
 			id: 'variables',
 			component: Variables
 		};
 	};
 
 	const notesSwitch = () => {
-		$currentPanelStore = {
+		$panelStore = {
 			id: 'notes',
 			component: Notes
 		};
 	};
 
 	const settingsSwitch = () => {
-		currentPanelStore.clear();
+		panelStore.clear();
 	};
 
 	const historySwitch = () => {
-		$currentPanelStore = {
+		$panelStore = {
 			id: 'history',
 			component: Changes
 		};
@@ -83,7 +83,7 @@
 			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-3"
 			variant="ghost"
 			size="lg"
-			on:click={currentPanelStore.switchVisible}
+			on:click={() => ($panelShow = !$panelShow)}
 		>
 			<Icon type={ChevronLeft} class="h-6 w-6" />
 		</Button>

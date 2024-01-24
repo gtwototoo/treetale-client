@@ -6,7 +6,8 @@
 
 	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
-	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { bodyColorStore } from '$lib/stores/main';
+	import { panelStore } from '$lib/stores/panel';
 	import { fullscreenStore } from '$lib/stores/reading';
 	import { contrastText } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -25,7 +26,7 @@
 	// };
 
 	const openDonutPanel = () => {
-		$currentPanelStore = {
+		$panelStore = {
 			id: 'donut',
 			component: Donut
 		};

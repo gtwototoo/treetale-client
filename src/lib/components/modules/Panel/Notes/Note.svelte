@@ -5,7 +5,8 @@
 	import { Button, Contenteditable, FormSplit, InputTags } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { notesStore } from '$lib/stores/editing';
-	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { redColorStore } from '$lib/stores/main';
+	import { panelEditMode } from '$lib/stores/panel';
 
 	export let noteKey: number;
 	export let checkUpdates: () => void;
@@ -17,8 +18,6 @@
 
 		checkUpdates();
 	};
-
-	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <FormSplit vertical>
@@ -27,7 +26,7 @@
 		bind:html={$notesStore[noteKey].text}
 		on:input={checkUpdates}
 	/>
-	{#if editMode}
+	{#if $panelEditMode}
 		<Button variant="main" on:click={removeNote} class={clsx('!text-red-500', $redColorStore)}>
 			<Icon type={XMark} />
 		</Button>

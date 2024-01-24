@@ -8,7 +8,8 @@
 	import { Image } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { bodyColorStore, currentPanelStore } from '$lib/stores/main';
+	import { bodyColorStore } from '$lib/stores/main';
+	import { panelStore } from '$lib/stores/panel';
 	import {
 		activeModeStore,
 		connectionStore,
@@ -40,7 +41,7 @@
 			$movingFrameStore = frame.frameId;
 		}
 
-		if ($currentPanelStore.id !== `frame-${frame.frameId}`) {
+		if ($panelStore.id !== `frame-${frame.frameId}`) {
 			setSelectedFrame(frame);
 		}
 	};

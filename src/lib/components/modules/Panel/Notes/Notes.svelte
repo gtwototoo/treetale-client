@@ -7,7 +7,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateNotes } from '$lib/requests/story';
 	import { informationDataStore, notesStore, readonlyStore } from '$lib/stores/editing';
-	import { currentPanelStore } from '$lib/stores/main';
+	import { panelEditMode } from '$lib/stores/panel';
 	import Panel from '../Panel.svelte';
 	import NoteRow from './Note.svelte';
 
@@ -44,8 +44,6 @@
 
 		checkUpdates();
 	};
-
-	$: editMode = $currentPanelStore.editMode;
 </script>
 
 <Panel title="Заметки">
@@ -57,7 +55,7 @@
 		{#each $notesStore.keys() as key}
 			<NoteRow noteKey={key} {checkUpdates} />
 		{/each}
-		{#if !editMode && !$readonlyStore}
+		{#if !$panelEditMode && !$readonlyStore}
 			<Button variant="ghost" on:click={addNote} class="bg-contrast-9 justify-center text-text">
 				Добавить заметку
 			</Button>

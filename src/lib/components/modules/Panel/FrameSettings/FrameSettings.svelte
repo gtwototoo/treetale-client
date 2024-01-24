@@ -15,7 +15,8 @@
 		variablesStore
 	} from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
-	import { currentPanelStore, redColorStore } from '$lib/stores/main';
+	import { redColorStore } from '$lib/stores/main';
+	import { panelEditMode, panelStore } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import type { IFrame } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
@@ -27,7 +28,6 @@
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
 	$: ({ x, y, choices, imageUrl, frameId } = $framesDataStore[frameKey] || ({} as IFrameCreate));
-	$: editMode = $currentPanelStore.editMode;
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
@@ -78,7 +78,7 @@
 	};
 
 	const removeFrame = () => {
-		currentPanelStore.clear();
+		panelStore.clear();
 
 		$framesDataStore = $framesDataStore.filter(({ frameId }) => frameId !== $selectedFrameStore);
 
@@ -147,7 +147,7 @@
 	$: onePrevFrame = findPrevFrame($framesDataStore);
 
 	$: if (!$framesDataStore[frameKey]) {
-		currentPanelStore.clear();
+		panelStore.clear();
 	}
 </script>
 
@@ -173,7 +173,7 @@
 		</FormSplit>
 		<FormSplit vertical class="h-48">
 			<ImageUploader
-				disabled={editMode}
+				disabled={$panelEditMode}
 				readonly={$readonlyStore}
 				icon={RectangleStack}
 				on:loadstart={setFile}
@@ -181,8 +181,9 @@
 				src={imageUrl}
 				alt="Иллюстрация текста"
 			/>
-			{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl}
+			{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl && !$readonlyStore}
 				<Button
+					disabled={$panelEditMode}
 					variant="ghost"
 					on:click={addPrevImage}
 					class="bg-contrast-9 justify-center text-text"
@@ -194,7 +195,7 @@
 		<FormSplit vertical>
 			<Input
 				placeholder="Название блока"
-				disabled={editMode}
+				disabled={$panelEditMode}
 				readonly={$readonlyStore}
 				bind:value={$framesDataStore[frameKey].title}
 				maxlength={25}
@@ -209,7 +210,7 @@
 				}}
 				readonly={$readonlyStore}
 				maxlength={1500}
-				disabled={editMode}
+				disabled={$panelEditMode}
 				placeholder="Описание блока"
 				bind:html={$framesDataStore[frameKey].text}
 			/>
@@ -225,7 +226,7 @@
 				<Choice {choiceId} {frameKey} />
 			{/each}
 			{#if !$readonlyStore}
-				{#if editMode}
+				{#if $panelEditMode}
 					<Button
 						variant="main"
 						class={clsx('justify-center !text-red-500', $redColorStore)}
