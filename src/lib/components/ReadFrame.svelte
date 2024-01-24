@@ -80,7 +80,7 @@
 						active={selectedChoiceId === choiceId}
 						on:click={() => handleClick(choiceId)}
 					>
-						{correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
+						{@html correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
 					</Choice>
 				{/if}
 			{/each}
