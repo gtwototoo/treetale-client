@@ -2,7 +2,7 @@ import type { ICoordinates, IStory, IVariable } from '.';
 import type { IFrameCreate, INote } from './editing';
 
 export interface IStorySchema extends IStory {
-	[index: string]: number | ICoordinates | Array<unknown> | string | boolean;
+	[index: string]: Array<unknown> | boolean | ICoordinates | number | string;
 	darkTheme: boolean;
 	frames: Array<IFrameCreate>;
 	imageUrl: string;

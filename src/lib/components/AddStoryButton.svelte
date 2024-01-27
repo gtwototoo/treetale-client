@@ -1,13 +1,11 @@
 <script lang="ts">
-	import clsx from 'clsx';
-	import { Plus } from 'svelte-heros-v2';
-
-	import Icon from './Icon.svelte';
-
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/stores';	import clsx from 'clsx';	import { Plus } from 'svelte-heros-v2';
+
 	import { createStory } from '$lib/requests/story';
 	import { Button } from '$UI';
+
+	import Icon from './Icon.svelte';
 
 	let className = '';
 	export { className as class };
@@ -29,11 +27,11 @@
 
 <Button
 	class={clsx('text-text', className)}
-	variant="ghost"
-	on:click={handleClick}
 	{loading}
+	on:click={handleClick}
 	size="lg"
+	variant="ghost"
 >
-	<Icon type={Plus} class="h-6 w-6" />
+	<Icon class="h-6 w-6" type={Plus} />
 	<p class="mr-1">Добавить историю</p>
 </Button>

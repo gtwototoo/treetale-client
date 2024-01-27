@@ -21,7 +21,7 @@ const fetchCore = async <T>(url: RequestInfo | URL, options?: RequestInit) => {
 
 export const fetchPost = <T = DefaultResponse>(
 	url: RequestInfo | URL,
-	data?: unknown | FormData
+	data?: FormData | unknown
 ) => {
 	const options: RequestInit = {
 		method: 'POST'

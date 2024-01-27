@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Image } from '$UI';
-	import { GENRES_LIST } from '$lib/constants';
-	import type { TGenre } from '$lib/types';
 	import { BookOpen } from 'svelte-heros-v2';
+
+	import type { TGenre } from '$lib/types';
+
+	import { GENRES_LIST } from '$lib/constants';
+	import { Image } from '$UI';
 
 	export let title: string;
 	export let imageUrl: string;
@@ -22,14 +24,14 @@
 >
 	{#if imageUrl && !errorImage}
 		<Image
-			on:error={handleError}
 			alt={title || 'Иллюстрация истории'}
-			cover
 			class="h-full w-full rounded-t-xl xs:rounded-t-2xl"
+			cover
+			on:error={handleError}
 			src={imageUrl}
 		/>
-		<svelte:component this={icon} class="absolute right-4 top-4 h-8 w-8 text-contrast" />
+		<svelte:component class="absolute right-4 top-4 h-8 w-8 text-contrast" this={icon} />
 	{:else}
-		<svelte:component this={icon} class="h-2/3 w-auto text-contrast" />
+		<svelte:component class="h-2/3 w-auto text-contrast" this={icon} />
 	{/if}
 </div>

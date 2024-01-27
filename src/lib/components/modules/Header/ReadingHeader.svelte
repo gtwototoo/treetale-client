@@ -1,17 +1,18 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import clsx from 'clsx';
 	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
 
-	import Header from './Header.svelte';
-
-	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { panelStore } from '$lib/stores/panel';
 	import { fullscreenStore } from '$lib/stores/reading';
 	import { contrastText } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { Button } from '$UI';
+
 	import Donut from '../Panel/Donut.svelte';
+	import Header from './Header.svelte';
 
 	let fullscreenSupport = false;
 
@@ -27,8 +28,8 @@
 
 	const openDonutPanel = () => {
 		$panelStore = {
-			id: 'donut',
-			component: Donut
+			component: Donut,
+			id: 'donut'
 		};
 	};
 
@@ -57,21 +58,21 @@
 			'header-button text-text',
 			contrastText($bodyColorStore) ? 'bg-yellow-600' : 'bg-yellow-300'
 		)}
-		variant="ghost"
-		size="lg"
 		on:click={openDonutPanel}
+		size="lg"
+		variant="ghost"
 	>
-		<Icon type={Star} class="h-6 w-6" />
+		<Icon class="h-6 w-6" type={Star} />
 		<p class="mr-1">Поддержать</p>
 	</Button>
 	{#if fullscreenSupport}
 		<Button
-			variant="ghost"
 			class="header-button bg-contrast text-text"
-			size="lg"
 			on:click={handleFulscreen}
+			size="lg"
+			variant="ghost"
 		>
-			<Icon type={ArrowsPointingOut} class="h-6 w-6" />
+			<Icon class="h-6 w-6" type={ArrowsPointingOut} />
 		</Button>
 	{/if}
 </Header>

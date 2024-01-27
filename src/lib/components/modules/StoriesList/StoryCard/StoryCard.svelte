@@ -1,14 +1,15 @@
 <script lang="ts">
-	import Body from './Body.svelte';
+	import { page } from '$app/stores';	import clsx from 'clsx';
 
-	import { Card } from '$UI';
-	import { page } from '$app/stores';
-	import Link from '$lib/components/Link.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
+
+	import Link from '$lib/components/Link.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants';
 	import { generateMainColors } from '$lib/utils';
-	import clsx from 'clsx';
+	import { Card } from '$UI';
+
+	import Body from './Body.svelte';
 	import Illustration from './Illustration.svelte';
 	import Info from './Info.svelte';
 
@@ -21,17 +22,17 @@
 	export let author: IUser | undefined = undefined;
 
 	$: ({
-		imageUrl,
-		title,
-		tags,
-		storyId,
 		color,
-		userId,
-		likes,
-		status,
 		created,
 		description,
-		genre
+		genre,
+		imageUrl,
+		likes,
+		status,
+		storyId,
+		tags,
+		title,
+		userId
 	} = story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
@@ -49,10 +50,10 @@
 				className
 			)}
 		>
-			<Illustration {title} {imageUrl} {genre} />
+			<Illustration {genre} {imageUrl} {title} />
 			<div class="body">
-				<Body {title} {vars} {description} />
-				<Info {status} {likes} {created} {tags} {author} {edit} />
+				<Body {description} {title} {vars} />
+				<Info {author} {created} {edit} {likes} {status} {tags} />
 			</div>
 		</Card>
 	</div>

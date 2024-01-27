@@ -1,21 +1,21 @@
 import type { TComparisonOperator, TMathOperator, TVariableExpects } from '$lib/types';
 
-export const correctToType = (value: string | number, expect: TVariableExpects) => {
+export const correctToType = (value: number | string, expect: TVariableExpects) => {
 	return expect === 'Число' ? +value : value;
 };
 
 export const doLogic = (
-	firstValue: string | number,
+	firstValue: number | string,
 	symbol: TComparisonOperator,
-	secondValue: string | number
+	secondValue: number | string
 ) => {
 	const operations: Record<TComparisonOperator, boolean> = {
-		'=': firstValue === secondValue,
-		'≥': firstValue >= secondValue,
-		'≤': firstValue <= secondValue,
-		'≠': firstValue !== secondValue,
 		'<': firstValue < secondValue,
-		'>': firstValue > secondValue
+		'=': firstValue === secondValue,
+		'≠': firstValue !== secondValue,
+		'>': firstValue > secondValue,
+		'≤': firstValue <= secondValue,
+		'≥': firstValue >= secondValue
 	};
 
 	if (!(symbol in operations)) return false;
@@ -33,10 +33,10 @@ export const doMath = (
 	if (typeof firstValue === 'string' || typeof secondValue === 'string') return `${firstValue}`;
 
 	const operations: Record<Exclude<TMathOperator, '='>, number> = {
-		'+': firstValue + secondValue,
 		'-': firstValue - secondValue,
+		'*': firstValue * secondValue,
 		'/': firstValue / secondValue,
-		'*': firstValue * secondValue
+		'+': firstValue + secondValue
 	};
 
 	if (!(symbol in operations)) return `${firstValue}`;

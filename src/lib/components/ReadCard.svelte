@@ -10,7 +10,7 @@
 	let errorLoad = false;
 
 	export let classCard = '';
-	export let src: string | null = null;
+	export let src: null | string = null;
 	export let text: string | undefined = undefined;
 	export let alt = 'Иллюстрация';
 
@@ -22,11 +22,11 @@
 <div class={clsx('card adaptive-size', className)}>
 	{#if src && !errorLoad}
 		<Image
-			{src}
 			{alt}
 			class="h-[22rem] w-full rounded-2xl !bg-contrast/30 text-text max-xl:h-80 max-md:h-72"
 			cover
 			on:error={handleError}
+			{src}
 		/>
 	{/if}
 	<Card

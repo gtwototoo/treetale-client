@@ -1,5 +1,5 @@
 export const correctPosition = (node: HTMLDivElement) => {
-	const { bottom, top, height } = node.getBoundingClientRect();
+	const { bottom, height, top } = node.getBoundingClientRect();
 	const toTop = bottom > window.innerHeight && top - height > 0;
 	const correctClasses = toTop ? ['bottom-full', 'mb-1'] : ['top-full', 'mt-1'];
 

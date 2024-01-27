@@ -1,13 +1,13 @@
 export const enableControl = <T>(
 	node: T,
 	{
-		f,
-		enabled
+		enabled,
+		f
 	}: {
+		enabled: boolean;
 		f: (node: T) => {
 			destroy?: () => void;
 		};
-		enabled: boolean;
 	}
 ) => {
 	let activeFunction: {
@@ -17,6 +17,11 @@ export const enableControl = <T>(
 	if (enabled) activeFunction = f(node);
 
 	return {
+		destroy: () => {
+			if (!activeFunction) return;
+
+			if (activeFunction.destroy) activeFunction.destroy();
+		},
 		update: ({ enabled }: { enabled: boolean }) => {
 			if (enabled) {
 				activeFunction = f(node);
@@ -26,11 +31,6 @@ export const enableControl = <T>(
 				if (activeFunction.destroy) activeFunction.destroy();
 				activeFunction = null;
 			}
-		},
-		destroy: () => {
-			if (!activeFunction) return;
-
-			if (activeFunction.destroy) activeFunction.destroy();
 		}
 	};
 };

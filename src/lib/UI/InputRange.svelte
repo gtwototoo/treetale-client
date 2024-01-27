@@ -9,7 +9,7 @@
 	export let value = 0;
 </script>
 
-<input class={clsx('range', className)} type="range" {min} {max} bind:value />
+<input bind:value class={clsx('range', className)} {max} {min} type="range" />
 
 <style lang="postcss">
 	.range {

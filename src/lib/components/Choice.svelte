@@ -5,9 +5,9 @@
 </script>
 
 <Button
+	class="adaptive-font adaptive-padding !whitespace-normal bg-main text-left !text-text"
 	on:click
 	variant={active ? 'main' : 'ghost'}
-	class="adaptive-font adaptive-padding !whitespace-normal bg-main text-left !text-text"
 >
 	<slot />
 </Button>

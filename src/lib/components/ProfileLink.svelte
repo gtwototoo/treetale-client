@@ -1,8 +1,11 @@
 <script lang="ts">
-	import { Button } from '$UI';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+
 	import type { IUser } from '$lib/types';
+
+	import { Button } from '$UI';
+
 	import ProfileAvatar from './ProfileAvatar.svelte';
 
 	export let author: IUser;
@@ -15,8 +18,8 @@
 	$: date = new Date(created).toLocaleDateString('en-GB');
 </script>
 
-<Button class="min-w-0 gap-2 !p-0" variant="main" on:click={handleClick}>
-	<ProfileAvatar size="sm" user={author} color={author.color} />
+<Button class="min-w-0 gap-2 !p-0" on:click={handleClick} variant="main">
+	<ProfileAvatar color={author.color} size="sm" user={author} />
 	<div class="overflow-hidden text-left">
 		<p class="truncate text-text max-xs:hidden">
 			{author.name}

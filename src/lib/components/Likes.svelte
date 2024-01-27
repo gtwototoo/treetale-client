@@ -1,12 +1,11 @@
 <script lang="ts">
-	import clsx from 'clsx';
-	import { Heart } from 'svelte-heros-v2';
-
-	import Icon from './Icon.svelte';
-
 	import { page } from '$app/stores';
+	import clsx from 'clsx';	import { Heart } from 'svelte-heros-v2';
+
 	import { addLike } from '$lib/requests/story';
 	import { Button } from '$UI';
+
+	import Icon from './Icon.svelte';
 
 	export let likes: Array<number>;
 	export let storyId: number;
@@ -36,15 +35,15 @@
 
 <Button
 	class="gap-2 bg-main !px-3 text-text hover:text-red-500"
-	variant="ghost"
-	size="lg"
-	on:click={handleClick}
 	{loading}
+	on:click={handleClick}
+	size="lg"
+	variant="ghost"
 >
 	<Icon
+		class={clsx('h-6 w-6', isLiked && 'text-red-500')}
 		type={Heart}
 		variation={isLiked ? 'solid' : 'outline'}
-		class={clsx('h-6 w-6', isLiked && 'text-red-500')}
 	/>
 	<p class="min-w-[1rem]">{likes.length}</p>
 </Button>

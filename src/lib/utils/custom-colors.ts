@@ -1,6 +1,7 @@
+import type { TRGB } from '$lib/types';
+
 import { BLACK_COLOR, BLACK_TEXT_COLOR, WHITE_COLOR, WHITE_TEXT_COLOR } from '$lib/constants';
 
-import type { TRGB } from '$lib/types';
 import { alphaToRgb } from './alpha-to-rgb';
 import { contrastText } from './contrast';
 
@@ -20,9 +21,9 @@ export const generateMainColors = (color: TRGB) => {
 	const contrast = contrastText(color);
 
 	const additionalColors: Record<string, TRGB> = {
+		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR,
 		'color-main': color,
-		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR,
-		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR
+		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR
 	};
 
 	for (const i in new Array(9).fill(undefined)) {

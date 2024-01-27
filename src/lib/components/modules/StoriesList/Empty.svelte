@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { BookOpen } from 'svelte-heros-v2';
+	import clsx from 'clsx';	import { BookOpen } from 'svelte-heros-v2';
 
 	import { Card } from '$UI';
-	import clsx from 'clsx';
 
 	let className = '';
 	export { className as class };
@@ -15,7 +14,7 @@
 	)}
 >
 	<BookOpen
-		variation="solid"
 		class="absolute h-1/3 w-auto bg-transparent text-main transition-colors"
+		variation="solid"
 	/>
 </Card>

@@ -1,7 +1,8 @@
 import { derived, writable } from 'svelte/store';
 
-import { DEFAULT_COLOR } from '$lib/constants';
 import type { TRGB } from '$lib/types';
+
+import { DEFAULT_COLOR } from '$lib/constants';
 import { contrastText } from '$lib/utils';
 
 export const bodyColorStore = writable<TRGB>(DEFAULT_COLOR);

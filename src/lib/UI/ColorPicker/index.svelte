@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Picker from './Picker.svelte';
-
-	import { Popover } from '$UI';
 	import type { TRGB } from '$lib/types';
 
+	import { Popover } from '$UI';
+
+	import Picker from './Picker.svelte';
+
 	export let disabled = false;
-	export let popoverAlign: 'left' | 'right' | 'inset' = 'right';
+	export let popoverAlign: 'inset' | 'left' | 'right' = 'right';
 	export let lightRange = [0, 100];
 	export let saturateRange = [0, 100];
 	export let light = 0;
@@ -16,7 +17,7 @@
 
 {#if $$slots.default}
 	<Popover align={popoverAlign} {readonly}>
-		<svelte:fragment slot="button" let:click>
+		<svelte:fragment let:click slot="button">
 			<slot {click} {color} />
 		</svelte:fragment>
 		<Picker
@@ -25,20 +26,20 @@
 			bind:saturate
 			{disabled}
 			{lightRange}
-			{saturateRange}
 			on:change
+			{saturateRange}
 		/>
 	</Popover>
 {:else}
-	<Popover align={popoverAlign} {disabled} value="Цвет фона" btnClass="bg-main" {readonly}>
+	<Popover align={popoverAlign} btnClass="bg-main" {disabled} {readonly} value="Цвет фона">
 		<Picker
 			bind:color
 			bind:light
 			bind:saturate
 			{disabled}
 			{lightRange}
-			{saturateRange}
 			on:change
+			{saturateRange}
 		/>
 	</Popover>
 {/if}

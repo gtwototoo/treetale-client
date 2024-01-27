@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Cloud, DocumentText } from 'svelte-heros-v2';
 
-	import Note from '../Note.svelte';
-
-	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateNotes } from '$lib/requests/story';
 	import { informationDataStore, notesStore, readonlyStore } from '$lib/stores/editing';
 	import { panelEditMode } from '$lib/stores/panel';
+	import { Button } from '$UI';
+
+	import Note from '../Note.svelte';
 	import Panel from '../Panel.svelte';
 	import NoteRow from './Note.svelte';
 
@@ -37,8 +37,8 @@
 		$notesStore = [
 			...$notesStore,
 			{
-				text: '',
-				tags: []
+				tags: [],
+				text: ''
 			}
 		];
 
@@ -53,10 +53,10 @@
 	/>
 	<div class="flex flex-col gap-2">
 		{#each $notesStore.keys() as key}
-			<NoteRow noteKey={key} {checkUpdates} />
+			<NoteRow {checkUpdates} noteKey={key} />
 		{/each}
 		{#if !$panelEditMode && !$readonlyStore}
-			<Button variant="ghost" on:click={addNote} class="bg-contrast-9 justify-center text-text">
+			<Button class="justify-center bg-contrast-9 text-text" on:click={addNote} variant="ghost">
 				Добавить заметку
 			</Button>
 		{/if}
@@ -64,7 +64,7 @@
 	{#if !$readonlyStore}
 		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 			{#if saving}
-				<Icon type={Cloud} class="h-4 animate-pulse text-gray-600" />
+				<Icon class="h-4 animate-pulse text-gray-600" type={Cloud} />
 			{:else}
 				{saveInfo}
 			{/if}

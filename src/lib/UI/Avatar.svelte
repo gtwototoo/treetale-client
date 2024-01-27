@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { Image } from '$UI';
-	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
 	import type { TRGB } from '$lib/types';
-	import { RGB, alphaToRgb, clm, contrastText, last } from '$lib/utils';
+
+	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
+	import { alphaToRgb, clm, contrastText, last, RGB } from '$lib/utils';
+	import { Image } from '$UI';
 
 	let className = '';
 	export { className as class };
 
 	export let alt: string;
-	export let src: string | undefined | null = undefined;
-	export let size: 'sm' | 'base' | 'lg' = 'base';
+	export let src: null | string | undefined = undefined;
+	export let size: 'base' | 'lg' | 'sm' = 'base';
 	export let color: TRGB;
 	export let base64src = '';
 
@@ -36,7 +37,7 @@
 		)}
 	>
 		{#if src || base64src}
-			<Image class="h-full w-full rounded-full" cover {src} {alt} {base64src} on:load />
+			<Image {alt} {base64src} class="h-full w-full rounded-full" cover on:load {src} />
 		{:else}
 			{short}
 		{/if}

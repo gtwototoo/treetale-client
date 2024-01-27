@@ -1,15 +1,15 @@
 import type { SvelteComponent } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
 
-import { framesDataStore } from './workspace';
+import { diff } from 'deep-object-diff';
+import { Play } from 'svelte-heros-v2';
 
 import type { IFrameCreate } from '$lib/types/editing';
 
-import { Play } from 'svelte-heros-v2';
-
 import { serialize } from '$lib/utils';
 import { applyDiff, type IDiff } from '$lib/utils/apply-diff';
-import { diff } from 'deep-object-diff';
+
+import { framesDataStore } from './workspace';
 
 interface IChange {
 	difference?: IDiff;
@@ -25,19 +25,19 @@ interface IChanges {
 
 type IOverrideChanges = Writable<IChanges> & {
 	add: (title: string, icon: typeof SvelteComponent<unknown>) => void;
-	undo: () => void;
-	redo: () => void;
 	init: (initialFrames: Array<IFrameCreate>) => void;
+	redo: () => void;
 	to: (stageId: number) => void;
+	undo: () => void;
 };
 
 const STAGES_MAX_COUNT = 50;
 
 const framesHistoryCustomStore = () => {
-	const { subscribe, set, update } = writable<IChanges>({
+	const { set, subscribe, update } = writable<IChanges>({
+		currentId: 0,
 		initial: null,
-		stages: [],
-		currentId: 0
+		stages: []
 	});
 
 	const init = (initialFrames: Array<IFrameCreate>) =>
@@ -46,8 +46,8 @@ const framesHistoryCustomStore = () => {
 
 			data.stages.push({
 				difference: {},
-				title: 'Начальное состояние',
-				icon: Play
+				icon: Play,
+				title: 'Начальное состояние'
 			});
 
 			return data;
@@ -65,8 +65,8 @@ const framesHistoryCustomStore = () => {
 			if (hasChanges) {
 				data.stages.push({
 					difference,
-					title,
-					icon
+					icon,
+					title
 				});
 
 				if (data.stages.length > STAGES_MAX_COUNT) data.stages.shift();
@@ -129,14 +129,14 @@ const framesHistoryCustomStore = () => {
 		});
 
 	return {
-		subscribe,
-		set,
-		update,
-		init,
 		add,
+		init,
+		redo,
+		set,
+		subscribe,
 		to,
 		undo,
-		redo
+		update
 	};
 };
 

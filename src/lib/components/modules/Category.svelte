@@ -1,12 +1,16 @@
 <script lang="ts">
-	import type { IUser } from '$lib/types';
-	import type { IStoryFull } from '$lib/types/reading';
-	import { correctWhitespace } from '$lib/utils';
+	import type { SvelteComponent } from 'svelte';
+
 	import emblaCarouselSvelte, {
 		type EmblaOptionsType,
 		type EmblaPluginType
 	} from 'embla-carousel-svelte';
-	import type { SvelteComponent } from 'svelte';
+
+	import type { IUser } from '$lib/types';
+	import type { IStoryFull } from '$lib/types/reading';
+
+	import { correctWhitespace } from '$lib/utils';
+
 	import AddStoryButton from '../AddStoryButton.svelte';
 	import Icon from '../Icon.svelte';
 	import Empty from './StoriesList/Empty.svelte';
@@ -29,11 +33,11 @@
 
 <div class="flex h-full flex-col">
 	<div class="flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6">
-		<Icon type={icon} class="h-8 w-8 max-sm:h-6 max-sm:w-6" />
+		<Icon class="h-8 w-8 max-sm:h-6 max-sm:w-6" type={icon} />
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
 	{#if listFormat}
-		<StoriesList {stories} {authors}>
+		<StoriesList {authors} {stories}>
 			<p>
 				{correctWhitespace(
 					'Историй по вашему запросу не найдено, а значит вы можете добавить свою уникальную историю'
@@ -48,10 +52,10 @@
 					{@const { vars, ...story } = rawStory}
 					{@const author = authors && authors.find(({ userId }) => userId === story.userId)}
 					<StoryCard
-						{story}
-						{vars}
 						{author}
 						class="w-96 max-lg:w-80 max-md:w-72 max-xs:w-60"
+						{story}
+						{vars}
 					/>
 				{/each}
 				{#if stories.length < 5}

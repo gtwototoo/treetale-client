@@ -1,7 +1,8 @@
 <script lang="ts">
+	import type { ICoordinates } from '$lib/types';
+
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
-	import type { ICoordinates } from '$lib/types';
 	import { clm, transform } from '$lib/utils';
 	import { Button } from '$UI';
 
@@ -54,10 +55,10 @@
 
 <Button
 	bind:element
-	size="lg"
-	variant="ghost"
 	class="h-12 w-12 items-center justify-center !rounded-full bg-contrast !p-0"
 	on:click={setDefaultCoordinates}
+	size="lg"
+	variant="ghost"
 >
 	<div class="h-6 w-6 rounded-full !bg-contrast/20" />
 	{#if element && workspaceHeight}

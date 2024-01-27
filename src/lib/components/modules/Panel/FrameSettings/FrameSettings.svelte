@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+
+	import clsx from 'clsx';
 	import { ArrowLeft, MusicalNote, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
 
-	import Choice from './Choice.svelte';
+	import type { IFrame } from '$lib/types';
+	import type { IFrameCreate } from '$lib/types/editing';
 
-	import { Button, Contenteditable, FormSplit, Input } from '$UI';
-	import Sound from '$UI/Sound.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { removeImage, removeSound, saveImage, saveSound } from '$lib/requests/files';
@@ -19,23 +20,23 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode, panelStore } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
-	import type { IFrame } from '$lib/types';
-	import type { IFrameCreate } from '$lib/types/editing';
 	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
-	import clsx from 'clsx';
+	import { Button, Contenteditable, FormSplit, Input, Sound } from '$UI';
+
 	import Panel from '../Panel.svelte';
+	import Choice from './Choice.svelte';
 
 	const imageFolder = 'frames';
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
-	$: ({ x, y, choices, imageUrl, frameId, soundUrl } =
+	$: ({ choices, frameId, imageUrl, soundUrl, x, y } =
 		$framesDataStore[frameKey] || ({} as IFrameCreate));
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
 			const { fileUrl } = await saveImage(file, imageFolder, {
-				storyId: $informationDataStore.storyId,
-				frameId: $selectedFrameStore
+				frameId: $selectedFrameStore,
+				storyId: $informationDataStore.storyId
 			});
 
 			$framesDataStore[frameKey].imageUrl = fileUrl;
@@ -49,8 +50,8 @@
 	const preSaveSound = async (file: File): Promise<void> => {
 		try {
 			const { fileUrl } = await saveSound(file, {
-				storyId: $informationDataStore.storyId,
-				frameId: $selectedFrameStore
+				frameId: $selectedFrameStore,
+				storyId: $informationDataStore.storyId
 			});
 
 			$framesDataStore[frameKey].soundUrl = fileUrl;
@@ -66,8 +67,8 @@
 
 		try {
 			await removeSound({
-				storyId: $informationDataStore.storyId,
-				frameId: $selectedFrameStore
+				frameId: $selectedFrameStore,
+				storyId: $informationDataStore.storyId
 			});
 
 			$framesDataStore[frameKey].soundUrl = null;
@@ -83,8 +84,8 @@
 
 		try {
 			await removeImage(imageFolder, {
-				storyId: $informationDataStore.storyId,
-				frameId: $selectedFrameStore
+				frameId: $selectedFrameStore,
+				storyId: $informationDataStore.storyId
 			});
 
 			$framesDataStore[frameKey].imageUrl = null;
@@ -137,11 +138,11 @@
 		$framesDataStore[frameKey].choices = [
 			...choices,
 			{
-				text: null,
-				frameId: null,
 				choiceId,
+				frameId: null,
+				logicOperations: [],
 				mathOperations: [],
-				logicOperations: []
+				text: null
 			}
 		];
 
@@ -195,38 +196,38 @@
 	<Panel title={$framesDataStore[frameKey].title}>
 		<FormSplit class="w-full">
 			<Input
-				value={`${Math.round(x)}`}
+				class="flex-1 !text-center"
+				number
 				on:input={setX}
 				placeholder="x"
 				readonly={$readonlyStore}
-				class="flex-1 !text-center"
-				number
+				value={`${Math.round(x)}`}
 			/>
 			<Input
-				value={`${Math.round(y)}`}
-				placeholder="y"
-				readonly={$readonlyStore}
-				on:input={setY}
 				class="flex-1 !text-center"
 				number
+				on:input={setY}
+				placeholder="y"
+				readonly={$readonlyStore}
+				value={`${Math.round(y)}`}
 			/>
 		</FormSplit>
-		<FormSplit vertical class="h-48">
+		<FormSplit class="h-48" vertical>
 			<ImageUploader
+				alt="Иллюстрация текста"
 				disabled={$panelEditMode}
-				readonly={$readonlyStore}
 				icon={RectangleStack}
 				on:loadstart={setFile}
 				on:remove={preRemoveImage}
+				readonly={$readonlyStore}
 				src={imageUrl}
-				alt="Иллюстрация текста"
 			/>
 			{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl && !$readonlyStore}
 				<Button
+					class="justify-center bg-contrast-9 text-text"
 					disabled={$panelEditMode}
-					variant="ghost"
 					on:click={addPrevImage}
-					class="bg-contrast-9 justify-center text-text"
+					variant="ghost"
 				>
 					Вставить с предыдущего блока
 				</Button>
@@ -235,30 +236,30 @@
 		<Sound on:change={handleAddSound} on:remove={preRemoveSound} src={soundUrl} />
 		<FormSplit vertical>
 			<Input
-				placeholder="Название блока"
-				disabled={$panelEditMode}
-				readonly={$readonlyStore}
 				bind:value={$framesDataStore[frameKey].title}
+				disabled={$panelEditMode}
 				maxlength={25}
+				placeholder="Название блока"
+				readonly={$readonlyStore}
 			/>
 			<Contenteditable
+				bind:html={$framesDataStore[frameKey].text}
+				disabled={$panelEditMode}
 				id="description"
+				maxlength={1500}
 				pattern={(html) => {
 					const varFormattedHtml = variablesHighlight(html, $variablesStore);
 					const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
 
 					return notesFormattedHtml;
 				}}
-				readonly={$readonlyStore}
-				maxlength={1500}
-				disabled={$panelEditMode}
 				placeholder="Описание блока"
-				bind:html={$framesDataStore[frameKey].text}
+				readonly={$readonlyStore}
 			/>
 		</FormSplit>
 		{#if onePrevFrame !== null}
-			<Button variant="ghost" on:click={gotoPrevFrame} class="bg-contrast-9 gap-3 text-text">
-				<Icon type={ArrowLeft} class="h-5 w-5" />
+			<Button class="gap-3 bg-contrast-9 text-text" on:click={gotoPrevFrame} variant="ghost">
+				<Icon class="h-5 w-5" type={ArrowLeft} />
 				<p>К предыдущему блоку</p>
 			</Button>
 		{/if}
@@ -269,17 +270,17 @@
 			{#if !$readonlyStore}
 				{#if $panelEditMode}
 					<Button
-						variant="main"
 						class={clsx('justify-center !text-red-500', $redColorStore)}
 						on:click={removeFrame}
+						variant="main"
 					>
 						Удалить блок
 					</Button>
 				{:else}
 					<Button
-						variant="ghost"
+						class="justify-center bg-contrast-9 text-text"
 						on:click={addChoice}
-						class="bg-contrast-9 justify-center text-text"
+						variant="ghost"
 					>
 						Добавить вариант
 					</Button>

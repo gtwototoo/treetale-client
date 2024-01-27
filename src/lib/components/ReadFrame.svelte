@@ -1,13 +1,12 @@
 <script lang="ts">
-	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 
-	import Choice from './Choice.svelte';
+	import clsx from 'clsx';
 
-	import { FormSplit } from '$UI';
+	import type { ILogicOperation } from '$lib/types';
+
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, soundStore, variablesStore } from '$lib/stores/reading';
-	import type { ILogicOperation } from '$lib/types';
 	import {
 		correctToType,
 		correctVariableReplace,
@@ -16,6 +15,9 @@
 		getChoiceFromId,
 		getFrameFromId
 	} from '$lib/utils';
+	import { FormSplit } from '$UI';
+
+	import Choice from './Choice.svelte';
 
 	const dispatch = createEventDispatcher<{
 		click: { choiceId: number };
@@ -40,7 +42,7 @@
 
 		if (!choice.mathOperations.length) return;
 
-		for (const { symbol, variable, value } of choice.mathOperations) {
+		for (const { symbol, value, variable } of choice.mathOperations) {
 			const variableId = $variablesStore.findIndex(({ name }) => name === variable);
 			const { expect } = $variablesStore[variableId];
 			const firstValue = $variablesStore[variableId].value;
@@ -55,8 +57,8 @@
 
 	const checkLogic = (logicOperations: Array<ILogicOperation>) => {
 		return logicOperations
-			.map(({ variable, symbol, value: firstValue }) => {
-				const { value, expect } = $variablesStore.find(({ name }) => name === variable);
+			.map(({ symbol, value: firstValue, variable }) => {
+				const { expect, value } = $variablesStore.find(({ name }) => name === variable);
 
 				return doLogic(correctToType(value, expect), symbol, correctToType(firstValue, expect));
 			})
@@ -69,17 +71,17 @@
 		return correctVariableReplace(text, $variablesStore) || 'Пустота...';
 	};
 
-	$: ({ imageUrl, text, choices, soundUrl } = getFrameFromId($framesStore, frameId));
+	$: ({ choices, imageUrl, soundUrl, text } = getFrameFromId($framesStore, frameId));
 
 	$: if (isLastFrame) {
 		soundStore.setSrc(soundUrl);
 	}
 </script>
 
-<ReadCard src={imageUrl} text={dynamicText()} class={clsx('text-left', className)}>
+<ReadCard class={clsx('text-left', className)} src={imageUrl} text={dynamicText()}>
 	{#if choices.length}
-		<FormSplit vertical class="w-full">
-			{#each choices as { choiceId, text, logicOperations } (choiceId)}
+		<FormSplit class="w-full" vertical>
+			{#each choices as { choiceId, logicOperations, text } (choiceId)}
 				{#if !logicOperations.length || checkLogic(logicOperations)}
 					<Choice
 						active={selectedChoiceId === choiceId}

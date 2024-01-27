@@ -1,6 +1,7 @@
-import { redirect, type HttpError } from '@sveltejs/kit';
+import { type HttpError, redirect } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
 import { fetchPost } from '$lib/requests/index.js';
 import { COOKIE_OPTIONS } from '$lib/server/constants.js';
 
@@ -8,7 +9,7 @@ interface ISessionInfo {
 	sessionId: string;
 }
 
-export const load = async ({ params, cookies }) => {
+export const load = async ({ cookies, params }) => {
 	const { code } = params;
 
 	let response;

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Empty from './Empty.svelte';
-	import StoryCard from './StoryCard/StoryCard.svelte';
-
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
+
+	import Empty from './Empty.svelte';
+	import StoryCard from './StoryCard/StoryCard.svelte';
 
 	export let stories: Array<IStoryFull>;
 	export let authors: Array<IUser> | undefined = undefined;
@@ -17,7 +17,7 @@
 		{#each stories as rawStory}
 			{@const { vars, ...story } = rawStory}
 			{@const author = authors && authors.find(({ userId }) => userId === story.userId)}
-			<StoryCard {story} {vars} {author} />
+			<StoryCard {author} {story} {vars} />
 		{/each}
 		{#if stories.length < 8}
 			{#each Array(8 - stories.length).fill(undefined) as _}

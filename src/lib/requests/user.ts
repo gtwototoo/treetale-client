@@ -1,4 +1,5 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
 import { fetchPost } from '.';
 
 export const signInUser = async (value: string) => {
@@ -9,8 +10,8 @@ export const signInUser = async (value: string) => {
 
 export const signUpUser = async (name: string, code: string) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-up`, {
-		name,
-		code
+		code,
+		name
 	});
 };
 
@@ -20,9 +21,9 @@ export const signOutUser = async () => {
 
 export const updateProfile = async (name: string, description: string, color: Array<number>) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/me/update`, {
-		name,
+		color,
 		description,
-		color
+		name
 	});
 };
 

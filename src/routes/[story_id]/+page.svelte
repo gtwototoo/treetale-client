@@ -1,7 +1,18 @@
 <script lang="ts">
-	import Button from '$UI/Button.svelte';
+	import type {
+		EmblaCarouselType,
+		EmblaOptionsType,
+		EmblaPluginType
+	} from 'embla-carousel-svelte';
+
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
+	import Button from '$UI/Button.svelte';
+	import clsx from 'clsx';
+	import emblaCarouselSvelte from 'embla-carousel-svelte';
+	import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
+	import { MetaTags } from 'svelte-meta-tags';
+
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import StoryDescription from '$lib/components/StoryDescription.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
@@ -22,15 +33,6 @@
 		last,
 		rootStyle
 	} from '$lib/utils';
-	import clsx from 'clsx';
-	import type {
-		EmblaCarouselType,
-		EmblaOptionsType,
-		EmblaPluginType
-	} from 'embla-carousel-svelte';
-	import emblaCarouselSvelte from 'embla-carousel-svelte';
-	import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
-	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -86,8 +88,8 @@
 		};
 
 		const actions: Record<string, () => void> = {
-			ArrowUp: prevFrame,
 			ArrowDown: nextFrame,
+			ArrowUp: prevFrame,
 			Space: setFastChoice
 		};
 
@@ -104,7 +106,7 @@
 
 		if (!choice.mathOperations.length) return;
 
-		for (const { symbol, variable, value } of choice.mathOperations) {
+		for (const { symbol, value, variable } of choice.mathOperations) {
 			const variableId = $variablesStore.findIndex(({ name }) => name === variable);
 			const { expect } = $variablesStore[variableId];
 			const firstValue = $variablesStore[variableId].value;
@@ -143,7 +145,7 @@
 		await document.exitFullscreen();
 	};
 
-	$: ({ storyId, title, description, color } = data.story);
+	$: ({ color, description, storyId, title } = data.story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
 	$: $framesStore = data.frames;
 
@@ -157,39 +159,39 @@
 	})}
 </svelte:head>
 
-<MetaTags {title} {description} />
+<MetaTags {description} {title} />
 
 <ska:html class="h-full" />
 <svelte:body class="h-full" />
 
-<svelte:window on:keydown={handleKeydown} on:fullscreenchange={handleFullscreenChange} />
+<svelte:window on:fullscreenchange={handleFullscreenChange} on:keydown={handleKeydown} />
 
 <SvgGradient id={storyId} />
-<div id="read-screen" class="absolute h-full w-full">
+<div class="absolute h-full w-full" id="read-screen">
 	<div
 		class="flex h-full w-full px-4 py-20 max-sm:px-3"
-		use:emblaCarouselSvelte={{ options, plugins }}
 		on:emblaInit={handleInit}
+		use:emblaCarouselSvelte={{ options, plugins }}
 	>
 		<div class="flex w-full flex-col items-center gap-4">
-			<StoryDescription story={data.story} author={data.author} />
+			<StoryDescription author={data.author} story={data.story} />
 			{#each $framesStore as { frameId }, key}
 				{@const isLastFrame = key === $framesStore.length - 1}
 				<ReadFrame
+					class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
 					{frameId}
 					{isLastFrame}
 					on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
 					selectedChoiceId={data.progress[key]?.choiceId}
-					class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
 				/>
 			{/each}
 		</div>
 	</div>
 	{#if $fullscreenStore}
 		<Button
-			variant="custom"
 			class="!fixed bottom-0 left-0 w-full justify-center !rounded-none bg-main-90 text-text text-opacity-10 hover:text-opacity-100"
 			on:click={handleFulscreen}
+			variant="custom"
 		>
 			Выйти
 		</Button>

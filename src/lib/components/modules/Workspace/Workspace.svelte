@@ -1,12 +1,9 @@
 <script lang="ts">
-	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 
-	import ConnectionsLayer from './ConnectionsLayer.svelte';
-	import Frame from './Frame/Frame.svelte';
-	import MovingArea from './MovingArea.svelte';
-	import NewFrame from './NewFrame.svelte';
-	import WindowActions from './WindowActions.svelte';
+	import clsx from 'clsx';
+
+	import type { ICoordinates } from '$lib/types';
 
 	import { pinch } from '$lib/hooks/pinch';
 	import {
@@ -17,8 +14,12 @@
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
-	import type { ICoordinates } from '$lib/types';
-	import LineManipulators from './LineManipulators.svelte';
+
+	import ConnectionsLayer from './ConnectionsLayer.svelte';
+	import Frame from './Frame/Frame.svelte';	import LineManipulators from './LineManipulators.svelte';
+	import MovingArea from './MovingArea.svelte';
+	import NewFrame from './NewFrame.svelte';
+	import WindowActions from './WindowActions.svelte';
 
 	export let height: number;
 	export let width: number;
@@ -27,11 +28,11 @@
 	let workspace: HTMLDivElement;
 
 	const dispatch = createEventDispatcher<{
-		mousedown: { doubleClick: boolean; button: number; isMouse: boolean } & ICoordinates;
-		mousemove: ICoordinates;
 		click: ICoordinates;
-		zoom: { zoom: number; offset: ICoordinates };
+		mousedown: { button: number; doubleClick: boolean; isMouse: boolean } & ICoordinates;
+		mousemove: ICoordinates;
 		mouseup: null;
+		zoom: { offset: ICoordinates; zoom: number };
 	}>();
 
 	const handleMouseMove = (e: MouseEvent | TouchEvent) => {
@@ -48,8 +49,8 @@
 		const { clientX: x, clientY: y } = event;
 
 		dispatch('mousedown', {
-			doubleClick: isMouse && e.detail === 2,
 			button: isMouse && e.button,
+			doubleClick: isMouse && e.detail === 2,
 			isMouse,
 			x,
 			y
@@ -64,7 +65,7 @@
 		dispatch('click', { x, y });
 	};
 
-	const handleZoom = (e: WheelEvent | CustomEvent<{ scale: number; center: ICoordinates }>) => {
+	const handleZoom = (e: CustomEvent<{ center: ICoordinates; scale: number }> | WheelEvent) => {
 		const isWheel = e instanceof WheelEvent;
 		const { x, y } = isWheel ? e : e.detail.center;
 		const upscale = isWheel ? e.deltaY < 0 : e.detail.scale - startPinch > 0;
@@ -88,32 +89,32 @@
 
 		if (!isWheel) startPinch = e.detail.scale;
 
-		dispatch('zoom', { zoom: $zoomStore, offset: $offsetStore });
+		dispatch('zoom', { offset: $offsetStore, zoom: $zoomStore });
 	};
 </script>
 
-<WindowActions {workspace} on:mouseup={handleMouseUp} />
+<WindowActions on:mouseup={handleMouseUp} {workspace} />
 <div
-	role="treegrid"
-	tabindex="0"
+	bind:clientHeight={height}
+	bind:clientWidth={width}
+	bind:this={workspace}
 	class={clsx(
 		'relative h-full w-full select-none overflow-hidden bg-transparent',
 		$activeActionStore === 'movingArea' && 'cursor-grabbing',
 		$activeActionStore === 'movingFrame' && 'cursor-move'
 	)}
-	bind:clientHeight={height}
-	bind:clientWidth={width}
-	bind:this={workspace}
-	use:pinch
-	on:pinch={handleZoom}
-	on:keypress|stopPropagation
-	on:wheel|preventDefault={handleZoom}
-	on:mousedown={handleMouseDown}
-	on:touchstart={handleMouseDown}
-	on:touchmove={handleMouseMove}
-	on:touchend={handleMouseUp}
-	on:mousemove={handleMouseMove}
 	on:click={handleClick}
+	on:keypress|stopPropagation
+	on:mousedown={handleMouseDown}
+	on:mousemove={handleMouseMove}
+	on:pinch={handleZoom}
+	on:touchend={handleMouseUp}
+	on:touchmove={handleMouseMove}
+	on:touchstart={handleMouseDown}
+	on:wheel|preventDefault={handleZoom}
+	role="treegrid"
+	tabindex="0"
+	use:pinch
 >
 	<MovingArea>
 		{#if $activeModeStore === 'adding'}

@@ -1,8 +1,10 @@
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-import type { IResponseStories } from '$lib/types/response.js';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals, params, fetch }) => {
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
+import type { IResponseStories } from '$lib/types/response.js';
+
+export const load = async ({ fetch, locals, params }) => {
 	const { name } = params;
 
 	if (locals.session && locals.session.name === name) {

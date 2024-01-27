@@ -2,12 +2,13 @@
 	import clsx from 'clsx';
 	import { ArrowsPointingIn, PencilSquare, XMark } from 'svelte-heros-v2';
 
-	import { Button, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { panelEditMode, panelShow, panelStore } from '$lib/stores/panel';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import { clm } from '$lib/utils';
+	import { Button, Listbox } from '$UI';
+
 	import { setSelectedFrame } from '../Workspace/methods';
 
 	let className = '';
@@ -20,8 +21,8 @@
 	$: framePanel = $panelStore.id.includes('frame');
 	$: framesList = $framesDataStore.map((frame) => {
 		return {
-			title: frame.title,
-			click: () => setSelectedFrame(frame)
+			click: () => setSelectedFrame(frame),
+			title: frame.title
 		};
 	});
 </script>
@@ -36,55 +37,55 @@
 	<div class="flex w-full gap-2">
 		{#if !nonEdit && !$readonlyStore}
 			<Button
+				class={clsx('z-[2] bg-contrast-9 !p-3', $panelEditMode && 'text-red-500')}
+				on:click={() => ($panelEditMode = !$panelEditMode)}
 				size="lg"
 				variant="ghost"
-				class={clsx('bg-contrast-9 z-[2] !p-3', $panelEditMode && 'text-red-500')}
-				on:click={() => ($panelEditMode = !$panelEditMode)}
 			>
-				<Icon type={PencilSquare} class="h-6 w-6" />
+				<Icon class="h-6 w-6" type={PencilSquare} />
 			</Button>
 		{:else}
 			<div class="w-12" />
 		{/if}
 		<Listbox
-			size="lg"
+			align="inset"
+			class="w-full"
+			let:click
 			list={framesList}
 			placeholder="Блок"
-			class="w-full"
-			align="inset"
-			let:click
+			size="lg"
 		>
 			<Button
-				size="lg"
-				variant="ghost"
 				class={clsx(
-					'bg-contrast-9 w-full justify-center whitespace-normal !px-2',
+					'w-full justify-center whitespace-normal bg-contrast-9 !px-2',
 					(!framePanel || !framesList) && 'pointer-events-none !bg-opacity-20'
 				)}
 				on:click={click}
+				size="lg"
+				variant="ghost"
 			>
 				{title}
 			</Button>
 		</Listbox>
 		{#if $panelStore.component && !nonClose}
 			<Button
-				size="lg"
-				variant="ghost"
 				class="bg-contrast-9 !p-3 max-lg:!hidden"
 				on:click={panelStore.clear}
+				size="lg"
+				variant="ghost"
 			>
-				<Icon type={XMark} class="h-6 w-6" />
+				<Icon class="h-6 w-6" type={XMark} />
 			</Button>
 		{:else}
 			<div class="w-12 max-lg:!hidden" />
 		{/if}
 		<Button
+			class="!hidden bg-contrast-9 !p-3 max-lg:!block"
+			on:click={() => ($panelShow = !$panelShow)}
 			size="lg"
 			variant="ghost"
-			class="bg-contrast-9 !hidden !p-3 max-lg:!block"
-			on:click={() => ($panelShow = !$panelShow)}
 		>
-			<Icon type={ArrowsPointingIn} class="h-6 w-6" />
+			<Icon class="h-6 w-6" type={ArrowsPointingIn} />
 		</Button>
 	</div>
 	<slot />

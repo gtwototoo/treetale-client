@@ -1,6 +1,7 @@
 <script lang="ts">
-	import clsx from 'clsx';
 	import { onMount } from 'svelte';
+
+	import clsx from 'clsx';
 
 	import { clm } from '$lib/utils';
 
@@ -61,12 +62,12 @@
 	<textarea
 		bind:this={ref}
 		bind:value
-		{disabled}
-		{readonly}
-		on:focus={handleFocus}
-		on:blur={handleBlur}
-		on:input
 		class={clsx(!ready && 'absolute left-0 h-full px-4 py-2')}
+		{disabled}
+		on:blur={handleBlur}
+		on:focus={handleFocus}
+		on:input
+		{readonly}
 		rows="1"
 		{...$$restProps}
 	/>

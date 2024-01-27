@@ -1,11 +1,12 @@
 import { derived, get, writable, type Writable } from 'svelte/store';
 
-import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 import type { ICoordinates, TBoundings } from '$lib/types';
 import type { IConnect, IFrameCreate } from '$lib/types/editing';
 
-export type IAction = 'movingFrame' | 'movingArea' | 'dragImage' | 'connectTo';
-export type IMode = 'view' | 'binding' | 'adding';
+import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+
+export type IAction = 'connectTo' | 'dragImage' | 'movingArea' | 'movingFrame';
+export type IMode = 'adding' | 'binding' | 'view';
 
 interface IWorkspaceFrame extends TBoundings {
 	frameId: number;
@@ -18,7 +19,7 @@ type IFramesCustomStore = Writable<Array<IFrameCreate>> & {
 };
 
 const framesCustomStore = () => {
-	const { subscribe, set, update } = writable<Array<IFrameCreate>>([]);
+	const { set, subscribe, update } = writable<Array<IFrameCreate>>([]);
 
 	const init = (data: Array<IFrameCreate>) => {
 		data.map((frame) => {
@@ -31,9 +32,9 @@ const framesCustomStore = () => {
 	};
 
 	return {
-		subscribe,
-		set,
 		init,
+		set,
+		subscribe,
 		update
 	};
 };

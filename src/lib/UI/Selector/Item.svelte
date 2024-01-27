@@ -9,9 +9,9 @@
 </script>
 
 <Button
-	variant={active ? 'main' : 'ghost'}
 	class={clm({ '!bg-blue-500': active }, className)}
 	on:click
+	variant={active ? 'main' : 'ghost'}
 >
 	<slot />
 </Button>

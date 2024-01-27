@@ -2,10 +2,8 @@
 	import clsx from 'clsx';
 	import { Share } from 'svelte-heros-v2';
 
-	import Choices from './Choices.svelte';
-	import Header from './Header.svelte';
+	import type { IFrameCreate } from '$lib/types/editing';
 
-	import { Image } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore } from '$lib/stores/main';
@@ -16,9 +14,12 @@
 		framesDataStore,
 		movingFrameStore
 	} from '$lib/stores/workspace';
-	import type { IFrameCreate } from '$lib/types/editing';
 	import { contrastText, createConnections, transform } from '$lib/utils';
+	import { Image } from '$UI';
+
 	import { setSelectedFrame } from '../methods';
+	import Choices from './Choices.svelte';
+	import Header from './Header.svelte';
 
 	export let frameId: number;
 	export let index: number;
@@ -60,7 +61,7 @@
 		)
 			return;
 
-		const { frameId: fromFrameId, choiceId } = $connectionStore;
+		const { choiceId, frameId: fromFrameId } = $connectionStore;
 
 		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === fromFrameId);
 		const fromChoiceKey = $framesDataStore[fromFrameKey].choices.findIndex(
@@ -73,7 +74,7 @@
 		changesHistory.add('Добавление связи', Share);
 	};
 
-	$: ({ hidden, text, x, y, imageUrl } = frame || ({} as IFrameCreate));
+	$: ({ hidden, imageUrl, text, x, y } = frame || ({} as IFrameCreate));
 	$: greenColor = clsx(
 		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
 	);
@@ -82,6 +83,7 @@
 {#if frame}
 	<div class="absolute" style="{transform({ x, y })}; z-index: {frameId}">
 		<button
+			bind:clientHeight={$framesDataStore[frameKey].height}
 			class={clsx(
 				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text childs:bg-transparent',
 				!$readonlyStore && 'cursor-move transition-[box-shadow] hover:shadow-lg',
@@ -92,18 +94,17 @@
 						$connectionStore && $connectionStore.frameId !== frameId && greenColor
 					)
 			)}
-			on:mousedown={handleMouseDown}
 			on:click={createConnection}
-			bind:clientHeight={$framesDataStore[frameKey].height}
+			on:mousedown={handleMouseDown}
 		>
-			<Header on:hide={setVisible} {frame} start={!index} />
+			<Header {frame} on:hide={setVisible} start={!index} />
 			{#if !hidden}
 				{#if imageUrl}
 					<Image
 						alt="Изображение блока"
-						src={$framesDataStore[frameKey].imageUrl}
 						class="h-36 w-full rounded-lg !bg-main/30 text-text"
 						cover
+						src={$framesDataStore[frameKey].imageUrl}
 					/>
 				{/if}
 				<div class={clsx('flex h-20 items-center px-4 text-center', !text && 'text-gray-400')}>

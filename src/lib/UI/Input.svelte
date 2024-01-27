@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { clm } from '$lib/utils';
 	import { createEventDispatcher } from 'svelte';
+
+	import { clm } from '$lib/utils';
 
 	export let value = '';
 	export let number = false;
-	export let size: 'sm' | 'base' | 'lg' = 'base';
+	export let size: 'base' | 'lg' | 'sm' = 'base';
 	export let disabled = false;
 	export let required = false;
 	export let readonly = false;
@@ -54,7 +55,6 @@
 </script>
 
 <button
-	type="button"
 	class={clm(
 		'input',
 		`size-${size}`,
@@ -62,34 +62,35 @@
 		focused && '!bg-contrast-5',
 		$$slots.left &&
 			{
-				sm: '!pl-1',
 				base: '!pl-2',
-				lg: '!pl-3'
+				lg: '!pl-3',
+				sm: '!pl-1'
 			}[size],
 		$$slots.right &&
 			{
-				sm: '!pr-1',
 				base: '!pr-2',
-				lg: '!pr-3'
+				lg: '!pr-3',
+				sm: '!pr-1'
 			}[size],
 		{ disabled },
 		className
 	)}
 	on:click={handleClick}
+	type="button"
 >
 	<slot name="left" />
 	<input
 		bind:this={inputRef}
-		{readonly}
-		{name}
+		bind:value
 		{disabled}
 		{maxlength}
-		{placeholder}
-		bind:value
-		on:focus={handleFocus}
+		{name}
 		on:blur={handleBlur}
-		on:input={handleInput}
 		on:change
+		on:focus={handleFocus}
+		on:input={handleInput}
+		{placeholder}
+		{readonly}
 	/>
 	<slot name="right" />
 </button>
@@ -108,7 +109,7 @@
 		@apply gap-3 rounded-xl px-6 py-3 text-base font-medium;
 	}
 	.input {
-		@apply bg-contrast-2 hover:bg-contrast-5 relative flex cursor-text items-center text-left text-text transition-colors;
+		@apply relative flex cursor-text items-center bg-contrast-2 text-left text-text transition-colors hover:bg-contrast-5;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

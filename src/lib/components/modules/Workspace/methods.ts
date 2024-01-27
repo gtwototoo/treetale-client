@@ -1,5 +1,9 @@
-import { Plus } from 'svelte-heros-v2';
 import { get } from 'svelte/store';
+
+import { Plus } from 'svelte-heros-v2';
+
+import type { ICoordinates } from '$lib/types';
+import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 
 import { changesHistory } from '$lib/stores/history';
 import { panelStore } from '$lib/stores/panel';
@@ -13,9 +17,8 @@ import {
 	selectedFrameStore,
 	zoomCorrect
 } from '$lib/stores/workspace';
-import type { ICoordinates } from '$lib/types';
-import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 import { last } from '$lib/utils';
+
 import { FrameSettings } from '../Panel';
 
 export const addFrame = ({ x, y }: ICoordinates) => {
@@ -29,16 +32,16 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 
 	framesDataStore.update((data: Array<IFrameCreate>) => {
 		data.push({
+			choices: [],
+			frameId: lastFrameId + 1,
+			height: 0,
+			hidden: false,
 			imageUrl: null,
 			soundUrl: null,
-			title: `Блок ${lastFrameId}`,
-			frameId: lastFrameId + 1,
-			x,
-			y,
 			text: '',
-			hidden: false,
-			choices: [],
-			height: 0
+			title: `Блок ${lastFrameId}`,
+			x,
+			y
 		} satisfies IFrameCreate);
 
 		return data;
@@ -111,8 +114,8 @@ export const setSelectedFrame = (frame: IFrameCreate) => {
 	selectedFrameStore.set(frame.frameId);
 
 	panelStore.set({
-		id: `frame-${frame.frameId}`,
-		component: FrameSettings
+		component: FrameSettings,
+		id: `frame-${frame.frameId}`
 	});
 };
 

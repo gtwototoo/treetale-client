@@ -1,11 +1,13 @@
 import type { Handle, HandleServerError } from '@sveltejs/kit';
+
 import { sequence } from '@sveltejs/kit/hooks';
 // @ts-expect-error "No types"
 import { handle as documentHandle } from '@sveltekit-addons/document/hooks';
-
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-import { NOT_FOUND_VARIANTS } from '$lib/constants';
+
 import type { IUser } from '$lib/types';
+
+import { NOT_FOUND_VARIANTS } from '$lib/constants';
 import { randomArray } from '$lib/utils';
 
 const defaultHandle = (async ({ event, resolve }) => {
@@ -37,7 +39,7 @@ const defaultHandle = (async ({ event, resolve }) => {
 
 export const handle = sequence(defaultHandle, documentHandle);
 
-export const handleError = (({ event, error }) => {
+export const handleError = (({ error, event }) => {
 	console.error(error);
 
 	return event.route.id === null ? randomArray(NOT_FOUND_VARIANTS) : (error as App.Error);

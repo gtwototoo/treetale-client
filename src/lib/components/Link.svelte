@@ -3,9 +3,9 @@
 	export { className as class };
 
 	export let href: string;
-	export let target: '_self' | '_blank' | '_parent' | '_top' = '_self';
+	export let target: '_blank' | '_parent' | '_self' | '_top' = '_self';
 </script>
 
-<a {href} draggable="false" {target} class={className}>
+<a class={className} draggable="false" {href} {target}>
 	<slot />
 </a>

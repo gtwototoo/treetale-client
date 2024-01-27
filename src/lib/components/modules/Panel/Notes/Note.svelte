@@ -2,11 +2,11 @@
 	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 
-	import { Button, Contenteditable, FormSplit, InputTags } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { notesStore } from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
+	import { Button, Contenteditable, FormSplit, InputTags } from '$UI';
 
 	export let noteKey: number;
 	export let checkUpdates: () => void;
@@ -22,20 +22,20 @@
 
 <FormSplit vertical>
 	<Contenteditable
-		placeholder="Текст заметки"
 		bind:html={$notesStore[noteKey].text}
 		on:input={checkUpdates}
+		placeholder="Текст заметки"
 	/>
 	{#if $panelEditMode}
-		<Button variant="main" on:click={removeNote} class={clsx('!text-red-500', $redColorStore)}>
+		<Button class={clsx('!text-red-500', $redColorStore)} on:click={removeNote} variant="main">
 			<Icon type={XMark} />
 		</Button>
 	{:else}
 		<InputTags
-			placeholder="Ключевые слова"
 			bind:tags={$notesStore[noteKey].tags}
 			on:add={checkUpdates}
 			on:remove={checkUpdates}
+			placeholder="Ключевые слова"
 		/>
 	{/if}
 </FormSplit>

@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { Cloud, Variable } from 'svelte-heros-v2';
 
-	import Note from '../Note.svelte';
-
-	import VariableRow from './Variable.svelte';
-
-	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateVars } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { panelEditMode } from '$lib/stores/panel';
 	import { correctWhitespace } from '$lib/utils';
+	import { Button } from '$UI';
+
+	import Note from '../Note.svelte';
 	import Panel from '../Panel.svelte';
+	import VariableRow from './Variable.svelte';
 
 	let timer: number;
 	let saving = false;
@@ -21,8 +20,8 @@
 		$variablesStore = [
 			...$variablesStore,
 			{
-				name: '',
 				expect: 'Строка',
+				name: '',
 				value: ''
 			}
 		];
@@ -60,13 +59,13 @@
 	</Note>
 	<div class="flex flex-col gap-2">
 		{#each $variablesStore.keys() as key}
-			<VariableRow varKey={key} {checkUpdates} />
+			<VariableRow {checkUpdates} varKey={key} />
 		{/each}
 		{#if !$panelEditMode && !$readonlyStore}
 			<Button
-				variant="ghost"
+				class="justify-center bg-contrast-9 text-text"
 				on:click={addVariable}
-				class="bg-contrast-9 justify-center text-text"
+				variant="ghost"
 			>
 				Добавить переменную
 			</Button>
@@ -75,7 +74,7 @@
 	{#if !$readonlyStore}
 		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 			{#if saving}
-				<Icon type={Cloud} class="h-4 animate-pulse text-gray-600" />
+				<Icon class="h-4 animate-pulse text-gray-600" type={Cloud} />
 			{:else}
 				{saveInfo}
 			{/if}

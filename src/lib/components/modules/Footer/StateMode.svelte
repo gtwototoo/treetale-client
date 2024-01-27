@@ -1,6 +1,7 @@
 <script lang="ts">
-	import clsx from 'clsx';
 	import type { SvelteComponent } from 'svelte';
+
+	import clsx from 'clsx';
 	import {
 		ArrowRightOnRectangle,
 		ArrowsPointingOut,
@@ -25,16 +26,16 @@
 	import { Button } from '$UI';
 
 	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
+		adding: Square3Stack3d,
 		binding: Share,
-		view: Eye,
-		adding: Square3Stack3d
+		view: Eye
 	};
 
 	const iconsActions: Record<IAction, typeof SvelteComponent<unknown>> = {
-		movingArea: Map,
-		movingFrame: ArrowsPointingOut,
+		connectTo: ArrowRightOnRectangle,
 		dragImage: Photo,
-		connectTo: ArrowRightOnRectangle
+		movingArea: Map,
+		movingFrame: ArrowsPointingOut
 	};
 
 	const switchConnectionMode = () => {
@@ -44,27 +45,27 @@
 </script>
 
 <Button
-	variant="ghost"
 	class={clsx(
 		'pointer-events-auto !min-h-0 flex-col gap-1 bg-contrast !p-1.5',
 		{
-			saving: 'animate-pulse text-gray-400',
-			saved: 'text-emerald-500',
+			await: 'text-gray-400',
 			error: 'text-red-500',
-			await: 'text-gray-400'
+			saved: 'text-emerald-500',
+			saving: 'animate-pulse text-gray-400'
 		}[$stateAreaStore]
 	)}
 	on:click={switchConnectionMode}
+	variant="ghost"
 >
 	{#if $activeActionStore}
-		<Icon type={iconsActions[$activeActionStore]} class="h-4 w-4" />
+		<Icon class="h-4 w-4" type={iconsActions[$activeActionStore]} />
 	{/if}
-	<Icon type={iconsModes[$activeModeStore]} class="h-4 w-4" />
+	<Icon class="h-4 w-4" type={iconsModes[$activeModeStore]} />
 	{#if !$readonlyStore}
 		<Icon
+			class={clsx('h-4 w-4')}
 			type={Cloud}
 			variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
-			class={clsx('h-4 w-4')}
 		/>
 	{/if}
 </Button>

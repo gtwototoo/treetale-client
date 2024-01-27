@@ -1,9 +1,6 @@
 <script lang="ts">
-	import clsx from 'clsx';
+	import clsx from 'clsx';	import { Plus, XMark } from 'svelte-heros-v2';
 
-	import StateMode from './StateMode.svelte';
-
-	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
@@ -16,8 +13,10 @@
 		zoomStore
 	} from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
-	import { Plus, XMark } from 'svelte-heros-v2';
+	import { Button } from '$UI';
+
 	import Radar from './Radar.svelte';
+	import StateMode from './StateMode.svelte';
 
 	export let workspaceWidth: number;
 	export let workspaceHeight: number;
@@ -44,7 +43,7 @@
 			$activeActionStore ? 'blind' : 'pointer-events-auto'
 		)}
 	>
-		<Radar bind:workspaceWidth bind:workspaceHeight />
+		<Radar bind:workspaceHeight bind:workspaceWidth />
 		<div class="mr-4 flex select-none flex-col whitespace-nowrap text-sm text-text">
 			<p>
 				{Math.round($offsetStore.x)}, {Math.round($offsetStore.y)}
@@ -58,22 +57,22 @@
 		{#if !$readonlyStore}
 			{#if $activeModeStore === 'adding'}
 				<Button
-					on:click={cancelAddFrameMode}
-					variant="ghost"
-					size="lg"
 					class={clsx('pointer-events-auto w-64 justify-center text-red-500', $redColorStore)}
+					on:click={cancelAddFrameMode}
+					size="lg"
+					variant="ghost"
 				>
-					<Icon type={XMark} class="hidden h-6 w-6 max-md:block" />
+					<Icon class="hidden h-6 w-6 max-md:block" type={XMark} />
 					<p class="max-md:hidden">Отмена</p>
 				</Button>
 			{:else}
 				<Button
-					on:click={enableAddFrameMode}
-					variant="ghost"
-					size="lg"
 					class={clsx('pointer-events-auto w-64 justify-center text-emerald-500', greenColor)}
+					on:click={enableAddFrameMode}
+					size="lg"
+					variant="ghost"
 				>
-					<Icon type={Plus} class="hidden h-6 w-6 max-md:block" />
+					<Icon class="hidden h-6 w-6 max-md:block" type={Plus} />
 					<p class="max-md:hidden">Новый блок</p>
 				</Button>
 			{/if}

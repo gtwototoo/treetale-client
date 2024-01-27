@@ -7,10 +7,11 @@
 </script>
 
 <script lang="ts">
-	import { clsx } from 'clsx';
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
-	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
+
+	import { clsx } from 'clsx';
+	import { ChevronDown } from 'svelte-heros-v2';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
@@ -22,9 +23,9 @@
 
 	export let disabled = false;
 	export let readonly = false;
-	export let align: 'left' | 'right' | 'inset' | 'center' = 'left';
+	export let align: 'center' | 'inset' | 'left' | 'right' = 'left';
 	export let value = '';
-	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
+	export let size: 'base' | 'lg' | 'sm' | 'xl' = 'base';
 	export let placeholder: string;
 	export let list: Array<IList | string>;
 
@@ -56,47 +57,47 @@
 	};
 </script>
 
-<div class={clsx('listbox', className)} use:clickOutside on:outclick={() => (focused = false)}>
+<div class={clsx('listbox', className)} on:outclick={() => (focused = false)} use:clickOutside>
 	{#if $$slots.default}
-		<slot value={value || placeholder} click={handleClick} />
+		<slot click={handleClick} value={value || placeholder} />
 	{:else}
 		<Button
-			variant="ghost"
-			class={clm('bg-contrast-9 w-full gap-3 !pr-3', size === 'sm' && 'gap-1 !pr-2')}
+			class={clm('w-full gap-3 bg-contrast-9 !pr-3', size === 'sm' && 'gap-1 !pr-2')}
 			{disabled}
-			{size}
 			on:click={handleClick}
+			{size}
+			variant="ghost"
 		>
 			<p class={clm('w-full text-left', !value && 'text-gray-400')}>
 				{value || placeholder}
 			</p>
 			{#if !readonly}
 				<Icon
-					type={ChevronDown}
 					class={clm('h-5 w-auto shrink-0', size === 'sm' && 'h-4', focused && 'rotate-180')}
+					type={ChevronDown}
 				/>
 			{/if}
 		</Button>
 	{/if}
 	{#if focused}
 		<div
-			in:fly={{ y: 10 }}
 			class={clm(
 				'list',
 				{
-					left: '-left-1',
-					right: '-right-1',
+					center: '-left-1/2',
 					inset: '-inset-x-1',
-					center: '-left-1/2'
+					left: '-left-1',
+					right: '-right-1'
 				}[align]
 			)}
+			in:fly={{ y: 10 }}
 			use:correctPosition
 		>
 			<FormSplit vertical>
 				{#each list as item}
 					<Button
+						class="w-full gap-4 bg-contrast-9 text-text"
 						on:click={(e) => handleSelect(e, item)}
-						class="bg-contrast-9 w-full gap-4 text-text"
 						variant="ghost"
 					>
 						{#if typeof item === 'string'}

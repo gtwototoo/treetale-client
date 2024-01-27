@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import { createEventDispatcher } from 'svelte';
+
+	import clsx from 'clsx';
+	import { Howl } from 'howler';
+	import { MusicalNote, Play, Stop, Trash } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$lib/components/icons';
 	import { redColorStore } from '$lib/stores/main';
-	import clsx from 'clsx';
-	import { Howl } from 'howler';
-	import { createEventDispatcher } from 'svelte';
-	import { MusicalNote, Play, Stop, Trash } from 'svelte-heros-v2';
+	import { Button } from '$UI';
+
 	import InputFile from './InputFile.svelte';
 
 	const dispatch = createEventDispatcher<{
@@ -62,10 +65,10 @@
 
 		if (src) {
 			sound = new Howl({
-				src,
 				loop: true,
 				onplay: () => (playing = true),
-				onstop: () => (playing = false)
+				onstop: () => (playing = false),
+				src
 			});
 		}
 	}
@@ -99,25 +102,25 @@
 </script>
 
 {#if sound}
-	<div class="bg-contrast-3 flex select-none items-center gap-3 rounded-lg p-2 text-sm/6">
+	<div class="flex select-none items-center gap-3 rounded-lg bg-contrast-3 p-2 text-sm/6">
 		{#await preload(sound)}
-			<Icon type={Loading} class="h-5 w-5" />
+			<Icon class="h-5 w-5" type={Loading} />
 			<p>Загрузка</p>
 		{:then}
 			<Button
+				class="gap-1 bg-contrast-9 !p-1 text-text"
+				on:click={() => sound[playing ? 'stop' : 'play']()}
 				size="sm"
 				variant="ghost"
-				on:click={() => sound[playing ? 'stop' : 'play']()}
-				class="bg-contrast-9 gap-1 !p-1 text-text"
 			>
 				<Icon class="h-4 w-4" type={playing ? Stop : Play} />
 			</Button>
 			<p class="w-full">Длительность: {sound.duration()}</p>
 			<Button
+				class={clsx('gap-1 !p-1 text-red-500', $redColorStore)}
+				on:click={handleRemove}
 				size="sm"
 				variant="ghost"
-				on:click={handleRemove}
-				class={clsx('gap-1 !p-1 text-red-500', $redColorStore)}
 			>
 				<Icon class="h-4 w-4" type={Trash} />
 			</Button>
@@ -128,12 +131,12 @@
 	</div>
 {:else}
 	<InputFile
+		accept="audio/*"
+		class="gap-3 bg-contrast-9 text-text"
 		on:change={handleChange}
 		variant="ghost"
-		class="bg-contrast-9 gap-3 text-text"
-		accept="audio/*"
 	>
-		<Icon type={MusicalNote} class="h-5 w-5" />
+		<Icon class="h-5 w-5" type={MusicalNote} />
 		<p>Добавить звук</p>
 	</InputFile>
 {/if}

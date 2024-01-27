@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import { changesHistory } from '$lib/stores/history';
-	import { redColorStore } from '$lib/stores/main';
-	import { activeModeStore, framesDataStore } from '$lib/stores/workspace';
-
-	import { createLineRemoveButtons, transform } from '$lib/utils';
 	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { changesHistory } from '$lib/stores/history';
+	import { redColorStore } from '$lib/stores/main';	import { activeModeStore, framesDataStore } from '$lib/stores/workspace';
+	import { createLineRemoveButtons, transform } from '$lib/utils';
+	import { Button } from '$UI';
 
 	const removeConnection = (frameId: number, choiceId: number) => {
 		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === frameId);
@@ -23,14 +22,14 @@
 
 {#if $activeModeStore === 'binding'}
 	<div>
-		{#each createLineRemoveButtons($framesDataStore) as { x, y, fromFrameId, fromChoiceId }}
+		{#each createLineRemoveButtons($framesDataStore) as { fromChoiceId, fromFrameId, x, y }}
 			<div class="absolute flex h-0 w-0 items-center justify-center" style={transform({ x, y })}>
 				<Button
-					variant="main"
-					on:click={() => removeConnection(fromFrameId, fromChoiceId)}
 					class={clsx($redColorStore, '!min-h-0 !rounded-full !p-2 text-red-500')}
+					on:click={() => removeConnection(fromFrameId, fromChoiceId)}
+					variant="main"
 				>
-					<Icon type={XMark} class="h-4 w-4" />
+					<Icon class="h-4 w-4" type={XMark} />
 				</Button>
 			</div>
 		{/each}

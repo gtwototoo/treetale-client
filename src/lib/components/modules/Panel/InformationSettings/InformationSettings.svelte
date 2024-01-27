@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+
+	import clsx from 'clsx';
 	import { BookOpen, Cloud, Photo } from 'svelte-heros-v2';
 
-	import Shortcuts from './Shortcuts.svelte';
-
-	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
@@ -20,9 +19,11 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
 	import { exclude, notesHighlight, variablesHighlight } from '$lib/utils';
-	import clsx from 'clsx';
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
+
 	import Panel from '../Panel.svelte';
 	import Publishing from './Publishing.svelte';
+	import Shortcuts from './Shortcuts.svelte';
 
 	let light = 80;
 	let saturate = 90;
@@ -45,15 +46,15 @@
 		saving = true;
 
 		timer = window.setTimeout(async () => {
-			const { title, tags, color, description, storyId, genre } = $informationDataStore;
+			const { color, description, genre, storyId, tags, title } = $informationDataStore;
 
 			try {
 				await updateInfomation(storyId, {
-					title,
-					tags,
 					color,
 					description,
-					genre
+					genre,
+					tags,
+					title
 				});
 
 				saveInfo = 'Изменения сохранены';
@@ -109,78 +110,78 @@
 	});
 </script>
 
-<Panel title="Основная информация" nonClose>
+<Panel nonClose title="Основная информация">
 	<ImageUploader
+		alt="Иллюстрация текста"
 		class="h-48"
 		disabled={$panelEditMode}
-		readonly={$readonlyStore}
 		icon={BookOpen}
 		on:loadstart={setFile}
 		on:remove={preRemoveImage}
+		readonly={$readonlyStore}
 		src={$informationDataStore.imageUrl}
-		alt="Иллюстрация текста"
 	/>
 	<FormSplit vertical>
 		<Input
-			placeholder="Название"
-			class="w-full"
-			readonly={$readonlyStore}
 			bind:value={$informationDataStore.title}
-			on:input={checkUpdates}
+			class="w-full"
 			disabled={$panelEditMode}
+			on:input={checkUpdates}
+			placeholder="Название"
+			readonly={$readonlyStore}
 		/>
 		<Contenteditable
-			readonly={$readonlyStore}
+			bind:html={$informationDataStore.description}
+			disabled={$panelEditMode}
+			on:input={checkUpdates}
 			pattern={(html) => {
 				const varFormattedHtml = variablesHighlight(html, $variablesStore);
 				const notesFormattedHtml = notesHighlight(varFormattedHtml, $notesStore);
 
 				return notesFormattedHtml;
 			}}
-			disabled={$panelEditMode}
 			placeholder="Описание истории"
-			bind:html={$informationDataStore.description}
-			on:input={checkUpdates}
+			readonly={$readonlyStore}
 		/>
 		<InputTags
-			disabled={$panelEditMode}
-			readonly={$readonlyStore}
-			placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
 			bind:tags={$informationDataStore.tags}
+			disabled={$panelEditMode}
 			on:add={checkUpdates}
 			on:remove={checkUpdates}
+			placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
+			readonly={$readonlyStore}
 		/>
 	</FormSplit>
 	<Listbox
-		{list}
-		placeholder="Жанр"
-		readonly={$readonlyStore}
-		disabled={$panelEditMode}
 		align="inset"
-		value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
+		disabled={$panelEditMode}
+		{list}
 		on:change={({ detail }) => {
 			$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
 			checkUpdates();
 		}}
+		placeholder="Жанр"
+		readonly={$readonlyStore}
+		value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
 	/>
 	<FormSplit vertical>
 		<ColorPicker
-			readonly={$readonlyStore}
-			popoverAlign="inset"
-			lightRange={[15, 80]}
-			saturateRange={[10, 90]}
 			color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
-			{saturate}
-			{light}
-			on:change={setColor}
 			disabled={$panelEditMode}
+			{light}
+			lightRange={[15, 80]}
+			on:change={setColor}
+			popoverAlign="inset"
+			readonly={$readonlyStore}
+			{saturate}
+			saturateRange={[10, 90]}
 		/>
 	</FormSplit>
 	{#if $panelEditMode}
 		<Button
-			variant="main"
 			class={clsx('justify-center !text-red-500', $redColorStore)}
 			on:click={handleDeleteStory}
+			variant="main"
 		>
 			Удалить историю
 		</Button>
@@ -190,7 +191,7 @@
 	{#if !$readonlyStore}
 		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 			{#if saving}
-				<Icon type={Cloud} class="h-4 w-4 animate-pulse text-gray-600" />
+				<Icon class="h-4 w-4 animate-pulse text-gray-600" type={Cloud} />
 			{:else}
 				{saveInfo}
 			{/if}

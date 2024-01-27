@@ -1,9 +1,11 @@
 /// <reference types="@sveltejs/kit" />
 /// <reference types="svelte-gestures" />
 
-import '@total-typescript/ts-reset';
 import type { Mongoose } from 'mongoose';
+
 import type { IUser, TRGB } from './lib/types';
+
+import '@total-typescript/ts-reset';
 
 /* eslint-disable no-var */
 

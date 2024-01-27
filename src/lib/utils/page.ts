@@ -1,16 +1,16 @@
 import { findByPattern } from './find';
 
-type TPage = 'viewed' | 'liked' | 'moderated' | 'profile' | 'editing' | 'reading' | 'viewing';
+type TPage = 'editing' | 'liked' | 'moderated' | 'profile' | 'reading' | 'viewed' | 'viewing';
 
 export const getPageType = (path: string): TPage => {
 	return findByPattern(path, {
-		profile: /^\/profile$/,
-		liked: /^\/profile\/liked$/,
-		viewed: /^\/profile\/viewed$/,
-		moderated: /^\/profile\/moderated$/,
 		editing: /^\/\d+\/edit$/,
-		viewing: /^\/\d+\/view$/,
-		reading: /^\/\d+$/
+		liked: /^\/profile\/liked$/,
+		moderated: /^\/profile\/moderated$/,
+		profile: /^\/profile$/,
+		reading: /^\/\d+$/,
+		viewed: /^\/profile\/viewed$/,
+		viewing: /^\/\d+\/view$/
 	});
 };
 

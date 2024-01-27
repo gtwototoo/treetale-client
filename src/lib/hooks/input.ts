@@ -20,7 +20,7 @@ export const autoHeight = (node: HTMLTextAreaElement) => {
 	const correctHeight = () => {
 		node.value = node.value.replace(/ {2,}/, ' ');
 
-		const { style, parentElement } = node;
+		const { parentElement, style } = node;
 
 		if (!parentElement) return;
 
@@ -72,11 +72,11 @@ export const autoWidth = (node: HTMLInputElement, overrideValue: string) => {
 	if (overrideValue === undefined) node.addEventListener('input', correctWidth);
 
 	return {
-		update() {
-			correctWidth();
-		},
 		destroy() {
 			node.removeEventListener('input', correctWidth);
+		},
+		update() {
+			correctWidth();
 		}
 	};
 };

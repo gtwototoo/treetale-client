@@ -2,27 +2,27 @@
 	import clsx from 'clsx';
 	import { Clock } from 'svelte-heros-v2';
 
-	import Note from './Note.svelte';
-
-	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/history';
+	import { Button, FormSplit } from '$UI';
+
+	import Note from './Note.svelte';
 	import Panel from './Panel.svelte';
 </script>
 
-<Panel title="История изменений" nonEdit>
+<Panel nonEdit title="История изменений">
 	<Note
 		icon={Clock}
 		text="Тут отображаются последние 20 изменений сделанных вами, вы можете отменить и вернуть любые из них"
 	/>
 	<FormSplit vertical>
-		{#each $changesHistory.stages as { title, icon }, key}
+		{#each $changesHistory.stages as { icon, title }, key}
 			<Button
-				variant="ghost"
-				on:click={() => changesHistory.to(key)}
-				class={clsx('bg-contrast-9 gap-4 text-text', {
+				class={clsx('gap-4 bg-contrast-9 text-text', {
 					'opacity-60': key > $changesHistory.currentId
 				})}
+				on:click={() => changesHistory.to(key)}
+				variant="ghost"
 			>
 				<Icon type={icon} />
 				<p>{title}</p>

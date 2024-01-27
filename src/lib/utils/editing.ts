@@ -1,8 +1,9 @@
+import clsx from 'clsx';
+
 import type { IChoice, ICoordinates, IFrame, IVariable, TBoundings } from '$lib/types';
 import type { IFrameCreate, INote, IPath } from '$lib/types/editing';
 
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
-import clsx from 'clsx';
 
 export const transform = (coords: ICoordinates, zoom?: number): string => {
 	let styleRow = 'transform:';
@@ -15,7 +16,7 @@ export const transform = (coords: ICoordinates, zoom?: number): string => {
 	return styleRow;
 };
 
-export const getFrameFromId = <T extends IFrameCreate | IFrame>(
+export const getFrameFromId = <T extends IFrame | IFrameCreate>(
 	frames: Array<T>,
 	frameId: number
 ) => {
@@ -24,7 +25,7 @@ export const getFrameFromId = <T extends IFrameCreate | IFrame>(
 	return frame;
 };
 
-export const getChoiceFromId = (frame: IFrameCreate | IFrame, choiceId: number) => {
+export const getChoiceFromId = (frame: IFrame | IFrameCreate, choiceId: number) => {
 	if (!frame) return;
 
 	const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
@@ -63,7 +64,7 @@ const getFramesPoints = (fromFrame: IFrameCreate, choice: IChoice, toFrame: IFra
 export const createConnections = (frames: Array<IFrameCreate>) => {
 	const paths: Array<IPath> = [];
 	const area: TBoundings = getAreaBoundings(frames);
-	const { width, height, x, y } = area;
+	const { height, width, x, y } = area;
 
 	for (const fromFrame of frames) {
 		for (const choice of fromFrame.choices) {
@@ -83,16 +84,16 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 	}
 
 	return {
-		paths,
-		viewBox: Object.values(area).join(' '),
-		width,
 		height,
-		style: transform({ x, y })
+		paths,
+		style: transform({ x, y }),
+		viewBox: Object.values(area).join(' '),
+		width
 	};
 };
 
 export const createLineRemoveButtons = (frames: Array<IFrameCreate>) => {
-	const coords: Array<ICoordinates & { fromFrameId: number; fromChoiceId: number }> = [];
+	const coords: Array<ICoordinates & { fromChoiceId: number; fromFrameId: number }> = [];
 
 	for (const fromFrame of frames) {
 		for (const choice of fromFrame.choices) {
@@ -105,10 +106,10 @@ export const createLineRemoveButtons = (frames: Array<IFrameCreate>) => {
 			const { fromPoint, toPoint } = getFramesPoints(fromFrame, choice, toFrame);
 
 			coords.push({
-				x: (fromPoint.x + toPoint.x) / 2,
-				y: (fromPoint.y + toPoint.y) / 2,
+				fromChoiceId: choice.choiceId,
 				fromFrameId: fromFrame.frameId,
-				fromChoiceId: choice.choiceId
+				x: (fromPoint.x + toPoint.x) / 2,
+				y: (fromPoint.y + toPoint.y) / 2
 			});
 		}
 	}
@@ -135,26 +136,26 @@ export const createBezierLine = (from: ICoordinates, to: ICoordinates): string =
 };
 
 const getAreaBoundings = (frames: Array<IFrameCreate>) => {
-	const { minX, minY, maxX, maxY } = frames.reduce(
-		(acc, { x, y, height }) => ({
-			minX: Math.min(acc.minX, x),
-			minY: Math.min(acc.minY, y),
+	const { maxX, maxY, minX, minY } = frames.reduce(
+		(acc, { height, x, y }) => ({
 			maxX: Math.max(acc.maxX, x + DEFAULT_FRAME_SIZE.width),
-			maxY: Math.max(acc.maxY, y + height)
+			maxY: Math.max(acc.maxY, y + height),
+			minX: Math.min(acc.minX, x),
+			minY: Math.min(acc.minY, y)
 		}),
 		{
-			minX: Infinity,
-			minY: Infinity,
 			maxX: -Infinity,
-			maxY: -Infinity
+			maxY: -Infinity,
+			minX: Infinity,
+			minY: Infinity
 		}
 	);
 
 	return {
-		x: minX,
-		y: minY,
+		height: maxY - minY,
 		width: maxX - minX,
-		height: maxY - minY
+		x: minX,
+		y: minY
 	};
 };
 

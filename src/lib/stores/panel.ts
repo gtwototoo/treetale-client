@@ -8,8 +8,8 @@ export interface IPanel {
 
 const panelCustomStore = () => {
 	const clearData: IPanel = {
-		id: '',
-		component: undefined
+		component: undefined,
+		id: ''
 	};
 	const { subscribe, update } = writable<IPanel>(clearData);
 
@@ -22,9 +22,9 @@ const panelCustomStore = () => {
 	const clearPanel = () => update(() => clearData);
 
 	return {
-		subscribe,
 		clear: clearPanel,
 		set: setPanel,
+		subscribe,
 		update
 	};
 };

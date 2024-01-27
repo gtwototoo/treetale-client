@@ -1,10 +1,13 @@
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-import type { IStorySchema } from '$lib/types/schemas';
-import { randomError } from '$lib/utils';
 import { redirect } from '@sveltejs/kit';
 
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
+import type { IStorySchema } from '$lib/types/schemas';
+
+import { randomError } from '$lib/utils';
+
 // пока тут функционал только для модераторов, дальше можно будет разбить логику и на режим просмотра
-export const load = async ({ fetch, params, locals }) => {
+export const load = async ({ fetch, locals, params }) => {
 	const user = locals.session;
 	const storyId = +params.story_id;
 

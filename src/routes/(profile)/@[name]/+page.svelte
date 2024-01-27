@@ -7,11 +7,11 @@
 	export let data;
 </script>
 
-<StoriesList stories={data.stories} authors={data.authors}>
+<StoriesList authors={data.authors} stories={data.stories}>
 	<p>
 		{correctWhitespace('У данного пользователя пока нету ни одной опубликованной истории')}
 	</p>
 	<Link href="/">
-		<Button size="lg" class="bg-contrast text-text" variant="ghost">Смотреть все истории</Button>
+		<Button class="bg-contrast text-text" size="lg" variant="ghost">Смотреть все истории</Button>
 	</Link>
 </StoriesList>

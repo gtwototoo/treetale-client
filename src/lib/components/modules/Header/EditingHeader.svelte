@@ -9,29 +9,28 @@
 		Variable
 	} from 'svelte-heros-v2';
 
-	import { Changes, Variables } from '../Panel';
-
-	import Header from './Header.svelte';
-
-	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { panelShow, panelStore } from '$lib/stores/panel';
 	import { activeActionStore } from '$lib/stores/workspace';
+	import { Button, FormSplit } from '$UI';
+
+	import { Changes, Variables } from '../Panel';
 	import Notes from '../Panel/Notes/Notes.svelte';
+	import Header from './Header.svelte';
 
 	const variablesSwitch = () => {
 		$panelStore = {
-			id: 'variables',
-			component: Variables
+			component: Variables,
+			id: 'variables'
 		};
 	};
 
 	const notesSwitch = () => {
 		$panelStore = {
-			id: 'notes',
-			component: Notes
+			component: Notes,
+			id: 'notes'
 		};
 	};
 
@@ -41,8 +40,8 @@
 
 	const historySwitch = () => {
 		$panelStore = {
-			id: 'history',
-			component: Changes
+			component: Changes,
+			id: 'history'
 		};
 	};
 </script>
@@ -58,21 +57,21 @@
 		<FormSplit>
 			<Button
 				class="header-button bg-contrast text-text"
-				variant="ghost"
-				size="lg"
-				on:click={changesHistory.undo}
 				disabled={$changesHistory.currentId === 0}
+				on:click={changesHistory.undo}
 				on:holdclick={historySwitch}
+				size="lg"
+				variant="ghost"
 			>
 				<Icon type={ArrowUturnLeft} />
 			</Button>
 			<Button
 				class="header-button bg-contrast text-text"
-				variant="ghost"
-				size="lg"
-				on:click={changesHistory.redo}
 				disabled={$changesHistory.currentId + 1 >= $changesHistory.stages.length}
+				on:click={changesHistory.redo}
 				on:holdclick={historySwitch}
+				size="lg"
+				variant="ghost"
 			>
 				<Icon type={ArrowUturnRight} />
 			</Button>
@@ -81,37 +80,37 @@
 	<svelte:fragment slot="right">
 		<Button
 			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-3"
-			variant="ghost"
-			size="lg"
 			on:click={() => ($panelShow = !$panelShow)}
+			size="lg"
+			variant="ghost"
 		>
-			<Icon type={ChevronLeft} class="h-6 w-6" />
+			<Icon class="h-6 w-6" type={ChevronLeft} />
 		</Button>
 	</svelte:fragment>
 	<FormSplit class="absolute right-4 top-20 max-sm:right-3 max-sm:top-[4.5rem]" vertical>
 		<Button
 			class="header-button bg-contrast !px-3 text-text"
-			variant="ghost"
-			size="lg"
 			on:click={settingsSwitch}
+			size="lg"
+			variant="ghost"
 		>
-			<Icon type={Cog6Tooth} class="h-6 w-6" />
+			<Icon class="h-6 w-6" type={Cog6Tooth} />
 		</Button>
 		<Button
 			class="header-button bg-contrast !px-3 text-text"
-			variant="ghost"
-			size="lg"
 			on:click={variablesSwitch}
+			size="lg"
+			variant="ghost"
 		>
-			<Icon type={Variable} class="h-6 w-6" />
+			<Icon class="h-6 w-6" type={Variable} />
 		</Button>
 		<Button
 			class="header-button bg-contrast !px-3 text-text"
-			variant="ghost"
-			size="lg"
 			on:click={notesSwitch}
+			size="lg"
+			variant="ghost"
 		>
-			<Icon type={DocumentText} class="h-6 w-6" />
+			<Icon class="h-6 w-6" type={DocumentText} />
 		</Button>
 	</FormSplit>
 </Header>

@@ -1,6 +1,7 @@
+import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
+
 import type { ISize, TRGB } from '$lib/types';
 
-import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 import Action from '$lib/components/icons/genres/Action.svelte';
 import Adult from '$lib/components/icons/genres/Adult.svelte';
 import Adventure from '$lib/components/icons/genres/Adventure.svelte';
@@ -21,89 +22,89 @@ export const WHITE_TEXT_COLOR: TRGB = [220, 220, 220];
 export const BLACK_TEXT_COLOR: TRGB = [25, 25, 25];
 export const ICON_TYPE = 'outline';
 
-export const DEFAULT_FRAME_SIZE: ISize = { width: 256, height: 200 };
+export const DEFAULT_FRAME_SIZE: ISize = { height: 200, width: 256 };
 
 export const NOT_FOUND_VARIANTS: Array<App.Error> = [
 	{
-		message:
-			'Вы забрели в темный уголок, откуда не видно света, вам придется вернуться назад и найти другой путь.',
+		color: [189, 156, 121],
 		img: `${PUBLIC_TREETALE_CLIENT_URL}/img/boy.png`,
-		color: [189, 156, 121]
+		message:
+			'Вы забрели в темный уголок, откуда не видно света, вам придется вернуться назад и найти другой путь.'
 	},
 	{
-		message:
-			'Эта дорога уходит далеко за горизонт и впереди только пустота, думаю дальше будет тоже самое.',
+		color: [246, 193, 179],
 		img: `${PUBLIC_TREETALE_CLIENT_URL}/img/road.png`,
-		color: [246, 193, 179]
+		message:
+			'Эта дорога уходит далеко за горизонт и впереди только пустота, думаю дальше будет тоже самое.'
 	},
 	{
-		message:
-			'Вы прогуливались по лесу, не заметили как стемнело и вдруг увидели страшный заброшенный дом, а вдалеке слышался вой волков, думаю стоит вернуться...',
+		color: [30, 47, 49],
 		img: `${PUBLIC_TREETALE_CLIENT_URL}/img/house.png`,
-		color: [30, 47, 49]
+		message:
+			'Вы прогуливались по лесу, не заметили как стемнело и вдруг увидели страшный заброшенный дом, а вдалеке слышался вой волков, думаю стоит вернуться...'
 	}
 ];
 
 export const GENRES_LIST = [
 	{
-		title: 'Ужасы',
 		icon: Horror,
-		id: 'horror'
+		id: 'horror',
+		title: 'Ужасы'
 	},
 	{
-		title: 'Юмор',
 		icon: Humor,
-		id: 'humor'
+		id: 'humor',
+		title: 'Юмор'
 	},
 	{
-		title: 'Приключение',
 		icon: Adventure,
-		id: 'adventure'
+		id: 'adventure',
+		title: 'Приключение'
 	},
 	{
-		title: 'Фантастика',
 		icon: Fantastic,
-		id: 'fantastic'
+		id: 'fantastic',
+		title: 'Фантастика'
 	},
 	{
-		title: 'История',
 		icon: Historical,
-		id: 'historical'
+		id: 'historical',
+		title: 'История'
 	},
 	{
-		title: 'Боевик',
 		icon: Action,
-		id: 'action'
+		id: 'action',
+		title: 'Боевик'
 	},
 	{
-		title: 'Фэнтези',
 		icon: Fantasy,
-		id: 'fantasy'
+		id: 'fantasy',
+		title: 'Фэнтези'
 	},
 	{
-		title: 'Романтика',
 		icon: Romance,
-		id: 'romance'
+		id: 'romance',
+		title: 'Романтика'
 	},
 	{
-		title: 'Детектив',
 		icon: Detective,
-		id: 'detective'
+		id: 'detective',
+		title: 'Детектив'
 	},
 	{
-		title: 'Триллер',
 		icon: Thriller,
-		id: 'thriller'
+		id: 'thriller',
+		title: 'Триллер'
 	},
 	{
-		title: 'Взрослое',
 		icon: Adult,
-		id: 'adult'
+		id: 'adult',
+		title: 'Взрослое'
 	},
 	{
-		title: 'Драма',
 		icon: Drama,
-		id: 'drama'
+		id: 'drama',
+		title: 'Драма'
 	}
 ] as const;
 

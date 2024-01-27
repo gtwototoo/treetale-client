@@ -9,6 +9,7 @@
 		connectionStore,
 		oneDirectionModeStore
 	} from '$lib/stores/workspace';
+
 	import { nextSelectedFrame } from './methods';
 
 	const dispatch = createEventDispatcher();
@@ -52,12 +53,12 @@
 			};
 		} else {
 			actions = {
+				Escape: cancelModes,
+				KeyC: switchConnectMode,
 				KeyF: switchAddFrameMode,
+				KeyZ: historyManipulate,
 				ShiftLeft: enableOneDirectionMode,
 				ShiftRight: enableOneDirectionMode,
-				KeyC: switchConnectMode,
-				KeyZ: historyManipulate,
-				Escape: cancelModes,
 				Tab: nextSelectedFrame
 			};
 		}
@@ -110,13 +111,13 @@
 </script>
 
 <svelte:window
-	on:keypress|stopPropagation
-	on:keydown={handleKeydown}
-	on:mouseup={handleMouseUp}
-	on:keyup|preventDefault={handleKeyup}
-	on:drop|preventDefault|stopPropagation={disableDragMode}
-	on:dragover|preventDefault
 	on:dragend|preventDefault={disableDragMode}
 	on:dragenter|preventDefault={enableDragMode}
 	on:dragleave|preventDefault={handleDragLeave}
+	on:dragover|preventDefault
+	on:drop|preventDefault|stopPropagation={disableDragMode}
+	on:keydown={handleKeydown}
+	on:keypress|stopPropagation
+	on:keyup|preventDefault={handleKeyup}
+	on:mouseup={handleMouseUp}
 />

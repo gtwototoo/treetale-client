@@ -1,20 +1,21 @@
 <script lang="ts">
+	import FormSplit from '$UI/FormSplit.svelte';
 	import clsx from 'clsx';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
 
-	import { Button, Input, Listbox } from '$UI';
-	import FormSplit from '$UI/FormSplit.svelte';
-	import Icon from '$lib/components/Icon.svelte';
-	import { readonlyStore, variablesStore } from '$lib/stores/editing';
-	import { bodyColorStore, redColorStore } from '$lib/stores/main';
-	import { framesDataStore } from '$lib/stores/workspace';
 	import type {
 		ILogicOperation,
 		IMathOperation,
 		TComparisonOperator,
 		TMathOperator
 	} from '$lib/types';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { readonlyStore, variablesStore } from '$lib/stores/editing';
+	import { bodyColorStore, redColorStore } from '$lib/stores/main';
+	import { framesDataStore } from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
+	import { Button, Input, Listbox } from '$UI';
 
 	type TModificator = 'logic' | 'math';
 
@@ -70,9 +71,9 @@
 			ILogicOperation | IMathOperation
 		>) = [
 			{
-				variable: '',
 				symbol: symbols[active][0],
-				value: ''
+				value: '',
+				variable: ''
 			},
 			...$framesDataStore[frameKey].choices[choiceKey][operationsKey]
 		];
@@ -99,46 +100,46 @@
 
 <div
 	class={clsx(
-		'bg-contrast-3 relative flex select-none flex-col items-center gap-2 rounded-lg p-2 text-sm',
+		'relative flex select-none flex-col items-center gap-2 rounded-lg bg-contrast-3 p-2 text-sm',
 		className
 	)}
 >
 	<div class="relative flex w-full justify-start">
 		<FormSplit>
 			<Button
-				size="sm"
-				variant="ghost"
 				class={clsx(
 					'bg-contrast-9',
 					active === 'logic' && clsx(orangeBackground, 'text-orange-500')
 				)}
 				on:click={() => (active = 'logic')}
+				size="sm"
+				variant="ghost"
 			>
 				Условия появления
 			</Button>
 			<Button
-				size="sm"
-				variant="ghost"
 				class={clsx(
 					'bg-contrast-9',
 					active === 'math' && clsx(violetBackground, 'text-violet-500')
 				)}
 				on:click={() => (active = 'math')}
+				size="sm"
+				variant="ghost"
 			>
 				Изменение переменных
 			</Button>
 		</FormSplit>
 		{#if !$readonlyStore}
 			<Button
-				size="sm"
-				variant="ghost"
 				class={clsx(
-					'bg-contrast-9 !absolute right-0 z-[2] !px-1 text-text',
+					'!absolute right-0 z-[2] bg-contrast-9 !px-1 text-text',
 					editMode && 'text-red-500'
 				)}
 				on:click={switchEditMode}
+				size="sm"
+				variant="ghost"
 			>
-				<Icon type={PencilSquare} class="h-4 w-4" />
+				<Icon class="h-4 w-4" type={PencilSquare} />
 			</Button>
 		{/if}
 	</div>
@@ -152,12 +153,12 @@
 					<Input placeholder="Значение" readonly {value}>
 						<svelte:fragment slot="right">
 							<Button
-								variant="main"
-								size="sm"
-								on:click={() => handleRemoveModificator(key)}
 								class={clsx('!px-1 !text-red-500', $redColorStore)}
+								on:click={() => handleRemoveModificator(key)}
+								size="sm"
+								variant="main"
 							>
-								<Icon type={XMark} class="h-4 w-4" />
+								<Icon class="h-4 w-4" type={XMark} />
 							</Button>
 						</svelte:fragment>
 					</Input>
@@ -165,55 +166,55 @@
 					{@const variable = $variablesStore.find(({ name }) => name === operation.variable)}
 					<div class="flex flex-wrap gap-1 rounded-lg bg-contrast/80 p-2">
 						<Listbox
-							size="sm"
-							placeholder="Переменная"
-							class="flex-1"
-							readonly={$readonlyStore}
-							on:change={({ detail }) => handleSelectVariable(key, detail)}
 							bind:value={operation.variable}
+							class="flex-1"
 							list={$variablesStore.map(({ name }) => name)}
+							on:change={({ detail }) => handleSelectVariable(key, detail)}
+							placeholder="Переменная"
+							readonly={$readonlyStore}
+							size="sm"
 						/>
 						<Listbox
-							list={symbols[active]}
-							placeholder=""
-							on:change={handleChange}
-							readonly={$readonlyStore}
-							bind:value={operation.symbol}
 							align="center"
-							let:value
+							bind:value={operation.symbol}
 							let:click
+							let:value
+							list={symbols[active]}
+							on:change={handleChange}
+							placeholder=""
+							readonly={$readonlyStore}
 						>
 							<Button
-								size="sm"
+								class="bg-contrast-9 text-text"
 								disabled={variable?.expect !== 'Число'}
 								on:click={click}
+								size="sm"
 								variant="ghost"
-								class="bg-contrast-9 text-text"
 							>
 								{value}
 							</Button>
 						</Listbox>
 						{#if variable?.expect !== 'Да/Нет'}
 							<Input
-								size="sm"
-								class="flex-1"
 								bind:value={operation.value}
-								placeholder="Значение"
+								class="flex-1"
 								maxlength={32}
-								readonly={$readonlyStore}
-								on:input={handleChange}
 								number={variable?.expect === 'Число'}
+								on:input={handleChange}
+								placeholder="Значение"
+								readonly={$readonlyStore}
+								size="sm"
 							/>
 						{:else}
 							<Listbox
+								align="inset"
 								bind:value={operation.value}
 								class="flex-1"
-								placeholder="Значение"
-								size="sm"
-								readonly={$readonlyStore}
-								align="inset"
 								list={[{ title: 'Да' }, { title: 'Нет' }]}
 								on:change={handleChange}
+								placeholder="Значение"
+								readonly={$readonlyStore}
+								size="sm"
 							/>
 						{/if}
 					</div>
@@ -222,9 +223,9 @@
 		</FormSplit>
 		{#if !editMode && !$readonlyStore}
 			<Button
-				variant="ghost"
-				class="bg-contrast-9 w-full justify-center text-text"
+				class="w-full justify-center bg-contrast-9 text-text"
 				on:click={handleAddModificator}
+				variant="ghost"
 			>
 				{active === 'logic' ? 'Добавить условие' : 'Добавить переменную'}
 			</Button>

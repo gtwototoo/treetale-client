@@ -1,5 +1,6 @@
-import type { ICoordinates } from '$lib/types';
 import type { ActionReturn } from 'svelte/action';
+
+import type { ICoordinates } from '$lib/types';
 
 export type GestureReturnType<
 	GestureParams,
@@ -15,14 +16,14 @@ export type PointerEventCallback<T> =
 	| ((activeEvents: PointerEvent[], event?: PointerEvent) => T)
 	| null;
 export type SubGestureFunctions = {
+	onDown: PointerEventCallback<void>;
 	onMove: PointerEventCallback<boolean>;
 	onUp: PointerEventCallback<void>;
-	onDown: PointerEventCallback<void>;
 };
 type PartialParameters<GestureParams> = Partial<GestureParams>;
 type PartialParametersWithComposed<GestureParams> = PartialParameters<GestureParams> & Composed;
 interface IPinch {
-	'on:pinch': (e: CustomEvent<{ scale: number; center: ICoordinates }>) => void;
+	'on:pinch': (e: CustomEvent<{ center: ICoordinates; scale: number }>) => void;
 }
 
 export type ParametersSwitch<GestureParams> =
@@ -35,24 +36,24 @@ export type PinchParameters = BaseParams;
 export type Composed = { composed: boolean };
 export type TouchAction =
 	| 'auto'
-	| 'none'
-	| 'pan-x'
-	| 'pan-left'
-	| 'pan-right'
-	| 'pan-y'
-	| 'pan-up'
-	| 'pan-down'
-	| 'pinch-zoom'
-	| 'manipulation'
 	| 'inherit'
 	| 'initial'
-	| 'revert'
+	| 'manipulation'
+	| 'none'
+	| 'pan-down'
+	| 'pan-left'
+	| 'pan-right'
+	| 'pan-up'
+	| 'pan-x'
+	| 'pan-y'
+	| 'pinch-zoom'
 	| 'revert-layer'
+	| 'revert'
 	| 'unset';
 export type BaseParams = Composed & {
 	touchAction: TouchAction;
 };
-type ActionType = 'up' | 'down' | 'move';
+type ActionType = 'down' | 'move' | 'up';
 
 function removeEvent(event: PointerEvent, activeEvents: PointerEvent[]): PointerEvent[] {
 	return activeEvents.filter((activeEvent: PointerEvent) => {
@@ -192,8 +193,8 @@ export function pinch<R extends ParametersSwitch<PinchParameters> = undefined>(
 	inputParameters?: R
 ): GestureReturnType<PinchParameters, R> {
 	const parameters: PinchParameters = {
-		touchAction: DEFAULT_TOUCH_ACTION,
 		composed: false,
+		touchAction: DEFAULT_TOUCH_ACTION,
 		...inputParameters
 	};
 
@@ -224,7 +225,7 @@ export function pinch<R extends ParametersSwitch<PinchParameters> = undefined>(
 				const scale = curDistance / initDistance;
 				node.dispatchEvent(
 					new CustomEvent(gestureName, {
-						detail: { scale, center: pinchCenter }
+						detail: { center: pinchCenter, scale }
 					})
 				);
 			}
@@ -235,7 +236,7 @@ export function pinch<R extends ParametersSwitch<PinchParameters> = undefined>(
 	}
 
 	if (parameters.composed) {
-		return { onMove, onDown, onUp: null } as GestureReturnType<PinchParameters, R>;
+		return { onDown, onMove, onUp: null } as GestureReturnType<PinchParameters, R>;
 	}
 
 	return setPointerControls(

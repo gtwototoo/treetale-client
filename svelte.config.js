@@ -5,6 +5,13 @@ import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	kit: {
+		adapter: adapter(),
+		alias: {
+			$UI: 'src/lib/UI'
+		}
+	},
+
 	preprocess: [
 		vitePreprocess(),
 		documentPreprocessor(),
@@ -12,13 +19,6 @@ const config = {
 			postcss: true
 		})
 	],
-
-	kit: {
-		adapter: adapter(),
-		alias: {
-			$UI: 'src/lib/UI'
-		}
-	},
 
 	vitePlugin: {
 		inspector: {

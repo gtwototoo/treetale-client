@@ -5,7 +5,7 @@
 	export let data;
 </script>
 
-<StoriesList stories={data.stories} authors={data.authors}>
+<StoriesList authors={data.authors} stories={data.stories}>
 	<p>
 		{correctWhitespace('Истории, отправленные на проверку, отсутствуют')}
 	</p>

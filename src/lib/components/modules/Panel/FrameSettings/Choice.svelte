@@ -2,7 +2,6 @@
 	import clsx from 'clsx';
 	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
 
-	import { Button, Contenteditable, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { readonlyStore } from '$lib/stores/editing';
@@ -11,6 +10,8 @@
 	import { panelEditMode, panelShow } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import { contrastText, getFrameFromId } from '$lib/utils';
+	import { Button, Contenteditable, FormSplit } from '$UI';
+
 	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
 	import Modificators from './Modificators.svelte';
 
@@ -82,25 +83,25 @@
 
 <FormSplit vertical={!$panelEditMode}>
 	<Contenteditable
-		maxlength={100}
-		class="!shrink grow"
-		placeholder="Вариант выбора"
-		disabled={$panelEditMode}
-		readonly={$readonlyStore}
 		bind:html={$framesDataStore[frameKey].choices[choiceKey].text}
+		class="!shrink grow"
+		disabled={$panelEditMode}
+		maxlength={100}
+		placeholder="Вариант выбора"
+		readonly={$readonlyStore}
 	>
 		<svelte:fragment slot="left">
 			<Button
-				size="sm"
-				variant="ghost"
 				class={clsx(
-					'bg-contrast-9 gap-1 !p-1 text-text',
+					'gap-1 bg-contrast-9 !p-1 text-text',
 					showModificators && '!bg-violet-500 !text-white',
 					!showModificators &&
 						(logicOperations.length || mathOperations.length) &&
 						'text-violet-500'
 				)}
 				on:click={switchShow}
+				size="sm"
+				variant="ghost"
 			>
 				<Icon class="h-4 w-4" type={Beaker} />
 			</Button>
@@ -108,19 +109,19 @@
 		<svelte:fragment slot="right">
 			{#if frameId}
 				<Button
-					size="sm"
-					variant="ghost"
 					class="bg-contrast-9 !px-1 text-text"
 					on:click={gotoChoiceToFrame}
+					size="sm"
+					variant="ghost"
 				>
 					<Icon class="h-4 w-4" type={ChevronRight} />
 				</Button>
 			{:else}
 				<Button
-					size="sm"
-					variant="ghost"
 					class={clsx(greenBackground, '!px-1 text-emerald-500')}
 					on:click={addFrameFromChoice}
+					size="sm"
+					variant="ghost"
 				>
 					<Icon class="h-4 w-4" type={Plus} />
 				</Button>
@@ -128,10 +129,10 @@
 		</svelte:fragment>
 	</Contenteditable>
 	{#if $panelEditMode}
-		<Button variant="main" class={clsx('!text-red-500', $redColorStore)} on:click={removeChoice}>
+		<Button class={clsx('!text-red-500', $redColorStore)} on:click={removeChoice} variant="main">
 			<Icon type={XMark} />
 		</Button>
 	{:else if showModificators}
-		<Modificators {frameKey} {choiceKey} />
+		<Modificators {choiceKey} {frameKey} />
 	{/if}
 </FormSplit>

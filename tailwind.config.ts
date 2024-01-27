@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+
 import plugin from 'tailwindcss/plugin';
 
 const colorsList = [
@@ -30,25 +31,8 @@ const colors = colorsList.reduce(
 const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	theme: {
-		extend: {
-			colors,
-			lineHeight: {
-				0: '0'
-			},
-			screens: {
-				xs: '480px',
-				hd: '1600px',
-				fd: '1920px'
-			},
-			borderRadius: {
-				inherit: 'inherit'
-			}
-		}
-	},
-
 	plugins: [
-		plugin(({ addVariant, matchUtilities, theme, addUtilities, matchVariant }) => {
+		plugin(({ addUtilities, addVariant, matchUtilities, matchVariant, theme }) => {
 			addVariant('childs', '& > *');
 			addVariant('thumb', '&::-webkit-scrollbar-thumb');
 			addVariant('scrollbar', '&::-webkit-scrollbar');
@@ -65,15 +49,15 @@ const config = {
 				'.fill-gradient': {
 					fill: 'var(--fill-gradient)'
 				},
+				'.inherit-align': {
+					'text-align': 'inherit'
+				},
 				'.scrollbar-none': {
 					'-ms-overflow-style': 'none',
 					'scrollbar-width': 'none'
 				},
 				'.scrollbar-none::-webkit-scrollbar': {
 					display: 'none'
-				},
-				'.inherit-align': {
-					'text-align': 'inherit'
 				}
 			});
 			matchUtilities(
@@ -88,7 +72,7 @@ const config = {
 						'--background-to': toColorValue(value)
 					})
 				},
-				{ values: theme('colors'), type: ['color'] }
+				{ type: ['color'], values: theme('colors') }
 			);
 			matchUtilities(
 				{
@@ -96,7 +80,7 @@ const config = {
 						'stop-color': toColorValue(value)
 					})
 				},
-				{ values: theme('colors'), type: ['color'] }
+				{ type: ['color'], values: theme('colors') }
 			);
 			matchUtilities(
 				{
@@ -107,7 +91,24 @@ const config = {
 				{ values: theme('spacing') }
 			);
 		})
-	]
+	],
+
+	theme: {
+		extend: {
+			borderRadius: {
+				inherit: 'inherit'
+			},
+			colors,
+			lineHeight: {
+				0: '0'
+			},
+			screens: {
+				fd: '1920px',
+				hd: '1600px',
+				xs: '480px'
+			}
+		}
+	}
 };
 
 export default config satisfies Config;

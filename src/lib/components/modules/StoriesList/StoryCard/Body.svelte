@@ -2,6 +2,7 @@
 	import clsx from 'clsx';
 
 	import type { IVariable } from '$lib/types';
+
 	import { correctVariableReplace } from '$lib/utils';
 
 	export let description: string;

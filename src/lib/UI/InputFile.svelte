@@ -9,7 +9,7 @@
 	export { className as class };
 
 	export let disabled = false;
-	export let variant: 'main' | 'custom' | 'ghost' = 'main';
+	export let variant: 'custom' | 'ghost' | 'main' = 'main';
 	export let loading = false;
 	export let accept = 'image/*';
 
@@ -22,7 +22,7 @@
 	};
 </script>
 
-<Button class={className} on:click={handleClick} {disabled} {variant} {loading}>
+<Button class={className} {disabled} {loading} on:click={handleClick} {variant}>
 	<slot />
-	<input bind:this={fileInput} class="hidden" type="file" {accept} on:change />
+	<input {accept} bind:this={fileInput} class="hidden" on:change type="file" />
 </Button>

@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import clsx from 'clsx';
+
+	import type { ILogicOperation, IMathOperation } from '$lib/types';
+
 	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { panelShow } from '$lib/stores/panel';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
-	import type { ILogicOperation, IMathOperation } from '$lib/types';
 	import { clm, contrastText, getFrameFromId } from '$lib/utils';
-	import clsx from 'clsx';
+	import { Button } from '$UI';
 
 	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
 
@@ -67,8 +69,8 @@
 			}
 
 			$connectionStore = {
-				frameId: frame.frameId,
-				choiceId
+				choiceId,
+				frameId: frame.frameId
 			};
 		}
 	};
@@ -89,8 +91,6 @@
 </script>
 
 <Button
-	{disabled}
-	variant="main"
 	class={clm(
 		'gap-4',
 		!text ? '!text-gray-400' : '!text-text',
@@ -106,8 +106,10 @@
 			  )
 			: 'bg-contrast-5'
 	)}
-	on:mousedown={handleMouseDown}
+	{disabled}
 	on:click={handleClick}
+	on:mousedown={handleMouseDown}
+	variant="main"
 >
 	{#if logicOperations.length}
 		<div class="absolute left-1 h-7 w-1 rounded-full !bg-orange-500" />

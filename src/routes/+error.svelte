@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
@@ -24,12 +25,12 @@
 {#if $page.error}
 	<div class="flex h-full w-full items-start justify-center">
 		<div class="flex min-h-full items-center p-4 max-sm:p-3">
-			<ReadCard src={img} alt="Ошибка" text={message}>
+			<ReadCard alt="Ошибка" src={img} text={message}>
 				<div class="w-full">
 					<Button
 						class="adaptive-font adaptive-padding w-full bg-main !text-text"
-						variant="ghost"
 						on:click={handleClick}
+						variant="ghost"
 					>
 						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}
 					</Button>

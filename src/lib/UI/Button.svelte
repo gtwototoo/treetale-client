@@ -11,14 +11,14 @@
 	let className = '';
 	export { className as class };
 
-	export let variant: 'main' | 'ghost' | 'custom';
-	export let size: 'sm' | 'base' | 'lg' | 'xl' = 'base';
+	export let variant: 'custom' | 'ghost' | 'main';
+	export let size: 'base' | 'lg' | 'sm' | 'xl' = 'base';
 	export let disabled = false;
 	export let loading = false;
 	export let element: HTMLButtonElement | undefined = undefined;
 	export let value: string | undefined = undefined;
 	export let style = '';
-	export let type: 'button' | 'submit' | 'reset' | undefined = 'button';
+	export let type: 'button' | 'reset' | 'submit' | undefined = 'button';
 
 	const handleClick = (e: MouseEvent) => {
 		if (disabled) return;
@@ -35,13 +35,6 @@
 
 <button
 	bind:this={element}
-	use:clickHold
-	on:click={handleClick}
-	on:holdclick={handleHoldClick}
-	on:dragenter
-	on:dragleave
-	on:drop
-	on:mousedown
 	class={clm(
 		'transition-opacity childs:bg-transparent',
 		`size-${size}`,
@@ -50,7 +43,14 @@
 		(disabled || loading) && 'disabled',
 		className
 	)}
-	{...{ value, type, style }}
+	on:click={handleClick}
+	on:dragenter
+	on:dragleave
+	on:drop
+	on:holdclick={handleHoldClick}
+	on:mousedown
+	use:clickHold
+	{...{ style, type, value }}
 >
 	<slot />
 	{#if loading}

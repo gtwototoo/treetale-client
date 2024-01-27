@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
 	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 
+	import { clsx } from 'clsx';
+	import { Photo } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$lib/components/icons';
-	import { Photo } from 'svelte-heros-v2';
 
 	let className = '';
 	export { className as class };
@@ -44,44 +45,44 @@
 	in:fade
 >
 	{#if base64src && !src}
-		<Icon type={Loading} class="z-10 h-6 w-6 text-white" />
+		<Icon class="z-10 h-6 w-6 text-white" type={Loading} />
 		<img
+			{alt}
 			class={clsx(
 				'absolute h-full w-full rounded-inherit brightness-50',
 				cover ? 'object-cover' : 'object-contain'
 			)}
 			draggable="false"
 			src={base64src}
-			{alt}
 		/>
 	{:else}
 		{#await preload(src)}
 			{#if base64src}
-				<Icon type={Loading} class="z-10 h-6 w-6 text-white" />
+				<Icon class="z-10 h-6 w-6 text-white" type={Loading} />
 				<img
+					{alt}
 					class={clsx(
 						'absolute h-full w-full rounded-inherit brightness-50',
 						cover ? 'object-cover' : 'object-contain'
 					)}
 					draggable="false"
 					src={base64src}
-					{alt}
 				/>
 			{:else}
-				<Icon type={Loading} class="h-6 w-6" />
+				<Icon class="h-6 w-6" type={Loading} />
 			{/if}
 		{:then}
 			<img
-				{src}
 				{alt}
-				draggable="false"
 				class={clsx('h-full w-full rounded-inherit', cover ? 'object-cover' : 'object-contain')}
+				draggable="false"
+				{src}
 			/>
 		{:catch}
 			{#if $$slots.error}
 				<slot name="error" />
 			{:else}
-				<Icon type={Photo} class="h-1/3 min-h-[1rem] w-auto" />
+				<Icon class="h-1/3 min-h-[1rem] w-auto" type={Photo} />
 			{/if}
 		{/await}
 	{/if}

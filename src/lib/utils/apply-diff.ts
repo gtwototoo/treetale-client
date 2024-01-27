@@ -1,7 +1,7 @@
-type TQuasiBaseType = unknown | Date | RegExp | string | number | boolean;
+type TQuasiBaseType = boolean | Date | number | RegExp | string | unknown;
 
 interface IElem {
-	[index: string | number]: IElem | unknown | object;
+	[index: number | string]: IElem | object | unknown;
 }
 
 export interface IDiff {
@@ -19,11 +19,11 @@ const isQuasiBaseType = (value: unknown) => {
 	);
 };
 
-const isLikelyPlainObject = (value: TQuasiBaseType | IElem) => {
+const isLikelyPlainObject = (value: IElem | TQuasiBaseType) => {
 	return typeof value === 'object' && value !== null && !isQuasiBaseType(value);
 };
 
-const applyDiff = <T extends IElem | Array<IElem>>(lhs: T, diff: IDiff) => {
+const applyDiff = <T extends Array<IElem> | IElem>(lhs: T, diff: IDiff) => {
 	if (!isLikelyPlainObject(diff) || !isLikelyPlainObject(lhs)) {
 		lhs = diff as T & IDiff;
 

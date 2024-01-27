@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
-	import { ChevronDown } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
 
-	import { Button } from '$UI';
+	import { clsx } from 'clsx';
+	import { ChevronDown } from 'svelte-heros-v2';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
 	import { clm } from '$lib/utils';
+	import { Button } from '$UI';
 
 	let className = '';
 	export { className as class };
@@ -14,7 +15,7 @@
 	export let btnClass = '';
 	export let disabled = false;
 	export let readonly = false;
-	export let align: 'left' | 'right' | 'inset' = 'left';
+	export let align: 'inset' | 'left' | 'right' = 'left';
 	export let value = '';
 	export let placeholder = '';
 
@@ -27,15 +28,15 @@
 	};
 </script>
 
-<div class={clsx('popover', className)} use:clickOutside on:outclick={() => (focused = false)}>
+<div class={clsx('popover', className)} on:outclick={() => (focused = false)} use:clickOutside>
 	{#if $$slots.button}
-		<slot name="button" {focused} click={handleClick} />
+		<slot click={handleClick} {focused} name="button" />
 	{:else}
 		<Button
-			variant="ghost"
-			class={clm('bg-contrast-9 w-full', btnClass)}
+			class={clm('w-full bg-contrast-9', btnClass)}
 			{disabled}
 			on:click={handleClick}
+			variant="ghost"
 		>
 			<p
 				class={clsx('min-h-[1.25rem] pr-5', {
@@ -46,23 +47,23 @@
 			</p>
 			{#if !readonly}
 				<Icon
-					type={ChevronDown}
 					class={clsx('absolute right-0 mr-3', focused && 'rotate-180')}
+					type={ChevronDown}
 				/>
 			{/if}
 		</Button>
 	{/if}
 	{#if focused}
 		<div
-			in:fly={{ y: 10 }}
 			class={clsx(
 				'content',
 				{
+					inset: '-inset-x-1',
 					left: '-left-1',
-					right: '-right-1',
-					inset: '-inset-x-1'
+					right: '-right-1'
 				}[align]
 			)}
+			in:fly={{ y: 10 }}
 			use:correctPosition
 		>
 			<slot />

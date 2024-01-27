@@ -1,9 +1,10 @@
 <script lang="ts">
-	import clsx from 'clsx';
+	import { goto, invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';	import clsx from 'clsx';
 	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
 
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
+	import type { IUser } from '$lib/types';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import {
@@ -13,7 +14,6 @@
 		updateProfile
 	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { IUser } from '$lib/types';
 	import { Button, ColorPicker, Contenteditable } from '$UI';
 
 	export let user: IUser;
@@ -68,8 +68,8 @@
 			await signOutUser();
 
 			goto('/', {
-				replaceState: true,
-				invalidateAll: true
+				invalidateAll: true,
+				replaceState: true
 			});
 		} catch (e) {
 			console.error(e);
@@ -99,7 +99,7 @@
 >
 	<div class="flex flex-col items-center gap-2 bg-transparent">
 		<div class="p-6">
-			<ProfileAvatar {user} {editMode} color={$bodyColorStore} />
+			<ProfileAvatar color={$bodyColorStore} {editMode} {user} />
 		</div>
 		<div
 			class={clsx(
@@ -120,15 +120,15 @@
 	<div class="flex w-full flex-col items-center bg-transparent">
 		<Contenteditable
 			bind:html={user.name}
-			placeholder="Никнейм"
 			class="!bg-transparent !text-center !text-4xl font-bold text-text"
+			placeholder="Никнейм"
 			readonly={!editMode}
 		/>
 		{#if editMode || user.description}
 			<Contenteditable
 				bind:html={user.description}
-				placeholder="Добавьте описание"
 				class="w-full !bg-transparent !text-center !text-lg text-text"
+				placeholder="Добавьте описание"
 				readonly={!editMode}
 			/>
 		{:else}
@@ -139,70 +139,70 @@
 		{#if me}
 			{#if editMode}
 				<ColorPicker
-					popoverAlign="left"
-					lightRange={[20, 80]}
-					saturateRange={[10, 90]}
 					color={$bodyColorStore}
-					{saturate}
-					{light}
-					on:change={setColor}
 					let:click
+					{light}
+					lightRange={[20, 80]}
+					on:change={setColor}
+					popoverAlign="left"
+					{saturate}
+					saturateRange={[10, 90]}
 				>
-					<Button size="lg" variant="main" on:click={click} class="bg-main !text-text">
+					<Button class="bg-main !text-text" on:click={click} size="lg" variant="main">
 						Цвет
 					</Button>
 				</ColorPicker>
 				<Button
+					class="bg-main text-text"
+					{loading}
+					on:click={saveProfile}
 					size="lg"
 					variant="ghost"
-					class="bg-main text-text"
-					on:click={saveProfile}
-					{loading}
 				>
 					Сохранить
 				</Button>
-				<Button class="bg-main !text-red-500" size="lg" variant="ghost" on:click={cancelEdit}>
+				<Button class="bg-main !text-red-500" on:click={cancelEdit} size="lg" variant="ghost">
 					Отмена
 				</Button>
 			{:else}
 				<Button
-					size="lg"
 					class="gap-3 bg-contrast text-text"
-					variant="ghost"
 					on:click={() => (editMode = true)}
+					size="lg"
+					variant="ghost"
 				>
-					<Icon type={Cog6Tooth} class="h-6 w-6" />
+					<Icon class="h-6 w-6" type={Cog6Tooth} />
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
 				<Button
 					class="bg-contrast text-red-500"
+					on:click={handleSignOut}
 					size="lg"
 					variant="ghost"
-					on:click={handleSignOut}
 				>
 					Выйти
 				</Button>
 			{/if}
 		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
 			<Button
+				class="gap-3 bg-white"
+				{loading}
+				on:click={handleUnsubscribe}
 				size="lg"
 				variant="ghost"
-				{loading}
-				class="gap-3 bg-white"
-				on:click={handleUnsubscribe}
 			>
-				<Icon type={UserMinus} class="h-6 w-6" />
+				<Icon class="h-6 w-6" type={UserMinus} />
 				<p class="mr-1">Отписаться</p>
 			</Button>
 		{:else}
 			<Button
+				class="gap-3 bg-white"
+				{loading}
+				on:click={handleSubscribe}
 				size="lg"
 				variant="ghost"
-				{loading}
-				class="gap-3 bg-white"
-				on:click={handleSubscribe}
 			>
-				<Icon type={UserPlus} class="h-6 w-6" />
+				<Icon class="h-6 w-6" type={UserPlus} />
 				<p class="mr-1">Подписаться</p>
 			</Button>
 		{/if}

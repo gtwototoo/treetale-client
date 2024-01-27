@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import clsx from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
+
+	import clsx from 'clsx';
+
+	import { Button } from '$UI';
 
 	export let disabled = false;
 
@@ -12,8 +14,8 @@
 	let fileInput: HTMLInputElement;
 
 	const dispatch = createEventDispatcher<{
-		click: MouseEvent;
 		change: FileList;
+		click: MouseEvent;
 	}>();
 
 	const handleClick = (e: CustomEvent<MouseEvent>) => {
@@ -50,9 +52,8 @@
 </script>
 
 <Button
-	variant="ghost"
 	class={clsx(
-		'bg-contrast-9 flex-col !whitespace-normal !p-6',
+		'flex-col !whitespace-normal bg-contrast-9 !p-6',
 		{ '!bg-main-40': dragged },
 		className
 	)}
@@ -61,8 +62,9 @@
 	on:dragenter={handleDragEnter}
 	on:dragleave={disableDragged}
 	on:drop={addedFiles}
+	variant="ghost"
 >
 	<slot />
 	<p>Нажмите тут или перетащите сюда изображение</p>
 </Button>
-<input bind:this={fileInput} class="hidden" type="file" accept="image/*" on:change={addedFiles} />
+<input accept="image/*" bind:this={fileInput} class="hidden" on:change={addedFiles} type="file" />

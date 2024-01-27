@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
 	import { onMount } from 'svelte';
+
+	import { clsx } from 'clsx';
 
 	let className = '';
 	export { className as class };
@@ -20,9 +21,9 @@
 		const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 		scrollToElement.scrollIntoView({
+			behavior: mediaQuery.matches || !ready ? 'auto' : 'smooth',
 			block: 'center',
-			inline: 'center',
-			behavior: mediaQuery.matches || !ready ? 'auto' : 'smooth'
+			inline: 'center'
 		});
 	};
 
@@ -43,10 +44,10 @@
 </script>
 
 <div
+	bind:this={carouselRef}
 	class={clsx('carousel childs:shrink-0 childs:snap-center', className, {
 		invisible: !ready
 	})}
-	bind:this={carouselRef}
 	use:addIdToChilds
 >
 	<slot />

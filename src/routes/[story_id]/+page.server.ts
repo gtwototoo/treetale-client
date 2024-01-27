@@ -1,7 +1,8 @@
-import type { IFrame, IProgress, IUser } from '$lib/types/index.js';
-
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
+import type { IFrame, IProgress, IUser } from '$lib/types/index.js';
 import type { IStoryFull } from '$lib/types/reading.js';
+
 import { randomError } from '$lib/utils';
 
 interface IResponseProgress {
@@ -11,7 +12,7 @@ interface IResponseProgress {
 	story: IStoryFull;
 }
 
-export const load = async ({ params, fetch }) => {
+export const load = async ({ fetch, params }) => {
 	const storyId = +params.story_id;
 
 	if (isNaN(storyId)) {

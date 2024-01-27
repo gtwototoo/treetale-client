@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { XMark } from 'svelte-heros-v2';
 	import { fly } from 'svelte/transition';
+
+	import { clsx } from 'clsx';
+	import { XMark } from 'svelte-heros-v2';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { createPortal } from '$lib/hooks';
@@ -56,7 +57,7 @@
 <svelte:window bind:innerHeight on:keydown={handleKeydown} />
 
 {#if active}
-	<div use:createPortal class="modal">
+	<div class="modal" use:createPortal>
 		<div
 			class={clsx(
 				'flex h-full w-full justify-center overflow-auto bg-transparent',
@@ -64,14 +65,14 @@
 			)}
 			in:fly={{ y: 100 }}
 		>
-			<div class="window" bind:offsetHeight>
+			<div bind:offsetHeight class="window">
 				<div class="header">
 					<p class="title px-20">{title}</p>
 					<Button
-						size="lg"
-						variant="ghost"
 						class="absolute !p-2 hover:!text-red-600"
 						on:click={handleClick}
+						size="lg"
+						variant="ghost"
 					>
 						<Icon type={XMark} />
 					</Button>

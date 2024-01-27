@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import { ArrowsPointingIn } from 'svelte-heros-v2';
+	import { MetaTags } from 'svelte-meta-tags';
+
+	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
+	import type { ICoordinates } from '$lib/types/index';
+
 	import EditingFooter from '$lib/components/modules/Footer/EditingFooter.svelte';
 	import InformationSettings from '$lib/components/modules/Panel/InformationSettings/InformationSettings.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
-	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
 		addFrame,
 		cursorFollow,
@@ -13,6 +17,8 @@
 		movingFrame,
 		startMoveArea
 	} from '$lib/components/modules/Workspace/methods';
+	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
+	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
 	import {
@@ -35,11 +41,7 @@
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
-	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
-	import type { ICoordinates } from '$lib/types/index';
 	import { contrastText, exclude, getFrameFromId, rootStyle } from '$lib/utils';
-	import { ArrowsPointingIn } from 'svelte-heros-v2';
-	import { MetaTags } from 'svelte-meta-tags';
 
 	export let data;
 
@@ -49,28 +51,28 @@
 	let height: number;
 	let startOffset: ICoordinates = { x: 0, y: 0 };
 	let startMoveData: IStartMove = {
-		startMoveCoords: { x: 0, y: 0 },
 		moveFrameOffset: { x: 0, y: 0 },
-		moveXDirection: null
+		moveXDirection: null,
+		startMoveCoords: { x: 0, y: 0 }
 	};
 
 	$readonlyStore = true;
 
-	const { color, description, genre, imageUrl, tags, title, storyId, created, status } = data;
+	const { color, created, description, genre, imageUrl, status, storyId, tags, title } = data;
 
 	$variablesStore = data.vars;
 	$notesStore = data.notes;
 	framesDataStore.init(data.frames);
 	$informationDataStore = {
 		color,
+		created,
 		description,
 		genre,
 		imageUrl,
-		tags,
-		title,
+		status,
 		storyId,
-		created,
-		status
+		tags,
+		title
 	};
 	$zoomStore = data.zoom;
 	$offsetStore = data.offset;
@@ -92,9 +94,9 @@
 	const startMoveFrame = (frame: IFrameCreate, coords: ICoordinates): IStartMove => {
 		if (!frame) {
 			return {
-				startMoveCoords: { x: 0, y: 0 },
 				moveFrameOffset: { x: 0, y: 0 },
-				moveXDirection: null
+				moveXDirection: null,
+				startMoveCoords: { x: 0, y: 0 }
 			};
 		}
 
@@ -104,18 +106,18 @@
 
 		return {
 			moveFrameOffset: { x: x - frame.x, y: y - frame.y },
+			moveXDirection: null,
 			startMoveCoords: {
 				x: frame.x,
 				y: frame.y
-			},
-			moveXDirection: null
+			}
 		} satisfies IStartMove;
 	};
 
 	const handleMouseDown = (
-		e: CustomEvent<{ doubleClick: boolean; button: number; isMouse: boolean } & ICoordinates>
+		e: CustomEvent<{ button: number; doubleClick: boolean; isMouse: boolean } & ICoordinates>
 	) => {
-		const { x, y, isMouse, button } = e.detail;
+		const { button, isMouse, x, y } = e.detail;
 
 		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
 
@@ -239,12 +241,12 @@
 		<CreateText />
 	{/if}
 	<Workspace
-		bind:width
 		bind:height
-		on:mousedown={handleMouseDown}
-		on:mouseup={handleMouseUp}
-		on:mousemove={handleMouseMove}
+		bind:width
 		on:click={handleClick}
+		on:mousedown={handleMouseDown}
+		on:mousemove={handleMouseMove}
+		on:mouseup={handleMouseUp}
 	/>
 </div>
-<EditingFooter bind:workspaceWidth={width} bind:workspaceHeight={height} />
+<EditingFooter bind:workspaceHeight={height} bind:workspaceWidth={width} />

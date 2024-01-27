@@ -1,16 +1,18 @@
 <script lang="ts">
-	import { PencilSquare, Trash } from 'svelte-heros-v2';
 	import { fade } from 'svelte/transition';
+
+	import { PencilSquare, Trash } from 'svelte-heros-v2';
+
+	import type { IUser, TRGB } from '$lib/types';
+
+	import { removeImage, saveImage } from '$lib/requests/files';
+	import { Avatar, Button, InputFile } from '$UI';
 
 	import Icon from './Icon.svelte';
 
-	import { Avatar, Button, InputFile } from '$UI';
-	import { removeImage, saveImage } from '$lib/requests/files';
-	import type { IUser, TRGB } from '$lib/types';
-
 	export let user: IUser;
 	export let editMode: boolean = false;
-	export let size: 'sm' | 'base' | 'lg' = 'lg';
+	export let size: 'base' | 'lg' | 'sm' = 'lg';
 	export let color: TRGB;
 
 	let removeLoading = false;
@@ -68,15 +70,15 @@
 </script>
 
 <Avatar
-	{size}
-	{color}
-	{src}
-	{base64src}
 	alt={user.name}
+	{base64src}
+	{color}
 	on:load={() => {
 		base64src = null;
 		addLoading = false;
 	}}
+	{size}
+	{src}
 >
 	{#if editMode}
 		<div
@@ -86,20 +88,20 @@
 			{#if src}
 				<Button
 					class="!rounded-full bg-main !p-3 text-text"
-					variant="ghost"
 					loading={removeLoading}
 					on:click={preRemoveImage}
+					variant="ghost"
 				>
-					<Icon type={Trash} class="h-6 w-6 text-red-500" />
+					<Icon class="h-6 w-6 text-red-500" type={Trash} />
 				</Button>
 			{:else}
 				<InputFile
 					class="!rounded-full bg-main !p-3 text-text"
-					variant="ghost"
 					disabled={addLoading}
 					on:change={setFile}
+					variant="ghost"
 				>
-					<Icon type={PencilSquare} class="h-6 w-6" />
+					<Icon class="h-6 w-6" type={PencilSquare} />
 				</InputFile>
 			{/if}
 		</div>

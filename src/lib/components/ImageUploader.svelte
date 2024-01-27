@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { Button, Image } from '$UI';
+	import { createEventDispatcher, type SvelteComponent } from 'svelte';
+
+	import clsx from 'clsx';
+	import { Trash } from 'svelte-heros-v2';
+
 	import { redColorStore } from '$lib/stores/main';
 	import { clm } from '$lib/utils';
-	import clsx from 'clsx';
-	import { createEventDispatcher, type SvelteComponent } from 'svelte';
-	import { Trash } from 'svelte-heros-v2';
+	import { Button, Image } from '$UI';
+
 	import DropBlock from './DropBlock.svelte';
 	import Icon from './Icon.svelte';
 
@@ -52,33 +55,33 @@
 	{#if src || base64src}
 		{#if !readonly}
 			<Button
-				variant="main"
-				size="sm"
-				on:click={handleRemove}
 				class={clsx('!absolute right-2 top-2 z-10 !text-red-500', $redColorStore)}
+				on:click={handleRemove}
+				size="sm"
+				variant="main"
 			>
-				<Icon type={Trash} class="h-4 w-4" />
+				<Icon class="h-4 w-4" type={Trash} />
 			</Button>
 		{/if}
 		<Image
 			{alt}
-			{src}
 			{base64src}
-			on:load={() => (base64src = null)}
 			class="h-full w-full rounded-inherit !bg-main/30 text-text"
 			cover
+			on:load={() => (base64src = null)}
+			{src}
 		/>
 	{:else if readonly}
 		<Button
+			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit bg-contrast-9 !p-6"
 			variant="ghost"
-			class="bg-contrast-9 pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit !p-6"
 		>
-			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />
+			<Icon class="h-24 w-auto childs:fill-gradient" type={icon} variation="solid" />
 			<p>Изображение не добавлено</p>
 		</Button>
 	{:else}
-		<DropBlock on:change={handleChange} class="h-full w-full gap-2 !rounded-inherit" {disabled}>
-			<Icon type={icon} class="h-24 w-auto childs:fill-gradient" variation="solid" />
+		<DropBlock class="h-full w-full gap-2 !rounded-inherit" {disabled} on:change={handleChange}>
+			<Icon class="h-24 w-auto childs:fill-gradient" type={icon} variation="solid" />
 		</DropBlock>
 	{/if}
 </div>

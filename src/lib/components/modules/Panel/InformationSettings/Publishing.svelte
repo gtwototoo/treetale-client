@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { Button } from '$UI';
 	import { page } from '$app/stores';
-	import { publishStory, reviewRequestStory } from '$lib/requests/story';
+	import clsx from 'clsx';
 
+	import { publishStory, reviewRequestStory } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
 	import { contrastText, correctWhitespace } from '$lib/utils';
-	import clsx from 'clsx';
+	import { Button } from '$UI';
 
 	let loading = false;
 
@@ -66,10 +66,10 @@
 				)}
 			</p>
 			<Button
-				variant="main"
 				class={clsx('justify-center !text-emerald-500', greenColor)}
-				on:click={switchReview}
 				{loading}
+				on:click={switchReview}
+				variant="main"
 			>
 				Опубликовать
 			</Button>
@@ -81,10 +81,10 @@
 					)}
 				</p>
 				<Button
-					variant="main"
 					class={clsx('justify-center !text-red-500', $redColorStore)}
-					on:click={switchReview}
 					{loading}
+					on:click={switchReview}
+					variant="main"
 				>
 					Отменить публикацию
 				</Button>
@@ -95,10 +95,10 @@
 					)}
 				</p>
 				<Button
-					variant="main"
 					class={clsx('justify-center !text-emerald-500', greenColor)}
-					on:click={setPublishedStory}
 					{loading}
+					on:click={setPublishedStory}
+					variant="main"
 				>
 					Опубликовать
 				</Button>
@@ -106,10 +106,10 @@
 		{:else if $informationDataStore.status === 'published'}
 			{correctWhitespace('История опубликована')}
 			<Button
-				variant="main"
 				class={clsx('justify-center !text-red-500', $redColorStore)}
-				on:click={switchReview}
 				{loading}
+				on:click={switchReview}
+				variant="main"
 			>
 				Отменить публикацию
 			</Button>

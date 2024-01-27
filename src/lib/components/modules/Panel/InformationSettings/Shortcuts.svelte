@@ -8,21 +8,21 @@
 	}
 
 	const shortcuts: Array<IShortcut> = [
-		{ text: 'Режим добавления блоков', keys: ['F'] },
-		{ text: 'Режим добавления связей', keys: ['C'] },
-		{ text: 'Отменить действие', keys: ['⌘', 'Z'] },
-		{ text: 'Вернуть действие', keys: ['SHIFT', '⌘', 'Z'] },
-		{ text: 'Переключить блок', keys: ['Tab'], readonly: true },
-		{ text: 'Режим просмотра', keys: ['ESC'] }
+		{ keys: ['F'], text: 'Режим добавления блоков' },
+		{ keys: ['C'], text: 'Режим добавления связей' },
+		{ keys: ['⌘', 'Z'], text: 'Отменить действие' },
+		{ keys: ['SHIFT', '⌘', 'Z'], text: 'Вернуть действие' },
+		{ keys: ['Tab'], readonly: true, text: 'Переключить блок' },
+		{ keys: ['ESC'], text: 'Режим просмотра' }
 	];
 </script>
 
 <div
-	class="bg-contrast-2 flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm childs:bg-transparent"
+	class="flex select-none flex-col gap-4 rounded-lg bg-contrast-2 p-4 text-center text-sm childs:bg-transparent"
 >
 	<p>Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
-		{#each shortcuts as { keys, text, readonly }}
+		{#each shortcuts as { keys, readonly, text }}
 			{#if !$readonlyStore || readonly}
 				<div class="flex items-center justify-between">
 					<p>{text}</p>

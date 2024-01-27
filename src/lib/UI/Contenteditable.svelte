@@ -1,6 +1,7 @@
 <script lang="ts">
-	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
+
+	import clsx from 'clsx';
 
 	import { clm } from '$lib/utils';
 
@@ -117,8 +118,6 @@
 </script>
 
 <button
-	type="button"
-	{id}
 	class={clm(
 		'contenteditable',
 		$$slots.left ? 'pl-2' : 'pl-4',
@@ -127,25 +126,27 @@
 		{ disabled },
 		className
 	)}
+	{id}
 	on:click={handleClick}
+	type="button"
 >
 	<slot name="left" />
 	<div class="relative w-full self-center">
 		<div
-			on:focus={handleFocus}
-			on:blur={handleBlur}
-			on:input={handleInput}
-			role="textbox"
-			on:paste|preventDefault={handlePaste}
-			bind:this={editableRef}
 			bind:innerHTML={html}
-			use:setReadonly={readonly || disabled}
-			contenteditable
+			bind:this={editableRef}
 			class={clsx(
 				'w-full bg-transparent',
 				!html && 'absolute',
 				hasPattern && 'text-transparent caret-text'
 			)}
+			contenteditable
+			on:blur={handleBlur}
+			on:focus={handleFocus}
+			on:input={handleInput}
+			on:paste|preventDefault={handlePaste}
+			role="textbox"
+			use:setReadonly={readonly || disabled}
 		/>
 		{#if hasPattern}
 			<div class="pointer-events-none absolute top-0 h-full w-full bg-transparent">
@@ -161,7 +162,7 @@
 
 <style lang="postcss">
 	.contenteditable {
-		@apply bg-contrast-2 hover:bg-contrast-5 relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 break-words rounded-lg py-2 text-left text-sm transition-colors;
+		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 break-words rounded-lg bg-contrast-2 py-2 text-left text-sm transition-colors hover:bg-contrast-5;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

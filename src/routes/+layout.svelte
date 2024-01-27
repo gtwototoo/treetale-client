@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
-	import { getPageType } from '$lib/utils';
 	import clsx from 'clsx';
 
+	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
 	import { panelStore } from '$lib/stores/panel';
+	import { getPageType } from '$lib/utils';
+
 	import '../app.postcss';
 
 	$: pageType = getPageType($page.url.pathname);
@@ -15,15 +16,15 @@
 	});
 </script>
 
-<svg width="0" height="0" aria-hidden="true" class="invisible absolute bg-transparent">
+<svg aria-hidden="true" class="invisible absolute bg-transparent" height="0" width="0">
 	<defs>
 		<linearGradient
+			gradientUnits="userSpaceOnUse"
 			id="linear-logo"
 			x1="137"
-			y1="0"
 			x2="137"
+			y1="0"
 			y2="442"
-			gradientUnits="userSpaceOnUse"
 		>
 			<stop stop-color="#FDBA74" />
 			<stop offset="1" stop-color="#FC8E4D" />

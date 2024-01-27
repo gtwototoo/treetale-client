@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Star } from 'svelte-heros-v2';
 
-	import Note from './Note.svelte';
-
 	import { Button, Input, Listbox } from '$UI';
+
+	import Note from './Note.svelte';
 	import Panel from './Panel.svelte';
 
 	const payments = ['Банковская карта', 'СБП'];
@@ -16,7 +16,7 @@
 		icon={Star}
 		text="Поддержите своего любимого автора, чтобы мотивировать его создавать новые интересные и захватывающие истории"
 	/>
-	<Input placeholder="Введите сумму" bind:value number />
+	<Input bind:value number placeholder="Введите сумму" />
 	<Listbox list={payments} placeholder="Вариант оплаты" />
-	<Button variant="main" class="justify-center bg-main">Внести вклад</Button>
+	<Button class="justify-center bg-main" variant="main">Внести вклад</Button>
 </Panel>

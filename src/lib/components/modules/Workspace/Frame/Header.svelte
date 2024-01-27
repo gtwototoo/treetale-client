@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import { activeModeStore } from '$lib/stores/workspace';
-	import type { IFrameCreate } from '$lib/types/editing';
 	import clsx from 'clsx';
 	import { MusicalNote } from 'svelte-heros-v2';
+
+	import type { IFrameCreate } from '$lib/types/editing';
+
+	import Icon from '$lib/components/Icon.svelte';
+	import { activeModeStore } from '$lib/stores/workspace';
+	import { Button } from '$UI';
 
 	export let start = false;
 	export let end = false;
@@ -18,12 +20,11 @@
 		dispatch('hide');
 	};
 
-	$: ({ hidden, choices, title, soundUrl } = frame);
+	$: ({ choices, hidden, soundUrl, title } = frame);
 	$: hasConnections = choices.some(({ frameId }) => frameId);
 </script>
 
 <Button
-	variant="main"
 	class={clsx(
 		'justify-between !text-text',
 		start && '!text-emerald-500',
@@ -31,6 +32,7 @@
 		$activeModeStore === 'binding' ? '!bg-main-60' : '!bg-contrast-5'
 	)}
 	on:click={hideFrame}
+	variant="main"
 >
 	{title}
 	{#if soundUrl}

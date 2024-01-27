@@ -1,14 +1,15 @@
 import type { GENRES_LIST } from '$lib/constants';
+
 import type { IStorySchema } from './schemas';
 
 export type TRGB = [number, number, number];
 
-export type TComparisonOperator = '=' | '≥' | '≤' | '>' | '<' | '≠';
-export type TMathOperator = '+' | '-' | '/' | '*' | '=';
+export type TComparisonOperator = '<' | '=' | '≠' | '>' | '≤' | '≥';
+export type TMathOperator = '-' | '*' | '/' | '+' | '=';
 
-export type TVariableExpects = 'Строка' | 'Число' | 'Да/Нет';
+export type TVariableExpects = 'Да/Нет' | 'Строка' | 'Число';
 
-export type TStoryStatus = 'draft' | 'review' | 'published';
+export type TStoryStatus = 'draft' | 'published' | 'review';
 
 export type TGenre = (typeof GENRES_LIST)[number]['id'];
 
@@ -18,7 +19,7 @@ export interface IStoryEditableInfo {
 	color: TRGB;
 	description: string;
 	genre: TGenre;
-	imageUrl?: string | null;
+	imageUrl?: null | string;
 	tags: Array<string>;
 	title: string;
 }
@@ -59,9 +60,9 @@ export interface IFrame {
 	[index: string]: unknown;
 	choices: Array<IChoice>;
 	frameId: number;
-	imageUrl: string | null;
-	soundUrl: string | null;
-	text: string | null;
+	imageUrl: null | string;
+	soundUrl: null | string;
+	text: null | string;
 }
 
 export interface IVariable {
@@ -94,18 +95,18 @@ export interface IProgressData {
 	version: number;
 }
 
-type IUserRole = 'member' | 'admin' | 'moderator';
+type IUserRole = 'admin' | 'member' | 'moderator';
 
 export interface IUser {
-	[index: string]: string | number | null | TRGB | Array<number>;
-	color: TRGB | null;
+	[index: string]: Array<number> | null | number | string | TRGB;
+	color: null | TRGB;
 	created: number;
 	description: string;
 	email: string;
-	imageUrl: string | null;
+	imageUrl: null | string;
 	name: string;
 	role: IUserRole;
-	sessionId: string | null;
+	sessionId: null | string;
 	subscriptions: Array<number>;
 	userId: number;
 }

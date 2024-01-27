@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { clsx } from 'clsx';
 	import { createEventDispatcher } from 'svelte';
+
+	import { clsx } from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 
 	import Icon from '$lib/components/Icon.svelte';
@@ -24,13 +25,16 @@
 
 	const removeTag = (name: string) => {
 		tags = tags.filter((value) => value !== name);
-		dispatch('remove', { name });
+
+		dispatch('remove', name);
 	};
 
 	const addTag = (name: string) => {
+		const lowerName = name.toLowerCase();
+
 		value = '';
-		tags = [...tags, name.toLowerCase()];
-		dispatch('add', { name });
+		tags = [...tags, lowerName];
+		dispatch('add', lowerName);
 	};
 
 	const handlePaste = (e: ClipboardEvent) => {
@@ -87,7 +91,6 @@
 </script>
 
 <button
-	type="button"
 	class={clsx(
 		'input',
 		focused && '!bg-contrast-5',
@@ -96,29 +99,30 @@
 		className
 	)}
 	on:keydown={handleKeydown}
+	type="button"
 >
 	{#each tags as tag}
-		<Tag class="bg-contrast-9 inline-flex items-stretch p-0">
+		<Tag class="inline-flex items-stretch bg-contrast-9 p-0">
 			<p class={clsx('pl-2 !leading-6', readonly && 'pr-2')}>{tag}</p>
 			{#if !readonly}
 				<Button
-					size="sm"
-					variant="ghost"
 					class="!py-1 hover:!text-red-600"
 					on:click={() => removeTag(tag)}
+					size="sm"
+					variant="ghost"
 				>
-					<Icon type={XMark} class="h-3 max-h-full w-3" />
+					<Icon class="h-3 max-h-full w-3" type={XMark} />
 				</Button>
 			{/if}
 		</Tag>
 	{/each}
 	<input
 		bind:value
+		on:blur={() => (focused = false)}
+		on:focus={() => (focused = true)}
+		on:paste|preventDefault={handlePaste}
 		{placeholder}
 		{readonly}
-		on:paste|preventDefault={handlePaste}
-		on:focus={() => (focused = true)}
-		on:blur={() => (focused = false)}
 		use:autoWidth={value}
 	/>
 </button>
@@ -128,7 +132,7 @@
 		@apply w-full flex-grow bg-transparent text-sm leading-6 placeholder:select-none;
 	}
 	.input {
-		@apply bg-contrast-2 hover:bg-contrast-5 flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-2 overflow-hidden rounded-lg py-2 text-text transition-colors;
+		@apply flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-2 overflow-hidden rounded-lg bg-contrast-2 py-2 text-text transition-colors hover:bg-contrast-5;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;

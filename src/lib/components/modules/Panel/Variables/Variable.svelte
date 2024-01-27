@@ -1,14 +1,16 @@
 <script lang="ts">
+	import type { IList } from '$UI/Listbox.svelte';
+
 	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 
-	import { Button, FormSplit, Input, Listbox } from '$UI';
-	import type { IList } from '$UI/Listbox.svelte';
+	import type { TVariableExpects } from '$lib/types';
+
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
-	import type { TVariableExpects } from '$lib/types';
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 
 	export let varKey: number;
 	export let checkUpdates: () => void;
@@ -21,11 +23,11 @@
 		{ title: 'Строка' },
 		{ title: 'Число' },
 		{
-			title: 'Да/Нет',
 			click: () => {
 				if (!['Да', 'Нет'].includes($variablesStore[varKey].value))
 					$variablesStore[varKey].value = 'Да';
-			}
+			},
+			title: 'Да/Нет'
 		}
 	];
 
@@ -41,53 +43,53 @@
 <FormSplit class="w-full">
 	<Input
 		bind:value={$variablesStore[varKey].name}
-		placeholder="Название"
-		readonly={$readonlyStore}
-		maxlength={15}
 		class={clsx('shrink-0', $panelEditMode ? 'grow' : 'w-[13rem]')}
 		disabled={$panelEditMode}
+		maxlength={15}
 		on:input={checkUpdates}
+		placeholder="Название"
+		readonly={$readonlyStore}
 	>
 		<svelte:fragment slot="right">
 			<Listbox
-				size="sm"
-				bind:value={$variablesStore[varKey].expect}
-				placeholder="Тип"
-				list={types}
 				align="right"
-				readonly={$readonlyStore}
+				bind:value={$variablesStore[varKey].expect}
+				list={types}
 				on:change={checkUpdates}
+				placeholder="Тип"
+				readonly={$readonlyStore}
+				size="sm"
 			/>
 		</svelte:fragment>
 	</Input>
 	{#if !$panelEditMode}
 		{#if $variablesStore[varKey].expect === 'Да/Нет'}
 			<Listbox
-				bind:value={$variablesStore[varKey].value}
-				placeholder="Значение"
-				readonly={$readonlyStore}
 				align="inset"
+				bind:value={$variablesStore[varKey].value}
 				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
 				list={[{ title: 'Да' }, { title: 'Нет' }]}
 				on:change={checkUpdates}
+				placeholder="Значение"
+				readonly={$readonlyStore}
 			/>
 		{:else}
 			<Input
 				bind:value={$variablesStore[varKey].value}
-				maxlength={32}
-				placeholder="Значение"
 				class="w-full"
-				readonly={$readonlyStore}
+				maxlength={32}
 				number={$variablesStore[varKey].expect !== 'Строка'}
 				on:input={checkUpdates}
+				placeholder="Значение"
+				readonly={$readonlyStore}
 			/>
 		{/if}
 	{/if}
 	{#if $panelEditMode}
 		<Button
-			variant="main"
-			on:click={removeVariable}
 			class={clsx('!text-red-500', $redColorStore)}
+			on:click={removeVariable}
+			variant="main"
 		>
 			<Icon type={XMark} />
 		</Button>
