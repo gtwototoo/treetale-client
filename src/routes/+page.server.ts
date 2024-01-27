@@ -1,6 +1,7 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import type { IUser } from '$lib/types/index.js';
 import type { IStorySchema } from '$lib/types/schemas.js';
+import { randomError } from '$lib/utils/random.js';
 import type { FilterQuery } from 'mongoose';
 
 interface ICategory {
@@ -21,7 +22,11 @@ interface IResponseMainInfo {
 
 export const load = async ({ fetch }) => {
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/main`);
-	const mainInfo = await res.json();
+	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseMainInfo;
 
-	return mainInfo as IResponseMainInfo;
+	if (error) {
+		throw randomError(500);
+	}
+
+	return data as IResponseMainInfo;
 };

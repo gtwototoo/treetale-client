@@ -15,7 +15,11 @@ export const load = async ({ fetch, params, locals }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}`);
-	const storyInfo = await res.json();
+	const { error, ...data } = (await res.json()) as { error: boolean } & IStorySchema;
 
-	return storyInfo as IStorySchema;
+	if (error) {
+		throw randomError(404);
+	}
+
+	return data as IStorySchema;
 };

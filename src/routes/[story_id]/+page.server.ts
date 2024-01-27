@@ -19,7 +19,11 @@ export const load = async ({ params, fetch }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/progress/${storyId}`);
-	const progressInfo = await res.json();
+	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseProgress;
 
-	return progressInfo as IResponseProgress;
+	if (error) {
+		throw randomError(404);
+	}
+
+	return data as IResponseProgress;
 };
