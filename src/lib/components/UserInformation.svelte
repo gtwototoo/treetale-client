@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';	import clsx from 'clsx';
+	import { page } from '$app/stores';
+	import clsx from 'clsx';
 	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
 
 	import type { IUser } from '$lib/types';

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import clsx from 'clsx';	import { Heart } from 'svelte-heros-v2';
+	import clsx from 'clsx';
+	import { Heart } from 'svelte-heros-v2';
 
 	import { addLike } from '$lib/requests/story';
 	import { Button } from '$UI';

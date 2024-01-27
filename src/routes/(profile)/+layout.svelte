@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import clsx from 'clsx';	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
+	import clsx from 'clsx';
+	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
 
 	import Icon from '$lib/components/Icon.svelte';

@@ -4,7 +4,8 @@
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/history';
-	import { redColorStore } from '$lib/stores/main';	import { activeModeStore, framesDataStore } from '$lib/stores/workspace';
+	import { redColorStore } from '$lib/stores/main';
+	import { activeModeStore, framesDataStore } from '$lib/stores/workspace';
 	import { createLineRemoveButtons, transform } from '$lib/utils';
 	import { Button } from '$UI';
 

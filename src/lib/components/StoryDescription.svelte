@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { BookOpen } from 'svelte-heros-v2';
 
-	import type { IUser } from '$lib/types';	import type { IStoryFull } from '$lib/types/reading';
+	import type { IUser } from '$lib/types';
+	import type { IStoryFull } from '$lib/types/reading';
 
 	import { correctVariableReplace } from '$lib/utils';
 

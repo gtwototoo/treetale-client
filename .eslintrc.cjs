@@ -1,13 +1,21 @@
 module.exports = {
 	root: true,
 	extends: [
-		'eslint:recommended',
 		'plugin:svelte/recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:perfectionist/recommended-alphabetical',
 		'prettier'
 	],
-	plugins: ['@typescript-eslint', 'perfectionist'],
+	parser: '@typescript-eslint/parser',
+	overrides: [
+		{
+			files: ['*.svelte'],
+			parser: 'svelte-eslint-parser',
+			parserOptions: {
+				parser: '@typescript-eslint/parser'
+			}
+		}
+	],
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '_' }],
 		'svelte/no-at-html-tags': 'off',
@@ -21,8 +29,8 @@ module.exports = {
 				groups: [
 					'type',
 					'svelte',
-					'aliases',
 					['builtin', 'external'],
+					'aliases',
 					'internal-type',
 					'internal',
 					['parent-type', 'sibling-type', 'index-type'],
@@ -45,25 +53,5 @@ module.exports = {
 			}
 		]
 	},
-	parser: '@typescript-eslint/parser',
-	ignorePatterns: ['*.cjs'],
-	parserOptions: {
-		ecmaVersion: 2020,
-		sourceType: 'module',
-		extraFileExtensions: ['.svelte']
-	},
-	overrides: [
-		{
-			files: ['*.svelte'],
-			parser: 'svelte-eslint-parser',
-			parserOptions: {
-				parser: '@typescript-eslint/parser'
-			}
-		}
-	],
-	env: {
-		browser: true,
-		es2017: true,
-		node: true
-	}
+	ignorePatterns: ['*.cjs']
 };

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';	import clsx from 'clsx';
+	import { page } from '$app/stores';
+	import clsx from 'clsx';
 
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';

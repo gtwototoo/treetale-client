@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';	import clsx from 'clsx';	import { Plus } from 'svelte-heros-v2';
+	import { page } from '$app/stores';
+	import clsx from 'clsx';
+	import { Plus } from 'svelte-heros-v2';
 
 	import { createStory } from '$lib/requests/story';
 	import { Button } from '$UI';

@@ -16,7 +16,8 @@
 	} from '$lib/stores/workspace';
 
 	import ConnectionsLayer from './ConnectionsLayer.svelte';
-	import Frame from './Frame/Frame.svelte';	import LineManipulators from './LineManipulators.svelte';
+	import Frame from './Frame/Frame.svelte';
+	import LineManipulators from './LineManipulators.svelte';
 	import MovingArea from './MovingArea.svelte';
 	import NewFrame from './NewFrame.svelte';
 	import WindowActions from './WindowActions.svelte';

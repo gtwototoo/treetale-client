@@ -1,5 +1,6 @@
 <script lang="ts">
-	import clsx from 'clsx';	import { Plus, XMark } from 'svelte-heros-v2';
+	import clsx from 'clsx';
+	import { Plus, XMark } from 'svelte-heros-v2';
 
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';

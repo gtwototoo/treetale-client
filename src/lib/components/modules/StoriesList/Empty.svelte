@@ -1,5 +1,6 @@
 <script lang="ts">
-	import clsx from 'clsx';	import { BookOpen } from 'svelte-heros-v2';
+	import clsx from 'clsx';
+	import { BookOpen } from 'svelte-heros-v2';
 
 	import { Card } from '$UI';
 
