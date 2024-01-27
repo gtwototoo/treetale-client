@@ -2,12 +2,12 @@
 	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/history';
 	import { redColorStore } from '$lib/stores/main';
 	import { activeModeStore, framesDataStore } from '$lib/stores/workspace';
 	import { createLineRemoveButtons, transform } from '$lib/utils';
-	import { Button } from '$UI';
 
 	const removeConnection = (frameId: number, choiceId: number) => {
 		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === frameId);

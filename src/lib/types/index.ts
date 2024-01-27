@@ -4,8 +4,8 @@ import type { IStorySchema } from './schemas';
 
 export type TRGB = [number, number, number];
 
-export type TComparisonOperator = '<' | '=' | '≠' | '>' | '≤' | '≥';
-export type TMathOperator = '-' | '*' | '/' | '+' | '=';
+export type TComparisonOperator = '<' | '=' | '>' | '≠' | '≤' | '≥';
+export type TMathOperator = '*' | '+' | '/' | '=' | '-';
 
 export type TVariableExpects = 'Да/Нет' | 'Строка' | 'Число';
 
@@ -98,8 +98,8 @@ export interface IProgressData {
 type IUserRole = 'admin' | 'member' | 'moderator';
 
 export interface IUser {
-	[index: string]: Array<number> | null | number | string | TRGB;
-	color: null | TRGB;
+	[index: string]: Array<number> | TRGB | null | number | string;
+	color: TRGB | null;
 	created: number;
 	description: string;
 	email: string;

@@ -2,11 +2,11 @@
 	import clsx from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 
+	import { Button, Contenteditable, FormSplit, InputTags } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { notesStore } from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
-	import { Button, Contenteditable, FormSplit, InputTags } from '$UI';
 
 	export let noteKey: number;
 	export let checkUpdates: () => void;

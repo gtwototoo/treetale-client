@@ -6,11 +6,11 @@
 
 	import type { TVariableExpects } from '$lib/types';
 
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
-	import { Button, FormSplit, Input, Listbox } from '$UI';
 
 	export let varKey: number;
 	export let checkUpdates: () => void;

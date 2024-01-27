@@ -2,6 +2,7 @@
 	import clsx from 'clsx';
 	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
 
+	import { Button, Contenteditable, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { readonlyStore } from '$lib/stores/editing';
@@ -10,7 +11,6 @@
 	import { panelEditMode, panelShow } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import { contrastText, getFrameFromId } from '$lib/utils';
-	import { Button, Contenteditable, FormSplit } from '$UI';
 
 	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
 	import Modificators from './Modificators.svelte';

@@ -12,8 +12,8 @@ export const doLogic = (
 	const operations: Record<TComparisonOperator, boolean> = {
 		'<': firstValue < secondValue,
 		'=': firstValue === secondValue,
-		'≠': firstValue !== secondValue,
 		'>': firstValue > secondValue,
+		'≠': firstValue !== secondValue,
 		'≤': firstValue <= secondValue,
 		'≥': firstValue >= secondValue
 	};
@@ -33,10 +33,10 @@ export const doMath = (
 	if (typeof firstValue === 'string' || typeof secondValue === 'string') return `${firstValue}`;
 
 	const operations: Record<Exclude<TMathOperator, '='>, number> = {
-		'-': firstValue - secondValue,
 		'*': firstValue * secondValue,
+		'+': firstValue + secondValue,
 		'/': firstValue / secondValue,
-		'+': firstValue + secondValue
+		'-': firstValue - secondValue
 	};
 
 	if (!(symbol in operations)) return `${firstValue}`;

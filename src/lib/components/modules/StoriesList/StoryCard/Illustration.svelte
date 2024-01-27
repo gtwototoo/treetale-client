@@ -3,8 +3,8 @@
 
 	import type { TGenre } from '$lib/types';
 
-	import { GENRES_LIST } from '$lib/constants';
 	import { Image } from '$UI';
+	import { GENRES_LIST } from '$lib/constants';
 
 	export let title: string;
 	export let imageUrl: string;

@@ -2,11 +2,11 @@
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 
+	import { Button } from '$UI';
 	import { publishStory, reviewRequestStory } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
 	import { contrastText, correctWhitespace } from '$lib/utils';
-	import { Button } from '$UI';
 
 	let loading = false;
 

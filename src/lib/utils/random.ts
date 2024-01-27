@@ -1,4 +1,4 @@
-import { error, type HttpError } from '@sveltejs/kit';
+import { type HttpError, error } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 

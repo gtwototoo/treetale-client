@@ -5,8 +5,8 @@
 
 	import type { IUser, TRGB } from '$lib/types';
 
-	import { removeImage, saveImage } from '$lib/requests/files';
 	import { Avatar, Button, InputFile } from '$UI';
+	import { removeImage, saveImage } from '$lib/requests/files';
 
 	import Icon from './Icon.svelte';
 

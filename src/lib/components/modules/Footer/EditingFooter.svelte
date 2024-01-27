@@ -2,6 +2,7 @@
 	import clsx from 'clsx';
 	import { Plus, XMark } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
@@ -14,7 +15,6 @@
 		zoomStore
 	} from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
-	import { Button } from '$UI';
 
 	import Radar from './Radar.svelte';
 	import StateMode from './StateMode.svelte';

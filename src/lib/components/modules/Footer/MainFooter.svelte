@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { DocumentText } from 'svelte-heros-v2';
 
-	import Icon from '$lib/components/Icon.svelte';
-	import { Mastercard, Mir, Telegram, TreetaleShort, Visa } from '$lib/components/icons';
-	import Link from '$lib/components/Link.svelte';
 	import { Button } from '$UI';
+	import Icon from '$lib/components/Icon.svelte';
+	import Link from '$lib/components/Link.svelte';
+	import { Mastercard, Mir, Telegram, TreetaleShort, Visa } from '$lib/components/icons';
 
 	const currentYear = new Date().getFullYear();
 </script>

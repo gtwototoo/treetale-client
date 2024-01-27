@@ -5,11 +5,11 @@
 
 	import type { IUser, TStoryStatus } from '$lib/types';
 
+	import { FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Likes from '$lib/components/Likes.svelte';
 	import ProfileLink from '$lib/components/ProfileLink.svelte';
 	import Tags from '$lib/components/Tags.svelte';
-	import { FormSplit } from '$UI';
 
 	export let status: TStoryStatus;
 	export let likes: Array<number>;

@@ -2,12 +2,12 @@
 	import clsx from 'clsx';
 	import { ArrowsPointingIn, PencilSquare, XMark } from 'svelte-heros-v2';
 
+	import { Button, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { panelEditMode, panelShow, panelStore } from '$lib/stores/panel';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import { clm } from '$lib/utils';
-	import { Button, Listbox } from '$UI';
 
 	import { setSelectedFrame } from '../Workspace/methods';
 

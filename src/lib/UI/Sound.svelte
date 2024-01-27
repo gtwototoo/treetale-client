@@ -5,10 +5,10 @@
 	import { Howl } from 'howler';
 	import { MusicalNote, Play, Stop, Trash } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$lib/components/icons';
 	import { redColorStore } from '$lib/stores/main';
-	import { Button } from '$UI';
 
 	import InputFile from './InputFile.svelte';
 

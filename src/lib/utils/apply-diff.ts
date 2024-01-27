@@ -1,4 +1,4 @@
-type TQuasiBaseType = boolean | Date | number | RegExp | string | unknown;
+type TQuasiBaseType = Date | RegExp | boolean | number | string | unknown;
 
 interface IElem {
 	[index: number | string]: IElem | object | unknown;

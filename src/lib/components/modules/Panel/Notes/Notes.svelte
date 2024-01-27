@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Cloud, DocumentText } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateNotes } from '$lib/requests/story';
 	import { informationDataStore, notesStore, readonlyStore } from '$lib/stores/editing';
 	import { panelEditMode } from '$lib/stores/panel';
-	import { Button } from '$UI';
 
 	import Note from '../Note.svelte';
 	import Panel from '../Panel.svelte';

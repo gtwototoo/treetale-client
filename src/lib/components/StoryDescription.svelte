@@ -7,8 +7,8 @@
 	import { correctVariableReplace } from '$lib/utils';
 
 	import Icon from './Icon.svelte';
-	import Info from './modules/StoriesList/StoryCard/Info.svelte';
 	import ReadCard from './ReadCard.svelte';
+	import Info from './modules/StoriesList/StoryCard/Info.svelte';
 
 	export let story: IStoryFull;
 	export let author: IUser;

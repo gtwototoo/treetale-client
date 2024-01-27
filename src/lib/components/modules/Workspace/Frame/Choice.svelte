@@ -3,12 +3,12 @@
 
 	import type { ILogicOperation, IMathOperation } from '$lib/types';
 
+	import { Button } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { panelShow } from '$lib/stores/panel';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { clm, contrastText, getFrameFromId } from '$lib/utils';
-	import { Button } from '$UI';
 
 	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
 

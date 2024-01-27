@@ -4,6 +4,7 @@
 
 	import type { IFrameCreate } from '$lib/types/editing';
 
+	import { Image } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore } from '$lib/stores/main';
@@ -15,7 +16,6 @@
 		movingFrameStore
 	} from '$lib/stores/workspace';
 	import { contrastText, createConnections, transform } from '$lib/utils';
-	import { Image } from '$UI';
 
 	import { setSelectedFrame } from '../methods';
 	import Choices from './Choices.svelte';

@@ -10,12 +10,12 @@
 		TMathOperator
 	} from '$lib/types';
 
+	import { Button, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
 	import { framesDataStore } from '$lib/stores/workspace';
 	import { contrastText } from '$lib/utils';
-	import { Button, Input, Listbox } from '$UI';
 
 	type TModificator = 'logic' | 'math';
 

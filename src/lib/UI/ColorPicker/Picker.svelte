@@ -3,8 +3,8 @@
 
 	import type { TRGB } from '$lib/types';
 
-	import { RGB } from '$lib/utils';
 	import { InputRange } from '$UI';
+	import { RGB } from '$lib/utils';
 
 	export let lightRange: Array<number>;
 	export let saturateRange: Array<number>;

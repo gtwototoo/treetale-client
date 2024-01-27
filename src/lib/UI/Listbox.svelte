@@ -7,16 +7,16 @@
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher, type SvelteComponent } from 'svelte';
+	import { type SvelteComponent, createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	import { clsx } from 'clsx';
 	import { ChevronDown } from 'svelte-heros-v2';
 
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
 	import { clm } from '$lib/utils';
-	import { Button, FormSplit } from '$UI';
 
 	let className = '';
 	export { className as class };

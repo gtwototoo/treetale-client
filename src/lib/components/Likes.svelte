@@ -3,8 +3,8 @@
 	import clsx from 'clsx';
 	import { Heart } from 'svelte-heros-v2';
 
-	import { addLike } from '$lib/requests/story';
 	import { Button } from '$UI';
+	import { addLike } from '$lib/requests/story';
 
 	import Icon from './Icon.svelte';
 

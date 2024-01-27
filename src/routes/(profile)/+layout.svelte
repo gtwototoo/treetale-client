@@ -4,13 +4,13 @@
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { getPageType, rootStyle } from '$lib/utils';
-	import { Button } from '$UI';
 
 	export let data;
 

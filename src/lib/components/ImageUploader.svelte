@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { createEventDispatcher, type SvelteComponent } from 'svelte';
+	import { type SvelteComponent, createEventDispatcher } from 'svelte';
 
 	import clsx from 'clsx';
 	import { Trash } from 'svelte-heros-v2';
 
+	import { Button, Image } from '$UI';
 	import { redColorStore } from '$lib/stores/main';
 	import { clm } from '$lib/utils';
-	import { Button, Image } from '$UI';
 
 	import DropBlock from './DropBlock.svelte';
 	import Icon from './Icon.svelte';

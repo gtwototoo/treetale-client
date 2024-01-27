@@ -3,7 +3,7 @@ module.exports = {
 	extends: [
 		'plugin:svelte/recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:perfectionist/recommended-alphabetical',
+		'plugin:perfectionist/recommended-natural',
 		'prettier'
 	],
 	parser: '@typescript-eslint/parser',
@@ -18,13 +18,14 @@ module.exports = {
 	],
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '_' }],
+		'svelte/sort-attributes': 'off',
 		'svelte/no-at-html-tags': 'off',
 		'@typescript-eslint/adjacent-overload-signatures': 'off',
 		'no-undef': 'off',
 		'perfectionist/sort-imports': [
 			'error',
 			{
-				type: 'alphabetical',
+				type: 'natural',
 				order: 'asc',
 				groups: [
 					'type',

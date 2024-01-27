@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Cloud, Variable } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { updateVars } from '$lib/requests/story';
 	import { informationDataStore, readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { panelEditMode } from '$lib/stores/panel';
 	import { correctWhitespace } from '$lib/utils';
-	import { Button } from '$UI';
 
 	import Note from '../Note.svelte';
 	import Panel from '../Panel.svelte';

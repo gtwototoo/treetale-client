@@ -7,6 +7,7 @@
 	import type { IFrame } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 
+	import { Button, Contenteditable, FormSplit, Input, Sound } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { removeImage, removeSound, saveImage, saveSound } from '$lib/requests/files';
@@ -21,7 +22,6 @@
 	import { panelEditMode, panelStore } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
-	import { Button, Contenteditable, FormSplit, Input, Sound } from '$UI';
 
 	import Panel from '../Panel.svelte';
 	import Choice from './Choice.svelte';

@@ -6,9 +6,9 @@
 
 	import type { IFrameCreate } from '$lib/types/editing';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { activeModeStore } from '$lib/stores/workspace';
-	import { Button } from '$UI';
 
 	export let start = false;
 	export let end = false;

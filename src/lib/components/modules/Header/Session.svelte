@@ -2,10 +2,10 @@
 	import { page } from '$app/stores';
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
-	import { Button } from '$UI';
 </script>
 
 {#if $page.data.session}

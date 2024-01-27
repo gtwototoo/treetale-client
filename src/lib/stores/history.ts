@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte';
-import { get, writable, type Writable } from 'svelte/store';
+import { type Writable, get, writable } from 'svelte/store';
 
 import { diff } from 'deep-object-diff';
 import { Play } from 'svelte-heros-v2';
@@ -7,7 +7,7 @@ import { Play } from 'svelte-heros-v2';
 import type { IFrameCreate } from '$lib/types/editing';
 
 import { serialize } from '$lib/utils';
-import { applyDiff, type IDiff } from '$lib/utils/apply-diff';
+import { type IDiff, applyDiff } from '$lib/utils/apply-diff';
 
 import { framesDataStore } from './workspace';
 

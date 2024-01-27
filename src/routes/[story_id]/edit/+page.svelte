@@ -7,9 +7,11 @@
 	import type { IFrameCreate, IStartMove } from '$lib/types/editing';
 	import type { ICoordinates } from '$lib/types/index';
 
+	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import EditingFooter from '$lib/components/modules/Footer/EditingFooter.svelte';
 	import InformationSettings from '$lib/components/modules/Panel/InformationSettings/InformationSettings.svelte';
 	import CreateText from '$lib/components/modules/Workspace/CreateText.svelte';
+	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
 	import {
 		addFrame,
 		cursorFollow,
@@ -17,8 +19,6 @@
 		movingFrame,
 		startMoveArea
 	} from '$lib/components/modules/Workspace/methods';
-	import Workspace from '$lib/components/modules/Workspace/Workspace.svelte';
-	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { DEFAULT_COLOR, DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { updateArea } from '$lib/requests/story';
 	import {

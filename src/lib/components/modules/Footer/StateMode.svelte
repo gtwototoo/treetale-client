@@ -13,17 +13,17 @@
 		Square3Stack3d
 	} from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { ICON_TYPE } from '$lib/constants';
 	import { readonlyStore, stateAreaStore } from '$lib/stores/editing';
 	import {
+		type IAction,
+		type IMode,
 		activeActionStore,
 		activeModeStore,
-		connectionStore,
-		type IAction,
-		type IMode
+		connectionStore
 	} from '$lib/stores/workspace';
-	import { Button } from '$UI';
 
 	const iconsModes: Record<IMode, typeof SvelteComponent<unknown>> = {
 		adding: Square3Stack3d,

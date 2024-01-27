@@ -4,12 +4,12 @@
 	import clsx from 'clsx';
 	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { panelStore } from '$lib/stores/panel';
 	import { fullscreenStore } from '$lib/stores/reading';
 	import { contrastText } from '$lib/utils';
-	import { Button } from '$UI';
 
 	import Donut from '../Panel/Donut.svelte';
 	import Header from './Header.svelte';

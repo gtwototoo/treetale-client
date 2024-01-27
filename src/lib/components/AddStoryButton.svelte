@@ -4,8 +4,8 @@
 	import clsx from 'clsx';
 	import { Plus } from 'svelte-heros-v2';
 
-	import { createStory } from '$lib/requests/story';
 	import { Button } from '$UI';
+	import { createStory } from '$lib/requests/story';
 
 	import Icon from './Icon.svelte';
 

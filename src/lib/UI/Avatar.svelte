@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { TRGB } from '$lib/types';
 
-	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
-	import { alphaToRgb, clm, contrastText, last, RGB } from '$lib/utils';
 	import { Image } from '$UI';
+	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
+	import { RGB, alphaToRgb, clm, contrastText, last } from '$lib/utils';
 
 	let className = '';
 	export { className as class };

@@ -6,6 +6,7 @@
 
 	import type { IUser } from '$lib/types';
 
+	import { Button, ColorPicker, Contenteditable } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import {
@@ -15,7 +16,6 @@
 		updateProfile
 	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { Button, ColorPicker, Contenteditable } from '$UI';
 
 	export let user: IUser;
 	export let me: boolean;

@@ -5,10 +5,10 @@
 	import type { IUser, IVariable } from '$lib/types';
 	import type { IStoryReading } from '$lib/types/reading';
 
+	import { Card } from '$UI';
 	import Link from '$lib/components/Link.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { generateMainColors } from '$lib/utils';
-	import { Card } from '$UI';
 
 	import Body from './Body.svelte';
 	import Illustration from './Illustration.svelte';

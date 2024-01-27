@@ -4,6 +4,7 @@
 	import clsx from 'clsx';
 	import { BookOpen, Cloud, Photo } from 'svelte-heros-v2';
 
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
@@ -19,7 +20,6 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
 	import { exclude, notesHighlight, variablesHighlight } from '$lib/utils';
-	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
 
 	import Panel from '../Panel.svelte';
 	import Publishing from './Publishing.svelte';

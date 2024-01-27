@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { Button } from '$UI';
 	import Link from '$lib/components/Link.svelte';
 	import StoriesList from '$lib/components/modules/StoriesList/StoriesList.svelte';
 	import { correctWhitespace } from '$lib/utils';
-	import { Button } from '$UI';
 
 	export let data;
 </script>

@@ -5,6 +5,7 @@
 
 	import type { ILogicOperation } from '$lib/types';
 
+	import { FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, soundStore, variablesStore } from '$lib/stores/reading';
 	import {
@@ -15,7 +16,6 @@
 		getChoiceFromId,
 		getFrameFromId
 	} from '$lib/utils';
-	import { FormSplit } from '$UI';
 
 	import Choice from './Choice.svelte';
 

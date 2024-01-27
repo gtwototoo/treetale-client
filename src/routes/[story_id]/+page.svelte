@@ -5,9 +5,9 @@
 		EmblaPluginType
 	} from 'embla-carousel-svelte';
 
+	import Button from '$UI/Button.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Button from '$UI/Button.svelte';
 	import clsx from 'clsx';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';

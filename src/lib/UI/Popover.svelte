@@ -4,10 +4,10 @@
 	import { clsx } from 'clsx';
 	import { ChevronDown } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { clickOutside, correctPosition } from '$lib/hooks';
 	import { clm } from '$lib/utils';
-	import { Button } from '$UI';
 
 	let className = '';
 	export { className as class };

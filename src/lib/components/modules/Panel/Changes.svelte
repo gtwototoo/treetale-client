@@ -2,9 +2,9 @@
 	import clsx from 'clsx';
 	import { Clock } from 'svelte-heros-v2';
 
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { changesHistory } from '$lib/stores/history';
-	import { Button, FormSplit } from '$UI';
 
 	import Note from './Note.svelte';
 	import Panel from './Panel.svelte';

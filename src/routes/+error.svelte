@@ -2,10 +2,10 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
+	import { Button } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils';
-	import { Button } from '$UI';
 
 	$: isNotFound = $page.status === 404;
 	$: $bodyColorStore = $page.error?.color;

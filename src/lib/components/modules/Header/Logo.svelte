@@ -1,7 +1,7 @@
 <script lang="ts">
+	import Link from '$lib/components/Link.svelte';
 	import { TreetaleShort } from '$lib/components/icons';
 	import Treetale from '$lib/components/icons/Treetale.svelte';
-	import Link from '$lib/components/Link.svelte';
 </script>
 
 <Link class="select-none px-2 md:px-4" href="/">

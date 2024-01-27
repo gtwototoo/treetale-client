@@ -47,8 +47,8 @@ export type TouchAction =
 	| 'pan-x'
 	| 'pan-y'
 	| 'pinch-zoom'
-	| 'revert-layer'
 	| 'revert'
+	| 'revert-layer'
 	| 'unset';
 export type BaseParams = Composed & {
 	touchAction: TouchAction;

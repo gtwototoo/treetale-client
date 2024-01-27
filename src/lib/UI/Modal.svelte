@@ -5,9 +5,9 @@
 	import { clsx } from 'clsx';
 	import { XMark } from 'svelte-heros-v2';
 
+	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { createPortal } from '$lib/hooks';
-	import { Button } from '$UI';
 
 	let className = '';
 	export { className as class };

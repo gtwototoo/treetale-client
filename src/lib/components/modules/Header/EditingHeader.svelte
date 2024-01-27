@@ -9,12 +9,12 @@
 		Variable
 	} from 'svelte-heros-v2';
 
+	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { panelShow, panelStore } from '$lib/stores/panel';
 	import { activeActionStore } from '$lib/stores/workspace';
-	import { Button, FormSplit } from '$UI';
 
 	import { Changes, Variables } from '../Panel';
 	import Notes from '../Panel/Notes/Notes.svelte';

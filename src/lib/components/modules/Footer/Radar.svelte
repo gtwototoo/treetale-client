@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { ICoordinates } from '$lib/types';
 
+	import { Button } from '$UI';
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
 	import { clm, transform } from '$lib/utils';
-	import { Button } from '$UI';
 
 	export let workspaceHeight: number;
 	export let workspaceWidth: number;

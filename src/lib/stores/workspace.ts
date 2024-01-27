@@ -1,4 +1,4 @@
-import { derived, get, writable, type Writable } from 'svelte/store';
+import { type Writable, derived, get, writable } from 'svelte/store';
 
 import type { ICoordinates, TBoundings } from '$lib/types';
 import type { IConnect, IFrameCreate } from '$lib/types/editing';

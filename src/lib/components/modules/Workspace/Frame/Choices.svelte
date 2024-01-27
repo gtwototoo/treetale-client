@@ -2,11 +2,11 @@
 	import clsx from 'clsx';
 	import { Plus } from 'svelte-heros-v2';
 
+	import { Button, FormSplit } from '$UI';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { last } from '$lib/utils';
-	import { Button, FormSplit } from '$UI';
 
 	import Choice from './Choice.svelte';
 
