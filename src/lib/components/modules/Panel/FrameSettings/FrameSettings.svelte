@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { ArrowLeft, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
+	import { ArrowLeft, MusicalNote, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
 
 	import Choice from './Choice.svelte';
 
 	import { Button, Contenteditable, FormSplit, Input } from '$UI';
+	import Sound from '$UI/Sound.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
-	import { removeImage, saveImage } from '$lib/requests/image';
+	import { removeImage, removeSound, saveImage, saveSound } from '$lib/requests/files';
 	import {
 		informationDataStore,
 		notesStore,
@@ -27,18 +28,51 @@
 	const imageFolder = 'frames';
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
-	$: ({ x, y, choices, imageUrl, frameId } = $framesDataStore[frameKey] || ({} as IFrameCreate));
+	$: ({ x, y, choices, imageUrl, frameId, soundUrl } =
+		$framesDataStore[frameKey] || ({} as IFrameCreate));
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
-			const { imageUrl } = await saveImage(file, imageFolder, {
+			const { fileUrl } = await saveImage(file, imageFolder, {
 				storyId: $informationDataStore.storyId,
 				frameId: $selectedFrameStore
 			});
 
-			$framesDataStore[frameKey].imageUrl = imageUrl;
+			$framesDataStore[frameKey].imageUrl = fileUrl;
 
 			changesHistory.add('Добавление изображения блока', Photo);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const preSaveSound = async (file: File): Promise<void> => {
+		try {
+			const { fileUrl } = await saveSound(file, {
+				storyId: $informationDataStore.storyId,
+				frameId: $selectedFrameStore
+			});
+
+			$framesDataStore[frameKey].soundUrl = fileUrl;
+
+			changesHistory.add('Добавление звука', MusicalNote);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const preRemoveSound = async () => {
+		if (!$framesDataStore[frameKey].soundUrl) return;
+
+		try {
+			await removeSound({
+				storyId: $informationDataStore.storyId,
+				frameId: $selectedFrameStore
+			});
+
+			$framesDataStore[frameKey].soundUrl = null;
+
+			changesHistory.add('Удаление звука', Trash);
 		} catch (e) {
 			console.error(e);
 		}
@@ -140,6 +174,12 @@
 		$framesDataStore[frameKey].imageUrl = onePrevFrame.imageUrl;
 	};
 
+	const handleAddSound = (e: CustomEvent<FileList>) => {
+		const file = e.detail[0];
+
+		preSaveSound(file);
+	};
+
 	onDestroy(() => {
 		$selectedFrameStore = null;
 	});
@@ -192,6 +232,7 @@
 				</Button>
 			{/if}
 		</FormSplit>
+		<Sound on:change={handleAddSound} on:remove={preRemoveSound} src={soundUrl} />
 		<FormSplit vertical>
 			<Input
 				placeholder="Название блока"

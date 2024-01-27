@@ -8,7 +8,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
-	import { removeImage, saveImage } from '$lib/requests/image';
+	import { removeImage, saveImage } from '$lib/requests/files';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
 	import {
 		informationDataStore,
@@ -82,11 +82,11 @@
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
-			const { imageUrl } = await saveImage(file, imageFolder, {
+			const { fileUrl } = await saveImage(file, imageFolder, {
 				storyId: $informationDataStore.storyId
 			});
 
-			$informationDataStore.imageUrl = imageUrl;
+			$informationDataStore.imageUrl = fileUrl;
 
 			changesHistory.add('Добавление изображения истории', Photo);
 		} catch (e) {

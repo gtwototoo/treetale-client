@@ -6,7 +6,7 @@
 
 	import { FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { framesStore, variablesStore } from '$lib/stores/reading';
+	import { framesStore, soundStore, variablesStore } from '$lib/stores/reading';
 	import type { ILogicOperation } from '$lib/types';
 	import {
 		correctToType,
@@ -26,6 +26,7 @@
 
 	export let frameId: number;
 	export let selectedChoiceId: number | undefined = undefined;
+	export let isLastFrame: boolean;
 
 	const handleClick = (choiceId: number) => {
 		dispatch('click', { choiceId });
@@ -68,7 +69,11 @@
 		return correctVariableReplace(text, $variablesStore) || 'Пустота...';
 	};
 
-	$: ({ imageUrl, text, choices } = getFrameFromId($framesStore, frameId));
+	$: ({ imageUrl, text, choices, soundUrl } = getFrameFromId($framesStore, frameId));
+
+	$: if (isLastFrame) {
+		soundStore.setSrc(soundUrl);
+	}
 </script>
 
 <ReadCard src={imageUrl} text={dynamicText()} class={clsx('text-left', className)}>

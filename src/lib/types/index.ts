@@ -60,6 +60,7 @@ export interface IFrame {
 	choices: Array<IChoice>;
 	frameId: number;
 	imageUrl: string | null;
+	soundUrl: string | null;
 	text: string | null;
 }
 

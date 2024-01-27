@@ -37,8 +37,8 @@
 		};
 	};
 
-	const handleChange = (e: CustomEvent<{ files: FileList }>) => {
-		const { files } = e.detail;
+	const handleChange = (e: CustomEvent<FileList>) => {
+		const files = e.detail;
 
 		createBase64Image(files[0]);
 	};

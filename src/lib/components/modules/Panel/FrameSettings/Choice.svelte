@@ -94,7 +94,7 @@
 				size="sm"
 				variant="ghost"
 				class={clsx(
-					'bg-contrast-9 gap-1 !p-1 text-xs text-text',
+					'bg-contrast-9 gap-1 !p-1 text-text',
 					showModificators && '!bg-violet-500 !text-white',
 					!showModificators &&
 						(logicOperations.length || mathOperations.length) &&

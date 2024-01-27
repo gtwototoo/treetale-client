@@ -13,7 +13,7 @@
 
 	const dispatch = createEventDispatcher<{
 		click: MouseEvent;
-		change: { files: FileList };
+		change: FileList;
 	}>();
 
 	const handleClick = (e: CustomEvent<MouseEvent>) => {
@@ -37,7 +37,7 @@
 
 		if (dragged) disableDragged();
 
-		dispatch('change', { files });
+		dispatch('change', files);
 	};
 
 	onMount(() => {

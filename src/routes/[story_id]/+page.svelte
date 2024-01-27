@@ -8,7 +8,12 @@
 	import { DEFAULT_COLOR } from '$lib/constants.js';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyColorStore } from '$lib/stores/main.js';
-	import { framesStore, fullscreenStore, variablesStore } from '$lib/stores/reading.js';
+	import {
+		framesStore,
+		fullscreenStore,
+		soundStore,
+		variablesStore
+	} from '$lib/stores/reading.js';
 	import {
 		correctToType,
 		doMath,
@@ -123,6 +128,8 @@
 			updateVars(frameId, choiceId);
 
 			await invalidateAll();
+
+			$soundStore?.play();
 		} catch (e) {
 			console.error(e);
 		}
@@ -170,6 +177,7 @@
 				{@const isLastFrame = key === $framesStore.length - 1}
 				<ReadFrame
 					{frameId}
+					{isLastFrame}
 					on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
 					selectedChoiceId={data.progress[key]?.choiceId}
 					class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}

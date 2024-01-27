@@ -30,6 +30,7 @@ export const addFrame = ({ x, y }: ICoordinates) => {
 	framesDataStore.update((data: Array<IFrameCreate>) => {
 		data.push({
 			imageUrl: null,
+			soundUrl: null,
 			title: `Блок ${lastFrameId}`,
 			frameId: lastFrameId + 1,
 			x,

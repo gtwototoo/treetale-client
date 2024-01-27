@@ -33,7 +33,7 @@ type IOverrideChanges = Writable<IChanges> & {
 
 const STAGES_MAX_COUNT = 50;
 
-const framesHistoryStore = () => {
+const framesHistoryCustomStore = () => {
 	const { subscribe, set, update } = writable<IChanges>({
 		initial: null,
 		stages: [],
@@ -140,4 +140,4 @@ const framesHistoryStore = () => {
 	};
 };
 
-export const changesHistory: IOverrideChanges = framesHistoryStore();
+export const changesHistory: IOverrideChanges = framesHistoryCustomStore();

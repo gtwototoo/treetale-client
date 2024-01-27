@@ -5,7 +5,7 @@
 	import Icon from './Icon.svelte';
 
 	import { Avatar, Button, InputFile } from '$UI';
-	import { removeImage, saveImage } from '$lib/requests/image';
+	import { removeImage, saveImage } from '$lib/requests/files';
 	import type { IUser, TRGB } from '$lib/types';
 
 	export let user: IUser;
@@ -50,9 +50,9 @@
 		};
 
 		try {
-			const { imageUrl } = await saveImage(file, imageFolder);
+			const { fileUrl } = await saveImage(file, imageFolder);
 
-			src = imageUrl;
+			src = fileUrl;
 		} catch (e) {
 			console.error(e);
 		}
