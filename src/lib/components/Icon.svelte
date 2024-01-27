@@ -10,4 +10,4 @@
 	export let variation: 'outline' | 'solid' = ICON_TYPE;
 </script>
 
-<svelte:component class={className} this={type} {variation} />
+<svelte:component this={type} class={className} {variation} />

@@ -110,7 +110,7 @@
 							size="lg"
 							variant={searchedGenres.includes(id) ? 'main' : 'ghost'}
 						>
-							<svelte:component class="h-8 w-8" this={icon} />
+							<svelte:component this={icon} class="h-8 w-8" />
 							<p class="text-xs">{title}</p>
 						</Button>
 					{/each}

@@ -22,6 +22,7 @@ module.exports = {
 		'svelte/no-at-html-tags': 'off',
 		'@typescript-eslint/adjacent-overload-signatures': 'off',
 		'no-undef': 'off',
+		'perfectionist/sort-svelte-attributes': 'off',
 		'perfectionist/sort-imports': [
 			'error',
 			{
