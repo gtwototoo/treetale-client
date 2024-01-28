@@ -58,7 +58,7 @@
 				)}
 			>
 				<div class="rounded-full bg-main-30 p-1.5">
-					<Icon class="h-6 w-6" type={currentStatus.icon} />
+					<Icon class="size-6" type={currentStatus.icon} />
 				</div>
 				<p class="truncate">{currentStatus.title}</p>
 			</div>
@@ -68,7 +68,7 @@
 		{:else}
 			<div class="mr-1 flex items-center gap-1">
 				<Icon
-					class={clsx('h-6 w-6', isLiked && 'text-red-500')}
+					class={clsx('size-6', isLiked && 'text-red-500')}
 					type={Heart}
 					variation={isLiked ? 'solid' : undefined}
 				/>

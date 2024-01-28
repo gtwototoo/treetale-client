@@ -104,7 +104,7 @@
 {#if sound}
 	<div class="flex select-none items-center gap-3 rounded-lg bg-contrast-3 p-2 text-sm/6">
 		{#await preload(sound)}
-			<Icon class="h-5 w-5" type={Loading} />
+			<Icon class="size-5" type={Loading} />
 			<p>Загрузка</p>
 		{:then}
 			<Button
@@ -113,7 +113,7 @@
 				size="sm"
 				variant="ghost"
 			>
-				<Icon class="h-4 w-4" type={playing ? Stop : Play} />
+				<Icon class="size-4" type={playing ? Stop : Play} />
 			</Button>
 			<p class="w-full">Длительность: {sound.duration()}</p>
 			<Button
@@ -122,10 +122,10 @@
 				size="sm"
 				variant="ghost"
 			>
-				<Icon class="h-4 w-4" type={Trash} />
+				<Icon class="size-4" type={Trash} />
 			</Button>
 		{:catch}
-			<Icon class="h-5 w-5 text-red-500" type={MusicalNote} />
+			<Icon class="size-5 text-red-500" type={MusicalNote} />
 			<p class="w-full">Ошибка загрузки</p>
 		{/await}
 	</div>
@@ -136,7 +136,7 @@
 		on:change={handleChange}
 		variant="ghost"
 	>
-		<Icon class="h-5 w-5" type={MusicalNote} />
+		<Icon class="size-5" type={MusicalNote} />
 		<p>Добавить звук</p>
 	</InputFile>
 {/if}

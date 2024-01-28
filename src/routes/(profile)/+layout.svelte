@@ -43,7 +43,7 @@
 							size="lg"
 							variant="custom"
 						>
-							<Icon class="hidden h-6 w-6 max-sm:block" type={Clock} />
+							<Icon class="hidden size-6 max-sm:block" type={Clock} />
 							<p class="max-sm:hidden">Модерируемые</p>
 						</Button>
 					</Link>
@@ -57,7 +57,7 @@
 						size="lg"
 						variant="custom"
 					>
-						<Icon class="hidden h-6 w-6 max-sm:block" type={Pencil} />
+						<Icon class="hidden size-6 max-sm:block" type={Pencil} />
 						<p class="max-sm:hidden">Созданные</p>
 					</Button>
 				</Link>
@@ -70,7 +70,7 @@
 						size="lg"
 						variant="custom"
 					>
-						<Icon class="hidden h-6 w-6 max-sm:block" type={Heart} />
+						<Icon class="hidden size-6 max-sm:block" type={Heart} />
 						<p class="max-sm:hidden">Понравившиеся</p>
 					</Button>
 				</Link>
@@ -83,7 +83,7 @@
 						size="lg"
 						variant="custom"
 					>
-						<Icon class="hidden h-6 w-6 max-sm:block" type={Eye} />
+						<Icon class="hidden size-6 max-sm:block" type={Eye} />
 						<p class="max-sm:hidden">Просмотренные</p>
 					</Button>
 				</Link>

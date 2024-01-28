@@ -60,7 +60,7 @@
 				size="sm"
 				variant="main"
 			>
-				<Icon class="h-4 w-4" type={Trash} />
+				<Icon class="size-4" type={Trash} />
 			</Button>
 		{/if}
 		<Image

@@ -4,6 +4,6 @@ export const load = async ({ locals }) => {
 	const user = locals.session;
 
 	if (user) {
-		throw redirect(302, '/profile');
+		redirect(302, '/profile');
 	}
 };

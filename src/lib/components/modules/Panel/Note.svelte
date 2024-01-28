@@ -8,7 +8,7 @@
 	export let icon: typeof SvelteComponent<unknown>;
 </script>
 
-<div class="flex select-none items-center gap-4 px-4 pb-4 text-center text-sm">
+<div class="flex select-none items-start gap-4 text-sm">
 	<div class="rounded-lg bg-contrast-2 p-3">
 		<Icon class="size-6 text-contrast-9" type={icon} />
 	</div>

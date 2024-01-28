@@ -25,19 +25,19 @@
 			class="flex flex-1 select-none flex-col justify-center gap-4 whitespace-nowrap rounded-3xl bg-white/20 p-6 text-base font-medium childs:bg-transparent max-lg:gap-2 max-lg:text-sm max-md:p-4"
 		>
 			<div class="flex items-center gap-3">
-				<Icon class="h-7 w-7" type={Share} variation="outline" />
+				<Icon class="size-7" type={Share} variation="outline" />
 				<p>Собственный редактор историй</p>
 			</div>
 			<div class="flex items-center gap-3">
-				<Icon class="h-7 w-7" type={Bookmark} variation="outline" />
+				<Icon class="size-7" type={Bookmark} variation="outline" />
 				<p>Библиотека просмотренных историй</p>
 			</div>
 			<div class="flex items-center gap-3">
-				<Icon class="h-7 w-7" type={PaintBrush} variation="outline" />
+				<Icon class="size-7" type={PaintBrush} variation="outline" />
 				<p>Кастомизация профилей и историй</p>
 			</div>
 			<div class="flex items-center gap-3">
-				<Icon class="h-7 w-7" type={Star} variation="outline" />
+				<Icon class="size-7" type={Star} variation="outline" />
 				<p>Возможность поддержки авторов</p>
 			</div>
 		</div>

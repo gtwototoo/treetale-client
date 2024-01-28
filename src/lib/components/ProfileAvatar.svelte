@@ -92,7 +92,7 @@
 					on:click={preRemoveImage}
 					variant="ghost"
 				>
-					<Icon class="h-6 w-6 text-red-500" type={Trash} />
+					<Icon class="size-6 text-red-500" type={Trash} />
 				</Button>
 			{:else}
 				<InputFile
@@ -101,7 +101,7 @@
 					on:change={setFile}
 					variant="ghost"
 				>
-					<Icon class="h-6 w-6" type={PencilSquare} />
+					<Icon class="size-6" type={PencilSquare} />
 				</InputFile>
 			{/if}
 		</div>

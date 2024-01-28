@@ -63,7 +63,7 @@
 					size="lg"
 					variant="ghost"
 				>
-					<Icon class="hidden h-6 w-6 max-md:block" type={XMark} />
+					<Icon class="hidden size-6 max-md:block" type={XMark} />
 					<p class="max-md:hidden">Отмена</p>
 				</Button>
 			{:else}
@@ -73,7 +73,7 @@
 					size="lg"
 					variant="ghost"
 				>
-					<Icon class="hidden h-6 w-6 max-md:block" type={Plus} />
+					<Icon class="hidden size-6 max-md:block" type={Plus} />
 					<p class="max-md:hidden">Новый блок</p>
 				</Button>
 			{/if}

@@ -86,7 +86,7 @@
 						)}
 						in:fade
 					>
-						<Icon class="h-6 w-6" type={result.error ? XMark : Check} />
+						<Icon class="size-6" type={result.error ? XMark : Check} />
 						{result.error ? result.text : 'Письмо успешно отправлено'}
 					</div>
 				{:else}

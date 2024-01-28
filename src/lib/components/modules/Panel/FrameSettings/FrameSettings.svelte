@@ -259,7 +259,7 @@
 		</FormSplit>
 		{#if onePrevFrame !== null}
 			<Button class="gap-3 bg-contrast-9 text-text" on:click={gotoPrevFrame} variant="ghost">
-				<Icon class="h-5 w-5" type={ArrowLeft} />
+				<Icon class="size-5" type={ArrowLeft} />
 				<p>К предыдущему блоку</p>
 			</Button>
 		{/if}

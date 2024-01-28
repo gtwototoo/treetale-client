@@ -1,8 +1,6 @@
 /// <reference types="@sveltejs/kit" />
 /// <reference types="svelte-gestures" />
 
-import type { Mongoose } from 'mongoose';
-
 import type { IUser, TRGB } from './lib/types';
 
 import '@total-typescript/ts-reset';
@@ -10,11 +8,6 @@ import '@total-typescript/ts-reset';
 /* eslint-disable no-var */
 
 declare global {
-	var mongoose: {
-		connection: Mongoose;
-		promise: Promise<Mongoose>;
-	};
-
 	namespace App {
 		interface Error {
 			color?: TRGB;

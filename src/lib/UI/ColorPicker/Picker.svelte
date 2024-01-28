@@ -29,25 +29,25 @@
 <div class="flex flex-col gap-4 bg-transparent p-4" style="--color-main: {RGB(color)}">
 	<div class="flex flex-col gap-2">
 		<div class="flex min-w-0 items-center gap-2">
-			<div class="h-3 w-3 rounded bg-gray-700" />
+			<div class="size-3 rounded bg-gray-700" />
 			<InputRange bind:value={light} class="min-w-0" max={lightRange[1]} min={lightRange[0]} />
-			<div class="h-3 w-3 rounded bg-gray-100" />
+			<div class="size-3 rounded bg-gray-100" />
 		</div>
 		<div class="flex min-w-0 items-center gap-2">
-			<div class="h-3 w-3 rounded bg-blue-100" />
+			<div class="size-3 rounded bg-blue-100" />
 			<InputRange
 				bind:value={saturate}
 				class="min-w-0"
 				max={saturateRange[1]}
 				min={saturateRange[0]}
 			/>
-			<div class="h-3 w-3 rounded bg-blue-700" />
+			<div class="size-3 rounded bg-blue-700" />
 		</div>
 	</div>
 	<div class="flex shrink-0 flex-wrap justify-center gap-2">
 		{#each new Array(36) as _, key}
 			<button
-				class="h-5 w-5 cursor-pointer rounded"
+				class="size-5 cursor-pointer rounded"
 				on:click={handleClick}
 				style:background={`hsl(${key * 10 + 5} ${saturate}% ${light}%)`}
 			/>

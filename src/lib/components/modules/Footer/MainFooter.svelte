@@ -44,7 +44,7 @@
 		<div class="flex items-center gap-6 max-sm:gap-4">
 			<Link href="tg://resolve?domain=treetale_news" target="_blank">
 				<Button class="gap-3 bg-main max-sm:!p-2" size="lg" variant="ghost">
-					<Telegram class="h-6 w-6" />
+					<Telegram class="size-6" />
 					<p class="mr-1 max-lg:hidden max-md:block max-sm:hidden">Telegram</p>
 				</Button>
 			</Link>

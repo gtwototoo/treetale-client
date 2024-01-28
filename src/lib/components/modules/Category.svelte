@@ -1,10 +1,9 @@
 <script lang="ts">
+	import type { EmblaOptionsType } from 'embla-carousel';
+
 	import type { SvelteComponent } from 'svelte';
 
-	import emblaCarouselSvelte, {
-		type EmblaOptionsType,
-		type EmblaPluginType
-	} from 'embla-carousel-svelte';
+	import emblaCarouselSvelte from 'embla-carousel-svelte';
 
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
@@ -27,13 +26,11 @@
 		align: 'start',
 		dragFree: true
 	};
-
-	const plugins: Array<EmblaPluginType> = [];
 </script>
 
 <div class="flex h-full flex-col">
 	<div class="flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6">
-		<Icon class="h-8 w-8 max-sm:h-6 max-sm:w-6" type={icon} />
+		<Icon class="size-8 max-sm:h-6 max-sm:w-6" type={icon} />
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
 	{#if listFormat}
@@ -46,7 +43,7 @@
 			<AddStoryButton class="gap-3 bg-contrast text-text" />
 		</StoriesList>
 	{:else}
-		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins }}>
+		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>
 			<div class="flex justify-start gap-4">
 				{#each stories as rawStory}
 					{@const { vars, ...story } = rawStory}

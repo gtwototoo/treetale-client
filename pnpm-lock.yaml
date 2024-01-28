@@ -4,14 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  '@types/cookie':
-    specifier: ^0.6.0
-    version: 0.6.0
-  dotenv:
-    specifier: ^16.4.1
-    version: 16.4.1
-
 devDependencies:
   '@sveltejs/adapter-node':
     specifier: ^4.0.1
@@ -19,12 +11,18 @@ devDependencies:
   '@sveltejs/kit':
     specifier: ^2.5.0
     version: 2.5.0(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.9)(vite@5.0.12)
+  '@sveltejs/vite-plugin-svelte':
+    specifier: ^3.0.0
+    version: 3.0.2(svelte@4.2.9)(vite@5.0.12)
   '@sveltekit-addons/document':
     specifier: ^1.0.1
     version: 1.0.1(svelte@4.2.9)
   '@total-typescript/ts-reset':
     specifier: ^0.5.1
     version: 0.5.1
+  '@types/cookie':
+    specifier: ^0.6.0
+    version: 0.6.0
   '@types/howler':
     specifier: ^2.2.11
     version: 2.2.11
@@ -52,12 +50,15 @@ devDependencies:
   deep-object-diff:
     specifier: ^1.1.9
     version: 1.1.9
+  dotenv:
+    specifier: ^16.4.1
+    version: 16.4.1
+  embla-carousel:
+    specifier: 8.0.0-rc21
+    version: 8.0.0-rc21
   embla-carousel-svelte:
     specifier: 8.0.0-rc21
     version: 8.0.0-rc21(svelte@4.2.9)
-  embla-carousel-wheel-gestures:
-    specifier: 8.0.0-rc05
-    version: 8.0.0-rc05(embla-carousel@8.0.0-rc21)
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -734,6 +735,7 @@ packages:
 
   /@types/cookie@0.6.0:
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: true
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -1345,7 +1347,7 @@ packages:
   /dotenv@16.4.1:
     resolution: {integrity: sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ==}
     engines: {node: '>=12'}
-    dev: false
+    dev: true
 
   /electron-to-chromium@1.4.601:
     resolution: {integrity: sha512-SpwUMDWe9tQu8JX5QCO1+p/hChAi9AE9UpoC3rcHVc+gdCGlbT3SGb5I1klgb952HRIyvt9wZhSz9bNBYz9swA==}
@@ -1367,16 +1369,6 @@ packages:
       embla-carousel: 8.0.0-rc21
       embla-carousel-reactive-utils: 8.0.0-rc21(embla-carousel@8.0.0-rc21)
       svelte: 4.2.9
-    dev: true
-
-  /embla-carousel-wheel-gestures@8.0.0-rc05(embla-carousel@8.0.0-rc21):
-    resolution: {integrity: sha512-KfPlGuOvMterlg01FDd+Iws5wefInkyks4ai3p4n4B5WAiyel+DHs4AFu09UmshcnHpIH5cLJQ6VJCbp/kyy1A==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      embla-carousel: ^8.0.0 || ~8.0.0-rc03
-    dependencies:
-      embla-carousel: 8.0.0-rc21
-      wheel-gestures: 2.2.5
     dev: true
 
   /embla-carousel@8.0.0-rc21:
@@ -2968,11 +2960,6 @@ packages:
         optional: true
     dependencies:
       vite: 5.0.12(@types/node@20.11.9)
-    dev: true
-
-  /wheel-gestures@2.2.5:
-    resolution: {integrity: sha512-01BlXRjBVt5Gy0VH2rRqMeccHruTGq2Gd1fx0UqCPN8KDeDCmlTXsRGc/hXJk6W+wnO9CNJp2xfntMNRArBxKQ==}
-    engines: {node: '>=10'}
     dev: true
 
   /which@2.0.2:

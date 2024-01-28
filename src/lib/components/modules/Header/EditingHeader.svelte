@@ -84,7 +84,7 @@
 			size="lg"
 			variant="ghost"
 		>
-			<Icon class="h-6 w-6" type={ChevronLeft} />
+			<Icon class="size-6" type={ChevronLeft} />
 		</Button>
 	</svelte:fragment>
 	<FormSplit class="absolute right-4 top-20 max-sm:right-3 max-sm:top-[4.5rem]" vertical>
@@ -94,7 +94,7 @@
 			size="lg"
 			variant="ghost"
 		>
-			<Icon class="h-6 w-6" type={Cog6Tooth} />
+			<Icon class="size-6" type={Cog6Tooth} />
 		</Button>
 		<Button
 			class="header-button bg-contrast !px-3 text-text"
@@ -102,7 +102,7 @@
 			size="lg"
 			variant="ghost"
 		>
-			<Icon class="h-6 w-6" type={Variable} />
+			<Icon class="size-6" type={Variable} />
 		</Button>
 		<Button
 			class="header-button bg-contrast !px-3 text-text"
@@ -110,7 +110,7 @@
 			size="lg"
 			variant="ghost"
 		>
-			<Icon class="h-6 w-6" type={DocumentText} />
+			<Icon class="size-6" type={DocumentText} />
 		</Button>
 	</FormSplit>
 </Header>

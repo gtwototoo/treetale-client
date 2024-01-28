@@ -39,7 +39,7 @@
 			? {
 					x: (formattedCoordinates.x * radius) / len,
 					y: (formattedCoordinates.y * radius) / len
-			  }
+				}
 			: formattedCoordinates;
 	};
 
@@ -60,7 +60,7 @@
 	size="lg"
 	variant="ghost"
 >
-	<div class="h-6 w-6 rounded-full !bg-contrast/20" />
+	<div class="size-6 rounded-full !bg-contrast/20" />
 	{#if element && workspaceHeight}
 		{#each $framesDataStore as { x, y }, key}
 			<div

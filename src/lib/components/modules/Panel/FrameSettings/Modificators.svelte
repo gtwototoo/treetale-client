@@ -1,5 +1,5 @@
 <script lang="ts">
-	import FormSplit from '$UI/FormSplit.svelte';
+
 	import clsx from 'clsx';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
 
@@ -10,7 +10,7 @@
 		TMathOperator
 	} from '$lib/types';
 
-	import { Button, Input, Listbox } from '$UI';
+	import { Button, FormSplit, Input, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore, variablesStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
@@ -139,7 +139,7 @@
 				size="sm"
 				variant="ghost"
 			>
-				<Icon class="h-4 w-4" type={PencilSquare} />
+				<Icon class="size-4" type={PencilSquare} />
 			</Button>
 		{/if}
 	</div>
@@ -158,7 +158,7 @@
 								size="sm"
 								variant="main"
 							>
-								<Icon class="h-4 w-4" type={XMark} />
+								<Icon class="size-4" type={XMark} />
 							</Button>
 						</svelte:fragment>
 					</Input>

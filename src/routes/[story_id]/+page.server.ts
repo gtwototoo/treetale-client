@@ -16,14 +16,14 @@ export const load = async ({ fetch, params }) => {
 	const storyId = +params.story_id;
 
 	if (isNaN(storyId)) {
-		throw randomError(404);
+		randomError(404);
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/progress/${storyId}`);
 	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseProgress;
 
 	if (error) {
-		throw randomError(404);
+		randomError(404);
 	}
 
 	return data as IResponseProgress;

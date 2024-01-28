@@ -36,7 +36,7 @@
 >
 	{title}
 	{#if soundUrl}
-		<Icon class="h-4 w-4" type={MusicalNote} />
+		<Icon class="size-4" type={MusicalNote} />
 	{/if}
 
 	<div class="leftBindPoint" />

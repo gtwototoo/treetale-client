@@ -8,7 +8,7 @@ export const load = async ({ fetch, locals, params }) => {
 	const { name } = params;
 
 	if (locals.session && locals.session.name === name) {
-		throw redirect(302, '/profile');
+		redirect(302, '/profile');
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/users/${name}/stories`);

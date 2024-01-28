@@ -13,7 +13,7 @@ const fetchCore = async <T>(url: RequestInfo | URL, options?: RequestInit) => {
 	const response = (await request.json()) as DefaultResponse;
 
 	if (!request.ok) {
-		throw error(request.status, response.message && { message: response.message });
+		error(request.status, response.message && { message: response.message });
 	}
 
 	return response as T;

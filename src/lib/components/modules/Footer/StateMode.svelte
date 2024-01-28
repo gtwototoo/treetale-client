@@ -58,12 +58,12 @@
 	variant="ghost"
 >
 	{#if $activeActionStore}
-		<Icon class="h-4 w-4" type={iconsActions[$activeActionStore]} />
+		<Icon class="size-4" type={iconsActions[$activeActionStore]} />
 	{/if}
-	<Icon class="h-4 w-4" type={iconsModes[$activeModeStore]} />
+	<Icon class="size-4" type={iconsModes[$activeModeStore]} />
 	{#if !$readonlyStore}
 		<Icon
-			class={clsx('h-4 w-4')}
+			class="size-4"
 			type={Cloud}
 			variation={$stateAreaStore === 'saving' ? ICON_TYPE : 'solid'}
 		/>

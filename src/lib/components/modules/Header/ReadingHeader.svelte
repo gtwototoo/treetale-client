@@ -62,7 +62,7 @@
 		size="lg"
 		variant="ghost"
 	>
-		<Icon class="h-6 w-6" type={Star} />
+		<Icon class="size-6" type={Star} />
 		<p class="mr-1">Поддержать</p>
 	</Button>
 	{#if fullscreenSupport}
@@ -72,7 +72,7 @@
 			size="lg"
 			variant="ghost"
 		>
-			<Icon class="h-6 w-6" type={ArrowsPointingOut} />
+			<Icon class="size-6" type={ArrowsPointingOut} />
 		</Button>
 	{/if}
 </Header>

@@ -103,7 +103,7 @@
 				size="sm"
 				variant="ghost"
 			>
-				<Icon class="h-4 w-4" type={Beaker} />
+				<Icon class="size-4" type={Beaker} />
 			</Button>
 		</svelte:fragment>
 		<svelte:fragment slot="right">
@@ -114,7 +114,7 @@
 					size="sm"
 					variant="ghost"
 				>
-					<Icon class="h-4 w-4" type={ChevronRight} />
+					<Icon class="size-4" type={ChevronRight} />
 				</Button>
 			{:else}
 				<Button
@@ -123,7 +123,7 @@
 					size="sm"
 					variant="ghost"
 				>
-					<Icon class="h-4 w-4" type={Plus} />
+					<Icon class="size-4" type={Plus} />
 				</Button>
 			{/if}
 		</svelte:fragment>

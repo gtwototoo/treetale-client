@@ -20,7 +20,7 @@ export const load = async ({ fetch, params }) => {
 	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseStats;
 
 	if (error) {
-		throw randomError(404);
+		randomError(404);
 	}
 
 	return data as IResponseStats;

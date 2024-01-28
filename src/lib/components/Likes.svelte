@@ -42,7 +42,7 @@
 	variant="ghost"
 >
 	<Icon
-		class={clsx('h-6 w-6', isLiked && 'text-red-500')}
+		class={clsx('size-6', isLiked && 'text-red-500')}
 		type={Heart}
 		variation={isLiked ? 'solid' : 'outline'}
 	/>

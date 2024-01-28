@@ -10,17 +10,17 @@ export const load = async ({ fetch, locals, params }) => {
 	const user = locals.session;
 	const storyId = +params.story_id;
 
-	if (!user) throw redirect(302, '/signin');
+	if (!user) redirect(302, '/signin');
 
 	if (isNaN(storyId)) {
-		throw randomError(404);
+		randomError(404);
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}`);
 	const { error, ...data } = (await res.json()) as { error: boolean } & IStorySchema;
 
 	if (error) {
-		throw randomError(404);
+		randomError(404);
 	}
 
 	return data as IStorySchema;

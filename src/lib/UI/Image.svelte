@@ -45,7 +45,7 @@
 	in:fade
 >
 	{#if base64src && !src}
-		<Icon class="z-10 h-6 w-6 text-white" type={Loading} />
+		<Icon class="z-10 size-6 text-white" type={Loading} />
 		<img
 			{alt}
 			class={clsx(
@@ -58,7 +58,7 @@
 	{:else}
 		{#await preload(src)}
 			{#if base64src}
-				<Icon class="z-10 h-6 w-6 text-white" type={Loading} />
+				<Icon class="z-10 size-6 text-white" type={Loading} />
 				<img
 					{alt}
 					class={clsx(
@@ -69,7 +69,7 @@
 					src={base64src}
 				/>
 			{:else}
-				<Icon class="h-6 w-6" type={Loading} />
+				<Icon class="size-6" type={Loading} />
 			{/if}
 		{:then}
 			<img

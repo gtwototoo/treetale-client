@@ -172,7 +172,7 @@
 					size="lg"
 					variant="ghost"
 				>
-					<Icon class="h-6 w-6" type={Cog6Tooth} />
+					<Icon class="size-6" type={Cog6Tooth} />
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
 				<Button
@@ -192,7 +192,7 @@
 				size="lg"
 				variant="ghost"
 			>
-				<Icon class="h-6 w-6" type={UserMinus} />
+				<Icon class="size-6" type={UserMinus} />
 				<p class="mr-1">Отписаться</p>
 			</Button>
 		{:else}
@@ -203,7 +203,7 @@
 				size="lg"
 				variant="ghost"
 			>
-				<Icon class="h-6 w-6" type={UserPlus} />
+				<Icon class="size-6" type={UserPlus} />
 				<p class="mr-1">Подписаться</p>
 			</Button>
 		{/if}

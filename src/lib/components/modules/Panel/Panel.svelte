@@ -42,7 +42,7 @@
 				size="lg"
 				variant="ghost"
 			>
-				<Icon class="h-6 w-6" type={PencilSquare} />
+				<Icon class="size-6" type={PencilSquare} />
 			</Button>
 		{:else}
 			<div class="w-12" />
@@ -74,7 +74,7 @@
 				size="lg"
 				variant="ghost"
 			>
-				<Icon class="h-6 w-6" type={XMark} />
+				<Icon class="size-6" type={XMark} />
 			</Button>
 		{:else}
 			<div class="w-12 max-lg:!hidden" />
@@ -85,7 +85,7 @@
 			size="lg"
 			variant="ghost"
 		>
-			<Icon class="h-6 w-6" type={ArrowsPointingIn} />
+			<Icon class="size-6" type={ArrowsPointingIn} />
 		</Button>
 	</div>
 	<slot />

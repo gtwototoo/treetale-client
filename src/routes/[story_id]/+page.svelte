@@ -1,18 +1,13 @@
 <script lang="ts">
-	import type {
-		EmblaCarouselType,
-		EmblaOptionsType,
-		EmblaPluginType
-	} from 'embla-carousel-svelte';
+	import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
 
-	import Button from '$UI/Button.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
-	import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 	import { MetaTags } from 'svelte-meta-tags';
 
+	import { Button } from '$UI';
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import StoryDescription from '$lib/components/StoryDescription.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
@@ -44,12 +39,6 @@
 		containScroll: false,
 		startIndex: data.progress.length
 	};
-
-	const plugins: Array<EmblaPluginType> = [
-		WheelGesturesPlugin({
-			forceWheelAxis: 'y'
-		})
-	];
 
 	// const isFullscreen = () => {
 	// 	return (
@@ -171,7 +160,7 @@
 	<div
 		class="flex h-full w-full px-4 py-20 max-sm:px-3"
 		on:emblaInit={handleInit}
-		use:emblaCarouselSvelte={{ options, plugins }}
+		use:emblaCarouselSvelte={{ options, plugins: [] }}
 	>
 		<div class="flex w-full flex-col items-center gap-4">
 			<StoryDescription author={data.author} story={data.story} />

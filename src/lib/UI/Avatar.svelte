@@ -53,6 +53,6 @@
 		@apply h-12 w-12 text-base;
 	}
 	.size-sm {
-		@apply h-9 w-9 text-xs;
+		@apply size-9 text-xs;
 	}
 </style>

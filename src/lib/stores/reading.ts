@@ -28,7 +28,7 @@ const customSoundStore = () => {
 				? new Howl({
 						loop: true,
 						src
-				  })
+					})
 				: null;
 		});
 	};

@@ -22,7 +22,7 @@ export const load = async ({ cookies, params }) => {
 		const error = e as HttpError;
 
 		if (error.status === 404) {
-			throw redirect(302, '/');
+			redirect(302, '/');
 		}
 	}
 
@@ -32,5 +32,5 @@ export const load = async ({ cookies, params }) => {
 
 	cookies.set('sessionId', response.sessionId, COOKIE_OPTIONS);
 
-	throw redirect(302, '/');
+	redirect(302, '/');
 };

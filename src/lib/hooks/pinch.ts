@@ -8,10 +8,10 @@ export type GestureReturnType<
 > = R extends undefined
 	? SvelteAction
 	: R extends PartialParametersWithComposed<GestureParams>
-	  ? SubGestureFunctions
-	  : R extends PartialParameters<GestureParams>
-	    ? SvelteAction
-	    : never;
+		? SubGestureFunctions
+		: R extends PartialParameters<GestureParams>
+			? SvelteAction
+			: never;
 export type PointerEventCallback<T> =
 	| ((activeEvents: PointerEvent[], event?: PointerEvent) => T)
 	| null;

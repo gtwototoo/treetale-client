@@ -191,7 +191,7 @@
 	{#if !$readonlyStore}
 		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
 			{#if saving}
-				<Icon class="h-4 w-4 animate-pulse text-gray-600" type={Cloud} />
+				<Icon class="size-4 animate-pulse text-gray-600" type={Cloud} />
 			{:else}
 				{saveInfo}
 			{/if}

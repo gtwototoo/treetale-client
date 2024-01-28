@@ -1,4 +1,4 @@
-import { type HttpError, error } from '@sveltejs/kit';
+import { error, type HttpError, type NumericRange } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 
@@ -12,7 +12,7 @@ export const randomArray = <T>(array: Array<T>): T => {
 	return array[randomInteger(0, array.length - 1)];
 };
 
-export const randomError = (status: number): HttpError => {
+export const randomError = (status: NumericRange<400, 599>): HttpError => {
 	return error(
 		status,
 		status === 404
@@ -22,6 +22,6 @@ export const randomError = (status: number): HttpError => {
 					img: `${PUBLIC_TREETALE_CLIENT_URL}/img/universe.png`,
 					message:
 						'Случилось что-то ужасное, мир схлопнулся в маленькую точку и теперь лучшие небесные кузнецы пытаются вернуть его в исходное состояние.'
-			  }
+				}
 	);
 };

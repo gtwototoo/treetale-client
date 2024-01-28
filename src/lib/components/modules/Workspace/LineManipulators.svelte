@@ -24,13 +24,13 @@
 {#if $activeModeStore === 'binding'}
 	<div>
 		{#each createLineRemoveButtons($framesDataStore) as { fromChoiceId, fromFrameId, x, y }}
-			<div class="absolute flex h-0 w-0 items-center justify-center" style={transform({ x, y })}>
+			<div class="absolute flex size-0 items-center justify-center" style={transform({ x, y })}>
 				<Button
 					class={clsx($redColorStore, '!min-h-0 !rounded-full !p-2 text-red-500')}
 					on:click={() => removeConnection(fromFrameId, fromChoiceId)}
 					variant="main"
 				>
-					<Icon class="h-4 w-4" type={XMark} />
+					<Icon class="size-4" type={XMark} />
 				</Button>
 			</div>
 		{/each}

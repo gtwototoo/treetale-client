@@ -103,7 +103,7 @@
 						$connectionStore.frameId === frame.frameId &&
 						$connectionStore.choiceId === choiceId &&
 						greenColor
-			  )
+				)
 			: 'bg-contrast-5'
 	)}
 	{disabled}

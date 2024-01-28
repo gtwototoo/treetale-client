@@ -97,7 +97,7 @@
 				>
 					<svelte:fragment slot="left">
 						<Icon
-							class="pointer-events-none h-6 w-6 shrink-0 text-gray-800"
+							class="pointer-events-none size-6 shrink-0 text-gray-800"
 							type={loading ? Loading : MagnifyingGlass}
 						/>
 					</svelte:fragment>
@@ -110,7 +110,7 @@
 							size="lg"
 							variant={searchedGenres.includes(id) ? 'main' : 'ghost'}
 						>
-							<svelte:component this={icon} class="h-8 w-8" />
+							<svelte:component this={icon} class="size-8" />
 							<p class="text-xs">{title}</p>
 						</Button>
 					{/each}
