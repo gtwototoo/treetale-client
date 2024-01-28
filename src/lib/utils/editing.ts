@@ -63,8 +63,7 @@ const getFramesPoints = (fromFrame: IFrameCreate, choice: IChoice, toFrame: IFra
 
 export const createConnections = (frames: Array<IFrameCreate>) => {
 	const paths: Array<IPath> = [];
-	const area: TBoundings = getAreaBoundings(frames);
-	const { height, width, x, y } = area;
+	const { height, width, x, y }: TBoundings = getAreaBoundings(frames);
 
 	for (const fromFrame of frames) {
 		for (const choice of fromFrame.choices) {
@@ -87,7 +86,7 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 		height,
 		paths,
 		style: transform({ x, y }),
-		viewBox: Object.values(area).join(' '),
+		viewBox: [x, y, width, height].join(' '),
 		width
 	};
 };

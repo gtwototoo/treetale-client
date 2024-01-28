@@ -153,7 +153,7 @@
 				{@html pattern(html)}
 			</div>
 		{/if}
-		{#if placeholder && (!html || !editableRef?.innerText.trim().length)}
+		{#if placeholder && !html}
 			<p class="w-full whitespace-nowrap text-gray-400">{placeholder}</p>
 		{/if}
 	</div>
@@ -162,7 +162,7 @@
 
 <style lang="postcss">
 	.contenteditable {
-		@apply bg-contrast-2 hover:bg-contrast-5 relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 break-words rounded-lg py-2 text-left text-sm transition-colors;
+		@apply relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 break-words rounded-lg bg-contrast-2 py-2 text-left text-sm transition-colors hover:bg-contrast-5;
 	}
 	.disabled {
 		@apply pointer-events-none cursor-default opacity-40;
