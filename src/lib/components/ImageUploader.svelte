@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { type SvelteComponent, createEventDispatcher } from 'svelte';
+	import type { SvelteComponent } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	import clsx from 'clsx';
 	import { Trash } from 'svelte-heros-v2';

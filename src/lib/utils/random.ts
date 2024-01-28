@@ -1,4 +1,5 @@
-import { error, type HttpError, type NumericRange } from '@sveltejs/kit';
+import type { HttpError, NumericRange } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 

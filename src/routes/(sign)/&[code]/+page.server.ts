@@ -1,4 +1,5 @@
-import { type HttpError, redirect } from '@sveltejs/kit';
+import type { HttpError } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 

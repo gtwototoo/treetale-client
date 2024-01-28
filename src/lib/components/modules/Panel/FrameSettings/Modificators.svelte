@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import clsx from 'clsx';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
 
