@@ -15,31 +15,9 @@
 	export let readonly = false;
 </script>
 
-{#if $$slots.default}
-	<Popover align={popoverAlign} {readonly}>
-		<svelte:fragment let:click slot="button">
-			<slot {click} {color} />
-		</svelte:fragment>
-		<Picker
-			bind:color
-			bind:light
-			bind:saturate
-			{disabled}
-			{lightRange}
-			on:change
-			{saturateRange}
-		/>
-	</Popover>
-{:else}
-	<Popover align={popoverAlign} btnClass="bg-main" {disabled} {readonly} value="Цвет фона">
-		<Picker
-			bind:color
-			bind:light
-			bind:saturate
-			{disabled}
-			{lightRange}
-			on:change
-			{saturateRange}
-		/>
-	</Popover>
-{/if}
+<Popover align={popoverAlign} {readonly}>
+	<svelte:fragment let:click slot="button">
+		<slot {click} {color} />
+	</svelte:fragment>
+	<Picker bind:color bind:light bind:saturate {disabled} {lightRange} on:change {saturateRange} />
+</Popover>

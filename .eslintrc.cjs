@@ -1,12 +1,14 @@
 module.exports = {
 	root: true,
 	extends: [
-		'plugin:svelte/recommended',
+		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
+		'plugin:svelte/recommended',
 		'plugin:perfectionist/recommended-natural',
 		'prettier'
 	],
 	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint'],
 	overrides: [
 		{
 			files: ['*.svelte'],
@@ -16,9 +18,18 @@ module.exports = {
 			}
 		}
 	],
+	env: {
+		browser: true,
+		es2017: true,
+		node: true
+	},
+	parserOptions: {
+		sourceType: 'module',
+		ecmaVersion: 2020,
+		extraFileExtensions: ['.svelte']
+	},
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '_' }],
-		'svelte/sort-attributes': 'off',
 		'svelte/no-at-html-tags': 'off',
 		'@typescript-eslint/adjacent-overload-signatures': 'off',
 		'no-undef': 'off',

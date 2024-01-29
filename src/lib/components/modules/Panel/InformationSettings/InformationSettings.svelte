@@ -2,7 +2,7 @@
 	import { onDestroy } from 'svelte';
 
 	import clsx from 'clsx';
-	import { BookOpen, Cloud, Photo } from 'svelte-heros-v2';
+	import { BookOpen, Cloud, PaintBrush, Photo } from 'svelte-heros-v2';
 
 	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
@@ -108,6 +108,8 @@
 			clearTimeout(timer);
 		}
 	});
+
+	$: genre = GENRES_LIST.find(({ id }) => id === $informationDataStore.genre);
 </script>
 
 <Panel nonClose title="Основная информация">
@@ -121,6 +123,53 @@
 		readonly={$readonlyStore}
 		src={$informationDataStore.imageUrl}
 	/>
+	<div class="flex gap-2 *:flex-1">
+		<Listbox
+			align="inset"
+			disabled={$panelEditMode}
+			let:click
+			{list}
+			on:change={({ detail }) => {
+				$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
+				checkUpdates();
+			}}
+			placeholder="Жанр"
+			readonly={$readonlyStore}
+			value={genre?.title}
+		>
+			<Button
+				class="w-full flex-col gap-1 bg-contrast-9 !text-text"
+				on:click={click}
+				size="lg"
+				variant="main"
+			>
+				<Icon class="size-8" type={genre?.icon} variation="solid" />
+				<p class="text-xs">{genre?.title}</p>
+			</Button>
+		</Listbox>
+		<ColorPicker
+			color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
+			disabled={$panelEditMode}
+			let:click
+			{light}
+			lightRange={[15, 80]}
+			on:change={setColor}
+			popoverAlign="inset"
+			readonly={$readonlyStore}
+			{saturate}
+			saturateRange={[10, 90]}
+		>
+			<Button
+				class="w-full flex-col gap-1 bg-main !text-text"
+				on:click={click}
+				size="lg"
+				variant="main"
+			>
+				<Icon class="size-8" type={PaintBrush} variation="solid" />
+				<p class="text-xs">Цвет фона</p>
+			</Button>
+		</ColorPicker>
+	</div>
 	<FormSplit vertical>
 		<Input
 			bind:value={$informationDataStore.title}
@@ -150,31 +199,6 @@
 			on:remove={checkUpdates}
 			placeholder={$informationDataStore.tags.length ? '' : 'Теги'}
 			readonly={$readonlyStore}
-		/>
-	</FormSplit>
-	<Listbox
-		align="inset"
-		disabled={$panelEditMode}
-		{list}
-		on:change={({ detail }) => {
-			$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
-			checkUpdates();
-		}}
-		placeholder="Жанр"
-		readonly={$readonlyStore}
-		value={GENRES_LIST.find(({ id }) => id === $informationDataStore.genre)?.title}
-	/>
-	<FormSplit vertical>
-		<ColorPicker
-			color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
-			disabled={$panelEditMode}
-			{light}
-			lightRange={[15, 80]}
-			on:change={setColor}
-			popoverAlign="inset"
-			readonly={$readonlyStore}
-			{saturate}
-			saturateRange={[10, 90]}
 		/>
 	</FormSplit>
 	{#if $panelEditMode}
