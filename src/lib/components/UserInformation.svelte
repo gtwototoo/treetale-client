@@ -17,6 +17,8 @@
 	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
 
+	import InvisibleDrop from './InvisibleDrop.svelte';
+
 	export let user: IUser;
 	export let me: boolean;
 	export let statistic: Array<Array<string>>;
@@ -98,17 +100,20 @@
 		editMode ? 'bg-main-20' : 'bg-transparent'
 	)}
 >
+	{#if editMode}
+		<InvisibleDrop>Перетащите сюда изображение, чтобы заменить текущую аватарку</InvisibleDrop>
+	{/if}
 	<div class="flex flex-col items-center gap-2 bg-transparent">
 		<div class="p-6">
 			<ProfileAvatar color={$bodyColorStore} {editMode} {user} />
 		</div>
 		<div
 			class={clsx(
-				'flex w-full gap-2 rounded-xl p-4 text-text childs:bg-transparent',
+				'flex w-full gap-2 rounded-xl p-4 text-text *:bg-transparent',
 				!editMode && 'bg-contrast/10'
 			)}
 		>
-			{#each statistic as [count, title]}
+			{#each statistic as [count, title] (title)}
 				<div class="flex w-24 flex-col items-center">
 					<p class="text-3xl font-bold">
 						{count === '0' ? 'Нет' : count}
@@ -143,11 +148,9 @@
 					color={$bodyColorStore}
 					let:click
 					{light}
-					lightRange={[20, 80]}
 					on:change={setColor}
-					popoverAlign="left"
+					align="left"
 					{saturate}
-					saturateRange={[10, 90]}
 				>
 					<Button class="bg-main !text-text" on:click={click} size="lg" variant="main">
 						Цвет

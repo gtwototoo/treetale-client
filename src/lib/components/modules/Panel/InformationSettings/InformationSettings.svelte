@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 
+	import Popover from '$UI/Popover.svelte';
 	import clsx from 'clsx';
 	import { BookOpen, Cloud, PaintBrush, Photo } from 'svelte-heros-v2';
 
-	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Listbox } from '$UI';
+	import type { TGenre } from '$lib/types';
+
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
+	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { removeImage, saveImage } from '$lib/requests/files';
 	import { deleteStory, updateInfomation } from '$lib/requests/story';
@@ -19,8 +23,9 @@
 	import { changesHistory } from '$lib/stores/history';
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode } from '$lib/stores/panel';
-	import { exclude, notesHighlight, variablesHighlight } from '$lib/utils';
+	import { notesHighlight, variablesHighlight } from '$lib/utils';
 
+	import IllustrationPopover from '../../IllustrationPopover.svelte';
 	import Panel from '../Panel.svelte';
 	import Publishing from './Publishing.svelte';
 	import Shortcuts from './Shortcuts.svelte';
@@ -30,8 +35,6 @@
 	let timer: number;
 	let saving = false;
 	let saveInfo = 'Ожидание изменений';
-
-	const list = exclude(GENRES_LIST, 'id');
 
 	const imageFolder = 'stories';
 
@@ -95,8 +98,29 @@
 		}
 	};
 
+	const handleChange = ({ detail }: CustomEvent<string>) => {
+		$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
+		checkUpdates();
+	};
+
 	const setFile = (e: CustomEvent<File>) => {
 		const file = e.detail;
+
+		preSaveImage(file);
+	};
+
+	const switchGenre = (id: TGenre) => {
+		$informationDataStore.genre = id;
+
+		checkUpdates();
+	};
+
+	const handleDrop = (e: CustomEvent<Array<File>>) => {
+		if (!e.detail.length) {
+			return;
+		}
+
+		const file = e.detail[0];
 
 		preSaveImage(file);
 	};
@@ -109,61 +133,74 @@
 		}
 	});
 
-	$: genre = GENRES_LIST.find(({ id }) => id === $informationDataStore.genre);
+	$: genre = GENRES_LIST.find(({ id }) => id === ($informationDataStore.genre || 'adventure'));
 </script>
 
 <Panel nonClose title="Основная информация">
-	<ImageUploader
-		alt="Иллюстрация текста"
-		class="h-48"
-		disabled={$panelEditMode}
-		icon={BookOpen}
-		on:loadstart={setFile}
-		on:remove={preRemoveImage}
-		readonly={$readonlyStore}
-		src={$informationDataStore.imageUrl}
-	/>
-	<div class="flex gap-2 *:flex-1">
-		<Listbox
-			align="inset"
+	<InvisibleDrop on:change={handleDrop}>
+		<Icon type={BookOpen} variation="solid" class="h-24 w-auto *:fill-gradient" />
+		<p>Перетащите сюда изображение, чтобы заменить текущее в блоке</p>
+	</InvisibleDrop>
+	<div class="flex gap-2 *:min-w-0 *:flex-1">
+		<IllustrationPopover imageUrl={$informationDataStore.imageUrl}>
+			<ImageUploader
+				alt="Иллюстрация истории"
+				class="h-48"
+				disabled={$panelEditMode}
+				icon={BookOpen}
+				on:loadstart={setFile}
+				on:remove={preRemoveImage}
+				readonly={$readonlyStore}
+				src={$informationDataStore.imageUrl}
+			/>
+		</IllustrationPopover>
+		<Popover
+			align="center"
 			disabled={$panelEditMode}
-			let:click
-			{list}
-			on:change={({ detail }) => {
-				$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
-				checkUpdates();
-			}}
+			on:change={handleChange}
 			placeholder="Жанр"
 			readonly={$readonlyStore}
-			value={genre?.title}
 		>
-			<Button
-				class="w-full flex-col gap-1 bg-contrast-9 !text-text"
-				on:click={click}
-				size="lg"
-				variant="main"
-			>
-				<Icon class="size-8" type={genre?.icon} variation="solid" />
-				<p class="text-xs">{genre?.title}</p>
-			</Button>
-		</Listbox>
+			<svelte:fragment slot="button" let:click>
+				<Button
+					class="w-full flex-col gap-1 bg-contrast-9 !text-text"
+					on:click={click}
+					size="lg"
+					variant="ghost"
+				>
+					<svelte:component this={genre.icon} class="size-8" />
+					<p class="text-xs">{genre.title}</p>
+				</Button>
+			</svelte:fragment>
+			<div class="flex w-96 flex-wrap gap-1 bg-transparent p-2">
+				{#each GENRES_LIST as { icon, id, title } (id)}
+					<Button
+						on:click={() => switchGenre(id)}
+						class="min-w-20 flex-1 flex-col gap-1 bg-contrast-9 !text-text"
+						size="lg"
+						variant="ghost"
+					>
+						<svelte:component this={icon} class="size-6" />
+						<p class="text-xs">{title}</p>
+					</Button>
+				{/each}
+			</div>
+		</Popover>
 		<ColorPicker
 			color={$informationDataStore.color.length ? $informationDataStore.color : DEFAULT_COLOR}
 			disabled={$panelEditMode}
 			let:click
 			{light}
-			lightRange={[15, 80]}
 			on:change={setColor}
-			popoverAlign="inset"
+			align="center"
 			readonly={$readonlyStore}
 			{saturate}
-			saturateRange={[10, 90]}
 		>
 			<Button
 				class="w-full flex-col gap-1 bg-main !text-text"
 				on:click={click}
 				size="lg"
-				variant="main"
+				variant="ghost"
 			>
 				<Icon class="size-8" type={PaintBrush} variation="solid" />
 				<p class="text-xs">Цвет фона</p>

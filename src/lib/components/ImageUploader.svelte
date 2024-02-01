@@ -9,8 +9,13 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { clm } from '$lib/utils';
 
-	import DropBlock from './DropBlock.svelte';
+	import DropArea from './DropArea.svelte';
 	import Icon from './Icon.svelte';
+
+	const dispatch = createEventDispatcher<{
+		loadstart: File;
+		remove: null;
+	}>();
 
 	export let icon: typeof SvelteComponent<unknown>;
 	export let disabled = false;
@@ -20,8 +25,6 @@
 
 	let className = '';
 	export { className as class };
-
-	const dispatch = createEventDispatcher();
 
 	let base64src: string = null;
 
@@ -41,14 +44,14 @@
 		};
 	};
 
-	const handleChange = (e: CustomEvent<FileList>) => {
+	const handleChange = (e: CustomEvent<Array<File>>) => {
 		const files = e.detail;
 
 		createBase64Image(files[0]);
 	};
 
-	const handleRemove = (e: CustomEvent) => {
-		dispatch('remove', e);
+	const handleRemove = () => {
+		dispatch('remove');
 	};
 </script>
 
@@ -72,17 +75,18 @@
 			on:load={() => (base64src = null)}
 			{src}
 		/>
-	{:else if readonly}
+	{:else if readonly || disabled}
 		<Button
 			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit bg-contrast-9 !p-6"
 			variant="ghost"
 		>
-			<Icon class="h-24 w-auto childs:fill-gradient" type={icon} variation="solid" />
+			<Icon class="h-24 w-auto *:fill-gradient" type={icon} variation="solid" />
 			<p>Изображение не добавлено</p>
 		</Button>
 	{:else}
-		<DropBlock class="h-full w-full gap-2 !rounded-inherit" {disabled} on:change={handleChange}>
-			<Icon class="h-24 w-auto childs:fill-gradient" type={icon} variation="solid" />
-		</DropBlock>
+		<DropArea on:change={handleChange} class="relative rounded-inherit bg-main-20">
+			<Icon class="h-20 w-auto *:fill-gradient" type={icon} variation="solid" />
+			<p>Нажмите тут или перетащите сюда изображение</p>
+		</DropArea>
 	{/if}
 </div>

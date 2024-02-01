@@ -7,9 +7,11 @@
 	import type { IFrame } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 
-	import { Button, Contenteditable, FormSplit, Input, Sound } from '$UI';
+	import { Button, Contenteditable, FormSplit, Input, Popover } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
+	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
+	import SoundUploader from '$lib/components/SoundUploader.svelte';
 	import { removeImage, removeSound, saveImage, saveSound } from '$lib/requests/files';
 	import {
 		informationDataStore,
@@ -23,10 +25,13 @@
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
 	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
 
+	import IllustrationPopover from '../../IllustrationPopover.svelte';
 	import Panel from '../Panel.svelte';
 	import Choice from './Choice.svelte';
 
 	const imageFolder = 'frames';
+
+	let draggedFileType = '';
 
 	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
 	$: ({ choices, frameId, imageUrl, soundUrl, x, y } =
@@ -175,10 +180,30 @@
 		$framesDataStore[frameKey].imageUrl = onePrevFrame.imageUrl;
 	};
 
-	const handleAddSound = (e: CustomEvent<FileList>) => {
-		const file = e.detail[0];
+	const handleAddSound = (e: CustomEvent<File>) => {
+		const file = e.detail;
 
 		preSaveSound(file);
+	};
+
+	const handleDragStart = (e: CustomEvent<DragEvent>) => {
+		const file = e.detail.dataTransfer.items[0];
+
+		draggedFileType = file.type.split('/')[0];
+	};
+
+	const handleDrop = (e: CustomEvent<Array<File>>) => {
+		if (!e.detail.length) {
+			return;
+		}
+
+		const file = e.detail[0];
+
+		if (file.type.includes('image')) {
+			preSaveImage(file);
+		} else {
+			preSaveSound(file);
+		}
 	};
 
 	onDestroy(() => {
@@ -194,6 +219,17 @@
 
 {#if $framesDataStore[frameKey]}
 	<Panel title={$framesDataStore[frameKey].title}>
+		<InvisibleDrop accept="image/*,audio/*" on:dragstart={handleDragStart} on:change={handleDrop}>
+			<Icon
+				class="h-24 w-auto *:fill-gradient"
+				type={draggedFileType === 'image' ? RectangleStack : MusicalNote}
+				variation="solid"
+			/>
+			<p>
+				Перетащите сюда {draggedFileType === 'image' ? 'изображение' : 'звук'}, чтобы заменить
+				его или добавить
+			</p>
+		</InvisibleDrop>
 		<FormSplit class="w-full">
 			<Input
 				class="flex-1 !text-center"
@@ -212,28 +248,54 @@
 				value={`${Math.round(y)}`}
 			/>
 		</FormSplit>
-		<FormSplit class="h-48" vertical>
-			<ImageUploader
-				alt="Иллюстрация текста"
-				disabled={$panelEditMode}
-				icon={RectangleStack}
-				on:loadstart={setFile}
-				on:remove={preRemoveImage}
-				readonly={$readonlyStore}
-				src={imageUrl}
-			/>
-			{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl && !$readonlyStore}
-				<Button
-					class="justify-center bg-contrast-9 text-text"
+		<div class="flex gap-2 *:min-w-0 *:flex-1">
+			<IllustrationPopover {imageUrl}>
+				<ImageUploader
+					alt="Иллюстрация блока"
+					class="h-48"
 					disabled={$panelEditMode}
-					on:click={addPrevImage}
-					variant="ghost"
-				>
-					Вставить с предыдущего блока
-				</Button>
-			{/if}
-		</FormSplit>
-		<Sound on:change={handleAddSound} on:remove={preRemoveSound} src={soundUrl} />
+					icon={RectangleStack}
+					on:loadstart={setFile}
+					on:remove={preRemoveImage}
+					readonly={$readonlyStore}
+					src={imageUrl}
+				/>
+				{#if !imageUrl && onePrevFrame !== null && onePrevFrame.imageUrl && !$readonlyStore}
+					<Button
+						class="justify-center bg-contrast-9 !text-text"
+						disabled={$panelEditMode}
+						on:click={addPrevImage}
+						variant="ghost"
+					>
+						Вставить с предыдущего блока
+					</Button>
+				{/if}
+			</IllustrationPopover>
+			<Popover align="left">
+				<svelte:fragment let:click slot="button">
+					<Button
+						class={clsx(
+							'w-full flex-col gap-1 bg-contrast-9 !text-text',
+							soundUrl && '!text-emerald-500'
+						)}
+						on:click={click}
+						size="lg"
+						variant="ghost"
+					>
+						<Icon class="size-8" type={MusicalNote} variation="solid" />
+						<p class="text-xs">{soundUrl ? `Звук ${frameId}` : 'Звук'}</p>
+					</Button>
+				</svelte:fragment>
+				<div class="flex w-96 flex-col gap-3 bg-transparent p-4">
+					<SoundUploader
+						class="h-48"
+						on:loadstart={handleAddSound}
+						on:remove={preRemoveSound}
+						src={soundUrl}
+					/>
+				</div>
+			</Popover>
+		</div>
 		<FormSplit vertical>
 			<Input
 				bind:value={$framesDataStore[frameKey].title}

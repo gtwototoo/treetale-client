@@ -6,6 +6,7 @@ export * from './custom-colors';
 export * from './editing';
 export * from './file';
 export * from './find';
+export * from './input-accept';
 export * from './number';
 export * from './page';
 export * from './random';

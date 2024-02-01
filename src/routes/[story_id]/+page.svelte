@@ -120,7 +120,7 @@
 
 			await invalidateAll();
 
-			$soundStore?.play();
+			$soundStore.sound?.play();
 		} catch (e) {
 			console.error(e);
 		}

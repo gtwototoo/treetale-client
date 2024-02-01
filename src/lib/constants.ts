@@ -59,7 +59,7 @@ export const GENRES_LIST = [
 	{
 		icon: Adventure,
 		id: 'adventure',
-		title: 'Приключение'
+		title: 'Авантюра'
 	},
 	{
 		icon: Fantastic,

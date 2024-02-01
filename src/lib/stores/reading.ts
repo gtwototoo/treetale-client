@@ -14,22 +14,31 @@ export const fullscreenStore = writable<boolean>(false);
 export const variablesStore = writable<Array<IVariable>>([]);
 
 const customSoundStore = () => {
-	const { set, subscribe, update } = writable<Howl>(null);
+	const { set, subscribe, update } = writable<{ playing: boolean; sound: Howl; src: string }>({
+		playing: false,
+		sound: null,
+		src: ''
+	});
 
 	const setSrc = (src: string) => {
 		update((current) => {
-			if (current) {
-				current.stop();
-				current.unload();
-				current.off();
+			if (current.sound) {
+				current.sound.stop();
+				current.sound.unload();
+				current.sound.off();
 			}
 
-			return src
-				? new Howl({
-						loop: true,
-						src
-					})
-				: null;
+			return {
+				...current,
+				sound: src
+					? new Howl({
+							loop: true,
+							onplay: () => update((current) => ({ ...current, playing: true })),
+							onstop: () => update((current) => ({ ...current, playing: false })),
+							src
+						})
+					: null
+			};
 		});
 	};
 
