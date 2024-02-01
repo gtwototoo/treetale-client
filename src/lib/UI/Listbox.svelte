@@ -7,7 +7,8 @@
 </script>
 
 <script lang="ts">
-	import { type SvelteComponent, createEventDispatcher } from 'svelte';
+	import type { SvelteComponent } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	import { clsx } from 'clsx';
@@ -28,6 +29,7 @@
 	export let size: 'base' | 'lg' | 'sm' | 'xl' = 'base';
 	export let placeholder: string;
 	export let list: Array<IList | string>;
+	export let listClass = '';
 
 	let focused = false;
 
@@ -57,12 +59,28 @@
 	};
 </script>
 
-<div class={clsx('listbox', className)} on:outclick={() => (focused = false)} use:clickOutside>
+<div
+	class={clsx(
+		'listbox',
+		{
+			base: 'rounded-lg',
+			lg: 'rounded-xl',
+			sm: 'rounded',
+			xl: 'rounded-2xl'
+		}[size],
+		className
+	)}
+	on:outclick={() => (focused = false)}
+	use:clickOutside
+>
 	{#if $$slots.default}
 		<slot click={handleClick} value={value || placeholder} />
 	{:else}
 		<Button
-			class={clm('w-full gap-3 bg-contrast-9 !pr-3', size === 'sm' && 'gap-1 !pr-2')}
+			class={clm(
+				'w-full gap-3 !rounded-inherit bg-contrast-9 !pr-3',
+				size === 'sm' && 'gap-1 !pr-2'
+			)}
 			{disabled}
 			on:click={handleClick}
 			{size}
@@ -88,7 +106,8 @@
 					inset: '-inset-x-1',
 					left: '-left-1',
 					right: '-right-1'
-				}[align]
+				}[align],
+				listClass
 			)}
 			in:fly={{ y: 10 }}
 			use:correctPosition
@@ -120,6 +139,6 @@
 		@apply relative bg-transparent text-text;
 	}
 	.list {
-		@apply absolute z-20 flex flex-col gap-1 rounded-lg bg-contrast p-1 shadow-md;
+		@apply absolute z-20 flex flex-col gap-1 bg-contrast p-1 shadow-md;
 	}
 </style>

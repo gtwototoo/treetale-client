@@ -31,7 +31,7 @@
 	{/if}
 	<Card
 		class={clsx(
-			'select-none items-start gap-8 bg-main-10 p-8 text-text childs:bg-transparent max-hd:gap-6 max-hd:p-6',
+			'select-none items-start gap-8 bg-main-10 p-8 text-text *:bg-transparent max-hd:gap-6 max-hd:p-6',
 			classCard
 		)}
 	>

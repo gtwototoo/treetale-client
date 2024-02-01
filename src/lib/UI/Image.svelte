@@ -39,7 +39,7 @@
 
 <div
 	class={clsx(
-		'relative flex select-none items-center justify-center bg-transparent text-contrast childs:bg-transparent',
+		'relative flex select-none items-center justify-center bg-transparent text-contrast *:bg-transparent',
 		className
 	)}
 	in:fade
@@ -69,7 +69,7 @@
 					src={base64src}
 				/>
 			{:else}
-				<Icon class="size-6" type={Loading} />
+				<Icon class="size-6 text-text" type={Loading} />
 			{/if}
 		{:then}
 			<img
@@ -82,7 +82,7 @@
 			{#if $$slots.error}
 				<slot name="error" />
 			{:else}
-				<Icon class="h-1/3 min-h-[1rem] w-auto" type={Photo} />
+				<Icon class="h-1/3 min-h-[1rem] w-auto text-text" type={Photo} />
 			{/if}
 		{/await}
 	{/if}

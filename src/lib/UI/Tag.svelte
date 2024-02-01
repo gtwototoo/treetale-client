@@ -7,7 +7,7 @@
 
 <p
 	class={clm(
-		'select-none rounded bg-contrast bg-opacity-30 px-2 py-1 text-xs text-text childs:bg-transparent',
+		'select-none rounded bg-contrast bg-opacity-30 px-2 py-1 text-xs text-text *:bg-transparent',
 		className
 	)}
 >

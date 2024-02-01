@@ -19,7 +19,7 @@
 <ReadCard classCard="h-full text-center !items-center !gap-10">
 	<svelte:fragment slot="body">
 		<Icon
-			class="h-44 w-auto childs:fill-gradient max-hd:h-36 max-xl:h-28"
+			class="h-44 w-auto *:fill-gradient max-hd:h-36 max-xl:h-28"
 			type={BookOpen}
 			variation="solid"
 		/>

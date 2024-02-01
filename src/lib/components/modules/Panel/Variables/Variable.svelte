@@ -67,7 +67,7 @@
 			<Listbox
 				align="inset"
 				bind:value={$variablesStore[varKey].value}
-				class="w-full child-[button]:!rounded-none child-[button]:!rounded-r-lg"
+				class="w-full !rounded-none !rounded-r-lg"
 				list={[{ title: 'Да' }, { title: 'Нет' }]}
 				on:change={checkUpdates}
 				placeholder="Значение"

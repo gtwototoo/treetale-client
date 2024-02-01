@@ -90,10 +90,10 @@
 		@apply fixed left-0 top-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
 	}
 	.window {
-		@apply m-4 flex flex-col rounded-2xl bg-white p-2 childs:w-full;
+		@apply m-4 flex flex-col rounded-2xl bg-white p-2 *:w-full;
 	}
 	.window > .header {
-		@apply flex items-center justify-end p-4 childs:flex;
+		@apply flex items-center justify-end p-4 *:flex;
 	}
 	.header > .title {
 		@apply min-h-[2.5rem] w-full items-center justify-center text-center text-xl;

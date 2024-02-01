@@ -46,9 +46,7 @@
 	};
 </script>
 
-<Header
-	class={clsx('pointer-events-none', $activeActionStore ? 'blind' : 'childs:pointer-events-auto')}
->
+<Header class={clsx('pointer-events-none', $activeActionStore ? 'blind' : '*:pointer-events-auto')}>
 	{#if $readonlyStore}
 		<div class="select-none rounded-xl bg-contrast/10 px-6 py-3 text-base text-text">
 			Режим просмотра

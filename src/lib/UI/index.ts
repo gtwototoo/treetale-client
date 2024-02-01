@@ -15,7 +15,6 @@ import Modal from './Modal.svelte';
 import Popover from './Popover.svelte';
 import SelectorItem from './Selector/Item.svelte';
 import Selector from './Selector/index.svelte';
-import Sound from './Sound.svelte';
 import Tag from './Tag.svelte';
 import Textarea from './Textarea.svelte';
 
@@ -37,7 +36,6 @@ export {
 	Popover,
 	Selector,
 	SelectorItem,
-	Sound,
 	Tag,
 	Textarea
 };

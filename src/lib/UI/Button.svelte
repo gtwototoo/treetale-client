@@ -6,7 +6,10 @@
 	import { clickHold } from '$lib/hooks';
 	import { clm } from '$lib/utils';
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		click: MouseEvent;
+		holdclick: MouseEvent;
+	}>();
 
 	let className = '';
 	export { className as class };
@@ -36,9 +39,9 @@
 <button
 	bind:this={element}
 	class={clm(
-		'transition-opacity childs:bg-transparent',
+		'transition-opacity *:bg-transparent',
 		`size-${size}`,
-		loading && '!text-transparent childs:invisible',
+		loading && '!text-transparent *:invisible',
 		variant !== 'custom' && `variant-${variant}`,
 		(disabled || loading) && 'disabled',
 		className

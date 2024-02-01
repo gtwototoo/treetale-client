@@ -10,7 +10,7 @@
 
 <div class="flex select-none items-start gap-4 text-sm">
 	<div class="rounded-lg bg-contrast-2 p-3">
-		<Icon class="size-6 text-contrast-9" type={icon} />
+		<Icon class="size-6 text-text/50" type={icon} />
 	</div>
 	{#if text}
 		{correctWhitespace(text)}

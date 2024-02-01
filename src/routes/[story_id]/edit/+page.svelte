@@ -164,6 +164,13 @@
 
 	const handleMouseUp = () => {
 		if ($activeActionStore === 'movingFrame') {
+			const frameKey = $framesDataStore.findIndex(
+				({ frameId }) => frameId === $movingFrameStore
+			);
+
+			$framesDataStore[frameKey].x = Math.round($framesDataStore[frameKey].x);
+			$framesDataStore[frameKey].y = Math.round($framesDataStore[frameKey].y);
+
 			changesHistory.add('Перемещение блока', ArrowsPointingIn);
 		}
 

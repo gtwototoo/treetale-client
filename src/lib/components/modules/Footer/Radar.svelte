@@ -62,7 +62,7 @@
 >
 	<div class="size-6 rounded-full !bg-contrast/20" />
 	{#if element && workspaceHeight}
-		{#each $framesDataStore as { x, y }, key}
+		{#each $framesDataStore as { frameId, x, y }, key (frameId)}
 			<div
 				class={clm(
 					'absolute h-2.5 w-2.5 shrink-0 rounded-full !bg-text',

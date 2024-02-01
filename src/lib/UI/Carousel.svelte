@@ -45,7 +45,7 @@
 
 <div
 	bind:this={carouselRef}
-	class={clsx('carousel childs:shrink-0 childs:snap-center', className, {
+	class={clsx('carousel *:shrink-0 *:snap-center', className, {
 		invisible: !ready
 	})}
 	use:addIdToChilds

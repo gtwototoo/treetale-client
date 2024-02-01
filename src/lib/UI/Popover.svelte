@@ -15,9 +15,12 @@
 	export let btnClass = '';
 	export let disabled = false;
 	export let readonly = false;
-	export let align: 'inset' | 'left' | 'right' = 'left';
+	export let align: 'center' | 'inset' | 'left' | 'right' = 'left';
 	export let value = '';
 	export let placeholder = '';
+
+	let containerRef: HTMLDivElement;
+	let contentRef: HTMLDivElement;
 
 	let focused = false;
 
@@ -26,9 +29,50 @@
 
 		focused = !focused;
 	};
+
+	$: if (focused && containerRef && contentRef) {
+		const button = containerRef.childNodes[0] as HTMLButtonElement;
+		const space = 4;
+
+		switch (align) {
+			case 'inset':
+				contentRef.style.setProperty('width', `${button.clientWidth}px`);
+				break;
+			case 'center':
+				contentRef.style.setProperty(
+					'left',
+					`-${contentRef.clientWidth / 2 - button.clientWidth / 2}px`
+				);
+				break;
+			case 'left':
+				contentRef.style.setProperty('left', `${space}px`);
+				break;
+			case 'right':
+				contentRef.style.setProperty(
+					'left',
+					`-${contentRef.clientWidth - button.clientWidth - space}px`
+				);
+				break;
+		}
+
+		const { width, x } = contentRef.getBoundingClientRect();
+		const left = +contentRef.style.getPropertyValue('left').split('px')[0];
+
+		if (x + width >= window.innerWidth) {
+			contentRef.style.setProperty('left', `${left - (x + width - window.innerWidth)}px`);
+		}
+		if (x <= 0) {
+			contentRef.style.setProperty('left', `${left + Math.abs(x)}px`);
+		}
+	}
 </script>
 
-<div class={clsx('popover', className)} on:outclick={() => (focused = false)} use:clickOutside>
+<div
+	bind:this={containerRef}
+	class={clsx('relative bg-transparent', className)}
+	on:outclick={() => (focused = false)}
+	use:clickOutside
+>
 	{#if $$slots.button}
 		<slot click={handleClick} {focused} name="button" />
 	{:else}
@@ -55,14 +99,8 @@
 	{/if}
 	{#if focused}
 		<div
-			class={clsx(
-				'content',
-				{
-					inset: '-inset-x-1',
-					left: '-left-1',
-					right: '-right-1'
-				}[align]
-			)}
+			bind:this={contentRef}
+			class="absolute z-[4] rounded-lg bg-contrast text-text shadow"
 			in:fly={{ y: 10 }}
 			use:correctPosition
 		>
@@ -70,12 +108,3 @@
 		</div>
 	{/if}
 </div>
-
-<style lang="postcss">
-	.content {
-		@apply absolute z-[4] rounded-lg bg-contrast text-text shadow;
-	}
-	.popover {
-		@apply relative bg-transparent;
-	}
-</style>

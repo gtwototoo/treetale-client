@@ -45,7 +45,7 @@
 	{:else}
 		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>
 			<div class="flex justify-start gap-4">
-				{#each stories as rawStory}
+				{#each stories as rawStory (rawStory.storyId)}
 					{@const { vars, ...story } = rawStory}
 					{@const author = authors && authors.find(({ userId }) => userId === story.userId)}
 					<StoryCard

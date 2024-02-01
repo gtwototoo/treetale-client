@@ -10,7 +10,7 @@ const colorsList = [
 	'contrast'
 ];
 
-function withOpacityValue(variable) {
+function withOpacityValue(variable: string) {
 	return ({ opacityValue = 1 }) => {
 		if (opacityValue === undefined) {
 			return `rgb(var(${variable}))`;
@@ -19,7 +19,7 @@ function withOpacityValue(variable) {
 	};
 }
 
-function toColorValue(maybeFunction) {
+function toColorValue(maybeFunction: (obj: object) => string | string) {
 	return typeof maybeFunction === 'function' ? maybeFunction({}) : maybeFunction;
 }
 
@@ -32,8 +32,7 @@ const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
 	plugins: [
-		plugin(({ addUtilities, addVariant, matchUtilities, matchVariant, theme }) => {
-			addVariant('childs', '& > *');
+		plugin(({ addUtilities, addVariant, matchUtilities, theme }) => {
 			addVariant('thumb', '&::-webkit-scrollbar-thumb');
 			addVariant('scrollbar', '&::-webkit-scrollbar');
 			addVariant('rngthumb', ['&::-webkit-slider-thumb', '&::-moz-range-thumb', '&::-ms-thumb']);
@@ -42,9 +41,6 @@ const config = {
 				'&::-moz-range-track',
 				'&::-ms-track'
 			]);
-			matchVariant('child', (value) => {
-				return `& > ${value}`;
-			});
 			addUtilities({
 				'.fill-gradient': {
 					fill: 'var(--fill-gradient)'

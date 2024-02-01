@@ -85,7 +85,7 @@
 		<button
 			bind:clientHeight={$framesDataStore[frameKey].height}
 			class={clsx(
-				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text childs:bg-transparent',
+				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text *:bg-transparent',
 				!$readonlyStore && 'cursor-move transition-[box-shadow] hover:shadow-lg',
 				$movingFrameStore === frameId && 'shadow-lg',
 				$activeModeStore === 'binding' &&

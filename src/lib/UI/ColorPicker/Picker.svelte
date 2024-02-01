@@ -26,7 +26,7 @@
 	};
 </script>
 
-<div class="flex flex-col gap-4 bg-transparent p-2" style="--color-main: {RGB(color)}">
+<div class="flex w-96 flex-col gap-4 bg-transparent p-4" style="--color-main: {RGB(color)}">
 	<div class="flex flex-col gap-2">
 		<div class="flex min-w-0 items-center gap-2">
 			<div class="size-3 rounded bg-gray-700" />
