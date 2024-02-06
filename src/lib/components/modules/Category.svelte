@@ -4,6 +4,8 @@
 	import type { SvelteComponent } from 'svelte';
 
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
+	import find from 'lodash/find';
+	import range from 'lodash/range';
 
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
@@ -46,8 +48,8 @@
 		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>
 			<div class="flex justify-start gap-4">
 				{#each stories as rawStory (rawStory.storyId)}
-					{@const { vars, ...story } = rawStory}
-					{@const author = authors && authors.find(({ userId }) => userId === story.userId)}
+					{@const { userId, vars, ...story } = rawStory}
+					{@const author = find(authors, { userId })}
 					<StoryCard
 						{author}
 						class="w-96 max-lg:w-80 max-md:w-72 max-xs:w-60"
@@ -56,7 +58,7 @@
 					/>
 				{/each}
 				{#if stories.length < 5}
-					{#each Array(5 - stories.length).fill(undefined) as _}
+					{#each range(5 - stories.length) as _}
 						<Empty class="w-96 shrink-0 max-lg:w-80 max-md:w-72 max-xs:w-60" />
 					{/each}
 				{/if}

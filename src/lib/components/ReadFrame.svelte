@@ -2,20 +2,15 @@
 	import { createEventDispatcher } from 'svelte';
 
 	import clsx from 'clsx';
+	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
 
 	import type { ILogicOperation } from '$lib/types';
 
 	import { FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, soundStore, variablesStore } from '$lib/stores/reading';
-	import {
-		correctToType,
-		correctVariableReplace,
-		doLogic,
-		doMath,
-		getChoiceFromId,
-		getFrameFromId
-	} from '$lib/utils';
+	import { correctToType, correctVariableReplace, doLogic, doMath } from '$lib/utils';
 
 	import Choice from './Choice.svelte';
 
@@ -37,13 +32,13 @@
 	const updateVars = (frameId: number, choiceId: number) => {
 		if (!choiceId) return;
 
-		const frame = getFrameFromId($framesStore, frameId);
-		const choice = getChoiceFromId(frame, choiceId);
+		const frame = find($framesStore, { frameId });
+		const choice = find(frame.choices, { choiceId });
 
 		if (!choice.mathOperations.length) return;
 
-		for (const { symbol, value, variable } of choice.mathOperations) {
-			const variableId = $variablesStore.findIndex(({ name }) => name === variable);
+		for (const { symbol, value, variable: name } of choice.mathOperations) {
+			const variableId = findIndex($variablesStore, { name });
 			const { expect } = $variablesStore[variableId];
 			const firstValue = $variablesStore[variableId].value;
 
@@ -57,10 +52,14 @@
 
 	const checkLogic = (logicOperations: Array<ILogicOperation>) => {
 		return logicOperations
-			.map(({ symbol, value: firstValue, variable }) => {
-				const { expect, value } = $variablesStore.find(({ name }) => name === variable);
+			.map(({ symbol, value: secondValue, variable: name }) => {
+				const { expect, value: firstValue } = find($variablesStore, { name });
 
-				return doLogic(correctToType(value, expect), symbol, correctToType(firstValue, expect));
+				return doLogic(
+					correctToType(firstValue, expect),
+					symbol,
+					correctToType(secondValue, expect)
+				);
 			})
 			.every((operation) => operation);
 	};
@@ -71,7 +70,7 @@
 		return correctVariableReplace(text, $variablesStore) || 'Пустота...';
 	};
 
-	$: ({ choices, imageUrl, soundUrl, text } = getFrameFromId($framesStore, frameId));
+	$: ({ choices, imageUrl, soundUrl, text } = find($framesStore, { frameId }));
 
 	$: if (isLastFrame) {
 		soundStore.setSrc(soundUrl);

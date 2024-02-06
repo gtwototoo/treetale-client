@@ -1,5 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
+	import findIndex from 'lodash/findIndex';
 	import { XMark } from 'svelte-heros-v2';
 
 	import { Button } from '$UI';
@@ -10,10 +11,8 @@
 	import { createLineRemoveButtons, transform } from '$lib/utils';
 
 	const removeConnection = (frameId: number, choiceId: number) => {
-		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === frameId);
-		const fromChoiceKey = $framesDataStore[fromFrameKey].choices.findIndex(
-			(choice) => choice.choiceId === choiceId
-		);
+		const fromFrameKey = findIndex($framesDataStore, { frameId });
+		const fromChoiceKey = findIndex($framesDataStore[fromFrameKey].choices, { choiceId });
 
 		$framesDataStore[fromFrameKey].choices[fromChoiceKey].frameId = null;
 

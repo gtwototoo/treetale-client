@@ -2,9 +2,11 @@
 	import { onDestroy } from 'svelte';
 
 	import clsx from 'clsx';
+	import findIndex from 'lodash/findIndex';
+	import last from 'lodash/last';
+	import reject from 'lodash/reject';
 	import { ArrowLeft, MusicalNote, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
 
-	import type { IFrame } from '$lib/types';
 	import type { IFrameCreate } from '$lib/types/editing';
 
 	import { Button, Contenteditable, FormSplit, Input, Popover } from '$UI';
@@ -23,7 +25,7 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode, panelStore } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
-	import { last, notesHighlight, variablesHighlight } from '$lib/utils';
+	import { notesHighlight, variablesHighlight } from '$lib/utils';
 
 	import IllustrationPopover from '../../IllustrationPopover.svelte';
 	import Panel from '../Panel.svelte';
@@ -33,7 +35,7 @@
 
 	let draggedFileType = '';
 
-	$: frameKey = $framesDataStore.findIndex(({ frameId }) => frameId === $selectedFrameStore);
+	$: frameKey = findIndex($framesDataStore, { frameId: $selectedFrameStore });
 	$: ({ choices, frameId, imageUrl, soundUrl, x, y } =
 		$framesDataStore[frameKey] || ({} as IFrameCreate));
 
@@ -107,24 +109,24 @@
 		preSaveImage(file);
 	};
 
-	const outputCorrect = (frame: IFrame) => {
-		const outputOnFirstOrRemovedFrame = $framesDataStore[frameKey].choices.find(
-			({ frameId }) => frameId === $framesDataStore[0].frameId || frameId === frame.frameId
-		);
+	const removeFromChoicesDeletedFrameId = (removedFrameId: number) => {
+		for (const frameKey in $framesDataStore) {
+			for (const choiceKey in $framesDataStore[frameKey].choices) {
+				if ($framesDataStore[frameKey].choices[choiceKey].frameId !== removedFrameId) {
+					continue;
+				}
 
-		if (outputOnFirstOrRemovedFrame) {
-			outputOnFirstOrRemovedFrame.frameId = null;
+				$framesDataStore[frameKey].choices[choiceKey].frameId = null;
+			}
 		}
 	};
 
 	const removeFrame = () => {
 		panelStore.clear();
 
-		$framesDataStore = $framesDataStore.filter(({ frameId }) => frameId !== $selectedFrameStore);
+		$framesDataStore = reject($framesDataStore, { frameId: $selectedFrameStore });
 
-		for (const frame of $framesDataStore) {
-			outputCorrect(frame);
-		}
+		removeFromChoicesDeletedFrameId(frameId);
 
 		changesHistory.add('Удаление блока', Trash);
 	};

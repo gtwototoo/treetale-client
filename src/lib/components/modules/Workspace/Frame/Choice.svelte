@@ -1,5 +1,7 @@
 <script lang="ts">
 	import clsx from 'clsx';
+	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
 
 	import type { ILogicOperation, IMathOperation } from '$lib/types';
 
@@ -8,7 +10,7 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import { panelShow } from '$lib/stores/panel';
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
-	import { clm, contrastText, getFrameFromId } from '$lib/utils';
+	import { clm, contrastText } from '$lib/utils';
 
 	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
 
@@ -24,9 +26,7 @@
 	$: frame = $framesDataStore[frameKey];
 
 	const choiceFocus = (choiceId: number) => {
-		const choiceKey = $framesDataStore[frameKey].choices.findIndex(
-			(choice) => choice.choiceId === choiceId
-		);
+		const choiceKey = findIndex($framesDataStore[frameKey].choices, { choiceId });
 		const choiceInputs: NodeListOf<HTMLContentEditable> = document
 			.getElementById('choices')
 			?.querySelectorAll('[contenteditable]');
@@ -75,7 +75,7 @@
 		}
 	};
 
-	$: toFrame = getFrameFromId($framesDataStore, toFrameId);
+	$: toFrame = find($framesDataStore, { frameId: toFrameId });
 
 	$: greenHoverColor = contrastText($bodyColorStore)
 		? clsx('hover:!bg-emerald-800')

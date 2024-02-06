@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BookOpen } from 'svelte-heros-v2';
+	import find from 'lodash/find';
 
 	import type { TGenre } from '$lib/types';
 
@@ -16,7 +16,7 @@
 		errorImage = true;
 	};
 
-	$: icon = genre ? GENRES_LIST.find(({ id }) => genre === id)?.icon : BookOpen;
+	$: icon = find(GENRES_LIST, { id: genre }).icon;
 </script>
 
 <div

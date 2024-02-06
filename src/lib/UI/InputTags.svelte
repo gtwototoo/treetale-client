@@ -2,12 +2,13 @@
 	import { createEventDispatcher } from 'svelte';
 
 	import { clsx } from 'clsx';
+	import last from 'lodash/last';
+	import without from 'lodash/without';
 	import { XMark } from 'svelte-heros-v2';
 
 	import { Button, Tag } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { autoWidth } from '$lib/hooks';
-	import { last } from '$lib/utils';
 
 	let className = '';
 	export { className as class };
@@ -24,7 +25,7 @@
 	const dispatch = createEventDispatcher();
 
 	const removeTag = (name: string) => {
-		tags = tags.filter((value) => value !== name);
+		tags = without(tags, name);
 
 		dispatch('remove', name);
 	};

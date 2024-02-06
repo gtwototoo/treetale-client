@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import find from 'lodash/find';
+	import omit from 'lodash/omit';
 	import { ArrowsPointingIn } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
 
@@ -41,7 +43,7 @@
 		zoomCorrect,
 		zoomStore
 	} from '$lib/stores/workspace';
-	import { contrastText, exclude, getFrameFromId, rootStyle } from '$lib/utils';
+	import { contrastText, rootStyle } from '$lib/utils';
 
 	export let data;
 
@@ -120,7 +122,7 @@
 		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
 
 		if (isMouse && button === 0 && $movingFrameStore) {
-			const frame = getFrameFromId($framesDataStore, $movingFrameStore);
+			const frame = find($framesDataStore, { frameId: $movingFrameStore });
 
 			startMoveData = startMoveFrame(frame, { x, y });
 		}
@@ -149,7 +151,7 @@
 
 		timer = window.setTimeout(async () => {
 			try {
-				const correctFrames = frames.map((frame) => exclude(frame, ['height']));
+				const correctFrames = frames.map((frame) => omit(frame, ['height']) as IFrameCreate);
 
 				await updateArea($informationDataStore.storyId, correctFrames, offset, zoom);
 
@@ -164,12 +166,11 @@
 
 	const handleMouseUp = () => {
 		if ($activeActionStore === 'movingFrame') {
-			const frameKey = $framesDataStore.findIndex(
-				({ frameId }) => frameId === $movingFrameStore
-			);
+			const frame = find($framesDataStore, { frameId: $movingFrameStore });
 
-			$framesDataStore[frameKey].x = Math.round($framesDataStore[frameKey].x);
-			$framesDataStore[frameKey].y = Math.round($framesDataStore[frameKey].y);
+			frame.x = Math.round(frame.x);
+			frame.y = Math.round(frame.y);
+			$framesDataStore = $framesDataStore;
 
 			changesHistory.add('Перемещение блока', ArrowsPointingIn);
 		}

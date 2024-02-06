@@ -1,6 +1,7 @@
 import clsx from 'clsx';
+import find from 'lodash/find';
 
-import type { IChoice, ICoordinates, IFrame, IVariable, TBoundings } from '$lib/types';
+import type { IChoice, ICoordinates, IVariable, TBoundings } from '$lib/types';
 import type { IFrameCreate, INote, IPath } from '$lib/types/editing';
 
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
@@ -14,23 +15,6 @@ export const transform = (coords: ICoordinates, zoom?: number): string => {
 	}
 
 	return styleRow;
-};
-
-export const getFrameFromId = <T extends IFrame | IFrameCreate>(
-	frames: Array<T>,
-	frameId: number
-) => {
-	const frame = frames.find((frame) => frame.frameId === frameId);
-
-	return frame;
-};
-
-export const getChoiceFromId = (frame: IFrame | IFrameCreate, choiceId: number) => {
-	if (!frame) return;
-
-	const choice = frame.choices.find((choice) => choice.choiceId === choiceId);
-
-	return choice;
 };
 
 export const getChoicePosition = (index: number, imageUrl: string) => {
@@ -69,7 +53,7 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 		for (const choice of fromFrame.choices) {
 			if (choice.frameId === null) continue;
 
-			const toFrame = getFrameFromId(frames, choice.frameId) as IFrameCreate;
+			const toFrame = find(frames, { frameId: choice.frameId }) as IFrameCreate;
 
 			if (!toFrame) continue;
 
@@ -98,7 +82,7 @@ export const createLineRemoveButtons = (frames: Array<IFrameCreate>) => {
 		for (const choice of fromFrame.choices) {
 			if (choice.frameId === null) continue;
 
-			const toFrame = getFrameFromId(frames, choice.frameId) as IFrameCreate;
+			const toFrame = find(frames, { frameId: choice.frameId }) as IFrameCreate;
 
 			if (!toFrame) continue;
 

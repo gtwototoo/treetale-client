@@ -1,9 +1,11 @@
 <script lang="ts">
+	import last from 'lodash/last';
+
 	import type { TRGB } from '$lib/types';
 
 	import { Image } from '$UI';
 	import { BLACK_COLOR, WHITE_COLOR } from '$lib/constants';
-	import { RGB, alphaToRgb, clm, contrastText, last } from '$lib/utils';
+	import { RGB, alphaToRgb, clm, contrastText } from '$lib/utils';
 
 	let className = '';
 	export { className as class };

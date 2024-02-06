@@ -1,5 +1,8 @@
 <script lang="ts">
 	import clsx from 'clsx';
+	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
+	import reject from 'lodash/reject';
 	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
 
 	import { Button, Contenteditable, FormSplit } from '$UI';
@@ -8,9 +11,9 @@
 	import { readonlyStore } from '$lib/stores/editing';
 	import { changesHistory } from '$lib/stores/history';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
-	import { panelEditMode, panelShow } from '$lib/stores/panel';
+	import { panelEditMode } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
-	import { contrastText, getFrameFromId } from '$lib/utils';
+	import { contrastText } from '$lib/utils';
 
 	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
 	import Modificators from './Modificators.svelte';
@@ -22,24 +25,22 @@
 
 	let showModificators = false;
 
-	$: choiceKey = $framesDataStore[frameKey].choices.findIndex(
-		(choice) => choice.choiceId === choiceId
-	);
+	$: choiceKey = findIndex($framesDataStore[frameKey].choices, { choiceId });
+	$: frame = $framesDataStore[frameKey];
 
 	const switchShow = () => {
 		showModificators = !showModificators;
 	};
 
 	const removeChoice = () => {
-		$framesDataStore[frameKey].choices = $framesDataStore[frameKey].choices.filter(
-			(choice) => choice.choiceId !== choiceId
-		);
+		frame.choices = reject(frame.choices, { choiceId });
+		$framesDataStore = $framesDataStore;
 
 		changesHistory.add('Удаление выбора', XMark);
 	};
 
 	const gotoChoiceToFrame = () => {
-		const gotoFrame = getFrameFromId($framesDataStore, frameId);
+		const gotoFrame = find($framesDataStore, { frameId });
 
 		$selectedFrameStore = gotoFrame.frameId;
 
@@ -52,7 +53,7 @@
 			.getElementById('description')
 			?.querySelectorAll('[contenteditable]');
 
-		if (!descriptionInputs || !$panelShow) {
+		if (!descriptionInputs) {
 			return;
 		}
 
@@ -66,7 +67,7 @@
 			x: x + DEFAULT_FRAME_SIZE.width + distance,
 			y: y + (DEFAULT_FRAME_SIZE.height + distance) * choiceKey - DEFAULT_FRAME_SIZE.height / 2
 		});
-		const newFrame = getFrameFromId($framesDataStore, lastFrameId + 1);
+		const newFrame = find($framesDataStore, { frameId: lastFrameId + 1 });
 
 		$framesDataStore[frameKey].choices[choiceKey].frameId = newFrame.frameId;
 

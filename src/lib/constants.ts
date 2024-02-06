@@ -106,7 +106,7 @@ export const GENRES_LIST = [
 		id: 'drama',
 		title: 'Драма'
 	}
-] as const;
+];
 
 // export const GENRES_LIST = {
 // 	horror: {

@@ -1,3 +1,5 @@
+import range from 'lodash/range';
+
 import type { TRGB } from '$lib/types';
 
 import { BLACK_COLOR, BLACK_TEXT_COLOR, WHITE_COLOR, WHITE_TEXT_COLOR } from '$lib/constants';
@@ -26,7 +28,7 @@ export const generateMainColors = (color: TRGB) => {
 		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR
 	};
 
-	for (const i in new Array(9).fill(undefined)) {
+	for (const i in range(9)) {
 		additionalColors[`color-contrast-${+i + 1}`] = alphaToRgb(
 			contrast ? WHITE_COLOR : BLACK_COLOR,
 			(+i + 1) / 100,

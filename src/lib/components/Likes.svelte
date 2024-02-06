@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
+	import without from 'lodash/without';
 	import { Heart } from 'svelte-heros-v2';
 
 	import { Button } from '$UI';
@@ -24,7 +25,7 @@
 			if (response.liked) {
 				likes = [...likes, $page.data.session.userId];
 			} else {
-				likes = likes.filter((id) => id !== $page.data.session.userId);
+				likes = without(likes, $page.data.session.userId);
 			}
 
 			isLiked = likes.includes($page.data.session.userId);

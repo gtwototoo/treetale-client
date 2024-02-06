@@ -118,7 +118,7 @@
 					<p class="text-3xl font-bold">
 						{count === '0' ? 'Нет' : count}
 					</p>
-					<p>{title}</p>
+					<p class="text-sm">{title}</p>
 				</div>
 			{/each}
 		</div>

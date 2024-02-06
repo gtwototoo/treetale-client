@@ -22,22 +22,11 @@
 	export let edit = false;
 	export let author: IUser | undefined = undefined;
 
-	$: ({
-		color,
-		created,
-		description,
-		genre,
-		imageUrl,
-		likes,
-		status,
-		storyId,
-		tags,
-		title,
-		userId
-	} = story);
+	$: ({ color, created, description, genre, imageUrl, likes, status, storyId, tags, title } =
+		story);
 
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
-	$: edit = $page.data.session && $page.data.session.userId === userId;
+	$: edit = $page.data.session && $page.data.session.userId === author?.userId;
 	$: view =
 		$page.data.session &&
 		($page.data.session.role === 'admin' || $page.data.session.role === 'moderator');

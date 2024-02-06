@@ -1,5 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
+	import find from 'lodash/find';
 	import { PencilSquare, XMark } from 'svelte-heros-v2';
 
 	import type {
@@ -45,16 +46,16 @@
 		editMode = false;
 	};
 
-	const handleSelectVariable = (key: number, variableName: string) => {
-		const variable = $variablesStore.find(({ name }) => name === variableName);
+	const handleSelectVariable = (key: number, name: string) => {
+		const { expect } = find($variablesStore, { name });
 
-		if (variable.expect === 'Да/Нет') {
+		if (expect === 'Да/Нет') {
 			if (!['Да', 'Нет'].includes(operations[key].value)) {
 				operations[key].value = 'Да';
 			}
 		}
 
-		if (variable.expect !== 'Число') {
+		if (expect !== 'Число') {
 			operations[key].symbol = '=';
 		}
 
@@ -162,7 +163,7 @@
 						</svelte:fragment>
 					</Input>
 				{:else}
-					{@const variable = $variablesStore.find(({ name }) => name === operation.variable)}
+					{@const variable = find($variablesStore, { name: operation.variable })}
 					<div class="flex flex-wrap gap-1 rounded-lg bg-contrast/80 p-2">
 						<Listbox
 							bind:value={operation.variable}

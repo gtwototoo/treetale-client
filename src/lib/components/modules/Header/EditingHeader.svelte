@@ -6,6 +6,7 @@
 		ChevronLeft,
 		Cog6Tooth,
 		DocumentText,
+		Link,
 		Variable
 	} from 'svelte-heros-v2';
 
@@ -16,8 +17,7 @@
 	import { panelShow, panelStore } from '$lib/stores/panel';
 	import { activeActionStore } from '$lib/stores/workspace';
 
-	import { Changes, Variables } from '../Panel';
-	import Notes from '../Panel/Notes/Notes.svelte';
+	import { Changes, Notes, ShareWorkspace, Variables } from '../Panel';
 	import Header from './Header.svelte';
 
 	const variablesSwitch = () => {
@@ -31,6 +31,13 @@
 		$panelStore = {
 			component: Notes,
 			id: 'notes'
+		};
+	};
+
+	const shareSwitch = () => {
+		$panelStore = {
+			component: ShareWorkspace,
+			id: 'share'
 		};
 	};
 
@@ -109,6 +116,14 @@
 			variant="ghost"
 		>
 			<Icon class="size-6" type={DocumentText} />
+		</Button>
+		<Button
+			class="header-button bg-contrast !px-3 text-text"
+			on:click={shareSwitch}
+			size="lg"
+			variant="ghost"
+		>
+			<Icon class="size-6" type={Link} />
 		</Button>
 	</FormSplit>
 </Header>

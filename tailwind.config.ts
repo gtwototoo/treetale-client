@@ -1,11 +1,12 @@
 import type { Config } from 'tailwindcss';
 
+import range from 'lodash/range';
 import plugin from 'tailwindcss/plugin';
 
 const colorsList = [
 	'main',
-	...new Array(9).fill(undefined).map((_, index) => `main-${index + 1}0`),
-	...new Array(9).fill(undefined).map((_, index) => `contrast-${index + 1}`),
+	...range(9).map((index) => `main-${index + 1}0`),
+	...range(9).map((index) => `contrast-${index + 1}`),
 	'text',
 	'contrast'
 ];

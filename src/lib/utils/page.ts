@@ -1,9 +1,9 @@
-import { findByPattern } from './find';
+import findKey from 'lodash/findKey';
 
 type TPage = 'editing' | 'liked' | 'moderated' | 'profile' | 'reading' | 'viewed' | 'viewing';
 
 export const getPageType = (path: string): TPage => {
-	return findByPattern(path, {
+	const patterns = {
 		editing: /^\/\d+\/edit$/,
 		liked: /^\/profile\/liked$/,
 		moderated: /^\/profile\/moderated$/,
@@ -11,7 +11,9 @@ export const getPageType = (path: string): TPage => {
 		reading: /^\/\d+$/,
 		viewed: /^\/profile\/viewed$/,
 		viewing: /^\/\d+\/view$/
-	});
+	};
+
+	return findKey(patterns, (pattern) => pattern.test(path)) as TPage;
 };
 
 export const setBodyFullHeight = () => {

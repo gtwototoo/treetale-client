@@ -1,5 +1,7 @@
 import { get } from 'svelte/store';
 
+import findIndex from 'lodash/findIndex';
+import last from 'lodash/last';
 import { Plus } from 'svelte-heros-v2';
 
 import type { ICoordinates } from '$lib/types';
@@ -17,7 +19,6 @@ import {
 	selectedFrameStore,
 	zoomCorrect
 } from '$lib/stores/workspace';
-import { last } from '$lib/utils';
 
 import { FrameSettings } from '../Panel';
 
@@ -75,7 +76,7 @@ export const movingFrame = (coords: ICoordinates, startMoveData: IStartMove) => 
 	const framesData = get(framesDataStore);
 	const getOneDirectionModeStore = get(oneDirectionModeStore);
 	const getMovingFrameStore = get(movingFrameStore);
-	const frameIndex = framesData.findIndex(({ frameId }) => frameId === getMovingFrameStore);
+	const frameIndex = findIndex(framesData, { frameId: getMovingFrameStore });
 
 	if (frameIndex === -1) return null;
 
@@ -125,9 +126,7 @@ const switchSelectedFrame = (prev?: boolean) => {
 
 	if (!getSelectedFrameStore) return;
 
-	const frameKey = getFramesDataStore.findIndex(
-		({ frameId }) => frameId === getSelectedFrameStore
-	);
+	const frameKey = findIndex(getFramesDataStore, { frameId: getSelectedFrameStore });
 
 	let frame;
 

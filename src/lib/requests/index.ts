@@ -1,3 +1,4 @@
+import type { NumericRange } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
 interface DefaultResponse {
@@ -13,7 +14,10 @@ const fetchCore = async <T>(url: RequestInfo | URL, options?: RequestInit) => {
 	const response = (await request.json()) as DefaultResponse;
 
 	if (!request.ok) {
-		error(request.status, response.message && { message: response.message });
+		error(
+			request.status as NumericRange<400, 599>,
+			response.message && { message: response.message }
+		);
 	}
 
 	return response as T;

@@ -1,4 +1,7 @@
 <script lang="ts">
+	import find from 'lodash/find';
+	import range from 'lodash/range';
+
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
 
@@ -15,12 +18,12 @@
 {#if stories.length}
 	<div class="stories">
 		{#each stories as rawStory}
-			{@const { vars, ...story } = rawStory}
-			{@const author = authors && authors.find(({ userId }) => userId === story.userId)}
+			{@const { userId, vars, ...story } = rawStory}
+			{@const author = find(authors, { userId })}
 			<StoryCard {author} {story} {vars} />
 		{/each}
 		{#if stories.length < 8}
-			{#each Array(8 - stories.length).fill(undefined) as _}
+			{#each range(8 - stories.length) as _}
 				<Empty />
 			{/each}
 		{/if}

@@ -3,6 +3,7 @@
 
 	import Popover from '$UI/Popover.svelte';
 	import clsx from 'clsx';
+	import find from 'lodash/find';
 	import { BookOpen, Cloud, PaintBrush, Photo } from 'svelte-heros-v2';
 
 	import type { TGenre } from '$lib/types';
@@ -98,11 +99,6 @@
 		}
 	};
 
-	const handleChange = ({ detail }: CustomEvent<string>) => {
-		$informationDataStore.genre = GENRES_LIST.find(({ title }) => title === detail).id;
-		checkUpdates();
-	};
-
 	const setFile = (e: CustomEvent<File>) => {
 		const file = e.detail;
 
@@ -133,7 +129,7 @@
 		}
 	});
 
-	$: genre = GENRES_LIST.find(({ id }) => id === ($informationDataStore.genre || 'adventure'));
+	$: genre = find(GENRES_LIST, { id: $informationDataStore.genre || 'adventure' });
 </script>
 
 <Panel nonClose title="Основная информация">
@@ -157,7 +153,6 @@
 		<Popover
 			align="center"
 			disabled={$panelEditMode}
-			on:change={handleChange}
 			placeholder="Жанр"
 			readonly={$readonlyStore}
 		>

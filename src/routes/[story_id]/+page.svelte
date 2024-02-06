@@ -5,6 +5,9 @@
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
+	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
+	import last from 'lodash/last';
 	import { MetaTags } from 'svelte-meta-tags';
 
 	import { Button } from '$UI';
@@ -20,14 +23,7 @@
 		soundStore,
 		variablesStore
 	} from '$lib/stores/reading.js';
-	import {
-		correctToType,
-		doMath,
-		getChoiceFromId,
-		getFrameFromId,
-		last,
-		rootStyle
-	} from '$lib/utils';
+	import { correctToType, doMath, rootStyle } from '$lib/utils';
 
 	export let data;
 
@@ -90,13 +86,13 @@
 	};
 
 	const updateVars = (frameId: number, choiceId: number) => {
-		const frame = getFrameFromId($framesStore, frameId);
-		const choice = getChoiceFromId(frame, choiceId);
+		const frame = find($framesStore, { frameId });
+		const choice = find(frame.choices, { choiceId });
 
 		if (!choice.mathOperations.length) return;
 
-		for (const { symbol, value, variable } of choice.mathOperations) {
-			const variableId = $variablesStore.findIndex(({ name }) => name === variable);
+		for (const { symbol, value, variable: name } of choice.mathOperations) {
+			const variableId = findIndex($variablesStore, { name });
 			const { expect } = $variablesStore[variableId];
 			const firstValue = $variablesStore[variableId].value;
 

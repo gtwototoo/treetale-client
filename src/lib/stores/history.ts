@@ -1,13 +1,15 @@
 import type { SvelteComponent } from 'svelte';
-import { type Writable, get, writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 
 import { diff } from 'deep-object-diff';
+import cloneDeep from 'lodash/cloneDeep';
 import { Play } from 'svelte-heros-v2';
 
 import type { IFrameCreate } from '$lib/types/editing';
+import type { IDiff } from '$lib/utils/apply-diff';
 
-import { serialize } from '$lib/utils';
-import { type IDiff, applyDiff } from '$lib/utils/apply-diff';
+import { applyDiff } from '$lib/utils/apply-diff';
 
 import { framesDataStore } from './workspace';
 
@@ -42,7 +44,7 @@ const framesHistoryCustomStore = () => {
 
 	const init = (initialFrames: Array<IFrameCreate>) =>
 		update((data: IChanges) => {
-			data.initial = serialize(initialFrames);
+			data.initial = cloneDeep(initialFrames);
 
 			data.stages.push({
 				difference: {},
@@ -57,7 +59,7 @@ const framesHistoryCustomStore = () => {
 		update((data: IChanges) => {
 			data.stages = data.stages.slice(0, data.currentId + 1);
 
-			const difference = diff(data.initial, serialize(get(framesDataStore))) as IDiff;
+			const difference = diff(data.initial, cloneDeep(get(framesDataStore))) as IDiff;
 			const hasChanges = Object.keys(
 				diff(difference, data.stages[data.currentId].difference)
 			).length;
@@ -83,7 +85,7 @@ const framesHistoryCustomStore = () => {
 				return;
 			}
 
-			const modifiedData = applyDiff(serialize(data.initial), data.stages[stageId].difference);
+			const modifiedData = applyDiff(cloneDeep(data.initial), data.stages[stageId].difference);
 
 			data.currentId = stageId;
 
@@ -101,7 +103,7 @@ const framesHistoryCustomStore = () => {
 			data.currentId -= 1;
 
 			const modifiedData = applyDiff(
-				serialize(data.initial),
+				cloneDeep(data.initial),
 				data.stages[data.currentId].difference
 			);
 
@@ -119,7 +121,7 @@ const framesHistoryCustomStore = () => {
 			data.currentId += 1;
 
 			const modifiedData = applyDiff(
-				serialize(data.initial),
+				cloneDeep(data.initial),
 				data.stages[data.currentId].difference
 			);
 

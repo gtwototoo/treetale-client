@@ -1,5 +1,7 @@
 <script lang="ts">
 	import clsx from 'clsx';
+	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
 	import { Share } from 'svelte-heros-v2';
 
 	import type { IFrameCreate } from '$lib/types/editing';
@@ -24,9 +26,6 @@
 	export let frameId: number;
 	export let index: number;
 
-	$: frameKey = $framesDataStore.findIndex((frame) => frame.frameId === frameId);
-	$: frame = frameKey !== -1 ? $framesDataStore[frameKey] : undefined;
-
 	const handleMouseDown = () => {
 		if (!frame) return;
 
@@ -48,7 +47,8 @@
 	};
 
 	const setVisible = () => {
-		$framesDataStore[frameKey].hidden = !$framesDataStore[frameKey].hidden;
+		frame.hidden = !frame.hidden;
+		$framesDataStore = $framesDataStore;
 
 		createConnections($framesDataStore);
 	};
@@ -63,17 +63,19 @@
 
 		const { choiceId, frameId: fromFrameId } = $connectionStore;
 
-		const fromFrameKey = $framesDataStore.findIndex((frame) => frame.frameId === fromFrameId);
-		const fromChoiceKey = $framesDataStore[fromFrameKey].choices.findIndex(
-			(choice) => choice.choiceId === choiceId
-		);
+		const frame = find($framesDataStore, { frameId: fromFrameId });
+		const choice = find(frame.choices, { choiceId });
 
-		$framesDataStore[fromFrameKey].choices[fromChoiceKey].frameId = frameId;
+		choice.frameId = frameId;
+		$framesDataStore = $framesDataStore;
+
 		$connectionStore = null;
 
 		changesHistory.add('Добавление связи', Share);
 	};
 
+	$: frameKey = findIndex($framesDataStore, { frameId });
+	$: frame = frameKey !== -1 ? $framesDataStore[frameKey] : undefined;
 	$: ({ hidden, imageUrl, text, x, y } = frame || ({} as IFrameCreate));
 	$: greenColor = clsx(
 		contrastText($bodyColorStore) ? 'hover:!bg-emerald-800' : 'hover:!bg-emerald-200'
