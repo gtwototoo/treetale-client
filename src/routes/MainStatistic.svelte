@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Bookmark, PaintBrush, Share, Star } from 'svelte-heros-v2';
 
-	import Icon from './Icon.svelte';
-	import { Treetale } from './icons';
+	import Icon from '$lib/components/Icon.svelte';
+	import { Treetale } from '$lib/components/icons';
 
 	export let statistic: Array<Array<string>>;
 </script>

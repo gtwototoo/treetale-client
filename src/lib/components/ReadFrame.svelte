@@ -9,7 +9,7 @@
 
 	import { FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { framesStore, soundStore, variablesStore } from '$lib/stores/reading';
+	import { framesStore, variablesStore } from '$lib/stores/reading';
 	import { correctToType, correctVariableReplace, doLogic, doMath } from '$lib/utils';
 
 	import Choice from './Choice.svelte';
@@ -23,7 +23,6 @@
 
 	export let frameId: number;
 	export let selectedChoiceId: number | undefined = undefined;
-	export let isLastFrame: boolean;
 
 	const handleClick = (choiceId: number) => {
 		dispatch('click', { choiceId });
@@ -64,20 +63,16 @@
 			.every((operation) => operation);
 	};
 
-	const dynamicText = () => {
+	const dynamicText = (text: string) => {
 		updateVars(frameId, selectedChoiceId);
 
 		return correctVariableReplace(text, $variablesStore) || 'Пустота...';
 	};
 
-	$: ({ choices, imageUrl, soundUrl, text } = find($framesStore, { frameId }));
-
-	$: if (isLastFrame) {
-		soundStore.setSrc(soundUrl);
-	}
+	$: ({ choices, imageUrl, text } = find($framesStore, { frameId }));
 </script>
 
-<ReadCard class={clsx('text-left', className)} src={imageUrl} text={dynamicText()}>
+<ReadCard class={clsx('text-left', className)} src={imageUrl} text={dynamicText(text)}>
 	{#if choices.length}
 		<FormSplit class="w-full" vertical>
 			{#each choices as { choiceId, logicOperations, text } (choiceId)}

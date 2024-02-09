@@ -23,8 +23,8 @@
 </svelte:head>
 
 {#if $page.error}
-	<div class="flex h-full w-full items-start justify-center">
-		<div class="flex min-h-full items-center p-4 max-sm:p-3">
+	<div class="absolute flex h-full w-full items-start justify-center overflow-auto">
+		<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
 			<ReadCard alt="Ошибка" src={img} text={message}>
 				<div class="w-full">
 					<Button

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import findIndex from 'lodash/findIndex';
+	import find from 'lodash/find';
 	import { XMark } from 'svelte-heros-v2';
 
 	import { Button } from '$UI';
@@ -11,10 +11,11 @@
 	import { createLineRemoveButtons, transform } from '$lib/utils';
 
 	const removeConnection = (frameId: number, choiceId: number) => {
-		const fromFrameKey = findIndex($framesDataStore, { frameId });
-		const fromChoiceKey = findIndex($framesDataStore[fromFrameKey].choices, { choiceId });
+		const frame = find($framesDataStore, { frameId });
+		const choice = find(frame.choices, { choiceId });
 
-		$framesDataStore[fromFrameKey].choices[fromChoiceKey].frameId = null;
+		choice.frameId = null;
+		$framesDataStore = $framesDataStore;
 
 		changesHistory.add('Удаление связи', XMark);
 	};

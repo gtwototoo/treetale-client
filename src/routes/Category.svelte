@@ -10,13 +10,12 @@
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
 
+	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import Empty from '$lib/components/modules/StoriesList/Empty.svelte';
+	import StoriesList from '$lib/components/modules/StoriesList/StoriesList.svelte';
+	import StoryCard from '$lib/components/modules/StoriesList/StoryCard/StoryCard.svelte';
 	import { correctWhitespace } from '$lib/utils';
-
-	import AddStoryButton from '../AddStoryButton.svelte';
-	import Icon from '../Icon.svelte';
-	import Empty from './StoriesList/Empty.svelte';
-	import StoriesList from './StoriesList/StoriesList.svelte';
-	import StoryCard from './StoriesList/StoryCard/StoryCard.svelte';
 
 	export let title: string;
 	export let stories: Array<IStoryFull>;

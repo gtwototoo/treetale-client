@@ -9,14 +9,15 @@
 	import { Button, Input } from '$UI';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import MainStatistic from '$lib/components/MainStatistic.svelte';
 	import { Loading } from '$lib/components/icons';
-	import Category from '$lib/components/modules/Category.svelte';
 	import MainFooter from '$lib/components/modules/Footer/MainFooter.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { searchStories } from '$lib/requests/story';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
+
+	import Category from './Category.svelte';
+	import MainStatistic from './MainStatistic.svelte';
 
 	export let data;
 

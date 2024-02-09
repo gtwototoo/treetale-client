@@ -4,6 +4,7 @@
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
 
+	import { Button } from '$UI';
 	import { correctVariableReplace } from '$lib/utils';
 
 	import Icon from './Icon.svelte';
@@ -28,5 +29,8 @@
 			<p class="max-w-sm">{@html correctVariableReplace(description, vars) || 'Без описания'}</p>
 		</div>
 		<Info {author} {created} edit={false} {likes} {status} {storyId} {tags} />
+		<Button size="xl" variant="main" class="w-full justify-center !bg-main" on:click>
+			Начать историю
+		</Button>
 	</svelte:fragment>
 </ReadCard>

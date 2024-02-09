@@ -1,14 +1,12 @@
 <script lang="ts">
-	import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
-
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
-	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
 	import { MetaTags } from 'svelte-meta-tags';
+
+	import type { IFrame } from '$lib/types/index.js';
 
 	import { Button } from '$UI';
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
@@ -27,15 +25,6 @@
 
 	export let data;
 
-	let emblaApi: EmblaCarouselType;
-
-	const options: EmblaOptionsType = {
-		align: 'center',
-		axis: 'y',
-		containScroll: false,
-		startIndex: data.progress.length
-	};
-
 	// const isFullscreen = () => {
 	// 	return (
 	// 		document.fullscreenElement ||
@@ -45,21 +34,7 @@
 	// 	);
 	// };
 
-	const handleInit = (event: CustomEvent<EmblaCarouselType>) => {
-		emblaApi = event.detail;
-	};
-
-	const prevFrame = () => {
-		if (!emblaApi) return;
-
-		emblaApi.scrollPrev();
-	};
-
-	const nextFrame = () => {
-		if (!emblaApi) return;
-
-		emblaApi.scrollNext();
-	};
+	let started = false;
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		const { code } = e;
@@ -73,8 +48,6 @@
 		};
 
 		const actions: Record<string, () => void> = {
-			ArrowDown: nextFrame,
-			ArrowUp: prevFrame,
 			Space: setFastChoice
 		};
 
@@ -130,12 +103,14 @@
 		await document.exitFullscreen();
 	};
 
-	$: ({ color, description, storyId, title } = data.story);
+	$: ({ author, frames, progress, story } = data);
+	$: ({ color, description, storyId, title, vars } = story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
-	$: $framesStore = data.frames;
-
-	$framesStore = data.frames;
-	$variablesStore = data.story.vars;
+	$: $framesStore = frames;
+	$: $variablesStore = vars;
+	$: ({ frameId } = progress.length
+		? find(frames, { frameId: last(progress).nextFrameId })
+		: ({} as IFrame));
 </script>
 
 <svelte:head>
@@ -146,31 +121,23 @@
 
 <MetaTags {description} {title} />
 
-<ska:html class="h-full" />
-<svelte:body class="h-full" />
-
 <svelte:window on:fullscreenchange={handleFullscreenChange} on:keydown={handleKeydown} />
 
 <SvgGradient id={storyId} />
-<div class="absolute h-full w-full" id="read-screen">
-	<div
-		class="flex h-full w-full px-4 py-20 max-sm:px-3"
-		on:emblaInit={handleInit}
-		use:emblaCarouselSvelte={{ options, plugins: [] }}
-	>
-		<div class="flex w-full flex-col items-center gap-4">
-			<StoryDescription author={data.author} story={data.story} />
-			{#each $framesStore as { frameId }, key}
-				{@const isLastFrame = key === $framesStore.length - 1}
+<div class="absolute flex h-full w-full items-start justify-center overflow-auto" id="read-screen">
+	<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
+		{#if !progress.length}
+			{#if !started}
+				<StoryDescription {author} {story} on:click={() => (started = true)} />
+			{:else}
 				<ReadFrame
-					class={clsx(!isLastFrame && 'pointer-events-none opacity-10')}
-					{frameId}
-					{isLastFrame}
-					on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
-					selectedChoiceId={data.progress[key]?.choiceId}
+					frameId={$framesStore[0].frameId}
+					on:click={({ detail }) => setChoice($framesStore[0].frameId, detail.choiceId)}
 				/>
-			{/each}
-		</div>
+			{/if}
+		{:else}
+			<ReadFrame {frameId} on:click={({ detail }) => setChoice(frameId, detail.choiceId)} />
+		{/if}
 	</div>
 	{#if $fullscreenStore}
 		<Button
