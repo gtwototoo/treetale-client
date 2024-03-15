@@ -12,9 +12,9 @@
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import Empty from '$lib/components/modules/StoriesList/Empty.svelte';
-	import StoriesList from '$lib/components/modules/StoriesList/StoriesList.svelte';
-	import StoryCard from '$lib/components/modules/StoriesList/StoryCard/StoryCard.svelte';
+	import StoriesList from '$lib/components/StoriesList.svelte';
+	import Empty from '$lib/components/modules/StoryCard/Empty.svelte';
+	import StoryCard from '$lib/components/modules/StoryCard/StoryCard.svelte';
 	import { correctWhitespace } from '$lib/utils';
 
 	export let title: string;
@@ -49,16 +49,11 @@
 				{#each stories as rawStory (rawStory.storyId)}
 					{@const { userId, vars, ...story } = rawStory}
 					{@const author = find(authors, { userId })}
-					<StoryCard
-						{author}
-						class="w-96 max-lg:w-80 max-md:w-72 max-xs:w-60"
-						{story}
-						{vars}
-					/>
+					<StoryCard class="shrink-0" {author} {story} {vars} />
 				{/each}
-				{#if stories.length < 5}
-					{#each range(5 - stories.length) as _}
-						<Empty class="w-96 shrink-0 max-lg:w-80 max-md:w-72 max-xs:w-60" />
+				{#if stories.length < 6}
+					{#each range(6 - stories.length) as _}
+						<Empty class="shrink-0" />
 					{/each}
 				{/if}
 			</div>

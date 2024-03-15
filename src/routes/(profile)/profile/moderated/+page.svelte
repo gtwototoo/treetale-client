@@ -1,5 +1,5 @@
 <script lang="ts">
-	import StoriesList from '$lib/components/modules/StoriesList/StoriesList.svelte';
+	import StoriesList from '$lib/components/StoriesList.svelte';
 	import { correctWhitespace } from '$lib/utils';
 
 	export let data;

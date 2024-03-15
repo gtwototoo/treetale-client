@@ -8,6 +8,7 @@
 	import { getPageType } from '$lib/utils';
 
 	import '../app.postcss';
+	import '../fonts/RobotoSlab-Black.css';
 
 	$: pageType = getPageType($page.url.pathname);
 

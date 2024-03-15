@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 import range from 'lodash/range';
+import defaultTheme from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
 
 const colorsList = [
@@ -42,6 +43,7 @@ const config = {
 				'&::-moz-range-track',
 				'&::-ms-track'
 			]);
+
 			addUtilities({
 				'.fill-gradient': {
 					fill: 'var(--fill-gradient)'
@@ -57,6 +59,15 @@ const config = {
 					display: 'none'
 				}
 			});
+
+			matchUtilities(
+				{
+					'text-shadow': (value) => ({
+						textShadow: value
+					})
+				},
+				{ values: theme('textShadow') }
+			);
 			matchUtilities(
 				{
 					'bg-with-border': (value) => ({
@@ -96,6 +107,9 @@ const config = {
 				inherit: 'inherit'
 			},
 			colors,
+			fontFamily: {
+				RobotoSlab: ['Roboto Slab', ...defaultTheme.fontFamily.sans]
+			},
 			lineHeight: {
 				0: '0'
 			},
@@ -103,6 +117,11 @@ const config = {
 				fd: '1920px',
 				hd: '1600px',
 				xs: '480px'
+			},
+			textShadow: {
+				DEFAULT: '0 2px 4px var(--tw-shadow-color)',
+				lg: '0 8px 16px var(--tw-shadow-color)',
+				sm: '0 1px 2px var(--tw-shadow-color)'
 			}
 		}
 	}

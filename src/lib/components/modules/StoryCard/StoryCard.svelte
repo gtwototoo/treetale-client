@@ -1,0 +1,103 @@
+<script lang="ts">
+	import { page } from '$app/stores';
+	import clsx from 'clsx';
+	import find from 'lodash/find';
+
+	import type { IUser, IVariable } from '$lib/types';
+	import type { IStoryReading } from '$lib/types/reading';
+
+	import { Image } from '$UI';
+	import Tags from '$lib/components/modules/StoryCard/Tags.svelte';
+	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
+	import { contrastText, correctVariableReplace, generateMainColors } from '$lib/utils';
+
+	import Link from '../../Link.svelte';
+	import Info from './Info.svelte';
+	import TransparentRect from './TransparentRect.svelte';
+
+	let className = '';
+	export { className as class };
+
+	export let story: IStoryReading;
+	export let author: IUser | undefined = undefined;
+	export let vars: Array<IVariable>;
+
+	let errorImage = false;
+
+	const handleError = () => {
+		errorImage = true;
+	};
+
+	$: ({ color, created, description, genre, imageUrl, likes, status, storyId, tags, title } =
+		story);
+
+	$: edit = $page.data.session && $page.data.session.userId === author?.userId;
+	$: view =
+		$page.data.session &&
+		($page.data.session.role === 'admin' || $page.data.session.role === 'moderator');
+
+	$: icon = find(GENRES_LIST, { id: genre }).icon;
+	$: selectedColor = color.length ? color : DEFAULT_COLOR;
+
+	$: textColor = contrastText(selectedColor) ? clsx('text-white') : clsx('text-black');
+	$: gradientColor = contrastText(selectedColor)
+		? clsx('from-main to-main-50')
+		: clsx('from-main-70 to-main');
+	$: iconColor = contrastText(selectedColor) ? clsx('text-main-60') : clsx('text-main');
+</script>
+
+<Link href={`/${storyId}${edit ? '/edit' : view ? '/view' : ''}`} class="shrink-0">
+	<div class="contents" style={generateMainColors(selectedColor)}>
+		<div class={clsx('group relative select-none', className)}>
+			<div
+				class={clsx(
+					'animate-card absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-transparent bg-gradient-to-b',
+					gradientColor
+				)}
+			>
+				{#if imageUrl && !errorImage}
+					<Image
+						alt={title || 'Иллюстрация истории'}
+						class="absolute size-full rounded-3xl"
+						cover
+						on:error={handleError}
+						src={imageUrl}
+					/>
+					<svelte:component
+						this={icon}
+						class={clsx('absolute right-4 top-4 size-16 opacity-70', iconColor)}
+					/>
+				{:else}
+					<div class="absolute top-0 flex h-1/2 w-full items-center justify-center">
+						<svelte:component this={icon} class={clsx('h-1/2 w-auto', iconColor)} />
+					</div>
+				{/if}
+				<h2
+					class={clsx(
+						'absolute top-1/2 w-full bg-transparent px-4 text-center font-RobotoSlab text-3xl font-black uppercase shadow-main text-shadow',
+						textColor
+					)}
+				>
+					{title || 'Без названия'}
+				</h2>
+				<Info {author} {created} {edit} {likes} {status} {selectedColor} />
+				<div
+					class="absolute bottom-0 flex w-full translate-y-full flex-col gap-3 rounded-inherit bg-contrast p-4 text-base text-text transition-transform group-hover:translate-y-0"
+				>
+					<p>{@html correctVariableReplace(description, vars) || 'Без описания'}</p>
+					<Tags {tags} />
+				</div>
+			</div>
+			<TransparentRect />
+		</div>
+	</div>
+</Link>
+
+<style lang="postcss">
+	:global(.animate-card) {
+		@apply from-50% to-100% bg-[length:100%_200%] bg-[0_-100%] transition-[background-position,transform];
+	}
+	:global(.animate-card:hover) {
+		@apply bg-[0_-110%];
+	}
+</style>

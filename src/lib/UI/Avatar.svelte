@@ -49,12 +49,12 @@
 
 <style lang="postcss">
 	.size-lg {
-		@apply h-40 w-40 text-6xl font-bold;
+		@apply size-40 text-6xl font-bold;
 	}
 	.size-base {
-		@apply h-12 w-12 text-base;
+		@apply size-12 text-base;
 	}
 	.size-sm {
-		@apply size-9 text-xs;
+		@apply size-10 text-xs;
 	}
 </style>
