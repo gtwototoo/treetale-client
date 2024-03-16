@@ -7,9 +7,9 @@
 	import type { IStoryReading } from '$lib/types/reading';
 
 	import { Image } from '$UI';
-	import Tags from '$lib/components/modules/StoryCard/Tags.svelte';
+	import HoverInfo from '$lib/components/modules/StoryCard/HoverInfo.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
-	import { contrastText, correctVariableReplace, generateMainColors } from '$lib/utils';
+	import { contrastText, generateMainColors } from '$lib/utils';
 
 	import Link from '../../Link.svelte';
 	import Info from './Info.svelte';
@@ -74,12 +74,7 @@
 				{/if}
 				<Titie {title} {textColor} />
 				<Info {author} {created} {edit} {likes} {status} {selectedColor} />
-				<div
-					class="absolute bottom-0 flex w-full translate-y-full flex-col gap-3 rounded-inherit bg-contrast p-4 text-base text-text transition-transform group-hover:translate-y-0"
-				>
-					<p>{@html correctVariableReplace(description, vars) || 'Без описания'}</p>
-					<Tags {tags} />
-				</div>
+				<HoverInfo {tags} {vars} {description} />
 			</div>
 			<TransparentRect />
 		</div>

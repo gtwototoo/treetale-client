@@ -63,7 +63,7 @@
 		y="50%"
 		text-anchor="middle"
 		class={clsx(
-			'font-RobotoSlab text-3xl font-black uppercase shadow-main text-shadow',
+			'font-RobotoSlab text-3xl font-black uppercase',
 			!ready && 'invisible -z-10',
 			textColor
 		)}
@@ -74,6 +74,7 @@
 
 <style lang="postcss">
 	text {
-		inline-size: 200px;
+		paint-order: stroke;
+		@apply stroke-main-80 stroke-[.5rem];
 	}
 </style>
