@@ -13,6 +13,7 @@
 
 	import Link from '../../Link.svelte';
 	import Info from './Info.svelte';
+	import Titie from './Titie.svelte';
 	import TransparentRect from './TransparentRect.svelte';
 
 	let className = '';
@@ -38,8 +39,7 @@
 
 	$: icon = find(GENRES_LIST, { id: genre }).icon;
 	$: selectedColor = color.length ? color : DEFAULT_COLOR;
-
-	$: textColor = contrastText(selectedColor) ? clsx('text-white') : clsx('text-black');
+	$: textColor = contrastText(selectedColor) ? clsx('fill-white') : clsx('fill-black');
 	$: gradientColor = contrastText(selectedColor)
 		? clsx('from-main to-main-50')
 		: clsx('from-main-70 to-main');
@@ -65,21 +65,14 @@
 					/>
 					<svelte:component
 						this={icon}
-						class={clsx('absolute right-4 top-4 size-16 opacity-70', iconColor)}
+						class={clsx('absolute right-4 top-4 h-auto w-1/6 opacity-70', iconColor)}
 					/>
 				{:else}
 					<div class="absolute top-0 flex h-1/2 w-full items-center justify-center">
 						<svelte:component this={icon} class={clsx('h-1/2 w-auto', iconColor)} />
 					</div>
 				{/if}
-				<h2
-					class={clsx(
-						'absolute top-1/2 w-full bg-transparent px-4 text-center font-RobotoSlab text-3xl font-black uppercase shadow-main text-shadow',
-						textColor
-					)}
-				>
-					{title || 'Без названия'}
-				</h2>
+				<Titie {title} {textColor} />
 				<Info {author} {created} {edit} {likes} {status} {selectedColor} />
 				<div
 					class="absolute bottom-0 flex w-full translate-y-full flex-col gap-3 rounded-inherit bg-contrast p-4 text-base text-text transition-transform group-hover:translate-y-0"

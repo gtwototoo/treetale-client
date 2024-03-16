@@ -23,6 +23,9 @@ devDependencies:
   '@types/cookie':
     specifier: ^0.6.0
     version: 0.6.0
+  '@types/d3-selection':
+    specifier: ^3.0.10
+    version: 3.0.10
   '@types/howler':
     specifier: ^2.2.11
     version: 2.2.11
@@ -47,6 +50,9 @@ devDependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
+  d3-selection:
+    specifier: ^3.0.0
+    version: 3.0.0
   deep-object-diff:
     specifier: ^1.1.9
     version: 1.1.9
@@ -737,6 +743,10 @@ packages:
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
     dev: true
 
+  /@types/d3-selection@3.0.10:
+    resolution: {integrity: sha512-cuHoUgS/V3hLdjJOLTT691+G2QoqAjCVLmr4kJXR4ha56w1Zdu8UUQ5TxLRqudgNjwXeQxKMq4j+lyf9sWuslg==}
+    dev: true
+
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
@@ -1254,6 +1264,11 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: true
+
+  /d3-selection@3.0.0:
+    resolution: {integrity: sha512-fmTRWbNMmsmWq6xJV8D19U/gw/bwrHfNXxrIN+HfZgnzqTHp9jOmKMhsTUjXOJnZOdZY9Q28y4yebKzqDKlxlQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /debug@4.3.4:
