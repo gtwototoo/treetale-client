@@ -49,14 +49,20 @@
 				{#each stories as rawStory (rawStory.storyId)}
 					{@const { userId, vars, ...story } = rawStory}
 					{@const author = find(authors, { userId })}
-					<StoryCard class="w-[30vw] min-w-48 shrink-0" {author} {story} {vars} />
+					<StoryCard class="slider-card" {author} {story} {vars} />
 				{/each}
 				{#if stories.length < 6}
 					{#each range(6 - stories.length) as _}
-						<Empty class="w-[30vw] min-w-48 shrink-0" />
+						<Empty class="slider-card" />
 					{/each}
 				{/if}
 			</div>
 		</div>
 	{/if}
 </div>
+
+<style lang="postcss">
+	:global(.slider-card) {
+		@apply w-[30vw] min-w-48 max-w-[21.25rem] shrink-0;
+	}
+</style>

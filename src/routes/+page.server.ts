@@ -14,7 +14,7 @@ interface ICategory {
 interface IResponseMainInfo {
 	authors: Array<IUser>;
 	categories: Array<ICategory>;
-	statistic: Array<Array<string>>;
+	statistic: Array<{ id: 'likes' | 'stories' | 'users'; title: string; value: string }>;
 }
 
 export const load = async ({ fetch }) => {

@@ -4,7 +4,7 @@
 	import clsx from 'clsx';
 	import { select } from 'd3-selection';
 
-	export let title = 'Без названия';
+	export let title: string;
 	export let textColor: string;
 
 	let ready = false;
@@ -68,7 +68,7 @@
 			textColor
 		)}
 	>
-		{title}
+		{title || 'Без названия'}
 	</text>
 </svg>
 

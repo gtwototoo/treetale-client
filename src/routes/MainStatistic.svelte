@@ -1,13 +1,101 @@
 <script lang="ts">
-	import { Bookmark, PaintBrush, Share, Star } from 'svelte-heros-v2';
+	// import type { SvelteComponent } from 'svelte';
 
-	import Icon from '$lib/components/Icon.svelte';
-	import { Treetale } from '$lib/components/icons';
+	// import clsx from 'clsx';
+	// import { BookOpen, Bookmark, Cube, Heart, PaintBrush, Star, Users } from 'svelte-heros-v2';
 
-	export let statistic: Array<Array<string>>;
+	// export let statistic: Array<{ id: 'likes' | 'stories' | 'users'; title: string; value: string }>;
+
+	// const features = [
+	// 	{
+	// 		className: clsx('right-[105%] top-[6%] w-[26.25rem]'),
+	// 		icon: Cube,
+	// 		text: 'Собственный редактор историй'
+	// 	},
+	// 	{
+	// 		className: clsx('right-[104%] top-[40%] w-[26.25rem]'),
+	// 		icon: Bookmark,
+	// 		text: 'Библиотека просмотренных историй'
+	// 	},
+	// 	{
+	// 		className: clsx('left-[105%] top-[6%] w-[26.25rem]'),
+	// 		icon: Star,
+	// 		text: 'Возможность поддержки авторов'
+	// 	},
+	// 	{
+	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
+	// 		icon: PaintBrush,
+	// 		text: 'Кастомизация профилей и историй'
+	// 	}
+	// ];
+
+	// const statisticIconsAndClasses = {
+	// 	likes: {
+	// 		className: clsx('bottom-[4%] left-[102%]'),
+	// 		icon: Heart
+	// 	},
+	// 	stories: {
+	// 		className: clsx('bottom-[4%] right-[132%]'),
+	// 		icon: BookOpen
+	// 	},
+	// 	users: {
+	// 		className: clsx('bottom-[4%] right-[102%]'),
+	// 		icon: Users
+	// 	}
+	// };
+
+	// const featuresAndStatistic: {
+	// 	className: string;
+	// 	icon: typeof SvelteComponent<unknown>;
+	// 	stat?: boolean;
+	// 	text: string;
+	// }[] = [
+	// 	...features,
+	// 	...statistic.map(({ id, value }) => ({
+	// 		className: statisticIconsAndClasses[id].className,
+	// 		icon: statisticIconsAndClasses[id].icon,
+	// 		stat: true,
+	// 		text: value
+	// 	}))
+	// ];
 </script>
 
-<div class="flex gap-6 px-4 max-lg:flex-col-reverse max-md:gap-4">
+<div class="flex justify-center">
+	<div class="relative flex flex-col items-center gap-8 py-[calc(16px+2vw)] text-center">
+		<h2
+			class="text-gradient !bg-clip-text text-[calc(24px+4vw)] uppercase leading-none text-transparent"
+		>
+			<p>Бесконечный</p>
+			<p>мир историй</p>
+		</h2>
+		<p
+			class="w-[50vw] min-w-72 max-w-[40rem] text-[calc(12px+0.7vw)] leading-tight text-amber-900"
+		>
+			Окунитесь в захватывающий мир историй, где каждый ваш выбор влияет на развитие сюжета.
+			Перед вами разнообразие жанров от серьезных и тяжелых до смешных и легких, среди которых вы
+			формируете свой приключенческий опыт.
+		</p>
+		<!-- {#each featuresAndStatistic as { className, icon, stat, text }}
+			<div
+				class={clsx(
+					'absolute flex items-center gap-5 rounded-[2rem] bg-white/60 px-8 py-6 text-left text-amber-900 *:bg-transparent',
+					className
+				)}
+			>
+				<svelte:component
+					this={icon}
+					class="size-[3.5vw] shrink-0 text-main"
+					variation="solid"
+				/>
+				<p class={clsx(stat ? 'text-6xl font-bold' : 'text-[calc(12px+0.7vw)]')}>
+					{text}
+				</p>
+			</div>
+		{/each} -->
+	</div>
+</div>
+
+<!-- <div class="flex gap-6 px-4 max-lg:flex-col-reverse max-md:gap-4">
 	<div class="flex flex-col gap-[inherit] max-lg:flex-row max-sm:flex-col">
 		<div
 			class="flex select-none items-center justify-center gap-4 rounded-3xl bg-white/20 p-6 *:bg-transparent max-md:p-4"
@@ -54,4 +142,10 @@
 		</p>
 		<div class="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-black" />
 	</div>
-</div>
+</div> -->
+
+<style lang="postcss">
+	.text-gradient {
+		background: linear-gradient(to bottom, #fdba66, #fd6d71);
+	}
+</style>
