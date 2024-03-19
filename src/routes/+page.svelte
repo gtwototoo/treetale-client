@@ -106,7 +106,7 @@
 				<div class="flex w-full flex-wrap items-center justify-center gap-3">
 					{#each GENRES_LIST as { icon, id, title }}
 						<Button
-							class="h-20 w-24 flex-col gap-1 bg-white max-sm:flex-1"
+							class="h-20 w-24 flex-col justify-center gap-1 bg-white max-sm:flex-1"
 							on:click={() => switchGenre(id)}
 							size="lg"
 							variant={searchedGenres.includes(id) ? 'main' : 'ghost'}

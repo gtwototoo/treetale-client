@@ -9,10 +9,18 @@
 </script>
 
 <div
-	class="absolute bottom-0 flex max-h-full w-full translate-y-full flex-col gap-3 overflow-auto rounded-inherit bg-contrast p-4 text-center text-base text-text transition-transform group-hover:translate-y-0"
+	class="absolute bottom-0 flex max-h-full w-full translate-y-full flex-col gap-3 overflow-auto rounded-inherit bg-contrast p-4 text-center transition-transform group-hover:translate-y-0"
 >
-	<p>{@html correctVariableReplace(description, vars) || 'Без описания'}</p>
-	<div class="w-full select-none text-center text-sm text-gray-500">
+	<p class="clear-text text-base text-text max-md:text-sm">
+		{@html correctVariableReplace(description, vars) || 'Без описания'}
+	</p>
+	<p class="select-none text-sm text-gray-500 max-md:text-xs">
 		{tags.length ? tags.join(' - ') : 'Теги не указаны'}
-	</div>
+	</p>
 </div>
+
+<style lang="postcss">
+	.clear-text :global(*) {
+		font-size: inherit !important;
+	}
+</style>

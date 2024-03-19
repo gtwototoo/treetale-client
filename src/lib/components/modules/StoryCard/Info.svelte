@@ -49,13 +49,16 @@
 	{:else}
 		<div
 			class={clsx(
-				'flex items-center overflow-hidden rounded-full p-1 pr-4 text-sm',
+				'flex items-center overflow-hidden rounded-full p-1 text-sm',
 				currentStatus.color,
 				infoColor
 			)}
 		>
-			<Icon class="box-content size-8 px-2 py-1" type={currentStatus.icon} />
-			<div class="overflow-hidden bg-transparent text-left">
+			<Icon
+				class="box-content size-8 shrink-0 px-2 py-1 max-md:px-1"
+				type={currentStatus.icon}
+			/>
+			<div class="overflow-hidden bg-transparent pr-4 text-left max-md:hidden">
 				<p class="truncate text-text max-xs:hidden">
 					{currentStatus.title}
 				</p>

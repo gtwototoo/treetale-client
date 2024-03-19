@@ -1,10 +1,8 @@
 <script lang="ts">
-	// import type { SvelteComponent } from 'svelte';
-
 	// import clsx from 'clsx';
 	// import { BookOpen, Bookmark, Cube, Heart, PaintBrush, Star, Users } from 'svelte-heros-v2';
 
-	// export let statistic: Array<{ id: 'likes' | 'stories' | 'users'; title: string; value: string }>;
+	export let statistic: Array<{ id: 'likes' | 'stories' | 'users'; title: string; value: string }>;
 
 	// const features = [
 	// 	{
@@ -26,41 +24,21 @@
 	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
 	// 		icon: PaintBrush,
 	// 		text: 'Кастомизация профилей и историй'
-	// 	}
-	// ];
-
-	// const statisticIconsAndClasses = {
-	// 	likes: {
-	// 		className: clsx('bottom-[4%] left-[102%]'),
-	// 		icon: Heart
 	// 	},
-	// 	stories: {
-	// 		className: clsx('bottom-[4%] right-[132%]'),
-	// 		icon: BookOpen
+	// 	{
+	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
+	// 		icon: PuzzlePiece,
+	// 		text: 'Частые обновления и модификации'
 	// 	},
-	// 	users: {
-	// 		className: clsx('bottom-[4%] right-[102%]'),
-	// 		icon: Users
+	// 	{
+	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
+	// 		icon: Variable,
+	// 		text: 'Наличие переменных и условий в истории'
 	// 	}
-	// };
-
-	// const featuresAndStatistic: {
-	// 	className: string;
-	// 	icon: typeof SvelteComponent<unknown>;
-	// 	stat?: boolean;
-	// 	text: string;
-	// }[] = [
-	// 	...features,
-	// 	...statistic.map(({ id, value }) => ({
-	// 		className: statisticIconsAndClasses[id].className,
-	// 		icon: statisticIconsAndClasses[id].icon,
-	// 		stat: true,
-	// 		text: value
-	// 	}))
 	// ];
 </script>
 
-<div class="flex justify-center">
+<div class="flex select-none justify-center">
 	<div class="relative flex flex-col items-center gap-8 py-[calc(16px+2vw)] text-center">
 		<h2
 			class="text-gradient !bg-clip-text text-[calc(24px+4vw)] uppercase leading-none text-transparent"
@@ -75,6 +53,18 @@
 			Перед вами разнообразие жанров от серьезных и тяжелых до смешных и легких, среди которых вы
 			формируете свой приключенческий опыт.
 		</p>
+		<div
+			class="flex items-center justify-center gap-4 rounded-3xl bg-white/20 p-[calc(12px+1vw)] *:bg-transparent"
+		>
+			{#each statistic as { id, title, value } (id)}
+				<div class="flex w-[calc(4.5rem+3vw)] flex-1 flex-col items-center">
+					<p class="text-[calc(30px+1.5vw)] font-black leading-none">{value}</p>
+					<p class="text-[calc(12px+0.5vw)]">
+						{title}
+					</p>
+				</div>
+			{/each}
+		</div>
 		<!-- {#each featuresAndStatistic as { className, icon, stat, text }}
 			<div
 				class={clsx(

@@ -21,12 +21,12 @@
 </script>
 
 <Button
-	class={clsx('min-w-0 gap-2 !rounded-full !p-1 !pr-4', infoColor)}
+	class={clsx('min-w-0 gap-2 !rounded-full !p-1', infoColor)}
 	on:click={handleClick}
 	variant="main"
 >
 	<ProfileAvatar color={author.color} size="sm" user={author} />
-	<div class="overflow-hidden text-left">
+	<div class="overflow-hidden pr-4 text-left max-md:hidden">
 		<p class="truncate text-text max-xs:hidden">
 			{author.name}
 		</p>

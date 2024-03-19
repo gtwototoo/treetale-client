@@ -96,7 +96,7 @@
 
 <div
 	class={clsx(
-		'screen-md screen-xl screen-hd screen-sm sticky top-8 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
+		'screen-lg screen-xl screen-hd screen-sm sticky top-8 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
 		editMode ? 'bg-main-20' : 'bg-transparent'
 	)}
 >
@@ -220,7 +220,7 @@
 	.screen-xl {
 		@apply max-hd:gap-10 max-xl:w-[24rem] max-xl:p-6;
 	}
-	.screen-md {
-		@apply max-md:static max-md:w-full max-md:gap-8;
+	.screen-lg {
+		@apply max-lg:static max-lg:w-full max-lg:gap-8;
 	}
 </style>

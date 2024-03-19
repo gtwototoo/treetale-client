@@ -28,7 +28,7 @@
 
 <MetaTags description={user.description} title={me ? 'Профиль' : user.name} />
 
-<div class="screen-sm screen-md screen-hd screen-xl flex grow items-start gap-8 p-16">
+<div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-8 p-16">
 	<UserInformation {me} {statistic} {user} />
 	<div class="flex h-full w-full flex-col items-center gap-8">
 		{#if me}
@@ -102,8 +102,8 @@
 	.screen-xl {
 		@apply max-xl:gap-6 max-xl:p-10;
 	}
-	.screen-md {
-		@apply max-md:flex-col max-md:items-center;
+	.screen-lg {
+		@apply max-lg:flex-col max-lg:items-center;
 	}
 	.screen-sm {
 		@apply max-sm:p-3;

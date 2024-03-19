@@ -12,9 +12,6 @@
 	export let authors: Array<IUser> | undefined = undefined;
 </script>
 
-<ska:html class:h-full={!stories.length} />
-<svelte:body class:h-full={!stories.length} />
-
 {#if stories.length}
 	<div class="stories">
 		{#each stories as rawStory}
@@ -36,6 +33,6 @@
 
 <style lang="postcss">
 	.stories {
-		@apply grid w-full items-start justify-center gap-4 p-4 grid-columns-fit-40 max-sm:gap-2 max-sm:p-2 xs:grid-columns-fit-64 lg:grid-columns-fit-72;
+		@apply grid w-full items-start justify-center gap-4 p-4 grid-columns-fit-60 max-md:grid-columns-fit-40 max-sm:gap-2 max-sm:p-2;
 	}
 </style>
