@@ -6,6 +6,7 @@
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 	import { Check, XMark } from 'svelte-heros-v2';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	import type { IResponseResult } from '$lib/types';
 
@@ -15,7 +16,6 @@
 	import { DEFAULT_COLOR } from '$lib/constants';
 	import { signUpUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { rootStyle } from '$lib/utils';
 
 	let name = '';
 	let loading = false;
@@ -54,10 +54,7 @@
 	$bodyColorStore = DEFAULT_COLOR;
 </script>
 
-<svelte:head>
-	<title>Завершение регистрации</title>
-	{@html rootStyle($bodyColorStore)}
-</svelte:head>
+<MetaTags title="Завершение регистрации" />
 
 <div class="flex h-full w-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">

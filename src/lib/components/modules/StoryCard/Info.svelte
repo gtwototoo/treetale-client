@@ -19,6 +19,9 @@
 	export let storyId: number | undefined = undefined;
 	export let selectedColor: TRGB;
 
+	let className = '';
+	export { className as class };
+
 	const statuses = {
 		draft: {
 			color: 'text-gray-500',
@@ -43,7 +46,7 @@
 	$: infoColor = contrastText(selectedColor) ? clsx('bg-main-30') : clsx('bg-main-80');
 </script>
 
-<div class={clsx('absolute bottom-0 flex w-full items-center justify-between gap-4 p-2')}>
+<div class={clsx('bottom-0 flex w-full items-center justify-between gap-4 p-2', className)}>
 	{#if author && !edit}
 		<ProfileLink {author} {created} {infoColor} />
 	{:else}

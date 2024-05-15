@@ -5,6 +5,7 @@
 	import type { IStoryFull } from '$lib/types/reading';
 
 	import { Button } from '$UI';
+	import { DEFAULT_COLOR } from '$lib/constants';
 	import { correctVariableReplace } from '$lib/utils';
 
 	import Icon from './Icon.svelte';
@@ -14,10 +15,12 @@
 	export let story: IStoryFull;
 	export let author: IUser;
 
-	$: ({ created, description, likes, status, storyId, tags, title, vars } = story);
+	$: ({ color, created, description, likes, status, storyId, title, vars } = story);
+
+	$: selectedColor = color.length ? color : DEFAULT_COLOR;
 </script>
 
-<ReadCard classCard="h-full text-center !items-center !gap-10">
+<ReadCard classCard="h-full text-center !items-center !gap-5">
 	<svelte:fragment slot="body">
 		<Icon
 			class="h-44 w-auto *:fill-gradient max-hd:h-36 max-xl:h-28"
@@ -28,7 +31,7 @@
 			<h2 class="uppercase">{title}</h2>
 			<p class="max-w-sm">{@html correctVariableReplace(description, vars) || 'Без описания'}</p>
 		</div>
-		<Info {author} {created} edit={false} {likes} {status} {storyId} {tags} />
+		<Info {author} {created} edit={false} {likes} {status} {storyId} {selectedColor} />
 		<Button size="xl" variant="main" class="w-full justify-center !bg-main" on:click>
 			Начать историю
 		</Button>

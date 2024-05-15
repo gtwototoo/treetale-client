@@ -6,6 +6,8 @@
 	import { framesDataStore, offsetStore, zoomStore } from '$lib/stores/workspace';
 	import { clm, transform } from '$lib/utils';
 
+	import { connectedWithStart } from '../Workspace/methods';
+
 	export let workspaceHeight: number;
 	export let workspaceWidth: number;
 
@@ -62,11 +64,12 @@
 >
 	<div class="size-6 rounded-full !bg-contrast/20" />
 	{#if element && workspaceHeight}
-		{#each $framesDataStore as { frameId, x, y }, key (frameId)}
+		{#each $framesDataStore as { choices, frameId, x, y } (frameId)}
 			<div
 				class={clm(
 					'absolute h-2.5 w-2.5 shrink-0 rounded-full !bg-text',
-					!key && 'z-10 !bg-emerald-500'
+					frameId === 1 && 'z-10 !bg-emerald-500',
+					connectedWithStart(frameId) && !choices.length && '!bg-blue-500'
 				)}
 				style={getStyle({ x, y }, $zoomStore, $offsetStore)}
 			/>

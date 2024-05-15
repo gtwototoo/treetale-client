@@ -122,8 +122,8 @@
 			<NewFrame />
 		{/if}
 		<div>
-			{#each $framesDataStore as { frameId }, key (frameId)}
-				<Frame {frameId} index={key} />
+			{#each $framesDataStore as { frameId } (frameId)}
+				<Frame {frameId} />
 			{/each}
 		</div>
 		<ConnectionsLayer />

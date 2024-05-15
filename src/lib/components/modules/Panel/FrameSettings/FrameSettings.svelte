@@ -25,7 +25,7 @@
 	import { redColorStore } from '$lib/stores/main';
 	import { panelEditMode, panelStore } from '$lib/stores/panel';
 	import { framesDataStore, selectedFrameStore } from '$lib/stores/workspace';
-	import { notesHighlight, variablesHighlight } from '$lib/utils';
+	import { findPrevFrames, notesHighlight, variablesHighlight } from '$lib/utils';
 
 	import IllustrationPopover from '../../IllustrationPopover.svelte';
 	import Panel from '../Panel.svelte';
@@ -34,6 +34,7 @@
 	const imageFolder = 'frames';
 
 	let draggedFileType = '';
+	let onePrevFrame: IFrameCreate | null = null;
 
 	$: frameKey = findIndex($framesDataStore, { frameId: $selectedFrameStore });
 	$: ({ choices, frameId, imageUrl, soundUrl, x, y } =
@@ -156,24 +157,6 @@
 		changesHistory.add('Добавление выбора', Plus);
 	};
 
-	const findPrevFrame = (frames: Array<IFrameCreate>) => {
-		const prevFrames: Array<IFrameCreate> = [];
-
-		for (const frame of frames) {
-			const isPrevFrame = frame.choices.some((choice) => choice.frameId === frameId);
-
-			if (isPrevFrame) {
-				prevFrames.push(frame);
-			}
-		}
-
-		if (prevFrames.length === 1) {
-			return prevFrames[0];
-		}
-
-		return null;
-	};
-
 	const gotoPrevFrame = () => {
 		$selectedFrameStore = onePrevFrame.frameId;
 	};
@@ -212,7 +195,13 @@
 		$selectedFrameStore = null;
 	});
 
-	$: onePrevFrame = findPrevFrame($framesDataStore);
+	$: {
+		const prevFrames = findPrevFrames($framesDataStore, frameId);
+
+		if (prevFrames.length === 1) {
+			onePrevFrame = prevFrames[0];
+		}
+	}
 
 	$: if (!$framesDataStore[frameKey]) {
 		panelStore.clear();
@@ -332,7 +321,7 @@
 				<Choice {choiceId} {frameKey} />
 			{/each}
 			{#if !$readonlyStore}
-				{#if $panelEditMode}
+				{#if $panelEditMode && frameId !== 1}
 					<Button
 						class={clsx('justify-center !text-red-500', $redColorStore)}
 						on:click={removeFrame}
@@ -340,7 +329,8 @@
 					>
 						Удалить блок
 					</Button>
-				{:else}
+				{/if}
+				{#if !$panelEditMode}
 					<Button
 						class="justify-center bg-contrast-9 text-text"
 						on:click={addChoice}

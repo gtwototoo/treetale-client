@@ -19,8 +19,33 @@ import {
 	selectedFrameStore,
 	zoomCorrect
 } from '$lib/stores/workspace';
+import { findPrevFrames } from '$lib/utils';
 
 import { FrameSettings } from '../Panel';
+
+export const connectedWithStart = (frameId: number) => {
+	if (frameId === 1) return false;
+
+	const framesData = get(framesDataStore);
+
+	if (!framesData) return false;
+
+	const checkConnectedWithStart = (frameId: number): boolean => {
+		const frames = findPrevFrames(framesData, frameId);
+
+		if (!frames.length) return false;
+
+		for (const { frameId } of frames) {
+			if (frameId === 1) {
+				return true;
+			} else {
+				return checkConnectedWithStart(frameId);
+			}
+		}
+	};
+
+	return checkConnectedWithStart(frameId);
+};
 
 export const addFrame = ({ x, y }: ICoordinates) => {
 	const framesData = get(framesDataStore);

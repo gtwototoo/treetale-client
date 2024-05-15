@@ -5,7 +5,7 @@ import type { IStoryFull } from '$lib/types/reading.js';
 
 import { randomError } from '$lib/utils';
 
-interface IResponseProgress {
+export interface IResponseProgress {
 	author: IUser;
 	frames: IFrame[];
 	progress: IProgress[];

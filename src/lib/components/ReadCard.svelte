@@ -2,7 +2,7 @@
 	import clsx from 'clsx';
 
 	import { Card, Image } from '$UI';
-	import { correctWhitespace } from '$lib/utils';
+	import { clm, correctWhitespace } from '$lib/utils';
 
 	let className = '';
 	export { className as class };
@@ -19,7 +19,7 @@
 	};
 </script>
 
-<div class={clsx('card adaptive-size', className)}>
+<div class={clm('card adaptive-size', className)}>
 	{#if src && !errorLoad}
 		<Image
 			{alt}

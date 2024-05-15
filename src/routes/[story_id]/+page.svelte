@@ -1,10 +1,12 @@
 <script lang="ts">
+	import type { Book } from 'schema-dts';
+
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
-	import { MetaTags } from 'svelte-meta-tags';
+	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 
 	import type { IFrame } from '$lib/types/index.js';
 
@@ -104,13 +106,32 @@
 	};
 
 	$: ({ author, frames, progress, story } = data);
-	$: ({ color, description, storyId, title, vars } = story);
+	$: ({ color, description, genre, likes, storyId, title, vars } = story);
 	$: $bodyColorStore = color.length ? color : DEFAULT_COLOR;
 	$: $framesStore = frames;
 	$: $variablesStore = vars;
 	$: ({ frameId } = progress.length
 		? find(frames, { frameId: last(progress).nextFrameId })
 		: ({} as IFrame));
+
+	$: bookSchema = {
+		'@type': 'Book',
+		abstract: description,
+		bookFormat: 'EBook',
+		genre,
+		interactionStatistic: {
+			'@type': 'InteractionCounter',
+			interactionType: {
+				'@type': 'LikeAction'
+			},
+			userInteractionCount: likes.length
+		},
+		name: title,
+		publisher: {
+			'@type': 'Person',
+			name: author.name
+		}
+	} as Book;
 </script>
 
 <svelte:head>
@@ -119,6 +140,7 @@
 	})}
 </svelte:head>
 
+<JsonLd schema={bookSchema} />
 <MetaTags {description} {title} />
 
 <svelte:window on:fullscreenchange={handleFullscreenChange} on:keydown={handleKeydown} />

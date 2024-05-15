@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
+	import { type Person } from 'schema-dts';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
-	import { MetaTags } from 'svelte-meta-tags';
+	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 
 	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
@@ -20,12 +21,18 @@
 	$: pageType = getPageType($page.url.pathname);
 	$: ({ statistic } = data);
 	$: $bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;
+
+	$: userSchema = {
+		'@type': 'Person',
+		name: user.name
+	} as Person;
 </script>
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
 </svelte:head>
 
+<JsonLd schema={userSchema} />
 <MetaTags description={user.description} title={me ? 'Профиль' : user.name} />
 
 <div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-8 p-16">

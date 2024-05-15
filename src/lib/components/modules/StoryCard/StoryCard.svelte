@@ -73,7 +73,7 @@
 					</div>
 				{/if}
 				<Titie {title} {textColor} />
-				<Info {author} {created} {edit} {likes} {status} {selectedColor} />
+				<Info {author} {created} {edit} {likes} {status} {selectedColor} class="absolute" />
 				<HoverInfo {tags} {vars} {description} />
 			</div>
 			<TransparentRect />

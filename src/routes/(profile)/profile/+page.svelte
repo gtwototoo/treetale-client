@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { MetaTags } from 'svelte-meta-tags';
+
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
 	import { correctWhitespace } from '$lib/utils';
@@ -6,9 +8,7 @@
 	export let data;
 </script>
 
-<svelte:head>
-	<title>Профиль</title>
-</svelte:head>
+<MetaTags title="Профиль" />
 
 <StoriesList authors={data.authors} stories={data.stories}>
 	<p>

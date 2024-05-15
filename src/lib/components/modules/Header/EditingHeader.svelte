@@ -1,14 +1,6 @@
 <script lang="ts">
 	import clsx from 'clsx';
-	import {
-		ArrowUturnLeft,
-		ArrowUturnRight,
-		ChevronLeft,
-		Cog6Tooth,
-		DocumentText,
-		Link,
-		Variable
-	} from 'svelte-heros-v2';
+	import { ArrowUturnLeft, ArrowUturnRight, ChevronLeft } from 'svelte-heros-v2';
 
 	import { Button, FormSplit } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
@@ -17,33 +9,8 @@
 	import { panelShow, panelStore } from '$lib/stores/panel';
 	import { activeActionStore } from '$lib/stores/workspace';
 
-	import { Changes, Notes, ShareWorkspace, Variables } from '../Panel';
+	import { Changes } from '../Panel';
 	import Header from './Header.svelte';
-
-	const variablesSwitch = () => {
-		$panelStore = {
-			component: Variables,
-			id: 'variables'
-		};
-	};
-
-	const notesSwitch = () => {
-		$panelStore = {
-			component: Notes,
-			id: 'notes'
-		};
-	};
-
-	const shareSwitch = () => {
-		$panelStore = {
-			component: ShareWorkspace,
-			id: 'share'
-		};
-	};
-
-	const settingsSwitch = () => {
-		panelStore.clear();
-	};
 
 	const historySwitch = () => {
 		$panelStore = {
@@ -84,7 +51,7 @@
 	{/if}
 	<svelte:fragment slot="right">
 		<Button
-			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-3"
+			class="header-button -mr-4 !hidden !rounded-r-none bg-contrast text-text max-lg:!block max-sm:-mr-3 max-xs:!hidden"
 			on:click={() => ($panelShow = !$panelShow)}
 			size="lg"
 			variant="ghost"
@@ -92,38 +59,4 @@
 			<Icon class="size-6" type={ChevronLeft} />
 		</Button>
 	</svelte:fragment>
-	<FormSplit class="absolute right-4 top-20 max-sm:right-3 max-sm:top-[4.5rem]" vertical>
-		<Button
-			class="header-button bg-contrast !px-3 text-text"
-			on:click={settingsSwitch}
-			size="lg"
-			variant="ghost"
-		>
-			<Icon class="size-6" type={Cog6Tooth} />
-		</Button>
-		<Button
-			class="header-button bg-contrast !px-3 text-text"
-			on:click={variablesSwitch}
-			size="lg"
-			variant="ghost"
-		>
-			<Icon class="size-6" type={Variable} />
-		</Button>
-		<Button
-			class="header-button bg-contrast !px-3 text-text"
-			on:click={notesSwitch}
-			size="lg"
-			variant="ghost"
-		>
-			<Icon class="size-6" type={DocumentText} />
-		</Button>
-		<Button
-			class="header-button bg-contrast !px-3 text-text"
-			on:click={shareSwitch}
-			size="lg"
-			variant="ghost"
-		>
-			<Icon class="size-6" type={Link} />
-		</Button>
-	</FormSplit>
 </Header>

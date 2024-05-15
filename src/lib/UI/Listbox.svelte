@@ -59,20 +59,7 @@
 	};
 </script>
 
-<div
-	class={clsx(
-		'listbox',
-		{
-			base: 'rounded-lg',
-			lg: 'rounded-xl',
-			sm: 'rounded',
-			xl: 'rounded-2xl'
-		}[size],
-		className
-	)}
-	on:outclick={() => (focused = false)}
-	use:clickOutside
->
+<div class={clsx('listbox', className)} on:outclick={() => (focused = false)} use:clickOutside>
 	{#if $$slots.default}
 		<slot click={handleClick} value={value || placeholder} />
 	{:else}
@@ -101,6 +88,12 @@
 		<div
 			class={clm(
 				'list',
+				{
+					base: 'rounded-lg',
+					lg: 'rounded-xl',
+					sm: 'rounded',
+					xl: 'rounded-2xl'
+				}[size],
 				{
 					center: '-left-1/2',
 					inset: '-inset-x-1',

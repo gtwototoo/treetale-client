@@ -6,6 +6,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { readonlyStore } from '$lib/stores/editing';
 	import { bodyColorStore, redColorStore } from '$lib/stores/main';
+	import { panelShow } from '$lib/stores/panel';
 	import {
 		activeActionStore,
 		activeModeStore,
@@ -37,7 +38,7 @@
 	$: greenColor = contrastText($bodyColorStore) ? clsx('bg-emerald-900') : clsx('bg-emerald-200');
 </script>
 
-<div class="area">
+<div class={clsx('area', !$panelShow && 'max-xs:mb-16')}>
 	<div
 		class={clsx(
 			'flex items-center gap-2 rounded-full bg-main ring-4 ring-main',

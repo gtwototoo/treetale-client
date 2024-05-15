@@ -17,6 +17,20 @@ export const transform = (coords: ICoordinates, zoom?: number): string => {
 	return styleRow;
 };
 
+export const findPrevFrames = (frames: Array<IFrameCreate>, frameId: number) => {
+	const prevFrames: Array<IFrameCreate> = [];
+
+	for (const frame of frames) {
+		const isPrevFrame = frame.choices.some((choice) => choice.frameId === frameId);
+
+		if (isPrevFrame) {
+			prevFrames.push(frame);
+		}
+	}
+
+	return prevFrames;
+};
+
 export const getChoicePosition = (index: number, imageUrl: string) => {
 	let startPosition = DEFAULT_FRAME_SIZE.height - 8 - 40 / 2;
 

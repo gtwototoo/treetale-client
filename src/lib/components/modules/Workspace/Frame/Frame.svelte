@@ -19,12 +19,11 @@
 	} from '$lib/stores/workspace';
 	import { contrastText, createConnections, transform } from '$lib/utils';
 
-	import { setSelectedFrame } from '../methods';
+	import { connectedWithStart, setSelectedFrame } from '../methods';
 	import Choices from './Choices.svelte';
 	import Header from './Header.svelte';
 
 	export let frameId: number;
-	export let index: number;
 
 	const handleMouseDown = () => {
 		if (!frame) return;
@@ -74,6 +73,7 @@
 		changesHistory.add('Добавление связи', Share);
 	};
 
+	$: isEndFrame = connectedWithStart(frameId) && !$framesDataStore[frameKey].choices.length;
 	$: frameKey = findIndex($framesDataStore, { frameId });
 	$: frame = frameKey !== -1 ? $framesDataStore[frameKey] : undefined;
 	$: ({ hidden, imageUrl, text, x, y } = frame || ({} as IFrameCreate));
@@ -99,7 +99,7 @@
 			on:click={createConnection}
 			on:mousedown={handleMouseDown}
 		>
-			<Header {frame} on:hide={setVisible} start={!index} />
+			<Header {frame} on:hide={setVisible} start={frameId === 1} end={isEndFrame} />
 			{#if !hidden}
 				{#if imageUrl}
 					<Image

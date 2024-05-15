@@ -47,9 +47,3 @@ export const cutText = (text: string, vars: Array<IVariable>, maxLength = 200) =
 		return correctWhitespace(`${newText.substring(0, maxLength)}${lastWord}...`);
 	}
 };
-
-export const pluralize = (number: number, gen: string, nom: string, plu: string) => {
-	const n = String(number);
-
-	return n.match(/(0|[5-9]|1[0-9])$/) ? gen : n.match(/1$/) ? nom : plu;
-};
