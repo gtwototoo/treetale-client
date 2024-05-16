@@ -21,7 +21,7 @@ export type SubGestureFunctions = {
 	onUp: PointerEventCallback<void>;
 };
 type PartialParameters<GestureParams> = Partial<GestureParams>;
-type PartialParametersWithComposed<GestureParams> = PartialParameters<GestureParams> & Composed;
+type PartialParametersWithComposed<GestureParams> = Composed & PartialParameters<GestureParams>;
 interface IPinch {
 	'on:pinch': (e: CustomEvent<{ center: ICoordinates; scale: number }>) => void;
 }
@@ -50,9 +50,9 @@ export type TouchAction =
 	| 'revert'
 	| 'revert-layer'
 	| 'unset';
-export type BaseParams = Composed & {
+export type BaseParams = {
 	touchAction: TouchAction;
-};
+} & Composed;
 type ActionType = 'down' | 'move' | 'up';
 
 function removeEvent(event: PointerEvent, activeEvents: PointerEvent[]): PointerEvent[] {

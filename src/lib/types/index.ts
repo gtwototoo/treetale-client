@@ -13,7 +13,7 @@ export type TStoryStatus = 'draft' | 'published' | 'review';
 
 export type TGenre = (typeof GENRES_LIST)[number]['id'];
 
-export type TBoundings = ISize & ICoordinates;
+export type TBoundings = ICoordinates & ISize;
 
 export interface IStoryEditableInfo {
 	color: TRGB;

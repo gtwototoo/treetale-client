@@ -90,7 +90,7 @@ export const createConnections = (frames: Array<IFrameCreate>) => {
 };
 
 export const createLineRemoveButtons = (frames: Array<IFrameCreate>) => {
-	const coords: Array<ICoordinates & { fromChoiceId: number; fromFrameId: number }> = [];
+	const coords: Array<{ fromChoiceId: number; fromFrameId: number } & ICoordinates> = [];
 
 	for (const fromFrame of frames) {
 		for (const choice of fromFrame.choices) {

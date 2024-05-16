@@ -132,11 +132,11 @@
 		changesHistory.add('Удаление блока', Trash);
 	};
 
-	const setX = (e: CustomEvent<Event & { currentTarget: EventTarget & HTMLInputElement }>) => {
+	const setX = (e: CustomEvent<{ currentTarget: EventTarget & HTMLInputElement } & Event>) => {
 		$framesDataStore[frameKey].x = +(e.detail.target as HTMLInputElement).value;
 	};
 
-	const setY = (e: CustomEvent<Event & { currentTarget: EventTarget & HTMLInputElement }>) => {
+	const setY = (e: CustomEvent<{ currentTarget: EventTarget & HTMLInputElement } & Event>) => {
 		$framesDataStore[frameKey].y = +(e.detail.target as HTMLInputElement).value;
 	};
 

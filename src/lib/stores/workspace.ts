@@ -1,4 +1,5 @@
-import { type Writable, derived, get, writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 
 import type { ICoordinates, TBoundings } from '$lib/types';
 import type { IConnect, IFrameCreate } from '$lib/types/editing';
@@ -14,9 +15,9 @@ interface IWorkspaceFrame extends TBoundings {
 	title: string;
 }
 
-type IFramesCustomStore = Writable<Array<IFrameCreate>> & {
+type IFramesCustomStore = {
 	init: (data: Array<IFrameCreate>) => void;
-};
+} & Writable<Array<IFrameCreate>>;
 
 const framesCustomStore = () => {
 	const { set, subscribe, update } = writable<Array<IFrameCreate>>([]);

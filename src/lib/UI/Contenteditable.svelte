@@ -6,7 +6,7 @@
 	import { clm } from '$lib/utils';
 
 	const dispatch = createEventDispatcher<{
-		input: Event & { currentTarget: EventTarget & HTMLDivElement };
+		input: { currentTarget: EventTarget & HTMLDivElement } & Event;
 		paste: ClipboardEvent;
 	}>();
 
@@ -94,7 +94,7 @@
 	// 	return encoded;
 	// };
 
-	const handleInput = (e: Event & { currentTarget: EventTarget & HTMLDivElement }) => {
+	const handleInput = (e: { currentTarget: EventTarget & HTMLDivElement } & Event) => {
 		if (maxlength && editableRef.innerText.length + 1 > maxlength) {
 			const selection = window.getSelection();
 			const range = selection.getRangeAt(0);

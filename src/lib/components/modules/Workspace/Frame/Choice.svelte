@@ -11,7 +11,7 @@
 	import { activeModeStore, connectionStore, framesDataStore } from '$lib/stores/workspace';
 	import { clm, contrastText } from '$lib/utils';
 
-	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
+	type HTMLContentEditable = ElementContentEditable & HTMLDivElement;
 
 	export let choiceId: number;
 	export let text: string;

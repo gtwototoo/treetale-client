@@ -20,7 +20,7 @@
 	export { className as class };
 
 	const dispatch = createEventDispatcher<{
-		input: Event & { currentTarget: EventTarget & HTMLInputElement };
+		input: { currentTarget: EventTarget & HTMLInputElement } & Event;
 	}>();
 
 	const handleFocus = () => {
@@ -31,7 +31,7 @@
 		focused = false;
 	};
 
-	const handleInput = (e: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+	const handleInput = (e: { currentTarget: EventTarget & HTMLInputElement } & Event) => {
 		onlyNumbers(number);
 
 		dispatch('input', e);

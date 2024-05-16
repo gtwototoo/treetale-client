@@ -18,7 +18,7 @@
 	import { addFrame, setSelectedFrame } from '../../Workspace/methods';
 	import Modificators from './Modificators.svelte';
 
-	type HTMLContentEditable = HTMLDivElement & ElementContentEditable;
+	type HTMLContentEditable = ElementContentEditable & HTMLDivElement;
 
 	export let choiceId: number;
 	export let frameKey: number;

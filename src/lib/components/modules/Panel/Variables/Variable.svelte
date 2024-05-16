@@ -15,9 +15,9 @@
 	export let varKey: number;
 	export let checkUpdates: () => void;
 
-	type TExpects = IList & {
+	type TExpects = {
 		title: TVariableExpects;
-	};
+	} & IList;
 
 	const types: Array<TExpects> = [
 		{ title: 'Строка' },

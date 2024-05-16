@@ -25,7 +25,7 @@ const isLikelyPlainObject = (value: IElem | TQuasiBaseType) => {
 
 const applyDiff = <T extends Array<IElem> | IElem>(lhs: T, diff: IDiff) => {
 	if (!isLikelyPlainObject(diff) || !isLikelyPlainObject(lhs)) {
-		lhs = diff as T & IDiff;
+		lhs = diff as IDiff & T;
 
 		return lhs;
 	}

@@ -25,13 +25,13 @@ interface IChanges {
 	stages: Array<IChange>;
 }
 
-type IOverrideChanges = Writable<IChanges> & {
+type IOverrideChanges = {
 	add: (title: string, icon: typeof SvelteComponent<unknown>) => void;
 	init: (initialFrames: Array<IFrameCreate>) => void;
 	redo: () => void;
 	to: (stageId: number) => void;
 	undo: () => void;
-};
+} & Writable<IChanges>;
 
 const STAGES_MAX_COUNT = 50;
 

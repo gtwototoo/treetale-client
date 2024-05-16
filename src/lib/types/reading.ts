@@ -4,4 +4,4 @@ export interface IStoryReading extends IStory {
 	likes: Array<number>;
 }
 
-export type IStoryFull = IStoryReading & { vars: Array<IVariable> } & { userId: number };
+export type IStoryFull = { userId: number } & { vars: Array<IVariable> } & IStoryReading;
