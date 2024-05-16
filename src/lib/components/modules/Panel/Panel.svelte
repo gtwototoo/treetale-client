@@ -79,7 +79,7 @@
 		'relative ml-auto flex min-h-full w-96 max-w-full shrink-0 flex-col gap-4 bg-contrast px-4 py-4 text-text transition-transform max-sm:py-3 max-xs:ml-0 max-xs:w-full max-xs:px-3',
 		className,
 		!$panelShow &&
-			'max-lg:translate-x-full max-xs:-top-16 max-xs:translate-x-0 max-xs:translate-y-full'
+			'max-lg:translate-x-full max-xs:-top-16 max-xs:h-16 max-xs:translate-x-0 max-xs:translate-y-full'
 	)}
 >
 	<div class={clsx('flex gap-2 *:flex-1', !$panelShow && 'max-xs:hidden')}>
