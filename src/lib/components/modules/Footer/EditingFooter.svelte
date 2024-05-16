@@ -38,7 +38,7 @@
 	$: greenColor = contrastText($bodyColorStore) ? clsx('bg-emerald-900') : clsx('bg-emerald-200');
 </script>
 
-<div class={clsx('area', !$panelShow && 'max-xs:mb-16')}>
+<div class={clsx('area', !$panelShow && 'max-xs:mb-14')}>
 	<div
 		class={clsx(
 			'flex items-center gap-2 rounded-full bg-main ring-4 ring-main',
