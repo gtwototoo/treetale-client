@@ -56,7 +56,7 @@
 <div class={clm('relative h-full min-h-0 rounded-lg', className)}>
 	{#if $soundStore.sound}
 		<div
-			class="flex h-full w-full select-none flex-col items-center justify-center gap-3 rounded-lg bg-contrast-3 p-2 text-sm/6"
+			class="flex size-full select-none flex-col items-center justify-center gap-3 rounded-lg bg-contrast-3 p-2 text-sm/6"
 		>
 			{#await preload($soundStore.sound)}
 				<Icon class="size-5" type={Loading} />

@@ -25,7 +25,7 @@
 					src={imageUrl}
 					alt="Мини иллюстрация истории"
 					cover
-					class="flex h-full w-full flex-col rounded-lg"
+					class="flex size-full flex-col rounded-lg"
 				>
 					<svelte:fragment slot="error">
 						<Icon class="size-8 text-red-500" type={Photo} variation="solid" />

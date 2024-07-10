@@ -70,14 +70,14 @@
 		<Image
 			{alt}
 			{base64src}
-			class="h-full w-full rounded-inherit !bg-main/30 text-text"
+			class="size-full rounded-inherit !bg-main/30 text-text"
 			cover
 			on:load={() => (base64src = null)}
 			{src}
 		/>
 	{:else if readonly || disabled}
 		<Button
-			class="pointer-events-none h-full w-full flex-col gap-2 !whitespace-normal !rounded-inherit bg-contrast-9 !p-6"
+			class="pointer-events-none size-full flex-col gap-2 !whitespace-normal !rounded-inherit bg-contrast-9 !p-6"
 			variant="ghost"
 		>
 			<Icon class="h-24 w-auto *:fill-gradient" type={icon} variation="solid" />

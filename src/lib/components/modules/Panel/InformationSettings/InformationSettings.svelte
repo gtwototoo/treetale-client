@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 
-	import Popover from '$UI/Popover.svelte';
 	import clsx from 'clsx';
 	import find from 'lodash/find';
 	import { BookOpen, Cloud, PaintBrush, Photo } from 'svelte-heros-v2';
 
 	import type { TGenre } from '$lib/types';
 
-	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags } from '$UI';
+	import { Button, ColorPicker, Contenteditable, FormSplit, Input, InputTags, Popover } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import ImageUploader from '$lib/components/ImageUploader.svelte';
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';

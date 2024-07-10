@@ -37,7 +37,7 @@
 
 <div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-8 p-16">
 	<UserInformation {me} {statistic} {user} />
-	<div class="flex h-full w-full flex-col items-center gap-8">
+	<div class="flex size-full flex-col items-center gap-8">
 		{#if me}
 			<div class="flex flex-wrap justify-center gap-2">
 				{#if $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}

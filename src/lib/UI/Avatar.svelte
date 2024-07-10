@@ -39,7 +39,7 @@
 		)}
 	>
 		{#if src || base64src}
-			<Image {alt} {base64src} class="h-full w-full rounded-full" cover on:load {src} />
+			<Image {alt} {base64src} class="size-full rounded-full" cover on:load {src} />
 		{:else}
 			{short}
 		{/if}

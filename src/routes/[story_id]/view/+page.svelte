@@ -238,7 +238,7 @@
 <MetaTags title={`Редактирование "${$informationDataStore.title || 'Без названия'}"`} />
 
 <SvgGradient id={$informationDataStore.storyId} />
-<div class="absolute h-full w-full">
+<div class="absolute size-full">
 	{#if $framesDataStore.length === 1}
 		<CreateText />
 	{/if}

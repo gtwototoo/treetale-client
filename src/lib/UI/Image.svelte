@@ -49,7 +49,7 @@
 		<img
 			{alt}
 			class={clsx(
-				'absolute h-full w-full rounded-inherit brightness-50',
+				'absolute size-full rounded-inherit brightness-50',
 				cover ? 'object-cover' : 'object-contain'
 			)}
 			draggable="false"
@@ -62,7 +62,7 @@
 				<img
 					{alt}
 					class={clsx(
-						'absolute h-full w-full rounded-inherit brightness-50',
+						'absolute size-full rounded-inherit brightness-50',
 						cover ? 'object-cover' : 'object-contain'
 					)}
 					draggable="false"
@@ -74,7 +74,7 @@
 		{:then}
 			<img
 				{alt}
-				class={clsx('h-full w-full rounded-inherit', cover ? 'object-cover' : 'object-contain')}
+				class={clsx('size-full rounded-inherit', cover ? 'object-cover' : 'object-contain')}
 				draggable="false"
 				{src}
 			/>

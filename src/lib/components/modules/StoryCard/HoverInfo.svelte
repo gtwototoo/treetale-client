@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="absolute bottom-0 flex max-h-full w-full translate-y-full flex-col gap-3 overflow-auto rounded-inherit bg-contrast p-4 text-center transition-transform group-hover:translate-y-0"
+	class="max-size-full absolute bottom-0 flex w-full translate-y-full flex-col gap-3 overflow-auto rounded-inherit bg-contrast p-4 text-center transition-transform group-hover:translate-y-0"
 >
 	<p class="clear-text text-base text-text max-md:text-sm">
 		{@html correctVariableReplace(description, vars) || 'Без описания'}

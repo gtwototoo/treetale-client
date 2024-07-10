@@ -58,7 +58,7 @@
 	<slot />
 	{#if loading}
 		<div
-			class="!visible absolute left-0 top-0 flex h-full w-full items-center justify-center bg-transparent text-text"
+			class="!visible absolute left-0 top-0 flex size-full items-center justify-center bg-transparent text-text"
 		>
 			<Icon type={Loading} />
 		</div>

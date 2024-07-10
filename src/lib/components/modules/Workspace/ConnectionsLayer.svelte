@@ -6,16 +6,16 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: ({ paths, ...svgData } = createConnections($framesDataStore));
+	$: connections = createConnections($framesDataStore);
 
 	onMount(() => dispatch('mounted'));
 </script>
 
 <svg
 	class="absolute h-auto w-auto select-none bg-transparent fill-none stroke-contrast stroke-2"
-	{...svgData}
+	{...connections}
 >
-	{#each paths as path (path.connectId)}
+	{#each connections.paths as path (path.connectId)}
 		<path d={path.line} />
 	{/each}
 </svg>

@@ -60,7 +60,7 @@
 	<div class="modal" use:createPortal>
 		<div
 			class={clsx(
-				'flex h-full w-full justify-center overflow-auto bg-transparent',
+				'flex size-full justify-center overflow-auto bg-transparent',
 				innerHeight < offsetHeight ? 'items-start' : 'items-center'
 			)}
 			in:fly={{ y: 100 }}
@@ -87,7 +87,7 @@
 
 <style lang="postcss">
 	.modal {
-		@apply fixed left-0 top-0 z-[1000] flex h-full w-full select-none items-center justify-center bg-black bg-opacity-50;
+		@apply fixed left-0 top-0 z-[1000] flex size-full select-none items-center justify-center bg-black bg-opacity-50;
 	}
 	.window {
 		@apply m-4 flex flex-col rounded-2xl bg-white p-2 *:w-full;

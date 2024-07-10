@@ -20,6 +20,7 @@
 	export { className as class };
 
 	const dispatch = createEventDispatcher<{
+		click: MouseEvent;
 		input: { currentTarget: EventTarget & HTMLInputElement } & Event;
 	}>();
 
@@ -37,8 +38,10 @@
 		dispatch('input', e);
 	};
 
-	const handleClick = () => {
+	const handleClick = (e: MouseEvent) => {
 		inputRef.focus();
+
+		dispatch('click', e);
 	};
 
 	const onlyNumbers = (enable: boolean) => {

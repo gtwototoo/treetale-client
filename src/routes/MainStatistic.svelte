@@ -130,7 +130,7 @@
 			жанров от серьезных и тяжелых до смешных и легких, среди которых вы сами формируете свой
 			уникальный приключенческий опыт
 		</p>
-		<div class="absolute left-0 top-0 h-full w-full bg-gradient-to-r from-black" />
+		<div class="absolute left-0 top-0 size-full bg-gradient-to-r from-black" />
 	</div>
 </div> -->
 

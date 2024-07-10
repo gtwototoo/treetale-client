@@ -72,14 +72,14 @@
 
 <svelte:document on:visibilitychange={handleVisibilityChange} />
 
-<div class={clsx('inset-0 z-10 h-full w-full gap-2 p-4 text-sm', className)}>
+<div class={clsx('inset-0 z-10 size-full gap-2 p-4 text-sm', className)}>
 	<button
 		on:click|preventDefault={handleClick}
 		on:dragenter={handleDragEnter}
 		on:dragleave={handleDragLeave}
 		on:drop|preventDefault={handleDrop}
 		on:dragover|preventDefault
-		class="group relative flex h-full w-full flex-col items-center justify-center gap-[inherit] rounded-xl bg-main-30 p-4 *:pointer-events-none *:bg-transparent"
+		class="group relative flex size-full flex-col items-center justify-center gap-[inherit] rounded-xl bg-main-30 p-4 *:pointer-events-none *:bg-transparent"
 	>
 		<DashedBorder {dragged} />
 		<slot />

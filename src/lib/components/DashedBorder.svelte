@@ -9,7 +9,7 @@
 
 <svg
 	class={clsx(
-		'absolute left-0 h-full w-full rounded-inherit stroke-contrast stroke-2 transition-colors group-hover:stroke-main',
+		'absolute left-0 size-full rounded-inherit stroke-contrast stroke-2 transition-colors group-hover:stroke-main',
 		dragged && '!stroke-main'
 	)}
 	{rx}

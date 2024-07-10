@@ -46,7 +46,9 @@
 	$: infoColor = contrastText(selectedColor) ? clsx('bg-main-30') : clsx('bg-main-80');
 </script>
 
-<div class={clsx('bottom-0 flex w-full items-center justify-between gap-4 p-2', className)}>
+<div
+	class={clsx('bottom-0 flex w-full items-center justify-between gap-4 bg-transparent', className)}
+>
 	{#if author && !edit}
 		<ProfileLink {author} {created} {infoColor} />
 	{:else}

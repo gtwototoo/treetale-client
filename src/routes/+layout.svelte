@@ -48,7 +48,7 @@
 		<svelte:component this={$panelStore.component} />
 	{/if}
 {:else}
-	<div class="relative flex h-full w-full flex-col">
+	<div class="relative flex size-full flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />
 		<slot />
 	</div>

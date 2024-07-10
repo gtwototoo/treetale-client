@@ -149,7 +149,7 @@
 			use:setReadonly={readonly || disabled}
 		/>
 		{#if hasPattern}
-			<div class="pointer-events-none absolute top-0 h-full w-full bg-transparent">
+			<div class="pointer-events-none absolute top-0 size-full bg-transparent">
 				{@html pattern(html)}
 			</div>
 		{/if}

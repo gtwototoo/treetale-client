@@ -56,7 +56,7 @@
 
 <MetaTags title="Завершение регистрации" />
 
-<div class="flex h-full w-full items-start justify-center">
+<div class="flex size-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">
 		<ReadCard
 			alt="Завершение регистрации"

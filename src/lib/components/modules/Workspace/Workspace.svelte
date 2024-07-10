@@ -100,7 +100,7 @@
 	bind:clientWidth={width}
 	bind:this={workspace}
 	class={clsx(
-		'relative h-full w-full select-none overflow-hidden bg-transparent',
+		'relative size-full select-none overflow-hidden bg-transparent',
 		$activeActionStore === 'movingArea' && 'cursor-grabbing',
 		$activeActionStore === 'movingFrame' && 'cursor-move'
 	)}
