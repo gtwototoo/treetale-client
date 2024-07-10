@@ -8,7 +8,7 @@
 		"preview": "vite preview --host ::",
 		"start": "node -r dotenv/config build",
 		"sync": "svelte-kit sync",
-		"docker::build": "docker build --no-cache --tag treetale-client .",
+		"docker:build": "docker build --no-cache --tag treetale-client .",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin=prettier-plugin-svelte --plugin=prettier-plugin-tailwindcss --write . && eslint .",
