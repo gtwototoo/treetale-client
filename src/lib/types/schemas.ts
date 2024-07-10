@@ -11,6 +11,5 @@ export interface IStorySchema extends IStory {
 	offset: ICoordinates;
 	userId: number;
 	vars: Array<IVariable>;
-	version: number;
 	zoom: number;
 }

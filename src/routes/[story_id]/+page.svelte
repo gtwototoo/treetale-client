@@ -8,8 +8,6 @@
 	import last from 'lodash/last';
 	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 
-	import type { IFrame } from '$lib/types/index.js';
-
 	import { Button } from '$UI';
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import StoryDescription from '$lib/components/StoryDescription.svelte';
@@ -36,7 +34,7 @@
 	// 	);
 	// };
 
-	let started = false;
+	let storyState: 'begin' | 'ended' | 'started' = 'begin';
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		const { code } = e;
@@ -112,7 +110,7 @@
 	$: $variablesStore = vars;
 	$: ({ frameId } = progress.length
 		? find(frames, { frameId: last(progress).nextFrameId })
-		: ({} as IFrame));
+		: $framesStore[0]);
 
 	$: bookSchema = {
 		'@type': 'Book',
@@ -146,19 +144,25 @@
 <svelte:window on:fullscreenchange={handleFullscreenChange} on:keydown={handleKeydown} />
 
 <SvgGradient id={storyId} />
-<div class="absolute flex h-full w-full items-start justify-center overflow-auto" id="read-screen">
+<div class="absolute flex size-full items-start justify-center overflow-auto" id="read-screen">
 	<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
-		{#if !progress.length}
-			{#if !started}
-				<StoryDescription {author} {story} on:click={() => (started = true)} />
-			{:else}
-				<ReadFrame
-					frameId={$framesStore[0].frameId}
-					on:click={({ detail }) => setChoice($framesStore[0].frameId, detail.choiceId)}
-				/>
-			{/if}
+		{#if storyState === 'started'}
+			<ReadFrame
+				{likes}
+				{storyId}
+				{frameId}
+				on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
+				on:results={() => (storyState = 'ended')}
+			/>
 		{:else}
-			<ReadFrame {frameId} on:click={({ detail }) => setChoice(frameId, detail.choiceId)} />
+			<StoryDescription
+				{frames}
+				{progress}
+				{author}
+				{story}
+				{storyState}
+				on:click={() => (storyState = 'started')}
+			/>
 		{/if}
 	</div>
 	{#if $fullscreenStore}

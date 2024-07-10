@@ -7,15 +7,17 @@
 
 	import type { ILogicOperation } from '$lib/types';
 
-	import { FormSplit } from '$UI';
+	import { Button, FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, variablesStore } from '$lib/stores/reading';
 	import { correctToType, correctVariableReplace, doLogic, doMath } from '$lib/utils';
 
 	import Choice from './Choice.svelte';
+	import Likes from './Likes.svelte';
 
 	const dispatch = createEventDispatcher<{
 		click: { choiceId: number };
+		results: void;
 	}>();
 
 	let className = '';
@@ -23,6 +25,8 @@
 
 	export let frameId: number;
 	export let selectedChoiceId: number | undefined = undefined;
+	export let likes: number[];
+	export let storyId: number;
 
 	const handleClick = (choiceId: number) => {
 		dispatch('click', { choiceId });
@@ -47,6 +51,10 @@
 				correctToType(value, expect)
 			);
 		}
+	};
+
+	const handleGetResults = () => {
+		dispatch('results');
 	};
 
 	const checkLogic = (logicOperations: Array<ILogicOperation>) => {
@@ -86,5 +94,15 @@
 				{/if}
 			{/each}
 		</FormSplit>
+	{:else}
+		<div class="flex w-full gap-3">
+			<Button
+				size="xl"
+				variant="main"
+				class="w-full justify-center !bg-main"
+				on:click={handleGetResults}>Завершить</Button
+			>
+			<Likes {storyId} {likes} />
+		</div>
 	{/if}
 </ReadCard>

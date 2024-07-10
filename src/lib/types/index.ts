@@ -33,6 +33,7 @@ export interface IStory extends IStoryEditableInfo {
 	created: number;
 	status: TStoryStatus;
 	storyId: number;
+	version: number;
 }
 
 interface IOperation {
