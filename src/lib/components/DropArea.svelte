@@ -5,7 +5,7 @@
 
 	import { validateMimeType } from '$lib/utils';
 
-	import DashedBorder from './DashedBorder.svelte';
+	import DashedBorder from './DropArea/DashedBorder.svelte';
 
 	let className: string | undefined = undefined;
 

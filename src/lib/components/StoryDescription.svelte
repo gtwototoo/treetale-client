@@ -18,8 +18,8 @@
 	import EndResults from './EndResults.svelte';
 	import Icon from './Icon.svelte';
 	import Link from './Link.svelte';
-	import Cover from './modules/StoryCard/Cover.svelte';
-	import Info from './modules/StoryCard/Info.svelte';
+	import Cover from './StoryCard/Cover.svelte';
+	import Info from './StoryCard/Info.svelte';
 
 	export let story: IStoryFull;
 	export let author: IUser;

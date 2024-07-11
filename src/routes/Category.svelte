@@ -13,8 +13,8 @@
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
-	import Empty from '$lib/components/modules/StoryCard/Empty.svelte';
-	import StoryCard from '$lib/components/modules/StoryCard/StoryCard.svelte';
+	import Empty from '$lib/components/StoryCard/Empty.svelte';
+	import StoryCard from '$lib/components/StoryCard/StoryCard.svelte';
 	import { correctWhitespace } from '$lib/utils';
 
 	export let title: string;

@@ -7,11 +7,9 @@
 	import { Button } from '$UI';
 	import Icon from '$lib/components/Icon.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { panelStore } from '$lib/stores/panel';
 	import { fullscreenStore } from '$lib/stores/reading';
 	import { contrastText } from '$lib/utils';
 
-	import Donut from '../Panel/Donut.svelte';
 	import Header from './Header.svelte';
 
 	let fullscreenSupport = false;
@@ -25,13 +23,6 @@
 	// 		await element.mozRequestFullScreen();
 	// 	}
 	// };
-
-	const openDonutPanel = () => {
-		$panelStore = {
-			component: Donut,
-			id: 'donut'
-		};
-	};
 
 	const handleFulscreen = async () => {
 		const readScreen = document.getElementById('read-screen') as HTMLDivElement;
@@ -58,7 +49,6 @@
 			'header-button text-text',
 			contrastText($bodyColorStore) ? 'bg-yellow-600' : 'bg-yellow-300'
 		)}
-		on:click={openDonutPanel}
 		size="lg"
 		variant="ghost"
 	>

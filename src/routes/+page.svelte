@@ -10,12 +10,12 @@
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { Loading } from '$lib/components/icons';
-	import MainFooter from '$lib/components/modules/Footer/MainFooter.svelte';
 	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { searchStories } from '$lib/requests/story';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { correctWhitespace, rootStyle } from '$lib/utils';
 
+	import Footer from '$lib/components/Footer.svelte';
 	import Category from './Category.svelte';
 	import MainStatistic from './MainStatistic.svelte';
 
@@ -142,4 +142,4 @@
 		{/if}
 	</section>
 </div>
-<MainFooter />
+<Footer />

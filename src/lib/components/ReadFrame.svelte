@@ -12,8 +12,8 @@
 	import { framesStore, variablesStore } from '$lib/stores/reading';
 	import { correctToType, correctVariableReplace, doLogic, doMath } from '$lib/utils';
 
-	import Choice from './Choice.svelte';
 	import Likes from './Likes.svelte';
+	import Choice from './ReadFrame/Choice.svelte';
 
 	const dispatch = createEventDispatcher<{
 		click: { choiceId: number };

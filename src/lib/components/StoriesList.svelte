@@ -5,8 +5,8 @@
 	import type { IUser } from '$lib/types';
 	import type { IStoryFull } from '$lib/types/reading';
 
-	import Empty from './modules/StoryCard/Empty.svelte';
-	import StoryCard from './modules/StoryCard/StoryCard.svelte';
+	import Empty from './StoryCard/Empty.svelte';
+	import StoryCard from './StoryCard/StoryCard.svelte';
 
 	export let stories: Array<IStoryFull>;
 	export let authors: Array<IUser> | undefined = undefined;

@@ -7,7 +7,7 @@
 
 	import { Button } from '$UI';
 
-	import ProfileAvatar from '../../ProfileAvatar.svelte';
+	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	export let author: IUser;
 	export let created: number;

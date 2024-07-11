@@ -8,7 +8,7 @@
 	import { correctVariableReplace } from '$lib/utils';
 
 	import Link from './Link.svelte';
-	import Info from './modules/StoryCard/Info.svelte';
+	import Info from './StoryCard/Info.svelte';
 
 	export let progress: Array<IProgress>;
 	export let story: IStoryFull;

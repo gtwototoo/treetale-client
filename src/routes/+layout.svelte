@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 
-	import MainHeader from '$lib/components/modules/Header/MainHeader.svelte';
+	import MainHeader from '$lib/components/Header/MainHeader.svelte';
 	import { panelStore } from '$lib/stores/panel';
 	import { getPageType } from '$lib/utils';
 
