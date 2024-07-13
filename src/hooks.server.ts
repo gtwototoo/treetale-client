@@ -1,15 +1,11 @@
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-import { sequence } from '@sveltejs/kit/hooks';
-import { handle as documentHandle } from '@sveltekit-addons/document/hooks';
+import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';
+import type { User } from '$lib/types';
 import sample from 'lodash/sample';
 
-import type { IUser } from '$lib/types';
-
-import { NOT_FOUND_VARIANTS } from '$lib/constants';
-
-const defaultHandle = (async ({ event, resolve }) => {
+export const handle = (async ({ event, resolve }) => {
 	const sessionId = event.cookies.get('sessionId');
 
 	if (sessionId) {
@@ -23,7 +19,7 @@ const defaultHandle = (async ({ event, resolve }) => {
 		}
 
 		if (request) {
-			const json = (await request.json()) as { user: IUser };
+			const json = (await request.json()) as { user: User };
 
 			event.locals.session = json.user;
 		}
@@ -35,8 +31,6 @@ const defaultHandle = (async ({ event, resolve }) => {
 
 	return resolve(event);
 }) satisfies Handle;
-
-export const handle = sequence(defaultHandle, documentHandle);
 
 export const handleError = (({ error, event }) => {
 	console.error(error);

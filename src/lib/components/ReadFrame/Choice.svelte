@@ -1,13 +1,26 @@
 <script lang="ts">
-	import { Button } from '$UI';
+	import { clm } from '$lib/utils/classMerge';
+	import type { Snippet } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
+	import { Button } from 'treetale-ui';
 
-	export let active: boolean;
+	let {
+		active,
+		onclick,
+		children
+	}: {
+		active: boolean;
+		onclick: MouseEventHandler<HTMLButtonElement>;
+		children?: Snippet;
+	} = $props();
 </script>
 
 <Button
-	class="adaptive-font adaptive-padding !whitespace-normal bg-main text-left !text-text"
-	on:click
-	variant={active ? 'main' : 'ghost'}
+	class={clm(
+		'adaptive-font adaptive-padding whitespace-normal bg-main text-left text-text',
+		active && 'bg-main-50'
+	)}
+	{onclick}
 >
-	<slot />
+	{@render children?.()}
 </Button>

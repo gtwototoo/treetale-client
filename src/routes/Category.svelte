@@ -1,27 +1,33 @@
 <script lang="ts">
 	import type { EmblaOptionsType } from 'embla-carousel';
 
-	import type { SvelteComponent } from 'svelte';
-
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import find from 'lodash/find';
 	import range from 'lodash/range';
 
-	import type { IUser } from '$lib/types';
-	import type { IStoryFull } from '$lib/types/reading';
+	import type { Story, User } from '$lib/types';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
-	import Icon from '$lib/components/Icon.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
 	import Empty from '$lib/components/StoryCard/Empty.svelte';
 	import StoryCard from '$lib/components/StoryCard/StoryCard.svelte';
-	import { correctWhitespace } from '$lib/utils';
 
-	export let title: string;
-	export let stories: Array<IStoryFull>;
-	export let authors: Array<IUser>;
-	export let icon: typeof SvelteComponent<unknown>;
-	export let listFormat = false;
+	import { correctWhitespace } from '$lib/utils/text';
+	import { Icon, type HeroIconComponent } from 'treetale-ui';
+
+	let {
+		title,
+		stories,
+		authors,
+		icon,
+		listFormat = false
+	}: {
+		title: string;
+		stories: Story[];
+		authors: User[];
+		icon: HeroIconComponent;
+		listFormat?: boolean;
+	} = $props();
 
 	const options: EmblaOptionsType = {
 		align: 'start',
@@ -31,7 +37,7 @@
 
 <div class="flex h-full flex-col">
 	<div class="flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6">
-		<Icon class="size-8 max-sm:h-6 max-sm:w-6" type={icon} />
+		<Icon class="size-8 max-sm:h-6 max-sm:w-6" this={icon} />
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
 	{#if listFormat}
@@ -46,10 +52,9 @@
 	{:else}
 		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>
 			<div class="flex justify-start gap-4">
-				{#each stories as rawStory (rawStory.storyId)}
-					{@const { userId, vars, ...story } = rawStory}
-					{@const author = find(authors, { userId })}
-					<StoryCard class="slider-card" {author} {story} {vars} />
+				{#each stories as story (story.storyId)}
+					{@const author = find(authors, { userId: story.userId })}
+					<StoryCard class="slider-card" {author} {story} />
 				{/each}
 				{#if stories.length < 6}
 					{#each range(6 - stories.length) as _}

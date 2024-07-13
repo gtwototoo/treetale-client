@@ -7,14 +7,14 @@ import { randomError } from '$lib/utils/random.js';
 
 interface ICategory {
 	id: string;
-	stories: Array<IStorySchema>;
+	stories: IStorySchema[];
 	title: string;
 }
 
 interface IResponseMainInfo {
-	authors: Array<IUser>;
-	categories: Array<ICategory>;
-	statistic: Array<{ id: 'likes' | 'stories' | 'users'; title: string; value: string }>;
+	authors: IUser[];
+	categories: ICategory[];
+	statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
 }
 
 export const load = async ({ fetch }) => {

@@ -1,7 +1,11 @@
-import type { IUser } from '.';
-import type { IStoryFull } from './reading';
+import type { Story, User } from '.';
 
-export interface IResponseStories {
-	authors: IUser[];
-	stories: IStoryFull[];
+export interface ResponseStories {
+	authors: User[];
+	stories: Story[];
+}
+
+export interface ResponseResult {
+	error: boolean;
+	text: string;
 }

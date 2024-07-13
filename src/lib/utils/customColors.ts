@@ -1,13 +1,17 @@
 import range from 'lodash/range';
 
-import type { TRGB } from '$lib/types';
+import type { RGB as RGBType } from '$lib/types';
 
-import { BLACK_COLOR, BLACK_TEXT_COLOR, WHITE_COLOR, WHITE_TEXT_COLOR } from '$lib/constants';
-
-import { alphaToRgb } from './alpha-to-rgb';
+import {
+	BLACK_COLOR,
+	BLACK_TEXT_COLOR,
+	WHITE_COLOR,
+	WHITE_TEXT_COLOR
+} from '$lib/constants/colors';
+import { alphaToRgb } from './alphaToRgb';
 import { contrastText } from './contrast';
 
-export const varColors = (extend: Record<string, TRGB> = {}) => {
+export const varColors = (extend: Record<string, RGBType> = {}) => {
 	return Object.entries(extend)
 		.map(([key, value]) => `--${key}:${value.join(' ')}`)
 		.join(';');
@@ -19,10 +23,10 @@ export const varStyles = (extend: Record<string, string> = {}) => {
 		.join(';');
 };
 
-export const generateMainColors = (color: TRGB) => {
+export const generateMainColors = (color: RGBType) => {
 	const contrast = contrastText(color);
 
-	const additionalColors: Record<string, TRGB> = {
+	const additionalColors: Record<string, RGBType> = {
 		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR,
 		'color-main': color,
 		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR
@@ -44,12 +48,19 @@ export const generateMainColors = (color: TRGB) => {
 	return varColors(additionalColors);
 };
 
-export const rootStyle = (mainColor: TRGB, additionalStyles?: Record<string, string>) => {
-	const styles = [generateMainColors(mainColor), varStyles(additionalStyles)].join(';');
+export const rootStyle = (mainColor?: RGBType, additionalStyles?: Record<string, string>) => {
+	const styles = [];
+
+	if (mainColor) {
+		styles.push(generateMainColors(mainColor));
+	}
+	if (additionalStyles) {
+		styles.push(varStyles(additionalStyles));
+	}
 
 	return `<${'style'} type="text/css">:root{${styles}}</style>`;
 };
 
-export const RGB = (color: TRGB) => {
+export const toRGB = (color: RGBType) => {
 	return color.join(' ');
 };

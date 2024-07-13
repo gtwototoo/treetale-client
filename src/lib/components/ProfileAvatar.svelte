@@ -3,22 +3,30 @@
 
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
 
-	import type { IUser, TRGB } from '$lib/types';
+	import type { RGB, User } from '$lib/types';
 
-	import { Avatar, Button, InputFile } from '$UI';
+	import { BLACK_COLOR, DEFAULT_COLOR, WHITE_COLOR } from '$lib/constants/colors';
 	import { removeImage, saveImage } from '$lib/requests/files';
+	import { contrastText } from '$lib/utils/contrast';
+	import { toRGB } from '$lib/utils/customColors';
+	import { Avatar, Button, Icon, InputFile } from 'treetale-ui';
 
-	import Icon from './Icon.svelte';
+	let {
+		user,
+		editMode = false,
+		size = 'lg',
+		color
+	}: {
+		user: User;
+		editMode?: boolean;
+		size?: 'base' | 'lg' | 'sm';
+		color: RGB | null;
+	} = $props();
 
-	export let user: IUser;
-	export let editMode: boolean = false;
-	export let size: 'base' | 'lg' | 'sm' = 'lg';
-	export let color: TRGB;
-
-	let removeLoading = false;
-	let addLoading = false;
-	let base64src: string = null;
-	let src: string = user.imageUrl;
+	let removeLoading = $state(false);
+	let addLoading = $state(false);
+	let base64src = $state<string | null>(null);
+	let src = $state<string | null>(user.imageUrl);
 
 	const imageFolder = 'avatars';
 
@@ -67,43 +75,45 @@
 
 		preSaveImage(e.target.files[0]);
 	};
-</script>
 
-<Avatar
-	alt={user.name}
-	{base64src}
-	{color}
-	on:load={() => {
+	const loadHandler = () => {
 		base64src = null;
 		addLoading = false;
-	}}
-	{size}
-	{src}
+	};
+
+	let correctColor = $derived(color || DEFAULT_COLOR);
+	let colorContrast = $derived(contrastText(correctColor) ? BLACK_COLOR : WHITE_COLOR);
+</script>
+
+<div
+	class="contents"
+	style:--color-contrast={toRGB(colorContrast)}
+	style:--color-main={toRGB(correctColor)}
 >
-	{#if editMode}
-		<div
-			class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"
-			in:fade={{ duration: 150 }}
-		>
-			{#if src}
-				<Button
-					class="!rounded-full bg-main !p-3 text-text"
-					loading={removeLoading}
-					on:click={preRemoveImage}
-					variant="ghost"
-				>
-					<Icon class="size-6 text-red-500" type={Trash} />
-				</Button>
-			{:else}
-				<InputFile
-					class="!rounded-full bg-main !p-3 text-text"
-					disabled={addLoading}
-					on:change={setFile}
-					variant="ghost"
-				>
-					<Icon class="size-6" type={PencilSquare} />
-				</InputFile>
-			{/if}
-		</div>
-	{/if}
-</Avatar>
+	<Avatar alt={user.name} color={correctColor} {base64src} onload={loadHandler} {size} {src}>
+		{#if editMode}
+			<div
+				class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"
+				in:fade={{ duration: 150 }}
+			>
+				{#if src}
+					<Button
+						class="rounded-full bg-main p-3 text-text"
+						loading={removeLoading}
+						onclick={preRemoveImage}
+					>
+						<Icon class="size-6 text-red-500" this={Trash} />
+					</Button>
+				{:else}
+					<InputFile
+						class="rounded-full bg-main p-3 text-text"
+						disabled={addLoading}
+						onchange={setFile}
+					>
+						<Icon class="size-6" this={PencilSquare} />
+					</InputFile>
+				{/if}
+			</div>
+		{/if}
+	</Avatar>
+</div>

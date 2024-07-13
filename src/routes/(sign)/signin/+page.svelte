@@ -6,21 +6,23 @@
 	import { Check, XMark } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
 
-	import type { IResponseResult } from '$lib/types';
+	import type { ResponseResult } from '$lib/types/response';
 
-	import { Button, Input } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { rootStyle } from '$lib/utils';
+	import { rootStyle } from '$lib/utils/customColors';
+	import type { FormEventHandler } from 'svelte/elements';
+	import { Button, Icon, Input } from 'treetale-ui';
 
-	let value = '';
-	let loading = false;
-	let result: IResponseResult = null;
+	let value = $state('');
+	let loading = $state(false);
+	let result = $state<ResponseResult | null>(null);
 
-	const handleSignIn = async () => {
+	const handleSignIn: FormEventHandler<HTMLFormElement> = async (e) => {
+		e.preventDefault();
+
 		if (disabled || loading) {
 			return;
 		}
@@ -54,7 +56,7 @@
 
 	$bodyColorStore = DEFAULT_COLOR;
 
-	$: disabled = !value;
+	let disabled = $derived(!value);
 </script>
 
 <svelte:head>
@@ -70,11 +72,7 @@
 			src="/img/writer.png"
 			text={'Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением (Возможно в "Спам")'}
 		>
-			<form
-				class="flex w-full flex-col gap-3"
-				method="POST"
-				on:submit|preventDefault={handleSignIn}
-			>
+			<form class="flex w-full flex-col gap-3" method="POST" onsubmit={handleSignIn}>
 				<Input
 					bind:value
 					class="adaptive-font adaptive-padding w-full"
@@ -88,7 +86,7 @@
 						)}
 						in:fade
 					>
-						<Icon class="size-6" type={result.error ? XMark : Check} />
+						<Icon class="size-6" this={result.error ? XMark : Check} />
 						{result.error ? result.text : 'Письмо успешно отправлено'}
 					</div>
 				{:else}
@@ -97,7 +95,6 @@
 						{disabled}
 						{loading}
 						type="submit"
-						variant="ghost"
 					>
 						Войти по ссылке
 					</Button>

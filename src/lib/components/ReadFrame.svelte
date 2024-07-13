@@ -1,44 +1,48 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
-	import clsx from 'clsx';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 
-	import type { ILogicOperation } from '$lib/types';
+	import type { LogicOperation } from '$lib/types';
 
-	import { Button, FormSplit } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, variablesStore } from '$lib/stores/reading';
-	import { correctToType, correctVariableReplace, doLogic, doMath } from '$lib/utils';
 
+	import { clm } from '$lib/utils/classMerge';
+	import { correctVariableReplace } from '$lib/utils/text';
+	import { correctToType, doLogic, doMath } from '$lib/utils/variable-operations';
+	import { Button, FormSplit } from 'treetale-ui';
 	import Likes from './Likes.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
-	const dispatch = createEventDispatcher<{
-		click: { choiceId: number };
-		results: void;
-	}>();
+	let {
+		class: classname,
+		frameId,
+		selectedChoiceId,
+		likes,
+		storyId,
+		onclick,
+		onresults
+	}: {
+		class?: string;
+		frameId: number;
+		selectedChoiceId?: number;
+		likes: number[];
+		storyId: number;
+		onclick?: (choiceId: number) => void;
+		onresults?: () => void;
+	} = $props();
 
-	let className = '';
-	export { className as class };
-
-	export let frameId: number;
-	export let selectedChoiceId: number | undefined = undefined;
-	export let likes: number[];
-	export let storyId: number;
-
-	const handleClick = (choiceId: number) => {
-		dispatch('click', { choiceId });
+	const selectChoice = (choiceId: number) => {
+		onclick?.(choiceId);
 	};
 
-	const updateVars = (frameId: number, choiceId: number) => {
+	const updateVars = (frameId: number, choiceId?: number) => {
 		if (!choiceId) return;
 
 		const frame = find($framesStore, { frameId });
-		const choice = find(frame.choices, { choiceId });
+		const choice = find(frame?.choices, { choiceId });
 
-		if (!choice.mathOperations.length) return;
+		if (!choice?.mathOperations.length) return;
 
 		for (const { symbol, value, variable: name } of choice.mathOperations) {
 			const variableId = findIndex($variablesStore, { name });
@@ -54,13 +58,13 @@
 	};
 
 	const handleGetResults = () => {
-		dispatch('results');
+		onresults?.();
 	};
 
-	const checkLogic = (logicOperations: Array<ILogicOperation>) => {
+	const checkLogic = (logicOperations: LogicOperation[]) => {
 		return logicOperations
 			.map(({ symbol, value: secondValue, variable: name }) => {
-				const { expect, value: firstValue } = find($variablesStore, { name });
+				const { expect, value: firstValue } = find($variablesStore, { name })!;
 
 				return doLogic(
 					correctToType(firstValue, expect),
@@ -77,17 +81,17 @@
 		return correctVariableReplace(text, $variablesStore) || 'Пустота...';
 	};
 
-	$: ({ choices, imageUrl, text } = find($framesStore, { frameId }));
+	let { choices, imageUrl, text } = $derived(find($framesStore, { frameId })!);
 </script>
 
-<ReadCard class={clsx('text-left', className)} src={imageUrl} text={dynamicText(text)}>
+<ReadCard class={clm('text-left', classname)} src={imageUrl} text={dynamicText(text!)}>
 	{#if choices.length}
 		<FormSplit class="w-full" vertical>
 			{#each choices as { choiceId, logicOperations, text } (choiceId)}
 				{#if !logicOperations.length || checkLogic(logicOperations)}
 					<Choice
 						active={selectedChoiceId === choiceId}
-						on:click={() => handleClick(choiceId)}
+						onclick={() => selectChoice(choiceId)}
 					>
 						{@html correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
 					</Choice>
@@ -96,12 +100,9 @@
 		</FormSplit>
 	{:else}
 		<div class="flex w-full gap-3">
-			<Button
-				size="xl"
-				variant="main"
-				class="w-full justify-center !bg-main"
-				on:click={handleGetResults}>Завершить</Button
-			>
+			<Button size="xl" class="w-full justify-center !bg-main" onclick={handleGetResults}>
+				Завершить
+			</Button>
 			<Likes {storyId} {likes} />
 		</div>
 	{/if}

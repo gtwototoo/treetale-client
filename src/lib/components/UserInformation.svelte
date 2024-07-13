@@ -4,10 +4,8 @@
 	import clsx from 'clsx';
 	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
 
-	import type { IUser } from '$lib/types';
+	import type { RGB, User } from '$lib/types';
 
-	import { Button, ColorPicker, Contenteditable } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
 	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import {
 		signOutUser,
@@ -16,17 +14,24 @@
 		updateProfile
 	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
+	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
 	import InvisibleDrop from './InvisibleDrop.svelte';
 
-	export let user: IUser;
-	export let me: boolean;
-	export let statistic: Array<Array<string>>;
+	let {
+		user,
+		me,
+		statistic
+	}: {
+		user: User;
+		me: boolean;
+		statistic: string[][];
+	} = $props();
 
-	let editMode = false;
-	let light = 80;
-	let saturate = 90;
-	let loading = false;
+	let editMode = $state(false);
+	let light = $state(80);
+	let saturate = $state(90);
+	let loading = $state(false);
 
 	const handleUnsubscribe = async () => {
 		loading = true;
@@ -57,8 +62,8 @@
 		}
 	};
 
-	const setColor = ({ detail }: CustomEvent) => {
-		$bodyColorStore = detail.color;
+	const setColor = (color: RGB) => {
+		$bodyColorStore = color;
 	};
 
 	const cancelEdit = () => {
@@ -146,67 +151,36 @@
 			{#if editMode}
 				<ColorPicker
 					color={$bodyColorStore}
-					let:click
 					{light}
-					on:change={setColor}
+					onchange={setColor}
 					align="left"
 					{saturate}
 				>
-					<Button class="bg-main !text-text" on:click={click} size="lg" variant="main">
-						Цвет
-					</Button>
+					{#snippet children({ onclick })}
+						<Button class="bg-main !text-text" {onclick} size="lg">Цвет</Button>
+					{/snippet}
 				</ColorPicker>
-				<Button
-					class="bg-main text-text"
-					{loading}
-					on:click={saveProfile}
-					size="lg"
-					variant="ghost"
-				>
+				<Button class="bg-main text-text" {loading} onclick={saveProfile} size="lg">
 					Сохранить
 				</Button>
-				<Button class="bg-main !text-red-500" on:click={cancelEdit} size="lg" variant="ghost">
-					Отмена
-				</Button>
+				<Button class="bg-main text-red-500" onclick={cancelEdit} size="lg">Отмена</Button>
 			{:else}
-				<Button
-					class="gap-3 bg-contrast text-text"
-					on:click={() => (editMode = true)}
-					size="lg"
-					variant="ghost"
-				>
-					<Icon class="size-6" type={Cog6Tooth} />
+				<Button class="gap-3 bg-contrast text-text" onclick={() => (editMode = true)} size="lg">
+					<Icon class="size-6" this={Cog6Tooth} />
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
-				<Button
-					class="bg-contrast text-red-500"
-					on:click={handleSignOut}
-					size="lg"
-					variant="ghost"
-				>
+				<Button class="bg-contrast text-red-500" onclick={handleSignOut} size="lg">
 					Выйти
 				</Button>
 			{/if}
 		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
-			<Button
-				class="gap-3 bg-white"
-				{loading}
-				on:click={handleUnsubscribe}
-				size="lg"
-				variant="ghost"
-			>
-				<Icon class="size-6" type={UserMinus} />
+			<Button class="gap-3 bg-white" {loading} onclick={handleUnsubscribe} size="lg">
+				<Icon class="size-6" this={UserMinus} />
 				<p class="mr-1">Отписаться</p>
 			</Button>
 		{:else}
-			<Button
-				class="gap-3 bg-white"
-				{loading}
-				on:click={handleSubscribe}
-				size="lg"
-				variant="ghost"
-			>
-				<Icon class="size-6" type={UserPlus} />
+			<Button class="gap-3 bg-white" {loading} onclick={handleSubscribe} size="lg">
+				<Icon class="size-6" this={UserPlus} />
 				<p class="mr-1">Подписаться</p>
 			</Button>
 		{/if}

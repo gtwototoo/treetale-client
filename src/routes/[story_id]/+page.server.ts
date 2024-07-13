@@ -1,15 +1,15 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { IFrame, IProgress, IUser } from '$lib/types/index.js';
-import type { IStoryFull } from '$lib/types/reading.js';
+import type { Frame, Progress, Story, User } from '$lib/types/index';
+import { randomError } from '$lib/utils/random';
 
-import { randomError } from '$lib/utils';
+randomError;
 
-export interface IResponseProgress {
-	author: IUser;
-	frames: IFrame[];
-	progress: IProgress[];
-	story: IStoryFull;
+export interface ResponseProgress {
+	author: User;
+	frames: Frame[];
+	progress: Progress[];
+	story: Story;
 }
 
 export const load = async ({ fetch, params }) => {
@@ -20,11 +20,11 @@ export const load = async ({ fetch, params }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/progress/${storyId}`);
-	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseProgress;
+	const { error, ...data } = (await res.json()) as { error: boolean } & ResponseProgress;
 
 	if (error) {
 		randomError(404);
 	}
 
-	return data as IResponseProgress;
+	return data as ResponseProgress;
 };

@@ -1,12 +1,12 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { IUser } from '$lib/types/index.js';
+import type { User } from '$lib/types/index';
 
-import { randomError } from '$lib/utils/random.js';
+import { randomError } from '$lib/utils/random';
 
 interface IResponseStats {
-	statistic: Array<Array<string>>;
-	user: IUser;
+	statistic: string[][];
+	user: User;
 }
 
 export const load = async ({ fetch, params }) => {

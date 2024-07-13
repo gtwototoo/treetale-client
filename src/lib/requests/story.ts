@@ -23,7 +23,7 @@ export const updateInfomation = async (storyId: number, info: IStoryEditableInfo
 
 export const updateArea = async (
 	storyId: number,
-	frames: Array<IFrameCreate>,
+	frames: IFrameCreate[],
 	offset: ICoordinates,
 	zoom: number
 ) => {
@@ -34,13 +34,13 @@ export const updateArea = async (
 	});
 };
 
-export const updateVars = async (storyId: number, vars: Array<IVariable>) => {
+export const updateVars = async (storyId: number, vars: IVariable[]) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update?section=vars`, {
 		vars
 	});
 };
 
-export const updateNotes = async (storyId: number, notes: Array<INote>) => {
+export const updateNotes = async (storyId: number, notes: INote[]) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update?section=notes`, {
 		notes
 	});
@@ -80,7 +80,7 @@ export const deleteStory = async (id: number) => {
 	}
 };
 
-export const searchStories = async (row: string, genres: Array<TGenre>) => {
+export const searchStories = async (row: string, genres: TGenre[]) => {
 	const query = new URLSearchParams({
 		genres: genres.join(','),
 		row

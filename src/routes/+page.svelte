@@ -1,42 +1,40 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
 
-	import type { ISearched, TGenre } from '$lib/types';
+	import type { Genre, Searched } from '$lib/types';
 
-	import { Button, Input } from '$UI';
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
-	import Icon from '$lib/components/Icon.svelte';
-	import { Loading } from '$lib/components/icons';
-	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
 	import { searchStories } from '$lib/requests/story';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { correctWhitespace, rootStyle } from '$lib/utils';
 
 	import Footer from '$lib/components/Footer.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { GENRES_LIST } from '$lib/constants/genres';
+	import { clm } from '$lib/utils/classMerge';
+	import { rootStyle } from '$lib/utils/customColors';
+	import { correctWhitespace } from '$lib/utils/text';
+	import { Button, Icon, Input, Loading, type HeroIconComponent } from 'treetale-ui';
 	import Category from './Category.svelte';
 	import MainStatistic from './MainStatistic.svelte';
 
-	export let data;
+	let { data } = $props();
 
-	let value = '';
-	let searchedGenres: Array<TGenre> = [];
-	let searched: ISearched;
-	let loading = false;
-
-	let timer: number;
+	let value = $state('');
+	let searchedGenres = $state<Genre[]>([]);
+	let searched = $state<Searched | null>(null);
+	let loading = $state(false);
+	let timer = $state<number>();
 
 	$bodyColorStore = DEFAULT_COLOR;
 
-	const icons: Record<string, typeof SvelteComponent<unknown>> = {
+	const icons: Record<string, HeroIconComponent> = {
 		dark_theme: Moon,
 		light_theme: Sun,
 		news: RocketLaunch
 	};
 
-	const switchGenre = (id: TGenre) => {
+	const switchGenre = (id: Genre) => {
 		if (searchedGenres.includes(id)) {
 			searchedGenres.splice(searchedGenres.indexOf(id), 1);
 		} else {
@@ -92,24 +90,26 @@
 				<Input
 					bind:value
 					class="w-full max-w-lg"
-					on:input={handleInput}
+					oninput={handleInput}
 					placeholder="Поиск"
 					size="lg"
 				>
-					<svelte:fragment slot="left">
+					{#snippet left()}
 						<Icon
 							class="pointer-events-none size-6 shrink-0 text-gray-800"
-							type={loading ? Loading : MagnifyingGlass}
+							this={loading ? Loading : MagnifyingGlass}
 						/>
-					</svelte:fragment>
+					{/snippet}
 				</Input>
 				<div class="flex w-full flex-wrap items-center justify-center gap-3">
 					{#each GENRES_LIST as { icon, id, title }}
 						<Button
-							class="h-20 w-24 flex-col justify-center gap-1 bg-white max-sm:flex-1"
-							on:click={() => switchGenre(id)}
+							class={clm(
+								'h-20 w-24 flex-col justify-center gap-1 bg-white max-sm:flex-1',
+								searchedGenres.includes(id) && 'bg-main-10'
+							)}
+							onclick={() => switchGenre(id)}
 							size="lg"
-							variant={searchedGenres.includes(id) ? 'main' : 'ghost'}
 						>
 							<svelte:component this={icon} class="size-8" />
 							<p class="text-xs">{title}</p>

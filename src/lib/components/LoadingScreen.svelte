@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { Loading } from '$lib/components/icons';
-
-	import Icon from './Icon.svelte';
+	import { Icon, Loading } from 'treetale-ui';
 </script>
 
 <div class="fixed top-0 flex size-full items-center justify-center">
-	<Icon class="size-8" type={Loading} />
+	<Icon class="size-8" this={Loading} />
 </div>

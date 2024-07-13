@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { Button } from '$UI';
-	import Link from '$lib/components/Link.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
-	import { correctWhitespace } from '$lib/utils';
+	import { correctWhitespace } from '$lib/utils/text.js';
+	import { Button, Link } from 'treetale-ui';
 
-	export let data;
+	let { data } = $props();
 </script>
 
 <StoriesList authors={data.authors} stories={data.stories}>
@@ -12,6 +11,6 @@
 		{correctWhitespace('У данного пользователя пока нету ни одной опубликованной истории')}
 	</p>
 	<Link href="/">
-		<Button class="bg-contrast text-text" size="lg" variant="ghost">Смотреть все истории</Button>
+		<Button class="bg-contrast text-text" size="lg">Смотреть все истории</Button>
 	</Link>
 </StoriesList>

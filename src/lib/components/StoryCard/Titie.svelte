@@ -1,13 +1,18 @@
 <script lang="ts">
+	import { clm } from '$lib/utils/classMerge';
 	import type { Selection } from 'd3-selection';
 
-	import clsx from 'clsx';
 	import { select } from 'd3-selection';
 
-	export let title: string;
-	export let textColor: string;
+	let {
+		title = 'Без названия',
+		color
+	}: {
+		title: string;
+		color: string;
+	} = $props();
 
-	let ready = false;
+	let ready = $state(false);
 
 	const wrapText = (
 		element: Selection<SVGTextElement, unknown, null, undefined>,
@@ -32,7 +37,11 @@
 			line.push(word);
 			tspan.text(line.join(' '));
 
-			const { width } = tspan.node().getBBox();
+			let node = tspan.node();
+
+			if (!node) continue;
+
+			const { width } = node.getBBox();
 
 			if (width > maxWidth) {
 				line.pop();
@@ -62,13 +71,13 @@
 		x="50%"
 		y="50%"
 		text-anchor="middle"
-		class={clsx(
+		class={clm(
 			'font-RobotoSlab text-3xl font-black uppercase',
 			!ready && 'invisible -z-10',
-			textColor
+			color
 		)}
 	>
-		{title || 'Без названия'}
+		{title}
 	</text>
 </svg>
 

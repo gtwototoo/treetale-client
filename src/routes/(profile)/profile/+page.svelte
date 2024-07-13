@@ -3,7 +3,7 @@
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
-	import { correctWhitespace } from '$lib/utils';
+	import { correctWhitespace } from '$lib/utils/text.js';
 
 	export let data;
 </script>

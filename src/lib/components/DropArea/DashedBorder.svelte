@@ -1,14 +1,18 @@
 <script lang="ts">
-	import clsx from 'clsx';
+	import { clm } from '$lib/utils/classMerge';
 
 	const width = '100%';
 	const rx = 12;
 
-	export let dragged: boolean;
+	let {
+		dragged
+	}: {
+		dragged: boolean;
+	} = $props();
 </script>
 
 <svg
-	class={clsx(
+	class={clm(
 		'absolute left-0 size-full rounded-inherit stroke-contrast stroke-2 transition-colors group-hover:stroke-main',
 		dragged && '!stroke-main'
 	)}

@@ -2,7 +2,7 @@
 	// import clsx from 'clsx';
 	// import { BookOpen, Bookmark, Cube, Heart, PaintBrush, Star, Users } from 'svelte-heros-v2';
 
-	export let statistic: Array<{ id: 'likes' | 'stories' | 'users'; title: string; value: string }>;
+	export let statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
 
 	// const features = [
 	// 	{

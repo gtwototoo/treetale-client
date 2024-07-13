@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
+	import { addLike } from '$lib/requests/story';
+	import { clm } from '$lib/utils/classMerge';
 	import without from 'lodash/without';
 	import { Heart } from 'svelte-heros-v2';
+	import { Button, Icon } from 'treetale-ui';
 
-	import { Button } from '$UI';
-	import { addLike } from '$lib/requests/story';
+	let {
+		likes,
+		storyId
+	}: {
+		likes: number[];
+		storyId: number;
+	} = $props();
 
-	import Icon from './Icon.svelte';
-
-	export let likes: Array<number>;
-	export let storyId: number;
-
-	let loading = false;
-
-	$: isLiked = likes.includes($page.data.session?.userId);
+	let loading = $state(false);
 
 	const handleClick = async () => {
 		loading = true;
@@ -33,18 +33,19 @@
 			loading = false;
 		}
 	};
+
+	let isLiked = $derived(likes?.includes($page.data.session?.userId));
 </script>
 
 <Button
 	class="gap-2 bg-main !px-3 text-text hover:text-red-500"
 	{loading}
-	on:click={handleClick}
+	onclick={handleClick}
 	size="lg"
-	variant="ghost"
 >
 	<Icon
-		class={clsx('size-6', isLiked && 'text-red-500')}
-		type={Heart}
+		class={clm('size-6', isLiked && 'text-red-500')}
+		this={Heart}
 		variation={isLiked ? 'solid' : 'outline'}
 	/>
 	<p class="min-w-[1rem]">{likes.length}</p>

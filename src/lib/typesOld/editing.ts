@@ -11,7 +11,7 @@ export interface IPath {
 }
 
 export interface INote {
-	tags: Array<string>;
+	tags: string[];
 	text: string;
 }
 
