@@ -66,7 +66,7 @@
 							<Button
 								class={clm(
 									'w-full justify-center text-text hover:bg-contrast',
-									$page.url.pathname === href && 'bg-main-70'
+									$page.url.pathname === href && 'bg-main-40'
 								)}
 								size="lg"
 							>

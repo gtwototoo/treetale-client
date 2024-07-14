@@ -148,7 +148,7 @@
 
 {#if frame}
 	<div class="absolute flex size-full items-start justify-center overflow-auto" id="read-screen">
-		<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
+		<div class="flex min-h-full w-full items-center justify-center p-4 py-20 max-sm:p-3">
 			{#if storyState === 'started'}
 				<ReadFrame
 					{likes}

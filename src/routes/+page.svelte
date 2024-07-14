@@ -107,8 +107,8 @@
 					{#each GENRES_LIST as { icon, id, title }}
 						<Button
 							class={clm(
-								'h-20 w-24 flex-col justify-center gap-1 bg-white max-sm:flex-1',
-								searchedGenres.includes(id) && 'bg-main-10'
+								'h-20 w-24 flex-col justify-center gap-1 bg-main-80 hover:bg-contrast max-sm:flex-1',
+								searchedGenres.includes(id) && 'bg-main-20'
 							)}
 							onclick={() => switchGenre(id)}
 							size="lg"

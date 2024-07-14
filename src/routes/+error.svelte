@@ -29,7 +29,7 @@
 			<ReadCard alt="Ошибка" src={$page.error?.img} text={$page.error?.message}>
 				<div class="w-full">
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main !text-text"
+						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
 						onclick={handleClick}
 					>
 						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}

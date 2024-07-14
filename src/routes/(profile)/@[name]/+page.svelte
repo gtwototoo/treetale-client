@@ -11,6 +11,6 @@
 		{correctWhitespace('У данного пользователя пока нету ни одной опубликованной истории')}
 	</p>
 	<Link href="/">
-		<Button class="bg-contrast text-text" size="lg">Смотреть все истории</Button>
+		<Button class="bg-main-40 text-text hover:bg-contrast" size="lg">Смотреть все истории</Button>
 	</Link>
 </StoriesList>

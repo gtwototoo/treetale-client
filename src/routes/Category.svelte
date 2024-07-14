@@ -68,6 +68,6 @@
 
 <style lang="postcss">
 	:global(.slider-card) {
-		@apply w-[30vw] min-w-48 max-w-[21.25rem] shrink-0;
+		@apply w-[30vw] min-w-48 max-w-[21.25rem] shrink-0 select-none;
 	}
 </style>

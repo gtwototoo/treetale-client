@@ -100,7 +100,11 @@
 		</FormSplit>
 	{:else}
 		<div class="flex w-full gap-3">
-			<Button size="xl" class="w-full justify-center !bg-main" onclick={handleGetResults}>
+			<Button
+				size="xl"
+				class="w-full justify-center bg-main-70 hover:bg-main"
+				onclick={handleGetResults}
+			>
 				Завершить
 			</Button>
 			<Likes {storyId} {likes} />

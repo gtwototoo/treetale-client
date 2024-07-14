@@ -144,7 +144,7 @@
 							/>
 						{/snippet}
 					</Input>
-					<Button class="bg-main p-3" onclick={handleOpenHistory}>
+					<Button class="bg-main-70 p-3 hover:bg-main" onclick={handleOpenHistory}>
 						<Icon this={Clock} class="size-7" />
 					</Button>
 				</div>
@@ -193,11 +193,13 @@
 								<p>{new Date(Date.now()).toLocaleDateString('en-GB')}</p>
 							</div>
 						</div>
-						<Button size="lg" class="justify-center bg-main" {onclick}>Продолжить</Button>
+						<Button size="lg" class="justify-center bg-main-70 hover:bg-main" {onclick}>
+							Продолжить
+						</Button>
 					</div>
 				</div>
 			{:else}
-				<Button size="xl" class="w-full justify-center bg-main" {onclick}>
+				<Button size="xl" class="w-full justify-center bg-main-70 hover:bg-main" {onclick}>
 					Начать историю
 				</Button>
 			{/if}

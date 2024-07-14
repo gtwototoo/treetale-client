@@ -89,7 +89,7 @@
 					</div>
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main text-text"
+						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
 						{disabled}
 						{loading}
 						type="submit"

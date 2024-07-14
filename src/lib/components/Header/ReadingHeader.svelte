@@ -54,7 +54,11 @@
 		<p class="mr-1">Поддержать</p>
 	</Button>
 	{#if fullscreenSupport}
-		<Button class="header-button bg-contrast text-text" onclick={handleFulscreen} size="lg">
+		<Button
+			class="header-button bg-main-40 text-text hover:bg-contrast"
+			onclick={handleFulscreen}
+			size="lg"
+		>
 			<Icon class="size-6" this={ArrowsPointingOut} />
 		</Button>
 	{/if}

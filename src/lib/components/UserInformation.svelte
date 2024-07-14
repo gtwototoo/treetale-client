@@ -16,6 +16,7 @@
 	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { clm } from '$lib/utils/classMerge';
 	import InvisibleDrop from './InvisibleDrop.svelte';
 	import ProfileAvatar from './ProfileAvatar.svelte';
 
@@ -138,19 +139,25 @@
 	<div class="flex w-full flex-col items-center bg-transparent">
 		<Contenteditable
 			bind:html={user.name}
-			class="!bg-transparent !text-center !text-4xl font-bold text-text"
+			class={clm(
+				'bg-transparent text-center text-4xl font-bold text-text',
+				!editMode && 'pointer-events-none'
+			)}
 			placeholder="Никнейм"
 			readonly={!editMode}
 		/>
 		{#if editMode || user.description}
 			<Contenteditable
 				bind:html={user.description}
-				class="w-full !bg-transparent !text-center !text-lg text-text"
+				class={clm(
+					'w-full bg-transparent text-center text-lg text-text',
+					!editMode && 'pointer-events-none'
+				)}
 				placeholder="Добавьте описание"
 				readonly={!editMode}
 			/>
 		{:else}
-			<p class="px-4 py-2 text-lg text-text/50">Описание отсутствует</p>
+			<p class="px-4 text-lg/10 text-text/50">Описание отсутствует</p>
 		{/if}
 	</div>
 	<div class="flex gap-2 bg-transparent">
@@ -164,25 +171,25 @@
 					{saturate}
 				>
 					{#snippet children({ onclick })}
-						<Button class="bg-main text-text hover:bg-main-70" {onclick} size="lg"
-							>Цвет</Button
-						>
+						<Button class="bg-main-70 text-text hover:bg-main" {onclick} size="lg">
+							Цвет
+						</Button>
 					{/snippet}
 				</ColorPicker>
 				<Button
-					class="bg-main text-text hover:bg-main-70"
+					class="bg-main-70 text-text hover:bg-main"
 					{loading}
 					onclick={saveProfile}
 					size="lg"
 				>
 					Сохранить
 				</Button>
-				<Button class="bg-main text-red-500 hover:bg-main-70" onclick={cancelEdit} size="lg">
+				<Button class="bg-main-70 text-red-500 hover:bg-main" onclick={cancelEdit} size="lg">
 					Отмена
 				</Button>
 			{:else}
 				<Button
-					class="gap-3 bg-contrast text-text hover:bg-main-40"
+					class="gap-3 bg-main-40 text-text hover:bg-contrast"
 					onclick={() => (editMode = true)}
 					size="lg"
 				>
@@ -190,7 +197,7 @@
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
 				<Button
-					class="bg-contrast text-red-500 hover:bg-main-40"
+					class="bg-main-40 text-red-500 hover:bg-contrast"
 					onclick={handleSignOut}
 					size="lg"
 				>
@@ -198,12 +205,22 @@
 				</Button>
 			{/if}
 		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
-			<Button class="gap-3 bg-white" {loading} onclick={handleUnsubscribe} size="lg">
+			<Button
+				class="gap-3 bg-main-40 text-text hover:bg-contrast"
+				{loading}
+				onclick={handleUnsubscribe}
+				size="lg"
+			>
 				<Icon class="size-6" this={UserMinus} />
 				<p class="mr-1">Отписаться</p>
 			</Button>
 		{:else}
-			<Button class="gap-3 bg-white" {loading} onclick={handleSubscribe} size="lg">
+			<Button
+				class="gap-3 bg-main-40 text-text hover:bg-contrast"
+				{loading}
+				onclick={handleSubscribe}
+				size="lg"
+			>
 				<Icon class="size-6" this={UserPlus} />
 				<p class="mr-1">Подписаться</p>
 			</Button>

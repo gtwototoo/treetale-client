@@ -11,6 +11,6 @@
 		{correctWhitespace('Пока у вас нет ни одной понравившейся истории, но вы можете их добавить')}
 	</p>
 	<Link href="/">
-		<Button class="bg-contrast text-text" size="lg">Смотреть все истории</Button>
+		<Button class="bg-main-40 text-text hover:bg-contrast" size="lg">Смотреть все истории</Button>
 	</Link>
 </StoriesList>

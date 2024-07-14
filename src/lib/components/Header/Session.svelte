@@ -15,7 +15,7 @@
 	</Link>
 {:else}
 	<Link href="/signin">
-		<Button class="gap-3 bg-contrast text-text" size="lg">
+		<Button class="gap-3 bg-main-40 text-text hover:bg-contrast" size="lg">
 			<Icon class="size-6" this={ArrowLeftOnRectangle} />
 			<p>Войти</p>
 		</Button>

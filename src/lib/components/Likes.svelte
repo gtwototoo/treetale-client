@@ -38,7 +38,7 @@
 </script>
 
 <Button
-	class="gap-2 bg-main !px-3 text-text hover:text-red-500"
+	class="gap-2 bg-main-70 px-3 text-text hover:bg-main hover:text-red-500"
 	{loading}
 	onclick={handleClick}
 	size="lg"

@@ -45,7 +45,7 @@
 		</div>
 		<div class="flex items-center gap-6 max-sm:gap-4">
 			<Link href="tg://resolve?domain=treetale_news" target="_blank">
-				<Button class="gap-3 bg-gray-900 text-white" size="base">
+				<Button class="gap-3 bg-gray-900 text-white hover:bg-gray-700" size="base">
 					<Telegram class="size-5" />
 					<p class="mr-1 max-lg:hidden max-md:block max-sm:hidden">Telegram</p>
 				</Button>

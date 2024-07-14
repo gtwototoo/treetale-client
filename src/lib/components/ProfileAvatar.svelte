@@ -99,7 +99,7 @@
 			>
 				{#if src}
 					<Button
-						class="rounded-full bg-main p-3 text-text"
+						class="rounded-full bg-red-200 p-3 text-text"
 						loading={removeLoading}
 						onclick={preRemoveImage}
 					>
@@ -107,7 +107,7 @@
 					</Button>
 				{:else}
 					<InputFile
-						class="rounded-full bg-main p-3 text-text"
+						class="rounded-full bg-main-70 p-3 text-text hover:bg-main"
 						disabled={addLoading}
 						onchange={setFile}
 					>

@@ -38,7 +38,7 @@
 </script>
 
 <Link
-	href={`${PUBLIC_TREETALE_BOARD_URL}/${storyId}`}
+	href={`${edit ? PUBLIC_TREETALE_BOARD_URL : ''}/${storyId}`}
 	class="group relative shrink-0 overflow-hidden rounded-3xl"
 >
 	<div class="contents" style={generateMainColors(selectedColor)}>

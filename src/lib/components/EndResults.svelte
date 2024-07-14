@@ -59,10 +59,14 @@
 	<Info {author} {created} edit={false} {likes} {status} {storyId} {selectedColor} />
 	<div class="flex gap-6">
 		<Link href={`/story/${storyId}`} class="flex-1">
-			<Button size="lg" class="w-full justify-center bg-main" {onclick}>В начало</Button>
+			<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main" {onclick}>
+				В начало
+			</Button>
 		</Link>
 		<Link href="/" class="flex-1">
-			<Button size="lg" class="w-full justify-center bg-main" {onclick}>На главную</Button>
+			<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main" {onclick}>
+				На главную
+			</Button>
 		</Link>
 	</div>
 </div>
