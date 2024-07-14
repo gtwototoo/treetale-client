@@ -33,7 +33,7 @@
 		progress: Progress[];
 		frames: Frame[];
 		storyState: 'begin' | 'ended';
-		onclick?: MouseEventHandler<HTMLButtonElement>;
+		onclick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 	} = $props();
 
 	type ICopyState = 'error' | 'success' | null;

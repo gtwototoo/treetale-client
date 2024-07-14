@@ -3,21 +3,24 @@
 
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
 
-	import type { RGB, User } from '$lib/types';
+	import type { RGB } from '$lib/types';
 
 	import { BLACK_COLOR, DEFAULT_COLOR, WHITE_COLOR } from '$lib/constants/colors';
 	import { removeImage, saveImage } from '$lib/requests/files';
 	import { contrastText } from '$lib/utils/contrast';
 	import { toRGB } from '$lib/utils/customColors';
+	import type { ChangeEventHandler } from 'svelte/elements';
 	import { Avatar, Button, Icon, InputFile } from 'treetale-ui';
 
 	let {
-		user,
+		alt,
+		src,
 		editMode = false,
-		size = 'lg',
+		size = 'base',
 		color
 	}: {
-		user: User;
+		alt: string;
+		src: string | null;
 		editMode?: boolean;
 		size?: 'base' | 'lg' | 'sm';
 		color: RGB | null;
@@ -26,7 +29,6 @@
 	let removeLoading = $state(false);
 	let addLoading = $state(false);
 	let base64src = $state<string | null>(null);
-	let src = $state<string | null>(user.imageUrl);
 
 	const imageFolder = 'avatars';
 
@@ -68,7 +70,7 @@
 		}
 	};
 
-	const setFile = (e: Event) => {
+	const setFile: ChangeEventHandler<HTMLInputElement> = (e) => {
 		if (!(e.target instanceof HTMLInputElement) || !e.target.files) {
 			return;
 		}
@@ -87,10 +89,9 @@
 
 <div
 	class="contents"
-	style:--color-contrast={toRGB(colorContrast)}
-	style:--color-main={toRGB(correctColor)}
+	style="--color-contrast: {toRGB(colorContrast)}; --color-main: {toRGB(correctColor)}"
 >
-	<Avatar alt={user.name} color={correctColor} {base64src} onload={loadHandler} {size} {src}>
+	<Avatar {alt} color={DEFAULT_COLOR} {base64src} onload={loadHandler} {size} {src}>
 		{#if editMode}
 			<div
 				class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"

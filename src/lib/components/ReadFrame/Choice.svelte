@@ -10,7 +10,7 @@
 		children
 	}: {
 		active: boolean;
-		onclick: MouseEventHandler<HTMLButtonElement>;
+		onclick: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 		children?: Snippet;
 	} = $props();
 </script>

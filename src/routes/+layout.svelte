@@ -28,8 +28,8 @@
 	</defs>
 </svg>
 
-{#if pageType == 'editing' || pageType === 'reading' || pageType === 'viewing'}
-	<div class="fixed left-0 flex h-full flex-col">
+{#if pageType === 'reading'}
+	<div class="fixed left-0 flex size-full flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />
 		{@render children()}
 	</div>

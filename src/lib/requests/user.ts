@@ -1,4 +1,5 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+import type { RGB } from '$lib/types';
 
 import { fetchPost } from '.';
 
@@ -19,7 +20,7 @@ export const signOutUser = async () => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-out`);
 };
 
-export const updateProfile = async (name: string, description: string, color: number[]) => {
+export const updateProfile = async (name: string, description: string, color: RGB) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/me/update`, {
 		color,
 		description,

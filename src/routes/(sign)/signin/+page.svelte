@@ -4,7 +4,6 @@
 
 	import clsx from 'clsx';
 	import { Check, XMark } from 'svelte-heros-v2';
-	import { MetaTags } from 'svelte-meta-tags';
 
 	import type { ResponseResult } from '$lib/types/response';
 
@@ -61,9 +60,8 @@
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
+	<title>Авторизация</title>
 </svelte:head>
-
-<MetaTags title="Авторизация" />
 
 <div class="flex size-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">

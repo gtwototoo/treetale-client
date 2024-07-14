@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
-	import { MetaTags } from 'svelte-meta-tags';
 
 	import type { Genre, Searched } from '$lib/types';
 
@@ -74,12 +73,15 @@
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
+	<title>TREETALE</title>
+	<meta
+		name="description"
+		content="есплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных
+		нелинейных историй. Все добавленные авторами истории находятся на главном экране, что
+		позволяет найти большее количество читателей, а добавление истории происходит с помощью
+		создания интуитивно понятных node-схем с описанием, иллюстрациями и вариантами выбора."
+	/>
 </svelte:head>
-
-<MetaTags
-	description="Бесплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных нелинейных историй. Все добавленные авторами истории находятся на главном экране, что позволяет найти большее количество читателей, а добавление истории происходит с помощью создания интуитивно понятных node-схем с описанием, иллюстрациями и вариантами выбора."
-	title="TREETALE"
-/>
 
 <div class="flex min-h-full justify-center overflow-hidden">
 	<section class="flex w-full max-w-[120rem] flex-col gap-6 py-4">

@@ -6,7 +6,6 @@
 
 	import type { RGB, User } from '$lib/types';
 
-	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import {
 		signOutUser,
 		subscribeProfile,
@@ -16,7 +15,9 @@
 	import { bodyColorStore } from '$lib/stores/main';
 	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import InvisibleDrop from './InvisibleDrop.svelte';
+	import ProfileAvatar from './ProfileAvatar.svelte';
 
 	let {
 		user,
@@ -67,7 +68,7 @@
 	};
 
 	const cancelEdit = () => {
-		$bodyColorStore = user.color;
+		$bodyColorStore = user.color || DEFAULT_COLOR;
 		editMode = false;
 	};
 
@@ -110,7 +111,13 @@
 	{/if}
 	<div class="flex flex-col items-center gap-2 bg-transparent">
 		<div class="p-6">
-			<ProfileAvatar color={$bodyColorStore} {editMode} {user} />
+			<ProfileAvatar
+				color={$bodyColorStore}
+				{editMode}
+				size="lg"
+				src={user.imageUrl}
+				alt={user.name}
+			/>
 		</div>
 		<div
 			class={clsx(
@@ -157,19 +164,36 @@
 					{saturate}
 				>
 					{#snippet children({ onclick })}
-						<Button class="bg-main !text-text" {onclick} size="lg">Цвет</Button>
+						<Button class="bg-main text-text hover:bg-main-70" {onclick} size="lg"
+							>Цвет</Button
+						>
 					{/snippet}
 				</ColorPicker>
-				<Button class="bg-main text-text" {loading} onclick={saveProfile} size="lg">
+				<Button
+					class="bg-main text-text hover:bg-main-70"
+					{loading}
+					onclick={saveProfile}
+					size="lg"
+				>
 					Сохранить
 				</Button>
-				<Button class="bg-main text-red-500" onclick={cancelEdit} size="lg">Отмена</Button>
+				<Button class="bg-main text-red-500 hover:bg-main-70" onclick={cancelEdit} size="lg">
+					Отмена
+				</Button>
 			{:else}
-				<Button class="gap-3 bg-contrast text-text" onclick={() => (editMode = true)} size="lg">
+				<Button
+					class="gap-3 bg-contrast text-text hover:bg-main-40"
+					onclick={() => (editMode = true)}
+					size="lg"
+				>
 					<Icon class="size-6" this={Cog6Tooth} />
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
-				<Button class="bg-contrast text-red-500" onclick={handleSignOut} size="lg">
+				<Button
+					class="bg-contrast text-red-500 hover:bg-main-40"
+					onclick={handleSignOut}
+					size="lg"
+				>
 					Выйти
 				</Button>
 			{/if}

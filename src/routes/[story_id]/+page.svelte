@@ -6,7 +6,6 @@
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
-	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import StoryDescription from '$lib/components/StoryDescription.svelte';
@@ -21,7 +20,8 @@
 		variablesStore
 	} from '$lib/stores/reading.js';
 	import { rootStyle } from '$lib/utils/customColors.js';
-	import { correctToType, doMath } from '$lib/utils/variable-operations';
+	import { correctToType, doMath } from '$lib/utils/variableOperations.js';
+	import { onMount } from 'svelte';
 	import type { KeyboardEventHandler } from 'svelte/elements';
 	import { Button } from 'treetale-ui';
 
@@ -62,9 +62,9 @@
 
 	const updateVars = (frameId: number, choiceId: number) => {
 		const frame = find($framesStore, { frameId });
-		const choice = find(frame.choices, { choiceId });
+		const choice = find(frame?.choices, { choiceId });
 
-		if (!choice.mathOperations.length) return;
+		if (!choice || !choice.mathOperations.length) return;
 
 		for (const { symbol, value, variable: name } of choice.mathOperations) {
 			const variableId = findIndex($variablesStore, { name });
@@ -105,10 +105,16 @@
 		await document.exitFullscreen();
 	};
 
+	onMount(() => {
+		$bodyColorStore = color.length ? color : DEFAULT_COLOR;
+		$framesStore = frames;
+		$variablesStore = vars;
+	});
+
 	let { author, frames, progress, story } = data;
 	let { color, description, genre, likes, storyId, title, vars } = story;
-	let { frameId } = $derived(
-		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : $framesStore[0]
+	let frame = $derived(
+		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : $framesStore?.[0]
 	);
 	let bookSchema = $derived({
 		'@type': 'Book',
@@ -128,52 +134,47 @@
 			name: author.name
 		}
 	} as Book);
-
-	$effect(() => {
-		$bodyColorStore = color.length ? color : DEFAULT_COLOR;
-		$framesStore = frames;
-		$variablesStore = vars;
-	});
 </script>
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
+	<meta name="description" content={description} />
+	<title>{title}</title>
 </svelte:head>
-
-<JsonLd schema={bookSchema} />
-<MetaTags {description} {title} />
 
 <svelte:window onfullscreenchange={handleFullscreenChange} onkeydown={handleKeydown} />
 
 <SvgGradient />
 
-<div class="absolute flex size-full items-start justify-center overflow-auto" id="read-screen">
-	<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
-		{#if storyState === 'started'}
-			<ReadFrame
-				{likes}
-				{storyId}
-				{frameId}
-				on:click={({ detail }) => setChoice(frameId, detail.choiceId)}
-				on:results={() => (storyState = 'ended')}
-			/>
-		{:else}
-			<StoryDescription
-				{frames}
-				{progress}
-				{author}
-				{story}
-				{storyState}
-				on:click={() => (storyState = 'started')}
-			/>
+{#if frame}
+	<div class="absolute flex size-full items-start justify-center overflow-auto" id="read-screen">
+		<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
+			{#if storyState === 'started'}
+				<ReadFrame
+					{likes}
+					{storyId}
+					frameId={frame.frameId}
+					onclick={(choiceId) => setChoice(frame.frameId, choiceId)}
+					onresults={() => (storyState = 'ended')}
+				/>
+			{:else}
+				<StoryDescription
+					{frames}
+					{progress}
+					{author}
+					{story}
+					{storyState}
+					onclick={() => (storyState = 'started')}
+				/>
+			{/if}
+		</div>
+		{#if $fullscreenStore}
+			<Button
+				class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-90 text-text text-opacity-10 hover:text-opacity-100"
+				onclick={handleFulscreen}
+			>
+				Выйти
+			</Button>
 		{/if}
 	</div>
-	{#if $fullscreenStore}
-		<Button
-			class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-90 text-text text-opacity-10 hover:text-opacity-100"
-			onclick={handleFulscreen}
-		>
-			Выйти
-		</Button>
-	{/if}
-</div>
+{/if}

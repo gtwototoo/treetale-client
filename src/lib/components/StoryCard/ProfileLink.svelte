@@ -25,7 +25,7 @@
 </script>
 
 <Button class={clm('min-w-0 gap-2 rounded-full p-1', infoColor)} onclick={handleClick}>
-	<ProfileAvatar color={author.color} size="sm" user={author} />
+	<ProfileAvatar color={author.color} size="sm" alt={author.name} src={author.imageUrl} />
 	<div class="overflow-hidden pr-4 text-left max-md:hidden">
 		<p class="truncate text-text max-xs:hidden">
 			{author.name}

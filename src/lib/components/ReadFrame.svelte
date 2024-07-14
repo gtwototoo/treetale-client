@@ -9,7 +9,7 @@
 
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
-	import { correctToType, doLogic, doMath } from '$lib/utils/variable-operations';
+	import { correctToType, doLogic, doMath } from '$lib/utils/variableOperations';
 	import { Button, FormSplit } from 'treetale-ui';
 	import Likes from './Likes.svelte';
 	import Choice from './ReadFrame/Choice.svelte';

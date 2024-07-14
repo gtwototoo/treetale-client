@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { MetaTags } from 'svelte-meta-tags';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
@@ -21,9 +20,8 @@
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
+	<title>{isNotFound ? 'Страница не найдена' : 'Произошла ошибка'}</title>
 </svelte:head>
-
-<MetaTags title={isNotFound ? 'Страница не найдена' : 'Произошла ошибка'} />
 
 {#if $page.error}
 	<div class="flex size-full items-start justify-center overflow-auto">

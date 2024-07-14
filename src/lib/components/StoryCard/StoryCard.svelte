@@ -4,6 +4,7 @@
 
 	import type { Story, User } from '$lib/types';
 
+	import { PUBLIC_TREETALE_BOARD_URL } from '$env/static/public';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { generateMainColors } from '$lib/utils/customColors';
@@ -37,7 +38,7 @@
 </script>
 
 <Link
-	href={`/${storyId}${edit ? '/edit' : view ? '/view' : ''}`}
+	href={`${PUBLIC_TREETALE_BOARD_URL}/${storyId}`}
 	class="group relative shrink-0 overflow-hidden rounded-3xl"
 >
 	<div class="contents" style={generateMainColors(selectedColor)}>

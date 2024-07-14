@@ -5,5 +5,5 @@
 </script>
 
 <Header>
-	<AddStoryButton class="header-button bg-emerald-400" />
+	<AddStoryButton class="header-button bg-emerald-400 hover:bg-emerald-300" />
 </Header>

@@ -31,7 +31,10 @@ const colors = colorsList.reduce(
 );
 
 const config = {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: [
+		'./src/**/*.{html,js,svelte,ts}',
+		'./node_modules/treetale-ui/**/*.{html,js,svelte,ts}'
+	],
 
 	plugins: [
 		plugin(({ addUtilities, addVariant, matchUtilities, theme }) => {
