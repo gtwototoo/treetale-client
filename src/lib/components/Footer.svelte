@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { DocumentText } from 'svelte-heros-v2';
 
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import { Mastercard, Mir, Telegram, TreetaleShort, Visa } from '$lib/components/icons';
+	import { Button, Icon, Link } from 'treetale-ui';
+	import Mastercard from './icons/Mastercard.svelte';
+	import Mir from './icons/Mir.svelte';
+	import Telegram from './icons/Telegram.svelte';
+	import TreetaleShort from './icons/TreetaleShort.svelte';
+	import Visa from './icons/Visa.svelte';
 
 	const currentYear = new Date().getFullYear();
 </script>
@@ -22,7 +24,7 @@
 				</div>
 			</div>
 			<div class="flex shrink-0 items-center gap-2">
-				<Icon class="h-10 w-10 text-black/20 max-lg:hidden" type={DocumentText} />
+				<Icon class="h-10 w-10 text-black/20 max-lg:hidden" this={DocumentText} />
 				<div class="flex flex-col gap-1 max-sm:text-center">
 					<Link
 						class="transition-colors hover:text-main"
@@ -42,9 +44,9 @@
 			</div>
 		</div>
 		<div class="flex items-center gap-6 max-sm:gap-4">
-			<Link href="tg://resolve?domain=treetale_news" target="_blank">
-				<Button class="gap-3 bg-main max-sm:!p-2" size="lg" variant="ghost">
-					<Telegram class="size-6" />
+			<Link href="tg://resolve?domain=treetale" target="_blank">
+				<Button class="gap-3 bg-gray-900 text-white hover:bg-gray-700" size="base">
+					<Telegram class="size-5" />
 					<p class="mr-1 max-lg:hidden max-md:block max-sm:hidden">Telegram</p>
 				</Button>
 			</Link>

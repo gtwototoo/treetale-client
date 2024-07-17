@@ -1,4 +1,4 @@
-import type { IVariable } from '$lib/types';
+import type { Variable } from '$lib/types';
 
 export const correctWhitespace = (text: string) => {
 	if (!text) return text;
@@ -20,7 +20,7 @@ export const correctWhitespace = (text: string) => {
 	);
 };
 
-export const variableReplace = (text: string, vars: Array<IVariable>) => {
+export const variableReplace = (text: string, vars: Variable[]) => {
 	if (!vars) return text;
 
 	for (const variable of vars) {
@@ -30,13 +30,13 @@ export const variableReplace = (text: string, vars: Array<IVariable>) => {
 	return text;
 };
 
-export const correctVariableReplace = (text: string | undefined, vars: Array<IVariable>) => {
+export const correctVariableReplace = (text: string | null, vars: Variable[]) => {
 	if (!text) return '';
 
 	return correctWhitespace(variableReplace(text, vars));
 };
 
-export const cutText = (text: string, vars: Array<IVariable>, maxLength = 200) => {
+export const cutText = (text: string, vars: Variable[], maxLength = 200) => {
 	const newText = variableReplace(text, vars);
 
 	if (newText.length < maxLength) {

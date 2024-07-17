@@ -1,31 +1,31 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
 
-	import type { IUser } from '$lib/types';
-
-	import { Button } from '$UI';
-
+	import type { User } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+	import { Button } from 'treetale-ui';
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
-	export let author: IUser;
-	export let created: number;
-	export let infoColor: string;
+	let {
+		author,
+		created,
+		infoColor
+	}: {
+		author: User;
+		created: number;
+		infoColor: string;
+	} = $props();
 
 	const handleClick = () => {
 		goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
 	};
 
-	$: date = new Date(created).toLocaleDateString('en-GB');
+	let date = $derived(new Date(created).toLocaleDateString('en-GB'));
 </script>
 
-<Button
-	class={clsx('min-w-0 gap-2 !rounded-full !p-1', infoColor)}
-	on:click={handleClick}
-	variant="main"
->
-	<ProfileAvatar color={author.color} size="sm" user={author} />
+<Button class={clm('min-w-0 gap-2 rounded-full p-1', infoColor)} onclick={handleClick}>
+	<ProfileAvatar color={author.color} size="sm" alt={author.name} src={author.imageUrl} />
 	<div class="overflow-hidden pr-4 text-left max-md:hidden">
 		<p class="truncate text-text max-xs:hidden">
 			{author.name}

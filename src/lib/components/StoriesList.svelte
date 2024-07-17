@@ -2,22 +2,30 @@
 	import find from 'lodash/find';
 	import range from 'lodash/range';
 
-	import type { IUser } from '$lib/types';
-	import type { IStoryFull } from '$lib/types/reading';
+	import type { Story, User } from '$lib/types';
 
+	import type { Snippet } from 'svelte';
 	import Empty from './StoryCard/Empty.svelte';
 	import StoryCard from './StoryCard/StoryCard.svelte';
 
-	export let stories: Array<IStoryFull>;
-	export let authors: Array<IUser> | undefined = undefined;
+	let {
+		stories,
+		authors,
+		children
+	}: {
+		stories: Story[];
+		authors?: User[];
+		children?: Snippet;
+	} = $props();
 </script>
 
 {#if stories.length}
-	<div class="stories">
-		{#each stories as rawStory}
-			{@const { userId, vars, ...story } = rawStory}
-			{@const author = find(authors, { userId })}
-			<StoryCard {author} {story} {vars} />
+	<div
+		class="grid w-full items-start justify-center gap-4 p-4 grid-columns-fit-60 max-md:grid-columns-fit-40 max-sm:gap-2 max-sm:p-2"
+	>
+		{#each stories as story}
+			{@const author = find(authors, { userId: story.userId })}
+			<StoryCard {author} {story} />
 		{/each}
 		{#if stories.length < 8}
 			{#each range(8 - stories.length) as _}
@@ -27,12 +35,6 @@
 	</div>
 {:else}
 	<div class="plug flex-grow gap-8">
-		<slot />
+		{@render children?.()}
 	</div>
 {/if}
-
-<style lang="postcss">
-	.stories {
-		@apply grid w-full items-start justify-center gap-4 p-4 grid-columns-fit-60 max-md:grid-columns-fit-40 max-sm:gap-2 max-sm:p-2;
-	}
-</style>

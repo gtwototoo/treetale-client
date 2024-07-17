@@ -2,20 +2,21 @@
 	import { page } from '$app/stores';
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
 
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
+	import type { User } from '$lib/types';
+	import { Button, Icon, Link } from 'treetale-ui';
+	import ProfileAvatar from '../ProfileAvatar.svelte';
+
+	let user: User = $derived($page.data.session);
 </script>
 
 {#if $page.data.session}
-	<Link class="contents" href="/profile">
-		<ProfileAvatar color={$page.data.session.color} size="base" user={$page.data.session} />
+	<Link href="/profile">
+		<ProfileAvatar alt={user.name} color={user.color} src={user.imageUrl} />
 	</Link>
 {:else}
 	<Link href="/signin">
-		<Button class="gap-3 bg-contrast text-text" size="lg" variant="ghost">
-			<Icon class="size-6" type={ArrowLeftOnRectangle} />
+		<Button class="gap-3 bg-main-40 text-text hover:bg-contrast" size="lg">
+			<Icon class="size-6" this={ArrowLeftOnRectangle} />
 			<p>Войти</p>
 		</Button>
 	</Link>

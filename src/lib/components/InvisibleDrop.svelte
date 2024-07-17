@@ -1,22 +1,30 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
-	import { validateMimeType } from '$lib/utils';
-
+	import { validateMimeType } from '$lib/utils/inputAccept';
+	import type {
+		DragEventHandler,
+		HTMLButtonAttributes,
+		HTMLInputAttributes,
+		SvelteWindowAttributes
+	} from 'svelte/elements';
 	import DropArea from './DropArea.svelte';
 
-	export let accept = 'image/*';
+	let {
+		accept = 'image/*',
+		children,
+		onchange,
+		ondragstart,
+		...props
+	}: Pick<HTMLInputAttributes, 'accept'> &
+		Pick<HTMLButtonAttributes, 'class' | 'children' | 'ondragenter' | 'onclick'> & {
+			onchange?: (files: File[]) => void;
+			ondragleave?: () => void;
+		} & Pick<SvelteWindowAttributes, 'ondragstart'> = $props();
 
-	let visibleFile = false;
-	let blockFile = false;
+	let visibleFile = $state(false);
+	let blockFile = $state(false);
 
-	const dispatch = createEventDispatcher<{
-		change: Array<File>;
-		dragstart: DragEvent;
-	}>();
-
-	const handleWindowDragEnter = (e: DragEvent) => {
-		if (e.relatedTarget !== null) {
+	const handleWindowDragEnter: DragEventHandler<Window> = (e) => {
+		if (e.relatedTarget !== null || !e.dataTransfer) {
 			return;
 		}
 
@@ -30,16 +38,16 @@
 
 		visibleFile = true;
 
-		dispatch('dragstart', e);
+		ondragstart?.(e);
 	};
 
-	const handleChange = (e: CustomEvent<Array<File>>) => {
+	const handleChange = (files: File[]) => {
 		visibleFile = false;
 
-		dispatch('change', e.detail);
+		onchange?.(files);
 	};
 
-	const handleWindowDragLeave = (e: DragEvent) => {
+	const handleWindowDragLeave: DragEventHandler<Window> = (e) => {
 		if (e.x || e.y) {
 			return;
 		}
@@ -49,18 +57,16 @@
 	};
 </script>
 
-<svelte:window on:dragenter={handleWindowDragEnter} on:dragleave={handleWindowDragLeave} />
+<svelte:window ondragenter={handleWindowDragEnter} ondragleave={handleWindowDragLeave} />
 
 {#if visibleFile && !blockFile}
 	<DropArea
 		{accept}
 		class="absolute bg-transparent"
-		on:dragenter
-		on:dragleave
-		on:click
-		on:change={handleChange}
-		on:visibilitychange={() => (visibleFile = false)}
+		{...props}
+		onchange={handleChange}
+		onvisibilitychange={() => (visibleFile = false)}
 	>
-		<slot />
+		{@render children?.()}
 	</DropArea>
 {/if}

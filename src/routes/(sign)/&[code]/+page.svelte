@@ -6,22 +6,23 @@
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 	import { Check, XMark } from 'svelte-heros-v2';
-	import { MetaTags } from 'svelte-meta-tags';
 
-	import type { IResponseResult } from '$lib/types';
+	import type { ResponseResult } from '$lib/types/response';
 
-	import { Button, Input } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signUpUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
+	import type { FormEventHandler } from 'svelte/elements';
+	import { Button, Icon, Input } from 'treetale-ui';
 
-	let name = '';
-	let loading = false;
-	let result: IResponseResult = null;
+	let name = $state('');
+	let loading = $state(false);
+	let result = $state<ResponseResult | null>(null);
 
-	const handleSignUp = async () => {
+	const handleSignUp: FormEventHandler<HTMLFormElement> = async (e) => {
+		e.preventDefault();
+
 		if (disabled || loading) {
 			return;
 		}
@@ -49,12 +50,14 @@
 		}
 	};
 
-	$: disabled = !name;
+	let disabled = $derived(!name);
 
 	$bodyColorStore = DEFAULT_COLOR;
 </script>
 
-<MetaTags title="Завершение регистрации" />
+<svelte:head>
+	<title>Завершение регистрации</title>
+</svelte:head>
 
 <div class="flex size-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">
@@ -63,11 +66,7 @@
 			src="/img/writer.png"
 			text="Для завершения регистрации введите свой псевдоним, под которым вы будете отображаться в проекте"
 		>
-			<form
-				class="flex w-full flex-col gap-3"
-				method="POST"
-				on:submit|preventDefault={handleSignUp}
-			>
+			<form class="flex w-full flex-col gap-3" method="POST" onsubmit={handleSignUp}>
 				<Input
 					bind:value={name}
 					class="adaptive-font adaptive-padding w-full"
@@ -81,16 +80,15 @@
 						)}
 						in:fade
 					>
-						<Icon class="size-6" type={result.error ? XMark : Check} />
+						<Icon class="size-6" this={result.error ? XMark : Check} />
 						{result.error ? result.text : 'Регистрация завершена'}
 					</div>
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main text-text"
+						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
 						{disabled}
 						{loading}
 						type="submit"
-						variant="main"
 					>
 						Завершить регистрацию
 					</Button>

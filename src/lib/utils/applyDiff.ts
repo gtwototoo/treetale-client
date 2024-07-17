@@ -1,11 +1,11 @@
-type TQuasiBaseType = Date | RegExp | boolean | number | string | unknown;
+type QuasiBaseType = Date | RegExp | boolean | number | string | unknown;
 
-interface IElem {
-	[index: number | string]: IElem | object | unknown;
+export interface Elem {
+	[index: number | string]: Elem | object | unknown;
 }
 
-export interface IDiff {
-	[index: string]: IDiff | undefined | unknown;
+export interface Diff {
+	[index: string]: Diff | undefined | unknown;
 }
 
 const isQuasiBaseType = (value: unknown) => {
@@ -19,13 +19,13 @@ const isQuasiBaseType = (value: unknown) => {
 	);
 };
 
-const isLikelyPlainObject = (value: IElem | TQuasiBaseType) => {
+const isLikelyPlainObject = (value: Elem | QuasiBaseType) => {
 	return typeof value === 'object' && value !== null && !isQuasiBaseType(value);
 };
 
-const applyDiff = <T extends Array<IElem> | IElem>(lhs: T, diff: IDiff) => {
+const applyDiff = <T extends Elem | Elem[]>(lhs: T, diff: Diff) => {
 	if (!isLikelyPlainObject(diff) || !isLikelyPlainObject(lhs)) {
-		lhs = diff as IDiff & T;
+		lhs = diff as Diff & T;
 
 		return lhs;
 	}
@@ -38,12 +38,12 @@ const applyDiff = <T extends Array<IElem> | IElem>(lhs: T, diff: IDiff) => {
 
 	for (const key of keys) {
 		if (isLikelyPlainObject(diff[key])) {
-			if (Object.keys(diff[key]).length === 0) {
+			if (Object.keys(diff[key] as Diff).length === 0) {
 				lhs[key as unknown as number] = Array.isArray(diff[key]) ? [] : {};
 			} else {
 				lhs[key as unknown as number] = applyDiff(
-					(lhs[key as unknown as number] as IElem) ?? {},
-					diff[key] as IDiff
+					(lhs[key as unknown as number] as Elem) ?? {},
+					diff[key] as Diff
 				);
 			}
 		} else if (diff[key] === undefined) {

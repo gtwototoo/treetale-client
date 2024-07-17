@@ -2,42 +2,47 @@
 	import { page } from '$app/stores';
 	import find from 'lodash/find';
 
-	import type { IUser, IVariable } from '$lib/types';
-	import type { IStoryReading } from '$lib/types/reading';
+	import type { Story, User } from '$lib/types';
 
-	import { DEFAULT_COLOR, GENRES_LIST } from '$lib/constants';
-	import { generateMainColors } from '$lib/utils';
-
-	import Link from '../../Link.svelte';
+	import { PUBLIC_TREETALE_BOARD_URL } from '$env/static/public';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { GENRES_LIST } from '$lib/constants/genres';
+	import { generateMainColors } from '$lib/utils/customColors';
+	import { Link } from 'treetale-ui';
+	import Adventure from '../icons/genres/Adventure.svelte';
 	import Cover from './Cover.svelte';
 	import HoverInfo from './HoverInfo.svelte';
 	import Info from './Info.svelte';
 
-	let className = '';
-	export { className as class };
+	let {
+		class: classname,
+		story,
+		author
+	}: {
+		class?: string;
+		story: Story;
+		author?: User;
+	} = $props();
 
-	export let story: IStoryReading;
-	export let author: IUser | undefined = undefined;
-	export let vars: Array<IVariable>;
+	let { color, created, description, genre, imageUrl, likes, status, storyId, tags, title, vars } =
+		$derived(story);
 
-	$: ({ color, created, description, genre, imageUrl, likes, status, storyId, tags, title } =
-		story);
-
-	$: edit = $page.data.session && $page.data.session.userId === author?.userId;
-	$: view =
+	let edit = $derived($page.data.session && $page.data.session.userId === author?.userId);
+	let view = $derived(
 		$page.data.session &&
-		($page.data.session.role === 'admin' || $page.data.session.role === 'moderator');
+			($page.data.session.role === 'admin' || $page.data.session.role === 'moderator')
+	);
 
-	$: icon = find(GENRES_LIST, { id: genre }).icon;
-	$: selectedColor = color.length ? color : DEFAULT_COLOR;
+	let icon = $derived(find(GENRES_LIST, { id: genre })?.icon || Adventure);
+	let selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
 </script>
 
 <Link
-	href={`/${storyId}${edit ? '/edit' : view ? '/view' : ''}`}
+	href={`${edit ? PUBLIC_TREETALE_BOARD_URL : ''}/${storyId}`}
 	class="group relative shrink-0 overflow-hidden rounded-3xl"
 >
 	<div class="contents" style={generateMainColors(selectedColor)}>
-		<Cover {imageUrl} {title} {icon} color={selectedColor} class={className} />
+		<Cover {imageUrl} {title} {icon} color={selectedColor} class={classname} />
 		<Info {author} {created} {edit} {likes} {status} {selectedColor} class="absolute p-2" />
 		<HoverInfo {tags} {vars} {description} />
 	</div>

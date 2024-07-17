@@ -1,9 +1,12 @@
+<svelte:options namespace="svg" />
+
 <script lang="ts">
-	let className = '';
-	export { className as class };
+	import type { SVGAttributes } from 'svelte/elements';
+
+	let { ...props }: SVGAttributes<SVGElement> = $props();
 </script>
 
-<svg class={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+<svg {...props} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 	<path
 		d="M23.8 11.4c-6.6-5.5-14-5.7-20.8 0-.2.2-.3.2-.3-.2a10.9 10.9 0 0 1 21.5 0c0 .3 0 .4-.4.2Z"
 		fill="currentColor"

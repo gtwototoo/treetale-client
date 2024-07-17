@@ -27,7 +27,7 @@ export const load = async ({ cookies, params }) => {
 		}
 	}
 
-	if (!response.sessionId) {
+	if (!response?.sessionId) {
 		return {};
 	}
 

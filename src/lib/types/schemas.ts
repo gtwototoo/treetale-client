@@ -1,15 +1,14 @@
-import type { ICoordinates, IStory, IVariable } from '.';
-import type { IFrameCreate, INote } from './editing';
+import type { Coordinates, Frame, Note, Story, Variable } from '.';
 
-export interface IStorySchema extends IStory {
-	[index: string]: Array<unknown> | ICoordinates | boolean | number | string;
+export interface StorySchema extends Story {
+	[index: string]: unknown[] | Coordinates | boolean | number | string;
 	darkTheme: boolean;
-	frames: Array<IFrameCreate>;
+	frames: Frame[];
 	imageUrl: string;
-	likes: Array<number>;
-	notes: Array<INote>;
-	offset: ICoordinates;
+	likes: number[];
+	notes: Note[];
+	offset: Coordinates;
 	userId: number;
-	vars: Array<IVariable>;
+	vars: Variable[];
 	zoom: number;
 }

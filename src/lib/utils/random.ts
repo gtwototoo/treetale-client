@@ -2,9 +2,8 @@ import type { HttpError, NumericRange } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
+import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';
 import sample from 'lodash/sample';
-
-import { NOT_FOUND_VARIANTS } from '$lib/constants';
 
 export const randomError = (status: NumericRange<400, 599>): HttpError => {
 	return error(

@@ -1,88 +1,101 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
-	import clsx from 'clsx';
-
-	import { validateMimeType } from '$lib/utils';
-
+	import { clm } from '$lib/utils/classMerge';
+	import { preventDefault } from '$lib/utils/eventsModificators';
+	import { validateMimeType } from '$lib/utils/inputAccept';
+	import type {
+		ChangeEventHandler,
+		DragEventHandler,
+		EventHandler,
+		HTMLButtonAttributes,
+		HTMLInputAttributes,
+		MouseEventHandler,
+		SvelteDocumentAttributes
+	} from 'svelte/elements';
 	import DashedBorder from './DropArea/DashedBorder.svelte';
 
-	let className: string | undefined = undefined;
+	let {
+		class: classname,
+		accept = 'image/*',
+		children,
+		onclick,
+		ondragenter,
+		ondragleave,
+		onvisibilitychange,
+		onchange
+	}: Pick<HTMLInputAttributes, 'accept'> &
+		Pick<SvelteDocumentAttributes, 'onvisibilitychange'> &
+		Pick<HTMLButtonAttributes, 'class' | 'children' | 'ondragenter' | 'onclick'> & {
+			onchange?: (files: File[]) => void;
+			ondragleave?: () => void;
+		} = $props();
 
-	export { className as class };
+	let dragged = $state(false);
+	let inputElement = $state<HTMLInputElement>();
 
-	export let accept = 'image/*';
+	const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+		e.preventDefault();
 
-	let dragged = false;
-	let inputElement: HTMLInputElement | undefined = undefined;
+		inputElement?.click();
 
-	const dispatch = createEventDispatcher<{
-		change: Array<File>;
-		click: MouseEvent;
-		dragenter: DragEvent;
-		dragleave: DragEvent | Event;
-		visibilitychange: Event;
-	}>();
-
-	const handleClick = (e: MouseEvent) => {
-		inputElement.click();
-
-		dispatch('click', e);
+		onclick?.(e);
 	};
 
-	const handleDragEnter = (e: DragEvent) => {
+	const handleDragEnter: DragEventHandler<HTMLButtonElement> = (e) => {
+		if (!e.dataTransfer) return;
+
 		e.dataTransfer.dropEffect = 'copy';
 
 		dragged = true;
 
-		dispatch('dragenter', e);
+		ondragenter?.(e);
 	};
 
-	const handleDragLeave = (e: DragEvent | Event) => {
+	const handleDragLeave = () => {
 		dragged = false;
 
-		dispatch('dragleave', e);
+		ondragleave?.();
 	};
 
-	const handleVisibilityChange = (e: Event) => {
-		handleDragLeave(e);
+	const handleVisibilityChange: EventHandler<Event, Document> = (e) => {
+		handleDragLeave();
 
-		dispatch('visibilitychange', e);
+		onvisibilitychange?.(e);
 	};
 
-	const handleDrop = (e: DragEvent | Event) => {
-		let files: FileList;
+	const handleDrop: DragEventHandler<HTMLButtonElement> = (e) => {
+		e.preventDefault();
 
-		if (e instanceof DragEvent) {
-			files = e.dataTransfer.files;
+		setFiles(e.dataTransfer?.files as FileList);
 
-			handleDragLeave(e);
-		} else if (e.target instanceof HTMLInputElement) {
-			files = e.target.files;
-		}
+		handleDragLeave();
+	};
 
-		dispatch(
-			'change',
-			[...files].filter((file) => validateMimeType(file, accept))
-		);
+	const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+		e.preventDefault();
 
-		inputElement.value = '';
+		setFiles((e.target as HTMLInputElement).files as FileList);
+	};
+
+	const setFiles = (files: FileList) => {
+		if (inputElement) inputElement.value = '';
+
+		onchange?.([...files].filter((file) => validateMimeType(file, accept)));
 	};
 </script>
 
-<svelte:document on:visibilitychange={handleVisibilityChange} />
+<svelte:document onvisibilitychange={handleVisibilityChange} />
 
-<div class={clsx('inset-0 z-10 size-full gap-2 p-4 text-sm', className)}>
+<div class={clm('inset-0 z-10 size-full gap-2 p-4 text-sm', classname)}>
 	<button
-		on:click|preventDefault={handleClick}
-		on:dragenter={handleDragEnter}
-		on:dragleave={handleDragLeave}
-		on:drop|preventDefault={handleDrop}
-		on:dragover|preventDefault
-		class="group relative flex size-full flex-col items-center justify-center gap-[inherit] rounded-xl bg-main-30 p-4 *:pointer-events-none *:bg-transparent"
+		onclick={handleClick}
+		ondragenter={handleDragEnter}
+		ondragleave={handleDragLeave}
+		ondrop={handleDrop}
+		ondragover={preventDefault}
+		class="group relative flex size-full flex-col items-center justify-center gap-[inherit] rounded-xl bg-main-30 p-4 text-text *:pointer-events-none *:bg-transparent"
 	>
 		<DashedBorder {dragged} />
-		<slot />
+		{@render children?.()}
 	</button>
-	<input bind:this={inputElement} on:change={handleDrop} class="hidden" type="file" {accept} />
+	<input bind:this={inputElement} onchange={handleChange} class="hidden" type="file" {accept} />
 </div>

@@ -1,20 +1,15 @@
 <script lang="ts">
-	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
-	import { panelStore } from '$lib/stores/panel';
-	import { getPageType } from '$lib/utils';
+	import { getPageType } from '$lib/utils/page';
 
 	import '../app.postcss';
 	import '../fonts/RobotoSlab-Black.css';
 
-	$: pageType = getPageType($page.url.pathname);
+	let { children } = $props();
 
-	beforeNavigate(() => {
-		panelStore.clear();
-	});
+	let pageType = $derived(getPageType($page.url.pathname));
 </script>
 
 <svg aria-hidden="true" class="invisible absolute bg-transparent" height="0" width="0">
@@ -33,23 +28,14 @@
 	</defs>
 </svg>
 
-{#if pageType == 'editing' || pageType === 'reading' || pageType === 'viewing'}
-	<div
-		class={clsx(
-			'fixed left-0 flex h-full flex-col',
-			$panelStore.component ? 'right-96 max-lg:right-0' : 'right-0'
-		)}
-	>
+{#if pageType === 'reading'}
+	<div class="fixed left-0 flex size-full flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />
-		<slot />
+		{@render children()}
 	</div>
-
-	{#if $panelStore.component}
-		<svelte:component this={$panelStore.component} />
-	{/if}
 {:else}
 	<div class="relative flex size-full flex-col">
 		<svelte:component this={$page.data.header || MainHeader} />
-		<slot />
+		{@render children()}
 	</div>
 {/if}

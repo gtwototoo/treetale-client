@@ -3,9 +3,9 @@ interface FileData {
 	type: string;
 }
 
-export const validateMimeType = (file: FileData, acceptedFiles: Array<string> | string) => {
+export const validateMimeType = (file: FileData, acceptedFiles: string[] | string | null) => {
 	if (file && acceptedFiles) {
-		const acceptedFilesArray: Array<string> = Array.isArray(acceptedFiles)
+		const acceptedFilesArray: string[] = Array.isArray(acceptedFiles)
 			? acceptedFiles
 			: acceptedFiles.split(',');
 		const fileName = file.name || '';

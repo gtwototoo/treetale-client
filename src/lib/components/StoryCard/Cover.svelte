@@ -1,42 +1,45 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
+	import type { RGB } from '$lib/types';
 
-	import clsx from 'clsx';
-
-	import type { TRGB } from '$lib/types';
-
-	import { Image } from '$UI';
-	import { contrastText } from '$lib/utils';
-
+	import { clm } from '$lib/utils/classMerge';
+	import { contrastText } from '$lib/utils/contrast';
+	import type { Component } from 'svelte';
+	import { Image } from 'treetale-ui';
 	import Titie from './Titie.svelte';
 	import TransparentRect from './TransparentRect.svelte';
 
-	let className = '';
-	export { className as class };
+	let {
+		class: classname,
+		imageUrl,
+		title,
+		color,
+		icon
+	}: {
+		class?: string;
+		imageUrl: string | null;
+		title: string;
+		color: RGB;
+		icon: Component;
+	} = $props();
 
-	export let imageUrl: string;
-	export let title: string;
-	export let color: TRGB;
-	export let icon: typeof SvelteComponent<unknown>;
-
-	let errorImage = false;
+	let errorImage = $state(false);
 
 	const handleError = () => {
 		errorImage = true;
 	};
 
-	$: gradientColor = contrastText(color)
-		? clsx('from-main to-main-50')
-		: clsx('from-main-70 to-main');
-	$: iconColor = contrastText(color) ? clsx('text-main-60') : clsx('text-main');
-	$: textColor = contrastText(color) ? clsx('fill-white') : clsx('fill-black');
+	let gradientBackgroundColor = $derived(
+		contrastText(color) ? clm('from-main to-main-50') : clm('from-main-70 to-main')
+	);
+	let iconColor = $derived(contrastText(color) ? clm('text-main-60') : clm('text-main'));
+	let textFillColor = $derived(contrastText(color) ? clm('fill-white') : clm('fill-black'));
 </script>
 
-<div class={clsx('relative select-none', className)}>
+<div class={clm('relative select-none', classname)}>
 	<div
-		class={clsx(
+		class={clm(
 			'animate-card absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-transparent bg-gradient-to-b',
-			gradientColor
+			gradientBackgroundColor
 		)}
 	>
 		{#if imageUrl && !errorImage}
@@ -44,19 +47,19 @@
 				alt={title || 'Иллюстрация истории'}
 				class="absolute size-full rounded-inherit"
 				cover
-				on:error={handleError}
+				onerror={handleError}
 				src={imageUrl}
 			/>
 			<svelte:component
 				this={icon}
-				class={clsx('absolute right-4 top-4 h-auto w-1/6 opacity-70', iconColor)}
+				class={clm('absolute right-4 top-4 h-auto w-1/6 opacity-70', iconColor)}
 			/>
 		{:else}
 			<div class="absolute top-0 flex h-1/2 w-full items-center justify-center">
-				<svelte:component this={icon} class={clsx('h-1/2 w-auto', iconColor)} />
+				<svelte:component this={icon} class={clm('h-1/2 w-auto', iconColor)} />
 			</div>
 		{/if}
-		<Titie {title} {textColor} />
+		<Titie {title} color={textFillColor} />
 	</div>
 	<TransparentRect />
 </div>

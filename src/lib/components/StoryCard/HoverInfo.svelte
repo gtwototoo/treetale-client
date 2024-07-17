@@ -1,11 +1,16 @@
 <script lang="ts">
-	import type { IVariable } from '$lib/types';
+	import type { Variable } from '$lib/types';
+	import { correctVariableReplace } from '$lib/utils/text';
 
-	import { correctVariableReplace } from '$lib/utils';
-
-	export let tags: Array<string>;
-	export let description: string;
-	export let vars: IVariable[];
+	let {
+		tags,
+		description,
+		vars
+	}: {
+		tags: string[];
+		description: string;
+		vars: Variable[];
+	} = $props();
 </script>
 
 <div

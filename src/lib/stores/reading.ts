@@ -2,19 +2,22 @@ import { writable } from 'svelte/store';
 
 import { Howl } from 'howler';
 
-import type { IFrame, IVariable } from '$lib/types';
-import type { IStoryFull } from '$lib/types/reading';
+import type { Frame, Story, Variable } from '$lib/types';
 
-export const storyStore = writable<IStoryFull>();
-export const framesStore = writable<Array<IFrame>>();
-// export const progressStore = writable<Array<IProgressData>>();
+export const storyStore = writable<Story>();
+export const framesStore = writable<Frame[]>();
+// export const progressStore = writable<IProgressData[]>();
 
 export const fullscreenStore = writable<boolean>(false);
 
-export const variablesStore = writable<Array<IVariable>>([]);
+export const variablesStore = writable<Variable[]>([]);
 
 const customSoundStore = () => {
-	const { set, subscribe, update } = writable<{ playing: boolean; sound: Howl; src: string }>({
+	const { set, subscribe, update } = writable<{
+		playing: boolean;
+		sound: Howl | null;
+		src: string;
+	}>({
 		playing: false,
 		sound: null,
 		src: ''

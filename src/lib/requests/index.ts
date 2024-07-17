@@ -8,7 +8,7 @@ interface DefaultResponse {
 const fetchCore = async <T>(url: RequestInfo | URL, options?: RequestInit) => {
 	const request = await fetch(url, {
 		...options,
-		credentials: 'include'
+		credentials: 'include' // TODO: change to 'include' when update origin
 	});
 
 	const response = (await request.json()) as DefaultResponse;

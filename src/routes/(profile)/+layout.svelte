@@ -1,104 +1,86 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
 	import { type Person } from 'schema-dts';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
-	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import Link from '$lib/components/Link.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { getPageType, rootStyle } from '$lib/utils';
+	import { clm } from '$lib/utils/classMerge';
+	import { rootStyle } from '$lib/utils/customColors';
+	import { Button, Icon, Link } from 'treetale-ui';
 
-	export let data;
+	let { data, children } = $props();
 
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
 
-	$: user = me ? $page.data.session : data.user;
-	$: pageType = getPageType($page.url.pathname);
-	$: ({ statistic } = data);
-	$: $bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;
-
-	$: userSchema = {
+	let user = $derived(me ? $page.data.session : data.user);
+	let { statistic } = $derived(data);
+	let userSchema = $derived({
 		'@type': 'Person',
 		name: user.name
-	} as Person;
+	} as Person);
+
+	$effect(() => {
+		$bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;
+	});
+
+	let tabs = [
+		{
+			name: 'Модерируемые',
+			href: '/profile/moderated',
+			icon: Clock
+		},
+		{
+			name: 'Созданные',
+			href: '/profile',
+			icon: Pencil
+		},
+		{
+			name: 'Понравившиеся',
+			href: '/profile/liked',
+			icon: Heart
+		},
+		{
+			name: 'Просмотренные',
+			href: '/profile/viewed',
+			icon: Eye
+		}
+	];
 </script>
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
+	<title>{me ? 'Профиль' : user.name}</title>
+	<meta name="description" content={user.description} />
 </svelte:head>
-
-<JsonLd schema={userSchema} />
-<MetaTags description={user.description} title={me ? 'Профиль' : user.name} />
 
 <div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-8 p-16">
 	<UserInformation {me} {statistic} {user} />
 	<div class="flex size-full flex-col items-center gap-8">
 		{#if me}
 			<div class="flex flex-wrap justify-center gap-2">
-				{#if $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
-					<Link class="w-44 max-sm:w-24" href="/profile/moderated">
-						<Button
-							class={clsx(
-								'w-full justify-center !text-text transition-colors hover:bg-contrast',
-								pageType === 'moderated' && 'bg-contrast/20'
-							)}
-							size="lg"
-							variant="custom"
-						>
-							<Icon class="hidden size-6 max-sm:block" type={Clock} />
-							<p class="max-sm:hidden">Модерируемые</p>
-						</Button>
-					</Link>
-				{/if}
-				<Link class="w-44 max-sm:w-24" href="/profile">
-					<Button
-						class={clsx(
-							'w-full justify-center !text-text !transition-colors hover:bg-contrast',
-							pageType === 'profile' && 'bg-contrast/20'
-						)}
-						size="lg"
-						variant="custom"
-					>
-						<Icon class="hidden size-6 max-sm:block" type={Pencil} />
-						<p class="max-sm:hidden">Созданные</p>
-					</Button>
-				</Link>
-				<Link class="w-44 max-sm:w-24" href="/profile/liked">
-					<Button
-						class={clsx(
-							'w-full justify-center !text-text transition-colors hover:bg-contrast',
-							pageType === 'liked' && 'bg-contrast/20'
-						)}
-						size="lg"
-						variant="custom"
-					>
-						<Icon class="hidden size-6 max-sm:block" type={Heart} />
-						<p class="max-sm:hidden">Понравившиеся</p>
-					</Button>
-				</Link>
-				<Link class="w-44 max-sm:w-24" href="/profile/viewed">
-					<Button
-						class={clsx(
-							'w-full justify-center !text-text transition-colors hover:bg-contrast',
-							pageType === 'viewed' && 'bg-contrast/20'
-						)}
-						size="lg"
-						variant="custom"
-					>
-						<Icon class="hidden size-6 max-sm:block" type={Eye} />
-						<p class="max-sm:hidden">Просмотренные</p>
-					</Button>
-				</Link>
+				{#each tabs as { name, href, icon }}
+					{#if href !== '/profile/moderated' || $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
+						<Link class="w-44 max-sm:w-24" {href}>
+							<Button
+								class={clm(
+									'w-full justify-center text-text hover:bg-contrast',
+									$page.url.pathname === href && 'bg-main-40'
+								)}
+								size="lg"
+							>
+								<Icon class="hidden size-6 max-sm:block" this={icon} />
+								<p class="max-sm:hidden">{name}</p>
+							</Button>
+						</Link>
+					{/if}
+				{/each}
 			</div>
 		{:else}
 			<h1>Список историй</h1>
 		{/if}
-		<slot />
+		{@render children()}
 	</div>
 </div>
 

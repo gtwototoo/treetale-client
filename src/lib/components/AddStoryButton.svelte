@@ -1,18 +1,20 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
 	import { Plus } from 'svelte-heros-v2';
 
-	import { Button } from '$UI';
 	import { createStory } from '$lib/requests/story';
 
-	import Icon from './Icon.svelte';
+	import { clm } from '$lib/utils/classMerge';
+	import { Button, Icon } from 'treetale-ui';
 
-	let className = '';
-	export { className as class };
+	let {
+		class: classname
+	}: {
+		class?: string;
+	} = $props();
 
-	let loading = false;
+	let loading = $state(false);
 
 	const handleClick = async () => {
 		if ($page.data.session) {
@@ -27,13 +29,7 @@
 	};
 </script>
 
-<Button
-	class={clsx('text-text', className)}
-	{loading}
-	on:click={handleClick}
-	size="lg"
-	variant="ghost"
->
-	<Icon class="size-6" type={Plus} />
+<Button class={clm('text-text', classname)} {loading} onclick={handleClick} size="lg">
+	<Icon class="size-6" this={Plus} />
 	<p class="mr-1">Добавить историю</p>
 </Button>

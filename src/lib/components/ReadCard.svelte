@@ -1,25 +1,36 @@
 <script lang="ts">
-	import clsx from 'clsx';
+	import { clm } from '$lib/utils/classMerge';
+	import { correctWhitespace } from '$lib/utils/text';
+	import type { Snippet } from 'svelte';
+	import { Image } from 'treetale-ui';
+	import Card from './Card.svelte';
 
-	import { Card, Image } from '$UI';
-	import { clm, correctWhitespace } from '$lib/utils';
+	let {
+		class: classname,
+		classCard,
+		src = null,
+		text,
+		alt = 'Иллюстрация',
+		body,
+		children
+	}: {
+		class?: string;
+		classCard?: string;
+		src?: null | string;
+		text?: string;
+		alt?: string;
+		body?: Snippet;
+		children?: Snippet;
+	} = $props();
 
-	let className = '';
-	export { className as class };
-
-	let errorLoad = false;
-
-	export let classCard = '';
-	export let src: null | string = null;
-	export let text: string | undefined = undefined;
-	export let alt = 'Иллюстрация';
+	let errorLoad = $state(false);
 
 	const handleError = () => {
 		errorLoad = true;
 	};
 </script>
 
-<div class={clm('card adaptive-size', className)}>
+<div class={clm('card adaptive-size', classname)}>
 	{#if src && !errorLoad}
 		<Image
 			{alt}
@@ -30,14 +41,14 @@
 		/>
 	{/if}
 	<Card
-		class={clsx(
+		class={clm(
 			'select-none items-start gap-8 bg-main-10 p-8 text-text *:bg-transparent max-hd:gap-6 max-hd:p-6',
 			classCard
 		)}
 	>
 		{#if text}
 			<div
-				class={clsx(
+				class={clm(
 					'adaptive-padding text-text',
 					text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
 				)}
@@ -45,9 +56,9 @@
 				{@html correctWhitespace(text)}
 			</div>
 		{:else}
-			<slot name="body" />
+			{@render body?.()}
 		{/if}
-		<slot />
+		{@render children?.()}
 	</Card>
 </div>
 

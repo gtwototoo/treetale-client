@@ -4,11 +4,8 @@
 	import clsx from 'clsx';
 	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
 
-	import type { IUser } from '$lib/types';
+	import type { RGB, User } from '$lib/types';
 
-	import { Button, ColorPicker, Contenteditable } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
-	import ProfileAvatar from '$lib/components/ProfileAvatar.svelte';
 	import {
 		signOutUser,
 		subscribeProfile,
@@ -16,17 +13,27 @@
 		updateProfile
 	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
+	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { clm } from '$lib/utils/classMerge';
 	import InvisibleDrop from './InvisibleDrop.svelte';
+	import ProfileAvatar from './ProfileAvatar.svelte';
 
-	export let user: IUser;
-	export let me: boolean;
-	export let statistic: Array<Array<string>>;
+	let {
+		user,
+		me,
+		statistic
+	}: {
+		user: User;
+		me: boolean;
+		statistic: string[][];
+	} = $props();
 
-	let editMode = false;
-	let light = 80;
-	let saturate = 90;
-	let loading = false;
+	let editMode = $state(false);
+	let light = $state(80);
+	let saturate = $state(90);
+	let loading = $state(false);
 
 	const handleUnsubscribe = async () => {
 		loading = true;
@@ -57,12 +64,12 @@
 		}
 	};
 
-	const setColor = ({ detail }: CustomEvent) => {
-		$bodyColorStore = detail.color;
+	const setColor = (color: RGB) => {
+		$bodyColorStore = color;
 	};
 
 	const cancelEdit = () => {
-		$bodyColorStore = user.color;
+		$bodyColorStore = user.color || DEFAULT_COLOR;
 		editMode = false;
 	};
 
@@ -105,7 +112,13 @@
 	{/if}
 	<div class="flex flex-col items-center gap-2 bg-transparent">
 		<div class="p-6">
-			<ProfileAvatar color={$bodyColorStore} {editMode} {user} />
+			<ProfileAvatar
+				color={$bodyColorStore}
+				{editMode}
+				size="lg"
+				src={user.imageUrl}
+				alt={user.name}
+			/>
 		</div>
 		<div
 			class={clsx(
@@ -126,19 +139,25 @@
 	<div class="flex w-full flex-col items-center bg-transparent">
 		<Contenteditable
 			bind:html={user.name}
-			class="!bg-transparent !text-center !text-4xl font-bold text-text"
+			class={clm(
+				'bg-transparent text-center text-4xl font-bold text-text',
+				!editMode && 'pointer-events-none'
+			)}
 			placeholder="Никнейм"
 			readonly={!editMode}
 		/>
 		{#if editMode || user.description}
 			<Contenteditable
 				bind:html={user.description}
-				class="w-full !bg-transparent !text-center !text-lg text-text"
+				class={clm(
+					'w-full bg-transparent text-center text-lg text-text',
+					!editMode && 'pointer-events-none'
+				)}
 				placeholder="Добавьте описание"
 				readonly={!editMode}
 			/>
 		{:else}
-			<p class="px-4 py-2 text-lg text-text/50">Описание отсутствует</p>
+			<p class="px-4 text-lg/10 text-text/50">Описание отсутствует</p>
 		{/if}
 	</div>
 	<div class="flex gap-2 bg-transparent">
@@ -146,67 +165,63 @@
 			{#if editMode}
 				<ColorPicker
 					color={$bodyColorStore}
-					let:click
 					{light}
-					on:change={setColor}
+					onchange={setColor}
 					align="left"
 					{saturate}
 				>
-					<Button class="bg-main !text-text" on:click={click} size="lg" variant="main">
-						Цвет
-					</Button>
+					{#snippet children({ onclick })}
+						<Button class="bg-main-70 text-text hover:bg-main" {onclick} size="lg">
+							Цвет
+						</Button>
+					{/snippet}
 				</ColorPicker>
 				<Button
-					class="bg-main text-text"
+					class="bg-main-70 text-text hover:bg-main"
 					{loading}
-					on:click={saveProfile}
+					onclick={saveProfile}
 					size="lg"
-					variant="ghost"
 				>
 					Сохранить
 				</Button>
-				<Button class="bg-main !text-red-500" on:click={cancelEdit} size="lg" variant="ghost">
+				<Button class="bg-main-70 text-red-500 hover:bg-main" onclick={cancelEdit} size="lg">
 					Отмена
 				</Button>
 			{:else}
 				<Button
-					class="gap-3 bg-contrast text-text"
-					on:click={() => (editMode = true)}
+					class="gap-3 bg-main-40 text-text hover:bg-contrast"
+					onclick={() => (editMode = true)}
 					size="lg"
-					variant="ghost"
 				>
-					<Icon class="size-6" type={Cog6Tooth} />
+					<Icon class="size-6" this={Cog6Tooth} />
 					<p class="mr-1">Настройки профиля</p>
 				</Button>
 				<Button
-					class="bg-contrast text-red-500"
-					on:click={handleSignOut}
+					class="bg-main-40 text-red-500 hover:bg-contrast"
+					onclick={handleSignOut}
 					size="lg"
-					variant="ghost"
 				>
 					Выйти
 				</Button>
 			{/if}
 		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
 			<Button
-				class="gap-3 bg-white"
+				class="gap-3 bg-main-40 text-text hover:bg-contrast"
 				{loading}
-				on:click={handleUnsubscribe}
+				onclick={handleUnsubscribe}
 				size="lg"
-				variant="ghost"
 			>
-				<Icon class="size-6" type={UserMinus} />
+				<Icon class="size-6" this={UserMinus} />
 				<p class="mr-1">Отписаться</p>
 			</Button>
 		{:else}
 			<Button
-				class="gap-3 bg-white"
+				class="gap-3 bg-main-40 text-text hover:bg-contrast"
 				{loading}
-				on:click={handleSubscribe}
+				onclick={handleSubscribe}
 				size="lg"
-				variant="ghost"
 			>
-				<Icon class="size-6" type={UserPlus} />
+				<Icon class="size-6" this={UserPlus} />
 				<p class="mr-1">Подписаться</p>
 			</Button>
 		{/if}

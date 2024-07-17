@@ -1,37 +1,36 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { MetaTags } from 'svelte-meta-tags';
 
-	import { Button } from '$UI';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { rootStyle } from '$lib/utils';
+	import { rootStyle } from '$lib/utils/customColors';
+	import { Button } from 'treetale-ui';
 
 	const handleClick = () => {
 		isNotFound ? goto('/', { replaceState: true }) : location.reload();
 	};
 
-	$: isNotFound = $page.status === 404;
-	$: $bodyColorStore = $page.error?.color;
-	$: ({ img, message } = $page.error);
+	let isNotFound = $derived($page.status === 404);
+
+	$effect(() => {
+		$bodyColorStore = $page.error?.color;
+	});
 </script>
 
 <svelte:head>
 	{@html rootStyle($bodyColorStore)}
+	<title>{isNotFound ? 'Страница не найдена' : 'Произошла ошибка'}</title>
 </svelte:head>
-
-<MetaTags title={isNotFound ? 'Страница не найдена' : 'Произошла ошибка'} />
 
 {#if $page.error}
 	<div class="flex size-full items-start justify-center overflow-auto">
 		<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
-			<ReadCard alt="Ошибка" src={img} text={message}>
+			<ReadCard alt="Ошибка" src={$page.error?.img} text={$page.error?.message}>
 				<div class="w-full">
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main !text-text"
-						on:click={handleClick}
-						variant="ghost"
+						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
+						onclick={handleClick}
 					>
 						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}
 					</Button>

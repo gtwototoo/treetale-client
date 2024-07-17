@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import clsx from 'clsx';
 	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
 
-	import { Button } from '$UI';
-	import Icon from '$lib/components/Icon.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { fullscreenStore } from '$lib/stores/reading';
-	import { contrastText } from '$lib/utils';
 
+	import { clm } from '$lib/utils/classMerge';
+	import { contrastText } from '$lib/utils/contrast';
+	import { Button, Icon } from 'treetale-ui';
 	import Header from './Header.svelte';
 
 	let fullscreenSupport = false;
@@ -37,7 +36,7 @@
 	};
 
 	onMount(() => {
-		if (document.documentElement.requestFullscreen) {
+		if (!!document.documentElement.requestFullscreen) {
 			fullscreenSupport = true;
 		}
 	});
@@ -45,24 +44,22 @@
 
 <Header>
 	<Button
-		class={clsx(
+		class={clm(
 			'header-button text-text',
 			contrastText($bodyColorStore) ? 'bg-yellow-600' : 'bg-yellow-300'
 		)}
 		size="lg"
-		variant="ghost"
 	>
-		<Icon class="size-6" type={Star} />
+		<Icon class="size-6" this={Star} />
 		<p class="mr-1">Поддержать</p>
 	</Button>
 	{#if fullscreenSupport}
 		<Button
-			class="header-button bg-contrast text-text"
-			on:click={handleFulscreen}
+			class="header-button bg-main-40 text-text hover:bg-contrast"
+			onclick={handleFulscreen}
 			size="lg"
-			variant="ghost"
 		>
-			<Icon class="size-6" type={ArrowsPointingOut} />
+			<Icon class="size-6" this={ArrowsPointingOut} />
 		</Button>
 	{/if}
 </Header>
