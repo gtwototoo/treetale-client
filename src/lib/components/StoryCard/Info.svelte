@@ -1,34 +1,34 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { ArchiveBox, CheckCircle, Clock, Heart } from 'svelte-heros-v2';
+	import { Icon } from 'treetale-ui';
 
 	import type { RGB, StoryStatus, User } from '$lib/types';
 
 	import Likes from '$lib/components/Likes.svelte';
-
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
-	import { Icon } from 'treetale-ui';
+
 	import ProfileLink from './ProfileLink.svelte';
 
 	let {
-		class: classname,
-		status,
-		likes,
 		author,
+		class: classname,
 		created,
 		edit,
-		storyId,
-		selectedColor
+		likes,
+		selectedColor,
+		status,
+		storyId
 	}: {
-		class?: string;
-		status: StoryStatus;
-		likes: number[];
 		author?: User;
+		class?: string;
 		created: number;
 		edit: boolean;
-		storyId?: number;
+		likes: number[];
 		selectedColor: RGB;
+		status: StoryStatus;
+		storyId?: number;
 	} = $props();
 
 	const statuses = {

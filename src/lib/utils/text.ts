@@ -30,7 +30,7 @@ export const variableReplace = (text: string, vars: Variable[]) => {
 	return text;
 };
 
-export const correctVariableReplace = (text: string | null, vars: Variable[]) => {
+export const correctVariableReplace = (text: null | string, vars: Variable[]) => {
 	if (!text) return '';
 
 	return correctWhitespace(variableReplace(text, vars));

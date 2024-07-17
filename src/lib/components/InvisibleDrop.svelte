@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { validateMimeType } from '$lib/utils/inputAccept';
 	import type {
 		DragEventHandler,
 		HTMLButtonAttributes,
 		HTMLInputAttributes,
 		SvelteWindowAttributes
 	} from 'svelte/elements';
+
+	import { validateMimeType } from '$lib/utils/inputAccept';
+
 	import DropArea from './DropArea.svelte';
 
 	let {
@@ -14,11 +16,12 @@
 		onchange,
 		ondragstart,
 		...props
-	}: Pick<HTMLInputAttributes, 'accept'> &
-		Pick<HTMLButtonAttributes, 'class' | 'children' | 'ondragenter' | 'onclick'> & {
-			onchange?: (files: File[]) => void;
-			ondragleave?: () => void;
-		} & Pick<SvelteWindowAttributes, 'ondragstart'> = $props();
+	}: {
+		onchange?: (files: File[]) => void;
+		ondragleave?: () => void;
+	} & Pick<HTMLButtonAttributes, 'children' | 'class' | 'onclick' | 'ondragenter'> &
+		Pick<HTMLInputAttributes, 'accept'> &
+		Pick<SvelteWindowAttributes, 'ondragstart'> = $props();
 
 	let visibleFile = $state(false);
 	let blockFile = $state(false);

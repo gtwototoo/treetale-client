@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 	import { pluralize } from 'pluralize-ru-ts';
 	import { BookOpen, Calendar, Clock, DocumentDuplicate, Trash } from 'svelte-heros-v2';
+	import { Button, Icon, Input, Link, Tag } from 'treetale-ui';
 
 	import type { Frame, Progress, Story, User } from '$lib/types';
 
@@ -13,27 +15,26 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
-	import type { MouseEventHandler } from 'svelte/elements';
-	import { Button, Icon, Input, Link, Tag } from 'treetale-ui';
+
 	import Card from './Card.svelte';
 	import EndResults from './EndResults.svelte';
 	import Cover from './StoryCard/Cover.svelte';
 	import Info from './StoryCard/Info.svelte';
 
 	let {
-		story,
 		author,
-		progress,
 		frames,
-		storyState,
-		onclick
+		onclick,
+		progress,
+		story,
+		storyState
 	}: {
-		story: Story;
 		author: User;
-		progress: Progress[];
 		frames: Frame[];
+		onclick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+		progress: Progress[];
+		story: Story;
 		storyState: 'begin' | 'ended';
-		onclick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 	} = $props();
 
 	type ICopyState = 'error' | 'success' | null;

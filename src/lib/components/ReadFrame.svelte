@@ -1,35 +1,35 @@
 <script lang="ts">
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
+	import { Button, FormSplit } from 'treetale-ui';
 
 	import type { LogicOperation } from '$lib/types';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { framesStore, variablesStore } from '$lib/stores/reading';
-
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import { correctToType, doLogic, doMath } from '$lib/utils/variableOperations';
-	import { Button, FormSplit } from 'treetale-ui';
+
 	import Likes from './Likes.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
 		class: classname,
 		frameId,
-		selectedChoiceId,
 		likes,
-		storyId,
 		onclick,
-		onresults
+		onresults,
+		selectedChoiceId,
+		storyId
 	}: {
 		class?: string;
 		frameId: number;
-		selectedChoiceId?: number;
 		likes: number[];
-		storyId: number;
 		onclick?: (choiceId: number) => void;
 		onresults?: () => void;
+		selectedChoiceId?: number;
+		storyId: number;
 	} = $props();
 
 	const selectChoice = (choiceId: number) => {
@@ -87,7 +87,7 @@
 <ReadCard class={clm('text-left', classname)} src={imageUrl} text={dynamicText(text!)}>
 	{#if choices.length}
 		<FormSplit class="w-full" vertical>
-			{#each choices as { choiceId, logicOperations, text, frameId } (choiceId)}
+			{#each choices as { choiceId, frameId, logicOperations, text } (choiceId)}
 				{#if frameId && (!logicOperations.length || checkLogic(logicOperations))}
 					<Choice onclick={() => selectChoice(choiceId)}>
 						{@html correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}

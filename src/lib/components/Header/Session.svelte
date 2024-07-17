@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
+	import { Button, Icon, Link } from 'treetale-ui';
 
 	import type { User } from '$lib/types';
-	import { Button, Icon, Link } from 'treetale-ui';
+
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let user: User = $derived($page.data.session);

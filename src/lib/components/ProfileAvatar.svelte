@@ -1,7 +1,9 @@
 <script lang="ts">
+	import type { ChangeEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
+	import { Avatar, Button, Icon, InputFile } from 'treetale-ui';
 
 	import type { RGB } from '$lib/types';
 
@@ -9,26 +11,24 @@
 	import { removeImage, saveImage } from '$lib/requests/files';
 	import { contrastText } from '$lib/utils/contrast';
 	import { toRGB } from '$lib/utils/customColors';
-	import type { ChangeEventHandler } from 'svelte/elements';
-	import { Avatar, Button, Icon, InputFile } from 'treetale-ui';
 
 	let {
 		alt,
-		src,
+		color,
 		editMode = false,
 		size = 'base',
-		color
+		src
 	}: {
 		alt: string;
-		src: string | null;
+		color: RGB | null;
 		editMode?: boolean;
 		size?: 'base' | 'lg' | 'sm';
-		color: RGB | null;
+		src: null | string;
 	} = $props();
 
 	let removeLoading = $state(false);
 	let addLoading = $state(false);
-	let base64src = $state<string | null>(null);
+	let base64src = $state<null | string>(null);
 
 	const imageFolder = 'avatars';
 

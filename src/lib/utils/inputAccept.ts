@@ -3,7 +3,7 @@ interface FileData {
 	type: string;
 }
 
-export const validateMimeType = (file: FileData, acceptedFiles: string[] | string | null) => {
+export const validateMimeType = (file: FileData, acceptedFiles: null | string | string[]) => {
 	if (file && acceptedFiles) {
 		const acceptedFilesArray: string[] = Array.isArray(acceptedFiles)
 			? acceptedFiles

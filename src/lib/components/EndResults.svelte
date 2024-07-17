@@ -1,26 +1,26 @@
 <script lang="ts">
 	import { pluralize } from 'pluralize-ru-ts';
+	import { Button, Link, Tag } from 'treetale-ui';
 
 	import type { Frame, Progress, RGB, Story, User } from '$lib/types';
 
-	import { Button, Link, Tag } from 'treetale-ui';
-
 	import { correctVariableReplace } from '$lib/utils/text';
+
 	import Info from './StoryCard/Info.svelte';
 
 	let {
-		progress,
-		story,
+		author,
 		endFrame,
+		progress,
 		selectedColor,
-		author
+		story
 	}: {
-		class?: string;
-		progress: Progress[];
-		story: Story;
-		endFrame: Frame;
-		selectedColor: RGB;
 		author: User;
+		class?: string;
+		endFrame: Frame;
+		progress: Progress[];
+		selectedColor: RGB;
+		story: Story;
 	} = $props();
 
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');

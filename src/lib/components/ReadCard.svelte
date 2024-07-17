@@ -1,26 +1,29 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	import { Image } from 'treetale-ui';
+
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
-	import type { Snippet } from 'svelte';
-	import { Image } from 'treetale-ui';
+
 	import Card from './Card.svelte';
 
 	let {
+		alt = 'Иллюстрация',
+		body,
+		children,
 		class: classname,
 		classCard,
 		src = null,
-		text,
-		alt = 'Иллюстрация',
-		body,
-		children
+		text
 	}: {
+		alt?: string;
+		body?: Snippet;
+		children?: Snippet;
 		class?: string;
 		classCard?: string;
 		src?: null | string;
 		text?: string;
-		alt?: string;
-		body?: Snippet;
-		children?: Snippet;
 	} = $props();
 
 	let errorLoad = $state(false);

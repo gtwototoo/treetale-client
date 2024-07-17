@@ -1,7 +1,8 @@
 <script lang="ts">
+	import { Button, Link } from 'treetale-ui';
+
 	import StoriesList from '$lib/components/StoriesList.svelte';
 	import { correctWhitespace } from '$lib/utils/text.js';
-	import { Button, Link } from 'treetale-ui';
 
 	let { data } = $props();
 </script>

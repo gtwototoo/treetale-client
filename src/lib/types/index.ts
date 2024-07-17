@@ -1,5 +1,6 @@
-import type { GENRES_LIST } from '$lib/constants/genres';
 import type { SvelteComponent } from 'svelte';
+
+import type { GENRES_LIST } from '$lib/constants/genres';
 
 export type RGB = [number, number, number];
 export type UserRole = 'admin' | 'member' | 'moderator';
@@ -48,7 +49,7 @@ export interface ConnectPath {
 	line: string;
 }
 
-export type Bounding = Sizes & Coordinates;
+export type Bounding = Coordinates & Sizes;
 
 export type StoryTag = string;
 
@@ -57,19 +58,19 @@ export type Genre = (typeof GENRES_LIST)[number]['id'];
 export type StoryStatus = 'draft' | 'published' | 'review';
 
 export interface Story {
-	vars: Variable[];
-	userId: number;
 	color: RGB;
+	created: number;
 	description: string;
 	genre: Genre;
 	imageUrl: null | string;
-	tags: StoryTag[];
-	title: string;
-	created: number;
+	likes: number[];
 	status: StoryStatus;
 	storyId: number;
+	tags: StoryTag[];
+	title: string;
+	userId: number;
+	vars: Variable[];
 	version: number;
-	likes: number[];
 }
 
 export interface Note {
@@ -83,9 +84,9 @@ export interface Searched {
 }
 
 export interface PanelProps {
-	title: string;
-	isEdit?: boolean;
 	[key: string]: unknown;
+	isEdit?: boolean;
+	title: string;
 }
 
 export type VariableExpects = 'Логика' | 'Строка' | 'Число';
@@ -97,25 +98,25 @@ export interface Variable {
 }
 
 interface IconProps {
-	size?: string;
-	role?: string;
+	ariaLabel?: string;
+	class?: string;
 	color?: string;
-	variation?: 'solid' | 'outline' | 'mini' | 'micro';
-	strokeWidth?: string;
-	withEvents?: boolean;
+	desc?: {
+		desc?: string;
+		id?: string;
+	};
 	onclick?: (event: MouseEvent) => void;
 	onkeydown?: (event: KeyboardEvent) => void;
 	onkeyup?: (event: KeyboardEvent) => void;
-	class?: string;
+	role?: string;
+	size?: string;
+	strokeWidth?: string;
 	title?: {
 		id?: string;
 		title?: string;
 	};
-	desc?: {
-		id?: string;
-		desc?: string;
-	};
-	ariaLabel?: string;
+	variation?: 'micro' | 'mini' | 'outline' | 'solid';
+	withEvents?: boolean;
 }
 
 export type HeroIconComponent = typeof SvelteComponent<IconProps>;
@@ -134,9 +135,9 @@ export type ComparisonOperators = '<' | '=' | '>' | '≠' | '≤' | '≥';
 export type MathOperators = '*' | '+' | '/' | '=' | '-';
 
 interface Operation<T> {
+	symbol: T;
 	value: string;
 	variable: string;
-	symbol: T;
 }
 
 export type LogicOperation = Operation<ComparisonOperators>;
@@ -144,20 +145,20 @@ export type MathOperation = Operation<MathOperators>;
 
 export interface Choice {
 	choiceId: number;
-	frameId: number | null;
+	frameId: null | number;
 	logicOperations: LogicOperation[];
 	mathOperations: MathOperation[];
 	text: string;
 }
 
 export interface Frame extends Coordinates, Pick<Sizes, 'height'> {
-	hidden: boolean;
-	title: string;
-	isEnd: boolean;
-	isStart: boolean;
 	choices: Choice[];
 	frameId: number;
+	hidden: boolean;
 	imageUrl: null | string;
+	isEnd: boolean;
+	isStart: boolean;
 	soundUrl: null | string;
 	text: null | string;
+	title: string;
 }

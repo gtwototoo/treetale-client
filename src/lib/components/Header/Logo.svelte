@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { Link } from 'treetale-ui';
+
 	import Treetale from '../icons/Treetale.svelte';
 	import TreetaleShort from '../icons/TreetaleShort.svelte';
-
-	import { Link } from 'treetale-ui';
 </script>
 
 <Link class="select-none px-2 md:px-4" href="/">

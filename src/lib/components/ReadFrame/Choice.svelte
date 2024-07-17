@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { MouseEventHandler } from 'svelte/elements';
+
 	import { Button } from 'treetale-ui';
 
 	let {
-		onclick,
-		children
+		children,
+		onclick
 	}: {
-		onclick: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 		children?: Snippet;
+		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 	} = $props();
 </script>
 

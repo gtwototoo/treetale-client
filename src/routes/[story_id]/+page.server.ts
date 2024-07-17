@@ -1,6 +1,7 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { Frame, Progress, Story, User } from '$lib/types/index';
+
 import { randomError } from '$lib/utils/random';
 
 randomError;

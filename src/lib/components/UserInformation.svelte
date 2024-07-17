@@ -3,9 +3,11 @@
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
+	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
 	import type { RGB, User } from '$lib/types';
 
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import {
 		signOutUser,
 		subscribeProfile,
@@ -13,21 +15,19 @@
 		updateProfile
 	} from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
-	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
-
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { clm } from '$lib/utils/classMerge';
+
 	import InvisibleDrop from './InvisibleDrop.svelte';
 	import ProfileAvatar from './ProfileAvatar.svelte';
 
 	let {
-		user,
 		me,
-		statistic
+		statistic,
+		user
 	}: {
-		user: User;
 		me: boolean;
 		statistic: string[][];
+		user: User;
 	} = $props();
 
 	let editMode = $state(false);

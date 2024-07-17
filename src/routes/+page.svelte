@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
+	import { Button, type HeroIconComponent, Icon, Input, Loading } from 'treetale-ui';
 
 	import type { Genre, Searched } from '$lib/types';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
-	import { searchStories } from '$lib/requests/story';
-	import { bodyColorStore } from '$lib/stores/main';
-
 	import Footer from '$lib/components/Footer.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
+	import { searchStories } from '$lib/requests/story';
+	import { bodyColorStore } from '$lib/stores/main';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 	import { correctWhitespace } from '$lib/utils/text';
-	import { Button, Icon, Input, Loading, type HeroIconComponent } from 'treetale-ui';
+
 	import Category from './Category.svelte';
 	import MainStatistic from './MainStatistic.svelte';
 

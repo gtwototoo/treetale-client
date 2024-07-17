@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { Variable } from '$lib/types';
+
 	import { correctVariableReplace } from '$lib/utils/text';
 
 	let {
-		tags,
 		description,
+		tags,
 		vars
 	}: {
-		tags: string[];
 		description: string;
+		tags: string[];
 		vars: Variable[];
 	} = $props();
 </script>

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import type { HttpError } from '@sveltejs/kit';
+	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
 	import { Check, XMark } from 'svelte-heros-v2';
+	import { Button, Icon, Input } from 'treetale-ui';
 
 	import type { ResponseResult } from '$lib/types/response';
 
@@ -13,8 +15,6 @@
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signUpUser } from '$lib/requests/user';
 	import { bodyColorStore } from '$lib/stores/main';
-	import type { FormEventHandler } from 'svelte/elements';
-	import { Button, Icon, Input } from 'treetale-ui';
 
 	let name = $state('');
 	let loading = $state(false);

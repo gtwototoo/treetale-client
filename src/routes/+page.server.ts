@@ -1,18 +1,17 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { IUser } from '$lib/types/index.js';
-import type { IStorySchema } from '$lib/types/schemas.js';
+import type { Story, User } from '$lib/types';
 
-import { randomError } from '$lib/utils/random.js';
+import { randomError } from '$lib/utils/random';
 
 interface ICategory {
 	id: string;
-	stories: IStorySchema[];
+	stories: Story[];
 	title: string;
 }
 
 interface IResponseMainInfo {
-	authors: IUser[];
+	authors: User[];
 	categories: ICategory[];
 	statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
 }

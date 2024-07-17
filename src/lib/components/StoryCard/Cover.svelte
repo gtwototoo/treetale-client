@@ -1,25 +1,28 @@
 <script lang="ts">
+	import type { Component } from 'svelte';
+
+	import { Image } from 'treetale-ui';
+
 	import type { RGB } from '$lib/types';
 
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
-	import type { Component } from 'svelte';
-	import { Image } from 'treetale-ui';
+
 	import Titie from './Titie.svelte';
 	import TransparentRect from './TransparentRect.svelte';
 
 	let {
 		class: classname,
-		imageUrl,
-		title,
 		color,
-		icon
+		icon,
+		imageUrl,
+		title
 	}: {
 		class?: string;
-		imageUrl: string | null;
-		title: string;
 		color: RGB;
 		icon: Component;
+		imageUrl: null | string;
+		title: string;
 	} = $props();
 
 	let errorImage = $state(false);

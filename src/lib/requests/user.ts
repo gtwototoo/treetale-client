@@ -1,4 +1,5 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
 import type { RGB } from '$lib/types';
 
 import { fetchPost } from '.';

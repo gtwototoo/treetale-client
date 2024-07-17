@@ -1,25 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { type Person } from 'schema-dts';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
+	import { Button, Icon, Link } from 'treetale-ui';
 
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
-	import { Button, Icon, Link } from 'treetale-ui';
 
-	let { data, children } = $props();
+	let { children, data } = $props();
 
 	const me = $page.data.session && $page.data.session.userId === data.user.userId;
 
 	let user = $derived(me ? $page.data.session : data.user);
 	let { statistic } = $derived(data);
-	let userSchema = $derived({
-		'@type': 'Person',
-		name: user.name
-	} as Person);
+	// let userSchema = $derived({
+	// 	'@type': 'Person',
+	// 	name: user.name
+	// } as Person);
 
 	$effect(() => {
 		$bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;
@@ -27,24 +26,24 @@
 
 	let tabs = [
 		{
-			name: 'Модерируемые',
 			href: '/profile/moderated',
-			icon: Clock
+			icon: Clock,
+			name: 'Модерируемые'
 		},
 		{
-			name: 'Созданные',
 			href: '/profile',
-			icon: Pencil
+			icon: Pencil,
+			name: 'Созданные'
 		},
 		{
-			name: 'Понравившиеся',
 			href: '/profile/liked',
-			icon: Heart
+			icon: Heart,
+			name: 'Понравившиеся'
 		},
 		{
-			name: 'Просмотренные',
 			href: '/profile/viewed',
-			icon: Eye
+			icon: Eye,
+			name: 'Просмотренные'
 		}
 	];
 </script>
@@ -60,7 +59,7 @@
 	<div class="flex size-full flex-col items-center gap-8">
 		{#if me}
 			<div class="flex flex-wrap justify-center gap-2">
-				{#each tabs as { name, href, icon }}
+				{#each tabs as { href, icon, name }}
 					{#if href !== '/profile/moderated' || $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
 						<Link class="w-44 max-sm:w-24" {href}>
 							<Button

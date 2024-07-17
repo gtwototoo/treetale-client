@@ -1,5 +1,6 @@
-import { BLACK_COLOR } from '$lib/constants/colors';
 import type { RGB } from '$lib/types';
+
+import { BLACK_COLOR } from '$lib/constants/colors';
 
 export const alphaToRgb = (rgb: RGB, alpha: number, backColor: RGB = [255, 255, 255]) => {
 	if (!rgb || !rgb.length) return BLACK_COLOR;

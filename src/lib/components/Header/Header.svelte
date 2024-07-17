@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { clm } from '$lib/utils/classMerge';
 	import type { Snippet } from 'svelte';
+
+	import { clm } from '$lib/utils/classMerge';
+
 	import Logo from './Logo.svelte';
 	import LogoLinearGradient from './LogoLinearGradient.svelte';
 	import Session from './Session.svelte';
 
 	let {
-		class: classname,
 		children,
+		class: classname,
 		right
 	}: {
-		class?: string;
 		children?: Snippet;
+		class?: string;
 		right?: Snippet;
 	} = $props();
 </script>

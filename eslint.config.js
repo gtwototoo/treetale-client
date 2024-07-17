@@ -1,108 +1,119 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import parser from "svelte-eslint-parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import globals from 'globals';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import parser from 'svelte-eslint-parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+	allConfig: js.configs.all,
+	baseDirectory: __dirname,
+	recommendedConfig: js.configs.recommended
 });
 
-export default [{
-    ignores: [
-        "**/*.cjs",
-        "**/.DS_Store",
-        "**/node_modules",
-        "**/build",
-        "**/.svelte-kit",
-        "**/pnpm-lock.yaml",
-    ],
-}, ...compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:svelte/recommended",
-    "plugin:perfectionist/recommended-natural",
-    "prettier",
-), {
-    plugins: {
-        "@typescript-eslint": typescriptEslint,
-    },
+export default [
+	{
+		ignores: [
+			'**/*.cjs',
+			'**/.DS_Store',
+			'**/node_modules',
+			'**/build',
+			'**/.svelte-kit',
+			'**/pnpm-lock.yaml'
+		]
+	},
+	...compat.extends(
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:svelte/recommended',
+		'plugin:perfectionist/recommended-natural',
+		'prettier'
+	),
+	{
+		languageOptions: {
+			ecmaVersion: 2020,
 
-    languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
-        },
+			globals: {
+				...globals.browser,
+				...globals.node
+			},
+			parser: tsParser,
+			parserOptions: {
+				extraFileExtensions: ['.svelte']
+			},
 
-        parser: tsParser,
-        ecmaVersion: 2020,
-        sourceType: "module",
+			sourceType: 'module'
+		},
 
-        parserOptions: {
-            extraFileExtensions: [".svelte"],
-        },
-    },
+		plugins: {
+			'@typescript-eslint': typescriptEslint
+		},
 
-    rules: {
-        "@typescript-eslint/no-unused-vars": ["error", {
-            argsIgnorePattern: "_",
-        }],
+		rules: {
+			'@typescript-eslint/adjacent-overload-signatures': 'off',
 
-        "svelte/no-at-html-tags": "off",
-        "@typescript-eslint/adjacent-overload-signatures": "off",
-        "no-undef": "off",
-        "perfectionist/sort-svelte-attributes": "off",
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '_'
+				}
+			],
+			'no-undef': 'off',
+			'perfectionist/sort-imports': [
+				'error',
+				{
+					'custom-groups': {
+						type: {
+							svelte: ['@sveltejs/kit', 'svelte/*', 'svelte']
+						},
 
-        "perfectionist/sort-imports": ["error", {
-            type: "natural",
-            order: "asc",
+						value: {
+							svelte: ['@sveltejs/kit', 'svelte/*', 'svelte']
+						}
+					},
+					groups: [
+						'type',
+						'svelte',
+						['builtin', 'external'],
+						'aliases',
+						'internal-type',
+						'internal',
+						['parent-type', 'sibling-type', 'index-type'],
+						['parent', 'sibling', 'index'],
+						'side-effect',
+						'style',
+						'object',
+						'unknown'
+					],
 
-            groups: [
-                "type",
-                "svelte",
-                ["builtin", "external"],
-                "aliases",
-                "internal-type",
-                "internal",
-                ["parent-type", "sibling-type", "index-type"],
-                ["parent", "sibling", "index"],
-                "side-effect",
-                "style",
-                "object",
-                "unknown",
-            ],
+					'internal-pattern': ['$lib/**', '$page/**', '$UI'],
 
-            "custom-groups": {
-                value: {
-                    svelte: ["@sveltejs/kit", "svelte/*", "svelte"],
-                },
+					'newlines-between': 'always',
 
-                type: {
-                    svelte: ["@sveltejs/kit", "svelte/*", "svelte"],
-                },
-            },
+					order: 'asc',
+					type: 'natural'
+				}
+			],
+			'perfectionist/sort-svelte-attributes': 'off',
 
-            "newlines-between": "always",
-            "internal-pattern": ["$lib/**", "$page/**", "$UI"],
-        }],
-    },
-}, {
-    files: ["**/*.svelte"],
+			'svelte/no-at-html-tags': 'off'
+		}
+	},
+	{
+		files: ['**/*.svelte'],
 
-    languageOptions: {
-        parser: parser,
-        ecmaVersion: 5,
-        sourceType: "script",
+		languageOptions: {
+			ecmaVersion: 5,
+			parser: parser,
+			parserOptions: {
+				parser: '@typescript-eslint/parser'
+			},
 
-        parserOptions: {
-            parser: "@typescript-eslint/parser",
-        },
-    },
-}];
+			sourceType: 'script'
+		}
+	}
+];

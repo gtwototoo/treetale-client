@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte';
 
 	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
+	import { Button, Icon } from 'treetale-ui';
 
 	import { bodyColorStore } from '$lib/stores/main';
 	import { fullscreenStore } from '$lib/stores/reading';
-
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
-	import { Button, Icon } from 'treetale-ui';
+
 	import Header from './Header.svelte';
 
 	let fullscreenSupport = false;
@@ -36,7 +36,7 @@
 	};
 
 	onMount(() => {
-		if (!!document.documentElement.requestFullscreen) {
+		if (document.documentElement.requestFullscreen) {
 			fullscreenSupport = true;
 		}
 	});

@@ -5,8 +5,6 @@ import type { IUser, TRGB } from './lib/types';
 
 import '@total-typescript/ts-reset';
 
-/* eslint-disable no-var */
-
 declare global {
 	namespace App {
 		interface Error {

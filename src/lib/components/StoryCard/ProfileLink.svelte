@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { Button } from 'treetale-ui';
 
 	import type { User } from '$lib/types';
+
 	import { clm } from '$lib/utils/classMerge';
-	import { Button } from 'treetale-ui';
+
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let {

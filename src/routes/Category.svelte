@@ -4,6 +4,7 @@
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import find from 'lodash/find';
 	import range from 'lodash/range';
+	import { type HeroIconComponent, Icon } from 'treetale-ui';
 
 	import type { Story, User } from '$lib/types';
 
@@ -11,22 +12,20 @@
 	import StoriesList from '$lib/components/StoriesList.svelte';
 	import Empty from '$lib/components/StoryCard/Empty.svelte';
 	import StoryCard from '$lib/components/StoryCard/StoryCard.svelte';
-
 	import { correctWhitespace } from '$lib/utils/text';
-	import { Icon, type HeroIconComponent } from 'treetale-ui';
 
 	let {
-		title,
-		stories,
 		authors,
 		icon,
-		listFormat = false
+		listFormat = false,
+		stories,
+		title
 	}: {
-		title: string;
-		stories: Story[];
 		authors: User[];
 		icon: HeroIconComponent;
 		listFormat?: boolean;
+		stories: Story[];
+		title: string;
 	} = $props();
 
 	const options: EmblaOptionsType = {

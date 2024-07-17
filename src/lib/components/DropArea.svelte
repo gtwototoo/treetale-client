@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { clm } from '$lib/utils/classMerge';
-	import { preventDefault } from '$lib/utils/eventsModificators';
-	import { validateMimeType } from '$lib/utils/inputAccept';
 	import type {
 		ChangeEventHandler,
 		DragEventHandler,
@@ -11,23 +8,28 @@
 		MouseEventHandler,
 		SvelteDocumentAttributes
 	} from 'svelte/elements';
+
+	import { clm } from '$lib/utils/classMerge';
+	import { preventDefault } from '$lib/utils/eventsModificators';
+	import { validateMimeType } from '$lib/utils/inputAccept';
+
 	import DashedBorder from './DropArea/DashedBorder.svelte';
 
 	let {
-		class: classname,
 		accept = 'image/*',
 		children,
+		class: classname,
+		onchange,
 		onclick,
 		ondragenter,
 		ondragleave,
-		onvisibilitychange,
-		onchange
-	}: Pick<HTMLInputAttributes, 'accept'> &
-		Pick<SvelteDocumentAttributes, 'onvisibilitychange'> &
-		Pick<HTMLButtonAttributes, 'class' | 'children' | 'ondragenter' | 'onclick'> & {
-			onchange?: (files: File[]) => void;
-			ondragleave?: () => void;
-		} = $props();
+		onvisibilitychange
+	}: {
+		onchange?: (files: File[]) => void;
+		ondragleave?: () => void;
+	} & Pick<HTMLButtonAttributes, 'children' | 'class' | 'onclick' | 'ondragenter'> &
+		Pick<HTMLInputAttributes, 'accept'> &
+		Pick<SvelteDocumentAttributes, 'onvisibilitychange'> = $props();
 
 	let dragged = $state(false);
 	let inputElement = $state<HTMLInputElement>();

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { Button } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { bodyColorStore } from '$lib/stores/main';
 	import { rootStyle } from '$lib/utils/customColors';
-	import { Button } from 'treetale-ui';
 
 	const handleClick = () => {
 		isNotFound ? goto('/', { replaceState: true }) : location.reload();

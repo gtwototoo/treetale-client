@@ -2,11 +2,10 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Plus } from 'svelte-heros-v2';
+	import { Button, Icon } from 'treetale-ui';
 
 	import { createStory } from '$lib/requests/story';
-
 	import { clm } from '$lib/utils/classMerge';
-	import { Button, Icon } from 'treetale-ui';
 
 	let {
 		class: classname

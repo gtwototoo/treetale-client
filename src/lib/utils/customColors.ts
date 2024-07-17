@@ -8,6 +8,7 @@ import {
 	WHITE_COLOR,
 	WHITE_TEXT_COLOR
 } from '$lib/constants/colors';
+
 import { alphaToRgb } from './alphaToRgb';
 import { contrastText } from './contrast';
 

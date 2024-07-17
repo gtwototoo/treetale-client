@@ -1,27 +1,27 @@
 <script lang="ts">
+	import type { HTMLImgAttributes } from 'svelte/elements';
+
 	import last from 'lodash/last';
+	import { Image } from 'treetale-ui';
 
 	import type { RGB as RGBType } from '$lib/types';
 
 	import { clm } from '$lib/utils/classMerge';
-	import { Image } from 'treetale-ui';
-
-	import type { HTMLImgAttributes } from 'svelte/elements';
 
 	let {
-		class: classname,
 		alt,
-		src,
-		size = 'base',
 		base64src,
 		children,
-		onload
-	}: Omit<HTMLImgAttributes, 'color'> & {
-		size?: 'sm' | 'base' | 'lg';
-		onload?: (e: Event) => void;
+		class: classname,
+		onload,
+		size = 'base',
+		src
+	}: {
+		base64src?: null | string;
 		color: RGBType;
-		base64src?: string | null;
-	} = $props();
+		onload?: (e: Event) => void;
+		size?: 'base' | 'lg' | 'sm';
+	} & Omit<HTMLImgAttributes, 'color'> = $props();
 
 	let short = $derived.by(() => {
 		if (!alt) return '-';
@@ -32,9 +32,9 @@
 	});
 
 	const sizes = {
-		sm: clm('size-10 text-xs'),
 		base: clm('size-12 text-base'),
-		lg: clm('size-40 text-6xl font-bold')
+		lg: clm('size-40 text-6xl font-bold'),
+		sm: clm('size-10 text-xs')
 	};
 </script>
 

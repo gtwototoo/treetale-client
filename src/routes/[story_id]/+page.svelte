@@ -1,11 +1,13 @@
 <script lang="ts">
-	import type { Book } from 'schema-dts';
+	import { onMount } from 'svelte';
+	import type { KeyboardEventHandler } from 'svelte/elements';
 
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
+	import { Button } from 'treetale-ui';
 
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import StoryDescription from '$lib/components/StoryDescription.svelte';
@@ -21,9 +23,6 @@
 	} from '$lib/stores/reading.js';
 	import { rootStyle } from '$lib/utils/customColors.js';
 	import { correctToType, doMath } from '$lib/utils/variableOperations.js';
-	import { onMount } from 'svelte';
-	import type { KeyboardEventHandler } from 'svelte/elements';
-	import { Button } from 'treetale-ui';
 
 	let { data } = $props();
 
@@ -112,28 +111,28 @@
 	});
 
 	let { author, frames, progress, story } = data;
-	let { color, description, genre, likes, storyId, title, vars } = story;
+	let { color, description, likes, storyId, title, vars } = story;
 	let frame = $derived(
 		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : $framesStore?.[0]
 	);
-	let bookSchema = $derived({
-		'@type': 'Book',
-		abstract: description,
-		bookFormat: 'EBook',
-		genre,
-		interactionStatistic: {
-			'@type': 'InteractionCounter',
-			interactionType: {
-				'@type': 'LikeAction'
-			},
-			userInteractionCount: likes.length
-		},
-		name: title,
-		publisher: {
-			'@type': 'Person',
-			name: author.name
-		}
-	} as Book);
+	// let bookSchema = $derived({
+	// 	'@type': 'Book',
+	// 	abstract: description,
+	// 	bookFormat: 'EBook',
+	// 	genre,
+	// 	interactionStatistic: {
+	// 		'@type': 'InteractionCounter',
+	// 		interactionType: {
+	// 			'@type': 'LikeAction'
+	// 		},
+	// 		userInteractionCount: likes.length
+	// 	},
+	// 	name: title,
+	// 	publisher: {
+	// 		'@type': 'Person',
+	// 		name: author.name
+	// 	}
+	// } as Book);
 </script>
 
 <svelte:head>

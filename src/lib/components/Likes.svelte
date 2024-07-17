@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { addLike } from '$lib/requests/story';
-	import { clm } from '$lib/utils/classMerge';
 	import without from 'lodash/without';
 	import { Heart } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
+
+	import { addLike } from '$lib/requests/story';
+	import { clm } from '$lib/utils/classMerge';
 
 	let {
 		likes,

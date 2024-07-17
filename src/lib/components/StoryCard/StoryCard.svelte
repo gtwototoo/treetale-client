@@ -1,37 +1,38 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { PUBLIC_TREETALE_BOARD_URL } from '$env/static/public';
 	import find from 'lodash/find';
+	import { Link } from 'treetale-ui';
 
 	import type { Story, User } from '$lib/types';
 
-	import { PUBLIC_TREETALE_BOARD_URL } from '$env/static/public';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { generateMainColors } from '$lib/utils/customColors';
-	import { Link } from 'treetale-ui';
+
 	import Adventure from '../icons/genres/Adventure.svelte';
 	import Cover from './Cover.svelte';
 	import HoverInfo from './HoverInfo.svelte';
 	import Info from './Info.svelte';
 
 	let {
+		author,
 		class: classname,
-		story,
-		author
+		story
 	}: {
+		author?: User;
 		class?: string;
 		story: Story;
-		author?: User;
 	} = $props();
 
 	let { color, created, description, genre, imageUrl, likes, status, storyId, tags, title, vars } =
 		$derived(story);
 
 	let edit = $derived($page.data.session && $page.data.session.userId === author?.userId);
-	let view = $derived(
-		$page.data.session &&
-			($page.data.session.role === 'admin' || $page.data.session.role === 'moderator')
-	);
+	// let view = $derived(
+	// 	$page.data.session &&
+	// 		($page.data.session.role === 'admin' || $page.data.session.role === 'moderator')
+	// );
 
 	let icon = $derived(find(GENRES_LIST, { id: genre })?.icon || Adventure);
 	let selectedColor = $derived(color.length ? color : DEFAULT_COLOR);

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { DocumentText } from 'svelte-heros-v2';
-
 	import { Button, Icon, Link } from 'treetale-ui';
+
 	import Mastercard from './icons/Mastercard.svelte';
 	import Mir from './icons/Mir.svelte';
 	import Telegram from './icons/Telegram.svelte';

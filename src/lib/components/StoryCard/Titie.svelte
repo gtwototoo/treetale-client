@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { clm } from '$lib/utils/classMerge';
 	import type { Selection } from 'd3-selection';
 
 	import { select } from 'd3-selection';
 
+	import { clm } from '$lib/utils/classMerge';
+
 	let {
-		title = 'Без названия',
-		color
+		color,
+		title = 'Без названия'
 	}: {
-		title: string;
 		color: string;
+		title: string;
 	} = $props();
 
 	let ready = $state(false);
