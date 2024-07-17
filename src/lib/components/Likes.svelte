@@ -28,8 +28,6 @@
 			} else {
 				likes = without(likes, $page.data.session.userId);
 			}
-
-			isLiked = likes.includes($page.data.session.userId);
 		} finally {
 			loading = false;
 		}
