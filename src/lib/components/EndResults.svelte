@@ -58,7 +58,7 @@
 <div class="flex w-full flex-col gap-4">
 	<Info {author} {created} edit={false} {likes} {status} {storyId} {selectedColor} />
 	<div class="flex gap-6">
-		<Link href={`/story/${storyId}`} class="flex-1">
+		<Link href={`/${storyId}`} class="flex-1">
 			<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main" {onclick}>
 				В начало
 			</Button>

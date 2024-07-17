@@ -101,9 +101,15 @@
 	);
 </script>
 
-<div class="flex items-start gap-4">
+<div class="flex items-start gap-4 max-md:flex-col">
 	{#if imageUrl}
-		<Cover {imageUrl} {title} {icon} color={selectedColor} class="sticky top-20" />
+		<Cover
+			{imageUrl}
+			{title}
+			{icon}
+			color={selectedColor}
+			class="max-md:w-full md:sticky md:top-20"
+		/>
 	{/if}
 	<Card class="h-auto select-none !items-center gap-5 rounded-3xl bg-main-10 p-8 text-text">
 		{#if storyState === 'ended'}
@@ -154,7 +160,7 @@
 			</div>
 			<div>
 				{#each story.tags as tag, index}
-					<Link href={`/search?tag=${tag}`}>{tag}</Link>
+					<Link href={`/search?tag=${tag}`} data-sveltekit-preload-data="off">{tag}</Link>
 					{#if index !== story.tags.length - 1}
 						<span class="mx-1">-</span>
 					{/if}

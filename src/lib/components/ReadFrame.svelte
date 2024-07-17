@@ -87,12 +87,9 @@
 <ReadCard class={clm('text-left', classname)} src={imageUrl} text={dynamicText(text!)}>
 	{#if choices.length}
 		<FormSplit class="w-full" vertical>
-			{#each choices as { choiceId, logicOperations, text } (choiceId)}
-				{#if !logicOperations.length || checkLogic(logicOperations)}
-					<Choice
-						active={selectedChoiceId === choiceId}
-						onclick={() => selectChoice(choiceId)}
-					>
+			{#each choices as { choiceId, logicOperations, text, frameId } (choiceId)}
+				{#if frameId && (!logicOperations.length || checkLogic(logicOperations))}
+					<Choice onclick={() => selectChoice(choiceId)}>
 						{@html correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
 					</Choice>
 				{/if}

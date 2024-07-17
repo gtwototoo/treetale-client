@@ -1,4 +1,4 @@
-import type { ComparisonOperator, MathOperator, VariableExpects } from '$lib/types';
+import type { ComparisonOperators, MathOperators, VariableExpects } from '$lib/types';
 
 export const correctToType = (value: number | string, expect: VariableExpects) => {
 	return expect === 'Число' ? +value : value;
@@ -6,10 +6,10 @@ export const correctToType = (value: number | string, expect: VariableExpects) =
 
 export const doLogic = (
 	firstValue: number | string,
-	symbol: ComparisonOperator,
+	symbol: ComparisonOperators,
 	secondValue: number | string
 ) => {
-	const operations: Record<ComparisonOperator, boolean> = {
+	const operations: Record<ComparisonOperators, boolean> = {
 		'<': firstValue < secondValue,
 		'=': firstValue === secondValue,
 		'>': firstValue > secondValue,
@@ -25,14 +25,14 @@ export const doLogic = (
 
 export const doMath = (
 	firstValue: number | string,
-	symbol: MathOperator,
+	symbol: MathOperators,
 	secondValue: number | string
 ) => {
 	if (symbol === '=') return `${secondValue}`;
 
 	if (typeof firstValue === 'string' || typeof secondValue === 'string') return `${firstValue}`;
 
-	const operations: Record<Exclude<MathOperator, '='>, number> = {
+	const operations: Record<Exclude<MathOperators, '='>, number> = {
 		'*': firstValue * secondValue,
 		'+': firstValue + secondValue,
 		'/': firstValue / secondValue,
