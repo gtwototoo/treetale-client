@@ -1,61 +1,34 @@
-import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
+import prettier from 'eslint-config-prettier';
+import perfectionistNatural from 'eslint-plugin-perfectionist/configs/recommended-natural';
+import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import parser from 'svelte-eslint-parser';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-	allConfig: js.configs.all,
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended
-});
+import ts from 'typescript-eslint';
 
 export default [
+	perfectionistNatural,
+	prettier,
+	js.configs.recommended,
+	...ts.configs.recommended,
+	...svelte.configs['flat/recommended'],
+	...svelte.configs['flat/prettier'],
 	{
-		ignores: [
-			'**/*.cjs',
-			'**/.DS_Store',
-			'**/node_modules',
-			'**/build',
-			'**/.svelte-kit',
-			'**/pnpm-lock.yaml'
-		]
+		files: ['**/*.svelte'],
+		languageOptions: {
+			parserOptions: {
+				parser: ts.parser
+			}
+		}
 	},
-	...compat.extends(
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:svelte/recommended',
-		'plugin:perfectionist/recommended-natural',
-		'prettier'
-	),
 	{
 		languageOptions: {
-			ecmaVersion: 2020,
-
 			globals: {
 				...globals.browser,
 				...globals.node
-			},
-			parser: tsParser,
-			parserOptions: {
-				extraFileExtensions: ['.svelte']
-			},
-
-			sourceType: 'module'
+			}
 		},
-
-		plugins: {
-			'@typescript-eslint': typescriptEslint
-		},
-
 		rules: {
 			'@typescript-eslint/adjacent-overload-signatures': 'off',
-
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{
@@ -89,31 +62,24 @@ export default [
 						'object',
 						'unknown'
 					],
-
-					'internal-pattern': ['$lib/**', '$page/**', '$UI'],
-
+					'internal-pattern': ['$lib/**', '$page/**'],
 					'newlines-between': 'always',
-
 					order: 'asc',
 					type: 'natural'
 				}
 			],
 			'perfectionist/sort-svelte-attributes': 'off',
-
 			'svelte/no-at-html-tags': 'off'
 		}
 	},
 	{
-		files: ['**/*.svelte'],
-
-		languageOptions: {
-			ecmaVersion: 5,
-			parser: parser,
-			parserOptions: {
-				parser: '@typescript-eslint/parser'
-			},
-
-			sourceType: 'script'
-		}
+		ignores: [
+			'**/*.cjs',
+			'**/.DS_Store',
+			'**/node_modules',
+			'**/build',
+			'**/.svelte-kit',
+			'**/pnpm-lock.yaml'
+		]
 	}
 ];
