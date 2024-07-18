@@ -110,7 +110,7 @@
 	{#if editMode}
 		<InvisibleDrop>Перетащите сюда изображение, чтобы заменить текущую аватарку</InvisibleDrop>
 	{/if}
-	<div class="flex flex-col items-center gap-2 bg-transparent">
+	<div class="flex flex-col items-center gap-2">
 		<div class="p-6">
 			<ProfileAvatar
 				color={$bodyColorStore}
@@ -121,10 +121,7 @@
 			/>
 		</div>
 		<div
-			class={clsx(
-				'flex w-full gap-2 rounded-xl p-4 text-text *:bg-transparent',
-				!editMode && 'bg-contrast/10'
-			)}
+			class={clsx('flex w-full gap-2 rounded-xl p-4 text-text', !editMode && 'bg-contrast/10')}
 		>
 			{#each statistic as [count, title] (title)}
 				<div class="flex w-24 flex-col items-center">
@@ -136,7 +133,7 @@
 			{/each}
 		</div>
 	</div>
-	<div class="flex w-full flex-col items-center bg-transparent">
+	<div class="flex w-full flex-col items-center">
 		<Contenteditable
 			bind:html={user.name}
 			class={clm(
@@ -160,7 +157,7 @@
 			<p class="px-4 text-lg/10 text-text/50">Описание отсутствует</p>
 		{/if}
 	</div>
-	<div class="flex gap-2 bg-transparent">
+	<div class="flex gap-2">
 		{#if me}
 			{#if editMode}
 				<ColorPicker

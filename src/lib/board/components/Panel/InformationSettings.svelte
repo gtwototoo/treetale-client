@@ -181,7 +181,7 @@
 					<p class="text-xs">{genre?.title}</p>
 				</Button>
 			{/snippet}
-			<div class="flex w-96 flex-wrap gap-1 bg-transparent p-2">
+			<div class="flex w-96 flex-wrap gap-1 p-2">
 				{#each GENRES_LIST as { icon, id, title } (id)}
 					<Button
 						onclick={() => switchGenre(id)}

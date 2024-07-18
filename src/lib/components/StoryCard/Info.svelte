@@ -57,9 +57,7 @@
 	);
 </script>
 
-<div
-	class={clm('bottom-0 flex w-full items-center justify-between gap-4 bg-transparent', classname)}
->
+<div class={clm('bottom-0 flex w-full items-center justify-between gap-4', classname)}>
 	{#if author && !edit}
 		<ProfileLink {author} {created} infoColor={infoBackgroundColor} />
 	{:else}
@@ -74,7 +72,7 @@
 				class="box-content size-8 shrink-0 px-2 py-1 max-md:px-1"
 				this={currentStatus.icon}
 			/>
-			<div class="overflow-hidden bg-transparent pr-4 text-left max-md:hidden">
+			<div class="overflow-hiddenpr-4 text-left max-md:hidden">
 				<p class="truncate text-text max-xs:hidden">
 					{currentStatus.title}
 				</p>

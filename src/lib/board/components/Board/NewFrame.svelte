@@ -30,6 +30,6 @@
 		)}
 		style={newFrameStyle}
 	>
-		<Icon class={clm('h-12 w-12 bg-transparent', !x && !y && 'invisible')} this={Plus} />
+		<Icon class={clm('size-12', !x && !y && 'invisible')} this={Plus} />
 	</div>
 </div>

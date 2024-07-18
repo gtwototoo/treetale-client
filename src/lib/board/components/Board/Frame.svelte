@@ -85,7 +85,7 @@
 			tabindex="0"
 			bind:clientHeight={frame.height}
 			class={clm(
-				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text *:bg-transparent',
+				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text',
 				!readonlyModeStore.isEnabled && 'cursor-move transition-[box-shadow] hover:shadow-lg',
 				movingFrameStore.frameId === frame.frameId && 'shadow-lg',
 				boardStateStore.mode === 'binding' &&

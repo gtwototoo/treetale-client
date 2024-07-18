@@ -13,7 +13,7 @@
 
 <div class="flex justify-center bg-white/80">
 	<section
-		class="flex w-full max-w-[120rem] select-none items-center justify-between gap-6 bg-transparent p-6 text-sm max-md:flex-col max-sm:gap-3"
+		class="flex w-full max-w-[120rem] select-none items-center justify-between gap-6 p-6 text-sm max-md:flex-col max-sm:gap-3"
 	>
 		<div class="flex items-center gap-6 max-md:gap-4 max-sm:flex-col">
 			<div class="flex items-center gap-4">

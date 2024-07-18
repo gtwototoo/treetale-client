@@ -277,7 +277,7 @@
 					<p class="text-xs">{soundUrl ? `Звук ${frameId}` : 'Звук'}</p>
 				</Button>
 			{/snippet}
-			<div class="flex w-96 flex-col gap-3 bg-transparent p-4">
+			<div class="flex w-96 flex-col">
 				<SoundUploader
 					class="h-48"
 					onloadstart={handleAddSound}

@@ -94,7 +94,7 @@
 		ondragleave={handleDragLeave}
 		ondrop={handleDrop}
 		ondragover={preventDefault}
-		class="group relative flex size-full flex-col items-center justify-center gap-[inherit] rounded-xl bg-main-30 p-4 text-text *:pointer-events-none *:bg-transparent"
+		class="group relative flex size-full flex-col items-center justify-center gap-[inherit] rounded-xl bg-main-30 p-4 text-text *:pointer-events-none"
 	>
 		<DashedBorder {dragged} />
 		{@render children?.()}

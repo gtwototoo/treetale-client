@@ -43,7 +43,7 @@
 			{/if}
 		</Button>
 	{/snippet}
-	<div class="flex w-96 flex-col gap-3 bg-transparent p-4">
+	<div class="flex w-96 flex-col">
 		{@render children()}
 	</div>
 </Popover>

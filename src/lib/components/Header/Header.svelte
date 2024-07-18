@@ -20,7 +20,7 @@
 
 <LogoLinearGradient />
 
-<div class={clm('z-10 flex w-full justify-center bg-transparent', classname)}>
+<div class={clm('z-10 flex w-full justify-center', classname)}>
 	<section class="flex w-full max-w-[120rem] items-center justify-between p-4 max-sm:p-3">
 		<Logo />
 		<div class="flex gap-4 max-sm:gap-2">
