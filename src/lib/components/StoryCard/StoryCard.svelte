@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { PUBLIC_TREETALE_BOARD_URL } from '$env/static/public';
 	import find from 'lodash/find';
 	import { Link } from 'treetale-ui';
 
@@ -39,7 +38,7 @@
 </script>
 
 <Link
-	href={`${edit ? PUBLIC_TREETALE_BOARD_URL : ''}/${storyId}`}
+	href={`${edit ? '/board' : ''}/${storyId}`}
 	class="group relative shrink-0 overflow-hidden rounded-3xl"
 >
 	<div class="contents" style={generateMainColors(selectedColor)}>

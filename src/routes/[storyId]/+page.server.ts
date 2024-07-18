@@ -14,7 +14,7 @@ export interface ResponseProgress {
 }
 
 export const load = async ({ fetch, params }) => {
-	const storyId = +params.story_id;
+	const storyId = +params.storyId;
 
 	if (isNaN(storyId)) {
 		randomError(404);

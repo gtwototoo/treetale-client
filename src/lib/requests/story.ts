@@ -1,4 +1,5 @@
-import { PUBLIC_TREETALE_API_URL, PUBLIC_TREETALE_BOARD_URL } from '$env/static/public';
+import { goto } from '$app/navigation';
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { Genre, Searched } from '$lib/types';
 
@@ -20,9 +21,7 @@ export const createStory = async () => {
 	try {
 		const { storyId } = await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/stories/create`);
 
-		window.location.href = `${PUBLIC_TREETALE_BOARD_URL}/${storyId}`;
-
-		return;
+		return goto(`/board/${storyId}`);
 	} catch (e) {
 		console.error(e);
 	}

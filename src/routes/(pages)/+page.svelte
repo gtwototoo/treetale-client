@@ -5,7 +5,9 @@
 	import type { Genre, Searched } from '$lib/types';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
+	import Category from '$lib/components/Category.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import MainStatistic from '$lib/components/MainStatistic.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { searchStories } from '$lib/requests/story';
@@ -13,9 +15,6 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 	import { correctWhitespace } from '$lib/utils/text';
-
-	import Category from './Category.svelte';
-	import MainStatistic from './MainStatistic.svelte';
 
 	let { data } = $props();
 

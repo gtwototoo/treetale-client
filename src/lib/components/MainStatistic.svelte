@@ -1,41 +1,5 @@
 <script lang="ts">
-	// import clsx from 'clsx';
-	// import { BookOpen, Bookmark, Cube, Heart, PaintBrush, Star, Users } from 'svelte-heros-v2';
-
 	export let statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
-
-	// const features = [
-	// 	{
-	// 		className: clsx('right-[105%] top-[6%] w-[26.25rem]'),
-	// 		icon: Cube,
-	// 		text: 'Собственный редактор историй'
-	// 	},
-	// 	{
-	// 		className: clsx('right-[104%] top-[40%] w-[26.25rem]'),
-	// 		icon: Bookmark,
-	// 		text: 'Библиотека просмотренных историй'
-	// 	},
-	// 	{
-	// 		className: clsx('left-[105%] top-[6%] w-[26.25rem]'),
-	// 		icon: Star,
-	// 		text: 'Возможность поддержки авторов'
-	// 	},
-	// 	{
-	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
-	// 		icon: PaintBrush,
-	// 		text: 'Кастомизация профилей и историй'
-	// 	},
-	// 	{
-	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
-	// 		icon: PuzzlePiece,
-	// 		text: 'Частые обновления и модификации'
-	// 	},
-	// 	{
-	// 		className: clsx('left-[104%] top-[40%] w-[26.25rem]'),
-	// 		icon: Variable,
-	// 		text: 'Наличие переменных и условий в истории'
-	// 	}
-	// ];
 </script>
 
 <div class="flex select-none justify-center">
