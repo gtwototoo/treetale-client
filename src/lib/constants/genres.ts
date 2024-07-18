@@ -1,15 +1,15 @@
-import Action from '$lib/components/icons/genres/Action.svelte';
-import Adult from '$lib/components/icons/genres/Adult.svelte';
-import Adventure from '$lib/components/icons/genres/Adventure.svelte';
-import Detective from '$lib/components/icons/genres/Detective.svelte';
-import Drama from '$lib/components/icons/genres/Drama.svelte';
-import Fantastic from '$lib/components/icons/genres/Fantastic.svelte';
-import Fantasy from '$lib/components/icons/genres/Fantasy.svelte';
-import Historical from '$lib/components/icons/genres/Historical.svelte';
-import Horror from '$lib/components/icons/genres/Horror.svelte';
-import Humor from '$lib/components/icons/genres/Humor.svelte';
-import Romance from '$lib/components/icons/genres/Romance.svelte';
-import Thriller from '$lib/components/icons/genres/Thriller.svelte';
+import Action from '$lib/components/Icons/Genres/Action.svelte';
+import Adult from '$lib/components/Icons/Genres/Adult.svelte';
+import Adventure from '$lib/components/Icons/Genres/Adventure.svelte';
+import Detective from '$lib/components/Icons/Genres/Detective.svelte';
+import Drama from '$lib/components/Icons/Genres/Drama.svelte';
+import Fantastic from '$lib/components/Icons/Genres/Fantastic.svelte';
+import Fantasy from '$lib/components/Icons/Genres/Fantasy.svelte';
+import Historical from '$lib/components/Icons/Genres/Historical.svelte';
+import Horror from '$lib/components/Icons/Genres/Horror.svelte';
+import Humor from '$lib/components/Icons/Genres/Humor.svelte';
+import Romance from '$lib/components/Icons/Genres/Romance.svelte';
+import Thriller from '$lib/components/Icons/Genres/Thriller.svelte';
 
 export const GENRES_LIST = [
 	{

@@ -10,7 +10,7 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { generateMainColors } from '$lib/utils/customColors';
 
-	import Adventure from '../icons/genres/Adventure.svelte';
+	import Adventure from '../Icons/Genres/Adventure.svelte';
 	import Cover from './Cover.svelte';
 	import HoverInfo from './HoverInfo.svelte';
 	import Info from './Info.svelte';
