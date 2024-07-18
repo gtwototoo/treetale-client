@@ -63,7 +63,7 @@
 	{:else}
 		<div
 			class={clm(
-				'flex items-center overflow-hidden rounded-full p-1 text-sm',
+				'flex items-center overflow-hidden rounded-full p-1 pr-5 text-sm',
 				currentStatus.color,
 				infoBackgroundColor
 			)}
