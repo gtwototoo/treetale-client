@@ -14,7 +14,7 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signUpUser } from '$lib/requests/user';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 
 	let name = $state('');
 	let loading = $state(false);
@@ -52,7 +52,7 @@
 
 	let disabled = $derived(!name);
 
-	$bodyColorStore = DEFAULT_COLOR;
+	bodyBackgroundColorStore.color = DEFAULT_COLOR;
 </script>
 
 <svelte:head>

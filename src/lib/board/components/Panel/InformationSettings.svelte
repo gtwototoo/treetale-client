@@ -3,7 +3,6 @@
 
 	import ImageUploader from '$board/components/ImageUploader.svelte';
 	import { deleteStory, updateInfomation } from '$board/requests/story';
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
@@ -31,6 +30,7 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { ILLUSTRATIONS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage, saveImage } from '$lib/requests/files';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import IllustrationPopover from './IllustrationPopover.svelte';

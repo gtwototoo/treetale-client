@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { Trash } from 'svelte-heros-v2';
 	import { Button, Icon, Image } from 'treetale-ui';
 
 	import type { HeroIconComponent } from '$lib/types';
 
 	import DropArea from '$lib/components/DropArea.svelte';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	let {

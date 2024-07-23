@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { XMark } from 'svelte-heros-v2';
 	import { Button, Contenteditable, FormSplit, Icon, InputTags } from 'treetale-ui';
 
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	export let noteKey: number;

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { publishStory, reviewRequestStory } from '$board/requests/story';
-	import { currentThemeClass, redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { Button } from 'treetale-ui';
 
+	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 

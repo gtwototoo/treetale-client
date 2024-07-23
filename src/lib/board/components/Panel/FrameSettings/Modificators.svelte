@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { currentThemeClass, redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
@@ -15,6 +14,7 @@
 		MathOperators
 	} from '$lib/types';
 
+	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	type ModificatorType = 'logic' | 'math';

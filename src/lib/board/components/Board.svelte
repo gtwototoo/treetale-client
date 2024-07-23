@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 
 	import InformationSettings from '$board/components/Panel/InformationSettings.svelte';
-	import { bodyBackgroundColorStore } from '$board/stores/colors.svelte';
 	import {
 		addFrameOffsetStore,
 		boardFramesStore,
@@ -25,6 +24,7 @@
 
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 
 	import BoardArea from './Board/BoardArea.svelte';
 	import {

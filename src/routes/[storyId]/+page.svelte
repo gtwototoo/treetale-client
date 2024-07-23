@@ -14,15 +14,12 @@
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { updateProgress } from '$lib/requests/progress';
-	import { bodyColorStore } from '$lib/stores/main';
-	import {
-		framesStore,
-		fullscreenStore,
-		soundStore,
-		variablesStore
-	} from '$lib/stores/reading.js';
-	import { rootStyle } from '$lib/utils/customColors.js';
-	import { correctToType, doMath } from '$lib/utils/variableOperations.js';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { framesStore, fullscreenStore } from '$lib/stores/reading.svelte.js';
+	import { soundStore } from '$lib/stores/sound.svelte';
+	import { variablesStore } from '$lib/stores/variables.svelte.js';
+	import { rootStyle } from '$lib/utils/customColors';
+	import { correctToType, doMath } from '$lib/utils/variableOperations';
 
 	let { data } = $props();
 
@@ -42,8 +39,9 @@
 
 		const setFastChoice = () => {
 			const lastFrame = last(data.frames);
+			const correctChoices = lastFrame?.choices.filter((c) => c.frameId);
 
-			if (lastFrame?.choices && lastFrame?.choices.length === 1) {
+			if (lastFrame && correctChoices?.length === 1) {
 				setChoice(lastFrame.frameId, lastFrame.choices[0].choiceId);
 			}
 		};
@@ -60,17 +58,17 @@
 	};
 
 	const updateVars = (frameId: number, choiceId: number) => {
-		const frame = find($framesStore, { frameId });
+		const frame = find(framesStore.frames, { frameId });
 		const choice = find(frame?.choices, { choiceId });
 
 		if (!choice || !choice.mathOperations.length) return;
 
 		for (const { symbol, value, variable: name } of choice.mathOperations) {
-			const variableId = findIndex($variablesStore, { name });
-			const { expect } = $variablesStore[variableId];
-			const firstValue = $variablesStore[variableId].value;
+			const variableId = findIndex(variablesStore.variables, { name });
+			const { expect } = variablesStore.variables[variableId];
+			const firstValue = variablesStore.variables[variableId].value;
 
-			$variablesStore[variableId].value = doMath(
+			variablesStore.variables[variableId].value = doMath(
 				correctToType(firstValue, expect),
 				symbol,
 				correctToType(value, expect)
@@ -90,14 +88,14 @@
 
 			await invalidateAll();
 
-			$soundStore.sound?.play();
+			soundStore.sound?.play();
 		} catch (e) {
 			console.error(e);
 		}
 	};
 
 	const handleFullscreenChange = () => {
-		$fullscreenStore = !!document.fullscreenElement;
+		fullscreenStore.isEnabled = !!document.fullscreenElement;
 	};
 
 	const handleFulscreen = async () => {
@@ -105,15 +103,17 @@
 	};
 
 	onMount(() => {
-		$bodyColorStore = color.length ? color : DEFAULT_COLOR;
-		$framesStore = frames;
-		$variablesStore = vars;
+		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
+		framesStore.frames = frames;
+		variablesStore.variables = vars;
 	});
 
 	let { author, frames, progress, story } = data;
 	let { color, description, likes, storyId, title, vars } = story;
 	let frame = $derived(
-		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : $framesStore?.[0]
+		progress.length
+			? find(frames, { frameId: last(progress)!.nextFrameId })
+			: framesStore.frames?.[0]
 	);
 	// let bookSchema = $derived({
 	// 	'@type': 'Book',
@@ -136,7 +136,7 @@
 </script>
 
 <svelte:head>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle(bodyBackgroundColorStore.color)}
 	<meta name="description" content={description} />
 	<title>{title}</title>
 </svelte:head>
@@ -167,7 +167,7 @@
 				/>
 			{/if}
 		</div>
-		{#if $fullscreenStore}
+		{#if fullscreenStore.isEnabled}
 			<Button
 				class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-90 text-text text-opacity-10 hover:text-opacity-100"
 				onclick={handleFulscreen}

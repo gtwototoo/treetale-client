@@ -3,7 +3,6 @@
 	import type { DragEventHandler, FormEventHandler } from 'svelte/elements';
 
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { boardFramesStore, selectedFrameStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
@@ -22,6 +21,7 @@
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { FRAMES_FOLDER } from '$lib/constants/s3forders';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import ImageUploader from '../ImageUploader.svelte';

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { Cloud, Link, XMark } from 'svelte-heros-v2';
 	import { Button, Icon, Input, Listbox } from 'treetale-ui';
 
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import ShortDescription from './ShortDescription.svelte';

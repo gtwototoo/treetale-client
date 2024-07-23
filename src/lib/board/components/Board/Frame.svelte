@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { currentThemeClass } from '$board/stores/colors.svelte';
 	import {
 		boardFramesStore,
 		connectionStartStore,
-		movingFrameStore
+		movingFrameStore,
+		selectedFrameStore
 	} from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
@@ -16,6 +16,7 @@
 
 	import type { Frame } from '$lib/types';
 
+	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { preventDefault } from '$lib/utils/eventsModificators';
 
@@ -76,47 +77,48 @@
 	let greenHoverBackgroundColor = $derived(
 		currentThemeClass(clm('hover:!bg-emerald-800'), clm('hover:!bg-emerald-200'))
 	);
+	let style = $derived([transform({ x, y }), `z-index: ${frame.frameId}`].join(';'));
 </script>
 
 {#if frame}
-	<div class="absolute" style="{transform({ x, y })}; z-index: {frame.frameId}">
-		<div
-			role="button"
-			tabindex="0"
-			bind:clientHeight={frame.height}
-			class={clm(
-				'relative z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text',
-				!readonlyModeStore.isEnabled && 'cursor-move transition-[box-shadow] hover:shadow-lg',
-				movingFrameStore.frameId === frame.frameId && 'shadow-lg',
-				boardStateStore.mode === 'binding' &&
-					clm(
-						'!bg-main-70',
-						connectionStartStore.frameId &&
-							connectionStartStore.frameId !== frame.frameId &&
-							clm(greenHoverBackgroundColor, 'cursor-pointer !bg-contrast')
-					)
-			)}
-			onkeydown={preventDefault}
-			onclick={createConnection}
-			onmousedown={handleMouseDown}
-		>
-			<Header {frame} onhide={setVisible} start={frame.frameId === 1} end={isEndFrame} />
-			{#if !hidden}
-				{#if imageUrl}
-					<Image
-						alt="Изображение блока"
-						class="h-36 w-full rounded-lg !bg-main/30 text-text"
-						cover
-						src={frame.imageUrl}
-					/>
-				{/if}
-				<div class={clm('flex h-20 items-center px-4 text-center', !text && 'text-gray-400')}>
-					<div class="line-clamp-5 w-full break-words text-left">
-						{@html text || 'Описание блока'}
-					</div>
-				</div>
-				<Choices {frame} />
+	<div
+		role="button"
+		tabindex="0"
+		bind:clientHeight={frame.height}
+		{style}
+		class={clm(
+			'absolute z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text ring-text',
+			!readonlyModeStore.isEnabled && 'cursor-move transition-[box-shadow] hover:ring-2',
+			movingFrameStore.frameId === frame.frameId && '!ring-4',
+			selectedFrameStore.frameId === frame.frameId && 'ring-2',
+			boardStateStore.mode === 'binding' &&
+				clm(
+					'!bg-main-70',
+					connectionStartStore.frameId &&
+						connectionStartStore.frameId !== frame.frameId &&
+						clm(greenHoverBackgroundColor, 'cursor-pointer !bg-contrast')
+				)
+		)}
+		onkeydown={preventDefault}
+		onclick={createConnection}
+		onmousedown={handleMouseDown}
+	>
+		<Header {frame} onhide={setVisible} start={frame.frameId === 1} end={isEndFrame} />
+		{#if !hidden}
+			{#if imageUrl}
+				<Image
+					alt="Изображение блока"
+					class="h-36 w-full rounded-lg !bg-main/30 text-text"
+					cover
+					src={frame.imageUrl}
+				/>
 			{/if}
-		</div>
+			<div class={clm('flex h-20 items-center px-4 text-center', !text && 'text-gray-400')}>
+				<div class="line-clamp-5 w-full break-words text-left">
+					{@html text || 'Описание блока'}
+				</div>
+			</div>
+			<Choices {frame} />
+		{/if}
 	</div>
 {/if}

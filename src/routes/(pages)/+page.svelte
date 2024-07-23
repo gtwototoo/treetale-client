@@ -11,7 +11,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { searchStories } from '$lib/requests/story';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 	import { correctWhitespace } from '$lib/utils/text';
@@ -24,7 +24,7 @@
 	let loading = $state(false);
 	let timer = $state<number>();
 
-	$bodyColorStore = DEFAULT_COLOR;
+	bodyBackgroundColorStore.color = DEFAULT_COLOR;
 
 	const icons: Record<string, HeroIconComponent> = {
 		dark_theme: Moon,
@@ -71,7 +71,7 @@
 </script>
 
 <svelte:head>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle(bodyBackgroundColorStore.color)}
 	<title>TREETALE</title>
 	<meta
 		name="description"
@@ -82,7 +82,7 @@
 	/>
 </svelte:head>
 
-<div class="flex min-h-full justify-center overflow-hidden">
+<div class="flex grow justify-center overflow-hidden">
 	<section class="flex w-full max-w-[120rem] flex-col gap-6 py-4">
 		<MainStatistic statistic={data.statistic} />
 		{#if data.categories.length}

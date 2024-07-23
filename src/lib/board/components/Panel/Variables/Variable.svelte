@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
@@ -9,6 +8,7 @@
 
 	import type { Variable, VariableExpects } from '$lib/types';
 
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	let {

@@ -3,7 +3,6 @@
 	import Footer from '$board/components/Footer.svelte';
 	import Header from '$board/components/Header.svelte';
 	import Panel from '$board/components/Panel.svelte';
-	import { bodyBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { boardParamsStore, boardStateStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
@@ -12,6 +11,7 @@
 	import cloneDeep from 'lodash/cloneDeep';
 
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
 
 	let { data } = $props();

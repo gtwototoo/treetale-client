@@ -3,8 +3,8 @@ import { redirect } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import { fetchPost } from '$lib/requests/index.js';
-import { COOKIE_OPTIONS } from '$lib/server/constants.js';
+import { fetchPost } from '$lib/requests/index';
+import { COOKIE_OPTIONS } from '$lib/server/constants';
 
 interface ISessionInfo {
 	sessionId: string;

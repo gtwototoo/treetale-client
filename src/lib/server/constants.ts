@@ -4,7 +4,11 @@ import { dev } from '$app/environment';
 import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 import ms from 'ms';
 
-export const COOKIE_OPTIONS: CookieSerializeOptions = {
+type CookieOptions = {
+	path: string;
+} & CookieSerializeOptions;
+
+export const COOKIE_OPTIONS: CookieOptions = {
 	httpOnly: true,
 	maxAge: ms('365d'),
 	path: '/',

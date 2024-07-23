@@ -13,6 +13,7 @@
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
+	import { deleteProgress } from '$lib/requests/progress';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 
@@ -61,8 +62,14 @@
 		state = (await copyText(textForCopy)) ? 'success' : 'error';
 	};
 
-	const handleDelete = () => {
-		progress = [];
+	const handleDelete = async () => {
+		try {
+			await deleteProgress(storyId);
+
+			progress = [];
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	const handleOpenHistory = () => {

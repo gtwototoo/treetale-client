@@ -6,7 +6,7 @@
 	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 
@@ -22,7 +22,7 @@
 	// } as Person);
 
 	$effect(() => {
-		$bodyColorStore = user.color.length ? user.color : DEFAULT_COLOR;
+		bodyBackgroundColorStore.color = user.color.length ? user.color : DEFAULT_COLOR;
 	});
 
 	let tabs = [
@@ -50,7 +50,7 @@
 </script>
 
 <svelte:head>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle(bodyBackgroundColorStore.color)}
 	<title>{me ? 'Профиль' : user.name}</title>
 	<meta name="description" content={user.description} />
 </svelte:head>

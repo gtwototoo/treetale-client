@@ -1,6 +1,6 @@
 <script lang="ts">
 	import StoriesList from '$lib/components/StoriesList.svelte';
-	import { correctWhitespace } from '$lib/utils/text.js';
+	import { correctWhitespace } from '$lib/utils/text';
 
 	let { data } = $props();
 </script>

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { addFrame, setSelectedFrame } from '$board/components/methods.svelte';
-	import { currentThemeClass, redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
@@ -14,6 +13,7 @@
 	import type { Choice, Frame } from '$lib/types';
 
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import Modificators from './Modificators.svelte';

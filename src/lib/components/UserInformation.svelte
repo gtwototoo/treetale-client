@@ -14,7 +14,7 @@
 		unsubscribeProfile,
 		updateProfile
 	} from '$lib/requests/user';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import InvisibleDrop from './InvisibleDrop.svelte';
@@ -65,11 +65,11 @@
 	};
 
 	const setColor = (color: RGB) => {
-		$bodyColorStore = color;
+		bodyBackgroundColorStore.color = color;
 	};
 
 	const cancelEdit = () => {
-		$bodyColorStore = user.color || DEFAULT_COLOR;
+		bodyBackgroundColorStore.color = user.color || DEFAULT_COLOR;
 		editMode = false;
 	};
 
@@ -90,7 +90,7 @@
 		loading = true;
 
 		try {
-			await updateProfile(user.name, user.description, $bodyColorStore);
+			await updateProfile(user.name, user.description, bodyBackgroundColorStore.color);
 			await invalidateAll();
 		} catch (e) {
 			console.error(e);
@@ -113,7 +113,7 @@
 	<div class="flex flex-col items-center gap-2">
 		<div class="p-6">
 			<ProfileAvatar
-				color={$bodyColorStore}
+				color={bodyBackgroundColorStore.color}
 				{editMode}
 				size="lg"
 				src={user.imageUrl}
@@ -161,7 +161,7 @@
 		{#if me}
 			{#if editMode}
 				<ColorPicker
-					color={$bodyColorStore}
+					color={bodyBackgroundColorStore.color}
 					{light}
 					onchange={setColor}
 					align="left"

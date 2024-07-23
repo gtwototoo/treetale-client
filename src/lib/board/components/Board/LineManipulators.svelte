@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { boardStateStore } from '$board/stores/index.svelte';
@@ -9,6 +8,7 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	const removeConnection = (frameId: number, choiceId: number) => {

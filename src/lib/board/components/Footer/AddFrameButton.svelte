@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { MouseEventHandler } from 'svelte/elements';
 
-	import { currentThemeClass, redBackgroundColorStore } from '$board/stores/colors.svelte';
 	import { addFrameOffsetStore } from '$board/stores/frames.svelte';
 	import { boardStateStore, zoomCorrect } from '$board/stores/index.svelte';
 	import { Plus, XMark } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
+	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	const disableAddFrameMode = () => {

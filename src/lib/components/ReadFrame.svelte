@@ -6,7 +6,8 @@
 	import type { LogicOperation } from '$lib/types';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { framesStore, variablesStore } from '$lib/stores/reading';
+	import { framesStore } from '$lib/stores/reading.svelte';
+	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import { correctToType, doLogic, doMath } from '$lib/utils/variableOperations';
@@ -39,17 +40,17 @@
 	const updateVars = (frameId: number, choiceId?: number) => {
 		if (!choiceId) return;
 
-		const frame = find($framesStore, { frameId });
+		const frame = find(framesStore.frames, { frameId });
 		const choice = find(frame?.choices, { choiceId });
 
 		if (!choice?.mathOperations.length) return;
 
 		for (const { symbol, value, variable: name } of choice.mathOperations) {
-			const variableId = findIndex($variablesStore, { name });
-			const { expect } = $variablesStore[variableId];
-			const firstValue = $variablesStore[variableId].value;
+			const variableId = findIndex(variablesStore.variables, { name });
+			const { expect } = variablesStore.variables[variableId];
+			const firstValue = variablesStore.variables[variableId].value;
 
-			$variablesStore[variableId].value = doMath(
+			variablesStore.variables[variableId].value = doMath(
 				correctToType(firstValue, expect),
 				symbol,
 				correctToType(value, expect)
@@ -64,7 +65,7 @@
 	const checkLogic = (logicOperations: LogicOperation[]) => {
 		return logicOperations
 			.map(({ symbol, value: secondValue, variable: name }) => {
-				const { expect, value: firstValue } = find($variablesStore, { name })!;
+				const { expect, value: firstValue } = find(variablesStore.variables, { name })!;
 
 				return doLogic(
 					correctToType(firstValue, expect),
@@ -78,23 +79,28 @@
 	const dynamicText = (text: string) => {
 		updateVars(frameId, selectedChoiceId);
 
-		return correctVariableReplace(text, $variablesStore) || 'Пустота...';
+		return correctVariableReplace(text, variablesStore.variables) || 'Пустота...';
 	};
 
-	let { choices, imageUrl, text } = $derived(find($framesStore, { frameId })!);
+	let { choices, imageUrl, text } = $derived(find(framesStore.frames, { frameId })!);
 </script>
 
-<ReadCard class={clm('text-left', classname)} src={imageUrl} text={dynamicText(text!)}>
+<ReadCard class={clm('relative text-left', classname)} src={imageUrl} text={dynamicText(text!)}>
 	{#if choices.length}
 		<FormSplit class="w-full" vertical>
 			{#each choices as { choiceId, frameId, logicOperations, text } (choiceId)}
 				{#if frameId && (!logicOperations.length || checkLogic(logicOperations))}
 					<Choice onclick={() => selectChoice(choiceId)}>
-						{@html correctVariableReplace(text, $variablesStore) || 'Неожиданный поворот'}
+						{@html correctVariableReplace(text, variablesStore.variables) ||
+							'Неожиданный поворот'}
 					</Choice>
 				{/if}
 			{/each}
 		</FormSplit>
+		<div class="absolute top-full mt-5 flex items-center gap-2">
+			<div class="min-w-[1.75rem] rounded-lg bg-main-70 px-2 py-1 font-bold">ПРОБЕЛ</div>
+			<p>- Далее</p>
+		</div>
 	{:else}
 		<div class="flex w-full gap-3">
 			<Button

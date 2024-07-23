@@ -4,8 +4,8 @@
 	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import { bodyColorStore } from '$lib/stores/main';
-	import { fullscreenStore } from '$lib/stores/reading';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { fullscreenStore } from '$lib/stores/reading.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
 
@@ -29,9 +29,9 @@
 		try {
 			await readScreen.requestFullscreen();
 
-			$fullscreenStore = true;
+			fullscreenStore.isEnabled = true;
 		} catch {
-			$fullscreenStore = false;
+			fullscreenStore.isEnabled = false;
 		}
 	};
 
@@ -46,7 +46,7 @@
 	<Button
 		class={clm(
 			'header-button text-text',
-			contrastText($bodyColorStore) ? 'bg-yellow-600' : 'bg-yellow-300'
+			contrastText(bodyBackgroundColorStore.color) ? clm('bg-yellow-600') : clm('bg-yellow-300')
 		)}
 		size="lg"
 	>

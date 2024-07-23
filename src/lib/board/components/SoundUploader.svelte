@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { Howl } from 'howler';
 
-	import { redBackgroundColorStore } from '$board/stores/colors.svelte';
-	import { soundStore } from '$board/stores/sound.svelte';
 	import { MusicalNote, Play, Stop, Trash } from 'svelte-heros-v2';
 	import { Button, Icon, Loading } from 'treetale-ui';
 
 	import DropArea from '$lib/components/DropArea.svelte';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { soundStore } from '$lib/stores/sound.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	let {

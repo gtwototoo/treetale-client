@@ -12,7 +12,7 @@
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signInUser } from '$lib/requests/user';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
 
 	let value = $state('');
@@ -53,13 +53,13 @@
 		}
 	};
 
-	$bodyColorStore = DEFAULT_COLOR;
+	bodyBackgroundColorStore.color = DEFAULT_COLOR;
 
 	let disabled = $derived(!value);
 </script>
 
 <svelte:head>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle(bodyBackgroundColorStore.color)}
 	<title>Авторизация</title>
 </svelte:head>
 

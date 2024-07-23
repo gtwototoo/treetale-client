@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { currentThemeClass } from '$board/stores/colors.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { type SelectedChoices, inspectorStore } from '$board/stores/inspector.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
@@ -11,6 +10,7 @@
 
 	import type { Choice, LogicOperation } from '$lib/types';
 
+	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import { correctToType, doLogic, doMath } from '$lib/utils/variableOperations';

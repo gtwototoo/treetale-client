@@ -4,7 +4,7 @@
 	import { Button } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { bodyColorStore } from '$lib/stores/main';
+	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
 
 	const handleClick = () => {
@@ -14,12 +14,12 @@
 	let isNotFound = $derived($page.status === 404);
 
 	$effect(() => {
-		$bodyColorStore = $page.error?.color;
+		bodyBackgroundColorStore.color = $page.error?.color;
 	});
 </script>
 
 <svelte:head>
-	{@html rootStyle($bodyColorStore)}
+	{@html rootStyle(bodyBackgroundColorStore.color)}
 	<title>{isNotFound ? 'Страница не найдена' : 'Произошла ошибка'}</title>
 </svelte:head>
 

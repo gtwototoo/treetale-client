@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { currentThemeClass } from '$board/stores/colors.svelte';
 	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
 	import { boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import find from 'lodash/find';
@@ -8,6 +7,7 @@
 
 	import type { Choice, Frame } from '$lib/types';
 
+	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	type HTMLContentEditable = HTMLDivElement;
