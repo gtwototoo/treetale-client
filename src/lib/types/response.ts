@@ -1,7 +1,7 @@
 import type { Story, User } from '.';
 
 export interface ResponseStories {
-	authors: User[];
+	authors: ({ subscribersCount: number } & User)[];
 	stories: Story[];
 }
 

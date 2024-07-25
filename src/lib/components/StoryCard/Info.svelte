@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { ArchiveBox, CheckCircle, Clock, Heart } from 'svelte-heros-v2';
+	import { ArchiveBox, CheckCircle, Clock } from 'svelte-heros-v2';
 	import { Icon } from 'treetale-ui';
 
 	import type { RGB, StoryStatus, User } from '$lib/types';
 
-	import Likes from '$lib/components/Likes.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
+	import { formatDate } from '$lib/utils/date';
 
 	import ProfileLink from './ProfileLink.svelte';
 
@@ -16,19 +15,17 @@
 		class: classname,
 		created,
 		edit,
-		likes,
 		selectedColor,
-		status,
-		storyId
+		status
 	}: {
-		author?: User;
+		author?: {
+			subscribersCount: number;
+		} & User;
 		class?: string;
 		created: number;
 		edit: boolean;
-		likes: number[];
 		selectedColor: RGB;
 		status: StoryStatus;
-		storyId?: number;
 	} = $props();
 
 	const statuses = {
@@ -50,48 +47,34 @@
 	};
 
 	let currentStatus = $derived(statuses[status]);
-	let isLiked = $derived(likes?.includes($page.data.session?.userId));
-	let date = $derived(new Date(created).toLocaleDateString('en-GB'));
+	let date = $derived(formatDate(created));
 	let infoBackgroundColor = $derived(
-		contrastText(selectedColor) ? clm('bg-main-30') : clm('bg-main-80')
+		contrastText(selectedColor)
+			? clm('bg-main-30 hover:bg-main-50')
+			: clm('bg-main-60 hover:bg-main-70')
 	);
 </script>
 
-<div class={clm('bottom-0 flex w-full items-center justify-between gap-4', classname)}>
+<div class={classname}>
 	{#if author && !edit}
-		<ProfileLink {author} {created} infoColor={infoBackgroundColor} />
+		<ProfileLink {author} class={clm('w-full', infoBackgroundColor)} />
 	{:else}
 		<div
 			class={clm(
-				'flex items-center overflow-hidden rounded-full p-1 pr-5 text-sm',
+				'flex items-center overflow-hidden rounded-full rounded-br-none p-1 text-sm',
 				currentStatus.color,
 				infoBackgroundColor
 			)}
 		>
-			<Icon
-				class="box-content size-8 shrink-0 px-2 py-1 max-md:px-1"
-				this={currentStatus.icon}
-			/>
-			<div class="overflow-hiddenpr-4 text-left max-md:hidden">
-				<p class="truncate text-text max-xs:hidden">
+			<Icon class="box-content size-8 shrink-0 p-1" this={currentStatus.icon} />
+			<div class="ml-2 mr-5 overflow-hidden text-left text-text max-md:hidden">
+				<p class="truncate text-base/5 font-medium max-xs:hidden">
 					{currentStatus.title}
 				</p>
-				<p class="truncate text-xs text-gray-500">
+				<p class="truncate text-xs">
 					{date}
 				</p>
 			</div>
-		</div>
-	{/if}
-	{#if storyId !== undefined && $page.data.session}
-		<Likes {likes} {storyId} />
-	{:else}
-		<div class="mr-4 flex items-center gap-1 text-text">
-			<Icon
-				class={clm('size-6', isLiked && 'text-red-500')}
-				this={Heart}
-				variation={isLiked ? 'solid' : undefined}
-			/>
-			<p class="min-w-[1rem] text-center text-base">{likes.length}</p>
 		</div>
 	{/if}
 </div>

@@ -7,7 +7,7 @@
 
 	let {
 		color,
-		title = 'Без названия'
+		title
 	}: {
 		color: string;
 		title: string;
@@ -78,7 +78,7 @@
 			color
 		)}
 	>
-		{title}
+		{title || 'Без названия'}
 	</text>
 </svg>
 

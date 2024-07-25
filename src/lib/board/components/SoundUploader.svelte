@@ -51,9 +51,7 @@
 		soundStore.sound?.[soundStore.playing ? 'stop' : 'play']();
 	};
 
-	$effect(() => {
-		soundStore.set(src);
-	});
+	soundStore.set(src);
 </script>
 
 <div class={clm('relative h-full min-h-0 rounded-lg', classname)}>

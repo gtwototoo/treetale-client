@@ -10,8 +10,8 @@
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
+	import StoryCard from '$lib/components/StoryCard.svelte';
 	import Empty from '$lib/components/StoryCard/Empty.svelte';
-	import StoryCard from '$lib/components/StoryCard/StoryCard.svelte';
 	import { correctWhitespace } from '$lib/utils/text';
 
 	let {
@@ -21,7 +21,7 @@
 		stories,
 		title
 	}: {
-		authors: User[];
+		authors: ({ subscribersCount: number } & User)[];
 		icon: HeroIconComponent;
 		listFormat?: boolean;
 		stories: Story[];

@@ -79,9 +79,9 @@
 	};
 
 	const setFiles = (files: FileList) => {
-		if (inputElement) inputElement.value = '';
-
 		onchange?.([...files].filter((file) => validateMimeType(file, accept)));
+
+		if (inputElement) inputElement.value = '';
 	};
 </script>
 

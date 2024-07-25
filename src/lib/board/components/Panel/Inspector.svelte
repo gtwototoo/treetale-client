@@ -6,7 +6,7 @@
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { Tv } from 'svelte-heros-v2';
-	import { Button, FormSplit } from 'treetale-ui';
+	import { Button, FormSplit, Image } from 'treetale-ui';
 
 	import type { Choice, LogicOperation } from '$lib/types';
 
@@ -119,6 +119,14 @@
 	{#each frames as frame, index}
 		{@const text = correctVariableReplace(frame.text, inspectorVariables)}
 		<div class="relative flex flex-col items-center gap-2 rounded-xl bg-contrast-3 p-2">
+			{#if frame.imageUrl}
+				<Image
+					alt="Изображение блока"
+					class="h-48 w-full rounded-lg !bg-main/30 text-text"
+					cover
+					src={frame.imageUrl}
+				/>
+			{/if}
 			<p class={clm('px-3 py-1', !text && 'text-gray-400')}>
 				{@html text || 'Описание блока'}
 			</p>
@@ -144,9 +152,9 @@
 										.join(' и ')}
 								</p>
 							{/if}
-							<div>
+							<div class="w-full whitespace-normal break-words text-left">
 								{@html correctVariableReplace(choice.text, inspectorVariables) ||
-									'Описание выбора'}
+									'Вариант выбора'}
 							</div>
 							{#if choice.mathOperations.length}
 								<p class="text-xs text-violet-500">

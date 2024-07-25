@@ -32,7 +32,7 @@
 	let draggedFileType = $state<string>();
 	let onePrevFrame = $state<Frame | null>(null);
 	let frame = $derived(find(boardFramesStore.frames, { frameId: selectedFrameStore.frameId! })!);
-	let { choices, frameId, imageUrl, soundUrl, x, y } = $derived(frame);
+	let { choices, frameId, imageUrl, soundUrl, x, y } = $derived(frame || {});
 	let descriptionElement = $state<HTMLDivElement>();
 
 	const preSaveImage = async (file: File): Promise<void> => {
@@ -122,7 +122,7 @@
 			frameId: selectedFrameStore.frameId!
 		});
 
-		removeFromChoicesDeletedFrameId(frameId);
+		removeFromChoicesDeletedFrameId(selectedFrameStore.frameId!);
 
 		changesHistoryStore.add('Удаление блока', Trash);
 	};
@@ -277,7 +277,7 @@
 					<p class="text-xs">{soundUrl ? `Звук ${frameId}` : 'Звук'}</p>
 				</Button>
 			{/snippet}
-			<div class="flex w-96 flex-col">
+			<div class="flex w-96 flex-col p-4">
 				<SoundUploader
 					class="h-48"
 					onloadstart={handleAddSound}

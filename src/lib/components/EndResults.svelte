@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { MouseEventHandler } from 'svelte/elements';
+
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Button, Link, Tag } from 'treetale-ui';
 
@@ -11,13 +13,17 @@
 	let {
 		author,
 		endFrame,
+		onclick,
 		progress,
 		selectedColor,
 		story
 	}: {
-		author: User;
+		author: {
+			subscribersCount: number;
+		} & User;
 		class?: string;
 		endFrame: Frame;
+		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 		progress: Progress[];
 		selectedColor: RGB;
 		story: Story;
@@ -27,46 +33,43 @@
 	const percent = 12;
 	const newEnd = true;
 
-	let { created, likes, status, storyId, vars, version } = $derived(story);
+	let { created, status, vars, version } = $derived(story);
 </script>
 
-<h1>Результаты</h1>
-<div class="flex w-full items-center justify-between">
-	<p>
-		<span class="font-bold">{progress.length - 1}</span>
-		{choicesPluralize(progress.length - 1)}
-	</p>
-	<Tag class="bg-main">Версия {version}</Tag>
-</div>
-<div class="flex flex-col gap-4">
-	<div class="flex justify-between gap-4">
-		<div class="flex gap-2">
-			<p>Концовка <span class="font-bold">№{2}</span></p>
-			{#if newEnd}
-				<Tag class="bg-lime-200">Новая</Tag>
-			{/if}
+<h1 class="text-center">Результаты</h1>
+<div class="flex h-full flex-col gap-[inherit]">
+	<div class="flex w-full items-center justify-between">
+		<p>
+			<span class="font-bold">{progress.length - 1}</span>
+			{choicesPluralize(progress.length - 1)}
+		</p>
+		<Tag class="bg-main">Версия {version}</Tag>
+	</div>
+	<div class="flex flex-col gap-4">
+		<div class="flex justify-between gap-4">
+			<div class="flex gap-2">
+				<p>Концовка <span class="font-bold">№{2}</span></p>
+				{#if newEnd}
+					<Tag class="bg-green-100 text-green-500">Новая</Tag>
+				{/if}
+			</div>
+			<p>Получило <span class="font-bold">{percent}%</span> читателей</p>
 		</div>
-		<p>Получило <span class="font-bold">{percent}%</span> читателей</p>
+		<div class="h-4 w-full overflow-hidden rounded-full bg-main-50">
+			<div class="h-full bg-main" style:width="{percent}%"></div>
+		</div>
 	</div>
-	<div class="h-4 w-full overflow-hidden rounded-full bg-main-50">
-		<div class="h-full bg-main" style:width="{percent}%"></div>
-	</div>
+	<p class="line-clamp-3 max-w-sm">
+		{@html correctVariableReplace(endFrame.text || 'Без описания', vars)}
+	</p>
+	<Info {author} {created} edit={false} {status} {selectedColor} />
 </div>
-<p class="line-clamp-3 max-w-sm">
-	{@html correctVariableReplace(endFrame.text || 'Без описания', vars)}
-</p>
-<div class="flex w-full flex-col gap-4">
-	<Info {author} {created} edit={false} {likes} {status} {storyId} {selectedColor} />
-	<div class="flex gap-6">
-		<Link href={`/${storyId}`} class="flex-1">
-			<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main" {onclick}>
-				В начало
-			</Button>
-		</Link>
-		<Link href="/" class="flex-1">
-			<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main" {onclick}>
-				На главную
-			</Button>
-		</Link>
-	</div>
+<div class="h-px w-full bg-main-50"></div>
+<div class="flex gap-6">
+	<Button size="lg" class="flex-1 justify-center bg-main-70 hover:bg-main" {onclick}>
+		В начало
+	</Button>
+	<Link href="/" class="flex-1">
+		<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main">На главную</Button>
+	</Link>
 </div>

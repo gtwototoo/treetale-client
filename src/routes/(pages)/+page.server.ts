@@ -11,7 +11,7 @@ interface ICategory {
 }
 
 interface IResponseMainInfo {
-	authors: User[];
+	authors: ({ subscribersCount: number } & User)[];
 	categories: ICategory[];
 	statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
 }

@@ -70,7 +70,7 @@ export interface Story {
 	title: string;
 	userId: number;
 	vars: Variable[];
-	version: number;
+	version: string;
 }
 
 export interface Note {
@@ -79,7 +79,7 @@ export interface Note {
 }
 
 export interface Searched {
-	authors: User[];
+	authors: ({ subscribersCount: number } & User)[];
 	stories: Story[];
 }
 

@@ -1,39 +1,42 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { pluralize } from 'pluralize-ru-ts';
 	import { Button } from 'treetale-ui';
 
 	import type { User } from '$lib/types';
 
 	import { clm } from '$lib/utils/classMerge';
+	import { collapseValue } from '$lib/utils/number';
 
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let {
 		author,
-		created,
-		infoColor
+		class: classname
 	}: {
-		author: User;
-		created: number;
-		infoColor: string;
+		author: {
+			subscribersCount: number;
+		} & User;
+		class: string;
 	} = $props();
+
+	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
 
 	const handleClick = () => {
 		goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
 	};
-
-	let date = $derived(new Date(created).toLocaleDateString('en-GB'));
 </script>
 
-<Button class={clm('min-w-0 gap-2 rounded-full p-1', infoColor)} onclick={handleClick}>
+<Button class={clm('min-w-0 rounded-full rounded-br-none p-1', classname)} onclick={handleClick}>
 	<ProfileAvatar color={author.color} size="sm" alt={author.name} src={author.imageUrl} />
-	<div class="overflow-hidden pr-4 text-left max-md:hidden">
-		<p class="truncate text-text max-xs:hidden">
+	<div class="ml-2 mr-5 overflow-hidden text-left text-text max-md:hidden">
+		<p class="truncate text-base/5 font-medium max-xs:hidden">
 			{author.name}
 		</p>
-		<p class="truncate text-xs text-gray-500">
-			{date}
+		<p class="truncate text-xs">
+			{collapseValue(author.subscribersCount)}
+			{subscribersPluralize(author.subscribersCount)}
 		</p>
 	</div>
 </Button>

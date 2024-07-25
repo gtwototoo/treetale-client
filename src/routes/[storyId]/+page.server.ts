@@ -7,10 +7,13 @@ import { randomError } from '$lib/utils/random';
 randomError;
 
 export interface ResponseProgress {
-	author: User;
+	author: {
+		subscribersCount: number;
+	} & User;
 	frames: Frame[];
 	progress: Progress[];
 	story: Story;
+	version: string;
 }
 
 export const load = async ({ fetch, params }) => {

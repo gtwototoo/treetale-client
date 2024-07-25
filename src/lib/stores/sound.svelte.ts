@@ -1,3 +1,5 @@
+import { Howl } from 'howler';
+
 const getSoundStore = () => {
 	let playing = $state(false);
 	let sound = $state<Howl | null>(null);

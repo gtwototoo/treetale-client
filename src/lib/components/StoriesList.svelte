@@ -6,15 +6,15 @@
 
 	import type { Story, User } from '$lib/types';
 
+	import StoryCard from './StoryCard.svelte';
 	import Empty from './StoryCard/Empty.svelte';
-	import StoryCard from './StoryCard/StoryCard.svelte';
 
 	let {
 		authors,
 		children,
 		stories
 	}: {
-		authors?: User[];
+		authors?: ({ subscribersCount: number } & User)[];
 		children?: Snippet;
 		stories: Story[];
 	} = $props();

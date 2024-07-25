@@ -102,19 +102,17 @@
 		await document.exitFullscreen();
 	};
 
+	let { author, frames, progress, story, version } = $derived(data);
+	let { color, description, storyId, title, vars } = $derived(story);
+	let frame = $derived(
+		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : frames?.[0]
+	);
+
 	onMount(() => {
 		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
-		framesStore.frames = frames;
 		variablesStore.variables = vars;
 	});
 
-	let { author, frames, progress, story } = data;
-	let { color, description, likes, storyId, title, vars } = story;
-	let frame = $derived(
-		progress.length
-			? find(frames, { frameId: last(progress)!.nextFrameId })
-			: framesStore.frames?.[0]
-	);
 	// let bookSchema = $derived({
 	// 	'@type': 'Book',
 	// 	abstract: description,
@@ -146,13 +144,14 @@
 <SvgGradient />
 
 {#if frame}
-	<div class="absolute flex size-full items-start justify-center overflow-auto" id="read-screen">
+	<div
+		class="absolute flex size-full items-start justify-center overflow-auto bg-main"
+		id="read-screen"
+	>
 		<div class="flex min-h-full w-full items-center justify-center p-4 py-20 max-sm:p-3">
 			{#if storyState === 'started'}
 				<ReadFrame
-					{likes}
-					{storyId}
-					frameId={frame.frameId}
+					{frame}
 					onclick={(choiceId) => setChoice(frame.frameId, choiceId)}
 					onresults={() => (storyState = 'ended')}
 				/>
@@ -161,6 +160,7 @@
 					{frames}
 					{progress}
 					{author}
+					{version}
 					{story}
 					{storyState}
 					onclick={() => (storyState = 'started')}
