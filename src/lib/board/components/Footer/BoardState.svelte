@@ -17,9 +17,7 @@
 		Share,
 		Square3Stack3d
 	} from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
-
-	import type { HeroIconComponent } from '$lib/types';
+	import { Button, type HeroIconComponent, Icon } from 'treetale-ui';
 
 	import { ICON_TYPE } from '$lib/constants';
 	import { clm } from '$lib/utils/classMerge';

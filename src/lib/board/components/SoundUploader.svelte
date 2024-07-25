@@ -11,13 +11,17 @@
 
 	let {
 		class: classname,
+		disabled = false,
 		onloadstart,
 		onremove,
+		readonly = false,
 		src
 	}: {
 		class?: string;
+		disabled?: boolean;
 		onloadstart?: (file: File) => void;
 		onremove?: () => void;
+		readonly?: boolean;
 		src?: null | string;
 	} = $props();
 
@@ -81,6 +85,13 @@
 				<p class="w-full">Ошибка загрузки</p>
 			{/await}
 		</div>
+	{:else if readonly || disabled}
+		<Button
+			class="pointer-events-none size-full flex-col justify-center gap-2 !whitespace-normal rounded-inherit bg-contrast-9 !p-6"
+		>
+			<Icon class="h-24 w-auto *:fill-gradient" this={MusicalNote} variation="solid" />
+			<p>Звук не добавлен</p>
+		</Button>
 	{:else}
 		<DropArea
 			onchange={handleChange}

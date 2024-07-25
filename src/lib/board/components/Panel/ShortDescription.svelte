@@ -1,9 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	import { Icon } from 'treetale-ui';
-
-	import type { HeroIconComponent } from '$lib/types';
+	import { type HeroIconComponent, Icon } from 'treetale-ui';
 
 	import { correctWhitespace } from '$lib/utils/text';
 

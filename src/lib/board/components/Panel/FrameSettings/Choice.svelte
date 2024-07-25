@@ -116,8 +116,13 @@
 				>
 					<Icon this={XMark} class="size-4" />
 				</Button>
-			{:else if choice.frameId}
-				<Button size="sm" class="bg-contrast-9 text-text" onclick={gotoChoiceToFrame}>
+			{:else if choice.frameId || readonlyModeStore.isEnabled}
+				<Button
+					disabled={!choice.frameId}
+					size="sm"
+					class="bg-contrast-9 text-text"
+					onclick={gotoChoiceToFrame}
+				>
 					<Icon class="size-4" this={ChevronRight} />
 				</Button>
 			{:else}

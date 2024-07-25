@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { Trash } from 'svelte-heros-v2';
-	import { Button, Icon, Image } from 'treetale-ui';
-
-	import type { HeroIconComponent } from '$lib/types';
+	import { Button, type HeroIconComponent, Icon, Image } from 'treetale-ui';
 
 	import DropArea from '$lib/components/DropArea.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';

@@ -1,5 +1,3 @@
-import type { SvelteComponent } from 'svelte';
-
 import type { GENRES_LIST } from '$lib/constants/genres';
 
 export type RGB = [number, number, number];
@@ -96,30 +94,6 @@ export interface Variable {
 	name: string;
 	value: string;
 }
-
-interface IconProps {
-	ariaLabel?: string;
-	class?: string;
-	color?: string;
-	desc?: {
-		desc?: string;
-		id?: string;
-	};
-	onclick?: (event: MouseEvent) => void;
-	onkeydown?: (event: KeyboardEvent) => void;
-	onkeyup?: (event: KeyboardEvent) => void;
-	role?: string;
-	size?: string;
-	strokeWidth?: string;
-	title?: {
-		id?: string;
-		title?: string;
-	};
-	variation?: 'micro' | 'mini' | 'outline' | 'solid';
-	withEvents?: boolean;
-}
-
-export type HeroIconComponent = typeof SvelteComponent<IconProps>;
 
 export interface Coordinates {
 	x: number;

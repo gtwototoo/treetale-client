@@ -279,6 +279,8 @@
 			{/snippet}
 			<div class="flex w-96 flex-col p-4">
 				<SoundUploader
+					disabled={panelStatesStore.editMode}
+					readonly={readonlyModeStore.isEnabled}
 					class="h-48"
 					onloadstart={handleAddSound}
 					onremove={preRemoveSound}

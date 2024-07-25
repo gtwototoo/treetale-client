@@ -1,8 +1,10 @@
+import type { HeroIconComponent } from 'treetale-ui';
+
 import { diff } from 'deep-object-diff';
 import cloneDeep from 'lodash/cloneDeep';
 import { Play } from 'svelte-heros-v2';
 
-import type { Frame, HeroIconComponent } from '$lib/types';
+import type { Frame } from '$lib/types';
 
 import { HISTORY_STAGES_MAX_COUNT } from '$lib/constants';
 import { type Diff, type Elem, applyDiff } from '$lib/utils/applyDiff';

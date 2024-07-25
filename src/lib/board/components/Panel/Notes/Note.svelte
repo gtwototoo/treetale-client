@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { XMark } from 'svelte-heros-v2';
@@ -23,6 +24,7 @@
 		oninput={checkUpdates}
 		placeholder="Текст заметки"
 		disabled={panelStatesStore.editMode}
+		readonly={readonlyModeStore.isEnabled}
 	>
 		{#snippet right()}
 			{#if panelStatesStore.editMode}
@@ -42,5 +44,6 @@
 		onremove={checkUpdates}
 		placeholder="Ключевые слова"
 		disabled={panelStatesStore.editMode}
+		readonly={readonlyModeStore.isEnabled}
 	/>
 </FormSplit>

@@ -4,8 +4,6 @@ import type { Frame, Progress, Story, User } from '$lib/types/index';
 
 import { randomError } from '$lib/utils/random';
 
-randomError;
-
 export interface ResponseProgress {
 	author: {
 		subscribersCount: number;
