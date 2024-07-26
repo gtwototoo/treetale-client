@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
+	import { page } from '$app/stores';
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 	import { Button, type HeroIconComponent, Icon, Input, Loading } from 'treetale-ui';
 
-	import type { Genre, Searched } from '$lib/types';
+	import type { Searched } from '$lib/types';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Category from '$lib/components/Category.svelte';
@@ -19,10 +22,13 @@
 	let { data } = $props();
 
 	let value = $state('');
-	let searchedGenres = $state<Genre[]>([]);
+	let searchedGenres = $state<string[]>([]);
 	let searched = $state<Searched | null>(null);
 	let loading = $state(false);
 	let timer = $state<number>();
+
+	const genresSearchParams = $page.url.searchParams.get('genres')?.split(',');
+	const stringSearchParams = $page.url.searchParams.get('string');
 
 	bodyBackgroundColorStore.color = DEFAULT_COLOR;
 
@@ -32,14 +38,12 @@
 		news: RocketLaunch
 	};
 
-	const switchGenre = (id: Genre) => {
+	const switchGenre = (id: string) => {
 		if (searchedGenres.includes(id)) {
 			searchedGenres.splice(searchedGenres.indexOf(id), 1);
 		} else {
 			searchedGenres.push(id);
 		}
-
-		searchedGenres = searchedGenres;
 
 		searching();
 	};
@@ -68,6 +72,19 @@
 	const handleInput = () => {
 		searching();
 	};
+
+	onMount(() => {
+		if (stringSearchParams) {
+			value = stringSearchParams;
+		}
+		if (genresSearchParams) {
+			searchedGenres = genresSearchParams;
+		}
+
+		if (value || searchedGenres.length) {
+			searching();
+		}
+	});
 </script>
 
 <svelte:head>

@@ -4,44 +4,45 @@
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Button, Link, Tag } from 'treetale-ui';
 
-	import type { Frame, Progress, RGB, Story, User } from '$lib/types';
-
-	import { correctVariableReplace } from '$lib/utils/text';
+	import type { Frame, RGB, Story, User } from '$lib/types';
 
 	import Info from './StoryCard/Info.svelte';
+	import FrameMini from './StoryDescription/FrameMini.svelte';
 
 	let {
 		author,
+		choicesCount,
 		endFrame,
 		onclick,
-		progress,
 		selectedColor,
 		story
 	}: {
 		author: {
 			subscribersCount: number;
 		} & User;
+		choicesCount: number;
 		class?: string;
 		endFrame: Frame;
 		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
-		progress: Progress[];
 		selectedColor: RGB;
 		story: Story;
 	} = $props();
 
+	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
 	const percent = 12;
 	const newEnd = true;
 
-	let { created, status, vars, version } = $derived(story);
+	let { created, status, version } = $derived(story);
 </script>
 
 <h1 class="text-center">Результаты</h1>
 <div class="flex h-full flex-col gap-[inherit]">
 	<div class="flex w-full items-center justify-between">
 		<p>
-			<span class="font-bold">{progress.length - 1}</span>
-			{choicesPluralize(progress.length - 1)}
+			{doPluralize(choicesCount)}
+			<span class="font-bold">{choicesCount}</span>
+			{choicesPluralize(choicesCount)}
 		</p>
 		<Tag class="bg-main">Версия {version}</Tag>
 	</div>
@@ -59,9 +60,7 @@
 			<div class="h-full bg-main" style:width="{percent}%"></div>
 		</div>
 	</div>
-	<p class="line-clamp-3 max-w-sm">
-		{@html correctVariableReplace(endFrame.text || 'Без описания', vars)}
-	</p>
+	<FrameMini frame={endFrame} />
 	<Info {author} {created} edit={false} {status} {selectedColor} />
 </div>
 <div class="h-px w-full bg-main-50"></div>

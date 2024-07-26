@@ -10,7 +10,7 @@ interface ICategory {
 	title: string;
 }
 
-interface IResponseMainInfo {
+interface ResponseMainInfo {
 	authors: ({ subscribersCount: number } & User)[];
 	categories: ICategory[];
 	statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
@@ -18,11 +18,11 @@ interface IResponseMainInfo {
 
 export const load = async ({ fetch }) => {
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/main`);
-	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseMainInfo;
+	const { error, ...data } = (await res.json()) as { error: boolean } & ResponseMainInfo;
 
 	if (error) {
 		randomError(500);
 	}
 
-	return data as IResponseMainInfo;
+	return data as ResponseMainInfo;
 };

@@ -29,7 +29,13 @@
 </script>
 
 <Button class={clm('min-w-0 rounded-full rounded-br-none p-1', classname)} onclick={handleClick}>
-	<ProfileAvatar color={author.color} size="sm" alt={author.name} src={author.imageUrl} />
+	<ProfileAvatar
+		color={author.color}
+		size="sm"
+		alt={author.name}
+		src={author.imageUrl}
+		class="max-sm:size-8"
+	/>
 	<div class="ml-2 mr-5 overflow-hidden text-left text-text max-md:hidden">
 		<p class="truncate text-base/5 font-medium max-xs:hidden">
 			{author.name}

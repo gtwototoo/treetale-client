@@ -1,4 +1,4 @@
-import type { GENRES_LIST } from '$lib/constants/genres';
+import type { Component } from 'svelte';
 
 export type RGB = [number, number, number];
 export type UserRole = 'admin' | 'member' | 'moderator';
@@ -23,7 +23,7 @@ export interface StartConnectParams {
 export interface StoryEditableInfo {
 	color: RGB;
 	description: string;
-	genre: Genre;
+	genre: string;
 	imageUrl?: null | string;
 	tags: StoryTag[];
 	title: string;
@@ -47,11 +47,15 @@ export interface ConnectPath {
 	line: string;
 }
 
+export interface Genre {
+	icon: Component;
+	id: string;
+	title: string;
+}
+
 export type Bounding = Coordinates & Sizes;
 
 export type StoryTag = string;
-
-export type Genre = (typeof GENRES_LIST)[number]['id'];
 
 export type StoryStatus = 'draft' | 'published' | 'review';
 
@@ -59,13 +63,15 @@ export interface Story {
 	color: RGB;
 	created: number;
 	description: string;
-	genre: Genre;
+	genre: string;
 	imageUrl: null | string;
 	likes: number[];
+	published: number;
 	status: StoryStatus;
 	storyId: number;
 	tags: StoryTag[];
 	title: string;
+	updated: number;
 	userId: number;
 	vars: Variable[];
 	version: string;

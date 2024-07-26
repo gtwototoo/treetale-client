@@ -11,6 +11,7 @@ export interface ResponseProgress {
 	frames: Frame[];
 	progress: Progress[];
 	story: Story;
+	updated: number;
 	version: string;
 }
 

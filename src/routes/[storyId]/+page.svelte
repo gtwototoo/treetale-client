@@ -4,6 +4,7 @@
 
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
+	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
@@ -22,6 +23,8 @@
 	import { correctToType, doMath } from '$lib/utils/variableOperations';
 
 	let { data } = $props();
+	let clonedData = $derived(cloneDeep(data));
+	let { author, frames, progress, story, updated, version } = $derived(clonedData);
 
 	// const isFullscreen = () => {
 	// 	return (
@@ -82,7 +85,7 @@
 		}
 
 		try {
-			await updateProgress(storyId, choiceId);
+			await updateProgress(story.storyId, choiceId);
 
 			updateVars(frameId, choiceId);
 
@@ -102,15 +105,13 @@
 		await document.exitFullscreen();
 	};
 
-	let { author, frames, progress, story, version } = $derived(data);
-	let { color, description, storyId, title, vars } = $derived(story);
 	let frame = $derived(
 		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : frames?.[0]
 	);
 
 	onMount(() => {
-		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
-		variablesStore.variables = vars;
+		bodyBackgroundColorStore.color = story.color.length ? story.color : DEFAULT_COLOR;
+		variablesStore.variables = story.vars;
 	});
 
 	// let bookSchema = $derived({
@@ -135,8 +136,8 @@
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<meta name="description" content={description} />
-	<title>{title}</title>
+	<meta name="description" content={story.description} />
+	<title>{story.title}</title>
 </svelte:head>
 
 <svelte:window onfullscreenchange={handleFullscreenChange} onkeydown={handleKeydown} />
@@ -161,6 +162,7 @@
 					{progress}
 					{author}
 					{version}
+					{updated}
 					{story}
 					{storyState}
 					onclick={() => (storyState = 'started')}

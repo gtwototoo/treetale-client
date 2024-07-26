@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { ChevronRight } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
@@ -14,6 +16,10 @@
 		} else {
 			document.body.classList.add('max-lg:overflow-hidden');
 		}
+	});
+
+	onDestroy(() => {
+		document.body.classList.remove('max-lg:overflow-hidden');
 	});
 </script>
 

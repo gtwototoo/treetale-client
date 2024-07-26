@@ -1,25 +1,25 @@
 import { goto } from '$app/navigation';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { Genre, Searched } from '$lib/types';
+import type { Searched } from '$lib/types';
 
 import { fetchGet, fetchPut } from '.';
 
 export const addLike = async (storyId: number) => {
-	interface IResponse {
+	interface Response {
 		liked: boolean;
 	}
 
-	return await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/like`);
+	return await fetchPut<Response>(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/like`);
 };
 
 export const createStory = async () => {
-	interface IResponse {
+	interface Response {
 		storyId: number;
 	}
 
 	try {
-		const { storyId } = await fetchPut<IResponse>(`${PUBLIC_TREETALE_API_URL}/stories/create`);
+		const { storyId } = await fetchPut<Response>(`${PUBLIC_TREETALE_API_URL}/stories/create`);
 
 		return goto(`/board/${storyId}`);
 	} catch (e) {
@@ -27,7 +27,7 @@ export const createStory = async () => {
 	}
 };
 
-export const searchStories = async (row: string, genres: Genre[]) => {
+export const searchStories = async (row: string, genres: string[]) => {
 	const query = new URLSearchParams({
 		genres: genres.join(','),
 		row

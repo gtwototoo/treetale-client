@@ -23,7 +23,7 @@
 		Popover
 	} from 'treetale-ui';
 
-	import type { Genre, RGB } from '$lib/types';
+	import type { RGB } from '$lib/types';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -115,7 +115,7 @@
 		preSaveImage(file);
 	};
 
-	const switchGenre = (id: Genre) => {
+	const switchGenre = (id: string) => {
 		if (!storyInfoStore.info) return;
 
 		storyInfoStore.info.genre = id;

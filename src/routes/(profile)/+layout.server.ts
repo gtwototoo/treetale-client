@@ -4,7 +4,7 @@ import type { User } from '$lib/types/index';
 
 import { randomError } from '$lib/utils/random';
 
-interface IResponseStats {
+interface ResponseStats {
 	statistic: string[][];
 	user: User;
 }
@@ -17,11 +17,11 @@ export const load = async ({ fetch, params }) => {
 			? `${PUBLIC_TREETALE_API_URL}/users/${name}/stats`
 			: `${PUBLIC_TREETALE_API_URL}/me/stats`
 	);
-	const { error, ...data } = (await res.json()) as { error: boolean } & IResponseStats;
+	const { error, ...data } = (await res.json()) as { error: boolean } & ResponseStats;
 
 	if (error) {
 		randomError(404);
 	}
 
-	return data as IResponseStats;
+	return data as ResponseStats;
 };

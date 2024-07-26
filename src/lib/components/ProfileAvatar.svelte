@@ -14,12 +14,14 @@
 
 	let {
 		alt,
+		class: classname,
 		color,
 		editMode = false,
 		size = 'base',
 		src
 	}: {
 		alt: string;
+		class?: string;
 		color: RGB | null;
 		editMode?: boolean;
 		size?: 'base' | 'lg' | 'sm';
@@ -91,7 +93,15 @@
 	class="contents"
 	style="--color-contrast: {toRGB(colorContrast)}; --color-main: {toRGB(correctColor)}"
 >
-	<Avatar {alt} color={DEFAULT_COLOR} {base64src} onload={loadHandler} {size} {src}>
+	<Avatar
+		{alt}
+		color={DEFAULT_COLOR}
+		{base64src}
+		onload={loadHandler}
+		{size}
+		{src}
+		class={classname}
+	>
 		{#if editMode}
 			<div
 				class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"

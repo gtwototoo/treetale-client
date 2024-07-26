@@ -50,14 +50,16 @@
 			class="pointer-events-none absolute -left-1 -top-1 z-10"
 		/>
 		<div
-			class="absolute -bottom-1 -right-1 z-10 flex items-center gap-2 rounded-full rounded-tl-none bg-main-70 py-2 pl-2 pr-4 text-text"
+			class="absolute -bottom-1 -right-1 z-10 flex items-center gap-1 rounded-full rounded-tl-none bg-main-70 p-2 pr-4 text-text max-sm:pr-2"
 		>
 			<Icon
-				class={clm('size-7', isLiked && 'text-red-500')}
+				class={clm('size-7 max-sm:size-5', isLiked && 'text-red-500')}
 				this={Heart}
 				variation={isLiked ? 'solid' : 'outline'}
 			/>
-			<p class="min-w-[1rem] text-center text-xl">{collapseValue(likes.length)}</p>
+			<p class="min-w-[1rem] text-center text-xl max-sm:text-base">
+				{collapseValue(likes.length)}
+			</p>
 		</div>
 		<HoverInfo {tags} {vars} {description} />
 	</div>

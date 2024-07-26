@@ -66,7 +66,7 @@
 				infoBackgroundColor
 			)}
 		>
-			<Icon class="box-content size-8 shrink-0 p-1" this={currentStatus.icon} />
+			<Icon class="box-content size-8 shrink-0 p-1 max-sm:size-6" this={currentStatus.icon} />
 			<div class="ml-2 mr-5 overflow-hidden text-left text-text max-md:hidden">
 				<p class="truncate text-base/5 font-medium max-xs:hidden">
 					{currentStatus.title}
