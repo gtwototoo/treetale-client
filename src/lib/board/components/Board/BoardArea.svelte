@@ -32,6 +32,7 @@
 			button: number;
 			doubleClick: boolean;
 			isMouse: boolean;
+			touchCount: number;
 			x: number;
 			y: number;
 		}) => void;
@@ -67,6 +68,7 @@
 			button: 0,
 			doubleClick: false,
 			isMouse: false,
+			touchCount: e.touches.length,
 			x,
 			y
 		});
@@ -79,6 +81,7 @@
 			button: e.button,
 			doubleClick: e.detail === 2,
 			isMouse: true,
+			touchCount: 0,
 			x,
 			y
 		});

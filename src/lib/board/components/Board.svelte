@@ -78,13 +78,18 @@
 	};
 
 	const handleMouseDown = (
-		e: { button: number; doubleClick: boolean; isMouse: boolean } & Coordinates
+		e: {
+			button: number;
+			doubleClick: boolean;
+			isMouse: boolean;
+			touchCount: number;
+		} & Coordinates
 	) => {
 		const { button, isMouse, x, y } = e;
 
 		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
 
-		if (button === 0 && movingFrameStore.frameId) {
+		if (((isMouse && button === 0) || !isMouse) && movingFrameStore.frameId) {
 			const frame = find(boardFramesStore.frames, { frameId: movingFrameStore.frameId });
 
 			if (!frame) return;
