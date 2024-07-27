@@ -8,31 +8,34 @@
 	import type { RGB } from '$lib/types';
 
 	import { BLACK_COLOR, DEFAULT_COLOR, WHITE_COLOR } from '$lib/constants/colors';
-	import { removeImage, saveImage } from '$lib/requests/files';
+	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
+	import { removeImage } from '$lib/requests/files';
 	import { contrastText } from '$lib/utils/contrast';
 	import { toRGB } from '$lib/utils/customColors';
 
 	let {
+		addLoading = $bindable(),
 		alt,
+		base64src = $bindable(),
 		class: classname,
 		color,
 		editMode = false,
+		onchange,
 		size = 'base',
 		src
 	}: {
+		addLoading: boolean;
 		alt: string;
+		base64src: null | string;
 		class?: string;
 		color: RGB | null;
 		editMode?: boolean;
+		onchange?: ChangeEventHandler<HTMLInputElement>;
 		size?: 'base' | 'lg' | 'sm';
 		src: null | string;
 	} = $props();
 
 	let removeLoading = $state(false);
-	let addLoading = $state(false);
-	let base64src = $state<null | string>(null);
-
-	const imageFolder = 'avatars';
 
 	const preRemoveImage = async () => {
 		if (base64src || !src) {
@@ -42,42 +45,12 @@
 		removeLoading = true;
 
 		try {
-			await removeImage(imageFolder);
+			await removeImage(AVATARS_FOLDER);
 
 			src = null;
 		} finally {
 			removeLoading = false;
 		}
-	};
-
-	const preSaveImage = async (file: File): Promise<void> => {
-		addLoading = true;
-
-		const reader = new FileReader();
-
-		reader.readAsDataURL(file);
-
-		reader.onloadend = () => {
-			if (!reader.result) return;
-
-			base64src = reader.result.toString();
-		};
-
-		try {
-			const { fileUrl } = await saveImage(file, imageFolder);
-
-			src = fileUrl;
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
-	const setFile: ChangeEventHandler<HTMLInputElement> = (e) => {
-		if (!(e.target instanceof HTMLInputElement) || !e.target.files) {
-			return;
-		}
-
-		preSaveImage(e.target.files[0]);
 	};
 
 	const loadHandler = () => {
@@ -119,7 +92,7 @@
 					<InputFile
 						class="rounded-full bg-main-70 p-3 text-text hover:bg-main"
 						disabled={addLoading}
-						onchange={setFile}
+						{onchange}
 					>
 						<Icon class="size-6" this={PencilSquare} />
 					</InputFile>

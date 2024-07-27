@@ -4,6 +4,7 @@
 	import { Button, Icon, Link } from 'treetale-ui';
 
 	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
+	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -54,6 +55,8 @@
 	<title>{me ? 'Профиль' : user.name}</title>
 	<meta name="description" content={user.description} />
 </svelte:head>
+
+<SvgGradient />
 
 <div class="relative flex size-full flex-col">
 	<ProfileHeader />

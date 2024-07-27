@@ -90,6 +90,7 @@ export interface Searched {
 export interface PanelProps {
 	[key: string]: unknown;
 	isEdit?: boolean;
+	isSubpanel?: boolean;
 	title: string;
 }
 

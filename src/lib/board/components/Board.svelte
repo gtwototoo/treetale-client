@@ -138,10 +138,7 @@
 	const clearLiberties = (readonly: boolean) => {
 		if (!readonly) return;
 
-		if (panelStatesStore.editMode) {
-			panelStatesStore.editMode = !panelStatesStore.editMode;
-		}
-
+		panelStatesStore.editMode = false;
 		boardStateStore.mode = 'view';
 
 		if (panelStatesStore.id === 'history') {

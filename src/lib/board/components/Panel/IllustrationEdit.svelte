@@ -1,0 +1,88 @@
+<script lang="ts">
+	import type { ChangeEventHandler } from 'svelte/elements';
+
+	import { removeImage, saveImage } from '$board/requests/files';
+	import { changesHistoryStore } from '$board/stores/history.svelte';
+	import { storyInfoStore } from '$board/stores/info.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import find from 'lodash/find';
+	import { BookOpen, Photo } from 'svelte-heros-v2';
+	import { Button, Icon, InputFile } from 'treetale-ui';
+
+	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
+	import Cover from '$lib/components/StoryCard/Cover.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { GENRES_LIST } from '$lib/constants/genres';
+	import { ILLUSTRATIONS_FOLDER } from '$lib/constants/s3forders';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { clm } from '$lib/utils/classMerge';
+
+	let { color, imageUrl, title } = $derived(storyInfoStore.info!);
+
+	const handleDrop = (files: File[]) => {
+		const file = files[0];
+
+		preSaveImage(file);
+	};
+
+	const preRemoveImage = async () => {
+		if (!storyInfoStore.info || !storyInfoStore.info.imageUrl) return;
+
+		try {
+			await removeImage(ILLUSTRATIONS_FOLDER, {
+				storyId: storyInfoStore.info.storyId
+			});
+
+			storyInfoStore.info.imageUrl = null;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const preSaveImage = async (file: File): Promise<void> => {
+		if (!storyInfoStore.info) return;
+
+		try {
+			const { fileUrl } = await saveImage(file, ILLUSTRATIONS_FOLDER, {
+				storyId: storyInfoStore.info.storyId
+			});
+
+			storyInfoStore.info.imageUrl = fileUrl;
+
+			changesHistoryStore.add('Добавление изображения истории', Photo);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+		const file = (e.target as HTMLInputElement).files?.[0];
+
+		if (!file) return;
+
+		preSaveImage(file);
+	};
+
+	let genre = $derived(find(GENRES_LIST, { id: storyInfoStore.info?.genre || 'adventure' })!);
+</script>
+
+<InvisibleDrop onchange={handleDrop}>
+	<Icon this={BookOpen} variation="solid" class="h-24 w-auto *:fill-gradient" />
+	<p>Перетащите сюда изображение, чтобы заменить текущее в блоке</p>
+</InvisibleDrop>
+<Cover icon={genre.icon} {title} color={color || DEFAULT_COLOR} {imageUrl} />
+{#if panelStatesStore.editMode && imageUrl}
+	<Button
+		class={clm('justify-center text-red-500', redBackgroundColorStore.color)}
+		onclick={preRemoveImage}
+	>
+		Удалить иллюстрацию
+	</Button>
+{:else if !imageUrl}
+	<InputFile
+		class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+		onchange={handleChange}
+	>
+		Добавить иллюстрацию
+	</InputFile>
+{/if}

@@ -61,7 +61,10 @@
 		<VariableRow {checkUpdates} {variable} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button class="justify-center bg-contrast-9 text-text" onclick={addVariable}>
+		<Button
+			class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+			onclick={addVariable}
+		>
 			Добавить переменную
 		</Button>
 	{/if}

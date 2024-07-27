@@ -47,10 +47,10 @@
 			{edit}
 			{status}
 			{selectedColor}
-			class="pointer-events-none absolute -left-1 -top-1 z-10"
+			class="pointer-events-none absolute -left-1 -top-1 z-[1]"
 		/>
 		<div
-			class="absolute -bottom-1 -right-1 z-10 flex items-center gap-1 rounded-full rounded-tl-none bg-main-70 p-2 pr-4 text-text max-sm:pr-2"
+			class="absolute -bottom-1 -right-1 z-[1] flex items-center gap-1 rounded-full rounded-tl-none bg-main-70 p-2 pr-4 text-text max-sm:pr-2"
 		>
 			<Icon
 				class={clm('size-7 max-sm:size-5', isLiked && 'text-red-500')}

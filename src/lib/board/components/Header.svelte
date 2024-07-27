@@ -2,19 +2,25 @@
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { ArrowUturnLeft, ArrowUturnRight } from 'svelte-heros-v2';
+	import { ArrowUturnLeft, ArrowUturnRight, Link as LinkIcon } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon } from 'treetale-ui';
 
 	import Logo from '$lib/components/Header/Logo.svelte';
 	import LogoLinearGradient from '$lib/components/Header/LogoLinearGradient.svelte';
 	import Session from '$lib/components/Header/Session.svelte';
+	import { clm } from '$lib/utils/classMerge';
 
 	import ChangesHistory from './Panel/ChangesHistory.svelte';
+	import ShareBoard from './Panel/ShareBoard.svelte';
 
 	const historySwitch = () => {
 		panelStatesStore.set('history', ChangesHistory, {
 			title: 'История изменений'
 		});
+	};
+
+	const handleClick = () => {
+		panelStatesStore.set('share', ShareBoard, { isEdit: true, title: 'Совместный доступ' });
 	};
 </script>
 
@@ -49,6 +55,16 @@
 					<Icon this={ArrowUturnRight} />
 				</Button>
 			</FormSplit>
+			<Button
+				size="lg"
+				class={clm(
+					'-mr-6 rounded-full bg-contrast px-3 text-text',
+					panelStatesStore.id === 'share' && 'bg-main-50'
+				)}
+				onclick={handleClick}
+			>
+				<Icon this={LinkIcon} class="size-6" />
+			</Button>
 		{/if}
 		<Session />
 	</div>

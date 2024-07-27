@@ -54,7 +54,7 @@
 		<NoteRow {checkUpdates} noteKey={key} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button class="justify-center bg-contrast-9 text-text" onclick={addNote}>
+		<Button class="justify-center bg-contrast-9 text-text hover:bg-contrast-7" onclick={addNote}>
 			Добавить заметку
 		</Button>
 	{/if}

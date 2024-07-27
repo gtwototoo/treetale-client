@@ -118,7 +118,9 @@
 		{/if}
 	</div>
 </div>
-<Button onclick={clearChoices} class="justify-center bg-contrast-9">Сбросить все выборы</Button>
+<Button onclick={clearChoices} class="justify-center bg-contrast-9 hover:bg-contrast-7">
+	Сбросить все выборы
+</Button>
 <div class="flex flex-col gap-3 text-sm">
 	{#each frames as frame, index}
 		{@const text = correctVariableReplace(frame.text, inspectorVariables)}
@@ -141,7 +143,7 @@
 							class={clm(
 								inspectorStore.selectedChoices[index]?.choice.choiceId ===
 									choice.choiceId && yellowTextColor,
-								'flex-col items-start gap-1 bg-contrast-5'
+								'flex-col items-start gap-1 bg-contrast-9 hover:bg-contrast-7'
 							)}
 							disabled={!choice.frameId || !checkLogic(choice.logicOperations)}
 							onclick={() => handleClick(frame.frameId, choice, index)}

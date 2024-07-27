@@ -14,7 +14,7 @@
 <FormSplit vertical>
 	{#each changesHistoryStore.stages as { icon, title }, key}
 		<Button
-			class={clsx('gap-4 bg-contrast-9 text-text', {
+			class={clsx('gap-4 bg-contrast-9 text-text hover:bg-contrast-7', {
 				'opacity-60': key > changesHistoryStore.currentId
 			})}
 			onclick={() => changesHistoryStore.to(key)}

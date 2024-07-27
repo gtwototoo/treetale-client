@@ -74,7 +74,10 @@
 			{#await preload(soundStore.sound)}
 				<Icon class="size-5" this={Loading} />
 			{:then}
-				<Button class="w-20 flex-col gap-1 bg-contrast-9 text-text" onclick={handleClick}>
+				<Button
+					class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+					onclick={handleClick}
+				>
 					<Icon class="size-8" variation="solid" this={soundStore.playing ? Stop : Play} />
 					<p class="text-xs">{soundStore.playing ? 'Стоп' : 'Играть'}</p>
 				</Button>

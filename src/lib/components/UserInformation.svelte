@@ -1,13 +1,17 @@
 <script lang="ts">
+	import type { ChangeEventHandler } from 'svelte/elements';
+
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
-	import { Cog6Tooth, UserMinus, UserPlus } from 'svelte-heros-v2';
+	import { Cog6Tooth, User, UserMinus, UserPlus } from 'svelte-heros-v2';
 	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
-	import type { RGB, User } from '$lib/types';
+	import type { RGB } from '$lib/types';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
+	import { saveImage } from '$lib/requests/files';
 	import {
 		signOutUser,
 		subscribeProfile,
@@ -34,6 +38,8 @@
 	let light = $state(80);
 	let saturate = $state(90);
 	let loading = $state(false);
+	let base64src = $state<null | string>(null);
+	let addLoading = $state(false);
 
 	const handleUnsubscribe = async () => {
 		loading = true;
@@ -99,6 +105,42 @@
 			editMode = false;
 		}
 	};
+
+	const preSaveImage = async (file: File): Promise<void> => {
+		const reader = new FileReader();
+
+		reader.readAsDataURL(file);
+
+		reader.onloadend = () => {
+			if (!reader.result) return;
+
+			base64src = reader.result.toString();
+		};
+
+		try {
+			const { fileUrl } = await saveImage(file, AVATARS_FOLDER);
+
+			user.imageUrl = fileUrl;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const handleDrop = (files: File[]) => {
+		const file = files[0];
+
+		preSaveImage(file);
+	};
+
+	const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+		if (!(e.target instanceof HTMLInputElement) || !e.target.files) {
+			return;
+		}
+
+		const file = e.target.files[0];
+
+		preSaveImage(file);
+	};
 </script>
 
 <div
@@ -108,13 +150,19 @@
 	)}
 >
 	{#if editMode}
-		<InvisibleDrop>Перетащите сюда изображение, чтобы заменить текущую аватарку</InvisibleDrop>
+		<InvisibleDrop onchange={handleDrop}>
+			<Icon class="h-24 w-auto *:fill-gradient" this={User} variation="solid" />
+			<p>Перетащите сюда изображение, чтобы заменить текущую аватарку</p>
+		</InvisibleDrop>
 	{/if}
 	<div class="flex flex-col items-center gap-2">
 		<div class="p-6">
 			<ProfileAvatar
+				onchange={handleChange}
 				color={bodyBackgroundColorStore.color}
 				{editMode}
+				bind:addLoading
+				bind:base64src
 				size="lg"
 				src={user.imageUrl}
 				alt={user.name}
@@ -233,6 +281,6 @@
 		@apply max-hd:gap-10 max-xl:w-[24rem] max-xl:p-6;
 	}
 	.screen-lg {
-		@apply max-lg:static max-lg:w-full max-lg:gap-8;
+		@apply max-lg:relative max-lg:top-0 max-lg:w-full max-lg:gap-8;
 	}
 </style>

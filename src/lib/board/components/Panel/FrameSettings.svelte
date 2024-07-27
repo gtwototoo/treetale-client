@@ -14,7 +14,15 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 	import reject from 'lodash/reject';
-	import { ArrowLeft, MusicalNote, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
+	import {
+		ArrowLeft,
+		Beaker,
+		MusicalNote,
+		Photo,
+		Plus,
+		RectangleStack,
+		Trash
+	} from 'svelte-heros-v2';
 	import { Button, Contenteditable, FormSplit, Icon, Input, Popover } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
@@ -29,6 +37,7 @@
 	import { setSelectedFrame } from '../methods.svelte';
 	import Choice from './FrameSettings/Choice.svelte';
 	import IllustrationPopover from './IllustrationPopover.svelte';
+	import Modificators from './Modificators.svelte';
 
 	let draggedFileType = $state<string>();
 	let onePrevFrame = $state<Frame | null>(null);
@@ -39,7 +48,7 @@
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
 			const { fileUrl } = await saveImage(file, FRAMES_FOLDER, {
-				frameId: selectedFrameStore.frameId!,
+				frameId,
 				storyId: storyInfoStore.info!.storyId
 			});
 
@@ -54,7 +63,7 @@
 	const preSaveSound = async (file: File): Promise<void> => {
 		try {
 			const { fileUrl } = await saveSound(file, {
-				frameId: selectedFrameStore.frameId!,
+				frameId,
 				storyId: storyInfoStore.info!.storyId
 			});
 
@@ -71,7 +80,7 @@
 
 		try {
 			await removeSound({
-				frameId: selectedFrameStore.frameId!,
+				frameId,
 				storyId: storyInfoStore.info!.storyId
 			});
 
@@ -88,7 +97,7 @@
 
 		try {
 			await removeImage(FRAMES_FOLDER, {
-				frameId: selectedFrameStore.frameId!,
+				frameId,
 				storyId: storyInfoStore.info!.storyId
 			});
 
@@ -175,6 +184,17 @@
 		return notesFormattedHtml;
 	};
 
+	const openModificatorsPanel = () => {
+		panelStatesStore.set<{
+			frameId: number;
+		}>(`modificators-${frameId}`, Modificators, {
+			frameId,
+			isEdit: true,
+			isSubpanel: true,
+			title: 'Модификаторы'
+		});
+	};
+
 	const handleDrop = (files: File[]) => {
 		if (!files.length) {
 			return;
@@ -256,7 +276,7 @@
 			/>
 			{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
 				<Button
-					class="justify-center bg-contrast-9 !text-text"
+					class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
 					disabled={panelStatesStore.editMode}
 					onclick={addPrevImage}
 				>
@@ -268,7 +288,7 @@
 			{#snippet button({ onclick })}
 				<Button
 					class={clm(
-						'w-full flex-col justify-center gap-1 bg-contrast-9 text-text',
+						'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
 						soundUrl && 'text-emerald-500'
 					)}
 					size="lg"
@@ -309,11 +329,18 @@
 		/>
 	</FormSplit>
 	{#if onePrevFrame !== null}
-		<Button class="gap-4 bg-contrast-9 pl-3 text-text" onclick={gotoPrevFrame}>
-			<Icon class="size-4" this={ArrowLeft} />
-			<p>К предыдущему блоку</p>
+		<Button
+			class="justify-center gap-4 bg-contrast-9 pl-3 text-text hover:bg-contrast-7"
+			onclick={gotoPrevFrame}
+		>
+			<Icon class="absolute left-2 size-5" this={ArrowLeft} />
+			К предыдущему блоку
 		</Button>
 	{/if}
+	<Button class="justify-center bg-contrast-9 hover:bg-contrast-7" onclick={openModificatorsPanel}>
+		<Icon this={Beaker} class="absolute left-2 size-5" />
+		Модификаторы
+	</Button>
 	<div class="flex flex-col gap-2" id="choices">
 		{#each choices as choice (choice.choiceId)}
 			<Choice {choice} {frame} />
@@ -328,7 +355,10 @@
 				</Button>
 			{/if}
 			{#if !panelStatesStore.editMode}
-				<Button class="justify-center bg-contrast-9 text-text" onclick={addChoice}>
+				<Button
+					class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+					onclick={addChoice}
+				>
 					Добавить вариант
 				</Button>
 			{/if}

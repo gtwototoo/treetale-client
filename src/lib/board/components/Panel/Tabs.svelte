@@ -52,16 +52,19 @@
 	const setPanel = (id: string, component: Component, props: PanelProps) => {
 		panelStatesStore.set(id, component, props);
 	};
+
+	const isActive = (id: string) => {
+		const panelId = panelStatesStore.prevPanel?.id || panelStatesStore.id;
+
+		return id.startsWith('frame') ? panelId.startsWith('frame') : panelId === id;
+	};
 </script>
 
 <div class={clm('flex p-3 pb-0 *:flex-1', !panelStatesStore.show && 'max-xs:hidden')}>
 	{#each tabs as { component, icon, id, props } (id)}
-		{@const isActive = id.startsWith('frame')
-			? panelStatesStore.id.startsWith('frame')
-			: panelStatesStore.id === id}
 		<Button
 			size="lg"
-			class={clm('justify-center px-0 text-text', isActive && 'bg-main')}
+			class={clm('justify-center px-0 text-text', isActive(id) && 'bg-main')}
 			onclick={() => setPanel(id, component, props)}
 		>
 			<Icon class="size-6" this={icon} />

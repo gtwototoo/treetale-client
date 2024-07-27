@@ -102,7 +102,7 @@
 			<Button
 				size="sm"
 				class={clm(
-					'bg-contrast-9',
+					'bg-contrast-9 hover:bg-contrast-7',
 					activeModificator === 'logic' && clm(orangeBackgroundColor, 'text-orange-500')
 				)}
 				onclick={() => (activeModificator = 'logic')}
@@ -112,7 +112,7 @@
 			<Button
 				size="sm"
 				class={clm(
-					'bg-contrast-9',
+					'bg-contrast-9 hover:bg-contrast-7',
 					activeModificator === 'math' && clm(violetBackgroundColor, 'text-violet-500')
 				)}
 				onclick={() => (activeModificator = 'math')}
@@ -124,7 +124,7 @@
 			<Button
 				size="sm"
 				class={clm(
-					'absolute right-0 z-[2] bg-contrast-9 text-text',
+					'absolute right-0 z-[2] bg-contrast-9 text-text hover:bg-contrast-7',
 					editMode && 'text-red-500'
 				)}
 				onclick={switchEditMode}
@@ -171,7 +171,7 @@
 					>
 						{#snippet children({ onclick, value })}
 							<Button
-								class="bg-contrast-9 text-text"
+								class="bg-contrast-9 text-text hover:bg-contrast-7"
 								disabled={variable?.expect !== 'Число'}
 								{onclick}
 							>
@@ -205,7 +205,7 @@
 		{/each}
 		{#if !editMode && !readonlyModeStore.isEnabled}
 			<Button
-				class="w-full justify-center bg-contrast-9 text-text"
+				class="w-full justify-center bg-contrast-9 text-text hover:bg-contrast-7"
 				onclick={handleAddModificator}
 			>
 				{activeModificator === 'logic' ? 'Добавить условие' : 'Добавить переменную'}
