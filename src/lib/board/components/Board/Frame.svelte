@@ -101,6 +101,7 @@
 		)}
 		onkeydown={preventDefault}
 		onclick={createConnection}
+		ontouchstart={handleMouseDown}
 		onmousedown={handleMouseDown}
 	>
 		<Header {frame} onhide={setVisible} start={frame.frameId === 1} end={isEndFrame} />

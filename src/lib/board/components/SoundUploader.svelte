@@ -1,13 +1,12 @@
 <script lang="ts">
 	import type { Howl } from 'howler';
 
-	import { MusicalNote, Play, Stop, Trash } from 'svelte-heros-v2';
+	import { MusicalNote, Play, Stop } from 'svelte-heros-v2';
 	import { Button, Icon, Loading } from 'treetale-ui';
 
-	import DropArea from '$lib/components/DropArea.svelte';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { soundStore } from '$lib/stores/sound.svelte';
-	import { clm } from '$lib/utils/classMerge';
+
+	import FileUploader from './FileUploader.svelte';
 
 	let {
 		class: classname,
@@ -25,14 +24,8 @@
 		src?: null | string;
 	} = $props();
 
-	const handleChange = (files: File[]) => {
-		const file = files[0];
-
-		onloadstart?.(file);
-	};
-
 	const handleRemove = () => {
-		soundStore.set('');
+		soundStore.clear();
 
 		onremove?.();
 	};
@@ -55,13 +48,28 @@
 		soundStore.sound?.[soundStore.playing ? 'stop' : 'play']();
 	};
 
-	soundStore.set(src);
+	const handleLoadEnd = (base64src: string) => {
+		soundStore.set(base64src);
+	};
+
+	let base64src = $state<null | string>(null);
 </script>
 
-<div class={clm('relative h-full min-h-0 rounded-lg', classname)}>
+<FileUploader
+	icon={MusicalNote}
+	mediaType="audio"
+	{onloadstart}
+	onloadend={handleLoadEnd}
+	onremove={handleRemove}
+	{readonly}
+	{disabled}
+	{src}
+	bind:base64src
+	class={classname}
+>
 	{#if soundStore.sound}
 		<div
-			class="flex size-full select-none flex-col items-center justify-center gap-3 rounded-lg bg-contrast-3 p-2 text-sm/6"
+			class="flex size-full select-none items-center justify-center rounded-lg bg-contrast-3 text-sm/6"
 		>
 			{#await preload(soundStore.sound)}
 				<Icon class="size-5" this={Loading} />
@@ -70,36 +78,20 @@
 					<Icon class="size-8" variation="solid" this={soundStore.playing ? Stop : Play} />
 					<p class="text-xs">{soundStore.playing ? 'Стоп' : 'Играть'}</p>
 				</Button>
-				<p>Длительность: {soundStore.sound.duration()}</p>
-				<Button
-					class={clm(
-						'!absolute right-2 top-2 z-10 !text-red-500',
-						redBackgroundColorStore.color
-					)}
-					onclick={handleRemove}
-				>
-					<Icon class="size-4" this={Trash} />
-				</Button>
+				<div class="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+					<p class="w-5 shrink-0 text-center">{Math.round(soundStore.seek)}</p>
+					<div class="h-2 w-full overflow-hidden rounded-full bg-contrast">
+						<div
+							class="h-full bg-main"
+							style={`width: ${soundStore.seek / (soundStore.sound.duration() / 100)}%`}
+						></div>
+					</div>
+					<p class="w-5 shrink-0 text-center">{soundStore.sound.duration()}</p>
+				</div>
 			{:catch}
 				<Icon class="size-5 text-red-500" this={MusicalNote} />
 				<p class="w-full">Ошибка загрузки</p>
 			{/await}
 		</div>
-	{:else if readonly || disabled}
-		<Button
-			class="pointer-events-none size-full flex-col justify-center gap-2 !whitespace-normal rounded-inherit bg-contrast-9 !p-6"
-		>
-			<Icon class="h-24 w-auto *:fill-gradient" this={MusicalNote} variation="solid" />
-			<p>Звук не добавлен</p>
-		</Button>
-	{:else}
-		<DropArea
-			onchange={handleChange}
-			class="relative rounded-inherit bg-main-20"
-			accept="audio/*"
-		>
-			<Icon class="h-20 w-auto *:fill-gradient" this={MusicalNote} variation="solid" />
-			<p>Нажмите тут или перетащите сюда звук</p>
-		</DropArea>
 	{/if}
-</div>
+</FileUploader>

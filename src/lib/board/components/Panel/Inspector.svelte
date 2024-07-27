@@ -106,12 +106,16 @@
 <div class="flex select-none flex-col gap-4 rounded-lg bg-contrast-2 p-4 text-center text-sm">
 	<p>Переменные</p>
 	<div class="flex flex-col gap-2">
-		{#each inspectorVariables as variable}
-			<div class="flex justify-between gap-4">
-				<p class="px-2 py-1">{variable.name}</p>
-				<div class="rounded-lg bg-main-70 px-2 py-1 text-right">{variable.value}</div>
-			</div>
-		{/each}
+		{#if inspectorVariables.length}
+			{#each inspectorVariables as variable}
+				<div class="flex justify-between gap-4">
+					<p class="px-2 py-1">{variable.name}</p>
+					<div class="rounded-lg bg-main-70 px-2 py-1 text-right">{variable.value}</div>
+				</div>
+			{/each}
+		{:else}
+			<p class="text-gray-500">Отсутсвуют</p>
+		{/if}
 	</div>
 </div>
 <Button onclick={clearChoices} class="justify-center bg-contrast-9">Сбросить все выборы</Button>

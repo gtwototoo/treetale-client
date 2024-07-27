@@ -26,6 +26,7 @@
 
 	import ImageUploader from '../ImageUploader.svelte';
 	import SoundUploader from '../SoundUploader.svelte';
+	import { setSelectedFrame } from '../methods.svelte';
 	import Choice from './FrameSettings/Choice.svelte';
 	import IllustrationPopover from './IllustrationPopover.svelte';
 
@@ -150,7 +151,7 @@
 	};
 
 	const gotoPrevFrame = () => {
-		selectedFrameStore.frameId = onePrevFrame!.frameId;
+		setSelectedFrame(onePrevFrame!);
 	};
 
 	const addPrevImage = () => {

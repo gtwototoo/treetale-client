@@ -84,7 +84,7 @@
 
 		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
 
-		if (isMouse && button === 0 && movingFrameStore.frameId) {
+		if (button === 0 && movingFrameStore.frameId) {
 			const frame = find(boardFramesStore.frames, { frameId: movingFrameStore.frameId });
 
 			if (!frame) return;

@@ -11,7 +11,7 @@
 >
 	<Radar />
 	{#if !readonlyModeStore.isEnabled}
-		<div class="absolute z-0 flex h-12 w-full items-center justify-center max-xs:relative">
+		<div class="absolute z-0 flex h-12 items-center justify-center max-xs:right-16 xs:w-full">
 			<AddFrameButton />
 		</div>
 	{/if}
