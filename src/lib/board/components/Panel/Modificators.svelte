@@ -23,6 +23,10 @@
 		});
 	};
 
+	const handleRemoveModificator = (index: number) => {
+		modificators.splice(index, 1);
+	};
+
 	let modificators = $state<Modificator[]>([]);
 </script>
 
@@ -35,8 +39,8 @@
 	</div>
 </ShortDescription>
 <div class="flex flex-col gap-2">
-	{#each modificators as modificator}
-		<Modificator {modificator} />
+	{#each modificators as modificator, key}
+		<Modificator {modificator} onremove={() => handleRemoveModificator(key)} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
 		<Button

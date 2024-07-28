@@ -3,6 +3,7 @@
 
 	import { removeImage, saveImage } from '$board/requests/files';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
+	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import find from 'lodash/find';
@@ -78,7 +79,7 @@
 	>
 		Удалить иллюстрацию
 	</Button>
-{:else if !imageUrl}
+{:else if !imageUrl && !readonlyModeStore.isEnabled}
 	<InputFile
 		class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
 		onchange={handleChange}

@@ -15,6 +15,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signUpUser } from '$lib/requests/user';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { rootStyle } from '$lib/utils/customColors';
 
 	let name = $state('');
 	let loading = $state(false);
@@ -56,6 +57,7 @@
 </script>
 
 <svelte:head>
+	{@html rootStyle(bodyBackgroundColorStore.color)}
 	<title>Завершение регистрации</title>
 </svelte:head>
 
