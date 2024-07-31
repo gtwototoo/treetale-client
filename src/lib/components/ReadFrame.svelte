@@ -3,13 +3,18 @@
 	import findIndex from 'lodash/findIndex';
 	import { Button, FormSplit } from 'treetale-ui';
 
-	import type { Choice as ChoiceType, Frame, LogicOperation } from '$lib/types';
+	import type { Choice as ChoiceType, Frame, LogicOperation, MathOperation } from '$lib/types';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
-	import { correctToType, doLogic, doMath } from '$lib/utils/variableOperations';
+	import {
+		choiceModificators,
+		correctToType,
+		doLogic,
+		doMath
+	} from '$lib/utils/variableOperations';
 
 	import Choice from './ReadFrame/Choice.svelte';
 
@@ -34,11 +39,11 @@
 	const updateVars = (choiceId?: number) => {
 		if (!choiceId) return;
 
-		const choice = find(frame?.choices, { choiceId });
+		const mathOperations = choiceModificators(frame, choiceId, 'math') as MathOperation[];
 
-		if (!choice?.mathOperations.length) return;
+		if (!mathOperations.length) return;
 
-		for (const { symbol, value, variable: name } of choice.mathOperations) {
+		for (const { symbol, value, variable: name } of mathOperations) {
 			const variableId = findIndex(variablesStore.variables, { name });
 			const { expect } = variablesStore.variables[variableId];
 			const firstValue = variablesStore.variables[variableId].value;
@@ -76,9 +81,13 @@
 	};
 
 	const enabledChoice = (choice: ChoiceType) => {
-		return (
-			choice.frameId && (!choice.logicOperations.length || checkLogic(choice.logicOperations))
-		);
+		const logicOperations = choiceModificators(
+			frame,
+			choice.choiceId,
+			'logic'
+		) as LogicOperation[];
+
+		return choice.frameId && (!logicOperations.length || checkLogic(logicOperations));
 	};
 
 	let availableChoicesCount = $derived(frame.choices.filter(enabledChoice).length);

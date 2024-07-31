@@ -95,7 +95,7 @@ const config = {
 			);
 			matchUtilities(
 				{
-					'grid-columns-fit': (value) => ({
+					'grid-cols-fit': (value) => ({
 						'grid-template-columns': `repeat(auto-fit, minmax(${value}, 1fr))`
 					})
 				},

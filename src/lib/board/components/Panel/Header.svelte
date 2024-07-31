@@ -44,7 +44,7 @@
 			{panelStatesStore.props?.title}
 		</Button>
 	{:else}
-		<Listbox align="inset" class="w-full min-w-0" list={framesList} placeholder="Блок" size="lg">
+		<Listbox align="inset" class="w-full min-w-0" list={framesList} placeholder="Блок">
 			{#snippet children({ onclick })}
 				<Button
 					class={clm(

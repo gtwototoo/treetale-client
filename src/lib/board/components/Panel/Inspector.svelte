@@ -8,18 +8,23 @@
 	import { Tv } from 'svelte-heros-v2';
 	import { Button, FormSplit, Image } from 'treetale-ui';
 
-	import type { Choice, LogicOperation } from '$lib/types';
+	import type { Choice, Frame, LogicOperation, MathOperation } from '$lib/types';
 
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
-	import { correctToType, doLogic, doMath } from '$lib/utils/variableOperations';
+	import {
+		choiceModificators,
+		correctToType,
+		doLogic,
+		doMath
+	} from '$lib/utils/variableOperations';
 
 	import ShortDescription from './ShortDescription.svelte';
 
 	let inspectorVariables = $state(cloneDeep(variablesStore.variables));
 
-	const handleClick = (frameId: number, choice: Choice, index: number) => {
+	const handleClick = (frame: Frame, choice: Choice, index: number) => {
 		if (inspectorStore.selectedChoices[index]?.choice.choiceId === choice.choiceId) {
 			return;
 		}
@@ -28,14 +33,20 @@
 
 		inspectorStore.selectedChoices.push({
 			choice,
-			frameId
+			frameId: frame.frameId
 		});
 
 		inspectorVariables = cloneDeep(variablesStore.variables);
 
 		for (const selectedStage of inspectorStore.selectedChoices) {
-			if (selectedStage.choice.mathOperations.length) {
-				for (const mathOperation of selectedStage.choice.mathOperations) {
+			const mathOperations = choiceModificators(
+				frame,
+				selectedStage.choice.choiceId,
+				'math'
+			) as MathOperation[];
+
+			if (mathOperations.length) {
+				for (const mathOperation of mathOperations) {
 					const variableId = findIndex(inspectorVariables, { name: mathOperation.variable });
 					const firstValue = inspectorVariables[variableId].value;
 
@@ -139,19 +150,29 @@
 			{#if frame.choices.length}
 				<FormSplit vertical class="w-full">
 					{#each frame.choices as choice}
+						{@const logicOperations = choiceModificators(
+							frame,
+							choice.choiceId,
+							'logic'
+						) as LogicOperation[]}
+						{@const mathOperations = choiceModificators(
+							frame,
+							choice.choiceId,
+							'math'
+						) as MathOperation[]}
 						<Button
 							class={clm(
 								inspectorStore.selectedChoices[index]?.choice.choiceId ===
 									choice.choiceId && yellowTextColor,
 								'flex-col items-start gap-1 bg-contrast-9 hover:bg-contrast-7'
 							)}
-							disabled={!choice.frameId || !checkLogic(choice.logicOperations)}
-							onclick={() => handleClick(frame.frameId, choice, index)}
+							disabled={!choice.frameId || !checkLogic(logicOperations)}
+							onclick={() => handleClick(frame, choice, index)}
 						>
-							{#if choice.logicOperations.length}
+							{#if logicOperations.length}
 								<p class="text-xs text-orange-500">
 									Условие:
-									{choice.logicOperations
+									{logicOperations
 										.map(
 											({ symbol, value, variable }) => `${variable} ${symbol} ${value}`
 										)
@@ -162,10 +183,10 @@
 								{@html correctVariableReplace(choice.text, inspectorVariables) ||
 									'Вариант выбора'}
 							</div>
-							{#if choice.mathOperations.length}
-								<p class="text-xs text-violet-500">
+							{#if mathOperations.length}
+								<p class="text-xs text-blue-500">
 									Изменения:
-									{choice.mathOperations
+									{mathOperations
 										.map(
 											({ symbol, value, variable }) => `${variable} ${symbol} ${value}`
 										)

@@ -1,4 +1,6 @@
-import type { ComparisonOperators, MathOperators, VariableExpects } from '$lib/types';
+import filter from 'lodash/filter';
+
+import type { ComparisonOperators, Frame, MathOperators, VariableExpects } from '$lib/types';
 
 export const correctToType = (value: number | string, expect: VariableExpects) => {
 	return expect === 'Число' ? +value : value;
@@ -42,4 +44,8 @@ export const doMath = (
 	if (!(symbol in operations)) return `${firstValue}`;
 
 	return `${operations[symbol]}`;
+};
+
+export const choiceModificators = (frame: Frame, choiceId: number, type: 'logic' | 'math') => {
+	return filter(frame.modificators, { choiceId, type });
 };

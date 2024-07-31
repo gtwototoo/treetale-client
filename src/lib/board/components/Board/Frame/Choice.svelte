@@ -9,6 +9,7 @@
 
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
+	import { choiceModificators } from '$lib/utils/variableOperations';
 
 	type HTMLContentEditable = HTMLDivElement;
 
@@ -20,7 +21,7 @@
 		frame: Frame;
 	} = $props();
 
-	let { choiceId, frameId: toFrameId, logicOperations, mathOperations, text } = $derived(choice);
+	let { choiceId, frameId: toFrameId, text } = $derived(choice);
 
 	const choiceFocus = (choiceId: number) => {
 		const choiceKey = findIndex(frame.choices, { choiceId });
@@ -106,12 +107,12 @@
 	onclick={handleClick}
 	onmousedown={handleMouseDown}
 >
-	{#if logicOperations.length}
+	{#if choiceModificators(frame, choice.choiceId, 'logic').length}
 		<div class="absolute left-1 h-7 w-1 rounded-full !bg-orange-500"></div>
 	{/if}
 	<p class="truncate">{@html text || 'Вариант выбора'}</p>
-	{#if mathOperations.length}
-		<div class="absolute right-1 h-7 w-1 rounded-full !bg-violet-500"></div>
+	{#if choiceModificators(frame, choice.choiceId, 'math').length}
+		<div class="absolute right-1 h-7 w-1 rounded-full !bg-blue-500"></div>
 	{/if}
 	<div class={clm(toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint')}></div>
 </Button>

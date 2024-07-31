@@ -1,21 +1,23 @@
 <script lang="ts">
-	import type { LogicOperation, MathOperation, PanelProps } from '$board/types';
-
-	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import { variablesStore } from '$board/stores/variables.svelte';
 	import find from 'lodash/find';
-	import { Button, FormSplit, Listbox } from 'treetale-ui';
+	import { XMark } from 'svelte-heros-v2';
+	import { Button, Icon, Input, Listbox } from 'treetale-ui';
+
+	import type { ComparisonOperators, MathOperators, Modificator } from '$lib/types';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
-	import Operation from './Operation.svelte';
-
-	interface Modificator {
-		operations: LogicOperation[] | MathOperation[];
-		type: 'logic' | 'math';
-	}
+	const symbols: {
+		logic: ComparisonOperators[];
+		math: MathOperators[];
+	} = {
+		logic: ['=', '≥', '≤', '>', '<', '≠'],
+		math: ['+', '-', '*', '/', '=']
+	};
 
 	let {
 		modificator,
@@ -25,91 +27,94 @@
 		onremove?: () => void;
 	} = $props();
 
-	const selectType = (type: 'logic' | 'math') => {
-		modificator.type = type;
+	const handleSelectVariable = (name: string) => {
+		const { expect } = find(variablesStore.variables, { name })!;
+
+		if (expect === 'Логика') {
+			if (!['Да', 'Нет'].includes(modificator.value)) {
+				modificator.value = 'Да';
+			}
+		}
+
+		if (expect !== 'Число') {
+			modificator.symbol = '=';
+		}
 	};
 
-	const handleAddOperation = () => {
-		modificator.operations.push({
-			symbol: '=',
-			value: '',
-			variable: ''
-		});
-	};
-
-	const handleRemoveOperation = (key: number) => {
-		modificator.operations.splice(key, 1);
-	};
-
-	let frame = $derived(
-		find(boardFramesStore.frames, {
-			frameId: (panelStatesStore.props as { frameId: number } & PanelProps).frameId
-		})!
+	let variable = $derived(find(variablesStore.variables, { name: modificator.variable }));
+	let fullOperationValue = $derived(
+		`${modificator.variable || 'Переменная'} ${modificator.symbol} ${modificator.value || 'Значение'}`
 	);
 </script>
 
-<div class="flex flex-col gap-2 rounded-xl bg-contrast-3 p-2">
-	<Listbox
-		placeholder="Вариант выбора"
-		list={frame.choices.map(({ text }) => text)}
-		disabled={panelStatesStore.editMode}
-		readonly={readonlyModeStore.isEnabled}
-	/>
-	{#if panelStatesStore.editMode}
-		<Button disabled class="justify-center bg-contrast-9 text-text">
-			{modificator.type === 'logic' ? 'Условие' : 'Операция'}
-		</Button>
+{#snippet inputValue()}
+	{#if variable?.expect !== 'Логика'}
+		<Input
+			size="sm"
+			bind:value={modificator.value}
+			class="flex-1 bg-contrast-4"
+			maxlength={32}
+			number={variable?.expect === 'Число'}
+			placeholder="Значение"
+			disabled={modificator.variable === ''}
+			readonly={readonlyModeStore.isEnabled}
+		/>
 	{:else}
-		<FormSplit class="w-full *:flex-1">
-			<Button
-				onclick={() => selectType('logic')}
-				class={clm(
-					'justify-center bg-contrast-7',
-					modificator.type === 'logic' && 'bg-main text-text',
-					readonlyModeStore.isEnabled && 'pointer-events-none'
-				)}
-			>
-				Условие
-			</Button>
-			<Button
-				onclick={() => selectType('math')}
-				class={clm(
-					'justify-center bg-contrast-7',
-					modificator.type === 'math' && 'bg-main text-text',
-					readonlyModeStore.isEnabled && 'pointer-events-none'
-				)}
-			>
-				Операция
-			</Button>
-		</FormSplit>
+		<Listbox
+			size="sm"
+			align="inset"
+			bind:value={modificator.value}
+			class="flex-1"
+			list={[{ title: 'Да' }, { title: 'Нет' }]}
+			placeholder="Значение"
+			readonly={readonlyModeStore.isEnabled}
+		/>
 	{/if}
-	<div class="flex w-full flex-col gap-1">
-		{#if !readonlyModeStore.isEnabled || (readonlyModeStore.isEnabled && modificator.operations.length)}
-			{#each modificator.operations as operation, key}
-				<Operation {operation} {modificator} onremove={() => handleRemoveOperation(key)} />
-			{/each}
-		{:else}
-			<p class="p-2 text-center text-sm text-gray-500">
-				Нет {modificator.type === 'logic' ? 'условий' : 'операций'}
-			</p>
-		{/if}
-		{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-			<Button
-				size="sm"
-				class="w-full justify-center bg-contrast-9 text-text hover:bg-contrast-7"
-				onclick={handleAddOperation}
-			>
-				{modificator.type === 'logic' ? 'Добавить условие' : 'Добавить операцию'}
-			</Button>
-		{/if}
-		{#if panelStatesStore.editMode}
-			<Button
-				size="sm"
-				class={clm('w-full justify-center text-red-500', redBackgroundColorStore.color)}
-				onclick={onremove}
-			>
-				Удалить модификатор
-			</Button>
-		{/if}
+{/snippet}
+
+{#if panelStatesStore.editMode}
+	<div class="flex gap-1">
+		<Input placeholder="Значение" size="sm" readonly class="w-full" value={fullOperationValue} />
+		<Button
+			size="sm"
+			class={clm('text-red-500', redBackgroundColorStore.color)}
+			onclick={onremove}
+		>
+			<Icon class="size-4" this={XMark} />
+		</Button>
 	</div>
-</div>
+{:else}
+	<div class="grid grid-cols-[1fr,max-content,1fr] gap-1">
+		<Listbox
+			size="sm"
+			align="inset"
+			bind:value={modificator.variable}
+			class="flex-1"
+			list={variablesStore.variables.map(({ name }) => name)}
+			onchange={(value) => handleSelectVariable(value)}
+			placeholder="Переменная"
+			readonly={readonlyModeStore.isEnabled}
+		/>
+		<Listbox
+			align="inset"
+			size="sm"
+			classlist={clm('*:*:justify-center')}
+			bind:value={modificator.symbol}
+			list={symbols[modificator.type]}
+			placeholder=""
+			readonly={readonlyModeStore.isEnabled}
+		>
+			{#snippet children({ onclick, value })}
+				<Button
+					size="sm"
+					class="w-8 justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+					disabled={variable?.expect !== 'Число'}
+					{onclick}
+				>
+					{value}
+				</Button>
+			{/snippet}
+		</Listbox>
+		{@render inputValue()}
+	</div>
+{/if}

@@ -94,6 +94,11 @@ export interface PanelProps {
 	title: string;
 }
 
+export interface Modificator extends Operation<ComparisonOperators | MathOperators> {
+	choiceId?: number;
+	type: 'logic' | 'math';
+}
+
 export type VariableExpects = 'Логика' | 'Строка' | 'Число';
 
 export interface Variable {
@@ -125,10 +130,9 @@ export type LogicOperation = Operation<ComparisonOperators>;
 export type MathOperation = Operation<MathOperators>;
 
 export interface Choice {
+	asInput: boolean;
 	choiceId: number;
 	frameId: null | number;
-	logicOperations: LogicOperation[];
-	mathOperations: MathOperation[];
 	text: string;
 }
 
@@ -139,6 +143,7 @@ export interface Frame extends Coordinates, Pick<Sizes, 'height'> {
 	imageUrl: null | string;
 	isEnd: boolean;
 	isStart: boolean;
+	modificators: Modificator[];
 	soundUrl: null | string;
 	text: null | string;
 	title: string;

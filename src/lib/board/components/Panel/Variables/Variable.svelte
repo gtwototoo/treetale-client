@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
+	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { XMark } from 'svelte-heros-v2';
-	import { Button, FormSplit, Icon, Input, type ListItemProps, Listbox } from 'treetale-ui';
+	import { Button, Icon, Input, type ListItemProps, Listbox } from 'treetale-ui';
 
 	import type { Variable, VariableExpects } from '$lib/types';
 
@@ -34,10 +36,20 @@
 		}
 	];
 
+	const removeVariableFromModificators = (name: string) => {
+		for (const frame of boardFramesStore.frames) {
+			if (find(frame.modificators, { variable: name })) {
+				frame.modificators = frame.modificators.filter(({ variable }) => variable !== name);
+			}
+		}
+	};
+
 	const removeVariable = () => {
 		const variableIndex = findIndex(variablesStore.variables, (v) => v.name === variable.name);
 
 		variablesStore.variables.splice(variableIndex, 1);
+
+		removeVariableFromModificators(variable.name);
 
 		checkUpdates();
 	};
@@ -60,7 +72,7 @@
 		{/snippet}
 	</Input>
 {:else}
-	<FormSplit>
+	<div class="flex gap-1">
 		<Input
 			bind:value={variable.name}
 			class={clm('shrink-0', panelStatesStore.editMode ? 'grow' : 'w-[13rem]')}
@@ -103,5 +115,5 @@
 				readonly={readonlyModeStore.isEnabled}
 			/>
 		{/if}
-	</FormSplit>
+	</div>
 {/if}

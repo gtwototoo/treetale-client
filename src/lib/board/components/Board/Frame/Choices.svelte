@@ -22,10 +22,9 @@
 		const choiceId = frame.choices.length ? last(frame.choices)!.choiceId + 1 : 0;
 
 		frame.choices.push({
+			asInput: false,
 			choiceId,
 			frameId: null,
-			logicOperations: [],
-			mathOperations: [],
 			text: ''
 		});
 

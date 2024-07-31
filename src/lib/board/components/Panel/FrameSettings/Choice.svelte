@@ -2,12 +2,12 @@
 	import { addFrame, setSelectedFrame } from '$board/components/methods.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import reject from 'lodash/reject';
-	import { ChevronRight, Plus, XMark } from 'svelte-heros-v2';
+	import { Beaker, ChevronRight, Pencil, Plus, XMark } from 'svelte-heros-v2';
 	import { Button, Contenteditable, Icon } from 'treetale-ui';
 
 	import type { Choice, Frame } from '$lib/types';
@@ -15,6 +15,9 @@
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
+	import { choiceModificators } from '$lib/utils/variableOperations';
+
+	import Modificators from '../Modificators.svelte';
 
 	type HTMLContentEditable = HTMLDivElement;
 
@@ -54,6 +57,19 @@
 		(descriptionInputs[0] as HTMLContentEditable).focus();
 	};
 
+	const handleOpenModificatorsPanel = () => {
+		panelStatesStore.set<{
+			choiceId: number;
+			frameId: number;
+		}>(`modificators-${choice.choiceId}`, Modificators, {
+			choiceId: choice.choiceId,
+			frameId: frame.frameId,
+			isEdit: true,
+			isSubpanel: true,
+			title: 'Модификаторы'
+		});
+	};
+
 	const addFrameFromChoice = () => {
 		const distance = 40;
 		const { x, y } = frame;
@@ -73,16 +89,39 @@
 	let greenBackgroundColor = $derived(
 		currentThemeClass(clm('bg-emerald-800'), clm('bg-emerald-200'))
 	);
+
+	let logicModificators = $derived(choiceModificators(frame, choice.choiceId, 'logic'));
+	let mathModificators = $derived(choiceModificators(frame, choice.choiceId, 'math'));
 </script>
 
 <Contenteditable
 	bind:html={choice.text}
 	class="shrink grow"
 	disabled={panelStatesStore.editMode}
+	oninput={boardEventsStore.save}
 	maxlength={100}
 	placeholder="Вариант выбора"
 	readonly={readonlyModeStore.isEnabled}
 >
+	{#snippet left()}
+		<Button
+			size="sm"
+			class={clm(
+				'bg-contrast-9 text-text',
+				logicModificators.length || mathModificators.length
+					? 'text-white hover:opacity-70'
+					: 'hover:bg-contrast-7',
+				logicModificators.length && 'bg-orange-500',
+				mathModificators.length && 'bg-blue-500',
+				mathModificators.length &&
+					logicModificators.length &&
+					'bg-gradient-to-br from-orange-500 from-50% to-blue-500 to-50%'
+			)}
+			onclick={handleOpenModificatorsPanel}
+		>
+			<Icon this={choice.asInput ? Pencil : Beaker} class="size-4" />
+		</Button>
+	{/snippet}
 	{#snippet right()}
 		{#if panelStatesStore.editMode}
 			<Button

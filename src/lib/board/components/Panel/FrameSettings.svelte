@@ -5,7 +5,7 @@
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
 	import { boardFramesStore, selectedFrameStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -14,15 +14,7 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 	import reject from 'lodash/reject';
-	import {
-		ArrowLeft,
-		Beaker,
-		MusicalNote,
-		Photo,
-		Plus,
-		RectangleStack,
-		Trash
-	} from 'svelte-heros-v2';
+	import { ArrowLeft, MusicalNote, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
 	import { Button, Contenteditable, FormSplit, Icon, Input, Popover } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
@@ -37,7 +29,6 @@
 	import { setSelectedFrame } from '../methods.svelte';
 	import Choice from './FrameSettings/Choice.svelte';
 	import IllustrationPopover from './IllustrationPopover.svelte';
-	import Modificators from './Modificators.svelte';
 
 	let draggedFileType = $state<string>();
 	let onePrevFrame = $state<Frame | null>(null);
@@ -149,10 +140,9 @@
 		const choiceId = choices.length ? last(choices)!.choiceId + 1 : 0;
 
 		frame.choices.push({
+			asInput: false,
 			choiceId,
 			frameId: null,
-			logicOperations: [],
-			mathOperations: [],
 			text: ''
 		});
 
@@ -182,17 +172,6 @@
 		const notesFormattedHtml = notesHighlight(varFormattedHtml, notesStore.notes);
 
 		return notesFormattedHtml;
-	};
-
-	const openModificatorsPanel = () => {
-		panelStatesStore.set<{
-			frameId: number;
-		}>(`modificators-${frameId}`, Modificators, {
-			frameId,
-			isEdit: true,
-			isSubpanel: true,
-			title: 'Модификаторы'
-		});
 	};
 
 	const handleDrop = (files: File[]) => {
@@ -315,6 +294,7 @@
 			bind:value={frame.title}
 			disabled={panelStatesStore.editMode}
 			maxlength={25}
+			oninput={boardEventsStore.save}
 			placeholder="Название блока"
 			readonly={readonlyModeStore.isEnabled}
 		/>
@@ -322,6 +302,7 @@
 			bind:html={frame.text!}
 			disabled={panelStatesStore.editMode}
 			bind:ref={descriptionElement}
+			oninput={boardEventsStore.save}
 			maxlength={1500}
 			pattern={updatePattern}
 			placeholder="Описание блока"
@@ -333,14 +314,10 @@
 			class="justify-center gap-4 bg-contrast-9 pl-3 text-text hover:bg-contrast-7"
 			onclick={gotoPrevFrame}
 		>
-			<Icon class="absolute left-2 size-5" this={ArrowLeft} />
+			<Icon class="absolute left-3 size-5" this={ArrowLeft} />
 			К предыдущему блоку
 		</Button>
 	{/if}
-	<Button class="justify-center bg-contrast-9 hover:bg-contrast-7" onclick={openModificatorsPanel}>
-		<Icon this={Beaker} class="absolute left-2 size-5" />
-		Модификаторы
-	</Button>
 	<div class="flex flex-col gap-2" id="choices">
 		{#each choices as choice (choice.choiceId)}
 			<Choice {choice} {frame} />

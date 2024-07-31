@@ -1,4 +1,4 @@
-import type { Coordinates, Frame, Note, Story, Variable } from '.';
+import type { Coordinates, Frame, Note, Story, Variable } from '$lib/types';
 
 export interface StorySchema extends Story {
 	[index: string]: Coordinates | boolean | number | string | unknown[];

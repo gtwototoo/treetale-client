@@ -1,4 +1,4 @@
-import type { Choice, Coordinates, Frame } from '$board/types';
+import type { Choice, Coordinates, Frame } from '$lib/types';
 
 import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 
