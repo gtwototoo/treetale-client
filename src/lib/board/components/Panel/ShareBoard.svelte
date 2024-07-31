@@ -5,7 +5,6 @@
 	import { Button, Icon, Input, Listbox } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { clm } from '$lib/utils/classMerge';
 
 	import ShortDescription from './ShortDescription.svelte';
 
@@ -68,7 +67,7 @@
 			{#snippet right()}
 				{#if panelStatesStore.editMode}
 					<Button
-						class={clm('text-red-500', redBackgroundColorStore.color)}
+						class={redBackgroundColorStore.color}
 						onclick={() => removeShareUser(key)}
 						size="sm"
 					>

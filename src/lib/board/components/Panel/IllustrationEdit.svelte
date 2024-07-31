@@ -73,10 +73,7 @@
 </InvisibleDrop>
 <Cover icon={genre.icon} {title} color={color || DEFAULT_COLOR} {imageUrl} />
 {#if panelStatesStore.editMode && imageUrl}
-	<Button
-		class={clm('justify-center text-red-500', redBackgroundColorStore.color)}
-		onclick={preRemoveImage}
-	>
+	<Button class={clm('justify-center', redBackgroundColorStore.color)} onclick={preRemoveImage}>
 		Удалить иллюстрацию
 	</Button>
 {:else if !imageUrl && !readonlyModeStore.isEnabled}

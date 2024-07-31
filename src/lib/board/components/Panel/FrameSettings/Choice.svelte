@@ -124,11 +124,7 @@
 	{/snippet}
 	{#snippet right()}
 		{#if panelStatesStore.editMode}
-			<Button
-				size="sm"
-				class={clm('text-red-500', redBackgroundColorStore.color)}
-				onclick={removeChoice}
-			>
+			<Button size="sm" class={redBackgroundColorStore.color} onclick={removeChoice}>
 				<Icon this={XMark} class="size-4" />
 			</Button>
 		{:else if choice.frameId || readonlyModeStore.isEnabled}

@@ -36,7 +36,7 @@
 {#if boardStateStore.mode === 'adding'}
 	<Button
 		class={clm(
-			'w-64 justify-center text-red-500 max-sm:w-24',
+			'w-64 justify-center max-sm:w-24',
 			redBackgroundColorStore.color,
 			redHoverBackgroundColor
 		)}

@@ -180,7 +180,11 @@
 			{saturate}
 		>
 			{#snippet children({ onclick })}
-				<Button class="w-full flex-col gap-1 bg-main text-text" {onclick} size="lg">
+				<Button
+					class="w-full flex-col gap-1 bg-main text-text hover:bg-main-80"
+					{onclick}
+					size="lg"
+				>
 					<Icon class="size-8" this={PaintBrush} variation="solid" />
 					<p class="text-xs">Цвет фона</p>
 				</Button>
@@ -215,7 +219,7 @@
 	</FormSplit>
 	{#if panelStatesStore.editMode}
 		<Button
-			class={clm('justify-center !text-red-500', redBackgroundColorStore.color)}
+			class={clm('justify-center', redBackgroundColorStore.color)}
 			onclick={handleDeleteStory}
 		>
 			Удалить историю

@@ -81,11 +81,7 @@
 			class="w-full"
 			value={fullModificatorOperation}
 		/>
-		<Button
-			size="sm"
-			class={clm('text-red-500', redBackgroundColorStore.color)}
-			onclick={onremove}
-		>
+		<Button size="sm" class={redBackgroundColorStore.color} onclick={onremove}>
 			<Icon class="size-4" this={XMark} />
 		</Button>
 	</div>

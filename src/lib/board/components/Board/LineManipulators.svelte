@@ -26,10 +26,7 @@
 		{#each createLineRemoveButtons(boardFramesStore.frames) as { fromChoiceId, fromFrameId, x, y }}
 			<div class="absolute flex size-0 items-center justify-center" style={transform({ x, y })}>
 				<Button
-					class={clm(
-						redBackgroundColorStore.color,
-						'!min-h-0 !rounded-full !p-2 text-red-500'
-					)}
+					class={clm(redBackgroundColorStore.color, 'min-h-0 rounded-full p-2')}
 					onclick={() => removeConnection(fromFrameId, fromChoiceId)}
 				>
 					<Icon class="size-4" this={XMark} />

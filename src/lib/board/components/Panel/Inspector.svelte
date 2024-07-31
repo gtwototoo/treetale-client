@@ -3,6 +3,7 @@
 	import { type SelectedChoices, inspectorStore } from '$board/stores/inspector.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import cloneDeep from 'lodash/cloneDeep';
+	import filter from 'lodash/filter';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { Tv } from 'svelte-heros-v2';
@@ -151,10 +152,13 @@
 								!checkLogic(inspectorVariables, logicModificators)}
 							onclick={() => handleClick(frame, choice, index)}
 						>
-							{#if logicModificators.length}
+							{#if filter(logicModificators, (modificator) => !!(modificator.variable && modificator.value)).length}
 								<p class="text-xs text-orange-500">
 									Условие:
-									{logicModificators
+									{filter(
+										logicModificators,
+										(modificator) => !!(modificator.variable && modificator.value)
+									)
 										.map(
 											({ symbol, value, variable }) => `${variable} ${symbol} ${value}`
 										)

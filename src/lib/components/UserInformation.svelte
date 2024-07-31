@@ -4,7 +4,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import clsx from 'clsx';
-	import { Cog6Tooth, User, UserMinus, UserPlus } from 'svelte-heros-v2';
+	import { User, UserMinus, UserPlus } from 'svelte-heros-v2';
 	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
 
 	import type { RGB } from '$lib/types';
@@ -238,8 +238,7 @@
 					onclick={() => (editMode = true)}
 					size="lg"
 				>
-					<Icon class="size-6" this={Cog6Tooth} />
-					<p class="mr-1">Настройки профиля</p>
+					Редактировать
 				</Button>
 				<Button
 					class="bg-main-40 text-red-500 hover:bg-contrast"

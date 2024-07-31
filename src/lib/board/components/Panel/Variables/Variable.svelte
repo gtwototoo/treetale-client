@@ -62,11 +62,7 @@
 		class="w-full"
 	>
 		{#snippet right()}
-			<Button
-				class={clm('text-red-500', redBackgroundColorStore.color)}
-				onclick={removeVariable}
-				size="sm"
-			>
+			<Button class={redBackgroundColorStore.color} onclick={removeVariable} size="sm">
 				<Icon this={XMark} class="size-4" />
 			</Button>
 		{/snippet}

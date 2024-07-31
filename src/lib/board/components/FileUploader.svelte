@@ -72,7 +72,7 @@
 	{#if !(readonly || disabled)}
 		<Button
 			size="sm"
-			class={clm('absolute right-1 top-1 z-10 text-red-500', redBackgroundColorStore.color)}
+			class={clm('absolute right-1 top-1 z-10', redBackgroundColorStore.color)}
 			onclick={handleRemove}
 		>
 			<Icon class="size-4" this={Trash} />

@@ -50,7 +50,10 @@
 		currentThemeClass(clm('bg-emerald-950'), clm('bg-emerald-50'))
 	);
 	let greenBackgroundColorButton = $derived(
-		currentThemeClass(clm('bg-emerald-950'), clm('bg-emerald-200'))
+		currentThemeClass(
+			clm('bg-emerald-700 hover:bg-emerald-800'),
+			clm('bg-emerald-200 hover:bg-emerald-100')
+		)
 	);
 
 	let showPublishButton = $derived(
@@ -63,14 +66,14 @@
 {#if showPublishButton}
 	<div
 		class={clm(
-			'flex select-none flex-col gap-4 rounded-lg p-2 pt-4 text-center text-sm',
+			'flex select-none flex-col gap-2 rounded-lg p-2 text-center text-sm',
 			storyInfoStore.info?.status === 'review'
 				? clm('text-orange-500', orangeBackgroundColor)
 				: clm('text-emerald-500', greenBackgroundColor)
 		)}
 	>
 		{#if storyInfoStore.info?.status === 'draft'}
-			<p>
+			<p class="p-2">
 				{correctWhitespace(
 					'Перед публикацией убедитесь, что у вас присутствует заголовок, описание и выбран жанр, а также есть начало и концы истории'
 				)}
@@ -84,20 +87,20 @@
 			</Button>
 		{:else if storyInfoStore.info?.status === 'review'}
 			{#if $page.data.session.role === 'member'}
-				<p>
+				<p class="p-2">
 					{correctWhitespace(
 						'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории'
 					)}
 				</p>
 				<Button
-					class={clm('justify-center text-red-500', redBackgroundColorStore.color)}
+					class={clm('justify-center', redBackgroundColorStore.color)}
 					{loading}
 					onclick={switchReview}
 				>
 					Отменить публикацию
 				</Button>
 			{:else}
-				<p>
+				<p class="p-2">
 					{correctWhitespace(
 						'Перед тем как опубликовать историю, проверьте историю на наличие грамматических ошибок, логики связей и на наличие неприемлемого контента'
 					)}
@@ -111,9 +114,9 @@
 				</Button>
 			{/if}
 		{:else if storyInfoStore.info?.status === 'published'}
-			{correctWhitespace('История опубликована')}
+			<p class="p-2">{correctWhitespace('История опубликована')}</p>
 			<Button
-				class={clm('justify-center text-red-500', redBackgroundColorStore.color)}
+				class={clm('justify-center', redBackgroundColorStore.color)}
 				{loading}
 				onclick={switchReview}
 			>

@@ -20,7 +20,12 @@ const getBodyBackgroundColor = () => {
 };
 
 const getRedBackgroundColor = () => {
-	const color = $derived(currentThemeClass(clm('bg-red-900'), clm('bg-red-100')));
+	const color = $derived(
+		currentThemeClass(
+			clm('bg-red-900 hover:bg-red-800 text-red-500'),
+			clm('bg-red-100 hover:bg-red-200 text-red-500')
+		)
+	);
 
 	return {
 		get color() {

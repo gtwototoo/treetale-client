@@ -6,7 +6,6 @@
 	import { Button, Contenteditable, FormSplit, Icon, InputTags } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { clm } from '$lib/utils/classMerge';
 
 	export let noteKey: number;
 	export let checkUpdates: () => void;
@@ -28,11 +27,7 @@
 	>
 		{#snippet right()}
 			{#if panelStatesStore.editMode}
-				<Button
-					class={clm('text-red-500', redBackgroundColorStore.color)}
-					onclick={removeNote}
-					size="sm"
-				>
+				<Button class={redBackgroundColorStore.color} onclick={removeNote} size="sm">
 					<Icon this={XMark} class="size-4" />
 				</Button>
 			{/if}

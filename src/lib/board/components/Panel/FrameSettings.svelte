@@ -325,7 +325,7 @@
 		{#if !readonlyModeStore.isEnabled}
 			{#if panelStatesStore.editMode && frameId !== 1}
 				<Button
-					class={clm('justify-center text-red-500', redBackgroundColorStore.color)}
+					class={clm('justify-center', redBackgroundColorStore.color)}
 					onclick={removeFrame}
 				>
 					Удалить блок
