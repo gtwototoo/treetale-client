@@ -1,6 +1,14 @@
 import filter from 'lodash/filter';
+import find from 'lodash/find';
 
-import type { ComparisonOperators, Frame, MathOperators, VariableExpects } from '$lib/types';
+import type {
+	ComparisonOperators,
+	Frame,
+	LogicModificator,
+	MathOperators,
+	Variable,
+	VariableExpects
+} from '$lib/types';
 
 export const correctToType = (value: number | string, expect: VariableExpects) => {
 	return expect === 'Число' ? +value : value;
@@ -48,4 +56,24 @@ export const doMath = (
 
 export const choiceModificators = (frame: Frame, choiceId: number, type: 'logic' | 'math') => {
 	return filter(frame.modificators, { choiceId, type });
+};
+
+export const checkLogic = (variables: Variable[], logicModificators: LogicModificator[]) => {
+	return logicModificators
+		.map(({ symbol, value: secondValue, variable: name }) => {
+			if (!name) return true;
+
+			const variable = find(variables, { name })!;
+
+			if (!variable) return true;
+
+			const { expect, value: firstValue } = variable;
+
+			return doLogic(
+				correctToType(firstValue, expect),
+				symbol,
+				correctToType(secondValue, expect)
+			);
+		})
+		.every((isVisible) => isVisible);
 };

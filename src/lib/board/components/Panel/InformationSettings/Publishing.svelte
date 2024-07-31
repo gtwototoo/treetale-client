@@ -63,7 +63,7 @@
 {#if showPublishButton}
 	<div
 		class={clm(
-			'flex select-none flex-col gap-4 rounded-lg p-4 text-center text-sm',
+			'flex select-none flex-col gap-4 rounded-lg p-2 pt-4 text-center text-sm',
 			storyInfoStore.info?.status === 'review'
 				? clm('text-orange-500', orangeBackgroundColor)
 				: clm('text-emerald-500', greenBackgroundColor)

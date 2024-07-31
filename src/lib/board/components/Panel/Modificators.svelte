@@ -4,6 +4,8 @@
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
+	import last from 'lodash/last';
 	import { Beaker } from 'svelte-heros-v2';
 	import { Button, Listbox } from 'treetale-ui';
 
@@ -21,6 +23,7 @@
 	const handleAddModificator = (type: 'logic' | 'math') => {
 		frame.modificators.push({
 			choiceId,
+			modificatorId: (last(frame.modificators)?.modificatorId || 0) + 1,
 			symbol: '=',
 			type,
 			value: '',
@@ -28,8 +31,10 @@
 		});
 	};
 
-	const handleRemoveModificator = (index: number, type: 'logic' | 'math') => {
-		(type === 'logic' ? logicModificators : mathModificators).splice(index, 1);
+	const handleRemoveModificator = (modificatorId: number) => {
+		let modificatorIndex = findIndex(frame.modificators, { modificatorId });
+
+		frame.modificators.splice(modificatorIndex, 1);
 	};
 
 	let { choiceId, frameId } = $derived(
@@ -88,8 +93,11 @@
 					Условия появления
 					<Logics class="h-4 w-auto text-orange-500/50" />
 				</div>
-				{#each logicModificators as modificator, key}
-					<Modificator {modificator} onremove={() => handleRemoveModificator(key, 'logic')} />
+				{#each logicModificators as modificator (modificator.modificatorId)}
+					<Modificator
+						{modificator}
+						onremove={() => handleRemoveModificator(modificator.modificatorId)}
+					/>
 				{/each}
 			{/if}
 			{#if mathModificators.length}
@@ -99,8 +107,11 @@
 					Изменение переменных
 					<Maths class="h-4 w-auto text-blue-500/50" />
 				</div>
-				{#each mathModificators as modificator, key}
-					<Modificator {modificator} onremove={() => handleRemoveModificator(key, 'logic')} />
+				{#each mathModificators as modificator (modificator.modificatorId)}
+					<Modificator
+						{modificator}
+						onremove={() => handleRemoveModificator(modificator.modificatorId)}
+					/>
 				{/each}
 			{/if}
 		</div>

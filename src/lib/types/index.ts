@@ -94,9 +94,13 @@ export interface PanelProps {
 	title: string;
 }
 
-export interface Modificator extends Operation<ComparisonOperators | MathOperators> {
+export interface Modificator<T = ComparisonOperators | MathOperators> {
 	choiceId?: number;
+	modificatorId: number;
+	symbol: T;
 	type: 'logic' | 'math';
+	value: string;
+	variable: string;
 }
 
 export type VariableExpects = 'Логика' | 'Строка' | 'Число';
@@ -120,14 +124,8 @@ export interface Sizes {
 export type ComparisonOperators = '<' | '=' | '>' | '≠' | '≤' | '≥';
 export type MathOperators = '*' | '+' | '/' | '=' | '-';
 
-interface Operation<T> {
-	symbol: T;
-	value: string;
-	variable: string;
-}
-
-export type LogicOperation = Operation<ComparisonOperators>;
-export type MathOperation = Operation<MathOperators>;
+export type LogicModificator = Modificator<ComparisonOperators>;
+export type MathModificator = Modificator<MathOperators>;
 
 export interface Choice {
 	asInput: boolean;

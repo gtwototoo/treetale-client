@@ -10,17 +10,19 @@
 	import last from 'lodash/last';
 	import { Button } from 'treetale-ui';
 
+	import type { MathModificator } from '$lib/types/index';
+
 	import ReadFrame from '$lib/components/ReadFrame.svelte';
 	import StoryDescription from '$lib/components/StoryDescription.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { updateProgress } from '$lib/requests/progress';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { framesStore, fullscreenStore } from '$lib/stores/reading.svelte.js';
+	import { framesStore, fullscreenStore } from '$lib/stores/reading.svelte';
 	import { soundStore } from '$lib/stores/sound.svelte';
-	import { variablesStore } from '$lib/stores/variables.svelte.js';
+	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
-	import { correctToType, doMath } from '$lib/utils/variableOperations';
+	import { choiceModificators, correctToType, doMath } from '$lib/utils/variableOperations';
 
 	let { data } = $props();
 	let clonedData = $derived(cloneDeep(data));
@@ -62,11 +64,16 @@
 
 	const updateVars = (frameId: number, choiceId: number) => {
 		const frame = find(framesStore.frames, { frameId });
+
+		if (!frame) return;
+
 		const choice = find(frame?.choices, { choiceId });
 
-		if (!choice || !choice.mathOperations.length) return;
+		const mathModificators = choiceModificators(frame, choiceId, 'math') as MathModificator[];
 
-		for (const { symbol, value, variable: name } of choice.mathOperations) {
+		if (!choice || !mathModificators.length) return;
+
+		for (const { symbol, value, variable: name } of mathModificators) {
 			const variableId = findIndex(variablesStore.variables, { name });
 			const { expect } = variablesStore.variables[variableId];
 			const firstValue = variablesStore.variables[variableId].value;

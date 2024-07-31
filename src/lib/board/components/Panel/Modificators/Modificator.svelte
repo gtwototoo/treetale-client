@@ -42,7 +42,7 @@
 	};
 
 	let variable = $derived(find(variablesStore.variables, { name: modificator.variable }));
-	let fullOperationValue = $derived(
+	let fullModificatorOperation = $derived(
 		`${modificator.variable || 'Переменная'} ${modificator.symbol} ${modificator.value || 'Значение'}`
 	);
 </script>
@@ -74,7 +74,13 @@
 
 {#if panelStatesStore.editMode}
 	<div class="flex gap-1">
-		<Input placeholder="Значение" size="sm" readonly class="w-full" value={fullOperationValue} />
+		<Input
+			placeholder="Значение"
+			size="sm"
+			readonly
+			class="w-full"
+			value={fullModificatorOperation}
+		/>
 		<Button
 			size="sm"
 			class={clm('text-red-500', redBackgroundColorStore.color)}

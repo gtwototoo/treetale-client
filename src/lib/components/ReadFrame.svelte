@@ -1,18 +1,17 @@
 <script lang="ts">
-	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { Button, FormSplit } from 'treetale-ui';
 
-	import type { Choice as ChoiceType, Frame, LogicOperation, MathOperation } from '$lib/types';
+	import type { Choice as ChoiceType, Frame, LogicModificator, MathModificator } from '$lib/types';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import {
+		checkLogic,
 		choiceModificators,
 		correctToType,
-		doLogic,
 		doMath
 	} from '$lib/utils/variableOperations';
 
@@ -39,11 +38,11 @@
 	const updateVars = (choiceId?: number) => {
 		if (!choiceId) return;
 
-		const mathOperations = choiceModificators(frame, choiceId, 'math') as MathOperation[];
+		const mathModificators = choiceModificators(frame, choiceId, 'math') as MathModificator[];
 
-		if (!mathOperations.length) return;
+		if (!mathModificators.length) return;
 
-		for (const { symbol, value, variable: name } of mathOperations) {
+		for (const { symbol, value, variable: name } of mathModificators) {
 			const variableId = findIndex(variablesStore.variables, { name });
 			const { expect } = variablesStore.variables[variableId];
 			const firstValue = variablesStore.variables[variableId].value;
@@ -60,20 +59,6 @@
 		onresults?.();
 	};
 
-	const checkLogic = (logicOperations: LogicOperation[]) => {
-		return logicOperations
-			.map(({ symbol, value: secondValue, variable: name }) => {
-				const { expect, value: firstValue } = find(variablesStore.variables, { name })!;
-
-				return doLogic(
-					correctToType(firstValue, expect),
-					symbol,
-					correctToType(secondValue, expect)
-				);
-			})
-			.every((operation) => operation);
-	};
-
 	const dynamicText = (text: null | string) => {
 		updateVars(selectedChoiceId);
 
@@ -81,13 +66,16 @@
 	};
 
 	const enabledChoice = (choice: ChoiceType) => {
-		const logicOperations = choiceModificators(
+		const logicModificators = choiceModificators(
 			frame,
 			choice.choiceId,
 			'logic'
-		) as LogicOperation[];
+		) as LogicModificator[];
 
-		return choice.frameId && (!logicOperations.length || checkLogic(logicOperations));
+		return (
+			choice.frameId &&
+			(!logicModificators.length || checkLogic(variablesStore.variables, logicModificators))
+		);
 	};
 
 	let availableChoicesCount = $derived(frame.choices.filter(enabledChoice).length);
