@@ -19,11 +19,11 @@
 	} = $props();
 
 	const addChoice = () => {
-		const choiceId = frame.choices.length ? last(frame.choices)!.choiceId + 1 : 0;
+		const lastChoiceId = last(frame.choices)?.choiceId || 0;
 
 		frame.choices.push({
 			asInput: false,
-			choiceId,
+			choiceId: lastChoiceId + 1,
 			frameId: null,
 			text: ''
 		});

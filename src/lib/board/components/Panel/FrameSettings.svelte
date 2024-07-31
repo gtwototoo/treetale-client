@@ -137,11 +137,11 @@
 	};
 
 	const addChoice = () => {
-		const choiceId = choices.length ? last(choices)!.choiceId + 1 : 0;
+		const lastChoiceId = last(frame.choices)?.choiceId || 0;
 
 		frame.choices.push({
 			asInput: false,
-			choiceId,
+			choiceId: lastChoiceId + 1,
 			frameId: null,
 			text: ''
 		});

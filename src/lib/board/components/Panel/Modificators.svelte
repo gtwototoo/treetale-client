@@ -21,9 +21,11 @@
 	import ShortDescription from './ShortDescription.svelte';
 
 	const handleAddModificator = (type: 'logic' | 'math') => {
+		const lastModificatorId = last(frame.modificators)?.modificatorId || 0;
+
 		frame.modificators.push({
 			choiceId,
-			modificatorId: (last(frame.modificators)?.modificatorId || 0) + 1,
+			modificatorId: lastModificatorId + 1,
 			symbol: '=',
 			type,
 			value: '',

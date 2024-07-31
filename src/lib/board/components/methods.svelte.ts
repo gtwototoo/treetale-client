@@ -43,23 +43,21 @@ export const connectedWithStart = (frameId: number) => {
 export const addFrame = ({ x, y }: Coordinates) => {
 	const lastFrameId = last(boardFramesStore.frames)?.frameId || 0;
 
-	boardFramesStore.frames = [
-		...boardFramesStore.frames,
-		{
-			choices: [],
-			frameId: lastFrameId + 1,
-			height: 0,
-			hidden: false,
-			imageUrl: null,
-			isEnd: false,
-			isStart: false,
-			soundUrl: null,
-			text: '',
-			title: `Блок ${lastFrameId}`,
-			x,
-			y
-		}
-	];
+	boardFramesStore.frames.push({
+		choices: [],
+		frameId: lastFrameId + 1,
+		height: 0,
+		hidden: false,
+		imageUrl: null,
+		isEnd: false,
+		isStart: false,
+		modificators: [],
+		soundUrl: null,
+		text: '',
+		title: `Блок ${lastFrameId}`,
+		x,
+		y
+	});
 
 	changesHistoryStore.add('Добавление блока', Plus);
 
