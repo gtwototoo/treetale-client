@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import find from 'lodash/find';
@@ -31,6 +31,8 @@
 			value: '',
 			variable: ''
 		});
+
+		boardEventsStore.save();
 	};
 
 	const handleRemoveModificator = (modificatorId: number) => {

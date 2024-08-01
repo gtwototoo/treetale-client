@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import find from 'lodash/find';
@@ -27,7 +27,12 @@
 		onremove?: () => void;
 	} = $props();
 
-	const handleSelectVariable = (name: string) => {
+	const handleChange = (value: string) => {
+		selectVariable(value);
+		boardEventsStore.save();
+	};
+
+	const selectVariable = (name: string) => {
 		const { expect } = find(variablesStore.variables, { name })!;
 
 		if (expect === 'Логика') {
@@ -54,9 +59,10 @@
 			bind:value={modificator.value}
 			class="flex-1 bg-contrast-4"
 			maxlength={32}
+			oninput={boardEventsStore.save}
 			number={variable?.expect === 'Число'}
 			placeholder="Значение"
-			disabled={modificator.variable === ''}
+			disabled={!modificator.variable}
 			readonly={readonlyModeStore.isEnabled}
 		/>
 	{:else}
@@ -64,6 +70,7 @@
 			size="sm"
 			align="inset"
 			bind:value={modificator.value}
+			onchange={boardEventsStore.save}
 			class="flex-1"
 			list={[{ title: 'Да' }, { title: 'Нет' }]}
 			placeholder="Значение"
@@ -93,7 +100,7 @@
 			bind:value={modificator.variable}
 			class="flex-1"
 			list={variablesStore.variables.map(({ name }) => name)}
-			onchange={(value) => handleSelectVariable(value)}
+			onchange={handleChange}
 			placeholder="Переменная"
 			readonly={readonlyModeStore.isEnabled}
 		/>
@@ -104,6 +111,7 @@
 			bind:value={modificator.symbol}
 			list={symbols[modificator.type]}
 			placeholder=""
+			onchange={boardEventsStore.save}
 			readonly={readonlyModeStore.isEnabled}
 		>
 			{#snippet children({ onclick, value })}
