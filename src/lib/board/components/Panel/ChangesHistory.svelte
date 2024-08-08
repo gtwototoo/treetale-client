@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import clsx from 'clsx';
 	import { Clock } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon } from 'treetale-ui';
+
+	import { clm } from '$lib/utils/classMerge';
 
 	import ShortDescription from './ShortDescription.svelte';
 </script>
@@ -14,7 +15,7 @@
 <FormSplit vertical>
 	{#each changesHistoryStore.stages as { icon, title }, key}
 		<Button
-			class={clsx('gap-4 bg-contrast-9 text-text hover:bg-contrast-7', {
+			class={clm('gap-4 bg-contrast-9 text-text hover:bg-contrast-7', {
 				'opacity-60': key > changesHistoryStore.currentId
 			})}
 			onclick={() => changesHistoryStore.to(key)}

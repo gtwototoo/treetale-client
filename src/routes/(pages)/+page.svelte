@@ -107,29 +107,29 @@
 				<h1 class="w-full select-none py-4 text-center leading-9 text-text">Список историй</h1>
 				<Input
 					bind:value
-					class="w-full max-w-lg"
+					class="w-full max-w-4xl bg-white p-4 text-2xl hover:bg-main-10"
 					oninput={handleInput}
 					placeholder="Поиск"
 					size="lg"
 				>
 					{#snippet left()}
 						<Icon
-							class="pointer-events-none ml-3 mr-1 size-6 shrink-0 text-gray-800"
+							class="pointer-events-none ml-3 mr-4 size-8 shrink-0 text-gray-800 *:stroke-2"
 							this={loading ? Loading : MagnifyingGlass}
 						/>
 					{/snippet}
 				</Input>
 				<div class="flex w-full flex-wrap items-center justify-center gap-3">
-					{#each GENRES_LIST as { icon, id, title }}
+					{#each GENRES_LIST as { icon: GenreIcon, id, title }}
 						<Button
 							class={clm(
-								'h-20 w-24 flex-col justify-center gap-1 bg-main-80 hover:bg-contrast max-sm:flex-1',
-								searchedGenres.includes(id) && 'bg-main-20'
+								'h-20 w-24 flex-col justify-center gap-1 bg-main-50 hover:bg-main-70 max-sm:flex-1',
+								searchedGenres.includes(id) && 'bg-main'
 							)}
 							onclick={() => switchGenre(id)}
 							size="lg"
 						>
-							<svelte:component this={icon} class="size-8" />
+							<GenreIcon class="size-8" />
 							<p class="text-xs">{title}</p>
 						</Button>
 					{/each}

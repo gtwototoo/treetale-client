@@ -60,7 +60,7 @@
 
 <div class="relative flex size-full flex-col">
 	<ProfileHeader />
-	<div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-8 p-16">
+	<div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-6 p-16">
 		<UserInformation {me} {statistic} {user} />
 		<div class="flex size-full flex-col items-center gap-8">
 			{#if me}
@@ -70,8 +70,8 @@
 							<Link class="w-44 max-sm:w-24" {href}>
 								<Button
 									class={clm(
-										'w-full justify-center text-text hover:bg-contrast',
-										$page.url.pathname === href && 'bg-main-40'
+										'w-full justify-center text-text hover:bg-main-40',
+										$page.url.pathname === href && 'bg-main-50'
 									)}
 									size="lg"
 								>

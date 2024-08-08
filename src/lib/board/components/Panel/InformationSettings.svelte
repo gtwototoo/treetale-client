@@ -112,7 +112,8 @@
 		}
 	});
 
-	let genre = $derived(find(GENRES_LIST, { id: storyInfoStore.info?.genre || 'adventure' }));
+	let genre = $derived(find(GENRES_LIST, { id: storyInfoStore.info?.genre || 'adventure' }))!;
+	let CurrentGenreIcon = $derived(genre.icon);
 </script>
 
 {#if storyInfoStore.info}
@@ -154,17 +155,17 @@
 					{onclick}
 					size="lg"
 				>
-					<svelte:component this={genre?.icon} class="size-8" />
-					<p class="text-xs">{genre?.title}</p>
+					<CurrentGenreIcon class="size-8" />
+					<p class="text-xs">{genre.title}</p>
 				</Button>
 			{/snippet}
 			<div class="flex w-96 flex-wrap gap-1 p-2">
-				{#each GENRES_LIST as { icon, id, title } (id)}
+				{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
 					<Button
 						onclick={() => switchGenre(id)}
 						class="min-w-20 flex-1 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
 					>
-						<svelte:component this={icon} class="size-6" />
+						<GenreIcon class="size-6" />
 						<p class="text-xs">{title}</p>
 					</Button>
 				{/each}
@@ -197,6 +198,7 @@
 			class="w-full"
 			disabled={panelStatesStore.editMode}
 			oninput={checkUpdates}
+			maxlength={25}
 			placeholder="Название"
 			readonly={readonlyModeStore.isEnabled}
 		/>

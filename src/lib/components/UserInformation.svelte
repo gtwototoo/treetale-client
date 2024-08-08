@@ -3,9 +3,8 @@
 
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
 	import { User, UserMinus, UserPlus } from 'svelte-heros-v2';
-	import { Button, ColorPicker, Contenteditable, Icon } from 'treetale-ui';
+	import { Button, ColorPicker, Contenteditable, Icon, Input } from 'treetale-ui';
 
 	import type { RGB } from '$lib/types';
 
@@ -144,9 +143,9 @@
 </script>
 
 <div
-	class={clsx(
+	class={clm(
 		'screen-lg screen-xl screen-hd screen-sm sticky top-8 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
-		editMode ? 'bg-main-20' : 'bg-transparent'
+		editMode ? 'bg-contrast' : 'bg-transparent'
 	)}
 >
 	{#if editMode}
@@ -168,18 +167,35 @@
 				alt={user.name}
 			/>
 		</div>
-		<div
-			class={clsx('flex w-full gap-2 rounded-xl p-4 text-text', !editMode && 'bg-contrast/10')}
-		>
-			{#each statistic as [count, title] (title)}
-				<div class="flex w-24 flex-col items-center">
-					<p class="text-3xl font-bold">
-						{count === '0' ? 'Нет' : count}
-					</p>
-					<p class="text-sm">{title}</p>
-				</div>
-			{/each}
-		</div>
+		{#if editMode}
+			<div class="flex w-full gap-3 py-5">
+				<Input placeholder="Короткая ссылка" size="lg" bind:value={user.name} class="w-full" />
+				<ColorPicker
+					color={bodyBackgroundColorStore.color}
+					{light}
+					onchange={setColor}
+					align="right"
+					{saturate}
+				>
+					{#snippet children({ onclick })}
+						<Button class="bg-main-70 text-text hover:bg-main" {onclick} size="lg">
+							Цвет
+						</Button>
+					{/snippet}
+				</ColorPicker>
+			</div>
+		{:else}
+			<div class="flex w-full gap-2 rounded-xl bg-main-30 p-4 text-text">
+				{#each statistic as [count, title] (title)}
+					<div class="flex w-24 flex-col items-center">
+						<p class="text-3xl font-bold">
+							{count === '0' ? 'Нет' : count}
+						</p>
+						<p class="text-sm">{title}</p>
+					</div>
+				{/each}
+			</div>
+		{/if}
 	</div>
 	<div class="flex w-full flex-col items-center">
 		<Contenteditable
@@ -188,7 +204,7 @@
 				'bg-transparent text-center text-4xl font-bold text-text',
 				!editMode && 'pointer-events-none'
 			)}
-			placeholder="Никнейм"
+			placeholder="Псевдоним"
 			readonly={!editMode}
 		/>
 		{#if editMode || user.description}
@@ -208,19 +224,6 @@
 	<div class="flex gap-2">
 		{#if me}
 			{#if editMode}
-				<ColorPicker
-					color={bodyBackgroundColorStore.color}
-					{light}
-					onchange={setColor}
-					align="left"
-					{saturate}
-				>
-					{#snippet children({ onclick })}
-						<Button class="bg-main-70 text-text hover:bg-main" {onclick} size="lg">
-							Цвет
-						</Button>
-					{/snippet}
-				</ColorPicker>
 				<Button
 					class="bg-main-70 text-text hover:bg-main"
 					{loading}
@@ -234,14 +237,14 @@
 				</Button>
 			{:else}
 				<Button
-					class="gap-3 bg-main-40 text-text hover:bg-contrast"
+					class="bg-main-50 text-text hover:bg-main-70"
 					onclick={() => (editMode = true)}
 					size="lg"
 				>
 					Редактировать
 				</Button>
 				<Button
-					class="bg-main-40 text-red-500 hover:bg-contrast"
+					class="bg-main-50 text-red-500 hover:bg-main-70"
 					onclick={handleSignOut}
 					size="lg"
 				>
@@ -250,7 +253,7 @@
 			{/if}
 		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
 			<Button
-				class="gap-3 bg-main-40 text-text hover:bg-contrast"
+				class="gap-3 bg-main-50 text-text hover:bg-main-70"
 				{loading}
 				onclick={handleUnsubscribe}
 				size="lg"
@@ -260,7 +263,7 @@
 			</Button>
 		{:else}
 			<Button
-				class="gap-3 bg-main-40 text-text hover:bg-contrast"
+				class="gap-3 bg-main-50 text-text hover:bg-main-70"
 				{loading}
 				onclick={handleSubscribe}
 				size="lg"

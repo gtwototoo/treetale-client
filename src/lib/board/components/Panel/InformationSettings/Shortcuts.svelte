@@ -10,6 +10,7 @@
 	const shortcuts: Shortcut[] = [
 		{ keys: ['F'], text: 'Режим добавления блоков' },
 		{ keys: ['C'], text: 'Режим добавления связей' },
+		{ keys: ['E'], text: 'Редактирование в панели' },
 		{ keys: ['⌘', 'Z'], text: 'Отменить действие' },
 		{ keys: ['SHIFT', '⌘', 'Z'], text: 'Вернуть действие' },
 		{ keys: ['Tab'], readonly: true, text: 'Переключить блок' },

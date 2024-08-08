@@ -38,7 +38,7 @@
 	let isLiked = $derived(likes?.includes($page.data.session?.userId));
 </script>
 
-<Link href={`${edit ? '/board' : ''}/${storyId}`} class="group relative shrink-0 rounded-3xl">
+<Link href={`${edit ? '/board' : ''}/${storyId}`} class="group relative shrink-0 rounded-2xl">
 	<div class="contents rounded-inherit" style={generateMainColors(selectedColor)}>
 		<Cover {imageUrl} {title} {icon} color={selectedColor} class={classname} />
 		<Info

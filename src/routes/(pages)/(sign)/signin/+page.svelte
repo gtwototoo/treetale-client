@@ -3,9 +3,7 @@
 	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
-	import clsx from 'clsx';
-	import { Check, XMark } from 'svelte-heros-v2';
-	import { Button, Icon, Input } from 'treetale-ui';
+	import { Button, Input } from 'treetale-ui';
 
 	import type { ResponseResult } from '$lib/types/response';
 
@@ -13,6 +11,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 
 	let value = $state('');
@@ -78,13 +77,12 @@
 				/>
 				{#if result !== null}
 					<div
-						class={clsx(
+						class={clm(
 							'adaptive-font adaptive-padding flex w-full select-none items-center gap-3 rounded-lg',
 							result.error ? 'bg-red-200 text-red-500' : 'bg-emerald-200 text-emerald-500'
 						)}
 						in:fade
 					>
-						<Icon class="size-6" this={result.error ? XMark : Check} />
 						{result.error ? result.text : 'Письмо успешно отправлено'}
 					</div>
 				{:else}

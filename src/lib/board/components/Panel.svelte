@@ -10,17 +10,21 @@
 	import Header from './Panel/Header.svelte';
 	import Tabs from './Panel/Tabs.svelte';
 
+	let CurrentPanel = $derived(panelStatesStore.component);
+
+	const switchOverflow = (add: boolean) => {
+		document.body.classList[add ? 'add' : 'remove'](clm('max-lg:overflow-hidden'));
+	};
+
 	$effect(() => {
 		if (panelStatesStore.show) {
-			document.body.classList.remove('max-lg:overflow-hidden');
+			switchOverflow(true);
 		} else {
-			document.body.classList.add('max-lg:overflow-hidden');
+			switchOverflow(false);
 		}
 	});
 
-	onDestroy(() => {
-		document.body.classList.remove('max-lg:overflow-hidden');
-	});
+	onDestroy(() => switchOverflow(false));
 </script>
 
 <div
@@ -37,7 +41,7 @@
 		<Header />
 		<div class="flex grow flex-col gap-3 p-3 pt-0">
 			{#if panelStatesStore.component}
-				<svelte:component this={panelStatesStore.component} props={panelStatesStore.props} />
+				<CurrentPanel {...panelStatesStore.props} />
 			{/if}
 		</div>
 		<div class="sticky bottom-24">

@@ -77,7 +77,7 @@
 	>
 		{#if editMode}
 			<div
-				class="absolute bottom-0 right-0 z-[3] rounded-full bg-main-20 p-1"
+				class="absolute bottom-0 right-0 z-[3] rounded-full bg-contrast p-1"
 				in:fade={{ duration: 150 }}
 			>
 				{#if src}

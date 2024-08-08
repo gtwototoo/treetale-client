@@ -12,6 +12,7 @@
 		oneDirectionModeStore,
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
 
 	import { preventDefault, stopPropagation } from '$lib/utils/eventsModificators';
 
@@ -40,6 +41,10 @@
 			oneDirectionModeStore.isEnabled = true;
 		};
 
+		const switchEditMode = () => {
+			panelStatesStore.editMode = !panelStatesStore.editMode;
+		};
+
 		const switchConnectMode = () => {
 			if (shiftKey) return;
 
@@ -65,6 +70,7 @@
 			actions = {
 				Escape: cancelModes,
 				KeyC: switchConnectMode,
+				KeyE: switchEditMode,
 				KeyF: switchAddFrameMode,
 				KeyZ: historyManipulate,
 				ShiftLeft: enableOneDirectionMode,

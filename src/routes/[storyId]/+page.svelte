@@ -112,10 +112,6 @@
 		await document.exitFullscreen();
 	};
 
-	let frame = $derived(
-		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId }) : frames?.[0]
-	);
-
 	onMount(() => {
 		bodyBackgroundColorStore.color = story.color.length ? story.color : DEFAULT_COLOR;
 		variablesStore.variables = story.vars;
@@ -151,38 +147,48 @@
 
 <SvgGradient />
 
-{#if frame}
-	<div
-		class="absolute flex size-full items-start justify-center overflow-auto bg-main"
-		id="read-screen"
-	>
-		<div class="flex min-h-full w-full items-center justify-center p-4 py-20 max-sm:p-3">
-			{#if storyState === 'started'}
+<div
+	class="absolute flex size-full items-start justify-center overflow-auto bg-main-20"
+	id="read-screen"
+>
+	<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
+		{#if storyState === 'started'}
+			<div class="flex flex-col gap-10">
 				<ReadFrame
-					{frame}
-					onclick={(choiceId) => setChoice(frame.frameId, choiceId)}
+					frame={frames?.[0]}
+					onclick={(choiceId) => setChoice(frames?.[0].frameId, choiceId)}
 					onresults={() => (storyState = 'ended')}
+					selectedChoiceId={progress?.[0]?.choiceId}
 				/>
-			{:else}
-				<StoryDescription
-					{frames}
-					{progress}
-					{author}
-					{version}
-					{updated}
-					{story}
-					{storyState}
-					onclick={() => (storyState = 'started')}
-				/>
-			{/if}
-		</div>
-		{#if fullscreenStore.isEnabled}
-			<Button
-				class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-90 text-text text-opacity-10 hover:text-opacity-100"
-				onclick={handleFulscreen}
-			>
-				Выйти
-			</Button>
+				{#each progress as { nextFrameId }, key}
+					{@const frame = find(frames, { frameId: nextFrameId })!}
+					<ReadFrame
+						{frame}
+						onclick={(choiceId) => setChoice(frame.frameId, choiceId)}
+						onresults={() => (storyState = 'ended')}
+						selectedChoiceId={progress[key + 1]?.choiceId}
+					/>
+				{/each}
+			</div>
+		{:else}
+			<StoryDescription
+				{frames}
+				{progress}
+				{author}
+				{version}
+				{updated}
+				{story}
+				{storyState}
+				onclick={() => (storyState = 'started')}
+			/>
 		{/if}
 	</div>
-{/if}
+	{#if fullscreenStore.isEnabled}
+		<Button
+			class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-30 text-text text-opacity-10 hover:text-opacity-100"
+			onclick={handleFulscreen}
+		>
+			Выйти
+		</Button>
+	{/if}
+</div>

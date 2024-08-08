@@ -36,7 +36,7 @@
 	let { created, status, version } = $derived(story);
 </script>
 
-<h1 class="text-center">Результаты</h1>
+<h1 class="py-10 text-center">Результаты</h1>
 <div class="flex h-full flex-col gap-[inherit]">
 	<div class="flex w-full items-center justify-between">
 		<p>
@@ -44,7 +44,9 @@
 			<span class="font-bold">{choicesCount}</span>
 			{choicesPluralize(choicesCount)}
 		</p>
-		<Tag class="bg-main">Версия {version}</Tag>
+		<Tag class="whitespace-nowrap bg-green-100 bg-opacity-30 text-green-500">
+			Версия {version}
+		</Tag>
 	</div>
 	<div class="flex flex-col gap-4">
 		<div class="flex justify-between gap-4">

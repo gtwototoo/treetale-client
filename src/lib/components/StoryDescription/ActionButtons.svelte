@@ -5,7 +5,7 @@
 	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import without from 'lodash/without';
 	import { pluralize } from 'pluralize-ru-ts';
-	import { Clock, DocumentDuplicate, Heart } from 'svelte-heros-v2';
+	import { DocumentDuplicate, Heart } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
 	import type { Genre } from '$lib/types';
@@ -65,12 +65,9 @@
 		copyState = (await copyText(textForCopy)) ? 'success' : 'error';
 	};
 
-	const handleOpenHistory = () => {
-		console.log('open history');
-	};
-
 	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/${storyId}`);
 	let isLiked = $derived(reactiveLikes?.includes($page.data.session?.userId));
+	let GenreIcon = $derived(genre.icon);
 
 	$effect(() => {
 		if (copyState) {
@@ -89,7 +86,7 @@
 	class="flex gap-2 *:flex-1 *:flex-col *:gap-1 *:overflow-hidden *:bg-main-50 hover:*:bg-main-70"
 >
 	<Button asLink size="lg" href={`/?genres=${genre.id}`}>
-		<svelte:component this={genre.icon} class="size-8" />
+		<GenreIcon class="size-8" />
 		<p>{genre.title}</p>
 	</Button>
 	<Button size="lg" onclick={handleCopyLink}>
@@ -103,10 +100,10 @@
 		/>
 		<p>Ссылка</p>
 	</Button>
-	<Button size="lg" onclick={handleOpenHistory}>
+	<!-- <Button size="lg" onclick={handleOpenHistory}>
 		<Icon this={Clock} class="size-8 *:stroke-2" />
 		<p>История</p>
-	</Button>
+	</Button> -->
 	<Button size="lg" onclick={switchLike} loading={likeLoading}>
 		<Icon
 			class={clm('size-8 *:stroke-2', isLiked && 'text-red-500')}

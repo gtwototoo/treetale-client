@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { connectedWithStart } from '$board/components/methods.svelte';
 	import { publishStory, reviewRequestStory } from '$board/requests/story';
+	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
-	import { Button } from 'treetale-ui';
+	import { Check } from 'svelte-heros-v2';
+	import { Button, Icon } from 'treetale-ui';
 
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
@@ -26,6 +29,28 @@
 			loading = false;
 		}
 	};
+
+	let requirements = $derived([
+		{
+			title: 'Заголовок',
+			value:
+				storyInfoStore.info?.title &&
+				storyInfoStore.info.title.length &&
+				storyInfoStore.info.title.length <= 25
+		},
+		{
+			title: 'Описание',
+			value: storyInfoStore.info?.description.length
+		},
+		{
+			title: 'Теги',
+			value: storyInfoStore.info?.tags.length
+		},
+		{
+			title: 'Начало и конец',
+			value: boardFramesStore.frames.some(({ frameId }) => connectedWithStart(frameId))
+		}
+	]);
 
 	const setPublishedStory = async () => {
 		if (!storyInfoStore.info) return;
@@ -73,14 +98,27 @@
 		)}
 	>
 		{#if storyInfoStore.info?.status === 'draft'}
-			<p class="p-2">
-				{correctWhitespace(
-					'Перед публикацией убедитесь, что у вас присутствует заголовок, описание и выбран жанр, а также есть начало и концы истории'
-				)}
-			</p>
+			<div class="grid grid-cols-2 gap-2 p-2">
+				{#each requirements as requirement}
+					<div class="flex items-center gap-2">
+						<div
+							class={clm(
+								'size-5 rounded-full p-1',
+								requirement.value ? greenBackgroundColorButton : 'bg-contrast'
+							)}
+						>
+							{#if requirement.value}
+								<Icon class="size-3" this={Check} />
+							{/if}
+						</div>
+						{requirement.title}
+					</div>
+				{/each}
+			</div>
 			<Button
 				class={clm('justify-center text-emerald-500', greenBackgroundColorButton)}
 				{loading}
+				disabled={requirements.some(({ value }) => !value)}
 				onclick={switchReview}
 			>
 				Опубликовать

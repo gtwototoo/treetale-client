@@ -5,7 +5,6 @@
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import clsx from 'clsx';
 	import { Check, XMark } from 'svelte-heros-v2';
 	import { Button, Icon, Input } from 'treetale-ui';
 
@@ -15,6 +14,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signUpUser } from '$lib/requests/user';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 
 	let name = $state('');
@@ -76,7 +76,7 @@
 				/>
 				{#if result !== null}
 					<div
-						class={clsx(
+						class={clm(
 							'adaptive-font adaptive-padding flex w-full select-none items-center gap-3 rounded-lg',
 							result.error ? 'bg-red-200 text-red-500' : 'bg-emerald-200 text-emerald-500'
 						)}

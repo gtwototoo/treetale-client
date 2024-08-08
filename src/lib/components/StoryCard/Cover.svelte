@@ -36,12 +36,13 @@
 	);
 	let iconColor = $derived(contrastText(color) ? clm('text-main-60') : clm('text-main'));
 	let textFillColor = $derived(contrastText(color) ? clm('fill-white') : clm('fill-black'));
+	let GenreIcon = $derived(icon);
 </script>
 
 <div class={clm('relative select-none', classname)}>
 	<div
 		class={clm(
-			'animate-card absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-transparent bg-gradient-to-b',
+			'animate-card absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-2xl bg-transparent bg-gradient-to-b',
 			gradientBackgroundColor
 		)}
 	>
@@ -53,13 +54,10 @@
 				onerror={handleError}
 				src={imageUrl}
 			/>
-			<svelte:component
-				this={icon}
-				class={clm('absolute right-4 top-4 h-auto w-1/6 opacity-70', iconColor)}
-			/>
+			<GenreIcon class={clm('absolute right-4 top-4 h-auto w-1/6 opacity-70', iconColor)} />
 		{:else}
 			<div class="absolute top-0 flex h-1/2 w-full items-center justify-center">
-				<svelte:component this={icon} class={clm('h-1/2 w-auto', iconColor)} />
+				<GenreIcon class={clm('h-1/2 w-auto', iconColor)} />
 			</div>
 		{/if}
 		<Titie {title} color={textFillColor} />

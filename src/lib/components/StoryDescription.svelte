@@ -13,7 +13,6 @@
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	import Card from './Card.svelte';
 	import EndResults from './EndResults.svelte';
 	import Cover from './StoryCard/Cover.svelte';
 	import Info from './StoryCard/Info.svelte';
@@ -61,15 +60,15 @@
 	);
 </script>
 
-<div class="flex gap-4 max-md:flex-col">
+<div class="flex w-full max-w-screen-lg select-none flex-row gap-8">
 	<Cover
 		{imageUrl}
 		{title}
 		icon={genre.icon}
 		color={selectedColor}
-		class="self-start max-md:w-full md:sticky md:top-20"
+		class="w-auto shrink-0 self-start max-md:w-full md:sticky md:top-20"
 	/>
-	<Card class="h-auto min-w-96 max-w-[36rem] select-none gap-5 bg-main-10 p-8 text-text">
+	<div class="flex h-auto w-full flex-col gap-6 text-text">
 		{#if storyState === 'ended'}
 			<EndResults
 				{story}
@@ -80,11 +79,11 @@
 				{author}
 			/>
 		{:else}
-			<h1 class="pb-3 text-center">{title}</h1>
+			<h1 class="py-8 text-center">{title}</h1>
 			<div class="flex h-full flex-col gap-[inherit]">
 				<ActionButtons {genre} {storyId} {likes} />
-				<div class="flex justify-between gap-4">
-					<div class="flex flex-col gap-3">
+				<div class="flex flex-col gap-4">
+					<div class="flex flex-col gap-3 px-2">
 						<div class="clear-text">
 							{@html correctVariableReplace(description, variablesStore.variables) ||
 								'Без описания'}
@@ -99,7 +98,8 @@
 							<p class="text-sm text-gray-500 max-md:text-xs">Теги не указаны</p>
 						{/if}
 					</div>
-					<div class="flex w-48 shrink-0 flex-col gap-4">
+					<div class="flex w-full shrink-0 justify-between gap-4">
+						<Info {author} {created} edit={false} {status} {selectedColor} />
 						<div class="flex flex-col gap-1">
 							<p class="text-sm">Последнее обновление:</p>
 							<div class="flex items-center justify-between gap-4">
@@ -109,21 +109,10 @@
 								</Tag>
 							</div>
 						</div>
-						<div class="flex flex-col gap-1">
-							<p class="text-sm">Автор:</p>
-							<Info
-								{author}
-								{created}
-								edit={false}
-								{status}
-								{selectedColor}
-								class="w-full"
-							/>
-						</div>
 					</div>
 				</div>
 			</div>
-			<div class="h-px w-full bg-main-50"></div>
+			<div class="h-0.5 w-full shrink-0 bg-main"></div>
 			{#if progress.length}
 				<SavedProgress
 					{version}
@@ -140,7 +129,7 @@
 				</Button>
 			{/if}
 		{/if}
-	</Card>
+	</div>
 </div>
 
 <style lang="postcss">

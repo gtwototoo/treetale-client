@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { Button } from 'treetale-ui';
 
+	import MainHeader from '$lib/components/Header/MainHeader.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
@@ -24,18 +25,19 @@
 </svelte:head>
 
 {#if $page.error}
-	<div class="flex size-full items-start justify-center overflow-auto">
-		<div class="flex min-h-full items-center p-4 py-20 max-sm:p-3">
-			<ReadCard alt="Ошибка" src={$page.error?.img} text={$page.error?.message}>
-				<div class="w-full">
+	<div class="relative flex min-h-screen w-full flex-col">
+		<MainHeader />
+		<div class="flex size-full items-start justify-center overflow-auto">
+			<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
+				<ReadCard alt="Ошибка" src={$page.error?.img} text={$page.error?.message}>
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
+						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main"
 						onclick={handleClick}
 					>
 						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}
 					</Button>
-				</div>
-			</ReadCard>
+				</ReadCard>
+			</div>
 		</div>
 	</div>
 {/if}

@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
+	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
-	import { Button, FormSplit } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import type { Choice as ChoiceType, Frame, LogicModificator, MathModificator } from '$lib/types';
 
@@ -30,6 +33,8 @@
 		onresults?: () => void;
 		selectedChoiceId?: number;
 	} = $props();
+
+	let readCard = $state<HTMLDivElement>();
 
 	const selectChoice = (choiceId: number) => {
 		onclick?.(choiceId);
@@ -79,40 +84,52 @@
 	};
 
 	let availableChoicesCount = $derived(frame.choices.filter(enabledChoice).length);
+
+	onMount(() => {
+		readCard?.scrollIntoView({ behavior: 'smooth' });
+	});
 </script>
 
 {#if frame}
 	<ReadCard
-		class={clm('relative text-left', classname)}
+		bind:readCard
+		class={clm(classname)}
 		src={frame.imageUrl}
 		text={dynamicText(frame.text)}
 	>
-		{#if availableChoicesCount}
-			<FormSplit class="w-full" vertical>
-				{#each frame.choices as choice (choice.choiceId)}
-					{#if enabledChoice(choice)}
-						<Choice onclick={() => selectChoice(choice.choiceId)}>
-							{@html correctVariableReplace(choice.text, variablesStore.variables) ||
-								'Неожиданный поворот'}
-						</Choice>
-					{/if}
-				{/each}
-			</FormSplit>
-			{#if availableChoicesCount === 1}
-				<div class="absolute top-full mt-5 flex items-center gap-1 opacity-50">
-					<div class="min-w-[1.75rem] rounded-lg bg-main-70 px-2 py-1 font-bold">ПРОБЕЛ</div>
-					<p>- Далее</p>
-				</div>
-			{/if}
+		{#if selectedChoiceId !== undefined}
+			{@const choice = find(frame.choices, { choiceId: selectedChoiceId })!}
+			<div class="adaptive-font adaptive-padding rounded-lg bg-main-30 text-left text-text">
+				{@html correctVariableReplace(choice.text, variablesStore.variables) ||
+					'Неожиданный поворот'}
+			</div>
 		{:else}
-			<div class="h-px w-full bg-main-50"></div>
-			<Button
-				size="xl"
-				class="w-full justify-center bg-main-70 hover:bg-main"
-				onclick={handleGetResults}
-			>
-				Завершить историю
-			</Button>
+			<div class="flex flex-col items-start gap-2">
+				{#if availableChoicesCount}
+					{#each frame.choices as choice (choice.choiceId)}
+						{#if enabledChoice(choice)}
+							<Choice onclick={() => selectChoice(choice.choiceId)}>
+								{@html correctVariableReplace(choice.text, variablesStore.variables) ||
+									'Неожиданный поворот'}
+							</Choice>
+						{/if}
+					{/each}
+				{:else}
+					<Button
+						size="xl"
+						class="bg-main-70 text-text hover:bg-main"
+						onclick={handleGetResults}
+					>
+						Завершить историю
+					</Button>
+				{/if}
+			</div>
+		{/if}
+		{#if availableChoicesCount === 1 && selectedChoiceId === undefined}
+			<div class="absolute top-full mt-5 flex items-center gap-1 opacity-50">
+				<div class="min-w-[1.75rem] rounded-lg bg-main-70 px-2 py-1 font-bold">ПРОБЕЛ</div>
+				<p>- Далее</p>
+			</div>
 		{/if}
 	</ReadCard>
 {/if}
