@@ -90,7 +90,7 @@
 					</Button>
 				{:else}
 					<InputFile
-						class="rounded-full bg-main-70 p-3 text-text hover:bg-main"
+						class="rounded-full bg-main-50 p-3 text-text hover:bg-main-70"
 						disabled={addLoading}
 						{onchange}
 					>

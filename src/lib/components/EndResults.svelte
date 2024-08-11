@@ -1,76 +1,131 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import type { MouseEventHandler } from 'svelte/elements';
 
+	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { pluralize } from 'pluralize-ru-ts';
-	import { Button, Link, Tag } from 'treetale-ui';
+	import { Share } from 'svelte-heros-v2';
+	import { Button, Icon, Tag } from 'treetale-ui';
 
-	import type { Frame, RGB, Story, User } from '$lib/types';
+	import type { Frame, Story } from '$lib/types';
 
-	import Info from './StoryCard/Info.svelte';
+	import { clm } from '$lib/utils/classMerge';
+	import { versionCompare } from '$lib/utils/versionCompare';
+
 	import FrameMini from './StoryDescription/FrameMini.svelte';
 
 	let {
-		author,
 		choicesCount,
 		endFrame,
 		onclick,
-		selectedColor,
-		story
+		story,
+		storyVersion
 	}: {
-		author: {
-			subscribersCount: number;
-		} & User;
 		choicesCount: number;
-		class?: string;
 		endFrame: Frame;
 		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
-		selectedColor: RGB;
 		story: Story;
+		storyVersion: string;
 	} = $props();
+
+	type CopyState = 'error' | 'success' | null;
 
 	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
 	const percent = 12;
 	const newEnd = true;
 
-	let { created, status, version } = $derived(story);
+	let { storyId, version } = $derived(story);
+	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/result/${storyId}/${Date.now()}`);
+
+	let copyState = $state<CopyState>(null);
+
+	const copyText = async (value: string): Promise<boolean> => {
+		let success = true;
+
+		try {
+			await window.navigator.clipboard.writeText(value);
+		} catch (e) {
+			console.error(e);
+
+			success = true;
+		}
+
+		return success;
+	};
+
+	const handleCopyLink = async () => {
+		copyState = (await copyText(textForCopy)) ? 'success' : 'error';
+	};
+
+	$effect(() => {
+		if (copyState) {
+			const timeout = setTimeout(() => {
+				copyState = null;
+			}, 500);
+
+			onDestroy(() => {
+				clearTimeout(timeout);
+			});
+		}
+	});
 </script>
 
-<h1 class="py-10 text-center">Результаты</h1>
-<div class="flex h-full flex-col gap-[inherit]">
-	<div class="flex w-full items-center justify-between">
-		<p>
-			{doPluralize(choicesCount)}
-			<span class="font-bold">{choicesCount}</span>
-			{choicesPluralize(choicesCount)}
-		</p>
-		<Tag class="whitespace-nowrap bg-green-100 bg-opacity-30 text-green-500">
+<div class="flex flex-col gap-3">
+	<div class="flex *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">
+		<Button size="lg" onclick={handleCopyLink}>
+			<Icon
+				this={Share}
+				class={clm(
+					'size-6 *:stroke-2',
+					copyState === 'success' && 'text-green-500',
+					copyState === 'error' && 'text-red-500'
+				)}
+			/>
+			<p>Поделиться результатом</p>
+		</Button>
+	</div>
+	<h1>Результаты</h1>
+	<div class="flex items-center gap-3">
+		<Tag
+			class={clm(
+				'bg-opacity-30',
+				{
+					breaking: 'bg-red-100 text-red-500',
+					current: 'bg-green-100 text-green-500',
+					minor: 'bg-yellow-100 text-yellow-500'
+				}[versionCompare(storyVersion, version)]
+			)}
+		>
 			Версия {version}
 		</Tag>
+		<p class="italic">
+			{doPluralize(choicesCount)}
+			<span class="font-medium">{choicesCount}</span>
+			{choicesPluralize(choicesCount)}
+		</p>
 	</div>
-	<div class="flex flex-col gap-4">
-		<div class="flex justify-between gap-4">
-			<div class="flex gap-2">
-				<p>Концовка <span class="font-bold">№{2}</span></p>
-				{#if newEnd}
-					<Tag class="bg-green-100 text-green-500">Новая</Tag>
-				{/if}
-			</div>
-			<p>Получило <span class="font-bold">{percent}%</span> читателей</p>
-		</div>
-		<div class="h-4 w-full overflow-hidden rounded-full bg-main-50">
-			<div class="h-full bg-main" style:width="{percent}%"></div>
-		</div>
-	</div>
-	<FrameMini frame={endFrame} />
-	<Info {author} {created} edit={false} {status} {selectedColor} />
 </div>
-<div class="h-px w-full bg-main-50"></div>
+<div class="flex w-full flex-col gap-4">
+	<div class="flex justify-between gap-4">
+		<div class="flex gap-2">
+			<p>Концовка <span class="font-bold">№{2}</span></p>
+			{#if newEnd}
+				<Tag class="bg-green-100 text-green-500">Новая</Tag>
+			{/if}
+		</div>
+		<p>Получило <span class="font-bold">{percent}%</span> читателей</p>
+	</div>
+	<div class="h-4 w-full overflow-hidden rounded-full bg-main-50">
+		<div class="h-full bg-main" style:width="{percent}%"></div>
+	</div>
+</div>
+<FrameMini frame={endFrame} />
 <div class="flex gap-6">
-	<Button size="lg" class="flex-1 justify-center bg-main-70 hover:bg-main" {onclick}>
+	<Button size="lg" class="adaptive-font bg-main-70 font-medium hover:bg-main" {onclick}>
 		В начало
 	</Button>
-	<Link href="/" class="flex-1">
-		<Button size="lg" class="w-full justify-center bg-main-70 hover:bg-main">На главную</Button>
-	</Link>
+	<Button asLink href="/" size="lg" class="adaptive-font bg-main-70 font-medium hover:bg-main">
+		На главную
+	</Button>
 </div>

@@ -26,7 +26,7 @@
 		{#if tags.length}
 			<div class="flex flex-wrap justify-center gap-2 max-md:gap-1">
 				{#each tags as tag}
-					<Tag class="bg-main text-text">{tag}</Tag>
+					<Tag class="rounded-full bg-main-40 px-3 text-text">{tag}</Tag>
 				{/each}
 			</div>
 		{:else}

@@ -14,6 +14,6 @@
 		)}
 	</p>
 	<Link href="/">
-		<Button class="bg-main-40 text-text hover:bg-contrast" size="lg">Смотреть все истории</Button>
+		<Button class="bg-main-50 text-text hover:bg-main-70" size="lg">Смотреть все истории</Button>
 	</Link>
 </StoriesList>

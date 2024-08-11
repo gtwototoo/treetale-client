@@ -155,7 +155,7 @@
 						'Историй не найдено, но вы можете добавить свою уникальную историю'
 					)}
 				</p>
-				<AddStoryButton class="gap-3 bg-white" />
+				<AddStoryButton class="gap-3 bg-main-50 text-text hover:bg-main-70" />
 			</div>
 		{/if}
 	</section>

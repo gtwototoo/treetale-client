@@ -3,7 +3,7 @@
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import { Button, Icon, Link } from 'treetale-ui';
 
-	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
+	import MainHeader from '$lib/components/Header/MainHeader.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -59,7 +59,7 @@
 <SvgGradient />
 
 <div class="relative flex size-full flex-col">
-	<ProfileHeader />
+	<MainHeader />
 	<div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-6 p-16">
 		<UserInformation {me} {statistic} {user} />
 		<div class="flex size-full flex-col items-center gap-8">

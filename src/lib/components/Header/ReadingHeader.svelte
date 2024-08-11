@@ -55,7 +55,7 @@
 	</Button>
 	{#if fullscreenSupport}
 		<Button
-			class="header-button bg-main-40 text-text hover:bg-contrast"
+			class="header-button bg-main-50 text-text hover:bg-main-70"
 			onclick={handleFulscreen}
 			size="lg"
 		>

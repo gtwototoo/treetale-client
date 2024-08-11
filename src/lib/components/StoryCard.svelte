@@ -47,7 +47,7 @@
 			{edit}
 			{status}
 			{selectedColor}
-			class="pointer-events-none absolute -left-1 -top-1 z-[1]"
+			class="pointer-events-none absolute -left-1 -top-1 z-[1] rounded-full rounded-br-none bg-main-50"
 		/>
 		<div
 			class="absolute -bottom-1 -right-1 z-[1] flex items-center gap-1 rounded-full rounded-tl-none bg-main-70 p-2 pr-4 text-text max-sm:pr-2"

@@ -225,14 +225,14 @@
 		{#if me}
 			{#if editMode}
 				<Button
-					class="bg-main-70 text-text hover:bg-main"
+					class="bg-main-50 text-text hover:bg-main-70"
 					{loading}
 					onclick={saveProfile}
 					size="lg"
 				>
 					Сохранить
 				</Button>
-				<Button class="bg-main-70 text-red-500 hover:bg-main" onclick={cancelEdit} size="lg">
+				<Button class="bg-main-50 text-red-500 hover:bg-main-70" onclick={cancelEdit} size="lg">
 					Отмена
 				</Button>
 			{:else}

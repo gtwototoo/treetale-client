@@ -116,8 +116,7 @@
 					{/each}
 				{:else}
 					<Button
-						size="xl"
-						class="bg-main-70 text-text hover:bg-main"
+						class="adaptive-font adaptive-padding bg-main-70 font-medium text-text hover:bg-main"
 						onclick={handleGetResults}
 					>
 						Завершить историю
@@ -126,7 +125,7 @@
 			</div>
 		{/if}
 		{#if availableChoicesCount === 1 && selectedChoiceId === undefined}
-			<div class="absolute top-full mt-5 flex items-center gap-1 opacity-50">
+			<div class="flex items-center gap-1 text-text opacity-50">
 				<div class="min-w-[1.75rem] rounded-lg bg-main-70 px-2 py-1 font-bold">ПРОБЕЛ</div>
 				<p>- Далее</p>
 			</div>

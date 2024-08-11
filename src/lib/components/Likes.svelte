@@ -8,9 +8,11 @@
 	import { clm } from '$lib/utils/classMerge';
 
 	let {
+		class: classname,
 		likes,
 		storyId
 	}: {
+		class?: string;
 		likes: number[];
 		storyId: number;
 	} = $props();
@@ -37,13 +39,13 @@
 </script>
 
 <Button
-	class="gap-2 bg-main-70 px-3 text-text hover:bg-main hover:text-red-500"
+	class={clm('gap-2 bg-main-50 px-3 text-text hover:bg-main-70 hover:text-red-500', classname)}
 	{loading}
 	onclick={handleClick}
 	size="lg"
 >
 	<Icon
-		class={clm('size-6', isLiked && 'text-red-500')}
+		class={clm('size-6 *:stroke-2', isLiked && 'text-red-500')}
 		this={Heart}
 		variation={isLiked ? 'solid' : 'outline'}
 	/>

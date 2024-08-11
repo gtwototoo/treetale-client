@@ -14,7 +14,7 @@
 	} = $props();
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 border-l-2 border-main px-2">
 	{#if frame.imageUrl}
 		<Image
 			alt="Иллюстрация"
@@ -23,7 +23,7 @@
 			src={frame.imageUrl}
 		/>
 	{/if}
-	<div class={clm('line-clamp-4 max-h-24 px-2', !frame.text?.length && 'text-gray-500')}>
+	<div class={clm('line-clamp-4 max-h-24', !frame.text?.length && 'text-gray-500')}>
 		{@html correctVariableReplace(frame.text, variablesStore.variables) || 'Без описания'}
 	</div>
 </div>

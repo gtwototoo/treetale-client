@@ -18,18 +18,22 @@
 		author: {
 			subscribersCount: number;
 		} & User;
-		class: string;
+		class?: string;
 	} = $props();
 
 	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
+	let base64src = $state(null);
+	let addLoading = $state(false);
 
 	const handleClick = () => {
 		goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
 	};
 </script>
 
-<Button class={clm('min-w-0 rounded-full rounded-br-none p-1', classname)} onclick={handleClick}>
+<Button class={clm('min-w-0 rounded-full p-1', classname)} onclick={handleClick}>
 	<ProfileAvatar
+		bind:base64src
+		bind:addLoading
 		color={author.color}
 		size="sm"
 		alt={author.name}
