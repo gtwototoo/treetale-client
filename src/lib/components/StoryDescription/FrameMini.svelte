@@ -18,7 +18,7 @@
 	{#if frame.imageUrl}
 		<Image
 			alt="Иллюстрация"
-			class="h-48 w-full rounded-xl !bg-main/30 text-text"
+			class="h-48 w-full rounded-xl bg-main-40 text-text"
 			cover
 			src={frame.imageUrl}
 		/>

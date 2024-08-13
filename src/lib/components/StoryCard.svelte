@@ -47,6 +47,7 @@
 			{edit}
 			{status}
 			{selectedColor}
+			textClass="max-md:hidden"
 			class="pointer-events-none absolute -left-1 -top-1 z-[1] rounded-full rounded-br-none bg-main-50"
 		/>
 		<div

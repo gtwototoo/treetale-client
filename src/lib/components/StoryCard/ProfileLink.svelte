@@ -13,12 +13,14 @@
 
 	let {
 		author,
-		class: classname
+		class: classname,
+		textClass
 	}: {
 		author: {
 			subscribersCount: number;
 		} & User;
 		class?: string;
+		textClass?: string;
 	} = $props();
 
 	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
@@ -40,8 +42,8 @@
 		src={author.imageUrl}
 		class="max-sm:size-8"
 	/>
-	<div class="ml-2 mr-5 overflow-hidden text-left text-text max-md:hidden">
-		<p class="truncate text-base/5 font-medium max-xs:hidden">
+	<div class={clm('ml-2 mr-5 overflow-hidden text-left text-text', textClass)}>
+		<p class="truncate text-base/5 font-medium">
 			{author.name}
 		</p>
 		<p class="truncate text-xs">

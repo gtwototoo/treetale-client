@@ -61,8 +61,10 @@
 	);
 </script>
 
-<div class="flex w-full max-w-screen-lg select-none flex-row gap-8">
-	<div class="flex w-1/3 shrink-0 flex-col gap-3">
+<div
+	class="flex w-full max-w-screen-lg select-none flex-row items-start gap-8 max-md:flex-col max-md:gap-4"
+>
+	<div class="flex shrink-0 flex-col gap-3 md:w-1/3">
 		<div class="flex gap-2">
 			<Info
 				{author}
