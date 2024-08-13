@@ -12,19 +12,19 @@
 
 	let CurrentPanel = $derived(panelStatesStore.component);
 
-	const switchOverflow = (add: boolean) => {
-		document.body.classList[add ? 'add' : 'remove'](clm('max-lg:overflow-hidden'));
+	const switchHiddenOverflow = (hidden: boolean) => {
+		document.body.classList[hidden ? 'add' : 'remove'](clm('max-lg:overflow-hidden'));
 	};
 
 	$effect(() => {
 		if (panelStatesStore.show) {
-			switchOverflow(true);
+			switchHiddenOverflow(false);
 		} else {
-			switchOverflow(false);
+			switchHiddenOverflow(true);
 		}
 	});
 
-	onDestroy(() => switchOverflow(false));
+	onDestroy(() => switchHiddenOverflow(false));
 </script>
 
 <div
