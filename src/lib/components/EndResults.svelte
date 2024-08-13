@@ -71,7 +71,7 @@
 	});
 </script>
 
-<div class="flex flex-col gap-3">
+<div class="flex w-full flex-col gap-3 max-md:items-center">
 	<div class="flex *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">
 		<Button size="lg" onclick={handleCopyLink}>
 			<Icon
@@ -86,7 +86,7 @@
 		</Button>
 	</div>
 	<h1>Результаты</h1>
-	<div class="flex items-center gap-3">
+	<div class="flex w-full items-center gap-3 max-md:justify-between max-md:px-3">
 		<Tag
 			class={clm(
 				'bg-opacity-30',

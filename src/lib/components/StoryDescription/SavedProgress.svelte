@@ -49,7 +49,7 @@
 </script>
 
 <div class="flex w-full flex-col gap-6">
-	<div class="flex items-center gap-3">
+	<div class="flex items-center gap-3 max-md:justify-between max-md:px-3">
 		<Tag
 			class={clm(
 				'bg-opacity-30',

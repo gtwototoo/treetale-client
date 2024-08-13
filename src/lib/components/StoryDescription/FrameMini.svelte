@@ -14,7 +14,7 @@
 	} = $props();
 </script>
 
-<div class="flex flex-col gap-4 border-l-2 border-main px-2">
+<div class="flex w-full flex-col gap-4 border-l-2 border-main px-2">
 	{#if frame.imageUrl}
 		<Image
 			alt="Иллюстрация"
