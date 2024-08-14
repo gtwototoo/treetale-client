@@ -85,7 +85,7 @@
 			<p>Поделиться результатом</p>
 		</Button>
 	</div>
-	<h1>Результаты</h1>
+	<h1 class="max-md:pb-4">Результаты</h1>
 	<div class="flex w-full items-center gap-3 max-md:justify-between max-md:px-3">
 		<Tag
 			class={clm(
@@ -121,11 +121,20 @@
 	</div>
 </div>
 <FrameMini frame={endFrame} />
-<div class="flex gap-6">
-	<Button size="lg" class="adaptive-font bg-main-70 font-medium hover:bg-main" {onclick}>
+<div class="flex gap-3 max-md:w-full *:max-md:flex-1">
+	<Button
+		size="lg"
+		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
+		{onclick}
+	>
 		В начало
 	</Button>
-	<Button asLink href="/" size="lg" class="adaptive-font bg-main-70 font-medium hover:bg-main">
+	<Button
+		asLink
+		href="/"
+		size="lg"
+		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
+	>
 		На главную
 	</Button>
 </div>

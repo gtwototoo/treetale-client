@@ -62,7 +62,7 @@
 </script>
 
 <div
-	class="flex w-full max-w-screen-lg select-none flex-row items-start gap-8 max-md:flex-col max-md:items-center max-md:gap-4"
+	class="flex w-full max-w-screen-lg select-none flex-row items-start gap-2 max-md:flex-col max-md:items-center max-md:gap-4"
 >
 	<div class="flex shrink-0 flex-col gap-3 md:w-1/3">
 		<div class="flex gap-2">
@@ -84,7 +84,7 @@
 			class="w-auto shrink-0 self-start max-md:w-full md:sticky md:top-20"
 		/>
 	</div>
-	<div class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center">
+	<div class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6">
 		{#if storyState === 'ended'}
 			<EndResults
 				{story}
@@ -94,9 +94,9 @@
 				storyVersion={story.version}
 			/>
 		{:else}
-			<div class="flex flex-col gap-3 max-md:items-center">
+			<div class="flex w-full flex-col gap-3 max-md:items-center">
 				<ActionButtons {genre} {storyId} />
-				<h1 class="max-md:text-center">{title}</h1>
+				<h1 class="max-md:pb-4 max-md:text-center">{title}</h1>
 				<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
 					<Tag class="whitespace-nowrap bg-green-100 bg-opacity-30 text-green-500">
 						Версия {story.version}
@@ -132,7 +132,11 @@
 					{onclick}
 				/>
 			{:else}
-				<Button size="lg" class="adaptive-font bg-main-70 font-medium hover:bg-main" {onclick}>
+				<Button
+					size="lg"
+					class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main max-md:w-full"
+					{onclick}
+				>
 					Начать историю
 				</Button>
 			{/if}
