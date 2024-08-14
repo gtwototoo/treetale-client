@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
-	import { Button, Icon, Link } from 'treetale-ui';
+	import { Button, Icon } from 'treetale-ui';
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
@@ -67,18 +67,18 @@
 				<div class="flex flex-wrap justify-center gap-2">
 					{#each tabs as { href, icon, name }}
 						{#if href !== '/profile/moderated' || $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
-							<Link class="w-44 max-sm:w-24" {href}>
-								<Button
-									class={clm(
-										'w-full justify-center text-text hover:bg-main-40',
-										$page.url.pathname === href && 'bg-main-50'
-									)}
-									size="lg"
-								>
-									<Icon class="hidden size-6 max-sm:block" this={icon} />
-									<p class="max-sm:hidden">{name}</p>
-								</Button>
-							</Link>
+							<Button
+								asLink
+								{href}
+								class={clm(
+									'w-full justify-center text-text hover:bg-main-40',
+									$page.url.pathname === href && 'bg-main-50'
+								)}
+								size="lg"
+							>
+								<Icon class="hidden size-6 max-sm:block" this={icon} />
+								<p class="max-sm:hidden">{name}</p>
+							</Button>
 						{/if}
 					{/each}
 				</div>

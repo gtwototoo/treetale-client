@@ -8,11 +8,19 @@
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let user: User = $derived($page.data.session);
+	let addLoading = $state(false);
+	let base64src = $state(null);
 </script>
 
 {#if $page.data.session}
 	<Link href="/profile">
-		<ProfileAvatar alt={user.name} color={user.color} src={user.imageUrl} />
+		<ProfileAvatar
+			bind:addLoading
+			bind:base64src
+			alt={user.name}
+			color={user.color}
+			src={user.imageUrl}
+		/>
 	</Link>
 {:else}
 	<Link href="/signin">
