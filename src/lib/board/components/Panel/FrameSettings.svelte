@@ -241,54 +241,62 @@
 			value={`${Math.round(y)}`}
 		/>
 	</FormSplit>
-	<div class="flex gap-2 *:min-w-0 *:flex-1">
-		<IllustrationPopover {imageUrl}>
-			<ImageUploader
-				alt="Иллюстрация блока"
-				class="h-48"
-				disabled={panelStatesStore.editMode}
-				icon={RectangleStack}
-				onloadstart={setFile}
-				onremove={preRemoveImage}
-				readonly={readonlyModeStore.isEnabled}
-				src={imageUrl}
-			/>
-			{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
-				<Button
-					class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
-					disabled={panelStatesStore.editMode}
-					onclick={addPrevImage}
-				>
-					Вставить с предыдущего блока
-				</Button>
-			{/if}
-		</IllustrationPopover>
-		<Popover align="left">
-			{#snippet button({ onclick })}
-				<Button
-					class={clm(
-						'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
-						soundUrl && 'text-emerald-500'
-					)}
-					size="lg"
-					{onclick}
-				>
-					<Icon class="size-8" this={MusicalNote} variation="solid" />
-					<p class="text-xs">{soundUrl ? `Звук ${frameId}` : 'Звук'}</p>
-				</Button>
-			{/snippet}
-			<div class="flex w-96 flex-col p-4">
-				<SoundUploader
-					disabled={panelStatesStore.editMode}
-					readonly={readonlyModeStore.isEnabled}
-					class="h-48"
-					onloadstart={handleAddSound}
-					onremove={preRemoveSound}
-					src={soundUrl}
-				/>
-			</div>
-		</Popover>
-	</div>
+	<table class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1">
+		<tbody>
+			<tr>
+				<td>
+					<IllustrationPopover {imageUrl}>
+						<ImageUploader
+							alt="Иллюстрация блока"
+							class="h-48"
+							disabled={panelStatesStore.editMode}
+							icon={RectangleStack}
+							onloadstart={setFile}
+							onremove={preRemoveImage}
+							readonly={readonlyModeStore.isEnabled}
+							src={imageUrl}
+						/>
+						{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
+							<Button
+								class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+								disabled={panelStatesStore.editMode}
+								onclick={addPrevImage}
+							>
+								Вставить с предыдущего блока
+							</Button>
+						{/if}
+					</IllustrationPopover>
+				</td>
+				<td>
+					<Popover align="left">
+						{#snippet button({ onclick })}
+							<Button
+								class={clm(
+									'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
+									soundUrl && 'text-emerald-500'
+								)}
+								size="lg"
+								{onclick}
+							>
+								<Icon class="size-8" this={MusicalNote} variation="solid" />
+								<p class="text-xs">{soundUrl ? `Звук ${frameId}` : 'Звук'}</p>
+							</Button>
+						{/snippet}
+						<div class="flex w-96 flex-col p-4">
+							<SoundUploader
+								disabled={panelStatesStore.editMode}
+								readonly={readonlyModeStore.isEnabled}
+								class="h-48"
+								onloadstart={handleAddSound}
+								onremove={preRemoveSound}
+								src={soundUrl}
+							/>
+						</div>
+					</Popover>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	<FormSplit vertical>
 		<Input
 			bind:value={frame.title}

@@ -117,81 +117,91 @@
 </script>
 
 {#if storyInfoStore.info}
-	<div class="grid grid-cols-3 gap-2">
-		<Button
-			class={clm(
-				'flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
-				storyInfoStore.info?.imageUrl && 'p-1'
-			)}
-			size="lg"
-			onclick={handleOpenIllustrationPanel}
-		>
-			{#if storyInfoStore.info?.imageUrl}
-				<Image
-					src={storyInfoStore.info.imageUrl}
-					alt="Мини иллюстрация истории"
-					cover
-					class="flex h-[4.25rem] w-full flex-col rounded-lg"
-				>
-					{#snippet error()}
-						<Icon class="size-8 text-red-500" this={Photo} variation="solid" />
-						<p class="text-xs text-red-500">Ошибка</p>
-					{/snippet}
-				</Image>
-			{:else}
-				<Icon class="size-8" this={Photo} variation="solid" />
-				<p class="text-xs">Иллюстрация</p>
-			{/if}
-		</Button>
-		<Popover
-			align="center"
-			disabled={panelStatesStore.editMode}
-			placeholder="Жанр"
-			readonly={readonlyModeStore.isEnabled}
-		>
-			{#snippet button({ onclick })}
-				<Button
-					class="w-full flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
-					{onclick}
-					size="lg"
-				>
-					<CurrentGenreIcon class="size-8" />
-					<p class="text-xs">{genre.title}</p>
-				</Button>
-			{/snippet}
-			<div class="flex w-96 flex-wrap gap-1 p-2">
-				{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
+	<table class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1">
+		<tbody>
+			<tr>
+				<td>
 					<Button
-						onclick={() => switchGenre(id)}
-						class="min-w-20 flex-1 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+						class={clm(
+							'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
+							storyInfoStore.info?.imageUrl && 'p-1'
+						)}
+						size="lg"
+						onclick={handleOpenIllustrationPanel}
 					>
-						<GenreIcon class="size-6" />
-						<p class="text-xs">{title}</p>
+						{#if storyInfoStore.info?.imageUrl}
+							<Image
+								src={storyInfoStore.info.imageUrl}
+								alt="Мини иллюстрация истории"
+								cover
+								class="flex h-[4.25rem] w-full flex-col rounded-lg"
+							>
+								{#snippet error()}
+									<Icon class="size-8 text-red-500" this={Photo} variation="solid" />
+									<p class="text-xs text-red-500">Ошибка</p>
+								{/snippet}
+							</Image>
+						{:else}
+							<Icon class="size-8" this={Photo} variation="solid" />
+							<p class="text-xs">Иллюстрация</p>
+						{/if}
 					</Button>
-				{/each}
-			</div>
-		</Popover>
-		<ColorPicker
-			color={storyInfoStore.info?.color || DEFAULT_COLOR}
-			disabled={panelStatesStore.editMode}
-			{light}
-			onchange={setColor}
-			align="center"
-			readonly={readonlyModeStore.isEnabled}
-			{saturate}
-		>
-			{#snippet children({ onclick })}
-				<Button
-					class="w-full flex-col gap-1 bg-main text-text hover:bg-main-80"
-					{onclick}
-					size="lg"
-				>
-					<Icon class="size-8" this={PaintBrush} variation="solid" />
-					<p class="text-xs">Цвет фона</p>
-				</Button>
-			{/snippet}
-		</ColorPicker>
-	</div>
+				</td>
+				<td>
+					<Popover
+						align="center"
+						disabled={panelStatesStore.editMode}
+						placeholder="Жанр"
+						readonly={readonlyModeStore.isEnabled}
+					>
+						{#snippet button({ onclick })}
+							<Button
+								class="w-full flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+								{onclick}
+								size="lg"
+							>
+								<CurrentGenreIcon class="size-8" />
+								<p class="text-xs">{genre.title}</p>
+							</Button>
+						{/snippet}
+						<div class="flex w-96 flex-wrap gap-1 p-2">
+							{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
+								<Button
+									onclick={() => switchGenre(id)}
+									class="min-w-20 flex-1 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+								>
+									<GenreIcon class="size-6" />
+									<p class="text-xs">{title}</p>
+								</Button>
+							{/each}
+						</div>
+					</Popover>
+				</td>
+				<td>
+					<ColorPicker
+						color={storyInfoStore.info?.color || DEFAULT_COLOR}
+						disabled={panelStatesStore.editMode}
+						{light}
+						onchange={setColor}
+						align="center"
+						readonly={readonlyModeStore.isEnabled}
+						{saturate}
+					>
+						{#snippet children({ onclick })}
+							<Button
+								class="w-full flex-col gap-1 bg-main text-text hover:bg-main-80"
+								{onclick}
+								size="lg"
+							>
+								<Icon class="size-8" this={PaintBrush} variation="solid" />
+								<p class="text-xs">Цвет фона</p>
+							</Button>
+						{/snippet}
+					</ColorPicker>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	<FormSplit vertical>
 		<Input
 			bind:value={storyInfoStore.info.title}

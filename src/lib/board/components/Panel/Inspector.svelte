@@ -56,10 +56,14 @@
 	<div class="flex flex-col gap-2">
 		{#if inspectorVariables.length}
 			{#each inspectorVariables as variable}
-				<div class="flex justify-between gap-4">
-					<p class="px-2 py-1">{variable.name}</p>
-					<div class="rounded-lg bg-main-70 px-2 py-1 text-right">{variable.value}</div>
-				</div>
+				{#if variable.name}
+					<div class="flex justify-between gap-4">
+						<p class="px-2 py-1">{variable.name}</p>
+						<div class="rounded-lg bg-main-70 px-2 py-1 text-right">
+							{variable.value || '-'}
+						</div>
+					</div>
+				{/if}
 			{/each}
 		{:else}
 			<p class="text-gray-500">Отсутсвуют</p>

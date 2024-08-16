@@ -17,7 +17,7 @@
 			Перед вами разнообразие жанров от серьезных и тяжелых до смешных и легких, среди которых вы
 			формируете свой приключенческий опыт.
 		</p>
-		<div class="flex items-center justify-center gap-4 rounded-3xl bg-main-50 p-[calc(12px+1vw)]">
+		<div class="flex items-center justify-center gap-4 rounded-3xl bg-main-40 p-[calc(12px+1vw)]">
 			{#each statistic as { id, title, value } (id)}
 				<div class="flex w-[calc(4.5rem+3vw)] flex-1 flex-col items-center">
 					<p class="text-[calc(30px+1.5vw)] font-black leading-none">{value}</p>

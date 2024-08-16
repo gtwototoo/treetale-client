@@ -64,24 +64,32 @@
 		<UserInformation {me} {statistic} {user} />
 		<div class="flex size-full flex-col items-center gap-8">
 			{#if me}
-				<div class="flex flex-wrap justify-center gap-2">
-					{#each tabs as { href, icon, name }}
-						{#if href !== '/profile/moderated' || $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
-							<Button
-								asLink
-								{href}
-								class={clm(
-									'w-full justify-center text-text hover:bg-main-40',
-									$page.url.pathname === href && 'bg-main-50'
-								)}
-								size="lg"
-							>
-								<Icon class="hidden size-6 max-sm:block" this={icon} />
-								<p class="max-sm:hidden">{name}</p>
-							</Button>
-						{/if}
-					{/each}
-				</div>
+				<table
+					class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1"
+				>
+					<tbody>
+						<tr>
+							{#each tabs as { href, icon, name }}
+								{#if href !== '/profile/moderated' || $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
+									<td>
+										<Button
+											asLink
+											{href}
+											class={clm(
+												'justify-center text-text hover:bg-main-70',
+												$page.url.pathname === href && 'bg-main-50'
+											)}
+											size="lg"
+										>
+											<Icon class="hidden size-6 max-sm:block" this={icon} />
+											<p class="max-sm:hidden">{name}</p>
+										</Button>
+									</td>
+								{/if}
+							{/each}
+						</tr>
+					</tbody>
+				</table>
 			{:else}
 				<h1>Список историй</h1>
 			{/if}

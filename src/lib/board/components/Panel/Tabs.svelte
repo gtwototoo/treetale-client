@@ -60,11 +60,11 @@
 	};
 </script>
 
-<div class={clm('flex p-3 pb-0 *:flex-1', !panelStatesStore.show && 'max-xs:hidden')}>
+<div class={clm('flex gap-1 p-3 pb-0 *:flex-1', !panelStatesStore.show && 'max-xs:hidden')}>
 	{#each tabs as { component, icon, id, props } (id)}
 		<Button
 			size="lg"
-			class={clm('justify-center px-0 text-text', isActive(id) && 'bg-main')}
+			class={clm('justify-center px-0 text-text hover:bg-main-70', isActive(id) && 'bg-main-50')}
 			onclick={() => setPanel(id, component, props)}
 		>
 			<Icon class="size-6" this={icon} />

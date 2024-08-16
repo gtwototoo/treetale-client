@@ -85,7 +85,7 @@
 			<p>Поделиться результатом</p>
 		</Button>
 	</div>
-	<h1 class="max-md:pb-4">Результаты</h1>
+	<h1 class="max-md:pb-4">Результат</h1>
 	<div class="flex w-full items-center gap-3 max-md:justify-between max-md:px-3">
 		<Tag
 			class={clm(
