@@ -56,6 +56,13 @@
 		)}
 	></div>
 	{#if hidden && hasConnections}
-		<div class="rightBindPoint"></div>
+		<div
+			class={clm(
+				'rightBindPoint',
+				(isSelected || isDragging) && 'after:to-text',
+				isSelectedBindingChoice && 'group-hover:after:to-green-500',
+				isDragging && 'after:-inset-1'
+			)}
+		></div>
 	{/if}
 </Button>
