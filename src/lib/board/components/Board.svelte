@@ -12,6 +12,7 @@
 		boardEventsStore,
 		boardParamsStore,
 		boardStateStore,
+		isAdding,
 		readonlyModeStore,
 		zoomCorrect
 	} from '$board/stores/index.svelte';
@@ -49,7 +50,7 @@
 		if (boardStateStore.action === 'movingArea') {
 			movingArea(coords, startOffset);
 		}
-		if (boardStateStore.mode === 'adding') {
+		if (isAdding()) {
 			cursorFollow(coords);
 		}
 	};
@@ -99,7 +100,7 @@
 	};
 
 	const handleClick = (coords: Coordinates) => {
-		if (boardStateStore.mode === 'adding' && addFrameOffsetStore.x) {
+		if (isAdding() && addFrameOffsetStore.x) {
 			const { x, y } = zoomCorrect(coords);
 
 			addFrame({

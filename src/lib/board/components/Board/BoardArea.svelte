@@ -5,7 +5,12 @@
 
 	import { type PinchEventHandler, pinch } from '$board/hooks/pinch';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { boardParamsStore, boardStateStore, zoomCorrect } from '$board/stores/index.svelte';
+	import {
+		boardParamsStore,
+		boardStateStore,
+		isAdding,
+		zoomCorrect
+	} from '$board/stores/index.svelte';
 
 	import type { Coordinates } from '$lib/types';
 
@@ -174,7 +179,7 @@
 			<CreateText />
 		{/if}
 		<MovingArea>
-			{#if boardStateStore.mode === 'adding'}
+			{#if isAdding()}
 				<NewFrame />
 			{/if}
 			<div>

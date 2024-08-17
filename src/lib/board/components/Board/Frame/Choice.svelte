@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
-	import { boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import {
+		boardStateStore,
+		isBinding,
+		isView,
+		readonlyModeStore
+	} from '$board/stores/index.svelte';
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { Button } from 'treetale-ui';
@@ -17,12 +22,14 @@
 		choice,
 		frame,
 		isDragging,
-		isSelected
+		isSelected,
+		isSelectedBindingChoice
 	}: {
 		choice: Choice;
 		frame: Frame;
 		isDragging: boolean;
 		isSelected: boolean;
+		isSelectedBindingChoice: boolean;
 	} = $props();
 
 	let { choiceId, frameId: toFrameId, text } = $derived(choice);
@@ -61,11 +68,11 @@
 	};
 
 	const handleClick = () => {
-		if (boardStateStore.mode === 'view' && !readonlyModeStore.isEnabled) {
+		if (isView() && !readonlyModeStore.isEnabled) {
 			choiceFocus(choiceId);
 		}
 
-		if (boardStateStore.mode === 'binding') {
+		if (isBinding()) {
 			if (connectionStartStore?.choiceId === choiceId) {
 				connectionStartStore.clear();
 
@@ -80,15 +87,16 @@
 	let selfConnect = $derived(
 		connectionStartStore.frameId === frame.frameId && connectionStartStore.choiceId === choiceId
 	);
-	let disabled = $derived(
-		boardStateStore.mode === 'binding' && connectionStartStore.frameId !== null && !selfConnect
-	);
+	let disabled = $derived(isBinding() && connectionStartStore.frameId !== null && !selfConnect);
 
 	let greenHoverBackgroundColor = $derived(
 		currentThemeClass(clm('hover:bg-emerald-800'), clm('hover:bg-emerald-200'))
 	);
 	let greenBackgroundColor = $derived(
 		currentThemeClass(clm('bg-emerald-800'), clm('bg-emerald-200'))
+	);
+	let greenGroupHoverBackgroundColor = $derived(
+		currentThemeClass(clm('group-hover:!bg-emerald-800'), clm('group-hover:!bg-emerald-200'))
 	);
 	let orangeBackgroundColor = $derived(
 		currentThemeClass(clm('bg-orange-800'), clm('bg-orange-200'))
@@ -99,7 +107,9 @@
 	class={clm(
 		'gap-4 bg-contrast-5',
 		text ? 'text-text' : 'text-gray-400',
-		boardStateStore.mode === 'binding' &&
+		disabled && 'pointer-events-none !bg-contrast',
+		isSelectedBindingChoice && greenGroupHoverBackgroundColor,
+		isBinding() &&
 			clm(
 				'bg-contrast-5',
 				greenHoverBackgroundColor,
@@ -107,7 +117,6 @@
 				connectionStartStore.frameId !== null && selfConnect && greenBackgroundColor
 			)
 	)}
-	{disabled}
 	onclick={handleClick}
 	onmousedown={handleMouseDown}
 >
@@ -122,6 +131,7 @@
 		class={clm(
 			toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint',
 			(isSelected || isDragging) && 'after:to-text',
+			isSelectedBindingChoice && 'group-hover:after:to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
 	></div>

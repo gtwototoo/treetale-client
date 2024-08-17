@@ -5,6 +5,7 @@
 		type ModeType,
 		type StateType,
 		boardStateStore,
+		isBinding,
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
 	import {
@@ -43,7 +44,7 @@
 	};
 
 	const switchConnectionMode = () => {
-		boardStateStore.mode = boardStateStore.mode === 'binding' ? 'view' : 'binding';
+		boardStateStore.mode = isBinding() ? 'view' : 'binding';
 
 		connectionStartStore.clear();
 	};

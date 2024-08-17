@@ -2,7 +2,7 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { addFrameOffsetStore } from '$board/stores/frames.svelte';
-	import { boardStateStore, zoomCorrect } from '$board/stores/index.svelte';
+	import { boardStateStore, isAdding, zoomCorrect } from '$board/stores/index.svelte';
 	import { Plus, XMark } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
@@ -33,7 +33,7 @@
 	);
 </script>
 
-{#if boardStateStore.mode === 'adding'}
+{#if isAdding()}
 	<Button
 		class={clm(
 			'w-64 justify-center max-sm:w-24',

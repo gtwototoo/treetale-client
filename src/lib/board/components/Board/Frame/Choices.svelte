@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { connectionStartStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { isBinding, readonlyModeStore } from '$board/stores/index.svelte';
 	import last from 'lodash/last';
 	import { Plus } from 'svelte-heros-v2';
 	import { Button, FormSplit } from 'treetale-ui';
@@ -15,11 +15,13 @@
 	let {
 		frame,
 		isDragging,
-		isSelected
+		isSelected,
+		isSelectedBindingChoice
 	}: {
 		frame: Frame;
 		isDragging: boolean;
 		isSelected: boolean;
+		isSelectedBindingChoice: boolean;
 	} = $props();
 
 	const addChoice = () => {
@@ -38,12 +40,11 @@
 
 <FormSplit vertical>
 	{#each frame.choices as choice (choice.choiceId)}
-		<Choice {choice} {frame} {isDragging} {isSelected} />
+		<Choice {choice} {frame} {isDragging} {isSelected} {isSelectedBindingChoice} />
 	{/each}
 	<Button
 		class="bg-contrast-5 text-text"
-		disabled={(boardStateStore.mode === 'binding' && !!connectionStartStore.frameId) ||
-			readonlyModeStore.isEnabled}
+		disabled={(isBinding() && !!connectionStartStore.frameId) || readonlyModeStore.isEnabled}
 		onclick={addChoice}
 		onmousedown={stopPropagation}
 	>

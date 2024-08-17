@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { boardStateStore } from '$board/stores/index.svelte';
+	import { isBinding } from '$board/stores/index.svelte';
 	import { MusicalNote } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
@@ -12,6 +12,7 @@
 		frame,
 		isDragging,
 		isSelected,
+		isSelectedBindingChoice,
 		onhide,
 		start
 	}: {
@@ -19,6 +20,7 @@
 		frame: Frame;
 		isDragging: boolean;
 		isSelected: boolean;
+		isSelectedBindingChoice: boolean;
 		onhide: () => void;
 		start: boolean;
 	} = $props();
@@ -36,7 +38,7 @@
 		'justify-between text-text',
 		start && 'text-emerald-500',
 		end && 'text-blue-500',
-		boardStateStore.mode === 'binding' ? '!bg-main-60' : '!bg-contrast-5'
+		isBinding() ? '!bg-main-60' : '!bg-contrast-5'
 	)}
 	onclick={hideFrame}
 >
@@ -49,6 +51,7 @@
 		class={clm(
 			'leftBindPoint',
 			(isSelected || isDragging) && 'after:to-text',
+			isSelectedBindingChoice && 'group-hover:after:to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
 	></div>

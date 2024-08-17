@@ -158,6 +158,10 @@ export const readonlyModeStore = getReadonlyMode();
 export const boardStateStore = getBoardState();
 export const oneDirectionModeStore = getOneDirectionMode();
 
+export const isBinding = () => boardStateStore.mode === 'binding';
+export const isView = () => boardStateStore.mode === 'view';
+export const isAdding = () => boardStateStore.mode === 'adding';
+
 export const zoomCorrect = (coordinates: Coordinates) => {
 	return {
 		x: (coordinates.x - boardStateStore.offset.x) / (boardStateStore.zoom / 100),

@@ -6,7 +6,7 @@
 		selectedFrameStore
 	} from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { isBinding, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
 	import { createConnections } from '$board/utils/editing';
@@ -69,9 +69,7 @@
 
 	let isEndFrame = $derived(connectedWithStart(frame.frameId) && !frame.choices.length);
 	let isConnectRequest = $derived(
-		boardStateStore.mode === 'binding' &&
-			connectionStartStore.frameId &&
-			connectionStartStore.frameId !== frame.frameId
+		isBinding() && connectionStartStore.frameId && connectionStartStore.frameId !== frame.frameId
 	);
 	let { hidden, imageUrl, text, x, y } = $derived(frame);
 	let greenHoverBackgroundColor = $derived(
@@ -80,6 +78,11 @@
 	let style = $derived([transform({ x, y }), `z-index: ${frame.frameId}`].join(';'));
 	let isDragging = $derived(movingFrameStore.frameId === frame.frameId);
 	let isSelected = $derived(selectedFrameStore.frameId === frame.frameId);
+	let isSelectedBindingChoice = $derived(
+		isBinding() &&
+			connectionStartStore.frameId !== null &&
+			connectionStartStore.frameId !== frame.frameId
+	);
 </script>
 
 {#if frame}
@@ -93,13 +96,9 @@
 			!readonlyModeStore.isEnabled && 'cursor-move hover:ring-text',
 			isDragging && '!ring-4 ring-text',
 			isSelected && 'ring-text',
-			boardStateStore.mode === 'binding' &&
-				clm(
-					'!bg-main-70',
-					connectionStartStore.frameId &&
-						connectionStartStore.frameId !== frame.frameId &&
-						clm(greenHoverBackgroundColor, 'cursor-pointer !bg-contrast')
-				)
+			isBinding() && 'bg-main-20',
+			isSelectedBindingChoice &&
+				clm(greenHoverBackgroundColor, 'cursor-pointer !bg-contrast hover:ring-green-500')
 		)}
 		onkeydown={preventDefault}
 		onclick={createConnection}
@@ -113,6 +112,7 @@
 			end={isEndFrame}
 			{isDragging}
 			{isSelected}
+			{isSelectedBindingChoice}
 		/>
 		{#if !hidden}
 			{#if imageUrl}
@@ -128,7 +128,7 @@
 					{@html text || 'Описание блока'}
 				</div>
 			</div>
-			<Choices {frame} {isDragging} {isSelected} />
+			<Choices {frame} {isDragging} {isSelected} {isSelectedBindingChoice} />
 		{/if}
 	</div>
 {/if}
