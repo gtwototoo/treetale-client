@@ -13,9 +13,13 @@
 	import Choice from './Choice.svelte';
 
 	let {
-		frame
+		frame,
+		isDragging,
+		isSelected
 	}: {
 		frame: Frame;
+		isDragging: boolean;
+		isSelected: boolean;
 	} = $props();
 
 	const addChoice = () => {
@@ -34,7 +38,7 @@
 
 <FormSplit vertical>
 	{#each frame.choices as choice (choice.choiceId)}
-		<Choice {choice} {frame} />
+		<Choice {choice} {frame} {isDragging} {isSelected} />
 	{/each}
 	<Button
 		class="bg-contrast-5 text-text"

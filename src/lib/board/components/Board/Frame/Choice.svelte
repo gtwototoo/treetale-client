@@ -15,10 +15,14 @@
 
 	let {
 		choice,
-		frame
+		frame,
+		isDragging,
+		isSelected
 	}: {
 		choice: Choice;
 		frame: Frame;
+		isDragging: boolean;
+		isSelected: boolean;
 	} = $props();
 
 	let { choiceId, frameId: toFrameId, text } = $derived(choice);
@@ -114,5 +118,11 @@
 	{#if choiceModificators(frame, choice.choiceId, 'math').length}
 		<div class="absolute right-1 h-7 w-1 rounded-full !bg-blue-500"></div>
 	{/if}
-	<div class={clm(toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint')}></div>
+	<div
+		class={clm(
+			toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint',
+			(isSelected || isDragging) && 'after:to-text',
+			isDragging && 'after:-inset-1'
+		)}
+	></div>
 </Button>

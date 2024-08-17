@@ -63,3 +63,13 @@ svg {
 .leftBindPoint {
 	@apply bindPoint right-full -mr-1 rounded-l-full;
 }
+.rightBindPoint:after,
+.leftBindPoint:after {
+	@apply absolute -inset-0.5 -z-[1] rounded-full from-transparent from-50% to-main to-50% content-[''] group-hover:to-text;
+}
+.rightBindPoint:after {
+	@apply bg-gradient-to-r;
+}
+.leftBindPoint:after {
+	@apply bg-gradient-to-l;
+}

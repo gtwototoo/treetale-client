@@ -78,6 +78,8 @@
 		currentThemeClass(clm('hover:!bg-emerald-800'), clm('hover:!bg-emerald-200'))
 	);
 	let style = $derived([transform({ x, y }), `z-index: ${frame.frameId}`].join(';'));
+	let isDragging = $derived(movingFrameStore.frameId === frame.frameId);
+	let isSelected = $derived(selectedFrameStore.frameId === frame.frameId);
 </script>
 
 {#if frame}
@@ -87,10 +89,10 @@
 		bind:clientHeight={frame.height}
 		{style}
 		class={clm(
-			'absolute z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text ring-text',
-			!readonlyModeStore.isEnabled && 'cursor-move transition-[box-shadow] hover:ring-2',
-			movingFrameStore.frameId === frame.frameId && '!ring-4',
-			selectedFrameStore.frameId === frame.frameId && 'ring-2',
+			'group absolute z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text ring-2 ring-main',
+			!readonlyModeStore.isEnabled && 'cursor-move hover:ring-text',
+			isDragging && '!ring-4 ring-text',
+			isSelected && 'ring-text',
 			boardStateStore.mode === 'binding' &&
 				clm(
 					'!bg-main-70',
@@ -104,7 +106,14 @@
 		ontouchstart={handleMouseDown}
 		onmousedown={handleMouseDown}
 	>
-		<Header {frame} onhide={setVisible} start={frame.frameId === 1} end={isEndFrame} />
+		<Header
+			{frame}
+			onhide={setVisible}
+			start={frame.frameId === 1}
+			end={isEndFrame}
+			{isDragging}
+			{isSelected}
+		/>
 		{#if !hidden}
 			{#if imageUrl}
 				<Image
@@ -119,7 +128,7 @@
 					{@html text || 'Описание блока'}
 				</div>
 			</div>
-			<Choices {frame} />
+			<Choices {frame} {isDragging} {isSelected} />
 		{/if}
 	</div>
 {/if}

@@ -10,11 +10,15 @@
 	let {
 		end,
 		frame,
+		isDragging,
+		isSelected,
 		onhide,
 		start
 	}: {
 		end: boolean;
 		frame: Frame;
+		isDragging: boolean;
+		isSelected: boolean;
 		onhide: () => void;
 		start: boolean;
 	} = $props();
@@ -41,7 +45,13 @@
 		<Icon class="size-4" this={MusicalNote} />
 	{/if}
 
-	<div class="leftBindPoint"></div>
+	<div
+		class={clm(
+			'leftBindPoint',
+			(isSelected || isDragging) && 'after:to-text',
+			isDragging && 'after:-inset-1'
+		)}
+	></div>
 	{#if hidden && hasConnections}
 		<div class="rightBindPoint"></div>
 	{/if}

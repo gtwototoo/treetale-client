@@ -78,7 +78,7 @@
 
 <div
 	class={clm(
-		'z-10 flex items-center gap-2 rounded-full bg-main text-sm ring-4 ring-main',
+		'z-10 flex items-center gap-2 rounded-full bg-main-20 text-sm ring-2 ring-main-20',
 		boardStateStore.action ? 'blind' : 'pointer-events-auto'
 	)}
 >
@@ -87,7 +87,7 @@
 		class="size-12 items-center justify-center rounded-full bg-contrast p-0"
 		onclick={setDefaultCoordinates}
 	>
-		<div class="size-6 rounded-full bg-contrast/20"></div>
+		<div class="size-4 rounded-full bg-contrast-5"></div>
 		{#if radar}
 			{#each boardFramesStore.frames as { choices, frameId, x, y } (frameId)}
 				<div
