@@ -10,11 +10,11 @@ interface ResponseStats {
 }
 
 export const load = async ({ fetch, params }) => {
-	const { name } = params;
+	const { linkName } = params;
 
 	const res = await fetch(
-		name
-			? `${PUBLIC_TREETALE_API_URL}/users/${name}/stats`
+		linkName
+			? `${PUBLIC_TREETALE_API_URL}/users/${linkName}/stats`
 			: `${PUBLIC_TREETALE_API_URL}/me/stats`
 	);
 	const { error, ...data } = (await res.json()) as { error: boolean } & ResponseStats;

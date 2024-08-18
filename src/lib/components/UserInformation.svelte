@@ -3,10 +3,10 @@
 
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { User, UserMinus, UserPlus } from 'svelte-heros-v2';
+	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
 	import { Button, ColorPicker, Contenteditable, Icon, Input } from 'treetale-ui';
 
-	import type { RGB } from '$lib/types';
+	import type { RGB, User } from '$lib/types';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -95,7 +95,12 @@
 		loading = true;
 
 		try {
-			await updateProfile(user.name, user.description, bodyBackgroundColorStore.color);
+			await updateProfile(
+				user.linkName,
+				user.name,
+				user.description,
+				bodyBackgroundColorStore.color
+			);
 			await invalidateAll();
 		} catch (e) {
 			console.error(e);
@@ -150,7 +155,7 @@
 >
 	{#if editMode}
 		<InvisibleDrop onchange={handleDrop}>
-			<Icon class="h-24 w-auto *:fill-gradient" this={User} variation="solid" />
+			<Icon class="h-24 w-auto *:fill-gradient" this={UserIcon} variation="solid" />
 			<p>Перетащите сюда изображение, чтобы заменить текущую аватарку</p>
 		</InvisibleDrop>
 	{/if}
@@ -169,7 +174,13 @@
 		</div>
 		{#if editMode}
 			<div class="flex w-full gap-3 py-5">
-				<Input placeholder="Короткая ссылка" size="lg" bind:value={user.name} class="w-full" />
+				<Input
+					placeholder="Короткая ссылка"
+					maxlength={20}
+					size="lg"
+					bind:value={user.linkName}
+					class="w-full"
+				/>
 				<ColorPicker
 					color={bodyBackgroundColorStore.color}
 					{light}

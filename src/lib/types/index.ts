@@ -35,6 +35,7 @@ export interface User {
 	description: string;
 	email: string;
 	imageUrl: null | string;
+	linkName: string;
 	name: string;
 	role: UserRole;
 	sessionId: null | string;

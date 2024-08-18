@@ -21,10 +21,16 @@ export const signOutUser = async () => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-out`);
 };
 
-export const updateProfile = async (name: string, description: string, color: RGB) => {
+export const updateProfile = async (
+	linkName: string,
+	name: string,
+	description: string,
+	color: RGB
+) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/me/update`, {
 		color,
 		description,
+		linkName,
 		name
 	});
 };
