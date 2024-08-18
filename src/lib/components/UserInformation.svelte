@@ -144,7 +144,7 @@
 
 <div
 	class={clm(
-		'screen-lg screen-xl screen-hd screen-sm sticky top-8 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
+		'screen-lg screen-xl screen-hd screen-sm sticky top-8 z-10 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
 		editMode ? 'bg-contrast' : 'bg-transparent'
 	)}
 >

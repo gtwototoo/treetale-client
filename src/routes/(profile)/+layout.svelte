@@ -62,10 +62,10 @@
 	<MainHeader />
 	<div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-6 p-16">
 		<UserInformation {me} {statistic} {user} />
-		<div class="flex size-full flex-col items-center gap-8">
+		<div class="flex size-full flex-col items-center gap-5">
 			{#if me}
 				<table
-					class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1"
+					class="sticky top-0 z-10 -ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1 bg-main-20 py-3"
 				>
 					<tbody>
 						<tr>

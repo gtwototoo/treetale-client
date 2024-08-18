@@ -11,5 +11,16 @@
 			<stop stop-color="#FDBA74" />
 			<stop offset="1" stop-color="#FC8E4D" />
 		</linearGradient>
+		<linearGradient
+			gradientUnits="userSpaceOnUse"
+			id="linear-logo-dark"
+			x1="137"
+			x2="137"
+			y1="0"
+			y2="442"
+		>
+			<stop stop-color="#AF00A9" />
+			<stop offset="1" stop-color="#5A00EC" />
+		</linearGradient>
 	</defs>
 </svg>
