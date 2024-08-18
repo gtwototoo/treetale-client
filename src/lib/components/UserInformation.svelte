@@ -208,11 +208,11 @@
 			</div>
 		{/if}
 	</div>
-	<div class="flex w-full flex-col items-center">
+	<div class="flex w-full flex-col items-center gap-2">
 		<Contenteditable
 			bind:html={user.name}
 			class={clm(
-				'bg-transparent text-center text-4xl font-bold text-text',
+				'max-w-full bg-transparent text-center text-4xl font-bold text-text',
 				!editMode && 'pointer-events-none'
 			)}
 			placeholder="Псевдоним"

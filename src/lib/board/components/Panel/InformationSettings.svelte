@@ -223,6 +223,8 @@
 		<InputTags
 			bind:tags={storyInfoStore.info.tags}
 			disabled={panelStatesStore.editMode}
+			maxlength={20}
+			maxcount={10}
 			onadd={checkUpdates}
 			onremove={checkUpdates}
 			placeholder={storyInfoStore.info?.tags.length ? '' : 'Теги'}
