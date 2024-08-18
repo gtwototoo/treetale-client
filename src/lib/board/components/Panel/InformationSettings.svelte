@@ -194,7 +194,7 @@
 								size="lg"
 							>
 								<Icon class="size-8" this={PaintBrush} variation="solid" />
-								<p class="text-xs">Цвет фона</p>
+								<p class="text-xs">Цвет темы</p>
 							</Button>
 						{/snippet}
 					</ColorPicker>
