@@ -14,13 +14,11 @@ export const load = async ({ fetch, locals, params }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/users/${linkName}/stories`);
-	const { error, message } = await res.json();
+	const { error, message } = (await res.json()) as { error: boolean; message: ResponseStories };
 
 	if (error) {
 		randomError(404);
 	}
-
-	console.log(message);
 
 	return message as ResponseStories;
 };
