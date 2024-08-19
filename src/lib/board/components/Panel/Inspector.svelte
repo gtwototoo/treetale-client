@@ -85,7 +85,7 @@
 					src={frame.imageUrl}
 				/>
 			{/if}
-			<p class={clm('px-3 py-1', !text && 'text-gray-400')}>
+			<p class={clm('px-3 py-1 break-all', !text && 'text-gray-400')}>
 				{@html text || 'Описание блока'}
 			</p>
 			{#if frame.choices.length}

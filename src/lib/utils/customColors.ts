@@ -1,6 +1,6 @@
 import range from 'lodash/range';
 
-import type { RGB as RGBType } from '$lib/types';
+import type { RGB } from '$lib/types';
 
 import {
 	BLACK_COLOR,
@@ -9,10 +9,9 @@ import {
 	WHITE_TEXT_COLOR
 } from '$lib/constants/colors';
 
-import { alphaToRgb } from './alphaToRgb';
 import { contrastText } from './contrast';
 
-export const varColors = (extend: Record<string, RGBType> = {}) => {
+export const varColors = (extend: Record<string, RGB> = {}) => {
 	return Object.entries(extend)
 		.map(([key, value]) => `--${key}:${value.join(' ')}`)
 		.join(';');
@@ -24,10 +23,10 @@ export const varStyles = (extend: Record<string, string> = {}) => {
 		.join(';');
 };
 
-export const generateMainColors = (color: RGBType) => {
+export const generateMainColors = (color: RGB) => {
 	const contrast = contrastText(color);
 
-	const additionalColors: Record<string, RGBType> = {
+	const additionalColors: Record<string, RGB> = {
 		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR,
 		'color-main': color,
 		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR
@@ -49,7 +48,15 @@ export const generateMainColors = (color: RGBType) => {
 	return varColors(additionalColors);
 };
 
-export const rootStyle = (mainColor?: RGBType, additionalStyles?: Record<string, string>) => {
+export const alphaToRgb = (rgb: RGB, alpha: number, backColor: RGB = [255, 255, 255]) => {
+	if (!rgb || !rgb.length) return BLACK_COLOR;
+
+	return rgb.map((color, index) => {
+		return Math.round((1 - alpha) * backColor[index] + alpha * color);
+	}) as RGB;
+};
+
+export const rootStyle = (mainColor?: RGB, additionalStyles?: Record<string, string>) => {
 	const styles = [];
 
 	if (mainColor) {
@@ -62,6 +69,6 @@ export const rootStyle = (mainColor?: RGBType, additionalStyles?: Record<string,
 	return `<${'style'} type="text/css">:root{${styles}}</style>`;
 };
 
-export const toRGB = (color: RGBType) => {
+export const toRGB = (color: RGB) => {
 	return color.join(' ');
 };

@@ -153,7 +153,7 @@
 >
 	<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
 		{#if storyState === 'started'}
-			<div class="flex flex-col gap-10">
+			<div class="flex w-full flex-col items-center gap-10">
 				<ReadFrame
 					frame={frames?.[0]}
 					onclick={(choiceId) => setChoice(frames?.[0].frameId, choiceId)}

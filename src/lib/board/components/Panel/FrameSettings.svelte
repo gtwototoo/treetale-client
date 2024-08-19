@@ -228,6 +228,8 @@
 			class="flex-1 !text-center"
 			number
 			oninput={setX}
+			max={10000}
+			min={-10000}
 			placeholder="x"
 			readonly={readonlyModeStore.isEnabled}
 			value={`${Math.round(x)}`}
@@ -236,6 +238,8 @@
 			class="flex-1 !text-center"
 			number
 			oninput={setY}
+			max={10000}
+			min={-10000}
 			placeholder="y"
 			readonly={readonlyModeStore.isEnabled}
 			value={`${Math.round(y)}`}
