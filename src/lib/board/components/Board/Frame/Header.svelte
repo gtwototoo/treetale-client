@@ -42,7 +42,7 @@
 	)}
 	onclick={hideFrame}
 >
-	{title}
+	<p class="truncate">{title}</p>
 	{#if soundUrl}
 		<Icon class="size-4" this={MusicalNote} />
 	{/if}

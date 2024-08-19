@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Button } from 'treetale-ui';
@@ -26,13 +25,13 @@
 	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
 	let base64src = $state(null);
 	let addLoading = $state(false);
-
-	const handleClick = () => {
-		goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
-	};
 </script>
 
-<Button class={clm('min-w-0 rounded-full p-1', classname)} onclick={handleClick}>
+<Button
+	asLink
+	href={$page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`}
+	class={clm('min-w-0 rounded-full p-1', classname)}
+>
 	<ProfileAvatar
 		bind:base64src
 		bind:addLoading

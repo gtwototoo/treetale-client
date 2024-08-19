@@ -18,8 +18,8 @@
 	];
 </script>
 
-<div class="flex select-none flex-col gap-4 rounded-lg bg-contrast-2 p-4 text-center text-sm">
-	<p>Горячие клавиши</p>
+<div class="flex select-none flex-col gap-2 rounded-lg bg-contrast-2 p-2 pl-4 text-center text-sm">
+	<p class="py-2">Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
 		{#each shortcuts as { keys, readonly, text }}
 			{#if !readonlyModeStore.isEnabled || readonly}

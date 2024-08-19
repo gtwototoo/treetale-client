@@ -51,15 +51,15 @@
 	icon={Tv}
 	text="Просмотр истории со стороны читателя, а также отладка связей, модификаторов и вариантов выбора"
 />
-<div class="flex select-none flex-col gap-4 rounded-lg bg-contrast-2 p-4 text-center text-sm">
-	<p>Переменные</p>
+<div class="flex select-none flex-col gap-2 rounded-lg bg-contrast-2 p-2 text-center text-sm">
+	<p class="py-2">Переменные</p>
 	<div class="flex flex-col gap-2">
 		{#if inspectorVariables.length}
 			{#each inspectorVariables as variable}
 				{#if variable.name}
-					<div class="flex justify-between gap-4">
+					<div class="flex justify-between gap-4 *:break-all *:text-left">
 						<p class="px-2 py-1">{variable.name}</p>
-						<div class="rounded-lg bg-main-70 px-2 py-1 text-right">
+						<div class="rounded-lg bg-main-70 px-2 py-1">
 							{variable.value || '-'}
 						</div>
 					</div>

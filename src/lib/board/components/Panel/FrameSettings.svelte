@@ -301,7 +301,7 @@
 		<Input
 			bind:value={frame.title}
 			disabled={panelStatesStore.editMode}
-			maxlength={25}
+			maxlength={200}
 			oninput={boardEventsStore.save}
 			placeholder="Название блока"
 			readonly={readonlyModeStore.isEnabled}
