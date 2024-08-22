@@ -14,8 +14,8 @@
 		class: classname,
 		created,
 		edit,
-		status,
-		textClass
+		mobileView,
+		status
 	}: {
 		author?: {
 			subscribersCount: number;
@@ -23,9 +23,9 @@
 		class?: string;
 		created: number;
 		edit: boolean;
+		mobileView?: boolean;
 		selectedColor: RGB;
 		status: StoryStatus;
-		textClass?: string;
 	} = $props();
 
 	const statuses = {
@@ -51,13 +51,18 @@
 </script>
 
 {#if author && !edit}
-	<ProfileLink {author} class={classname} {textClass} />
+	<ProfileLink {author} class={classname} {mobileView} />
 {:else}
 	<div
 		class={clm('flex items-center overflow-hidden p-1 text-sm', currentStatus.color, classname)}
 	>
-		<Icon class="box-content size-8 shrink-0 p-1 max-sm:size-6" this={currentStatus.icon} />
-		<div class={clm('ml-2 mr-5 overflow-hidden text-left text-text', textClass)}>
+		<Icon
+			class={clm('box-content size-8 shrink-0 p-1', mobileView && 'max-sm:size-6')}
+			this={currentStatus.icon}
+		/>
+		<div
+			class={clm('ml-2 mr-5 overflow-hidden text-left text-text', mobileView && 'max-md:hidden')}
+		>
 			<p class="truncate text-base/5 font-medium">
 				{currentStatus.title}
 			</p>

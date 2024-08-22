@@ -34,10 +34,14 @@
 		version: string;
 	} = $props();
 
+	let loading = $state(false);
+
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
 	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 
 	const handleDelete = async () => {
+		loading = true;
+
 		try {
 			await deleteProgress(storyId);
 
@@ -45,6 +49,8 @@
 		} catch (e) {
 			console.error(e);
 		}
+
+		loading = false;
 	};
 </script>
 
@@ -74,6 +80,7 @@
 			<Button
 				class={clm(redBackgroundColorStore.color, 'justify-center px-2.5 py-1 text-red-500')}
 				onclick={handleDelete}
+				{loading}
 			>
 				<Icon this={Trash} class="size-5" />
 			</Button>

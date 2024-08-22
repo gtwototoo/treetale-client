@@ -111,7 +111,7 @@
 		<div class="flex gap-2">
 			<p>Концовка <span class="font-bold">№{2}</span></p>
 			{#if newEnd}
-				<Tag class="bg-green-100 text-green-500">Новая</Tag>
+				<Tag class="bg-green-100 bg-opacity-30 text-green-500">Новая</Tag>
 			{/if}
 		</div>
 		<p>Получило <span class="font-bold">{percent}%</span> читателей</p>

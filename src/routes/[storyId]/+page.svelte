@@ -25,6 +25,9 @@
 	import { choiceModificators, correctToType, doMath } from '$lib/utils/variableOperations';
 
 	let { data } = $props();
+
+	let loadingId = $state<null | number>(null);
+
 	let clonedData = $derived(cloneDeep(data));
 	let { author, frames, progress, story, updated, version } = $derived(clonedData);
 
@@ -91,6 +94,8 @@
 			goto('/signin');
 		}
 
+		loadingId = choiceId;
+
 		try {
 			await updateProgress(story.storyId, choiceId);
 
@@ -102,6 +107,8 @@
 		} catch (e) {
 			console.error(e);
 		}
+
+		loadingId = null;
 	};
 
 	const handleFullscreenChange = () => {
@@ -158,6 +165,7 @@
 					frame={frames?.[0]}
 					onclick={(choiceId) => setChoice(frames?.[0].frameId, choiceId)}
 					onresults={() => (storyState = 'ended')}
+					{loadingId}
 					selectedChoiceId={progress?.[0]?.choiceId}
 				/>
 				{#each progress as { nextFrameId }, key}
@@ -166,6 +174,7 @@
 						{frame}
 						onclick={(choiceId) => setChoice(frame.frameId, choiceId)}
 						onresults={() => (storyState = 'ended')}
+						{loadingId}
 						selectedChoiceId={progress[key + 1]?.choiceId}
 					/>
 				{/each}

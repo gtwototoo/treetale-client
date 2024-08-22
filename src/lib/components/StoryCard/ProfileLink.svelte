@@ -13,13 +13,13 @@
 	let {
 		author,
 		class: classname,
-		textClass
+		mobileView
 	}: {
 		author: {
 			subscribersCount: number;
 		} & User;
 		class?: string;
-		textClass?: string;
+		mobileView?: boolean;
 	} = $props();
 
 	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
@@ -39,9 +39,9 @@
 		size="sm"
 		alt={author.name}
 		src={author.imageUrl}
-		class="max-sm:size-8"
+		class={clm(mobileView && 'max-sm:size-8')}
 	/>
-	<div class={clm('ml-2 mr-5 overflow-hidden text-left text-text', textClass)}>
+	<div class={clm('ml-2 mr-5 overflow-hidden text-left text-text', mobileView && 'max-md:hidden')}>
 		<p class="truncate text-base/5 font-medium">
 			{author.name}
 		</p>

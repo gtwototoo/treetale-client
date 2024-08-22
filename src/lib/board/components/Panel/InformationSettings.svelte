@@ -223,6 +223,7 @@
 		<InputTags
 			bind:tags={storyInfoStore.info.tags}
 			disabled={panelStatesStore.editMode}
+			lowerCase
 			maxlength={20}
 			maxcount={10}
 			onadd={checkUpdates}

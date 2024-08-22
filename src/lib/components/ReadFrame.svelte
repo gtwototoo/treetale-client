@@ -23,12 +23,14 @@
 	let {
 		class: classname,
 		frame,
+		loadingId,
 		onclick,
 		onresults,
 		selectedChoiceId
 	}: {
 		class?: string;
 		frame: Frame;
+		loadingId: null | number;
 		onclick?: (choiceId: number) => void;
 		onresults?: () => void;
 		selectedChoiceId?: number;
@@ -108,7 +110,11 @@
 				{#if availableChoicesCount}
 					{#each frame.choices as choice (choice.choiceId)}
 						{#if enabledChoice(choice)}
-							<Choice onclick={() => selectChoice(choice.choiceId)}>
+							<Choice
+								onclick={() => selectChoice(choice.choiceId)}
+								loading={loadingId === choice.choiceId}
+								disabled={loadingId !== null && loadingId !== choice.choiceId}
+							>
 								{@html correctVariableReplace(choice.text, variablesStore.variables) ||
 									'Неожиданный поворот'}
 							</Choice>
