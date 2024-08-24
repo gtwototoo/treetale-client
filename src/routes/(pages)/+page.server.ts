@@ -18,11 +18,11 @@ interface ResponseMainInfo {
 
 export const load = async ({ fetch }) => {
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/main`);
-	const { error, ...data } = (await res.json()) as { error: boolean } & ResponseMainInfo;
+	const { error, message } = (await res.json()) as { error: boolean; message: ResponseMainInfo };
 
 	if (error) {
 		randomError(500);
 	}
 
-	return data as ResponseMainInfo;
+	return message;
 };

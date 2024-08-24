@@ -4,10 +4,11 @@
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import find from 'lodash/find';
 	import { XMark } from 'svelte-heros-v2';
-	import { Button, Icon, Input, Listbox } from 'treetale-ui';
+	import { Button, FormSplit, Icon, Input, Listbox } from 'treetale-ui';
 
 	import type { ComparisonOperators, MathOperators, Modificator } from '$lib/types';
 
+	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
@@ -20,9 +21,11 @@
 	};
 
 	let {
+		asInput,
 		modificator,
 		onremove
 	}: {
+		asInput?: boolean;
 		modificator: Modificator;
 		onremove?: () => void;
 	} = $props();
@@ -53,29 +56,45 @@
 </script>
 
 {#snippet inputValue()}
-	{#if variable?.expect !== 'Логика'}
-		<Input
-			size="sm"
-			bind:value={modificator.value}
-			class="flex-1 bg-contrast-4"
-			maxlength={32}
-			oninput={boardEventsStore.save}
-			number={variable?.expect === 'Число'}
-			placeholder="Значение"
-			disabled={!modificator.variable}
-			readonly={readonlyModeStore.isEnabled}
-		/>
-	{:else}
+	{#if variable?.expect === 'Логика'}
 		<Listbox
 			size="sm"
 			align="inset"
 			bind:value={modificator.value}
 			onchange={boardEventsStore.save}
 			class="flex-1"
-			list={[{ title: 'Да' }, { title: 'Нет' }]}
+			list={['Да', 'Нет']}
 			placeholder="Значение"
 			readonly={readonlyModeStore.isEnabled}
 		/>
+	{:else}
+		<FormSplit>
+			<Input
+				size="sm"
+				bind:value={modificator.value}
+				class={clm(
+					'flex-1 bg-contrast-4',
+					asInput &&
+						modificator.value === '{input}' &&
+						'bg-violet-500/30 text-violet-500 hover:bg-violet-500/40'
+				)}
+				maxlength={32}
+				oninput={boardEventsStore.save}
+				number={variable?.expect === 'Число'}
+				placeholder="Значение"
+				disabled={!modificator.variable}
+				readonly={readonlyModeStore.isEnabled}
+			/>
+			{#if modificator.type === 'math' && asInput && !modificator.value && variable?.expect === 'Строка'}
+				<Button
+					size="sm"
+					class="bg-contrast-9 text-text hover:bg-contrast-7"
+					onclick={() => (modificator.value = '{input}')}
+				>
+					<Icon this={AsInput} class="size-4" />
+				</Button>
+			{/if}
+		</FormSplit>
 	{/if}
 {/snippet}
 

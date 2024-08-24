@@ -17,11 +17,11 @@ export const load = async ({ fetch, params }) => {
 			? `${PUBLIC_TREETALE_API_URL}/users/${linkName}/stats`
 			: `${PUBLIC_TREETALE_API_URL}/me/stats`
 	);
-	const { error, ...data } = (await res.json()) as { error: boolean } & ResponseStats;
+	const { error, message } = (await res.json()) as { error: boolean; message: ResponseStats };
 
 	if (error) {
 		randomError(404);
 	}
 
-	return data as ResponseStats;
+	return message;
 };

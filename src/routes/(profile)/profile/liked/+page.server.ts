@@ -4,6 +4,8 @@ import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { ResponseStories } from '$lib/types/response';
 
+import { randomError } from '$lib/utils/random.js';
+
 export const load = async ({ fetch, locals }) => {
 	const user = locals.session;
 
@@ -12,7 +14,11 @@ export const load = async ({ fetch, locals }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/me/stories?type=liked`);
-	const userLikedStories = await res.json();
+	const { error, message } = (await res.json()) as { error: boolean; message: ResponseStories };
 
-	return userLikedStories as ResponseStories;
+	if (error) {
+		randomError(404);
+	}
+
+	return message;
 };

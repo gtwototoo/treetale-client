@@ -13,11 +13,11 @@ export const load = async ({ fetch, locals, params }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}`);
-	const { error, ...data } = (await res.json()) as { error: boolean } & StorySchema;
+	const { error, message } = (await res.json()) as { error: boolean; message: StorySchema };
 
 	if (error) {
 		redirect(302, '/');
 	}
 
-	return data as StorySchema;
+	return message;
 };

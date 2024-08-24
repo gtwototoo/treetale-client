@@ -41,7 +41,7 @@
 			onclick={panelStatesStore.goBack}
 		>
 			<Icon this={ChevronLeft} class="absolute left-3 size-5" />
-			{panelStatesStore.props?.title}
+			<p class="truncate">{panelStatesStore.props?.title}</p>
 		</Button>
 	{:else}
 		<Listbox align="inset" class="w-full min-w-0" list={framesList} placeholder="Блок">
@@ -53,7 +53,7 @@
 					)}
 					{onclick}
 				>
-					{panelStatesStore.props?.title}
+					<p class="truncate">{panelStatesStore.props?.title}</p>
 				</Button>
 			{/snippet}
 		</Listbox>

@@ -3,7 +3,7 @@
 
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
-	import { Button } from 'treetale-ui';
+	import { Button, Contenteditable } from 'treetale-ui';
 
 	import type { Choice as ChoiceType, Frame, LogicModificator, MathModificator } from '$lib/types';
 
@@ -110,14 +110,23 @@
 				{#if availableChoicesCount}
 					{#each frame.choices as choice (choice.choiceId)}
 						{#if enabledChoice(choice)}
-							<Choice
-								onclick={() => selectChoice(choice.choiceId)}
-								loading={loadingId === choice.choiceId}
-								disabled={loadingId !== null && loadingId !== choice.choiceId}
-							>
-								{@html correctVariableReplace(choice.text, variablesStore.variables) ||
-									'Неожиданный поворот'}
-							</Choice>
+							{#if choice.asInput}
+								<Contenteditable
+									placeholder={correctVariableReplace(
+										choice.text,
+										variablesStore.variables
+									)}
+								/>
+							{:else}
+								<Choice
+									onclick={() => selectChoice(choice.choiceId)}
+									loading={loadingId === choice.choiceId}
+									disabled={loadingId !== null && loadingId !== choice.choiceId}
+								>
+									{@html correctVariableReplace(choice.text, variablesStore.variables) ||
+										'Неожиданный поворот'}
+								</Choice>
+							{/if}
 						{/if}
 					{/each}
 				{:else}

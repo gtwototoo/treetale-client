@@ -5,7 +5,7 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import { Tv } from 'svelte-heros-v2';
-	import { Button, FormSplit, Image } from 'treetale-ui';
+	import { Button, Image } from 'treetale-ui';
 
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
@@ -85,15 +85,15 @@
 					src={frame.imageUrl}
 				/>
 			{/if}
-			<p class={clm('px-3 py-1 break-all', !text && 'text-gray-400')}>
+			<p class={clm('break-all px-3 py-1', !text && 'text-gray-400')}>
 				{@html text || 'Описание блока'}
 			</p>
 			{#if frame.choices.length}
-				<FormSplit vertical class="w-full">
+				<div class="flex w-full flex-col gap-1">
 					{#each frame.choices as choice (choice.choiceId)}
 						<Choice {choice} {frame} frameIndex={index} bind:inspectorVariables />
 					{/each}
-				</FormSplit>
+				</div>
 			{:else}
 				<p class="p-2 text-gray-400">Варианты выбора отсутствуют</p>
 			{/if}

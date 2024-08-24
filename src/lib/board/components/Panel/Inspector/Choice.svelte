@@ -4,7 +4,7 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import filter from 'lodash/filter';
 	import findIndex from 'lodash/findIndex';
-	import { Button } from 'treetale-ui';
+	import { Button, Contenteditable, FormSplit } from 'treetale-ui';
 
 	import type { Choice, Frame, LogicModificator, MathModificator, Variable } from '$lib/types';
 
@@ -24,6 +24,8 @@
 		frameIndex: number;
 		inspectorVariables: Variable[];
 	} = $props();
+
+	let inputValue = $state('');
 
 	const handleClick = () => {
 		if (inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId) {
@@ -54,7 +56,7 @@
 					inspectorVariables[variableId].value = doMath(
 						firstValue,
 						modificator.symbol,
-						modificator.value
+						choice.asInput ? inputValue : modificator.value
 					);
 				}
 			}
@@ -67,41 +69,66 @@
 	let mathModificators = $derived(
 		choiceModificators(frame, choice.choiceId, 'math') as MathModificator[]
 	);
-	let yellowTextColor = $derived(
-		currentThemeClass(clm('text-yellow-200'), clm('text-yellow-500'))
+	let disabled = $derived(
+		!choice.frameId ||
+			!checkLogic(inspectorVariables, logicModificators) ||
+			(choice.asInput && !inputValue)
 	);
-	let disabled = $derived(!choice.frameId || !checkLogic(inspectorVariables, logicModificators));
 	let onlyCorrectLogicModificators = $derived(
 		filter(logicModificators, (modificator) => !!(modificator.variable && modificator.value))
 	);
+
+	let yellowTextColor = $derived(
+		currentThemeClass(clm('text-yellow-200'), clm('text-yellow-500'))
+	);
 </script>
 
-<Button
-	class={clm(
-		inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId &&
-			yellowTextColor,
-		'flex-col items-start gap-1 bg-contrast-9 hover:bg-contrast-7'
-	)}
-	{disabled}
-	onclick={handleClick}
->
-	{#if onlyCorrectLogicModificators.length}
-		<p class="text-xs text-orange-500">
-			Условие:
-			{onlyCorrectLogicModificators
-				.map(({ symbol, value, variable }) => `${variable} ${symbol} ${value}`)
-				.join(' и ')}
-		</p>
-	{/if}
-	<div class="w-full whitespace-normal break-words text-left">
-		{@html correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
-	</div>
-	{#if mathModificators.length}
-		<p class="text-xs text-blue-500">
-			Изменения:
-			{mathModificators
-				.map(({ symbol, value, variable }) => `${variable} ${symbol} ${value}`)
-				.join(' и ')}
-		</p>
-	{/if}
-</Button>
+{#snippet button()}
+	<Button
+		class={clm(
+			inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId &&
+				yellowTextColor,
+			'flex-col items-start gap-1 bg-contrast-9 hover:bg-contrast-7'
+		)}
+		{disabled}
+		onclick={handleClick}
+	>
+		{#if onlyCorrectLogicModificators.length}
+			<p class="text-xs text-orange-500">
+				Условие:
+				{onlyCorrectLogicModificators
+					.map(({ symbol, value, variable }) => `${variable} ${symbol} ${value}`)
+					.join(' и ')}
+			</p>
+		{/if}
+		<div class="w-full whitespace-normal break-words text-left">
+			{@html choice.asInput
+				? 'Продолжить'
+				: correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
+		</div>
+		{#if mathModificators.length}
+			<p class="text-xs text-blue-500">
+				Изменения:
+				{mathModificators
+					.map(
+						({ symbol, value, variable }) =>
+							`${variable} ${symbol} ${choice.asInput && value === '{input}' ? inputValue : value}`
+					)
+					.join(' и ')}
+			</p>
+		{/if}
+	</Button>
+{/snippet}
+
+{#if choice.asInput}
+	<FormSplit vertical>
+		<Contenteditable
+			bind:html={inputValue}
+			class="flex-1 bg-contrast-7 hover:bg-contrast-5"
+			placeholder={correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
+		/>
+		{@render button()}
+	</FormSplit>
+{:else}
+	{@render button()}
+{/if}

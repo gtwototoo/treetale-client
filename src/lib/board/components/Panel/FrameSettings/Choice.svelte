@@ -7,11 +7,12 @@
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import reject from 'lodash/reject';
-	import { Beaker, ChevronRight, Pencil, Plus, XMark } from 'svelte-heros-v2';
+	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
 	import { Button, Contenteditable, Icon } from 'treetale-ui';
 
 	import type { Choice, Frame } from '$lib/types';
 
+	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
@@ -119,7 +120,7 @@
 			)}
 			onclick={handleOpenModificatorsPanel}
 		>
-			<Icon this={choice.asInput ? Pencil : Beaker} class="size-4" />
+			<Icon this={choice.asInput ? AsInput : Beaker} class="size-4" />
 		</Button>
 	{/snippet}
 	{#snippet right()}

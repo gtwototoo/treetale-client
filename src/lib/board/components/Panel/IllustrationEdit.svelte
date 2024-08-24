@@ -5,7 +5,6 @@
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import find from 'lodash/find';
 	import { BookOpen, Photo } from 'svelte-heros-v2';
 	import { Button, Icon, InputFile } from 'treetale-ui';
@@ -72,7 +71,7 @@
 	<p>Перетащите сюда изображение, чтобы заменить текущее в блоке</p>
 </InvisibleDrop>
 <Cover icon={genre.icon} {title} color={color || DEFAULT_COLOR} {imageUrl} />
-{#if panelStatesStore.editMode && imageUrl}
+{#if imageUrl}
 	<Button class={clm('justify-center', redBackgroundColorStore.color)} onclick={preRemoveImage}>
 		Удалить иллюстрацию
 	</Button>
