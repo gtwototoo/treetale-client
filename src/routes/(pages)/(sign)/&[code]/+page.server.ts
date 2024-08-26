@@ -5,18 +5,20 @@ import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { FetchResponse } from '$lib/types/response.js';
 
-import { fetchPost } from '$lib/requests/index';
+import { fetchPost } from '$lib/requests/index.js';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
 
-interface ISessionInfo {
+interface SessionInfo {
 	sessionId: string;
 }
 
 export const load = async ({ cookies, params }) => {
 	const { code } = params;
 
+	let fetchMessage = null;
+
 	try {
-		const { message } = await fetchPost<FetchResponse<ISessionInfo>>(
+		const { message } = await fetchPost<FetchResponse<SessionInfo>>(
 			`${PUBLIC_TREETALE_API_URL}/me/session`,
 			{
 				code
@@ -25,16 +27,20 @@ export const load = async ({ cookies, params }) => {
 
 		if (message.sessionId) {
 			cookies.set('sessionId', message.sessionId, COOKIE_OPTIONS);
-
-			redirect(302, '/');
 		}
 
-		return {};
+		fetchMessage = message;
 	} catch (error) {
 		const httpError = error as HttpError;
 
-		if (httpError.status === 404) {
-			redirect(302, '/');
-		}
+		console.error(httpError);
+
+		redirect(302, '/');
+	}
+
+	if (fetchMessage.sessionId) {
+		return redirect(302, '/');
+	} else {
+		return {};
 	}
 };
