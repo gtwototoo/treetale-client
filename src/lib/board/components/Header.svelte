@@ -25,7 +25,7 @@
 </script>
 
 <div
-	class="pointer-events-none fixed inset-x-0 top-0 flex items-center justify-between p-4 *:pointer-events-auto lg:mr-[24.5rem]"
+	class="pointer-events-none fixed inset-x-0 top-0 flex items-center justify-between p-4 *:pointer-events-auto max-sm:p-3 lg:mr-[24.5rem]"
 >
 	<LogoLinearGradient />
 	<Logo />
