@@ -61,9 +61,13 @@
 		}
 
 		timer = window.setTimeout(async () => {
-			const { authors, stories } = await searchStories(value, searchedGenres);
+			try {
+				const { message } = await searchStories(value, searchedGenres);
 
-			searched = { authors, stories };
+				searched = { authors: message!.authors, stories: message!.stories };
+			} catch (error) {
+				console.error(error);
+			}
 
 			loading = false;
 		}, 500);

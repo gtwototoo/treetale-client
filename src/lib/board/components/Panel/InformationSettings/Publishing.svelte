@@ -23,8 +23,8 @@
 			await reviewRequestStory(storyInfoStore.info.storyId);
 
 			storyInfoStore.info.status = storyInfoStore.info.status === 'draft' ? 'review' : 'draft';
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		} finally {
 			loading = false;
 		}
@@ -61,8 +61,8 @@
 			await publishStory(storyInfoStore.info.storyId);
 
 			storyInfoStore.info.status = 'published';
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		} finally {
 			loading = false;
 		}

@@ -5,7 +5,7 @@ export interface ResponseStories {
 	stories: Story[];
 }
 
-export interface ResponseResult {
+export interface FetchResponse<T> {
 	error: boolean;
-	text: string;
+	message: T;
 }

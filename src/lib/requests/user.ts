@@ -5,20 +5,20 @@ import type { RGB } from '$lib/types';
 import { fetchPost } from '.';
 
 export const signInUser = async (value: string) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-in`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/signin`, {
 		value
 	});
 };
 
 export const signUpUser = async (name: string, code: string) => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-up`, {
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/signup`, {
 		code,
 		name
 	});
 };
 
 export const signOutUser = async () => {
-	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/sign-out`);
+	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/signout`);
 };
 
 export const updateProfile = async (

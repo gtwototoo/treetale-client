@@ -16,12 +16,18 @@
 	let loading = $state(false);
 
 	const handleClick = async () => {
-		if ($page.data.session) {
-			loading = true;
-
-			await createStory();
-		} else {
+		if (!$page.data.session) {
 			await goto('/signin');
+		}
+
+		loading = true;
+
+		try {
+			const { message } = await createStory();
+
+			return goto(`/board/${message.storyId}`);
+		} catch (error) {
+			console.error(error);
 		}
 
 		loading = false;

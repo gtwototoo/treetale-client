@@ -5,7 +5,7 @@
 
 	import { Button, Input } from 'treetale-ui';
 
-	import type { ResponseResult } from '$lib/types/response';
+	import type { FetchResponse } from '$lib/types/response';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -16,7 +16,7 @@
 
 	let value = $state('');
 	let loading = $state(false);
-	let result = $state<ResponseResult | null>(null);
+	let result = $state<FetchResponse<string> | null>(null);
 
 	const handleSignIn: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
@@ -28,24 +28,20 @@
 		loading = true;
 
 		try {
-			const response = await signInUser(value);
+			const { message } = await signInUser(value);
 
-			if (response) {
-				result = {
-					error: false,
-					text: response.message
-				};
-			} else {
-				location.reload();
-			}
-		} catch (e) {
-			const error = e as HttpError;
+			result = {
+				error: false,
+				message
+			};
+		} catch (error) {
+			const httpError = error as HttpError;
 
-			console.error(error);
+			console.error(httpError);
 
 			result = {
 				error: true,
-				text: error.body.message
+				message: httpError.body.message
 			};
 		} finally {
 			loading = false;
@@ -83,7 +79,7 @@
 						)}
 						in:fade
 					>
-						{result.error ? result.text : 'Письмо успешно отправлено'}
+						{result.error ? result.message : 'Письмо успешно отправлено'}
 					</div>
 				{:else}
 					<Button

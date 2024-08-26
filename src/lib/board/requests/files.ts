@@ -1,5 +1,7 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
+import type { FetchResponse } from '$lib/types/response';
+
 import { fetchDelete, fetchPost } from '$lib/requests';
 
 interface FileResponse {
@@ -9,7 +11,7 @@ interface FileResponse {
 type AllowedFolders = 'avatars' | 'frames' | 'sounds' | 'stories';
 
 export const removeImage = async (folder: AllowedFolders, args?: Record<string, number>) => {
-	return await fetchDelete<FileResponse>(`${PUBLIC_TREETALE_API_URL}/files`, {
+	return await fetchDelete<FetchResponse<FileResponse>>(`${PUBLIC_TREETALE_API_URL}/files`, {
 		folder,
 		type: 'image',
 		...args
@@ -30,7 +32,10 @@ export const saveImage = async (
 
 	body.append('image', file);
 
-	return await fetchPost<FileResponse>(`${PUBLIC_TREETALE_API_URL}/files?${params}`, body);
+	return await fetchPost<FetchResponse<FileResponse>>(
+		`${PUBLIC_TREETALE_API_URL}/files?${params}`,
+		body
+	);
 };
 
 export const saveSound = async (file: File, args?: Record<string, number>) => {
@@ -43,11 +48,14 @@ export const saveSound = async (file: File, args?: Record<string, number>) => {
 
 	body.append('sound', file);
 
-	return await fetchPost<FileResponse>(`${PUBLIC_TREETALE_API_URL}/files?${params}`, body);
+	return await fetchPost<FetchResponse<FileResponse>>(
+		`${PUBLIC_TREETALE_API_URL}/files?${params}`,
+		body
+	);
 };
 
 export const removeSound = async (args: { frameId: number; storyId: number }) => {
-	return await fetchDelete<FileResponse>(`${PUBLIC_TREETALE_API_URL}/files`, {
+	return await fetchDelete<FetchResponse<FileResponse>>(`${PUBLIC_TREETALE_API_URL}/files`, {
 		folder: 'frames',
 		type: 'sound',
 		...args

@@ -1,6 +1,7 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { Story, User } from '$lib/types';
+import type { FetchResponse } from '$lib/types/response.js';
 
 import { randomError } from '$lib/utils/random';
 
@@ -18,7 +19,7 @@ interface ResponseMainInfo {
 
 export const load = async ({ fetch }) => {
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/main`);
-	const { error, message } = (await res.json()) as { error: boolean; message: ResponseMainInfo };
+	const { error, message } = (await res.json()) as FetchResponse<ResponseMainInfo>;
 
 	if (error) {
 		randomError(500);

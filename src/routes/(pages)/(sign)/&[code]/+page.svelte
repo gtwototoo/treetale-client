@@ -8,7 +8,7 @@
 	import { Check, XMark } from 'svelte-heros-v2';
 	import { Button, Icon, Input } from 'treetale-ui';
 
-	import type { ResponseResult } from '$lib/types/response';
+	import type { FetchResponse } from '$lib/types/response';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -19,7 +19,7 @@
 
 	let name = $state('');
 	let loading = $state(false);
-	let result = $state<ResponseResult | null>(null);
+	let result = $state<FetchResponse<string> | null>(null);
 
 	const handleSignUp: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
@@ -37,14 +37,14 @@
 				invalidateAll: true,
 				replaceState: true
 			});
-		} catch (e) {
-			const error = e as HttpError;
+		} catch (error) {
+			const httpError = error as HttpError;
 
-			console.error(error);
+			console.error(httpError);
 
 			result = {
 				error: true,
-				text: error.body.message
+				message: httpError.body.message
 			};
 		} finally {
 			loading = false;
@@ -83,7 +83,7 @@
 						in:fade
 					>
 						<Icon class="size-6" this={result.error ? XMark : Check} />
-						{result.error ? result.text : 'Регистрация завершена'}
+						{result.error ? result.message : 'Регистрация завершена'}
 					</div>
 				{:else}
 					<Button

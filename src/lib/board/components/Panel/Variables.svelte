@@ -37,7 +37,9 @@
 					await updateVars(storyInfoStore.info.storyId, variablesStore.variables);
 
 					saveInfo = 'Изменения сохранены';
-				} catch {
+				} catch (error) {
+					console.error(error);
+
 					saveInfo = 'Ошибка сохранения';
 				}
 			}

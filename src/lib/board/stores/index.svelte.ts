@@ -136,7 +136,9 @@ const getBoardEvents = () => {
 					);
 
 					boardStateStore.state = 'saved';
-				} catch {
+				} catch (error) {
+					console.error(error);
+
 					boardStateStore.state = 'error';
 				}
 			} else {

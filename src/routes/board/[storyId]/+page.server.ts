@@ -2,6 +2,7 @@ import { redirect } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
+import type { FetchResponse } from '$lib/types/response';
 import type { StorySchema } from '$lib/types/schemas';
 
 export const load = async ({ fetch, locals, params }) => {
@@ -13,11 +14,11 @@ export const load = async ({ fetch, locals, params }) => {
 	}
 
 	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}`);
-	const { error, message } = (await res.json()) as { error: boolean; message: StorySchema };
+	const { error, message } = (await res.json()) as FetchResponse<{ story: StorySchema }>;
 
 	if (error) {
 		redirect(302, '/');
 	}
 
-	return message;
+	return message.story;
 };

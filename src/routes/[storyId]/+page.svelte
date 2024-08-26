@@ -65,7 +65,7 @@
 		actions[code]();
 	};
 
-	const updateVars = (frameId: number, choiceId: number) => {
+	const updateCurrentVarsValues = (frameId: number, choiceId: number) => {
 		const frame = find(framesStore.frames, { frameId });
 
 		if (!frame) return;
@@ -99,13 +99,13 @@
 		try {
 			await updateProgress(story.storyId, choiceId);
 
-			updateVars(frameId, choiceId);
+			updateCurrentVarsValues(frameId, choiceId);
 
 			await invalidateAll();
 
 			soundStore.sound?.play();
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 
 		loadingId = null;

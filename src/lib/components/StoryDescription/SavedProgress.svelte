@@ -46,8 +46,8 @@
 			await deleteProgress(storyId);
 
 			await invalidateAll();
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 
 		loading = false;

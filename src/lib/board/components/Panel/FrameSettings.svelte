@@ -38,31 +38,31 @@
 
 	const preSaveImage = async (file: File): Promise<void> => {
 		try {
-			const { fileUrl } = await saveImage(file, FRAMES_FOLDER, {
+			const { message } = await saveImage(file, FRAMES_FOLDER, {
 				frameId,
 				storyId: storyInfoStore.info!.storyId
 			});
 
-			frame.imageUrl = fileUrl;
+			frame.imageUrl = message.fileUrl;
 
 			changesHistoryStore.add('Добавление изображения блока', Photo);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
 	const preSaveSound = async (file: File): Promise<void> => {
 		try {
-			const { fileUrl } = await saveSound(file, {
+			const { message } = await saveSound(file, {
 				frameId,
 				storyId: storyInfoStore.info!.storyId
 			});
 
-			frame.soundUrl = fileUrl;
+			frame.soundUrl = message.fileUrl;
 
 			changesHistoryStore.add('Добавление звука', MusicalNote);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -78,8 +78,8 @@
 			frame.soundUrl = null;
 
 			changesHistoryStore.add('Удаление звука', Trash);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -95,8 +95,8 @@
 			frame.imageUrl = null;
 
 			changesHistoryStore.add('Удаление изображения блока', Trash);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 

@@ -45,8 +45,8 @@
 
 		try {
 			await window.navigator.clipboard.writeText(value);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 
 			success = true;
 		}

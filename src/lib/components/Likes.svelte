@@ -23,13 +23,15 @@
 		loading = true;
 
 		try {
-			const response = await addLike(storyId);
+			const { message } = await addLike(storyId);
 
-			if (response.liked) {
+			if (message.liked) {
 				likes = [...likes, $page.data.session.userId];
 			} else {
 				likes = without(likes, $page.data.session.userId);
 			}
+		} catch (error) {
+			console.error(error);
 		} finally {
 			loading = false;
 		}

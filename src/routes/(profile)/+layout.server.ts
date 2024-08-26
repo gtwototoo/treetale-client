@@ -1,6 +1,7 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { User } from '$lib/types/index';
+import type { FetchResponse } from '$lib/types/response.js';
 
 import { randomError } from '$lib/utils/random';
 
@@ -17,7 +18,8 @@ export const load = async ({ fetch, params }) => {
 			? `${PUBLIC_TREETALE_API_URL}/users/${linkName}/stats`
 			: `${PUBLIC_TREETALE_API_URL}/me/stats`
 	);
-	const { error, message } = (await res.json()) as { error: boolean; message: ResponseStats };
+
+	const { error, message } = (await res.json()) as FetchResponse<ResponseStats>;
 
 	if (error) {
 		randomError(404);

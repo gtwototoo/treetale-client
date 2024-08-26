@@ -23,7 +23,9 @@
 				await updateNotes(storyInfoStore.info!.storyId, notesStore.notes);
 
 				saveInfo = 'Изменения сохранены';
-			} catch {
+			} catch (error) {
+				console.error(error);
+
 				saveInfo = 'Ошибка сохранения';
 			}
 

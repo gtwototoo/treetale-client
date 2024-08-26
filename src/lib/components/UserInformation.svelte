@@ -46,8 +46,8 @@
 		try {
 			await unsubscribeProfile(user.userId);
 			await invalidateAll();
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		} finally {
 			loading = false;
 		}
@@ -59,8 +59,8 @@
 			try {
 				await subscribeProfile(user.userId);
 				await invalidateAll();
-			} catch (e) {
-				console.error(e);
+			} catch (error) {
+				console.error(error);
 			} finally {
 				loading = false;
 			}
@@ -86,8 +86,8 @@
 				invalidateAll: true,
 				replaceState: true
 			});
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -102,8 +102,8 @@
 				bodyBackgroundColorStore.color
 			);
 			await invalidateAll();
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		} finally {
 			loading = false;
 			editMode = false;
@@ -122,11 +122,11 @@
 		};
 
 		try {
-			const { fileUrl } = await saveImage(file, AVATARS_FOLDER);
+			const { message } = await saveImage(file, AVATARS_FOLDER);
 
-			user.imageUrl = fileUrl;
-		} catch (e) {
-			console.error(e);
+			user.imageUrl = message.fileUrl;
+		} catch (error) {
+			console.error(error);
 		}
 	};
 

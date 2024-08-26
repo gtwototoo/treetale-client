@@ -52,7 +52,7 @@ export const deleteStory = async (id: number) => {
 		return goto(`/profile`, {
 			invalidateAll: true
 		});
-	} catch (e) {
-		console.error(e);
+	} catch (error) {
+		console.error(error);
 	}
 };

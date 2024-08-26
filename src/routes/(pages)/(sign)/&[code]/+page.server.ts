@@ -3,6 +3,8 @@ import { redirect } from '@sveltejs/kit';
 
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
+import type { FetchResponse } from '$lib/types/response.js';
+
 import { fetchPost } from '$lib/requests/index';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
 
@@ -13,25 +15,26 @@ interface ISessionInfo {
 export const load = async ({ cookies, params }) => {
 	const { code } = params;
 
-	let response;
-
 	try {
-		response = await fetchPost<ISessionInfo>(`${PUBLIC_TREETALE_API_URL}/me/session`, {
-			code
-		});
-	} catch (e) {
-		const error = e as HttpError;
+		const { message } = await fetchPost<FetchResponse<ISessionInfo>>(
+			`${PUBLIC_TREETALE_API_URL}/me/session`,
+			{
+				code
+			}
+		);
 
-		if (error.status === 404) {
+		if (message.sessionId) {
+			cookies.set('sessionId', message.sessionId, COOKIE_OPTIONS);
+
+			redirect(302, '/');
+		}
+
+		return {};
+	} catch (error) {
+		const httpError = error as HttpError;
+
+		if (httpError.status === 404) {
 			redirect(302, '/');
 		}
 	}
-
-	if (!response?.sessionId) {
-		return {};
-	}
-
-	cookies.set('sessionId', response.sessionId, COOKIE_OPTIONS);
-
-	redirect(302, '/');
 };

@@ -68,7 +68,9 @@
 				});
 
 				saveInfo = 'Изменения сохранены';
-			} catch {
+			} catch (error) {
+				console.error(error);
+
 				saveInfo = 'Ошибка сохранения';
 			}
 
@@ -85,10 +87,14 @@
 		checkUpdates();
 	};
 
-	const handleDeleteStory = () => {
+	const handleDeleteStory = async () => {
 		if (!storyInfoStore.info) return;
 
-		deleteStory(storyInfoStore.info.storyId);
+		try {
+			await deleteStory(storyInfoStore.info.storyId);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const updatePattern = (html: string) => {

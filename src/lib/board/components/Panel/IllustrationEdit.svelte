@@ -34,8 +34,8 @@
 			});
 
 			storyInfoStore.info.imageUrl = null;
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -43,15 +43,15 @@
 		if (!storyInfoStore.info) return;
 
 		try {
-			const { fileUrl } = await saveImage(file, ILLUSTRATIONS_FOLDER, {
+			const { message } = await saveImage(file, ILLUSTRATIONS_FOLDER, {
 				storyId: storyInfoStore.info.storyId
 			});
 
-			storyInfoStore.info.imageUrl = fileUrl;
+			storyInfoStore.info.imageUrl = message.fileUrl;
 
 			changesHistoryStore.add('Добавление изображения истории', Photo);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 

@@ -4,6 +4,7 @@ import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 import sample from 'lodash/sample';
 
 import type { User } from '$lib/types';
+import type { FetchResponse } from '$lib/types/response';
 
 import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';
 
@@ -16,14 +17,14 @@ export const handle = (async ({ event, resolve }) => {
 		// skip errors, uptime 99.99%
 		try {
 			request = await event.fetch(`${PUBLIC_TREETALE_API_URL}/me/session`);
-		} catch (e) {
-			console.error(e);
+		} catch (error) {
+			console.error(error);
 		}
 
 		if (request) {
-			const json = (await request.json()) as { user: User };
+			const { message } = (await request.json()) as FetchResponse<{ user: User }>;
 
-			event.locals.session = json.user;
+			event.locals.session = message.user;
 		}
 	}
 

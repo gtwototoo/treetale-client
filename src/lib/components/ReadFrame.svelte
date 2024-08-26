@@ -42,7 +42,7 @@
 		onclick?.(choiceId);
 	};
 
-	const updateVars = (choiceId?: number) => {
+	const updateCurrentVarsValues = (choiceId?: number) => {
 		if (!choiceId) return;
 
 		const mathModificators = choiceModificators(frame, choiceId, 'math') as MathModificator[];
@@ -67,7 +67,7 @@
 	};
 
 	const dynamicText = (text: null | string) => {
-		updateVars(selectedChoiceId);
+		updateCurrentVarsValues(selectedChoiceId);
 
 		return correctVariableReplace(text, variablesStore.variables) || 'Пустота...';
 	};
