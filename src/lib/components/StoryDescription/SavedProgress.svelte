@@ -20,18 +20,18 @@
 		choicesCount,
 		lastFrame,
 		onclick,
+		progressVersion,
 		storyId,
 		storyVersion,
-		updated,
-		version
+		updated
 	}: {
 		choicesCount: number;
 		lastFrame: Frame;
 		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+		progressVersion: string;
 		storyId: number;
 		storyVersion: string;
 		updated: number;
-		version: string;
 	} = $props();
 
 	let loading = $state(false);
@@ -63,10 +63,10 @@
 					breaking: 'bg-red-100 text-red-500',
 					current: 'bg-green-100 text-green-500',
 					minor: 'bg-yellow-100 text-yellow-500'
-				}[versionCompare(storyVersion, version)]
+				}[versionCompare(storyVersion, progressVersion)]
 			)}
 		>
-			Версия {version}
+			Версия {progressVersion}
 		</Tag>
 		<p class="italic">
 			{doPluralize(choicesCount)}

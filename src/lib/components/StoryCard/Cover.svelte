@@ -14,12 +14,14 @@
 	let {
 		class: classname,
 		color,
+		editMode,
 		icon,
 		imageUrl,
 		title
 	}: {
 		class?: string;
 		color: RGB;
+		editMode?: boolean;
 		icon: Component;
 		imageUrl: null | string;
 		title: string;
@@ -60,7 +62,12 @@
 				<GenreIcon class={clm('h-1/2 w-auto', iconColor)} />
 			</div>
 		{/if}
-		<Titie {title} color={textFillColor} />
+		<Titie
+			{title}
+			color={textFillColor}
+			editMode={editMode && !!imageUrl && !errorImage}
+			isImage={!!imageUrl && !errorImage}
+		/>
 	</div>
 	<TransparentRect />
 </div>

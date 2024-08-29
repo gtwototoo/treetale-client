@@ -18,14 +18,14 @@
 		choicesCount,
 		endFrame,
 		onclick,
-		story,
-		storyVersion
+		progressVersion,
+		story
 	}: {
 		choicesCount: number;
 		endFrame: Frame;
 		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+		progressVersion: string;
 		story: Story;
-		storyVersion: string;
 	} = $props();
 
 	type CopyState = 'error' | 'success' | null;
@@ -35,8 +35,9 @@
 	const percent = 12;
 	const newEnd = true;
 
-	let { storyId, version } = $derived(story);
-	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/result/${storyId}/${Date.now()}`);
+	let textForCopy = $derived(
+		`${PUBLIC_TREETALE_CLIENT_URL}/result/${story.storyId}/${Date.now()}`
+	);
 
 	let copyState = $state<CopyState>(null);
 
@@ -94,10 +95,10 @@
 					breaking: 'bg-red-100 text-red-500',
 					current: 'bg-green-100 text-green-500',
 					minor: 'bg-yellow-100 text-yellow-500'
-				}[versionCompare(storyVersion, version)]
+				}[versionCompare(story.version, progressVersion)]
 			)}
 		>
-			Версия {version}
+			Версия {progressVersion}
 		</Tag>
 		<p class="italic">
 			{doPluralize(choicesCount)}

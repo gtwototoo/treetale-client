@@ -25,10 +25,10 @@
 		frames,
 		onclick,
 		progress,
+		progressVersion,
 		story,
 		storyState,
-		updated,
-		version
+		updated
 	}: {
 		author: {
 			subscribersCount: number;
@@ -36,10 +36,10 @@
 		frames: Frame[];
 		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 		progress: Progress[];
+		progressVersion: string;
 		story: Story;
 		storyState: 'begin' | 'ended';
 		updated: number;
-		version: string;
 	} = $props();
 
 	let {
@@ -91,7 +91,7 @@
 				choicesCount={progress.length}
 				endFrame={lastProgressFrame}
 				onclick={() => (storyState = 'begin')}
-				storyVersion={story.version}
+				{progressVersion}
 			/>
 		{:else}
 			<div class="flex w-full flex-col gap-3 max-md:items-center">
@@ -123,7 +123,7 @@
 			</div>
 			{#if progress.length}
 				<SavedProgress
-					{version}
+					{progressVersion}
 					{updated}
 					storyId={story.storyId}
 					storyVersion={story.version}

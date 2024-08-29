@@ -7,7 +7,13 @@
 
 	import type { RGB } from '$lib/types';
 
-	import { BLACK_COLOR, DEFAULT_COLOR, WHITE_COLOR } from '$lib/constants/colors';
+	import {
+		BLACK_COLOR,
+		BLACK_TEXT_COLOR,
+		DEFAULT_COLOR,
+		WHITE_COLOR,
+		WHITE_TEXT_COLOR
+	} from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage } from '$lib/requests/files';
 	import { contrastText } from '$lib/utils/contrast';
@@ -60,12 +66,18 @@
 
 	let correctColor = $derived(color || DEFAULT_COLOR);
 	let colorContrast = $derived(contrastText(correctColor) ? BLACK_COLOR : WHITE_COLOR);
+	let colorText = $derived(contrastText(correctColor) ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR);
+
+	let style = $derived(
+		[
+			`--color-contrast: ${toRGB(colorContrast)}`,
+			`--color-main: ${toRGB(correctColor)}`,
+			`--color-text: ${toRGB(colorText)}`
+		].join(';')
+	);
 </script>
 
-<div
-	class="contents"
-	style="--color-contrast: {toRGB(colorContrast)}; --color-main: {toRGB(correctColor)}"
->
+<div class="contents" {style}>
 	<Avatar
 		{alt}
 		color={DEFAULT_COLOR}

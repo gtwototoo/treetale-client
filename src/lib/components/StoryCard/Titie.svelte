@@ -5,15 +5,25 @@
 
 	import { clm } from '$lib/utils/classMerge';
 
+	import TitleEditRect from './TitleEditRect.svelte';
+
 	let {
 		color,
+		editMode,
+		isImage,
 		title
 	}: {
 		color: string;
+		editMode?: boolean;
+		isImage: boolean;
 		title: string;
 	} = $props();
 
+	const coverWidth = 340;
+	const coverHeigth = 510;
+
 	let ready = $state(false);
+	let sizes = $state<DOMRect>();
 
 	const wrapText = (
 		element: Selection<SVGTextElement, unknown, null, undefined>,
@@ -26,8 +36,8 @@
 			lineNumber = 0;
 
 		const words = element.text().split(/\s+/).reverse();
-		const x = element.attr('x'),
-			y = element.attr('y');
+		const x = element.attr('x');
+		const y = element.attr('y');
 		const dy = `${++lineNumber * lineHeight}${unit}`;
 
 		element.text(null);
@@ -57,30 +67,33 @@
 		wrapText(select(node), 300, 36);
 
 		ready = true;
+
+		sizes = node.getBBox();
 	};
 </script>
 
-<svg
-	viewBox="0 0 340 510"
-	width="340"
-	height="510"
-	class="absolute size-full"
-	xmlns="http://www.w3.org/2000/svg"
->
-	<text
-		use:calculateTitleWrap
-		x="50%"
-		y="50%"
-		text-anchor="middle"
-		class={clm(
-			'font-RobotoSlab text-3xl font-black uppercase',
-			!ready && 'invisible -z-10',
-			color
-		)}
+<TitleEditRect {sizes} {coverHeigth} {coverWidth} {editMode} {isImage}>
+	<svg
+		viewBox="0 0 {coverWidth} {coverHeigth}"
+		class="pointer-events-none absolute size-auto"
+		xmlns="http://www.w3.org/2000/svg"
 	>
-		{title || 'Без названия'}
-	</text>
-</svg>
+		<text
+			use:calculateTitleWrap
+			x="50%"
+			y="50%"
+			text-rendering="optimizeSpeed"
+			text-anchor="middle"
+			class={clm(
+				'font-RobotoSlab text-3xl font-black uppercase',
+				!ready && 'invisible -z-10',
+				color
+			)}
+		>
+			{title || 'Без названия'}
+		</text>
+	</svg>
+</TitleEditRect>
 
 <style lang="postcss">
 	text {

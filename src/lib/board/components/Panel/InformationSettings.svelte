@@ -106,6 +106,7 @@
 
 	const handleOpenIllustrationPanel = () => {
 		panelStatesStore.set('illustration-edit', IllustrationEdit, {
+			isEdit: true,
 			isSubpanel: true,
 			title: 'Настройка иллюстрации'
 		});

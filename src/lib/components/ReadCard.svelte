@@ -40,7 +40,7 @@
 		{#if src && !errorLoad}
 			<Image
 				{alt}
-				class="h-[22rem] w-full rounded-2xl bg-main-40 text-text max-xl:h-80 max-md:h-72"
+				class="h-[clamp(100px,33vw,330px)] w-full rounded-2xl bg-main-40 text-text"
 				cover
 				on:error={handleError}
 				{src}

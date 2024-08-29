@@ -30,6 +30,23 @@
 		}
 	};
 
+	const setPublishedStory = async () => {
+		if (!storyInfoStore.info) return;
+
+		loading = true;
+
+		try {
+			const { message } = await publishStory(storyInfoStore.info.storyId);
+
+			storyInfoStore.info.status = 'published';
+			storyInfoStore.info.version = message.version;
+		} catch (error) {
+			console.error(error);
+		} finally {
+			loading = false;
+		}
+	};
+
 	let requirements = $derived([
 		{
 			title: 'Заголовок',
@@ -51,22 +68,6 @@
 			value: boardFramesStore.frames.some(({ frameId }) => connectedWithStart(frameId))
 		}
 	]);
-
-	const setPublishedStory = async () => {
-		if (!storyInfoStore.info) return;
-
-		loading = true;
-
-		try {
-			await publishStory(storyInfoStore.info.storyId);
-
-			storyInfoStore.info.status = 'published';
-		} catch (error) {
-			console.error(error);
-		} finally {
-			loading = false;
-		}
-	};
 
 	let orangeBackgroundColor = $derived(
 		currentThemeClass(clm('bg-orange-950'), clm('bg-orange-50'))
@@ -152,7 +153,9 @@
 				</Button>
 			{/if}
 		{:else if storyInfoStore.info?.status === 'published'}
-			<p class="p-2">{correctWhitespace('История опубликована')}</p>
+			<p class="p-2">
+				{correctWhitespace(`История опубликована (Версия ${storyInfoStore.info.version})`)}
+			</p>
 			<Button
 				class={clm('justify-center', redBackgroundColorStore.color)}
 				{loading}

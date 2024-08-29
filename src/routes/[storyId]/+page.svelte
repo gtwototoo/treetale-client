@@ -184,7 +184,7 @@
 				{frames}
 				{progress}
 				{author}
-				{version}
+				progressVersion={version}
 				{updated}
 				{story}
 				{storyState}
