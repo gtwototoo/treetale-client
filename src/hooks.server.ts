@@ -16,7 +16,7 @@ export const handle = (async ({ event, resolve }) => {
 
 		// skip errors, uptime 99.99%
 		try {
-			request = await event.fetch(`${PUBLIC_TREETALE_API_URL}/me/session`);
+			request = await event.fetch(`${PUBLIC_TREETALE_API_URL}/session`);
 		} catch (error) {
 			console.error(error);
 		}

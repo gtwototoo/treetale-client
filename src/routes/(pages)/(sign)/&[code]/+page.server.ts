@@ -19,7 +19,7 @@ export const load = async ({ cookies, params }) => {
 
 	try {
 		const { message } = await fetchPost<FetchResponse<SessionInfo>>(
-			`${PUBLIC_TREETALE_API_URL}/me/session`,
+			`${PUBLIC_TREETALE_API_URL}/session`,
 			{
 				code
 			}
