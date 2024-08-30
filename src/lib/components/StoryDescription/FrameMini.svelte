@@ -23,7 +23,7 @@
 			src={frame.imageUrl}
 		/>
 	{/if}
-	<div class={clm('line-clamp-4 max-h-24', !frame.text?.length && 'text-gray-500')}>
+	<div class={clm('adaptive-font line-clamp-4', !frame.text?.length && 'text-gray-500')}>
 		{@html correctVariableReplace(frame.text, variablesStore.variables) || 'Без описания'}
 	</div>
 </div>

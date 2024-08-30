@@ -18,7 +18,7 @@
 </script>
 
 <Button
-	class="adaptive-font adaptive-padding whitespace-normal bg-main-70 text-left text-text hover:bg-main"
+	class="adaptive-padding adaptive-font whitespace-normal bg-main-70 text-left text-text hover:bg-main"
 	{onclick}
 	{loading}
 	{disabled}

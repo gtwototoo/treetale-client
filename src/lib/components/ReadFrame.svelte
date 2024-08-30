@@ -112,6 +112,7 @@
 						{#if enabledChoice(choice)}
 							{#if choice.asInput}
 								<Contenteditable
+									class="adaptive-font adaptive-padding"
 									placeholder={correctVariableReplace(
 										choice.text,
 										variablesStore.variables

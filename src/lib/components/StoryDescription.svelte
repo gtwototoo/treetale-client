@@ -96,7 +96,9 @@
 		{:else}
 			<div class="flex w-full flex-col gap-3 max-md:items-center">
 				<ActionButtons {genre} {storyId} />
-				<h1 class="max-md:pb-4 max-md:text-center">{title}</h1>
+				<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4 max-md:text-center">
+					{title}
+				</h1>
 				<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
 					<Tag class="whitespace-nowrap bg-green-100 bg-opacity-30 text-green-500">
 						Версия {story.version}

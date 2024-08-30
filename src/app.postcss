@@ -45,10 +45,10 @@ svg {
 }
 
 .adaptive-font {
-	@apply !text-2xl max-hd:!text-xl max-xl:!text-lg max-sm:!text-base;
+	@apply text-[clamp(16px,2.3vw,24px)] leading-snug;
 }
 .adaptive-font-upper {
-	@apply !text-4xl max-hd:!text-3xl max-xl:!text-2xl max-sm:!text-xl;
+	@apply text-[clamp(20px,2.8vw,30px)] leading-snug;
 }
 .adaptive-padding {
 	@apply !px-8 !py-4 max-hd:!px-6 max-hd:!py-3;

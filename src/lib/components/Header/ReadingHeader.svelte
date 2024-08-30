@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { ArrowsPointingOut, Star } from 'svelte-heros-v2';
+	import { ArrowsPointingOut } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
-	import { clm } from '$lib/utils/classMerge';
-	import { contrastText } from '$lib/utils/contrast';
 
 	import Header from './Header.svelte';
 
@@ -43,16 +40,6 @@
 </script>
 
 <Header>
-	<Button
-		class={clm(
-			'header-button text-text',
-			contrastText(bodyBackgroundColorStore.color) ? clm('bg-yellow-600') : clm('bg-yellow-300')
-		)}
-		size="lg"
-	>
-		<Icon class="size-6" this={Star} />
-		<p class="mr-1">Поддержать</p>
-	</Button>
 	{#if fullscreenSupport}
 		<Button
 			class="header-button bg-main-50 text-text hover:bg-main-70"
