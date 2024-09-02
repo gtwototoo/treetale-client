@@ -1,9 +1,6 @@
-import {
-	addFrameOffsetStore,
-	boardFramesStore,
-	movingFrameStore,
-	selectedFrameStore
-} from '$board/stores/frames.svelte';
+import { addBlockOffsetStore, movingBlockStore } from '$board/stores/blocks.svelte';
+import { boardCommentsStore } from '$board/stores/comments.svelte';
+import { boardFramesStore, selectedFrameStore } from '$board/stores/frames.svelte';
 import { changesHistoryStore } from '$board/stores/history.svelte';
 import { boardStateStore, oneDirectionModeStore, zoomCorrect } from '$board/stores/index.svelte';
 import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -38,6 +35,23 @@ export const connectedWithStart = (frameId: number) => {
 	};
 
 	return checkConnectedWithStart(frameId);
+};
+
+export const addComment = ({ x, y }: Coordinates) => {
+	const lastCommentId = last(boardCommentsStore.comments)?.commentId || 0;
+
+	boardCommentsStore.comments.push({
+		commentId: lastCommentId + 1,
+		height: 0,
+		text: '',
+		width: 0,
+		x,
+		y
+	});
+
+	changesHistoryStore.add('Добавление заметки', Plus);
+
+	return lastCommentId;
 };
 
 export const addFrame = ({ x, y }: Coordinates) => {
@@ -80,14 +94,23 @@ export const movingArea = ({ x, y }: Coordinates, startOffset: Coordinates) => {
 	};
 };
 
-export const movingFrame = (coords: Coordinates, startMoveData: StartMoveParams) => {
+export const movingBlock = (coords: Coordinates, startMoveData: StartMoveParams) => {
 	const { moveFrameOffset, startMoveCoords } = startMoveData;
 
-	if (!movingFrameStore.frameId) return null;
+	if (!movingBlockStore.id) return null;
 
-	const frameIndex = findIndex(boardFramesStore.frames, { frameId: movingFrameStore.frameId });
+	let index;
 
-	if (frameIndex === -1) return null;
+	const store =
+		movingBlockStore.type === 'frame' ? boardFramesStore.frames : boardCommentsStore.comments;
+
+	if (movingBlockStore.type === 'frame') {
+		index = findIndex(boardFramesStore.frames, { frameId: movingBlockStore.id });
+	} else {
+		index = findIndex(boardCommentsStore.comments, { commentId: movingBlockStore.id });
+	}
+
+	if (index === -1) return null;
 
 	const { x, y } = zoomCorrect(coords);
 	const newCoords: Coordinates = {
@@ -105,12 +128,9 @@ export const movingFrame = (coords: Coordinates, startMoveData: StartMoveParams)
 
 		const coordDirection = startMoveData.moveXDirection ? 'x' : 'y';
 
-		boardFramesStore.frames[frameIndex][coordDirection] = newCoords[coordDirection];
+		store[index][coordDirection] = newCoords[coordDirection];
 	} else {
-		boardFramesStore.frames[frameIndex] = Object.assign(
-			boardFramesStore.frames[frameIndex],
-			newCoords
-		);
+		store[index] = Object.assign(store[index], newCoords);
 	}
 
 	return startMoveData.moveXDirection;
@@ -149,5 +169,5 @@ export const prevSelectedFrame = () => {
 export const cursorFollow = (coords: Coordinates) => {
 	const cursorCoords = zoomCorrect(coords);
 
-	addFrameOffsetStore.set(cursorCoords);
+	addBlockOffsetStore.set(cursorCoords);
 };

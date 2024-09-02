@@ -1,13 +1,14 @@
 import { updateArea } from '$board/requests/story';
 import omit from 'lodash/omit';
 
-import type { Coordinates, Frame, Sizes } from '$lib/types';
+import type { Comment, Coordinates, Frame, Sizes } from '$lib/types';
 
+import { boardCommentsStore } from './comments.svelte';
 import { boardFramesStore } from './frames.svelte';
 import { storyInfoStore } from './info.svelte';
 
-export type ActionType = 'connectTo' | 'dragImage' | 'movingArea' | 'movingFrame';
-export type ModeType = 'adding' | 'binding' | 'view';
+export type ActionType = 'connectTo' | 'dragImage' | 'movingArea' | 'movingBlock';
+export type ModeType = 'addingComment' | 'addingFrame' | 'binding' | 'view';
 export type StateType = 'await' | 'error' | 'saved' | 'saving';
 
 export const simpleStore = <T>(key: string, initialValue?: T) => {
@@ -128,9 +129,14 @@ const getBoardEvents = () => {
 						(frame) => omit(frame, ['height']) as Frame
 					);
 
+					const correctComments = boardCommentsStore.comments.map(
+						(comment) => omit(comment, ['height']) as Comment
+					);
+
 					await updateArea(
 						storyInfoStore.info.storyId,
 						correctFrames,
+						correctComments,
 						boardStateStore.offset,
 						boardStateStore.zoom
 					);
@@ -162,7 +168,8 @@ export const oneDirectionModeStore = getOneDirectionMode();
 
 export const isBinding = () => boardStateStore.mode === 'binding';
 export const isView = () => boardStateStore.mode === 'view';
-export const isAdding = () => boardStateStore.mode === 'adding';
+export const isAdding = () =>
+	boardStateStore.mode === 'addingFrame' || boardStateStore.mode === 'addingComment';
 
 export const zoomCorrect = (coordinates: Coordinates) => {
 	return {

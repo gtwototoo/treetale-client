@@ -1,24 +1,30 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 
-	import { addFrameOffsetStore } from '$board/stores/frames.svelte';
+	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
+	import { boardStateStore } from '$board/stores/index.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
 	import { Plus } from 'svelte-heros-v2';
 	import { Icon } from 'treetale-ui';
 
-	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+	import {
+		DEFAULT_BLOCK_WIDTH,
+		DEFAULT_COMMENT_HEIGHT,
+		DEFAULT_FRAME_HEIGHT
+	} from '$lib/constants';
 	import { clm } from '$lib/utils/classMerge';
 
-	const { height, width } = DEFAULT_FRAME_SIZE;
+	const height =
+		boardStateStore.mode === 'addingComment' ? DEFAULT_COMMENT_HEIGHT : DEFAULT_FRAME_HEIGHT;
 
 	onDestroy(() => {
-		addFrameOffsetStore.clear();
+		addBlockOffsetStore.clear();
 	});
 
-	let { x, y } = $derived(addFrameOffsetStore);
+	let { x, y } = $derived(addBlockOffsetStore);
 
 	let newFrameStyle = $derived(
-		[transform({ x, y }), `width: ${width}px;`, `height: ${height}px`].join(';')
+		[transform({ x, y }), `width: ${DEFAULT_BLOCK_WIDTH}px;`, `height: ${height}px`].join(';')
 	);
 </script>
 
@@ -30,6 +36,6 @@
 		)}
 		style={newFrameStyle}
 	>
-		<Icon class={clm('size-12', !x && !y && 'invisible')} this={Plus} />
+		<Icon class={clm('size-6', !x && !y && 'invisible')} this={Plus} />
 	</div>
 </div>

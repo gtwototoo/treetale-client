@@ -4,6 +4,7 @@
 	import { on } from 'svelte/events';
 
 	import { type PinchEventHandler, pinch } from '$board/hooks/pinch';
+	import { boardCommentsStore } from '$board/stores/comments.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import {
 		boardParamsStore,
@@ -17,12 +18,13 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { stopPropagation } from '$lib/utils/eventsModificators';
 
+	import CommentBlock from './CommentBlock.svelte';
 	import ConnectionsLayer from './ConnectionsLayer.svelte';
 	import CreateText from './CreateText.svelte';
-	import Frame from './Frame.svelte';
+	import FrameBlock from './FrameBlock.svelte';
 	import LineManipulators from './LineManipulators.svelte';
 	import MovingArea from './MovingArea.svelte';
-	import NewFrame from './NewFrame.svelte';
+	import NewBlock from './NewBlock.svelte';
 	import WindowActions from './WindowActions.svelte';
 
 	let {
@@ -160,7 +162,7 @@
 	class={clm(
 		'fixed inset-0 size-full select-none overflow-hidden',
 		boardStateStore.action === 'movingArea' && 'cursor-grabbing',
-		boardStateStore.action === 'movingFrame' && 'cursor-move'
+		boardStateStore.action === 'movingBlock' && 'cursor-move'
 	)}
 	onclick={handleClick}
 	onkeypress={stopPropagation}
@@ -180,11 +182,16 @@
 		{/if}
 		<MovingArea>
 			{#if isAdding()}
-				<NewFrame />
+				<NewBlock />
 			{/if}
 			<div>
+				{#each boardCommentsStore.comments as comment (comment.commentId)}
+					<CommentBlock {comment} />
+				{/each}
+			</div>
+			<div>
 				{#each boardFramesStore.frames as frame (frame.frameId)}
-					<Frame {frame} />
+					<FrameBlock {frame} />
 				{/each}
 			</div>
 			<ConnectionsLayer />

@@ -13,7 +13,7 @@
 	import type { Choice, Frame } from '$lib/types';
 
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
-	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { choiceModificators } from '$lib/utils/variableOperations';
@@ -76,8 +76,8 @@
 		const { x, y } = frame;
 		const choiceKey = findIndex(frame.choices, { choiceId: choice.choiceId });
 		const lastFrameId = addFrame({
-			x: x + DEFAULT_FRAME_SIZE.width + distance,
-			y: y + (DEFAULT_FRAME_SIZE.height + distance) * choiceKey - DEFAULT_FRAME_SIZE.height / 2
+			x: x + DEFAULT_BLOCK_WIDTH + distance,
+			y: y + (DEFAULT_FRAME_HEIGHT + distance) * choiceKey - DEFAULT_FRAME_HEIGHT / 2
 		});
 		const newFrame = find(boardFramesStore.frames, { frameId: lastFrameId + 1 })!;
 

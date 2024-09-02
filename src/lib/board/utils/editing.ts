@@ -2,7 +2,7 @@ import find from 'lodash/find';
 
 import type { Bounding, Choice, ConnectPath, Coordinates, Frame, Note, Variable } from '$lib/types';
 
-import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 import { clm } from '$lib/utils/classMerge';
 
 export const transform = (coords: Coordinates, zoom?: number): string => {
@@ -31,7 +31,7 @@ export const findPrevFrames = (frames: Frame[], frameId: number) => {
 };
 
 export const getChoicePosition = (index: number, imageUrl: null | string) => {
-	let startPosition = DEFAULT_FRAME_SIZE.height - 8 - 40 / 2;
+	let startPosition = DEFAULT_FRAME_HEIGHT - 8 - 40 / 2;
 
 	if (imageUrl) {
 		startPosition += 156;
@@ -43,7 +43,7 @@ export const getChoicePosition = (index: number, imageUrl: null | string) => {
 const getFramesPoints = (fromFrame: Frame, choice: Choice, toFrame: Frame) => {
 	const fromFrameLeftSide = fromFrame.x < toFrame.x;
 	const fromPoint = {
-		x: fromFrameLeftSide ? fromFrame.x + DEFAULT_FRAME_SIZE.width : fromFrame.x,
+		x: fromFrameLeftSide ? fromFrame.x + DEFAULT_BLOCK_WIDTH : fromFrame.x,
 		y:
 			fromFrame.y +
 			(fromFrame.hidden
@@ -134,7 +134,7 @@ export const createBezierLine = (from: Coordinates, to: Coordinates): string => 
 const getAreaBoundings = (frames: Frame[]) => {
 	const { maxX, maxY, minX, minY } = frames.reduce(
 		(acc, { height, x, y }) => ({
-			maxX: Math.max(acc.maxX, x + DEFAULT_FRAME_SIZE.width),
+			maxX: Math.max(acc.maxX, x + DEFAULT_BLOCK_WIDTH),
 			maxY: Math.max(acc.maxY, y + height),
 			minX: Math.min(acc.minX, x),
 			minY: Math.min(acc.minY, y)

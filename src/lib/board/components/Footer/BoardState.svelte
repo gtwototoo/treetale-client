@@ -31,7 +31,8 @@
 	};
 
 	const modesIcons: Record<ModeType, HeroIconComponent> = {
-		adding: Square3Stack3d,
+		addingComment: Square3Stack3d,
+		addingFrame: Square3Stack3d,
 		binding: Share,
 		view: Eye
 	};
@@ -40,7 +41,7 @@
 		connectTo: ArrowRightOnRectangle,
 		dragImage: Photo,
 		movingArea: Map,
-		movingFrame: ArrowsPointingOut
+		movingBlock: ArrowsPointingOut
 	};
 
 	const switchConnectionMode = () => {

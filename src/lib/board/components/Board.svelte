@@ -2,11 +2,9 @@
 	import { onMount } from 'svelte';
 
 	import InformationSettings from '$board/components/Panel/InformationSettings.svelte';
-	import {
-		addFrameOffsetStore,
-		boardFramesStore,
-		movingFrameStore
-	} from '$board/stores/frames.svelte';
+	import { addBlockOffsetStore, movingBlockStore } from '$board/stores/blocks.svelte';
+	import { boardCommentsStore } from '$board/stores/comments.svelte';
+	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import {
 		boardEventsStore,
@@ -21,18 +19,23 @@
 	import find from 'lodash/find';
 	import { ArrowsPointingIn } from 'svelte-heros-v2';
 
-	import type { Coordinates, Frame, StartMoveParams } from '$lib/types/index';
+	import type { Comment, Coordinates, Frame, StartMoveParams } from '$lib/types/index';
 
-	import { DEFAULT_FRAME_SIZE } from '$lib/constants';
+	import {
+		DEFAULT_BLOCK_WIDTH,
+		DEFAULT_COMMENT_HEIGHT,
+		DEFAULT_FRAME_HEIGHT
+	} from '$lib/constants';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 
 	import BoardArea from './Board/BoardArea.svelte';
 	import {
+		addComment,
 		addFrame,
 		cursorFollow,
 		movingArea,
-		movingFrame,
+		movingBlock,
 		startMoveArea
 	} from './methods.svelte';
 
@@ -44,8 +47,8 @@
 	});
 
 	const handleMouseMove = (coords: Coordinates) => {
-		if (boardStateStore.action === 'movingFrame') {
-			startMoveData.moveXDirection = movingFrame(coords, startMoveData);
+		if (boardStateStore.action === 'movingBlock') {
+			startMoveData.moveXDirection = movingBlock(coords, startMoveData);
 		}
 		if (boardStateStore.action === 'movingArea') {
 			movingArea(coords, startOffset);
@@ -55,27 +58,31 @@
 		}
 	};
 
-	const startMoveFrame = (frame: Frame, coords: Coordinates): StartMoveParams => {
-		if (!frame) {
-			return {
-				moveFrameOffset: { x: 0, y: 0 },
-				moveXDirection: null,
-				startMoveCoords: { x: 0, y: 0 }
-			};
-		}
+	const startMoveBlock = (frameCoords: Coordinates, startCoords: Coordinates): StartMoveParams => {
+		const { x, y } = zoomCorrect(startCoords);
 
-		const { x, y } = zoomCorrect(coords);
-
-		boardStateStore.action = 'movingFrame';
+		boardStateStore.action = 'movingBlock';
 
 		return {
-			moveFrameOffset: { x: x - frame.x, y: y - frame.y },
+			moveFrameOffset: { x: x - frameCoords.x, y: y - frameCoords.y },
 			moveXDirection: null,
 			startMoveCoords: {
-				x: frame.x,
-				y: frame.y
+				x: frameCoords.x,
+				y: frameCoords.y
 			}
 		} satisfies StartMoveParams;
+	};
+
+	const getBlock = () => {
+		let block: Comment | Frame | undefined;
+
+		if (movingBlockStore.type === 'frame') {
+			block = find(boardFramesStore.frames, { frameId: movingBlockStore.id! });
+		} else {
+			block = find(boardCommentsStore.comments, { commentId: movingBlockStore.id! });
+		}
+
+		return block;
 	};
 
 	const handleMouseDown = (
@@ -90,35 +97,42 @@
 
 		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
 
-		if (((isMouse && button === 0) || !isMouse) && movingFrameStore.frameId) {
-			const frame = find(boardFramesStore.frames, { frameId: movingFrameStore.frameId });
+		if (((isMouse && button === 0) || !isMouse) && movingBlockStore.id) {
+			const block = getBlock();
 
-			if (!frame) return;
+			if (!block) return;
 
-			startMoveData = startMoveFrame(frame, { x, y });
+			startMoveData = startMoveBlock({ x: block.x, y: block.y }, { x, y });
 		}
 	};
 
 	const handleClick = (coords: Coordinates) => {
-		if (isAdding() && addFrameOffsetStore.x) {
+		if (isAdding() && addBlockOffsetStore.x) {
 			const { x, y } = zoomCorrect(coords);
 
-			addFrame({
-				x: x - DEFAULT_FRAME_SIZE.width / 2,
-				y: y - DEFAULT_FRAME_SIZE.height / 2
-			});
+			if (boardStateStore.mode === 'addingComment') {
+				addComment({
+					x: x - DEFAULT_BLOCK_WIDTH / 2,
+					y: y - DEFAULT_COMMENT_HEIGHT / 2
+				});
+			} else {
+				addFrame({
+					x: x - DEFAULT_BLOCK_WIDTH / 2,
+					y: y - DEFAULT_FRAME_HEIGHT / 2
+				});
+			}
 		}
 	};
 
 	const handleMouseUp = () => {
-		if (boardStateStore.action === 'movingFrame') {
-			if (!movingFrameStore.frameId) return;
+		if (boardStateStore.action === 'movingBlock') {
+			if (!movingBlockStore.id) return;
 
-			const frame = find(boardFramesStore.frames, { frameId: movingFrameStore.frameId });
+			const block = getBlock();
 
-			if (frame) {
-				frame.x = Math.round(frame.x);
-				frame.y = Math.round(frame.y);
+			if (block) {
+				block.x = Math.round(block.x);
+				block.y = Math.round(block.y);
 			}
 
 			changesHistoryStore.add('Перемещение блока', ArrowsPointingIn);
@@ -126,7 +140,9 @@
 
 		if (boardStateStore.action) {
 			boardStateStore.action = null;
-			movingFrameStore.frameId = null;
+
+			movingBlockStore.id = null;
+			movingBlockStore.type = null;
 
 			boardEventsStore.save();
 		}
@@ -154,10 +170,8 @@
 				boardFramesStore.frames[0].x === 0 &&
 				boardFramesStore.frames[0].y === 0
 			) {
-				boardFramesStore.frames[0].x =
-					boardParamsStore.width / 2 - DEFAULT_FRAME_SIZE.width / 2;
-				boardFramesStore.frames[0].y =
-					boardParamsStore.height / 2 - DEFAULT_FRAME_SIZE.height / 2;
+				boardFramesStore.frames[0].x = boardParamsStore.width / 2 - DEFAULT_BLOCK_WIDTH / 2;
+				boardFramesStore.frames[0].y = boardParamsStore.height / 2 - DEFAULT_FRAME_HEIGHT / 2;
 			}
 			changesHistoryStore.init(boardFramesStore.frames);
 		}, 0);

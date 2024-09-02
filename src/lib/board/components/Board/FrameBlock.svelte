@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { movingBlockStore } from '$board/stores/blocks.svelte';
 	import {
 		boardFramesStore,
 		connectionStartStore,
-		movingFrameStore,
 		selectedFrameStore
 	} from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
@@ -21,8 +21,8 @@
 	import { preventDefault } from '$lib/utils/eventsModificators';
 
 	import { connectedWithStart, setSelectedFrame } from '../methods.svelte';
-	import Choices from './Frame/Choices.svelte';
-	import Header from './Frame/Header.svelte';
+	import Choices from './FrameBlock/Choices.svelte';
+	import Header from './FrameBlock/Header.svelte';
 
 	let {
 		frame
@@ -38,7 +38,8 @@
 		}
 
 		if (!readonlyModeStore.isEnabled) {
-			movingFrameStore.frameId = frame.frameId;
+			movingBlockStore.id = frame.frameId;
+			movingBlockStore.type = 'frame';
 		}
 
 		if (panelStatesStore.id !== `frame-${frame.frameId}`) {
@@ -76,7 +77,9 @@
 		currentThemeClass(clm('hover:!bg-emerald-800'), clm('hover:!bg-emerald-200'))
 	);
 	let style = $derived([transform({ x, y }), `z-index: ${frame.frameId}`].join(';'));
-	let isDragging = $derived(movingFrameStore.frameId === frame.frameId);
+	let isDragging = $derived(
+		movingBlockStore.type === 'frame' && movingBlockStore.id === frame.frameId
+	);
 	let isSelected = $derived(selectedFrameStore.frameId === frame.frameId);
 	let isSelectedBindingChoice = $derived(
 		isBinding() &&

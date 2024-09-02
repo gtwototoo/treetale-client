@@ -6,7 +6,7 @@
 
 	import type { Coordinates } from '$lib/types';
 
-	import { DEFAULT_FRAME_SIZE } from '$lib/constants/index';
+	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants/index';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { connectedWithStart } from '../methods.svelte';
@@ -44,14 +44,14 @@
 			x: calculateCoordinates(
 				coordinates.x,
 				offset.x - (isHorizontal ? difference : 0),
-				DEFAULT_FRAME_SIZE.width,
+				DEFAULT_BLOCK_WIDTH,
 				scale,
 				radius
 			),
 			y: calculateCoordinates(
 				coordinates.y,
 				offset.y - (!isHorizontal ? difference : 0),
-				DEFAULT_FRAME_SIZE.height,
+				DEFAULT_FRAME_HEIGHT,
 				scale,
 				radius
 			)

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { MouseEventHandler } from 'svelte/elements';
-
-	import { addFrameOffsetStore } from '$board/stores/frames.svelte';
+	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
 	import { boardStateStore, isAdding, zoomCorrect } from '$board/stores/index.svelte';
-	import { Plus, XMark } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { ChatBubbleBottomCenter, RectangleStack, XMark } from 'svelte-heros-v2';
+	import { Button, FormSplit, Icon } from 'treetale-ui';
+
+	import type { Coordinates } from '$lib/types';
 
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
@@ -13,12 +13,10 @@
 		boardStateStore.mode = 'view';
 	};
 
-	const enableAddFrameMode: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement> = (e) => {
-		const { x, y } = e;
+	const enableAddMode = (coords: Coordinates, type: 'comment' | 'frame') => {
+		addBlockOffsetStore.set(zoomCorrect(coords));
 
-		addFrameOffsetStore.set(zoomCorrect({ x, y }));
-
-		boardStateStore.mode = 'adding';
+		boardStateStore.mode = type === 'frame' ? 'addingFrame' : 'addingComment';
 	};
 
 	let greenBackgroundColor = $derived(
@@ -47,12 +45,22 @@
 		<p class="max-sm:hidden">Отмена</p>
 	</Button>
 {:else}
-	<Button
-		class={clm('w-64 justify-center text-emerald-500 max-sm:w-24', greenBackgroundColor)}
-		onclick={enableAddFrameMode}
-		size="lg"
-	>
-		<Icon class="size-6 sm:hidden" this={Plus} />
-		<p class="max-sm:hidden">Новый блок</p>
-	</Button>
+	<FormSplit>
+		<Button
+			class={clm('w-32 justify-center text-emerald-500 max-sm:w-24', greenBackgroundColor)}
+			onclick={({ x, y }) => enableAddMode({ x, y }, 'frame')}
+			size="lg"
+		>
+			<Icon class="size-6 sm:hidden" this={RectangleStack} />
+			<p class="max-sm:hidden">Блок</p>
+		</Button>
+		<Button
+			class={clm('w-32 justify-center text-emerald-500 max-sm:w-24', greenBackgroundColor)}
+			onclick={({ x, y }) => enableAddMode({ x, y }, 'comment')}
+			size="lg"
+		>
+			<Icon class="size-6 sm:hidden" this={ChatBubbleBottomCenter} />
+			<p class="max-sm:hidden">Заметка</p>
+		</Button>
+	</FormSplit>
 {/if}

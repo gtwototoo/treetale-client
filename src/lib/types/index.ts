@@ -135,6 +135,11 @@ export interface Choice {
 	text: string;
 }
 
+export interface Comment extends Coordinates, Sizes {
+	commentId: number;
+	text: string;
+}
+
 export interface Frame extends Coordinates, Pick<Sizes, 'height'> {
 	choices: Choice[];
 	frameId: number;

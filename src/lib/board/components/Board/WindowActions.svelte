@@ -36,7 +36,7 @@
 				(document.activeElement as HTMLDivElement).isContentEditable);
 
 		const switchAddFrameMode = () => {
-			boardStateStore.mode = isAdding() ? 'view' : 'adding';
+			boardStateStore.mode = isAdding() ? 'view' : 'addingFrame';
 		};
 
 		const enableOneDirectionMode = () => {

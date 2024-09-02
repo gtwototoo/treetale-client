@@ -1,7 +1,8 @@
-import type { Coordinates, Frame, Note, Story, Variable } from '.';
+import type { Comment, Coordinates, Frame, Note, Story, Variable } from '.';
 
 export interface StorySchema extends Story {
 	[index: string]: Coordinates | boolean | number | string | unknown[];
+	comments: Comment[];
 	darkTheme: boolean;
 	frames: Frame[];
 	imageUrl: string;

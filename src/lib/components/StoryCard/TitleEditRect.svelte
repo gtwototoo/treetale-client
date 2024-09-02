@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { MouseEventHandler } from 'svelte/elements';
+	import type { MouseEventHandler, TouchEventHandler } from 'svelte/elements';
 
 	import clamp from 'lodash/clamp';
 
@@ -24,6 +24,13 @@
 	let moving = $state(false);
 	let offset = $state({ x: 0, y: 0 });
 
+	const handleTouchStart: TouchEventHandler<HTMLDivElement> = (e) => {
+		startOffset.x = e.touches[0].clientX - offset.x;
+		startOffset.y = e.touches[0].clientY - offset.y;
+
+		moving = true;
+	};
+
 	const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		startOffset.x = e.x - offset.x;
 		startOffset.y = e.y - offset.y;
@@ -31,7 +38,7 @@
 		moving = true;
 	};
 
-	const handleMouseUp: MouseEventHandler<HTMLDivElement> = () => {
+	const handleMouseUp = () => {
 		moving = false;
 	};
 
@@ -51,6 +58,8 @@
 	style="transform: translate({isImage ? offset.x : 0}px, {isImage ? offset.y : 0}px);"
 	onmouseup={handleMouseUp}
 	onmousemove={handleMouseMove}
+	ontouchstart={handleTouchStart}
+	ontouchend={handleMouseUp}
 	role="button"
 	tabindex="0"
 >

@@ -1,45 +1,7 @@
-import type { Choice, Coordinates, Frame } from '$lib/types';
-
-import { DEFAULT_FRAME_SIZE } from '$lib/constants';
-
-const getAddFrameOffset = () => {
-	let x = $state<Coordinates['x']>(0);
-	let y = $state<Coordinates['y']>(0);
-
-	const set = (value: Coordinates) => {
-		x = value.x;
-		y = value.y;
-	};
-
-	const clear = () => {
-		x = 0;
-		y = 0;
-	};
-
-	return {
-		clear,
-		set,
-		get x() {
-			return x;
-		},
-		get y() {
-			return y;
-		}
-	};
-};
+import type { Choice, Frame } from '$lib/types';
 
 const getBoardFrames = () => {
 	let frames = $state<Frame[]>([]);
-
-	const init = (data: Frame[]) => {
-		data.map((frame) => {
-			const height = DEFAULT_FRAME_SIZE.height + 37 * frame.choices.length - 1;
-
-			return [{ ...frame, height }];
-		});
-
-		frames = data;
-	};
 
 	return {
 		get frames() {
@@ -47,25 +9,11 @@ const getBoardFrames = () => {
 		},
 		set frames(updatedFrames: Frame[]) {
 			frames = [...updatedFrames];
-		},
-		init
-	};
-};
-
-const getSelectedFrame = () => {
-	let frameId = $state<null | number>(null);
-
-	return {
-		get frameId() {
-			return frameId;
-		},
-		set frameId(value) {
-			frameId = value;
 		}
 	};
 };
 
-const getMovingFrame = () => {
+const getSelectedFrame = () => {
 	let frameId = $state<null | number>(null);
 
 	return {
@@ -104,8 +52,6 @@ const getConnectionStart = () => {
 	};
 };
 
-export const movingFrameStore = getMovingFrame();
 export const connectionStartStore = getConnectionStart();
 export const selectedFrameStore = getSelectedFrame();
 export const boardFramesStore = getBoardFrames();
-export const addFrameOffsetStore = getAddFrameOffset();

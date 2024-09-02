@@ -5,7 +5,12 @@
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
 	import { boardFramesStore, selectedFrameStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import {
+		boardEventsStore,
+		boardParamsStore,
+		boardStateStore,
+		readonlyModeStore
+	} from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -14,12 +19,21 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 	import reject from 'lodash/reject';
-	import { ArrowLeft, MusicalNote, Photo, Plus, RectangleStack, Trash } from 'svelte-heros-v2';
+	import {
+		ArrowLeft,
+		CursorArrowRipple,
+		MusicalNote,
+		Photo,
+		Plus,
+		RectangleStack,
+		Trash
+	} from 'svelte-heros-v2';
 	import { Button, Contenteditable, FormSplit, Icon, Input, Popover } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
+	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
 	import { FRAMES_FOLDER } from '$lib/constants/s3forders';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
@@ -188,6 +202,14 @@
 		}
 	};
 
+	const setToCoordinates = () => {
+		boardStateStore.offset.x =
+			boardParamsStore.width / 2 -
+			(frame.x + DEFAULT_BLOCK_WIDTH / 2) * (boardStateStore.zoom / 100);
+		boardStateStore.offset.y =
+			boardParamsStore.height / 2 - (frame.y + frame.height / 2) * (boardStateStore.zoom / 100);
+	};
+
 	$effect(() => {
 		const prevFrames = findPrevFrames(boardFramesStore.frames, frameId);
 
@@ -223,28 +245,33 @@
 			или добавить
 		</p>
 	</InvisibleDrop>
-	<FormSplit class="w-full">
-		<Input
-			class="flex-1 !text-center"
-			number
-			oninput={setX}
-			max={10000}
-			min={-10000}
-			placeholder="x"
-			readonly={readonlyModeStore.isEnabled}
-			value={`${Math.round(x)}`}
-		/>
-		<Input
-			class="flex-1 !text-center"
-			number
-			oninput={setY}
-			max={10000}
-			min={-10000}
-			placeholder="y"
-			readonly={readonlyModeStore.isEnabled}
-			value={`${Math.round(y)}`}
-		/>
-	</FormSplit>
+	<div class="flex gap-2">
+		<FormSplit class="w-full">
+			<Input
+				class="flex-1 !text-center"
+				number
+				oninput={setX}
+				max={10000}
+				min={-10000}
+				placeholder="x"
+				readonly={readonlyModeStore.isEnabled}
+				value={`${Math.round(x)}`}
+			/>
+			<Input
+				class="flex-1 !text-center"
+				number
+				oninput={setY}
+				max={10000}
+				min={-10000}
+				placeholder="y"
+				readonly={readonlyModeStore.isEnabled}
+				value={`${Math.round(y)}`}
+			/>
+		</FormSplit>
+		<Button onclick={setToCoordinates} class="p-2 text-text hover:bg-contrast-7">
+			<Icon this={CursorArrowRipple} class="size-6" />
+		</Button>
+	</div>
 	<table class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1">
 		<tbody>
 			<tr>
