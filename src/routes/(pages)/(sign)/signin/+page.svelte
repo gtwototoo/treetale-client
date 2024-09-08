@@ -68,7 +68,9 @@
 			<form class="flex w-full flex-col gap-3" method="POST" onsubmit={handleSignIn}>
 				<Input
 					bind:value
-					class="adaptive-font adaptive-padding w-full"
+					oninput={() => (result = null)}
+					class="adaptive-font adaptive-padding w-full bg-contrast hover:bg-main-10"
+					focusClass="bg-main-10"
 					placeholder="Почта или логин"
 				/>
 				{#if result !== null}
