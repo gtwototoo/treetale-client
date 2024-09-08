@@ -44,6 +44,13 @@ export interface ConnectPath {
 	line: string;
 }
 
+export interface FormatValues {
+	description: string;
+	icon: Component;
+	id: StoryFormat;
+	title: string;
+}
+
 export interface Genre {
 	icon: Component;
 	id: string;

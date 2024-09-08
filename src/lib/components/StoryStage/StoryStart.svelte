@@ -4,6 +4,7 @@
 
 	import type { Frame, Progress, Story, User } from '$lib/types';
 
+	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { formatDate } from '$lib/utils/date';
@@ -31,12 +32,13 @@
 		updated: number;
 	} = $props();
 
-	let { description, genre: genreId, storyId, tags, title } = $derived(story);
+	let { description, format: formatId, genre: genreId, storyId, tags, title } = $derived(story);
 	let genre = $derived(find(GENRES_LIST, { id: genreId })!);
+	let format = $derived(find(STORY_FORMATS, { id: formatId })!);
 </script>
 
 <div class="flex w-full flex-col gap-3 max-md:items-center">
-	<ActionButtons {genre} {storyId} />
+	<ActionButtons {genre} {storyId} {format} />
 	<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4 max-md:text-center">
 		{title}
 	</h1>

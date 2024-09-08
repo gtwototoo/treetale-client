@@ -5,16 +5,18 @@
 	import { DocumentDuplicate } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import type { Genre } from '$lib/types';
+	import type { FormatValues, Genre } from '$lib/types';
 
 	import { clm } from '$lib/utils/classMerge';
 
 	type CopyState = 'error' | 'success' | null;
 
 	let {
+		format,
 		genre,
 		storyId
 	}: {
+		format: FormatValues;
 		genre: Genre;
 		storyId: number;
 	} = $props();
@@ -41,6 +43,7 @@
 
 	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/${storyId}`);
 	let GenreIcon = $derived(genre.icon);
+	let FormatIcon = $derived(format.icon);
 
 	$effect(() => {
 		if (copyState) {
@@ -59,6 +62,10 @@
 	<Button asLink size="lg" href={`/?genres=${genre.id}`}>
 		<GenreIcon class="size-6" />
 		<p>{genre.title}</p>
+	</Button>
+	<Button asLink size="lg" href={`/?format=${format.id}`}>
+		<FormatIcon class="size-6" />
+		<p>{format.title}</p>
 	</Button>
 	<Button size="lg" onclick={handleCopyLink}>
 		<Icon

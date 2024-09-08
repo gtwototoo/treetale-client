@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Component, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	import { deleteStory, updateInfomation } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
@@ -23,11 +23,9 @@
 
 	import type { RGB, StoryFormat } from '$lib/types';
 
-	import Canvas from '$lib/components/Icons/Format/Canvas.svelte';
-	import Frames from '$lib/components/Icons/Format/Frames.svelte';
-	import Novella from '$lib/components/Icons/Format/Novella.svelte';
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
@@ -124,34 +122,6 @@
 		});
 	};
 
-	interface FormatValues {
-		description: string;
-		icon: Component;
-		id: StoryFormat;
-		title: string;
-	}
-
-	const storyFormats: FormatValues[] = [
-		{
-			description: 'Блоки будут следовать друг за другом в виде ленты последовательных событий',
-			icon: Canvas,
-			id: 'canvas',
-			title: 'Полотно'
-		},
-		{
-			description: 'На странице будет отображаться только текущий активный блок',
-			icon: Frames,
-			id: 'frames',
-			title: 'Фреймы'
-		},
-		{
-			description: 'Изображение на весь экран, а текст и варианты выборов будут снизу',
-			icon: Novella,
-			id: 'novella',
-			title: 'Новелла'
-		}
-	];
-
 	onDestroy(() => {
 		if (timer) {
 			clearTimeout(timer);
@@ -159,7 +129,7 @@
 	});
 
 	let genre = $derived(find(GENRES_LIST, { id: storyInfoStore.info?.genre || 'adventure' }))!;
-	let format = $derived(find(storyFormats, { id: storyInfoStore.info?.format || 'canvas' }))!;
+	let format = $derived(find(STORY_FORMATS, { id: storyInfoStore.info?.format || 'canvas' }))!;
 
 	let CurrentGenreIcon = $derived(genre.icon);
 	let CurrentStoryFormatIcon = $derived(format.icon);
@@ -181,7 +151,7 @@
 					</Button>
 				{/snippet}
 				<div class="flex w-96 flex-wrap gap-1 p-2">
-					{#each storyFormats as { description, icon: FormatIcon, id, title } (id)}
+					{#each STORY_FORMATS as { description, icon: FormatIcon, id, title } (id)}
 						<Button
 							onclick={() => switchFormat(id)}
 							class={clm(

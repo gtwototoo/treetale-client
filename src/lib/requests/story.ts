@@ -1,6 +1,6 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { Searched } from '$lib/types';
+import type { Searched, StoryFormat } from '$lib/types';
 import type { FetchResponse } from '$lib/types/response';
 
 import { fetchGet, fetchPut } from '.';
@@ -17,13 +17,24 @@ export const createStory = async () => {
 	return await fetchPut<CreateStoryResponse>(`${PUBLIC_TREETALE_API_URL}/stories/create`);
 };
 
-export const searchStories = async (row: string, genres: string[]) => {
+export const searchStories = async (row: string, genres: string[], format: StoryFormat | null) => {
+	type SearchParams = {
+		format?: StoryFormat;
+		genres: string;
+		row: string;
+	};
 	type SearchedResponse = FetchResponse<Searched>;
 
-	const query = new URLSearchParams({
+	const params: SearchParams = {
 		genres: genres.join(','),
 		row
-	}).toString();
+	};
+
+	if (format) {
+		params.format = format;
+	}
+
+	const query = new URLSearchParams(params).toString();
 
 	return await fetchGet<SearchedResponse>(`${PUBLIC_TREETALE_API_URL}/stories/search?${query}`);
 };

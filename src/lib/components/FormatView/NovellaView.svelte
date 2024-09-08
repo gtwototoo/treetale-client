@@ -9,8 +9,8 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace, correctWhitespace } from '$lib/utils/text';
 
-	import Choice from '../ReadFrame/Choice.svelte';
 	import { enabledChoice, setChoice } from '../methods.svelte';
+	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
 		lastFrame,

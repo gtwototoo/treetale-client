@@ -5,7 +5,7 @@
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 	import { Button, type HeroIconComponent, Icon, Input, Loading } from 'treetale-ui';
 
-	import type { Searched } from '$lib/types';
+	import type { Searched, StoryFormat } from '$lib/types';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Category from '$lib/components/Category.svelte';
@@ -23,11 +23,13 @@
 
 	let value = $state('');
 	let searchedGenres = $state<string[]>([]);
+	let searchedFormat = $state<StoryFormat | null>(null);
 	let searched = $state<Searched | null>(null);
 	let loading = $state(false);
 	let timer = $state<number>();
 
 	const genresSearchParams = $page.url.searchParams.get('genres')?.split(',');
+	const formatSearchParams = $page.url.searchParams.get('format');
 	const stringSearchParams = $page.url.searchParams.get('string');
 
 	bodyBackgroundColorStore.color = DEFAULT_COLOR;
@@ -53,7 +55,7 @@
 
 		loading = true;
 
-		if (!searchedGenres.length && !value) {
+		if (!searchedGenres.length && !value && !searchedFormat) {
 			searched = null;
 			loading = false;
 
@@ -62,7 +64,7 @@
 
 		timer = window.setTimeout(async () => {
 			try {
-				const { message } = await searchStories(value, searchedGenres);
+				const { message } = await searchStories(value, searchedGenres, searchedFormat);
 
 				searched = { authors: message!.authors, stories: message!.stories };
 			} catch (error) {
@@ -84,8 +86,11 @@
 		if (genresSearchParams) {
 			searchedGenres = genresSearchParams;
 		}
+		if (formatSearchParams) {
+			searchedFormat = formatSearchParams as StoryFormat;
+		}
 
-		if (value || searchedGenres.length) {
+		if (value || searchedGenres.length || searchedFormat) {
 			searching();
 		}
 	});
@@ -108,32 +113,36 @@
 		<MainStatistic statistic={data.statistic} />
 		{#if data.categories.length}
 			<div class="flex w-full flex-col items-center gap-4 px-4">
-				<h1 class="w-full select-none py-4 text-center leading-9 text-text">Список историй</h1>
+				<h1 class="adaptive-font-upper w-full select-none text-center leading-tight text-text">
+					Список историй
+				</h1>
 				<Input
 					bind:value
-					class="w-full max-w-4xl bg-white p-4 text-2xl hover:bg-main-10"
+					class="adaptive-font-upper w-full max-w-2xl bg-white p-4 hover:bg-main-10"
 					oninput={handleInput}
 					placeholder="Поиск"
 					size="lg"
 				>
 					{#snippet left()}
 						<Icon
-							class="pointer-events-none ml-3 mr-4 size-8 shrink-0 text-gray-800 *:stroke-2"
+							class="pointer-events-none mx-3 size-8 shrink-0 text-gray-800 *:stroke-2 max-md:mx-1 max-md:size-6"
 							this={loading ? Loading : MagnifyingGlass}
 						/>
 					{/snippet}
 				</Input>
-				<div class="flex w-full flex-wrap items-center justify-center gap-3">
+				<div
+					class="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3 max-md:gap-1"
+				>
 					{#each GENRES_LIST as { icon: GenreIcon, id, title }}
 						<Button
 							class={clm(
-								'h-20 w-24 flex-col justify-center gap-1 bg-main-50 hover:bg-main-70 max-sm:flex-1',
+								'h-20 w-24 flex-col justify-center gap-1 bg-main-50 py-0 hover:bg-main-70 max-md:h-16 max-sm:flex-1',
 								searchedGenres.includes(id) && 'bg-main'
 							)}
 							onclick={() => switchGenre(id)}
 							size="lg"
 						>
-							<GenreIcon class="size-8" />
+							<GenreIcon class="size-8 max-md:size-6" />
 							<p class="text-xs">{title}</p>
 						</Button>
 					{/each}

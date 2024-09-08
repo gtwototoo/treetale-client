@@ -12,8 +12,8 @@
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	import Choice from '../ReadFrame/Choice.svelte';
 	import { enabledChoice, setChoice, updateCurrentVarsValues } from '../methods.svelte';
+	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
 		class: classname,
@@ -71,12 +71,12 @@
 				{#if availableChoicesCount}
 					{#each frame.choices as choice (choice.choiceId)}
 						{#if enabledChoice(frame.modificators, choice)}
-							<FormSplit vertical>
+							<FormSplit vertical class="rounded-lg bg-main-60 ring-2 ring-main-60">
 								{#if choice.asInput}
 									<Contenteditable
-										class="adaptive-font adaptive-padding bg-main-40 hover:bg-main-60"
-										focusClass="bg-main-60"
-										placeholder={choice.inputText}
+										class="adaptive-font adaptive-padding bg-main-20 hover:bg-main-40"
+										focusClass="bg-main-40"
+										placeholder={choice.inputText || 'Ввод текста'}
 									/>
 								{/if}
 								<Choice

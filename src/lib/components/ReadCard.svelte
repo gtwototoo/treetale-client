@@ -34,7 +34,10 @@
 
 <div
 	bind:this={readCard}
-	class={clm('flex w-full max-w-screen-lg flex-col items-start gap-6 text-left', classname)}
+	class={clm(
+		'flex w-full max-w-screen-lg flex-col items-start gap-6 text-left font-RobotoSlab',
+		classname
+	)}
 >
 	<div class="flex w-full flex-col gap-4 border-l-2 border-main px-4 text-text">
 		{#if src && !errorLoad}
