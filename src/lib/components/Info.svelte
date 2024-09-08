@@ -7,7 +7,7 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
 
-	import ProfileLink from './ProfileLink.svelte';
+	import ProfileLink from './StoryCard/ProfileLink.svelte';
 
 	let {
 		author,

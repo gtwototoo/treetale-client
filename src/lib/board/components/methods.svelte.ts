@@ -37,6 +37,20 @@ export const connectedWithStart = (frameId: number) => {
 	return checkConnectedWithStart(frameId);
 };
 
+export const addChoice = (frame: Frame) => {
+	const lastChoiceId = last(frame.choices)?.choiceId || 0;
+
+	frame.choices.push({
+		asInput: false,
+		choiceId: lastChoiceId + 1,
+		frameId: null,
+		inputText: '',
+		text: ''
+	});
+
+	changesHistoryStore.add('Добавление выбора', Plus);
+};
+
 export const addComment = ({ x, y }: Coordinates) => {
 	const lastCommentId = last(boardCommentsStore.comments)?.commentId || 0;
 

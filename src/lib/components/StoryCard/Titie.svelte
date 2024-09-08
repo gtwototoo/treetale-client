@@ -78,20 +78,22 @@
 		class="pointer-events-none absolute size-auto"
 		xmlns="http://www.w3.org/2000/svg"
 	>
-		<text
-			use:calculateTitleWrap
-			x="50%"
-			y="50%"
-			text-rendering="optimizeSpeed"
-			text-anchor="middle"
-			class={clm(
-				'font-RobotoSlab text-3xl font-black uppercase',
-				!ready && 'invisible -z-10',
-				color
-			)}
-		>
-			{title || 'Без названия'}
-		</text>
+		{#key title}
+			<text
+				use:calculateTitleWrap
+				x="50%"
+				y="50%"
+				text-rendering="optimizeSpeed"
+				text-anchor="middle"
+				class={clm(
+					'font-RobotoSlab text-3xl font-black uppercase',
+					!ready && 'invisible -z-10',
+					color
+				)}
+			>
+				{title || 'Без названия'}
+			</text>
+		{/key}
 	</svg>
 </TitleEditRect>
 

@@ -20,14 +20,10 @@ export interface StartConnectParams {
 	frameId: number;
 }
 
-export interface StoryEditableInfo {
-	color: RGB;
-	description: string;
-	genre: string;
-	imageUrl?: null | string;
-	tags: StoryTag[];
-	title: string;
-}
+export type StoryEditableInfo = Pick<
+	Story,
+	'color' | 'description' | 'format' | 'genre' | 'tags' | 'title'
+>;
 
 export interface User {
 	color: RGB | null;
@@ -60,10 +56,13 @@ export type StoryTag = string;
 
 export type StoryStatus = 'draft' | 'published' | 'review';
 
+export type StoryFormat = 'canvas' | 'frames' | 'novella';
+
 export interface Story {
 	color: RGB;
 	created: number;
 	description: string;
+	format: StoryFormat;
 	genre: string;
 	imageUrl: null | string;
 	likes: number[];
@@ -132,6 +131,7 @@ export interface Choice {
 	asInput: boolean;
 	choiceId: number;
 	frameId: null | number;
+	inputText?: string;
 	text: string;
 }
 

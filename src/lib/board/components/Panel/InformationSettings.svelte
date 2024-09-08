@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { type Component, onDestroy } from 'svelte';
 
 	import { deleteStory, updateInfomation } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
@@ -9,21 +9,24 @@
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import { notesHighlight, variablesHighlight } from '$board/utils/editing';
 	import find from 'lodash/find';
-	import { Cloud, PaintBrush, Photo } from 'svelte-heros-v2';
+	import { Cloud, PaintBrush } from 'svelte-heros-v2';
 	import {
 		Button,
 		ColorPicker,
 		Contenteditable,
 		FormSplit,
 		Icon,
-		Image,
 		Input,
 		InputTags,
 		Popover
 	} from 'treetale-ui';
 
-	import type { RGB } from '$lib/types';
+	import type { RGB, StoryFormat } from '$lib/types';
 
+	import Canvas from '$lib/components/Icons/Format/Canvas.svelte';
+	import Frames from '$lib/components/Icons/Format/Frames.svelte';
+	import Novella from '$lib/components/Icons/Format/Novella.svelte';
+	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -56,12 +59,13 @@
 				return;
 			}
 
-			const { color, description, genre, storyId, tags, title } = storyInfoStore.info;
+			const { color, description, format, genre, storyId, tags, title } = storyInfoStore.info;
 
 			try {
 				await updateInfomation(storyId, {
 					color,
 					description,
+					format,
 					genre,
 					tags,
 					title
@@ -83,6 +87,14 @@
 		if (!storyInfoStore.info) return;
 
 		storyInfoStore.info.genre = id;
+
+		checkUpdates();
+	};
+
+	const switchFormat = (id: StoryFormat) => {
+		if (!storyInfoStore.info) return;
+
+		storyInfoStore.info.format = id;
 
 		checkUpdates();
 	};
@@ -112,6 +124,34 @@
 		});
 	};
 
+	interface FormatValues {
+		description: string;
+		icon: Component;
+		id: StoryFormat;
+		title: string;
+	}
+
+	const storyFormats: FormatValues[] = [
+		{
+			description: 'Блоки будут следовать друг за другом в виде ленты последовательных событий',
+			icon: Canvas,
+			id: 'canvas',
+			title: 'Полотно'
+		},
+		{
+			description: 'На странице будет отображаться только текущий активный блок',
+			icon: Frames,
+			id: 'frames',
+			title: 'Фреймы'
+		},
+		{
+			description: 'Изображение на весь экран, а текст и варианты выборов будут снизу',
+			icon: Novella,
+			id: 'novella',
+			title: 'Новелла'
+		}
+	];
+
 	onDestroy(() => {
 		if (timer) {
 			clearTimeout(timer);
@@ -119,95 +159,102 @@
 	});
 
 	let genre = $derived(find(GENRES_LIST, { id: storyInfoStore.info?.genre || 'adventure' }))!;
+	let format = $derived(find(storyFormats, { id: storyInfoStore.info?.format || 'canvas' }))!;
+
 	let CurrentGenreIcon = $derived(genre.icon);
+	let CurrentStoryFormatIcon = $derived(format.icon);
 </script>
 
 {#if storyInfoStore.info}
-	<table class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1">
-		<tbody>
-			<tr>
-				<td>
+	<div class="flex gap-2">
+		<div class="flex w-28 shrink-0 flex-col gap-2 *:h-1/3">
+			<Popover align="center" placeholder="Формат" readonly={readonlyModeStore.isEnabled}>
+				{#snippet button({ onclick })}
 					<Button
-						class={clm(
-							'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
-							storyInfoStore.info?.imageUrl && 'p-1'
-						)}
+						disabled={panelStatesStore.editMode}
+						class="size-full flex-col justify-center gap-3 bg-main-20 text-text hover:bg-main-40"
+						{onclick}
 						size="lg"
-						onclick={handleOpenIllustrationPanel}
 					>
-						{#if storyInfoStore.info?.imageUrl}
-							<Image
-								src={storyInfoStore.info.imageUrl}
-								alt="Мини иллюстрация истории"
-								cover
-								class="flex h-[4.25rem] w-full flex-col rounded-lg"
-							>
-								{#snippet error()}
-									<Icon class="size-8 text-red-500" this={Photo} variation="solid" />
-									<p class="text-xs text-red-500">Ошибка</p>
-								{/snippet}
-							</Image>
-						{:else}
-							<Icon class="size-8" this={Photo} variation="solid" />
-							<p class="text-xs">Иллюстрация</p>
-						{/if}
+						<CurrentStoryFormatIcon class="h-12 w-auto text-main" />
+						<p class="text-xs">{format.title}</p>
 					</Button>
-				</td>
-				<td>
-					<Popover
-						align="center"
+				{/snippet}
+				<div class="flex w-96 flex-wrap gap-1 p-2">
+					{#each storyFormats as { description, icon: FormatIcon, id, title } (id)}
+						<Button
+							onclick={() => switchFormat(id)}
+							class={clm(
+								'gap-3 whitespace-normal p-2 hover:bg-main-40',
+								id === storyInfoStore.info?.format && 'bg-main-20'
+							)}
+						>
+							<FormatIcon class="h-auto w-24 shrink-0 text-main" />
+							<div class="flex flex-col items-start gap-1 text-left">
+								<p class="text-base font-medium">{title}</p>
+								<p class="text-xs">{description}</p>
+							</div>
+						</Button>
+					{/each}
+				</div>
+			</Popover>
+			<Popover align="center" placeholder="Жанр" readonly={readonlyModeStore.isEnabled}>
+				{#snippet button({ onclick })}
+					<Button
 						disabled={panelStatesStore.editMode}
-						placeholder="Жанр"
-						readonly={readonlyModeStore.isEnabled}
+						class="size-full flex-col justify-center gap-3 bg-main-20 text-text hover:bg-main-40"
+						{onclick}
+						size="lg"
 					>
-						{#snippet button({ onclick })}
-							<Button
-								class="w-full flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
-								{onclick}
-								size="lg"
-							>
-								<CurrentGenreIcon class="size-8" />
-								<p class="text-xs">{genre.title}</p>
-							</Button>
-						{/snippet}
-						<div class="flex w-96 flex-wrap gap-1 p-2">
-							{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
-								<Button
-									onclick={() => switchGenre(id)}
-									class="min-w-20 flex-1 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
-								>
-									<GenreIcon class="size-6" />
-									<p class="text-xs">{title}</p>
-								</Button>
-							{/each}
-						</div>
-					</Popover>
-				</td>
-				<td>
-					<ColorPicker
-						color={storyInfoStore.info?.color || DEFAULT_COLOR}
+						<CurrentGenreIcon class="size-10 text-main" />
+						<p class="text-xs">{genre.title}</p>
+					</Button>
+				{/snippet}
+				<div class="flex w-96 flex-wrap gap-1 p-2">
+					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
+						<Button
+							onclick={() => switchGenre(id)}
+							class={clm(
+								'min-w-20 flex-1 flex-col gap-1 text-text hover:bg-main-40',
+								id === storyInfoStore.info?.genre && 'bg-main-20'
+							)}
+						>
+							<GenreIcon class="size-7 text-main" />
+							<p class="text-xs">{title}</p>
+						</Button>
+					{/each}
+				</div>
+			</Popover>
+			<ColorPicker
+				color={storyInfoStore.info?.color || DEFAULT_COLOR}
+				{light}
+				onchange={setColor}
+				align="center"
+				readonly={readonlyModeStore.isEnabled}
+				{saturate}
+			>
+				{#snippet children({ onclick })}
+					<Button
 						disabled={panelStatesStore.editMode}
-						{light}
-						onchange={setColor}
-						align="center"
-						readonly={readonlyModeStore.isEnabled}
-						{saturate}
+						class="size-full flex-col justify-center gap-3 bg-main-20 text-text hover:bg-main-40"
+						{onclick}
+						size="lg"
 					>
-						{#snippet children({ onclick })}
-							<Button
-								class="w-full flex-col gap-1 bg-main text-text hover:bg-main-80"
-								{onclick}
-								size="lg"
-							>
-								<Icon class="size-8" this={PaintBrush} variation="solid" />
-								<p class="text-xs">Цвет темы</p>
-							</Button>
-						{/snippet}
-					</ColorPicker>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+						<Icon class="size-10 text-main" this={PaintBrush} variation="solid" />
+						<p class="text-xs">Цвет темы</p>
+					</Button>
+				{/snippet}
+			</ColorPicker>
+		</div>
+		<Button onclick={handleOpenIllustrationPanel} class="p-0">
+			<Cover
+				imageUrl={storyInfoStore.info.imageUrl}
+				title={storyInfoStore.info.title}
+				icon={CurrentGenreIcon}
+				color={storyInfoStore.info.color}
+			/>
+		</Button>
+	</div>
 	<FormSplit vertical>
 		<Input
 			bind:value={storyInfoStore.info.title}

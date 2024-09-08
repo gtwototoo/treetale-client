@@ -54,7 +54,7 @@
 </script>
 
 <div
-	class="flex size-full cursor-default items-center justify-center"
+	class="flex size-full items-center justify-center"
 	style="transform: translate({isImage ? offset.x : 0}px, {isImage ? offset.y : 0}px);"
 	onmouseup={handleMouseUp}
 	onmousemove={handleMouseMove}

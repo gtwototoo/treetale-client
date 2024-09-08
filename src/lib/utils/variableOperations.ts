@@ -3,9 +3,9 @@ import find from 'lodash/find';
 
 import type {
 	ComparisonOperators,
-	Frame,
 	LogicModificator,
 	MathOperators,
+	Modificator,
 	Variable,
 	VariableExpects
 } from '$lib/types';
@@ -54,8 +54,12 @@ export const doMath = (
 	return `${operations[symbol]}`;
 };
 
-export const choiceModificators = (frame: Frame, choiceId: number, type: 'logic' | 'math') => {
-	return filter(frame.modificators, { choiceId, type });
+export const choiceModificators = (
+	modificators: Modificator[],
+	choiceId: number,
+	type: 'logic' | 'math'
+) => {
+	return filter(modificators, { choiceId, type });
 };
 
 export const checkLogic = (variables: Variable[], logicModificators: LogicModificator[]) => {

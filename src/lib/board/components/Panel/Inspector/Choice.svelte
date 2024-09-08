@@ -43,7 +43,7 @@
 
 		for (const selectedStage of inspectorStore.selectedChoices) {
 			const mathModificators = choiceModificators(
-				frame,
+				frame.modificators,
 				selectedStage.choice.choiceId,
 				'math'
 			) as MathModificator[];
@@ -64,10 +64,10 @@
 	};
 
 	let logicModificators = $derived(
-		choiceModificators(frame, choice.choiceId, 'logic') as LogicModificator[]
+		choiceModificators(frame.modificators, choice.choiceId, 'logic') as LogicModificator[]
 	);
 	let mathModificators = $derived(
-		choiceModificators(frame, choice.choiceId, 'math') as MathModificator[]
+		choiceModificators(frame.modificators, choice.choiceId, 'math') as MathModificator[]
 	);
 	let disabled = $derived(
 		!choice.frameId ||
@@ -102,9 +102,7 @@
 			</p>
 		{/if}
 		<div class="w-full whitespace-normal break-words text-left">
-			{@html choice.asInput
-				? 'Продолжить'
-				: correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
+			{@html correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
 		</div>
 		{#if mathModificators.length}
 			<p class="text-xs text-blue-500">
@@ -125,7 +123,7 @@
 		<Contenteditable
 			bind:html={inputValue}
 			class="flex-1 bg-contrast-7 hover:bg-contrast-5"
-			placeholder={correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
+			placeholder={choice.inputText}
 		/>
 		{@render button()}
 	</FormSplit>

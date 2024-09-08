@@ -6,27 +6,22 @@
 	import { page } from '$app/stores';
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
-	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
 	import { Button } from 'treetale-ui';
 
-	import type { MathModificator } from '$lib/types/index';
-
-	import ReadFrame from '$lib/components/ReadFrame.svelte';
-	import StoryDescription from '$lib/components/StoryDescription.svelte';
+	import CanvasView from '$lib/components/FormatView/CanvasView.svelte';
+	import FramesView from '$lib/components/FormatView/FramesView.svelte';
+	import NovellaView from '$lib/components/FormatView/NovellaView.svelte';
+	import StoryStage from '$lib/components/StoryStage.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import { setChoice } from '$lib/components/methods.svelte.js';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { updateProgress } from '$lib/requests/progress';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { framesStore, fullscreenStore } from '$lib/stores/reading.svelte';
-	import { soundStore } from '$lib/stores/sound.svelte';
+	import { fullscreenStore } from '$lib/stores/reading.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
-	import { choiceModificators, correctToType, doMath } from '$lib/utils/variableOperations';
 
 	let { data } = $props();
-
-	let loadingId = $state<null | number>(null);
 
 	let clonedData = $derived(cloneDeep(data));
 	let { author, frames, progress, story, updated, version } = $derived(clonedData);
@@ -45,12 +40,17 @@
 	const handleKeydown: KeyboardEventHandler<Window> = (e) => {
 		const { code } = e;
 
-		const setFastChoice = () => {
+		const setFastChoice = async () => {
+			if (!$page.data.session) {
+				goto('/signin');
+			}
+
 			const lastFrame = last(data.frames);
 			const correctChoices = lastFrame?.choices.filter((c) => c.frameId);
 
 			if (lastFrame && correctChoices?.length === 1) {
-				setChoice(lastFrame.frameId, lastFrame.choices[0].choiceId);
+				await setChoice(story.storyId, lastFrame.frameId, lastFrame.choices[0].choiceId);
+				await invalidateAll();
 			}
 		};
 
@@ -65,52 +65,6 @@
 		actions[code]();
 	};
 
-	const updateCurrentVarsValues = (frameId: number, choiceId: number) => {
-		const frame = find(framesStore.frames, { frameId });
-
-		if (!frame) return;
-
-		const choice = find(frame?.choices, { choiceId });
-
-		const mathModificators = choiceModificators(frame, choiceId, 'math') as MathModificator[];
-
-		if (!choice || !mathModificators.length) return;
-
-		for (const { symbol, value, variable: name } of mathModificators) {
-			const variableId = findIndex(variablesStore.variables, { name });
-			const { expect } = variablesStore.variables[variableId];
-			const firstValue = variablesStore.variables[variableId].value;
-
-			variablesStore.variables[variableId].value = doMath(
-				correctToType(firstValue, expect),
-				symbol,
-				correctToType(value, expect)
-			);
-		}
-	};
-
-	const setChoice = async (frameId: number, choiceId: number) => {
-		if (!$page.data.session) {
-			goto('/signin');
-		}
-
-		loadingId = choiceId;
-
-		try {
-			await updateProgress(story.storyId, choiceId);
-
-			updateCurrentVarsValues(frameId, choiceId);
-
-			await invalidateAll();
-
-			soundStore.sound?.play();
-		} catch (error) {
-			console.error(error);
-		}
-
-		loadingId = null;
-	};
-
 	const handleFullscreenChange = () => {
 		fullscreenStore.isEnabled = !!document.fullscreenElement;
 	};
@@ -118,6 +72,10 @@
 	const handleFulscreen = async () => {
 		await document.exitFullscreen();
 	};
+
+	let lastFrame = $derived(
+		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId })! : frames?.[0]
+	);
 
 	onMount(() => {
 		bodyBackgroundColorStore.color = story.color.length ? story.color : DEFAULT_COLOR;
@@ -158,40 +116,32 @@
 	class="absolute flex size-full items-start justify-center overflow-auto bg-main-20"
 	id="read-screen"
 >
-	<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
-		{#if storyState === 'started'}
-			<div class="flex w-full flex-col items-center gap-10">
-				<ReadFrame
-					frame={frames?.[0]}
-					onclick={(choiceId) => setChoice(frames?.[0].frameId, choiceId)}
-					onresults={() => (storyState = 'ended')}
-					{loadingId}
-					selectedChoiceId={progress?.[0]?.choiceId}
-				/>
-				{#each progress as { nextFrameId }, key}
-					{@const frame = find(frames, { frameId: nextFrameId })!}
-					<ReadFrame
-						{frame}
-						onclick={(choiceId) => setChoice(frame.frameId, choiceId)}
-						onresults={() => (storyState = 'ended')}
-						{loadingId}
-						selectedChoiceId={progress[key + 1]?.choiceId}
-					/>
-				{/each}
-			</div>
+	{#if storyState === 'started'}
+		{#if story.format === 'novella'}
+			<NovellaView {lastFrame} storyId={story.storyId} />
 		{:else}
-			<StoryDescription
+			<div class="flex min-h-full w-full items-center justify-center px-4 py-20">
+				{#if story.format === 'canvas'}
+					<CanvasView {frames} {progress} storyId={story.storyId} bind:storyState />
+				{:else}
+					<FramesView {lastFrame} storyId={story.storyId} bind:storyState />
+				{/if}
+			</div>
+		{/if}
+	{:else}
+		<div class="flex min-h-full w-full items-center justify-center px-4 py-20">
+			<StoryStage
+				bind:storyState
+				{story}
+				{author}
+				{updated}
 				{frames}
 				{progress}
-				{author}
 				progressVersion={version}
-				{updated}
-				{story}
-				{storyState}
-				onclick={() => (storyState = 'started')}
 			/>
-		{/if}
-	</div>
+		</div>
+	{/if}
+
 	{#if fullscreenStore.isEnabled}
 		<Button
 			class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-30 text-text text-opacity-10 hover:text-opacity-100"

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { pluralize } from 'pluralize-ru-ts';
@@ -12,20 +11,20 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { versionCompare } from '$lib/utils/versionCompare';
 
-	import FrameMini from './StoryDescription/FrameMini.svelte';
+	import FrameMini from './FrameMini.svelte';
 
 	let {
 		choicesCount,
 		endFrame,
-		onclick,
 		progressVersion,
-		story
+		story,
+		storyState = $bindable()
 	}: {
 		choicesCount: number;
 		endFrame: Frame;
-		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 		progressVersion: string;
 		story: Story;
+		storyState: 'begin' | 'ended' | 'started';
 	} = $props();
 
 	type CopyState = 'error' | 'success' | null;
@@ -126,7 +125,7 @@
 	<Button
 		size="lg"
 		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
-		{onclick}
+		onclick={() => (storyState = 'begin')}
 	>
 		В начало
 	</Button>

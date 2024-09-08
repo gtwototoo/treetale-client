@@ -6,7 +6,7 @@
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
 	import { Beaker } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
+	import { Button, Input } from 'treetale-ui';
 
 	import type { PanelProps } from '$lib/types';
 
@@ -45,8 +45,8 @@
 	);
 	let frame = $derived(find(boardFramesStore.frames, { frameId })!);
 	let choice = $derived(find(frame.choices, { choiceId }))!;
-	let logicModificators = $derived(choiceModificators(frame, choiceId, 'logic'));
-	let mathModificators = $derived(choiceModificators(frame, choiceId, 'math'));
+	let logicModificators = $derived(choiceModificators(frame.modificators, choiceId, 'logic'));
+	let mathModificators = $derived(choiceModificators(frame.modificators, choiceId, 'math'));
 </script>
 
 <ShortDescription icon={Beaker}>
@@ -89,6 +89,13 @@
 		</p>
 	{/if}
 </div>
+{#if choice.asInput}
+	<Input
+		placeholder="Надпись внутри поля ввода"
+		bind:value={choice.inputText}
+		oninput={boardEventsStore.save}
+	/>
+{/if}
 {#if logicModificators.length || mathModificators.length}
 	<div class="flex w-full flex-col gap-1">
 		{#if logicModificators.length}

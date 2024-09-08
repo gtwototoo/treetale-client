@@ -14,7 +14,7 @@
 	import { formatDate } from '$lib/utils/date';
 	import { versionCompare } from '$lib/utils/versionCompare';
 
-	import FrameMini from './FrameMini.svelte';
+	import FrameMini from '../FrameMini.svelte';
 
 	let {
 		choicesCount,

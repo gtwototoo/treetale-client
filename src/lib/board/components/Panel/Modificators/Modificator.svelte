@@ -127,7 +127,7 @@
 			align="inset"
 			size="sm"
 			classlist={clm('*:*:justify-center')}
-			bind:value={modificator.symbol}
+			bind:value={modificator.symbol as string}
 			list={symbols[modificator.type]}
 			placeholder=""
 			onchange={boardEventsStore.save}

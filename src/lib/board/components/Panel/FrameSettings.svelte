@@ -17,14 +17,12 @@
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import { findPrevFrames, notesHighlight, variablesHighlight } from '$board/utils/editing';
 	import find from 'lodash/find';
-	import last from 'lodash/last';
 	import reject from 'lodash/reject';
 	import {
 		ArrowLeft,
 		CursorArrowRipple,
 		MusicalNote,
 		Photo,
-		Plus,
 		RectangleStack,
 		Trash
 	} from 'svelte-heros-v2';
@@ -40,7 +38,7 @@
 
 	import ImageUploader from '../ImageUploader.svelte';
 	import SoundUploader from '../SoundUploader.svelte';
-	import { setSelectedFrame } from '../methods.svelte';
+	import { addChoice, setSelectedFrame } from '../methods.svelte';
 	import Choice from './FrameSettings/Choice.svelte';
 	import IllustrationPopover from './IllustrationPopover.svelte';
 
@@ -148,19 +146,6 @@
 
 	const setY: FormEventHandler<HTMLInputElement> = (e) => {
 		frame.y = +(e.target as HTMLInputElement).value;
-	};
-
-	const addChoice = () => {
-		const lastChoiceId = last(frame.choices)?.choiceId || 0;
-
-		frame.choices.push({
-			asInput: false,
-			choiceId: lastChoiceId + 1,
-			frameId: null,
-			text: ''
-		});
-
-		changesHistoryStore.add('Добавление выбора', Plus);
 	};
 
 	const gotoPrevFrame = () => {
@@ -373,7 +358,7 @@
 			{#if !panelStatesStore.editMode}
 				<Button
 					class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
-					onclick={addChoice}
+					onclick={() => addChoice(frame)}
 				>
 					Добавить вариант
 				</Button>

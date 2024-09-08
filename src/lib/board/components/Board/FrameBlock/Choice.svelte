@@ -120,11 +120,11 @@
 	onclick={handleClick}
 	onmousedown={handleMouseDown}
 >
-	{#if choiceModificators(frame, choice.choiceId, 'logic').length}
+	{#if choiceModificators(frame.modificators, choice.choiceId, 'logic').length}
 		<div class="absolute left-1 h-7 w-1 rounded-full !bg-orange-500"></div>
 	{/if}
 	<p class="truncate">{@html text || 'Вариант выбора'}</p>
-	{#if choiceModificators(frame, choice.choiceId, 'math').length}
+	{#if choiceModificators(frame.modificators, choice.choiceId, 'math').length}
 		<div class="absolute right-1 h-7 w-1 rounded-full !bg-blue-500"></div>
 	{/if}
 	<div

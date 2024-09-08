@@ -1,9 +1,7 @@
 <script lang="ts">
+	import { addChoice } from '$board/components/methods.svelte';
 	import { connectionStartStore } from '$board/stores/frames.svelte';
-	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { isBinding, readonlyModeStore } from '$board/stores/index.svelte';
-	import last from 'lodash/last';
-	import { Plus } from 'svelte-heros-v2';
 	import { Button, FormSplit } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
@@ -23,19 +21,6 @@
 		isSelected: boolean;
 		isSelectedBindingChoice: boolean;
 	} = $props();
-
-	const addChoice = () => {
-		const lastChoiceId = last(frame.choices)?.choiceId || 0;
-
-		frame.choices.push({
-			asInput: false,
-			choiceId: lastChoiceId + 1,
-			frameId: null,
-			text: ''
-		});
-
-		changesHistoryStore.add('Добавление выбора', Plus);
-	};
 </script>
 
 <FormSplit vertical>
@@ -45,7 +30,7 @@
 	<Button
 		class="bg-contrast-5 text-text"
 		disabled={(isBinding() && !!connectionStartStore.frameId) || readonlyModeStore.isEnabled}
-		onclick={addChoice}
+		onclick={() => addChoice(frame)}
 		onmousedown={stopPropagation}
 	>
 		Добавить вариант

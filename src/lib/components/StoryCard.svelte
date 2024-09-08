@@ -13,9 +13,9 @@
 	import { collapseValue } from '$lib/utils/number';
 
 	import Adventure from './Icons/Genres/Adventure.svelte';
+	import Info from './Info.svelte';
 	import Cover from './StoryCard/Cover.svelte';
 	import HoverInfo from './StoryCard/HoverInfo.svelte';
-	import Info from './StoryCard/Info.svelte';
 
 	let {
 		author,
