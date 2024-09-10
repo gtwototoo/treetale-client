@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Image } from 'treetale-ui';
+	import { Button, Image } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
 
+	import { fullscreenStore } from '$lib/stores/reading.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace, correctWhitespace } from '$lib/utils/text';
@@ -14,10 +15,12 @@
 
 	let {
 		lastFrame,
-		storyId
+		storyId,
+		storyState = $bindable()
 	}: {
 		lastFrame: Frame;
 		storyId: number;
+		storyState: 'begin' | 'ended' | 'started';
 	} = $props();
 
 	let loadingId = $state<null | number>(null);
@@ -40,7 +43,12 @@
 	{#if lastFrame.imageUrl}
 		<Image alt="Иллюстрация" class="size-full text-text" cover src={lastFrame.imageUrl} />
 	{/if}
-	<div class="absolute bottom-0 flex w-full justify-center p-6">
+	<div
+		class={clm(
+			'absolute bottom-0 flex w-full justify-center p-6',
+			fullscreenStore.isEnabled && 'bottom-9'
+		)}
+	>
 		<div
 			class="flex max-h-52 w-full max-w-7xl flex-col gap-4 overflow-auto rounded-xl bg-contrast p-4 text-text"
 		>
@@ -68,6 +76,13 @@
 							</Choice>
 						{/if}
 					{/each}
+				{:else}
+					<Button
+						class="adaptive-font adaptive-padding bg-main-70 font-medium text-text hover:bg-main"
+						onclick={() => (storyState = 'ended')}
+					>
+						Завершить историю
+					</Button>
 				{/if}
 			</div>
 		</div>

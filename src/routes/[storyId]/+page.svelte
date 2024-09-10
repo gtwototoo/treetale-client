@@ -118,7 +118,7 @@
 >
 	{#if storyState === 'started'}
 		{#if story.format === 'novella'}
-			<NovellaView {lastFrame} storyId={story.storyId} />
+			<NovellaView {lastFrame} storyId={story.storyId} bind:storyState />
 		{:else}
 			<div class="flex min-h-full w-full items-center justify-center px-4 py-20">
 				{#if story.format === 'canvas'}
