@@ -78,7 +78,10 @@
 	<div class="flex justify-between">
 		<div class="flex items-center gap-3">
 			<Button
-				class={clm(redBackgroundColorStore.color, 'justify-center px-2.5 py-1 text-red-500')}
+				class={clm(
+					redBackgroundColorStore.color,
+					'pointer-events-auto justify-center px-2.5 py-1 text-red-500'
+				)}
 				onclick={handleDelete}
 				{loading}
 			>
@@ -89,7 +92,11 @@
 				<p>{formatDate(updated)}</p>
 			</div>
 		</div>
-		<Button size="lg" class="adaptive-font bg-main-70 font-medium hover:bg-main" {onclick}>
+		<Button
+			size="lg"
+			class="adaptive-font pointer-events-auto bg-main-70 font-medium hover:bg-main"
+			{onclick}
+		>
 			Продолжить
 		</Button>
 	</div>

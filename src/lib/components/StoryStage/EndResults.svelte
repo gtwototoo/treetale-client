@@ -73,7 +73,7 @@
 
 <div class="flex w-full flex-col gap-3 max-md:items-center">
 	<div class="flex *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">
-		<Button size="lg" onclick={handleCopyLink}>
+		<Button size="lg" onclick={handleCopyLink} class="pointer-events-auto">
 			<Icon
 				this={Share}
 				class={clm(
@@ -121,7 +121,7 @@
 	</div>
 </div>
 <FrameMini frame={endFrame} />
-<div class="flex gap-3 max-md:w-full *:max-md:flex-1">
+<div class="flex gap-3 *:pointer-events-auto max-md:w-full *:max-md:flex-1">
 	<Button
 		size="lg"
 		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"

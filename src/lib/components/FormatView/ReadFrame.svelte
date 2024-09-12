@@ -92,7 +92,7 @@
 					{/each}
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding bg-main-70 font-medium text-text hover:bg-main"
+						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
 						onclick={() => (storyState = 'ended')}
 					>
 						Завершить историю

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { ArrowsPointingOut } from 'svelte-heros-v2';
+	import { ArrowsPointingIn, ArrowsPointingOut } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
@@ -21,14 +21,18 @@
 	// };
 
 	const handleFulscreen = async () => {
-		const readScreen = document.getElementById('read-screen') as HTMLDivElement;
+		if (fullscreenStore.isEnabled) {
+			await document.exitFullscreen();
 
-		try {
-			await readScreen.requestFullscreen();
-
-			fullscreenStore.isEnabled = true;
-		} catch {
 			fullscreenStore.isEnabled = false;
+		} else {
+			try {
+				await document.documentElement.requestFullscreen();
+
+				fullscreenStore.isEnabled = true;
+			} catch {
+				fullscreenStore.isEnabled = false;
+			}
 		}
 	};
 
@@ -39,14 +43,17 @@
 	});
 </script>
 
-<Header>
+<Header class="fixed">
 	{#if fullscreenSupport}
 		<Button
-			class="header-button bg-main-50 text-text hover:bg-main-70"
+			class="header-button pointer-events-auto bg-main-50 text-text hover:bg-main-70"
 			onclick={handleFulscreen}
 			size="lg"
 		>
-			<Icon class="size-6" this={ArrowsPointingOut} />
+			<Icon
+				class="size-6"
+				this={fullscreenStore.isEnabled ? ArrowsPointingIn : ArrowsPointingOut}
+			/>
 		</Button>
 	{/if}
 </Header>

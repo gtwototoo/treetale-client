@@ -78,7 +78,7 @@
 {:else}
 	<Button
 		size="lg"
-		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main max-md:w-full"
+		class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main max-md:w-full"
 		onclick={() => (storyState = 'started')}
 	>
 		Начать историю

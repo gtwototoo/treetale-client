@@ -1,5 +1,18 @@
 import type { Frame } from '$lib/types';
 
+const getInterface = () => {
+	let show = $state(true);
+
+	return {
+		get show() {
+			return show;
+		},
+		set show(value) {
+			show = value;
+		}
+	};
+};
+
 const getFullscreen = () => {
 	let isEnabled = $state(false);
 
@@ -27,4 +40,5 @@ const getAvailableFrames = () => {
 };
 
 export const framesStore = getAvailableFrames();
+export const interfaceStore = getInterface();
 export const fullscreenStore = getFullscreen();

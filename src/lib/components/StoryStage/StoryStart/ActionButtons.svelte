@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { DocumentDuplicate } from 'svelte-heros-v2';
@@ -37,7 +38,9 @@
 		return success;
 	};
 
-	const handleCopyLink = async () => {
+	const handleCopyLink: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement> = async (e) => {
+		e.stopPropagation();
+
 		copyState = (await copyText(textForCopy)) ? 'success' : 'error';
 	};
 
@@ -58,7 +61,7 @@
 	});
 </script>
 
-<div class="flex *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">
+<div class="flex *:pointer-events-auto *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">
 	<Button asLink size="lg" href={`/?genres=${genre.id}`}>
 		<GenreIcon class="size-6" />
 		<p>{genre.title}</p>

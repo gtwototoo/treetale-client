@@ -26,7 +26,7 @@
 </script>
 
 <div class="flex shrink-0 flex-col gap-3 md:w-1/3">
-	<div class="flex gap-2">
+	<div class="flex gap-2 *:pointer-events-auto">
 		<Info
 			{author}
 			{created}

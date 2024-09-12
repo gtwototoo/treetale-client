@@ -7,18 +7,19 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import last from 'lodash/last';
-	import { Button } from 'treetale-ui';
 
 	import CanvasView from '$lib/components/FormatView/CanvasView.svelte';
 	import FramesView from '$lib/components/FormatView/FramesView.svelte';
+	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
 	import NovellaView from '$lib/components/FormatView/NovellaView.svelte';
 	import StoryStage from '$lib/components/StoryStage.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { setChoice } from '$lib/components/methods.svelte.js';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { fullscreenStore } from '$lib/stores/reading.svelte';
+	import { fullscreenStore, interfaceStore } from '$lib/stores/reading.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
+	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 
 	let { data } = $props();
@@ -69,10 +70,6 @@
 		fullscreenStore.isEnabled = !!document.fullscreenElement;
 	};
 
-	const handleFulscreen = async () => {
-		await document.exitFullscreen();
-	};
-
 	let lastFrame = $derived(
 		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId })! : frames?.[0]
 	);
@@ -112,42 +109,40 @@
 
 <SvgGradient />
 
-<div
-	class="absolute flex size-full items-start justify-center overflow-auto bg-main-20"
-	id="read-screen"
->
-	{#if storyState === 'started'}
-		{#if story.format === 'novella'}
-			<NovellaView {lastFrame} storyId={story.storyId} bind:storyState />
-		{:else}
-			<div class="flex min-h-full w-full items-center justify-center px-4 py-20">
-				{#if story.format === 'canvas'}
-					<CanvasView {frames} {progress} storyId={story.storyId} bind:storyState />
-				{:else}
-					<FramesView {lastFrame} storyId={story.storyId} bind:storyState />
-				{/if}
-			</div>
-		{/if}
+{#if storyState === 'started'}
+	{#if story.format === 'novella'}
+		<NovellaView {lastFrame} storyId={story.storyId} bind:storyState />
 	{:else}
-		<div class="flex min-h-full w-full items-center justify-center px-4 py-20">
-			<StoryStage
-				bind:storyState
-				{story}
-				{author}
-				{updated}
-				{frames}
-				{progress}
-				progressVersion={version}
-			/>
+		<div
+			class={clm(
+				'pointer-events-none relative flex min-h-full w-full items-center justify-center px-4 py-20 transition-[padding]',
+				!interfaceStore.show && 'py-4'
+			)}
+		>
+			<InterfaceViewButton />
+			{#if story.format === 'canvas'}
+				<CanvasView {frames} {progress} storyId={story.storyId} bind:storyState />
+			{:else}
+				<FramesView {lastFrame} storyId={story.storyId} bind:storyState />
+			{/if}
 		</div>
 	{/if}
-
-	{#if fullscreenStore.isEnabled}
-		<Button
-			class="fixed bottom-0 left-0 w-full justify-center rounded-none bg-main-30 text-text text-opacity-10 hover:text-opacity-100"
-			onclick={handleFulscreen}
-		>
-			Выйти
-		</Button>
-	{/if}
-</div>
+{:else}
+	<div
+		class={clm(
+			'pointer-events-none relative flex min-h-full w-full items-center justify-center px-4 py-20 transition-[padding]',
+			!interfaceStore.show && 'py-4'
+		)}
+	>
+		<InterfaceViewButton />
+		<StoryStage
+			bind:storyState
+			{story}
+			{author}
+			{updated}
+			{frames}
+			{progress}
+			progressVersion={version}
+		/>
+	</div>
+{/if}

@@ -11,6 +11,7 @@
 	import { correctVariableReplace, correctWhitespace } from '$lib/utils/text';
 
 	import { enabledChoice, setChoice } from '../methods.svelte';
+	import InterfaceViewButton from './InterfaceViewButton.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
@@ -39,13 +40,14 @@
 	);
 </script>
 
-<div class="size-full">
+<div class="pointer-events-none size-full">
+	<InterfaceViewButton />
 	{#if lastFrame.imageUrl}
 		<Image alt="Иллюстрация" class="size-full text-text" cover src={lastFrame.imageUrl} />
 	{/if}
 	<div
 		class={clm(
-			'absolute bottom-0 flex w-full justify-center p-6',
+			'absolute bottom-0 flex w-full justify-center p-6 max-md:p-4',
 			fullscreenStore.isEnabled && 'bottom-9'
 		)}
 	>
@@ -78,7 +80,7 @@
 					{/each}
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding bg-main-70 font-medium text-text hover:bg-main"
+						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
 						onclick={() => (storyState = 'ended')}
 					>
 						Завершить историю

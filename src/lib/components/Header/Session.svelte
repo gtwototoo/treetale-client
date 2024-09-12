@@ -13,7 +13,7 @@
 </script>
 
 {#if $page.data.session}
-	<Link href="/profile">
+	<Link href="/profile" class="pointer-events-auto">
 		<ProfileAvatar
 			bind:addLoading
 			bind:base64src
@@ -23,7 +23,7 @@
 		/>
 	</Link>
 {:else}
-	<Link href="/signin">
+	<Link href="/signin" class="pointer-events-auto">
 		<Button class="gap-3 bg-main-40 text-text hover:bg-contrast" size="lg">
 			<Icon class="size-6" this={ArrowLeftOnRectangle} />
 			<p>Войти</p>
