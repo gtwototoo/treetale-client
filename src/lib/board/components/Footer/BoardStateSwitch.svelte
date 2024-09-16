@@ -1,17 +1,16 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
+
 	import { connectionStartStore } from '$board/stores/frames.svelte';
 	import {
 		type ActionType,
 		type ModeType,
-		type StateType,
 		boardStateStore,
-		isBinding,
-		readonlyModeStore
+		isBinding
 	} from '$board/stores/index.svelte';
 	import {
 		ArrowRightOnRectangle,
 		ArrowsPointingOut,
-		Cloud,
 		Eye,
 		Map,
 		Photo,
@@ -19,16 +18,6 @@
 		Square3Stack3d
 	} from 'svelte-heros-v2';
 	import { Button, type HeroIconComponent, Icon } from 'treetale-ui';
-
-	import { ICON_TYPE } from '$lib/constants';
-	import { clm } from '$lib/utils/classMerge';
-
-	const stateColors: Record<StateType, string> = {
-		await: 'text-gray-400',
-		error: 'text-red-500',
-		saved: 'text-emerald-500',
-		saving: 'animate-pulse text-gray-400'
-	};
 
 	const modesIcons: Record<ModeType, HeroIconComponent> = {
 		addingComment: Square3Stack3d,
@@ -52,18 +41,15 @@
 </script>
 
 <Button
-	class={clm('z-10 min-h-0 flex-col gap-1 bg-contrast p-1.5', stateColors[boardStateStore.state])}
+	size="lg"
+	class="z-10 gap-3 bg-main-70 pl-4 text-text hover:bg-main-90 max-sm:px-3"
 	onclick={switchConnectionMode}
 >
 	{#if boardStateStore.action}
-		<Icon class="size-4" this={actionsIcons[boardStateStore.action]} />
+		<div class="absolute -left-4 -top-4 rounded-full bg-contrast p-2" in:fly={{ y: 10 }}>
+			<Icon class="size-5" this={actionsIcons[boardStateStore.action]} />
+		</div>
 	{/if}
-	<Icon class="size-4" this={modesIcons[boardStateStore.mode]} />
-	{#if !readonlyModeStore.isEnabled}
-		<Icon
-			class="size-4"
-			this={Cloud}
-			variation={boardStateStore.state === 'saving' ? ICON_TYPE : 'solid'}
-		/>
-	{/if}
+	<Icon class="size-6" this={modesIcons[boardStateStore.mode]} />
+	<p class="max-sm:hidden">{isBinding() ? 'Связывание' : 'Просмотр'}</p>
 </Button>

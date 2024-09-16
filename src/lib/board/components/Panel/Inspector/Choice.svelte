@@ -88,7 +88,7 @@
 		class={clm(
 			inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId &&
 				yellowTextColor,
-			'flex-col items-start gap-1 bg-contrast-9 hover:bg-contrast-7'
+			'flex-col items-start justify-center gap-1 bg-contrast-9 hover:bg-contrast-7'
 		)}
 		{disabled}
 		onclick={handleClick}

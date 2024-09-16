@@ -71,6 +71,7 @@
 					oninput={() => (result = null)}
 					class="adaptive-font adaptive-padding w-full bg-contrast hover:bg-main-10"
 					focusClass="bg-main-10"
+					type="email"
 					placeholder="Почта или логин"
 				/>
 				{#if result !== null}

@@ -47,7 +47,10 @@
 {:else}
 	<FormSplit>
 		<Button
-			class={clm('w-32 justify-center text-emerald-500 max-sm:w-24', greenBackgroundColor)}
+			class={clm(
+				'w-32 justify-center text-emerald-500 max-sm:w-24 max-xs:w-16',
+				greenBackgroundColor
+			)}
 			onclick={({ x, y }) => enableAddMode({ x, y }, 'frame')}
 			size="lg"
 		>
@@ -55,7 +58,10 @@
 			<p class="max-sm:hidden">Блок</p>
 		</Button>
 		<Button
-			class={clm('w-32 justify-center text-emerald-500 max-sm:w-24', greenBackgroundColor)}
+			class={clm(
+				'w-32 justify-center text-emerald-500 max-sm:w-24 max-xs:w-16',
+				greenBackgroundColor
+			)}
 			onclick={({ x, y }) => enableAddMode({ x, y }, 'comment')}
 			size="lg"
 		>
