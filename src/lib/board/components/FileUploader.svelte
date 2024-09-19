@@ -22,7 +22,7 @@
 		readonly = false,
 		src
 	}: {
-		base64src: null | string;
+		base64src: string;
 		children: Snippet<[null | string | undefined, () => void]>;
 		class?: string;
 		disabled?: boolean;
@@ -62,7 +62,7 @@
 	};
 
 	const base64Clear = () => {
-		base64src = null;
+		base64src = '';
 	};
 
 	const mediaName = mediaType === 'image' ? 'изображение' : 'звук';

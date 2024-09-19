@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+import { PUBLIC_TEST_STORY_ID, PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { FetchResponse } from '$lib/types/response';
 import type { StorySchema } from '$lib/types/schemas';
@@ -9,7 +9,7 @@ export const load = async ({ fetch, locals, params }) => {
 	const user = locals.session;
 	const storyId = +params.storyId;
 
-	if (!user || isNaN(storyId)) {
+	if (PUBLIC_TEST_STORY_ID !== params.storyId && (!user || isNaN(storyId))) {
 		redirect(302, '/');
 	}
 

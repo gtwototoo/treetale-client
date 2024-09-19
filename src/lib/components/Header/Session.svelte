@@ -7,16 +7,16 @@
 
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
-	let user: User = $derived($page.data.session);
+	let user = $derived($page.data.session as User);
 	let addLoading = $state(false);
-	let base64src = $state(null);
+	let base64src = $state('');
 </script>
 
 {#if $page.data.session}
 	<Link href="/profile" class="pointer-events-auto">
 		<ProfileAvatar
-			bind:addLoading
 			bind:base64src
+			bind:addLoading
 			alt={user.name}
 			color={user.color}
 			src={user.imageUrl}

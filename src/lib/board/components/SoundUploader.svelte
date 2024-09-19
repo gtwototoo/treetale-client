@@ -52,7 +52,7 @@
 		soundStore.set(base64src);
 	};
 
-	let base64src = $state<null | string>(null);
+	let base64src = $state<string>('');
 </script>
 
 <FileUploader

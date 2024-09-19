@@ -155,14 +155,28 @@ const getAreaBoundings = (frames: Frame[]) => {
 	};
 };
 
+export const conditionRegex = (html: string) => {
+	// (:|(?:\? [a-zA-Z0-9а-яА-Я]+ == [a-zA-Z0-9а-яА-Я]+)|\/\?)}/g;
+};
+
 export const variablesHighlight = (html: string, vars: Variable[]) => {
 	const variableRegex = /{([a-zA-Z0-9а-яА-Я]+)}/g;
+	const conditionRegex =
+		/{\? [a-zA-Z0-9а-яА-Я]+ == (?:[0-9]+|Да|Нет|"[a-zA-Z0-9а-яА-Я]+"|'[a-zA-Z0-9а-яА-Я]+')}|{:}|{\/\?}/g;
 
-	return html.replace(variableRegex, (match, variable) => {
-		const varExists = vars.some(({ name }) => name === variable);
+	[variableRegex, conditionRegex].forEach((regex, index) => {
+		html = html.replace(regex, (match, variable) => {
+			if (index === 0) {
+				const varExists = vars.some(({ name }) => name === variable);
 
-		return `<span class="${clm(varExists ? 'text-violet-500' : 'text-red-500')}">${match}</span>`;
+				return `<span class="${clm(varExists ? 'text-violet-500 bg-violet-500/5' : 'text-red-500 bg-red-500/5')}">${match}</span>`;
+			} else {
+				return `<span class="${clm('text-orange-500 bg-orange-500/5')}">${match}</span>`;
+			}
+		});
 	});
+
+	return html;
 };
 
 export const notesHighlight = (html: string, notes: Note[]) => {

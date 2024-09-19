@@ -74,7 +74,7 @@
 							<FormSplit vertical class="rounded-lg bg-main-60 ring-2 ring-main-60">
 								{#if choice.asInput}
 									<Contenteditable
-										class="adaptive-font adaptive-padding bg-main-20 hover:bg-main-40"
+										class="adaptive-font adaptive-padding pointer-events-auto bg-main-20 hover:bg-main-40"
 										focusClass="bg-main-40"
 										placeholder={choice.inputText || 'Ввод текста'}
 									/>

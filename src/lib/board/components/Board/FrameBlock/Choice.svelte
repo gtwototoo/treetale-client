@@ -2,8 +2,8 @@
 	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
 	import {
 		boardStateStore,
-		isBinding,
-		isView,
+		isBindingMode,
+		isViewMode,
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
 	import find from 'lodash/find';
@@ -68,11 +68,11 @@
 	};
 
 	const handleClick = () => {
-		if (isView() && !readonlyModeStore.isEnabled) {
+		if (isViewMode() && !readonlyModeStore.isEnabled) {
 			choiceFocus(choiceId);
 		}
 
-		if (isBinding()) {
+		if (isBindingMode()) {
 			if (connectionStartStore?.choiceId === choiceId) {
 				connectionStartStore.clear();
 
@@ -80,6 +80,7 @@
 			}
 
 			connectionStartStore.set(frame.frameId, choiceId);
+			boardStateStore.action = 'connectTo';
 		}
 	};
 
@@ -87,7 +88,9 @@
 	let selfConnect = $derived(
 		connectionStartStore.frameId === frame.frameId && connectionStartStore.choiceId === choiceId
 	);
-	let disabled = $derived(isBinding() && connectionStartStore.frameId !== null && !selfConnect);
+	let disabled = $derived(
+		isBindingMode() && connectionStartStore.frameId !== null && !selfConnect
+	);
 
 	let greenHoverBackgroundColor = $derived(
 		currentThemeClass(clm('hover:bg-emerald-800'), clm('hover:bg-emerald-200'))
@@ -109,7 +112,7 @@
 		text ? 'text-text' : 'text-gray-400',
 		disabled && 'pointer-events-none !bg-contrast',
 		isSelectedBindingChoice && greenGroupHoverBackgroundColor,
-		isBinding() &&
+		isBindingMode() &&
 			clm(
 				'bg-contrast-5',
 				greenHoverBackgroundColor,

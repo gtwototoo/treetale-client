@@ -9,8 +9,8 @@
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import {
 		boardStateStore,
-		isAdding,
-		isBinding,
+		isAddingMode,
+		isBindingMode,
 		oneDirectionModeStore,
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
@@ -36,7 +36,7 @@
 				(document.activeElement as HTMLDivElement).isContentEditable);
 
 		const switchAddFrameMode = () => {
-			boardStateStore.mode = isAdding() ? 'view' : 'addingFrame';
+			boardStateStore.mode = isAddingMode() ? 'view' : 'addingFrame';
 		};
 
 		const enableOneDirectionMode = () => {
@@ -50,8 +50,10 @@
 		const switchConnectMode = () => {
 			if (shiftKey) return;
 
-			boardStateStore.mode = isBinding() ? 'view' : 'binding';
+			boardStateStore.mode = isBindingMode() ? 'view' : 'binding';
 			connectionStartStore.clear();
+
+			boardStateStore.action = null;
 		};
 
 		const historyManipulate = () => {

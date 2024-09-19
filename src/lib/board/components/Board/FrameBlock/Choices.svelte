@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { addChoice } from '$board/components/methods.svelte';
 	import { connectionStartStore } from '$board/stores/frames.svelte';
-	import { isBinding, readonlyModeStore } from '$board/stores/index.svelte';
+	import { isBindingMode, readonlyModeStore } from '$board/stores/index.svelte';
 	import { Button, FormSplit } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
@@ -29,7 +29,7 @@
 	{/each}
 	<Button
 		class="bg-contrast-5 text-text"
-		disabled={(isBinding() && !!connectionStartStore.frameId) || readonlyModeStore.isEnabled}
+		disabled={(isBindingMode() && !!connectionStartStore.frameId) || readonlyModeStore.isEnabled}
 		onclick={() => addChoice(frame)}
 		onmousedown={stopPropagation}
 	>

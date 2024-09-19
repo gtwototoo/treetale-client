@@ -6,6 +6,8 @@
 		SvelteWindowAttributes
 	} from 'svelte/elements';
 
+	import { boardStateStore } from '$board/stores/index.svelte';
+
 	import { validateMimeType } from '$lib/utils/inputAccept';
 
 	import DropArea from './DropArea.svelte';
@@ -57,6 +59,8 @@
 
 		visibleFile = false;
 		blockFile = false;
+
+		boardStateStore.action = null;
 	};
 </script>
 

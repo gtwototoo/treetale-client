@@ -10,7 +10,7 @@
 		boardEventsStore,
 		boardParamsStore,
 		boardStateStore,
-		isAdding,
+		isAddingMode,
 		readonlyModeStore,
 		zoomCorrect
 	} from '$board/stores/index.svelte';
@@ -53,7 +53,7 @@
 		if (boardStateStore.action === 'movingArea') {
 			movingArea(coords, startOffset);
 		}
-		if (isAdding()) {
+		if (isAddingMode()) {
 			cursorFollow(coords);
 		}
 	};
@@ -95,7 +95,9 @@
 	) => {
 		const { button, isMouse, x, y } = e;
 
-		if (!isMouse || button === 0) startOffset = startMoveArea({ x, y });
+		if (!isMouse || button === 0) {
+			startOffset = startMoveArea({ x, y });
+		}
 
 		if (((isMouse && button === 0) || !isMouse) && movingBlockStore.id) {
 			const block = getBlock();
@@ -107,7 +109,7 @@
 	};
 
 	const handleClick = (coords: Coordinates) => {
-		if (isAdding() && addBlockOffsetStore.x) {
+		if (isAddingMode() && addBlockOffsetStore.x) {
 			const { x, y } = zoomCorrect(coords);
 
 			if (boardStateStore.mode === 'addingComment') {

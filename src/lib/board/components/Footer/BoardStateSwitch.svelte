@@ -6,7 +6,7 @@
 		type ActionType,
 		type ModeType,
 		boardStateStore,
-		isBinding
+		isBindingMode
 	} from '$board/stores/index.svelte';
 	import {
 		ArrowRightOnRectangle,
@@ -34,7 +34,7 @@
 	};
 
 	const switchConnectionMode = () => {
-		boardStateStore.mode = isBinding() ? 'view' : 'binding';
+		boardStateStore.mode = isBindingMode() ? 'view' : 'binding';
 
 		connectionStartStore.clear();
 	};
@@ -51,5 +51,5 @@
 		</div>
 	{/if}
 	<Icon class="size-6" this={modesIcons[boardStateStore.mode]} />
-	<p class="max-sm:hidden">{isBinding() ? 'Связывание' : 'Просмотр'}</p>
+	<p class="max-sm:hidden">{isBindingMode() ? 'Связывание' : 'Просмотр'}</p>
 </Button>

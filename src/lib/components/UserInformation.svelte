@@ -37,7 +37,7 @@
 	let light = $state(80);
 	let saturate = $state(90);
 	let loading = $state(false);
-	let base64src = $state<null | string>(null);
+	let base64src = $state<string>('');
 	let addLoading = $state(false);
 
 	const handleUnsubscribe = async () => {

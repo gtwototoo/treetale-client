@@ -6,7 +6,7 @@
 		selectedFrameStore
 	} from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { isBinding, readonlyModeStore } from '$board/stores/index.svelte';
+	import { isBindingMode, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
 	import { createConnections } from '$board/utils/editing';
@@ -70,7 +70,9 @@
 
 	let isEndFrame = $derived(connectedWithStart(frame.frameId) && !frame.choices.length);
 	let isConnectRequest = $derived(
-		isBinding() && connectionStartStore.frameId && connectionStartStore.frameId !== frame.frameId
+		isBindingMode() &&
+			connectionStartStore.frameId &&
+			connectionStartStore.frameId !== frame.frameId
 	);
 	let { hidden, imageUrl, text, x, y } = $derived(frame);
 	let greenHoverBackgroundColor = $derived(
@@ -82,7 +84,7 @@
 	);
 	let isSelected = $derived(selectedFrameStore.frameId === frame.frameId);
 	let isSelectedBindingChoice = $derived(
-		isBinding() &&
+		isBindingMode() &&
 			connectionStartStore.frameId !== null &&
 			connectionStartStore.frameId !== frame.frameId
 	);
@@ -99,7 +101,7 @@
 			!readonlyModeStore.isEnabled && 'cursor-move hover:ring-text',
 			isDragging && '!ring-4 ring-text',
 			isSelected && 'ring-text',
-			isBinding() && 'bg-main-20',
+			isBindingMode() && 'bg-main-20',
 			isSelectedBindingChoice &&
 				clm(greenHoverBackgroundColor, 'cursor-pointer !bg-contrast hover:ring-green-500')
 		)}

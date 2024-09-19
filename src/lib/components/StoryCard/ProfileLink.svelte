@@ -24,7 +24,7 @@
 	} = $props();
 
 	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
-	let base64src = $state(null);
+	let base64src = $state('');
 	let addLoading = $state(false);
 
 	const handleClick = () => {

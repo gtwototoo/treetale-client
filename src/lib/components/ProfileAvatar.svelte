@@ -32,13 +32,13 @@
 	}: {
 		addLoading: boolean;
 		alt: string;
-		base64src: null | string;
+		base64src: string;
 		class?: string;
 		color: RGB | null;
 		editMode?: boolean;
 		onchange?: ChangeEventHandler<HTMLInputElement>;
 		size?: 'base' | 'lg' | 'sm';
-		src: null | string;
+		src?: null | string;
 	} = $props();
 
 	let removeLoading = $state(false);
@@ -60,7 +60,7 @@
 	};
 
 	const loadHandler = () => {
-		base64src = null;
+		base64src = '';
 		addLoading = false;
 	};
 

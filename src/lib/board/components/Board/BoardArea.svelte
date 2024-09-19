@@ -9,7 +9,7 @@
 	import {
 		boardParamsStore,
 		boardStateStore,
-		isAdding,
+		isAddingMode,
 		zoomCorrect
 	} from '$board/stores/index.svelte';
 
@@ -181,7 +181,7 @@
 			<CreateText />
 		{/if}
 		<MovingArea>
-			{#if isAdding()}
+			{#if isAddingMode()}
 				<NewBlock />
 			{/if}
 			<div>

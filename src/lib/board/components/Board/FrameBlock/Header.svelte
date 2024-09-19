@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isBinding } from '$board/stores/index.svelte';
+	import { isBindingMode } from '$board/stores/index.svelte';
 	import { MusicalNote } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
@@ -38,7 +38,7 @@
 		'justify-between text-text',
 		start && 'text-emerald-500',
 		end && 'text-blue-500',
-		isBinding() ? '!bg-main-60' : '!bg-contrast-5'
+		isBindingMode() ? '!bg-main-60' : '!bg-contrast-5'
 	)}
 	onclick={hideFrame}
 >

@@ -23,7 +23,7 @@
 		src?: null | string;
 	} = $props();
 
-	let base64src = $state(null);
+	let base64src = $state('');
 </script>
 
 <FileUploader
@@ -42,7 +42,7 @@
 		{base64src}
 		class="size-full rounded-inherit bg-main/30 text-text"
 		cover
-		onload={() => (base64src = null)}
+		onload={() => (base64src = '')}
 		{src}
 	/>
 </FileUploader>

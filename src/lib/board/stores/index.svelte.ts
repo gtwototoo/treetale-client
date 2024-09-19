@@ -3,8 +3,9 @@ import omit from 'lodash/omit';
 
 import type { Comment, Coordinates, Frame, Sizes } from '$lib/types';
 
+import { movingBlockStore } from './blocks.svelte';
 import { boardCommentsStore } from './comments.svelte';
-import { boardFramesStore } from './frames.svelte';
+import { boardFramesStore, connectionStartStore } from './frames.svelte';
 import { storyInfoStore } from './info.svelte';
 
 export type ActionType = 'connectTo' | 'dragImage' | 'movingArea' | 'movingBlock';
@@ -166,10 +167,14 @@ export const readonlyModeStore = getReadonlyMode();
 export const boardStateStore = getBoardState();
 export const oneDirectionModeStore = getOneDirectionMode();
 
-export const isBinding = () => boardStateStore.mode === 'binding';
-export const isView = () => boardStateStore.mode === 'view';
-export const isAdding = () =>
+export const isBindingMode = () => boardStateStore.mode === 'binding';
+export const isViewMode = () => boardStateStore.mode === 'view';
+export const isAddingMode = () =>
 	boardStateStore.mode === 'addingFrame' || boardStateStore.mode === 'addingComment';
+
+export const isConnectToAction = () => isBindingMode() && connectionStartStore.frameId !== null;
+export const isMovingBlockAction = () => movingBlockStore.id !== null;
+export const isMovingAreaAction = () => boardStateStore.action === 'movingArea';
 
 export const zoomCorrect = (coordinates: Coordinates) => {
 	return {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
-	import { boardStateStore, isAdding, zoomCorrect } from '$board/stores/index.svelte';
+	import { boardStateStore, isAddingMode, zoomCorrect } from '$board/stores/index.svelte';
 	import { ChatBubbleBottomCenter, RectangleStack, XMark } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon } from 'treetale-ui';
 
@@ -31,7 +31,7 @@
 	);
 </script>
 
-{#if isAdding()}
+{#if isAddingMode()}
 	<Button
 		class={clm(
 			'w-64 justify-center max-sm:w-24',
