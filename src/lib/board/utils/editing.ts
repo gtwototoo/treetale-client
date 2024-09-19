@@ -155,10 +155,6 @@ const getAreaBoundings = (frames: Frame[]) => {
 	};
 };
 
-export const conditionRegex = (html: string) => {
-	// (:|(?:\? [a-zA-Z0-9а-яА-Я]+ == [a-zA-Z0-9а-яА-Я]+)|\/\?)}/g;
-};
-
 export const variablesHighlight = (html: string, vars: Variable[]) => {
 	const variableRegex = /{([a-zA-Z0-9а-яА-Я]+)}/g;
 	const conditionRegex =
