@@ -34,9 +34,3 @@
 		{/if}
 	</div>
 </div>
-
-<style lang="postcss">
-	.clear-text :global(*) {
-		font-size: inherit !important;
-	}
-</style>

@@ -51,7 +51,10 @@
 		{/if}
 		{#if text}
 			<div
-				class={clm('px-2', text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper')}
+				class={clm(
+					'clear-text px-2',
+					text && text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
+				)}
 			>
 				{@html correctWhitespace(text)}
 			</div>

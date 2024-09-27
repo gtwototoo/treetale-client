@@ -96,9 +96,3 @@
 		<CopyButton {storyId} />
 	</div>
 {/if}
-
-<style lang="postcss">
-	.clear-text :global(*) {
-		font-size: inherit !important;
-	}
-</style>
