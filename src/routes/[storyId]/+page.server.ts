@@ -9,11 +9,12 @@ export interface ResponseProgress {
 	author: {
 		subscribersCount: number;
 	} & User;
+	currentVersion: string;
 	frames: Frame[];
 	progress: Progress[];
+	progressVersion: string;
 	story: Story;
 	updated: number;
-	version: string;
 }
 
 export const load = async ({ fetch, params }) => {

@@ -1,16 +1,13 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { Button, Image } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
 
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
-	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
-	import { correctVariableReplace, correctWhitespace } from '$lib/utils/text';
+	import { correctWhitespace } from '$lib/utils/text';
 
-	import { enabledChoice, setChoice } from '../methods.svelte';
+	import { enabledChoice } from '../methods.svelte';
 	import InterfaceViewButton from './InterfaceViewButton.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
@@ -23,17 +20,6 @@
 		storyId: number;
 		storyState: 'begin' | 'ended' | 'started';
 	} = $props();
-
-	let loadingId = $state<null | number>(null);
-
-	const selectChoice = async (choiceId: number) => {
-		if (!$page.data.session) {
-			goto('/signin');
-		}
-
-		await setChoice(storyId, lastFrame.frameId, choiceId);
-		await invalidateAll();
-	};
 
 	let availableChoicesCount = $derived(
 		lastFrame.choices.filter((choice) => enabledChoice(lastFrame.modificators, choice)).length
@@ -68,14 +54,7 @@
 				{#if availableChoicesCount}
 					{#each lastFrame.choices as choice (choice.choiceId)}
 						{#if enabledChoice(lastFrame.modificators, choice)}
-							<Choice
-								onclick={() => selectChoice(choice.choiceId)}
-								loading={loadingId === choice.choiceId}
-								disabled={loadingId !== null && loadingId !== choice.choiceId}
-							>
-								{@html correctVariableReplace(choice.text, variablesStore.variables) ||
-									'Неожиданный поворот'}
-							</Choice>
+							<Choice {storyId} frameId={lastFrame.frameId} {choice} />
 						{/if}
 					{/each}
 				{:else}

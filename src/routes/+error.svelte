@@ -8,8 +8,8 @@
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
 
-	const handleClick = () => {
-		isNotFound ? goto('/', { replaceState: true }) : location.reload();
+	const handleClick = async () => {
+		isNotFound ? await goto('/', { replaceState: true }) : location.reload();
 	};
 
 	let isNotFound = $derived($page.status === 404);

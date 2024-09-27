@@ -101,7 +101,7 @@
 			{/each}
 		{/if}
 	</Button>
-	<div class="mr-4 flex select-none flex-col whitespace-nowrap text-text max-xs:hidden">
+	<div class="mr-4 flex select-none flex-col whitespace-nowrap text-text">
 		<p>{formattedOffset.x}, {formattedOffset.y}</p>
 		<p>{formattedZoom}x</p>
 	</div>

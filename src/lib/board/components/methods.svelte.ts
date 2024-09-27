@@ -1,6 +1,6 @@
 import { addBlockOffsetStore, movingBlockStore } from '$board/stores/blocks.svelte';
 import { boardCommentsStore } from '$board/stores/comments.svelte';
-import { boardFramesStore, selectedFrameStore } from '$board/stores/frames.svelte';
+import { boardFramesStore } from '$board/stores/frames.svelte';
 import { changesHistoryStore } from '$board/stores/history.svelte';
 import { boardStateStore, oneDirectionModeStore, zoomCorrect } from '$board/stores/index.svelte';
 import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -151,18 +151,19 @@ export const movingBlock = (coords: Coordinates, startMoveData: StartMoveParams)
 };
 
 export const setSelectedFrame = (frame: Frame) => {
-	selectedFrameStore.frameId = frame.frameId;
-
 	panelStatesStore.set(`frame-${frame.frameId}`, FrameSettingsSvelte, {
+		frameId: frame.frameId,
 		isEdit: true,
 		title: frame.title
 	});
 };
 
 const switchSelectedFrame = (prev?: boolean) => {
-	if (!selectedFrameStore.frameId) return;
+	if (!panelStatesStore.props?.frameId) return;
 
-	const frameKey = findIndex(boardFramesStore.frames, { frameId: selectedFrameStore.frameId });
+	const frameKey = findIndex(boardFramesStore.frames, {
+		frameId: panelStatesStore.props.frameId as number
+	});
 	const newFrameKey = prev ? frameKey - 1 : frameKey + 1;
 	const nextFrame = prev ? last(boardFramesStore.frames)! : boardFramesStore.frames[0];
 

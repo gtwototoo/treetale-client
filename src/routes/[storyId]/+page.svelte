@@ -14,7 +14,7 @@
 	import NovellaView from '$lib/components/FormatView/NovellaView.svelte';
 	import StoryStage from '$lib/components/StoryStage.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
-	import { setChoice } from '$lib/components/methods.svelte.js';
+	import { enabledChoice, setChoice } from '$lib/components/methods.svelte.js';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { fullscreenStore, interfaceStore } from '$lib/stores/reading.svelte';
@@ -25,7 +25,8 @@
 	let { data } = $props();
 
 	let clonedData = $derived(cloneDeep(data));
-	let { author, frames, progress, story, updated, version } = $derived(clonedData);
+	let { author, currentVersion, frames, progress, progressVersion, story, updated } =
+		$derived(clonedData);
 
 	// const isFullscreen = () => {
 	// 	return (
@@ -43,13 +44,14 @@
 
 		const setFastChoice = async () => {
 			if (!$page.data.session) {
-				goto('/signin');
+				await goto('/signin');
 			}
 
-			const lastFrame = last(data.frames);
-			const correctChoices = lastFrame?.choices.filter((c) => c.frameId);
+			let availableChoicesCount = lastFrame.choices.filter((choice) =>
+				enabledChoice(lastFrame.modificators, choice)
+			).length;
 
-			if (lastFrame && correctChoices?.length === 1) {
+			if (availableChoicesCount === 1) {
 				await setChoice(story.storyId, lastFrame.frameId, lastFrame.choices[0].choiceId);
 				await invalidateAll();
 			}
@@ -142,7 +144,8 @@
 			{updated}
 			{frames}
 			{progress}
-			progressVersion={version}
+			{currentVersion}
+			{progressVersion}
 		/>
 	</div>
 {/if}

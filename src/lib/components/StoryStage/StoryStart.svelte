@@ -7,13 +7,16 @@
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { variablesStore } from '$lib/stores/variables.svelte';
+	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
 
 	import ActionButtons from './StoryStart/ActionButtons.svelte';
+	import CopyButton from './StoryStart/CopyButton.svelte';
 	import SavedProgress from './StoryStart/SavedProgress.svelte';
 
 	let {
+		currentVersion,
 		lastFrame,
 		progress,
 		progressVersion,
@@ -24,6 +27,7 @@
 		author: {
 			subscribersCount: number;
 		} & User;
+		currentVersion: string;
 		lastFrame: Frame;
 		progress: Progress[];
 		progressVersion: string;
@@ -43,8 +47,13 @@
 		{title}
 	</h1>
 	<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
-		<Tag class="whitespace-nowrap bg-green-100 bg-opacity-30 text-green-500">
-			Версия {story.version}
+		<Tag
+			class={clm(
+				'whitespace-nowrap bg-opacity-30',
+				currentVersion === 'Архив' ? 'bg-gray-100 text-gray-500' : 'bg-green-100 text-green-500'
+			)}
+		>
+			{currentVersion === 'Архив' ? currentVersion : `Версия ${currentVersion}`}
 		</Tag>
 		<p class="text-base italic">
 			Обновлено <span class="font-medium">{formatDate(story.updated)}</span>
@@ -70,19 +79,22 @@
 		{progressVersion}
 		{updated}
 		storyId={story.storyId}
-		storyVersion={story.version}
+		{currentVersion}
 		choicesCount={progress.length}
 		{lastFrame}
 		onclick={() => (storyState = 'started')}
 	/>
 {:else}
-	<Button
-		size="lg"
-		class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main max-md:w-full"
-		onclick={() => (storyState = 'started')}
-	>
-		Начать историю
-	</Button>
+	<div class="flex w-full items-center justify-between">
+		<Button
+			size="lg"
+			class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
+			onclick={() => (storyState = 'started')}
+		>
+			Начать историю
+		</Button>
+		<CopyButton {storyId} />
+	</div>
 {/if}
 
 <style lang="postcss">

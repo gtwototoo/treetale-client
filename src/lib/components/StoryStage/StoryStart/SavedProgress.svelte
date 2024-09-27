@@ -15,22 +15,23 @@
 	import { versionCompare } from '$lib/utils/versionCompare';
 
 	import FrameMini from '../FrameMini.svelte';
+	import CopyButton from './CopyButton.svelte';
 
 	let {
 		choicesCount,
+		currentVersion,
 		lastFrame,
 		onclick,
 		progressVersion,
 		storyId,
-		storyVersion,
 		updated
 	}: {
 		choicesCount: number;
+		currentVersion: string;
 		lastFrame: Frame;
 		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 		progressVersion: string;
 		storyId: number;
-		storyVersion: string;
 		updated: number;
 	} = $props();
 
@@ -60,10 +61,11 @@
 			class={clm(
 				'bg-opacity-30',
 				{
+					archived: 'bg-gray-100 text-gray-500',
 					breaking: 'bg-red-100 text-red-500',
 					current: 'bg-green-100 text-green-500',
 					minor: 'bg-yellow-100 text-yellow-500'
-				}[versionCompare(storyVersion, progressVersion)]
+				}[versionCompare(currentVersion, progressVersion)]
 			)}
 		>
 			Версия {progressVersion}
@@ -92,12 +94,15 @@
 				<p>{formatDate(updated)}</p>
 			</div>
 		</div>
-		<Button
-			size="lg"
-			class="adaptive-font pointer-events-auto bg-main-70 font-medium hover:bg-main"
-			{onclick}
-		>
-			Продолжить
-		</Button>
+		<div class="flex items-center gap-2">
+			<CopyButton {storyId} />
+			<Button
+				size="lg"
+				class="adaptive-font pointer-events-auto bg-main-70 font-medium hover:bg-main"
+				{onclick}
+			>
+				Продолжить
+			</Button>
+		</div>
 	</div>
 </div>

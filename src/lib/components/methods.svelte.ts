@@ -4,7 +4,7 @@ import findIndex from 'lodash/findIndex';
 import type { Choice, LogicModificator, MathModificator, Modificator } from '$lib/types/index';
 
 import { updateProgress } from '$lib/requests/progress';
-import { framesStore } from '$lib/stores/reading.svelte';
+import { framesStore, loadingStore } from '$lib/stores/reading.svelte';
 import { soundStore } from '$lib/stores/sound.svelte';
 import { variablesStore } from '$lib/stores/variables.svelte';
 import {
@@ -46,6 +46,8 @@ export const updateCurrentVarsValues = (modificators: Modificator[], choiceId: n
 };
 
 export const setChoice = async (storyId: number, frameId: number, choiceId: number) => {
+	loadingStore.set(frameId, choiceId);
+
 	try {
 		await updateProgress(storyId, choiceId);
 
@@ -59,4 +61,6 @@ export const setChoice = async (storyId: number, frameId: number, choiceId: numb
 	} catch (error) {
 		console.error(error);
 	}
+
+	loadingStore.clear();
 };

@@ -17,6 +17,8 @@
 
 	let user = $derived(me ? $page.data.session : data.user);
 	let { statistic } = $derived(data);
+	let adminUser = $derived(me && (user.role === 'moderator' || user.role === 'admin'));
+
 	// let userSchema = $derived({
 	// 	'@type': 'Person',
 	// 	name: user.name
@@ -70,7 +72,7 @@
 					<tbody>
 						<tr>
 							{#each tabs as { href, icon, name }}
-								{#if href !== '/profile/moderated' || $page.data.session.role === 'moderator' || $page.data.session.role === 'admin'}
+								{#if href !== '/profile/moderated' || adminUser}
 									<td>
 										<Button
 											asLink

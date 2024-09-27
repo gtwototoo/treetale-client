@@ -17,11 +17,7 @@
 	};
 
 	$effect(() => {
-		if (panelStatesStore.show) {
-			switchHiddenOverflow(false);
-		} else {
-			switchHiddenOverflow(true);
-		}
+		switchHiddenOverflow(!panelStatesStore.show);
 	});
 
 	onDestroy(() => switchHiddenOverflow(false));

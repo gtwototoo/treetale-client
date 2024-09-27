@@ -25,7 +25,7 @@
 	let genre = $derived(find(GENRES_LIST, { id: story.genre })!);
 </script>
 
-<div class="flex shrink-0 flex-col gap-3 md:w-1/3">
+<div class="flex shrink-0 flex-col gap-3 md:sticky md:top-20 md:w-1/3">
 	<div class="flex gap-2 *:pointer-events-auto">
 		<Info
 			{author}
@@ -42,6 +42,6 @@
 		{title}
 		icon={genre.icon}
 		color={selectedColor}
-		class="w-auto shrink-0 self-start max-md:w-full md:sticky md:top-20"
+		class="w-auto shrink-0 self-start max-md:w-full"
 	/>
 </div>

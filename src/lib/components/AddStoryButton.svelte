@@ -25,7 +25,7 @@
 		try {
 			const { message } = await createStory();
 
-			return goto(`/board/${message.storyId}`);
+			await goto(`/board/${message.storyId}`);
 		} catch (error) {
 			console.error(error);
 		}

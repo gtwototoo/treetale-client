@@ -26,6 +26,32 @@ const getFullscreen = () => {
 	};
 };
 
+const getLoadingChoice = () => {
+	let frameId = $state<null | number>(null);
+	let choiceId = $state<null | number>(null);
+
+	const set = (newFrameId: number, newChoiceId: number) => {
+		frameId = newFrameId;
+		choiceId = newChoiceId;
+	};
+
+	const clear = () => {
+		frameId = null;
+		choiceId = null;
+	};
+
+	return {
+		get choiceId() {
+			return choiceId;
+		},
+		clear,
+		get frameId() {
+			return frameId;
+		},
+		set
+	};
+};
+
 const getAvailableFrames = () => {
 	let frames = $state<Frame[]>([]);
 
@@ -39,6 +65,7 @@ const getAvailableFrames = () => {
 	};
 };
 
+export const loadingStore = getLoadingChoice();
 export const framesStore = getAvailableFrames();
 export const interfaceStore = getInterface();
 export const fullscreenStore = getFullscreen();

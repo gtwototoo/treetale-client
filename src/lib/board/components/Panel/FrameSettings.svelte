@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
 	import type { DragEventHandler, FormEventHandler } from 'svelte/elements';
 
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
-	import { boardFramesStore, selectedFrameStore } from '$board/stores/frames.svelte';
+	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import {
 		boardEventsStore,
@@ -44,7 +43,9 @@
 
 	let draggedFileType = $state<string>();
 	let onePrevFrame = $state<Frame | null>(null);
-	let frame = $derived(find(boardFramesStore.frames, { frameId: selectedFrameStore.frameId! })!);
+	let frame = $derived(
+		find(boardFramesStore.frames, { frameId: panelStatesStore.props!.frameId as number })!
+	);
 	let { choices, frameId, imageUrl, soundUrl, x, y } = $derived(frame || {});
 	let descriptionElement = $state<HTMLDivElement>();
 
@@ -132,10 +133,10 @@
 		panelStatesStore.clear();
 
 		boardFramesStore.frames = reject(boardFramesStore.frames, {
-			frameId: selectedFrameStore.frameId!
+			frameId: frame.frameId!
 		});
 
-		removeFromChoicesDeletedFrameId(selectedFrameStore.frameId!);
+		removeFromChoicesDeletedFrameId(frame.frameId!);
 
 		changesHistoryStore.add('Удаление блока', Trash);
 	};
@@ -208,13 +209,9 @@
 	});
 
 	$effect.pre(() => {
-		if (!selectedFrameStore.frameId) {
-			selectedFrameStore.frameId = boardFramesStore.frames[0].frameId;
+		if (!frame.frameId) {
+			frame.frameId = boardFramesStore.frames[0].frameId;
 		}
-	});
-
-	onDestroy(() => {
-		selectedFrameStore.frameId = null;
 	});
 </script>
 

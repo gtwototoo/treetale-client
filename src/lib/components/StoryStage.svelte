@@ -10,6 +10,7 @@
 
 	let {
 		author,
+		currentVersion,
 		frames,
 		progress,
 		progressVersion,
@@ -20,6 +21,7 @@
 		author: {
 			subscribersCount: number;
 		} & User;
+		currentVersion: string;
 		frames: Frame[];
 		progress: Progress[];
 		progressVersion: string;
@@ -50,6 +52,7 @@
 				{author}
 				{lastFrame}
 				{progress}
+				{currentVersion}
 				{progressVersion}
 				{story}
 				{updated}

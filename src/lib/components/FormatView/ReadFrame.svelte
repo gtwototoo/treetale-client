@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
 	import find from 'lodash/find';
-	import { Button, Contenteditable, FormSplit } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
 
@@ -12,7 +10,7 @@
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	import { enabledChoice, setChoice, updateCurrentVarsValues } from '../methods.svelte';
+	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
@@ -30,16 +28,6 @@
 	} = $props();
 
 	let readCard = $state<HTMLDivElement>();
-	let loadingId = $state<null | number>(null);
-
-	const selectChoice = async (choiceId: number) => {
-		if (!$page.data.session) {
-			goto('/signin');
-		}
-
-		await setChoice(storyId, frame.frameId, choiceId);
-		await invalidateAll();
-	};
 
 	const dynamicText = (text: null | string) => {
 		if (selectedChoiceId) {
@@ -71,23 +59,7 @@
 				{#if availableChoicesCount}
 					{#each frame.choices as choice (choice.choiceId)}
 						{#if enabledChoice(frame.modificators, choice)}
-							<FormSplit vertical class="rounded-lg bg-main-60 ring-2 ring-main-60">
-								{#if choice.asInput}
-									<Contenteditable
-										class="adaptive-font adaptive-padding pointer-events-auto bg-main-20 hover:bg-main-40"
-										focusClass="bg-main-40"
-										placeholder={choice.inputText || 'Ввод текста'}
-									/>
-								{/if}
-								<Choice
-									onclick={() => selectChoice(choice.choiceId)}
-									loading={loadingId === choice.choiceId}
-									disabled={loadingId !== null && loadingId !== choice.choiceId}
-								>
-									{@html correctVariableReplace(choice.text, variablesStore.variables) ||
-										'Неожиданный поворот'}
-								</Choice>
-							</FormSplit>
+							<Choice {storyId} frameId={frame.frameId} {choice} />
 						{/if}
 					{/each}
 				{:else}

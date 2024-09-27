@@ -27,8 +27,8 @@
 	let base64src = $state('');
 	let addLoading = $state(false);
 
-	const handleClick = () => {
-		goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
+	const handleClick = async () => {
+		await goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
 	};
 </script>
 

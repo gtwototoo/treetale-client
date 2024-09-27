@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { movingBlockStore } from '$board/stores/blocks.svelte';
-	import {
-		boardFramesStore,
-		connectionStartStore,
-		selectedFrameStore
-	} from '$board/stores/frames.svelte';
+	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { isBindingMode, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -82,7 +78,7 @@
 	let isDragging = $derived(
 		movingBlockStore.type === 'frame' && movingBlockStore.id === frame.frameId
 	);
-	let isSelected = $derived(selectedFrameStore.frameId === frame.frameId);
+	let isSelected = $derived(panelStatesStore.props?.frameId === frame.frameId);
 	let isSelectedBindingChoice = $derived(
 		isBindingMode() &&
 			connectionStartStore.frameId !== null &&

@@ -136,7 +136,7 @@
 					{loading}
 					onclick={switchReview}
 				>
-					Отменить публикацию
+					Отменить модерацию
 				</Button>
 			{:else}
 				<p class="p-2">

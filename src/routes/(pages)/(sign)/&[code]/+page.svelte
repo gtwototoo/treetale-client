@@ -33,7 +33,7 @@
 		try {
 			await signUpUser(name, $page.params.code);
 
-			goto('/profile', {
+			await goto('/profile', {
 				invalidateAll: true,
 				replaceState: true
 			});

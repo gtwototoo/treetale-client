@@ -65,7 +65,7 @@
 				loading = false;
 			}
 		} else {
-			goto('/signin');
+			await goto('/signin');
 		}
 	};
 
@@ -82,7 +82,7 @@
 		try {
 			await signOutUser();
 
-			goto('/', {
+			await goto('/', {
 				invalidateAll: true,
 				replaceState: true
 			});
