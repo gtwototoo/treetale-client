@@ -78,7 +78,7 @@
 	</div>
 	<FrameMini frame={lastFrame} />
 	<div class="flex justify-between">
-		<div class="flex items-center gap-3">
+		<div class="flex items-center gap-3 overflow-hidden">
 			<Button
 				class={clm(
 					redBackgroundColorStore.color,
@@ -89,13 +89,13 @@
 			>
 				<Icon this={Trash} class="size-5" />
 			</Button>
-			<div class="flex flex-col text-sm">
-				<p>Дата прохождения:</p>
+			<div class="flex flex-col overflow-hidden text-sm">
+				<p class="truncate">Дата прохождения:</p>
 				<p>{formatDate(updated)}</p>
 			</div>
 		</div>
 		<div class="flex items-center gap-2">
-			<CopyButton {storyId} />
+			<CopyButton {storyId} class="max-xs:hidden" />
 			<Button
 				size="lg"
 				class="adaptive-font pointer-events-auto bg-main-70 font-medium hover:bg-main"

@@ -11,8 +11,10 @@
 	type CopyState = 'error' | 'success' | null;
 
 	let {
+		class: classname,
 		storyId
 	}: {
+		class?: string;
 		storyId: number;
 	} = $props();
 
@@ -66,7 +68,7 @@
 			copyState === 'error' && 'text-red-500'
 		)}
 	/>
-	<div class="flex flex-col items-start text-xs">
+	<div class={clm('flex flex-col items-start text-xs', classname)}>
 		<p class="text-base leading-4">Ссылка</p>
 		<p>на историю</p>
 	</div>

@@ -118,7 +118,7 @@
 		<div
 			class={clm(
 				'pointer-events-none relative flex min-h-full w-full items-center justify-center px-4 py-20 transition-[padding]',
-				!interfaceStore.show && 'py-4'
+				!interfaceStore.show && 'py-8'
 			)}
 		>
 			<InterfaceViewButton />
@@ -133,7 +133,7 @@
 	<div
 		class={clm(
 			'pointer-events-none relative flex min-h-full w-full items-center justify-center px-4 py-20 transition-[padding]',
-			!interfaceStore.show && 'py-4'
+			!interfaceStore.show && 'py-8'
 		)}
 	>
 		<InterfaceViewButton />
