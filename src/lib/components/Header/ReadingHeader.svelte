@@ -37,7 +37,7 @@
 	};
 
 	onMount(() => {
-		if (document.documentElement.requestFullscreen) {
+		if ('requestFullscreen' in document.documentElement) {
 			fullscreenSupport = true;
 		}
 	});
