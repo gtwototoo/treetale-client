@@ -7,6 +7,7 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 
+	import { goto } from '$app/navigation';
 	import { enabledChoice } from '../methods.svelte';
 	import InterfaceViewButton from './InterfaceViewButton.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
@@ -14,12 +15,16 @@
 	let {
 		lastFrame,
 		storyId,
-		storyState = $bindable()
+		progressId
 	}: {
 		lastFrame: Frame;
 		storyId: number;
-		storyState: 'begin' | 'ended' | 'started';
+		progressId: number;
 	} = $props();
+
+	const handleEndStory = async () => {
+		await goto(`/results/${progressId}`);
+	};
 
 	let availableChoicesCount = $derived(
 		lastFrame.choices.filter((choice) => enabledChoice(lastFrame.modificators, choice)).length
@@ -38,7 +43,7 @@
 		)}
 	>
 		<div
-			class="flex max-h-52 w-full max-w-7xl flex-col gap-4 overflow-auto rounded-xl bg-contrast p-4 text-text"
+			class="pointer-events-auto flex max-h-52 w-full max-w-7xl flex-col gap-4 overflow-auto rounded-xl bg-contrast p-4 text-text"
 		>
 			<div
 				class={clm(
@@ -60,7 +65,7 @@
 				{:else}
 					<Button
 						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
-						onclick={() => (storyState = 'ended')}
+						onclick={handleEndStory}
 					>
 						Завершить историю
 					</Button>

@@ -10,6 +10,7 @@
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { correctVariableReplace } from '$lib/utils/text';
 
+	import { goto } from '$app/navigation';
 	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
@@ -18,13 +19,13 @@
 		frame,
 		selectedChoiceId,
 		storyId,
-		storyState = $bindable()
+		progressId
 	}: {
 		class?: string;
 		frame: Frame;
 		selectedChoiceId?: number;
 		storyId: number;
-		storyState: 'begin' | 'ended' | 'started';
+		progressId: number;
 	} = $props();
 
 	let readCard = $state<HTMLDivElement>();
@@ -35,6 +36,11 @@
 		}
 
 		return correctVariableReplace(text, variablesStore.variables) || 'Пустота...';
+	};
+
+	const handleEndStory = async () => {
+		// Результат будет скорее всего в отдельном разделе бд, там должна быть скорее всего статика данных (% прошедших и т.д., кроме версии)
+		await goto(`/results/${progressId}`);
 	};
 
 	let availableChoicesCount = $derived(
@@ -64,8 +70,8 @@
 					{/each}
 				{:else}
 					<Button
+						onclick={handleEndStory}
 						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
-						onclick={() => (storyState = 'ended')}
 					>
 						Завершить историю
 					</Button>

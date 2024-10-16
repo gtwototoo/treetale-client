@@ -1,20 +1,20 @@
 <script lang="ts">
 	import find from 'lodash/find';
 
-	import type { Frame, Progress } from '$lib/types';
+	import type { Frame, ProgressChoices } from '$lib/types';
 
 	import ReadFrame from './ReadFrame.svelte';
 
 	let {
 		frames,
-		progress,
+		choices,
 		storyId,
-		storyState = $bindable()
+		progressId
 	}: {
 		frames: Frame[];
-		progress: Progress[];
+		choices: ProgressChoices[];
 		storyId: number;
-		storyState: 'begin' | 'ended' | 'started';
+		progressId: number;
 	} = $props();
 </script>
 
@@ -22,11 +22,11 @@
 	<ReadFrame
 		frame={frames?.[0]}
 		{storyId}
-		bind:storyState
-		selectedChoiceId={progress?.[0]?.choiceId}
+		selectedChoiceId={choices?.[0]?.choiceId}
+		{progressId}
 	/>
-	{#each progress as { nextFrameId }, key}
+	{#each choices as { nextFrameId }, key}
 		{@const frame = find(frames, { frameId: nextFrameId })!}
-		<ReadFrame {frame} {storyId} selectedChoiceId={progress[key + 1]?.choiceId} bind:storyState />
+		<ReadFrame {frame} {storyId} selectedChoiceId={choices[key + 1]?.choiceId} {progressId} />
 	{/each}
 </div>

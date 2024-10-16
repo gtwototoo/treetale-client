@@ -2,9 +2,8 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 
-	import type { Frame, Progress, Story, User } from '$lib/types';
+	import type { Frame, ProgressChoices, Story, User } from '$lib/types';
 
-	import EndResults from './StoryStage/EndResults.svelte';
 	import LeftSide from './StoryStage/LeftSide.svelte';
 	import StoryStart from './StoryStage/StoryStart.svelte';
 
@@ -12,10 +11,10 @@
 		author,
 		currentVersion,
 		frames,
-		progress,
+		choices,
 		progressVersion,
 		story,
-		storyState = $bindable(),
+		started = $bindable(),
 		updated
 	}: {
 		author: {
@@ -23,40 +22,30 @@
 		} & User;
 		currentVersion: string;
 		frames: Frame[];
-		progress: Progress[];
+		choices: ProgressChoices[];
 		progressVersion: string;
 		story: Story;
-		storyState: 'begin' | 'ended' | 'started';
+		started: boolean;
 		updated: number;
 	} = $props();
 
-	let lastFrame = $derived(find(frames, { frameId: last(progress)?.nextFrameId }) as Frame);
+	let lastFrame = $derived(find(frames, { frameId: last(choices)?.nextFrameId }) as Frame);
 </script>
 
 <div
 	class="flex w-full max-w-screen-lg select-none flex-row items-start gap-2 max-md:flex-col max-md:items-center"
 >
-	<LeftSide {story} {author} />
+	<LeftSide {story} {author} title={story.title} />
 	<div class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6">
-		{#if storyState === 'ended'}
-			<EndResults
-				bind:storyState
-				{story}
-				choicesCount={progress.length}
-				endFrame={lastFrame}
-				{progressVersion}
-			/>
-		{:else}
-			<StoryStart
-				bind:storyState
-				{author}
-				{lastFrame}
-				{progress}
-				{currentVersion}
-				{progressVersion}
-				{story}
-				{updated}
-			/>
-		{/if}
+		<StoryStart
+			bind:started
+			{author}
+			{lastFrame}
+			{choices}
+			{currentVersion}
+			{progressVersion}
+			{story}
+			{updated}
+		/>
 	</div>
 </div>

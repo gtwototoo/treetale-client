@@ -1,9 +1,15 @@
 <script lang="ts">
 	import ReadingHeader from '$lib/components/Header/ReadingHeader.svelte';
-	import { interfaceStore } from '$lib/stores/reading.svelte';
+	import { fullscreenStore, interfaceStore } from '$lib/stores/reading.svelte';
 
 	let { children } = $props();
+
+	const handleFullscreenChange = () => {
+		fullscreenStore.isEnabled = !!document.fullscreenElement;
+	};
 </script>
+
+<svelte:window onfullscreenchange={handleFullscreenChange} />
 
 <div class="fixed size-full overflow-auto">
 	{#if interfaceStore.show}

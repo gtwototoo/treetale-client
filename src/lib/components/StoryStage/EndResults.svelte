@@ -6,25 +6,27 @@
 	import { Share } from 'svelte-heros-v2';
 	import { Button, Icon, Tag } from 'treetale-ui';
 
-	import type { Frame, Story } from '$lib/types';
+	import type { Frame } from '$lib/types';
 
 	import { clm } from '$lib/utils/classMerge';
-	import { versionCompare } from '$lib/utils/versionCompare';
 
 	import FrameMini from './FrameMini.svelte';
+	import VersionTag from './VersionTag.svelte';
 
 	let {
 		choicesCount,
 		endFrame,
 		progressVersion,
-		story,
-		storyState = $bindable()
+		currentVersion,
+		storyId,
+		progressId
 	}: {
 		choicesCount: number;
 		endFrame: Frame;
 		progressVersion: string;
-		story: Story;
-		storyState: 'begin' | 'ended' | 'started';
+		currentVersion: string;
+		storyId: number;
+		progressId: number;
 	} = $props();
 
 	type CopyState = 'error' | 'success' | null;
@@ -34,9 +36,7 @@
 	const percent = 12;
 	const newEnd = true;
 
-	let textForCopy = $derived(
-		`${PUBLIC_TREETALE_CLIENT_URL}/result/${story.storyId}/${Date.now()}`
-	);
+	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${progressId}`);
 
 	let copyState = $state<CopyState>(null);
 
@@ -85,20 +85,9 @@
 			<p>Поделиться результатом</p>
 		</Button>
 	</div>
-	<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4">Результат</h1>
+	<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4">Результаты</h1>
 	<div class="flex w-full items-center gap-3 max-md:justify-between max-md:px-3">
-		<Tag
-			class={clm(
-				'bg-opacity-30',
-				{
-					breaking: 'bg-red-100 text-red-500',
-					current: 'bg-green-100 text-green-500',
-					minor: 'bg-yellow-100 text-yellow-500'
-				}[versionCompare(story.version, progressVersion)]
-			)}
-		>
-			Версия {progressVersion}
-		</Tag>
+		<VersionTag {currentVersion} {progressVersion} displayVersion="progress" />
 		<p class="italic">
 			{doPluralize(choicesCount)}
 			<span class="font-medium">{choicesCount}</span>
@@ -123,9 +112,10 @@
 <FrameMini frame={endFrame} />
 <div class="flex gap-3 *:pointer-events-auto max-md:w-full *:max-md:flex-1">
 	<Button
+		asLink
 		size="lg"
 		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
-		onclick={() => (storyState = 'begin')}
+		href={`/${storyId}`}
 	>
 		В начало
 	</Button>

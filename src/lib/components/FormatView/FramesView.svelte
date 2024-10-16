@@ -6,12 +6,12 @@
 	let {
 		lastFrame,
 		storyId,
-		storyState = $bindable()
+		progressId
 	}: {
 		lastFrame: Frame;
 		storyId: number;
-		storyState: 'begin' | 'ended' | 'started';
+		progressId: number;
 	} = $props();
 </script>
 
-<ReadFrame frame={lastFrame} {storyId} bind:storyState />
+<ReadFrame frame={lastFrame} {storyId} {progressId} />

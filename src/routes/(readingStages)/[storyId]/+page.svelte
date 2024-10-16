@@ -17,7 +17,7 @@
 	import { enabledChoice, setChoice } from '$lib/components/methods.svelte.js';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { fullscreenStore, interfaceStore } from '$lib/stores/reading.svelte';
+	import { interfaceStore } from '$lib/stores/reading.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
@@ -25,7 +25,7 @@
 	let { data } = $props();
 
 	let clonedData = $derived(cloneDeep(data));
-	let { author, currentVersion, frames, progress, progressVersion, story, updated } =
+	let { author, currentVersion, frames, choices, progressVersion, story, updated, progressId } =
 		$derived(clonedData);
 
 	// const isFullscreen = () => {
@@ -37,7 +37,7 @@
 	// 	);
 	// };
 
-	let storyState = $state<'begin' | 'ended' | 'started'>('begin');
+	let started = $state(false);
 
 	const handleKeydown: KeyboardEventHandler<Window> = (e) => {
 		const { code } = e;
@@ -68,12 +68,8 @@
 		actions[code]();
 	};
 
-	const handleFullscreenChange = () => {
-		fullscreenStore.isEnabled = !!document.fullscreenElement;
-	};
-
 	let lastFrame = $derived(
-		progress.length ? find(frames, { frameId: last(progress)!.nextFrameId })! : frames?.[0]
+		choices.length ? find(frames, { frameId: last(choices)!.nextFrameId })! : frames?.[0]
 	);
 
 	onMount(() => {
@@ -107,13 +103,13 @@
 	<title>{story.title}</title>
 </svelte:head>
 
-<svelte:window onfullscreenchange={handleFullscreenChange} onkeydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
 <SvgGradient />
 
-{#if storyState === 'started'}
+{#if started}
 	{#if story.format === 'novella'}
-		<NovellaView {lastFrame} storyId={story.storyId} bind:storyState />
+		<NovellaView {lastFrame} storyId={story.storyId} {progressId} />
 	{:else}
 		<div
 			class={clm(
@@ -123,9 +119,9 @@
 		>
 			<InterfaceViewButton />
 			{#if story.format === 'canvas'}
-				<CanvasView {frames} {progress} storyId={story.storyId} bind:storyState />
+				<CanvasView {frames} {choices} storyId={story.storyId} {progressId} />
 			{:else}
-				<FramesView {lastFrame} storyId={story.storyId} bind:storyState />
+				<FramesView {lastFrame} storyId={story.storyId} {progressId} />
 			{/if}
 		</div>
 	{/if}
@@ -138,12 +134,12 @@
 	>
 		<InterfaceViewButton />
 		<StoryStage
-			bind:storyState
+			bind:started
 			{story}
 			{author}
 			{updated}
 			{frames}
-			{progress}
+			{choices}
 			{currentVersion}
 			{progressVersion}
 		/>

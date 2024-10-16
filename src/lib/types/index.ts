@@ -9,7 +9,7 @@ export interface StartMoveParams {
 	startMoveCoords: Coordinates;
 }
 
-export interface Progress {
+export interface ProgressChoices {
 	choiceId: number;
 	frameId: number;
 	nextFrameId?: number;

@@ -2,26 +2,26 @@
 	import find from 'lodash/find';
 	import { Button, Tag } from 'treetale-ui';
 
-	import type { Frame, Progress, Story, User } from '$lib/types';
+	import type { Frame, ProgressChoices, Story, User } from '$lib/types';
 
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { variablesStore } from '$lib/stores/variables.svelte';
-	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
 
 	import ActionButtons from './StoryStart/ActionButtons.svelte';
 	import CopyButton from './StoryStart/CopyButton.svelte';
 	import SavedProgress from './StoryStart/SavedProgress.svelte';
+	import VersionTag from './VersionTag.svelte';
 
 	let {
 		currentVersion,
 		lastFrame,
-		progress,
+		choices,
 		progressVersion,
 		story,
-		storyState = $bindable(),
+		started = $bindable(),
 		updated
 	}: {
 		author: {
@@ -29,10 +29,10 @@
 		} & User;
 		currentVersion: string;
 		lastFrame: Frame;
-		progress: Progress[];
+		choices: ProgressChoices[];
 		progressVersion: string;
 		story: Story;
-		storyState: 'begin' | 'ended' | 'started';
+		started: boolean;
 		updated: number;
 	} = $props();
 
@@ -47,14 +47,7 @@
 		{title}
 	</h1>
 	<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
-		<Tag
-			class={clm(
-				'whitespace-nowrap bg-opacity-30',
-				currentVersion === 'Архив' ? 'bg-gray-100 text-gray-500' : 'bg-green-100 text-green-500'
-			)}
-		>
-			{currentVersion === 'Архив' ? currentVersion : `Версия ${currentVersion}`}
-		</Tag>
+		<VersionTag {currentVersion} />
 		<p class="text-base italic">
 			Обновлено <span class="font-medium">{formatDate(story.updated)}</span>
 		</p>
@@ -74,22 +67,22 @@
 		<p class="text-sm text-gray-500 max-md:text-xs">Теги не указаны</p>
 	{/if}
 </div>
-{#if progress.length}
+{#if choices.length}
 	<SavedProgress
 		{progressVersion}
 		{updated}
 		storyId={story.storyId}
 		{currentVersion}
-		choicesCount={progress.length}
+		choicesCount={choices.length}
 		{lastFrame}
-		onclick={() => (storyState = 'started')}
+		onclick={() => (started = true)}
 	/>
 {:else}
 	<div class="flex w-full items-center justify-between">
 		<Button
 			size="lg"
 			class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
-			onclick={() => (storyState = 'started')}
+			onclick={() => (started = true)}
 		>
 			Начать историю
 		</Button>

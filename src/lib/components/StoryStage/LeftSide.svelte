@@ -12,15 +12,17 @@
 
 	let {
 		author,
-		story
+		story,
+		title
 	}: {
 		author?: {
 			subscribersCount: number;
 		} & User;
 		story: Story;
+		title: string;
 	} = $props();
 
-	let { color, created, imageUrl, likes, status, storyId, title } = $derived(story);
+	let { color, created, imageUrl, likes, status, storyId } = $derived(story);
 	let selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
 	let genre = $derived(find(GENRES_LIST, { id: story.genre })!);
 </script>

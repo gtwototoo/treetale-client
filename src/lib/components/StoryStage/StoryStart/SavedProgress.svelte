@@ -4,7 +4,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Trash } from 'svelte-heros-v2';
-	import { Button, Icon, Tag } from 'treetale-ui';
+	import { Button, Icon } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
 
@@ -12,9 +12,9 @@
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
-	import { versionCompare } from '$lib/utils/versionCompare';
 
 	import FrameMini from '../FrameMini.svelte';
+	import VersionTag from '../VersionTag.svelte';
 	import CopyButton from './CopyButton.svelte';
 
 	let {
@@ -57,19 +57,7 @@
 
 <div class="flex w-full flex-col gap-6">
 	<div class="flex items-center gap-3 max-md:justify-between max-md:px-3">
-		<Tag
-			class={clm(
-				'bg-opacity-30',
-				{
-					archived: 'bg-gray-100 text-gray-500',
-					breaking: 'bg-red-100 text-red-500',
-					current: 'bg-green-100 text-green-500',
-					minor: 'bg-yellow-100 text-yellow-500'
-				}[versionCompare(currentVersion, progressVersion)]
-			)}
-		>
-			Версия {progressVersion}
-		</Tag>
+		<VersionTag {currentVersion} {progressVersion} displayVersion="progress" />
 		<p class="italic">
 			{doPluralize(choicesCount)}
 			<span class="font-medium">{choicesCount}</span>
