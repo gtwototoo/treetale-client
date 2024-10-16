@@ -46,7 +46,7 @@
 <Header class="fixed">
 	{#if fullscreenSupport}
 		<Button
-			class="header-button pointer-events-auto bg-main-50 text-text hover:bg-main-70"
+			class="header-button bg-main-50 text-text hover:bg-main-70"
 			onclick={handleFulscreen}
 			size="lg"
 		>

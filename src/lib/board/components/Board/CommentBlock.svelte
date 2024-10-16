@@ -45,7 +45,6 @@
 	role="button"
 	tabindex="0"
 	bind:clientHeight={comment.height}
-	bind:clientWidth={comment.width}
 	style={transform({ x, y })}
 	ontouchstart={handleMouseDown}
 	onmousedown={handleMouseDown}

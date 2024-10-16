@@ -132,10 +132,15 @@
 	{/if}
 	<div
 		class={clm(
+			'p-1',
 			toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint',
 			(isSelected || isDragging) && 'after:to-text',
 			isSelectedBindingChoice && 'group-hover:after:to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
-	></div>
+	>
+		{#if !toFrame}
+			<div class="size-full rounded-full bg-red-500"></div>
+		{/if}
+	</div>
 </Button>

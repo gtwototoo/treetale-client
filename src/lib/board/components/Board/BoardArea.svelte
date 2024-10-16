@@ -48,11 +48,6 @@
 		onzoom?: (args: { offset: Coordinates; zoom: number }) => void;
 	} = $props();
 
-	let { height, width } = $state({
-		height: 0,
-		width: 0
-	});
-
 	let startPinch = $state(0);
 	let board = $state<HTMLDivElement>();
 
@@ -139,8 +134,8 @@
 	};
 
 	onMount(() => {
-		boardParamsStore.width = width;
-		boardParamsStore.height = height;
+		boardParamsStore.width = board!.clientWidth;
+		boardParamsStore.height = board!.clientHeight;
 
 		const off = on(board!, 'wheel', handleWheel, {
 			passive: false
@@ -156,8 +151,6 @@
 	<WindowActions {onmouseup} {board} />
 {/if}
 <div
-	bind:clientHeight={height}
-	bind:clientWidth={width}
 	bind:this={board}
 	class={clm(
 		'fixed inset-0 size-full select-none overflow-hidden',

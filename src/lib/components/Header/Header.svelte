@@ -23,7 +23,7 @@
 <div class={clm('pointer-events-none z-10 flex w-full justify-center', classname)}>
 	<section class="flex w-full max-w-[120rem] items-center justify-between p-4 max-sm:p-3">
 		<Logo />
-		<div class="flex gap-4 max-sm:gap-2">
+		<div class="flex gap-4 *:pointer-events-auto max-sm:gap-2">
 			{@render children?.()}
 			<Session />
 			{@render right?.()}

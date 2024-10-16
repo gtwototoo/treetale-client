@@ -27,7 +27,11 @@
 			component: FrameSettings,
 			icon: RectangleStack,
 			id: `frame-${boardFramesStore.frames[0].frameId}`,
-			props: { isEdit: true, title: boardFramesStore.frames[0].title }
+			props: {
+				frameId: boardFramesStore.frames[0].frameId,
+				isEdit: true,
+				title: boardFramesStore.frames[0].title
+			}
 		},
 		{
 			component: Variables,

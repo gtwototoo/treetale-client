@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Howl } from 'howler';
 
-	import { MusicalNote, Play, Stop } from 'svelte-heros-v2';
+	import { MusicalNote, Pause, Play, Stop } from 'svelte-heros-v2';
 	import { Button, Icon, Loading } from 'treetale-ui';
 
 	import { soundStore } from '$lib/stores/sound.svelte';
@@ -44,8 +44,16 @@
 		});
 	};
 
-	const handleClick = () => {
-		soundStore.sound?.[soundStore.playing ? 'stop' : 'play']();
+	const handlePlay = () => {
+		soundStore.sound?.play();
+	};
+
+	const handlePause = () => {
+		soundStore.sound?.pause();
+	};
+
+	const handleStop = () => {
+		soundStore.sound?.stop();
 	};
 
 	const handleLoadEnd = (base64src: string) => {
@@ -74,13 +82,32 @@
 			{#await preload(soundStore.sound)}
 				<Icon class="size-5" this={Loading} />
 			{:then}
-				<Button
-					class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
-					onclick={handleClick}
-				>
-					<Icon class="size-8" variation="solid" this={soundStore.playing ? Stop : Play} />
-					<p class="text-xs">{soundStore.playing ? 'Стоп' : 'Играть'}</p>
-				</Button>
+				{#if soundStore.playing}
+					<Button
+						class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+						onclick={handlePlay}
+					>
+						<Icon class="size-8" variation="solid" this={Play} />
+						<p class="text-xs">Играть</p>
+					</Button>
+				{:else}
+					<div class="flex gap-2">
+						<Button
+							class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+							onclick={handlePause}
+						>
+							<Icon class="size-8" variation="solid" this={Pause} />
+							<p class="text-xs">Пауза</p>
+						</Button>
+						<Button
+							class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+							onclick={handleStop}
+						>
+							<Icon class="size-8" variation="solid" this={Stop} />
+							<p class="text-xs">Стоп</p>
+						</Button>
+					</div>
+				{/if}
 				<div class="absolute bottom-3 left-3 right-3 flex items-center gap-2">
 					<p class="w-5 shrink-0 text-center">{Math.round(soundStore.seek)}</p>
 					<div class="h-2 w-full overflow-hidden rounded-full bg-contrast">
