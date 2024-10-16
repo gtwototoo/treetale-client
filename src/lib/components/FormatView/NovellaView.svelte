@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	import { Button, Image } from 'treetale-ui';
 
-	import type { Frame } from '$lib/types';
-
-	import { fullscreenStore } from '$lib/stores/reading.svelte';
-	import { clm } from '$lib/utils/classMerge';
-	import { correctWhitespace } from '$lib/utils/text';
-
-	import { goto } from '$app/navigation';
 	import { enabledChoice } from '../methods.svelte';
+
 	import InterfaceViewButton from './InterfaceViewButton.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
+
+	import { fullscreenStore } from '$lib/stores/reading.svelte';
+	import type { Frame } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+	import { correctWhitespace } from '$lib/utils/text';
 
 	let {
 		lastFrame,

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Button, Contenteditable, FormSplit } from 'treetale-ui';
 
-	import type { Choice } from '$lib/types';
+	import { Button, Contenteditable, FormSplit } from 'treetale-ui';
 
 	import { setChoice } from '$lib/components/methods.svelte';
 	import { loadingStore } from '$lib/stores/reading.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
+	import type { Choice } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 

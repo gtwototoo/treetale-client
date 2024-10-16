@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { ChevronRight } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import { clm } from '$lib/utils/classMerge';
-
 	import Header from './Panel/Header.svelte';
 	import Tabs from './Panel/Tabs.svelte';
+
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import { clm } from '$lib/utils/classMerge';
 
 	let CurrentPanel = $derived(panelStatesStore.component);
 

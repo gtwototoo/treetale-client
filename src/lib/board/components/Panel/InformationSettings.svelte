@@ -1,13 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 
-	import { deleteStory, updateInfomation } from '$board/requests/story';
-	import { readonlyModeStore } from '$board/stores/index.svelte';
-	import { storyInfoStore } from '$board/stores/info.svelte';
-	import { notesStore } from '$board/stores/notes.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { variablesStore } from '$board/stores/variables.svelte';
-	import { notesHighlight, variablesHighlight } from '$board/utils/editing';
 	import find from 'lodash/find';
 	import { Cloud, PaintBrush } from 'svelte-heros-v2';
 	import {
@@ -21,18 +14,24 @@
 		Popover
 	} from 'treetale-ui';
 
-	import type { RGB, StoryFormat } from '$lib/types';
+	import IllustrationEdit from './IllustrationEdit.svelte';
+	import Publishing from './InformationSettings/Publishing.svelte';
+	import Shortcuts from './InformationSettings/Shortcuts.svelte';
 
+	import { deleteStory, updateInfomation } from '$board/requests/story';
+	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { storyInfoStore } from '$board/stores/info.svelte';
+	import { notesStore } from '$board/stores/notes.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import { variablesStore } from '$board/stores/variables.svelte';
+	import { notesHighlight, variablesHighlight } from '$board/utils/editing';
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { RGB, StoryFormat } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
-
-	import IllustrationEdit from './IllustrationEdit.svelte';
-	import Publishing from './InformationSettings/Publishing.svelte';
-	import Shortcuts from './InformationSettings/Shortcuts.svelte';
 
 	let light = $state(80);
 	let saturate = $state(90);

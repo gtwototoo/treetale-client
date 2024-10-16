@@ -1,7 +1,7 @@
+import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
+
 import type { HttpError, NumericRange } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
-
-import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 import sample from 'lodash/sample';
 
 import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';

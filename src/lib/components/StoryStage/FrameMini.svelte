@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { Image } from 'treetale-ui';
 
-	import type { Frame } from '$lib/types';
-
 	import { variablesStore } from '$lib/stores/variables.svelte';
+	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 

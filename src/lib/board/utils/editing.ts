@@ -1,8 +1,7 @@
 import find from 'lodash/find';
 
-import type { Bounding, Choice, ConnectPath, Coordinates, Frame, Note, Variable } from '$lib/types';
-
 import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants';
+import type { Bounding, Choice, ConnectPath, Coordinates, Frame, Note, Variable } from '$lib/types';
 import { clm } from '$lib/utils/classMerge';
 
 export const transform = (coords: Coordinates, zoom?: number): string => {

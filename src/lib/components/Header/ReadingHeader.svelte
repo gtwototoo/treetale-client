@@ -4,9 +4,9 @@
 	import { ArrowsPointingIn, ArrowsPointingOut } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import { fullscreenStore } from '$lib/stores/reading.svelte';
-
 	import Header from './Header.svelte';
+
+	import { fullscreenStore } from '$lib/stores/reading.svelte';
 
 	let fullscreenSupport = false;
 

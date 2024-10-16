@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
+import importPlugin from 'eslint-plugin-import';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
@@ -10,12 +11,31 @@ export default [
 	...ts.configs.recommended,
 	...svelte.configs['flat/recommended'],
 	...svelte.configs['flat/prettier'],
+	importPlugin.flatConfigs['warnings'],
+	importPlugin.flatConfigs['typescript'],
 	{
 		files: ['**/*.svelte'],
 		languageOptions: {
 			parserOptions: {
 				parser: ts.parser
 			}
+		}
+	},
+	{
+		settings: {
+			'import/core-modules': ['svelte', '$app', '$env']
+		},
+		rules: {
+			'import/order': [
+				'warn',
+				{
+					alphabetize: {
+						order: 'asc',
+						caseInsensitive: true
+					},
+					'newlines-between': 'always'
+				}
+			]
 		}
 	},
 	{

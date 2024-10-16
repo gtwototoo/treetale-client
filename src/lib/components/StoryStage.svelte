@@ -2,10 +2,10 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 
-	import type { Frame, ProgressChoices, Story, User } from '$lib/types';
-
 	import LeftSide from './StoryStage/LeftSide.svelte';
 	import StoryStart from './StoryStage/StoryStart.svelte';
+
+	import type { Frame, ProgressChoices, Story, User } from '$lib/types';
 
 	let {
 		author,

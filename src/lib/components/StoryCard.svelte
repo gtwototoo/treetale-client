@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+
 	import find from 'lodash/find';
 	import { Heart } from 'svelte-heros-v2';
 	import { Icon, Link } from 'treetale-ui';
-
-	import type { Story, User } from '$lib/types';
-
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { GENRES_LIST } from '$lib/constants/genres';
-	import { clm } from '$lib/utils/classMerge';
-	import { generateMainColors } from '$lib/utils/customColors';
-	import { collapseValue } from '$lib/utils/number';
 
 	import Adventure from './Icons/Genres/Adventure.svelte';
 	import Info from './Info.svelte';
 	import Cover from './StoryCard/Cover.svelte';
 	import HoverInfo from './StoryCard/HoverInfo.svelte';
+
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { GENRES_LIST } from '$lib/constants/genres';
+	import type { Story, User } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+	import { generateMainColors } from '$lib/utils/customColors';
+	import { collapseValue } from '$lib/utils/number';
 
 	let {
 		author,

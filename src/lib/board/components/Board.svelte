@@ -1,6 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import find from 'lodash/find';
+	import { ArrowsPointingIn } from 'svelte-heros-v2';
+
+	import BoardArea from './Board/BoardArea.svelte';
+	import {
+		addComment,
+		addFrame,
+		cursorFollow,
+		movingArea,
+		movingBlock,
+		startMoveArea
+	} from './methods.svelte';
+
 	import InformationSettings from '$board/components/Panel/InformationSettings.svelte';
 	import { addBlockOffsetStore, movingBlockStore } from '$board/stores/blocks.svelte';
 	import { boardCommentsStore } from '$board/stores/comments.svelte';
@@ -16,11 +29,6 @@
 	} from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import find from 'lodash/find';
-	import { ArrowsPointingIn } from 'svelte-heros-v2';
-
-	import type { Comment, Coordinates, Frame, StartMoveParams } from '$lib/types/index';
-
 	import {
 		DEFAULT_BLOCK_WIDTH,
 		DEFAULT_COMMENT_HEIGHT,
@@ -28,16 +36,7 @@
 	} from '$lib/constants';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-
-	import BoardArea from './Board/BoardArea.svelte';
-	import {
-		addComment,
-		addFrame,
-		cursorFollow,
-		movingArea,
-		movingBlock,
-		startMoveArea
-	} from './methods.svelte';
+	import type { Comment, Coordinates, Frame, StartMoveParams } from '$lib/types/index';
 
 	let startOffset = $state<Coordinates>({ x: 0, y: 0 });
 	let startMoveData = $state<StartMoveParams>({

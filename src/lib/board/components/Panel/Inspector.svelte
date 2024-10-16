@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { type SelectedChoices, inspectorStore } from '$board/stores/inspector.svelte';
-	import { variablesStore } from '$board/stores/variables.svelte';
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import { Tv } from 'svelte-heros-v2';
 	import { Button, Image } from 'treetale-ui';
 
-	import { clm } from '$lib/utils/classMerge';
-	import { correctVariableReplace } from '$lib/utils/text';
-
 	import Choice from './Inspector/Choice.svelte';
 	import ShortDescription from './ShortDescription.svelte';
+
+	import { boardFramesStore } from '$board/stores/frames.svelte';
+	import { type SelectedChoices, inspectorStore } from '$board/stores/inspector.svelte';
+	import { variablesStore } from '$board/stores/variables.svelte';
+	import { clm } from '$lib/utils/classMerge';
+	import { correctVariableReplace } from '$lib/utils/text';
 
 	let inspectorVariables = $state(cloneDeep(variablesStore.variables));
 

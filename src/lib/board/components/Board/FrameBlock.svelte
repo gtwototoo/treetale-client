@@ -1,4 +1,13 @@
 <script lang="ts">
+	import find from 'lodash/find';
+	import { Share } from 'svelte-heros-v2';
+	import { Image } from 'treetale-ui';
+
+	import { connectedWithStart, setSelectedFrame } from '../methods.svelte';
+
+	import Choices from './FrameBlock/Choices.svelte';
+	import Header from './FrameBlock/Header.svelte';
+
 	import { movingBlockStore } from '$board/stores/blocks.svelte';
 	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
@@ -6,19 +15,10 @@
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
 	import { createConnections } from '$board/utils/editing';
-	import find from 'lodash/find';
-	import { Share } from 'svelte-heros-v2';
-	import { Image } from 'treetale-ui';
-
-	import type { Frame } from '$lib/types';
-
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
+	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { preventDefault } from '$lib/utils/eventsModificators';
-
-	import { connectedWithStart, setSelectedFrame } from '../methods.svelte';
-	import Choices from './FrameBlock/Choices.svelte';
-	import Header from './FrameBlock/Header.svelte';
 
 	let {
 		frame

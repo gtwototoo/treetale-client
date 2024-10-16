@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { goto, invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import type { KeyboardEventHandler } from 'svelte/elements';
 
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import last from 'lodash/last';
@@ -12,9 +12,9 @@
 	import FramesView from '$lib/components/FormatView/FramesView.svelte';
 	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
 	import NovellaView from '$lib/components/FormatView/NovellaView.svelte';
+	import { enabledChoice, setChoice } from '$lib/components/methods.svelte.js';
 	import StoryStage from '$lib/components/StoryStage.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
-	import { enabledChoice, setChoice } from '$lib/components/methods.svelte.js';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { interfaceStore } from '$lib/stores/reading.svelte';

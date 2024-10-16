@@ -1,16 +1,15 @@
 <script lang="ts">
-	import type { HttpError } from '@sveltejs/kit';
 	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
+	import type { HttpError } from '@sveltejs/kit';
 	import { Button, Input } from 'treetale-ui';
-
-	import type { FetchResponse } from '$lib/types/response';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { signInUser } from '$lib/requests/user';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { FetchResponse } from '$lib/types/response';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 

@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { variablesStore } from '$board/stores/variables.svelte';
 	import find from 'lodash/find';
 	import { XMark } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon, Input, Listbox } from 'treetale-ui';
 
-	import type { ComparisonOperators, MathOperators, Modificator } from '$lib/types';
-
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import { variablesStore } from '$board/stores/variables.svelte';
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { ComparisonOperators, MathOperators, Modificator } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 
 	const symbols: {

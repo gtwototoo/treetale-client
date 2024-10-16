@@ -5,8 +5,6 @@
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
 	import { Avatar, Button, Icon, InputFile } from 'treetale-ui';
 
-	import type { RGB } from '$lib/types';
-
 	import {
 		BLACK_COLOR,
 		BLACK_TEXT_COLOR,
@@ -16,6 +14,7 @@
 	} from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage } from '$lib/requests/files';
+	import type { RGB } from '$lib/types';
 	import { contrastText } from '$lib/utils/contrast';
 	import { toRGB } from '$lib/utils/customColors';
 

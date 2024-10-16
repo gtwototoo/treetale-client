@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { Tag } from 'treetale-ui';
+
 	import { clm } from '$lib/utils/classMerge';
 	import { versionCompare } from '$lib/utils/versionCompare';
-
-	import { Tag } from 'treetale-ui';
 
 	let {
 		currentVersion,

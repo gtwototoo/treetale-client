@@ -1,8 +1,7 @@
-import type { FormatValues } from '$lib/types';
-
 import Canvas from '$lib/components/Icons/Format/Canvas.svelte';
 import Frames from '$lib/components/Icons/Format/Frames.svelte';
 import Novella from '$lib/components/Icons/Format/Novella.svelte';
+import type { FormatValues } from '$lib/types';
 
 export const STORY_FORMATS: FormatValues[] = [
 	{

@@ -1,13 +1,6 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	import { connectionStartStore } from '$board/stores/frames.svelte';
-	import {
-		type ActionType,
-		type ModeType,
-		boardStateStore,
-		isBindingMode
-	} from '$board/stores/index.svelte';
 	import {
 		ArrowRightOnRectangle,
 		ArrowsPointingOut,
@@ -18,6 +11,14 @@
 		Square3Stack3d
 	} from 'svelte-heros-v2';
 	import { Button, type HeroIconComponent, Icon } from 'treetale-ui';
+
+	import { connectionStartStore } from '$board/stores/frames.svelte';
+	import {
+		type ActionType,
+		type ModeType,
+		boardStateStore,
+		isBindingMode
+	} from '$board/stores/index.svelte';
 
 	const modesIcons: Record<ModeType, HeroIconComponent> = {
 		addingComment: Square3Stack3d,

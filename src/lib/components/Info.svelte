@@ -2,12 +2,11 @@
 	import { ArchiveBox, CheckCircle, Clock } from 'svelte-heros-v2';
 	import { Icon } from 'treetale-ui';
 
-	import type { RGB, StoryStatus, User } from '$lib/types';
+	import ProfileLink from './StoryCard/ProfileLink.svelte';
 
+	import type { RGB, StoryStatus, User } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
-
-	import ProfileLink from './StoryCard/ProfileLink.svelte';
 
 	let {
 		author,

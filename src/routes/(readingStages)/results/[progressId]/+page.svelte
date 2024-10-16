@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
+	import cloneDeep from 'lodash/cloneDeep';
+
 	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
 	import EndResults from '$lib/components/StoryStage/EndResults.svelte';
 	import LeftSide from '$lib/components/StoryStage/LeftSide.svelte';
@@ -8,8 +12,6 @@
 	import { interfaceStore } from '$lib/stores/reading.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors.js';
-	import cloneDeep from 'lodash/cloneDeep';
-	import { onMount } from 'svelte';
 
 	let { data } = $props();
 

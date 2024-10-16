@@ -1,9 +1,9 @@
 <script lang="ts">
+	import find from 'lodash/find';
+
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { inspectorStore } from '$board/stores/inspector.svelte';
 	import { createConnections } from '$board/utils/editing';
-	import find from 'lodash/find';
-
 	import { clm } from '$lib/utils/classMerge';
 
 	const checkInspectorConnections = (connectId: string) => {

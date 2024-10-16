@@ -1,10 +1,9 @@
 import { goto } from '$app/navigation';
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
+import { fetchDelete, fetchPost, fetchPut } from '$lib/requests';
 import type { Comment, Coordinates, Frame, Note, StoryEditableInfo, Variable } from '$lib/types';
 import type { FetchResponse } from '$lib/types/response';
-
-import { fetchDelete, fetchPost, fetchPut } from '$lib/requests';
 
 export const updateInfomation = async (storyId: number, info: StoryEditableInfo) => {
 	return await fetchPost(`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/update/info`, info);

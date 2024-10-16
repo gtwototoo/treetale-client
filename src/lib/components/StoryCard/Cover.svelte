@@ -3,13 +3,12 @@
 
 	import { Image } from 'treetale-ui';
 
-	import type { RGB } from '$lib/types';
-
-	import { clm } from '$lib/utils/classMerge';
-	import { contrastText } from '$lib/utils/contrast';
-
 	import Titie from './Titie.svelte';
 	import TransparentRect from './TransparentRect.svelte';
+
+	import type { RGB } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+	import { contrastText } from '$lib/utils/contrast';
 
 	let {
 		class: classname,

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import cloneDeep from 'lodash/cloneDeep';
+
 	import Board from '$board/components/Board.svelte';
 	import Footer from '$board/components/Footer.svelte';
 	import Header from '$board/components/Header.svelte';
@@ -9,8 +11,6 @@
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
-	import cloneDeep from 'lodash/cloneDeep';
-
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';

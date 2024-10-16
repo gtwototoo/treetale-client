@@ -2,7 +2,6 @@ import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
 import type { Story, User } from '$lib/types';
 import type { FetchResponse } from '$lib/types/response.js';
-
 import { randomError } from '$lib/utils/random';
 
 interface ICategory {

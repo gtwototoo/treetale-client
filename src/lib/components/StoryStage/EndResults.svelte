@@ -1,17 +1,16 @@
 <script lang="ts">
+	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { onDestroy } from 'svelte';
 
-	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Share } from 'svelte-heros-v2';
 	import { Button, Icon, Tag } from 'treetale-ui';
 
-	import type { Frame } from '$lib/types';
-
-	import { clm } from '$lib/utils/classMerge';
-
 	import FrameMini from './FrameMini.svelte';
 	import VersionTag from './VersionTag.svelte';
+
+	import type { Frame } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
 
 	let {
 		choicesCount,

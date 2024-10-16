@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
 	import { Button, Icon, Link } from 'treetale-ui';
 
-	import type { User } from '$lib/types';
-
 	import ProfileAvatar from '../ProfileAvatar.svelte';
+
+	import type { User } from '$lib/types';
 
 	let user = $derived($page.data.session as User);
 	let addLoading = $state(false);

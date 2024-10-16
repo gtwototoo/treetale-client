@@ -2,7 +2,6 @@
 	import { Tag } from 'treetale-ui';
 
 	import type { Variable } from '$lib/types';
-
 	import { correctVariableReplace } from '$lib/utils/text';
 
 	let {

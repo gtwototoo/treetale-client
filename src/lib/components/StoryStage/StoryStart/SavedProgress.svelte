@@ -1,21 +1,21 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import type { MouseEventHandler } from 'svelte/elements';
 
-	import { invalidateAll } from '$app/navigation';
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Trash } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import type { Frame } from '$lib/types';
+	import FrameMini from '../FrameMini.svelte';
+	import VersionTag from '../VersionTag.svelte';
+
+	import CopyButton from './CopyButton.svelte';
 
 	import { deleteProgress } from '$lib/requests/progress';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
-
-	import FrameMini from '../FrameMini.svelte';
-	import VersionTag from '../VersionTag.svelte';
-	import CopyButton from './CopyButton.svelte';
 
 	let {
 		choicesCount,

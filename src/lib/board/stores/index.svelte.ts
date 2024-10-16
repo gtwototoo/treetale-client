@@ -1,12 +1,12 @@
-import { updateArea } from '$board/requests/story';
 import omit from 'lodash/omit';
-
-import type { Comment, Coordinates, Frame, Sizes } from '$lib/types';
 
 import { movingBlockStore } from './blocks.svelte';
 import { boardCommentsStore } from './comments.svelte';
 import { boardFramesStore, connectionStartStore } from './frames.svelte';
 import { storyInfoStore } from './info.svelte';
+
+import { updateArea } from '$board/requests/story';
+import type { Comment, Coordinates, Frame, Sizes } from '$lib/types';
 
 export type ActionType = 'connectTo' | 'dragImage' | 'movingArea' | 'movingBlock';
 export type ModeType = 'addingComment' | 'addingFrame' | 'binding' | 'view';

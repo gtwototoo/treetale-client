@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { isBindingMode } from '$board/stores/index.svelte';
 	import { MusicalNote } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
+	import { isBindingMode } from '$board/stores/index.svelte';
 	import type { Frame } from '$lib/types';
-
 	import { clm } from '$lib/utils/classMerge';
 
 	let {

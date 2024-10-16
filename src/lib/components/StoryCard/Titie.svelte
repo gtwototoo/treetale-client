@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { Selection } from 'd3-selection';
-
 	import { select } from 'd3-selection';
 
-	import { clm } from '$lib/utils/classMerge';
-
 	import TitleEditRect from './TitleEditRect.svelte';
+
+	import { clm } from '$lib/utils/classMerge';
 
 	let {
 		color,

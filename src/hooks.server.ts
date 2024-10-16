@@ -1,12 +1,11 @@
-import type { Handle, HandleServerError } from '@sveltejs/kit';
-
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
+import type { Handle, HandleServerError } from '@sveltejs/kit';
 import sample from 'lodash/sample';
 
+import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';
 import type { User } from '$lib/types';
 import type { FetchResponse } from '$lib/types/response';
-
-import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';
 
 export const handle = (async ({ event, resolve }) => {
 	const sessionId = event.cookies.get('sessionId');

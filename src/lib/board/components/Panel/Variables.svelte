@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { Cloud, Variable } from 'svelte-heros-v2';
+	import { Button, Icon } from 'treetale-ui';
+
+	import ShortDescription from './ShortDescription.svelte';
+	import VariableRow from './Variables/Variable.svelte';
+
 	import { updateVars } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
-	import { Cloud, Variable } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
-
 	import { correctWhitespace } from '$lib/utils/text';
-
-	import ShortDescription from './ShortDescription.svelte';
-	import VariableRow from './Variables/Variable.svelte';
 
 	let timer = $state<number>();
 	let saving = $state(false);

@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { type StateType, boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { ArrowUturnLeft, ArrowUturnRight, Cloud, Link as LinkIcon } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon } from 'treetale-ui';
 
+	import ChangesHistory from './Panel/ChangesHistory.svelte';
+	import ShareBoard from './Panel/ShareBoard.svelte';
+
+	import { changesHistoryStore } from '$board/stores/history.svelte';
+	import { type StateType, boardStateStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import Logo from '$lib/components/Header/Logo.svelte';
 	import LogoLinearGradient from '$lib/components/Header/LogoLinearGradient.svelte';
 	import Session from '$lib/components/Header/Session.svelte';
 	import { ICON_TYPE } from '$lib/constants';
 	import { clm } from '$lib/utils/classMerge';
-
-	import ChangesHistory from './Panel/ChangesHistory.svelte';
-	import ShareBoard from './Panel/ShareBoard.svelte';
 
 	const stateColors: Record<StateType, string> = {
 		await: 'text-gray-400',

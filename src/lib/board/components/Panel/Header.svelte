@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { readonlyModeStore } from '$board/stores/index.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { ChevronDown, ChevronLeft, PencilSquare } from 'svelte-heros-v2';
 	import { Button, Icon, Listbox } from 'treetale-ui';
 
-	import { clm } from '$lib/utils/classMerge';
-
 	import { setSelectedFrame } from '../methods.svelte';
+
+	import { boardFramesStore } from '$board/stores/frames.svelte';
+	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import { clm } from '$lib/utils/classMerge';
 
 	let framesList = $derived(
 		boardFramesStore.frames.map((frame) => {

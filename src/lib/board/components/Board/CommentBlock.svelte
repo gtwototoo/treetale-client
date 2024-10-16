@@ -1,16 +1,15 @@
 <script lang="ts">
+	import reject from 'lodash/reject';
+	import { Trash, XMark } from 'svelte-heros-v2';
+	import { Button, Contenteditable, Icon } from 'treetale-ui';
+
 	import { movingBlockStore } from '$board/stores/blocks.svelte';
 	import { boardCommentsStore } from '$board/stores/comments.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
-	import reject from 'lodash/reject';
-	import { Trash, XMark } from 'svelte-heros-v2';
-	import { Button, Contenteditable, Icon } from 'treetale-ui';
-
-	import type { Comment } from '$lib/types';
-
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { Comment } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 
 	let {

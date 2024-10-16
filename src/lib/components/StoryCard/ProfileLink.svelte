@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Button } from 'treetale-ui';
 
-	import type { User } from '$lib/types';
+	import ProfileAvatar from '../ProfileAvatar.svelte';
 
+	import type { User } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { collapseValue } from '$lib/utils/number';
-
-	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let {
 		author,

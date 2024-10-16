@@ -12,6 +12,7 @@
 		"source.fixAll": "explicit",
 		"source.organizeImports": "explicit"
 	},
+	"eslint.codeActionsOnSave.mode": "all",
 	"editor.tabSize": 3,
 	"editor.wordWrap": "on",
 	"tailwindCSS.experimental.classRegex": [["clm\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],

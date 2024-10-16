@@ -4,10 +4,10 @@
 	import find from 'lodash/find';
 	import range from 'lodash/range';
 
-	import type { Story, User } from '$lib/types';
-
-	import StoryCard from './StoryCard.svelte';
 	import Empty from './StoryCard/Empty.svelte';
+	import StoryCard from './StoryCard.svelte';
+
+	import type { Story, User } from '$lib/types';
 
 	let {
 		authors,

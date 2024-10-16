@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+
 	import { Plus } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 

@@ -1,14 +1,13 @@
 <script lang="ts">
 	import find from 'lodash/find';
 
-	import type { Story, User } from '$lib/types';
-
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { GENRES_LIST } from '$lib/constants/genres';
-
 	import Info from '../Info.svelte';
 	import Likes from '../Likes.svelte';
 	import Cover from '../StoryCard/Cover.svelte';
+
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { GENRES_LIST } from '$lib/constants/genres';
+	import type { Story, User } from '$lib/types';
 
 	let {
 		author,

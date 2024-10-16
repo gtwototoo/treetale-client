@@ -1,12 +1,11 @@
 import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
 
-import type { Choice, LogicModificator, MathModificator, Modificator } from '$lib/types/index';
-
 import { updateProgress } from '$lib/requests/progress';
 import { framesStore, loadingStore } from '$lib/stores/reading.svelte';
 import { soundStore } from '$lib/stores/sound.svelte';
 import { variablesStore } from '$lib/stores/variables.svelte';
+import type { Choice, LogicModificator, MathModificator, Modificator } from '$lib/types/index';
 import {
 	checkLogic,
 	choiceModificators,

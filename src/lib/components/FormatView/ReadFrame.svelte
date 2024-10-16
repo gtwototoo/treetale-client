@@ -1,18 +1,18 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	import find from 'lodash/find';
 	import { Button } from 'treetale-ui';
 
-	import type { Frame } from '$lib/types';
+	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
+
+	import Choice from './ReadFrame/Choice.svelte';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
+	import type { Frame } from '$lib/types';
 	import { correctVariableReplace } from '$lib/utils/text';
-
-	import { goto } from '$app/navigation';
-	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
-	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
 		class: classname,

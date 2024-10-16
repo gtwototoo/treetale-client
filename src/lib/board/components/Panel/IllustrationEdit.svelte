@@ -1,15 +1,15 @@
 <script lang="ts">
 	import type { ChangeEventHandler } from 'svelte/elements';
 
+	import find from 'lodash/find';
+	import { BookOpen, Photo } from 'svelte-heros-v2';
+	import { Button, Icon, InputFile } from 'treetale-ui';
+
 	import { removeImage, saveImage } from '$board/requests/files';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import find from 'lodash/find';
-	import { BookOpen, Photo } from 'svelte-heros-v2';
-	import { Button, Icon, InputFile } from 'treetale-ui';
-
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';

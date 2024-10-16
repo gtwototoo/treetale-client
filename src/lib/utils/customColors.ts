@@ -1,6 +1,6 @@
 import range from 'lodash/range';
 
-import type { RGB } from '$lib/types';
+import { contrastText } from './contrast';
 
 import {
 	BLACK_COLOR,
@@ -8,8 +8,7 @@ import {
 	WHITE_COLOR,
 	WHITE_TEXT_COLOR
 } from '$lib/constants/colors';
-
-import { contrastText } from './contrast';
+import type { RGB } from '$lib/types';
 
 export const varColors = (extend: Record<string, RGB> = {}) => {
 	return Object.entries(extend)

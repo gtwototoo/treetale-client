@@ -1,12 +1,13 @@
 <script lang="ts">
-	import type { ChangeEventHandler } from 'svelte/elements';
-
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
+	import type { ChangeEventHandler } from 'svelte/elements';
+
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
 	import { Button, ColorPicker, Contenteditable, Icon, Input } from 'treetale-ui';
 
-	import type { RGB, User } from '$lib/types';
+	import InvisibleDrop from './InvisibleDrop.svelte';
+	import ProfileAvatar from './ProfileAvatar.svelte';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -18,10 +19,8 @@
 		updateProfile
 	} from '$lib/requests/user';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { RGB, User } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
-
-	import InvisibleDrop from './InvisibleDrop.svelte';
-	import ProfileAvatar from './ProfileAvatar.svelte';
 
 	let {
 		me,

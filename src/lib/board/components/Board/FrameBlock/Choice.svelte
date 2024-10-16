@@ -1,4 +1,8 @@
 <script lang="ts">
+	import find from 'lodash/find';
+	import findIndex from 'lodash/findIndex';
+	import { Button } from 'treetale-ui';
+
 	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
 	import {
 		boardStateStore,
@@ -6,13 +10,8 @@
 		isViewMode,
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
-	import find from 'lodash/find';
-	import findIndex from 'lodash/findIndex';
-	import { Button } from 'treetale-ui';
-
-	import type { Choice, Frame } from '$lib/types';
-
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
+	import type { Choice, Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { choiceModificators } from '$lib/utils/variableOperations';
 

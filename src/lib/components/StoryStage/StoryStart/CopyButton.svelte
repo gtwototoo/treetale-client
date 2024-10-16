@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { onDestroy } from 'svelte';
 	import type { MouseEventHandler } from 'svelte/elements';
 
-	import { PUBLIC_TREETALE_CLIENT_URL } from '$env/static/public';
 	import { DocumentDuplicate } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 

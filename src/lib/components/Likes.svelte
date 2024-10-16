@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+
 	import without from 'lodash/without';
 	import { Heart } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';

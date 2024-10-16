@@ -1,6 +1,6 @@
-import { redirect } from '@sveltejs/kit';
-
 import { PUBLIC_TEST_STORY_ID, PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
+import { redirect } from '@sveltejs/kit';
 
 import type { FetchResponse } from '$lib/types/response';
 import type { StorySchema } from '$lib/types/schemas';

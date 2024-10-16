@@ -1,11 +1,9 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 
-	import { page } from '$app/stores';
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 	import { Button, type HeroIconComponent, Icon, Input, Loading } from 'treetale-ui';
-
-	import type { Searched, StoryFormat } from '$lib/types';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Category from '$lib/components/Category.svelte';
@@ -15,6 +13,7 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { searchStories } from '$lib/requests/story';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { Searched, StoryFormat } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 	import { correctWhitespace } from '$lib/utils/text';

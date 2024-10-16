@@ -1,12 +1,11 @@
+import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
+
 import type { HttpError } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 
-import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-
-import type { FetchResponse } from '$lib/types/response.js';
-
 import { fetchPost } from '$lib/requests/index.js';
 import { COOKIE_OPTIONS } from '$lib/server/constants';
+import type { FetchResponse } from '$lib/types/response.js';
 
 interface SessionInfo {
 	sessionId: string;
