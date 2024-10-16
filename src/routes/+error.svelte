@@ -9,7 +9,11 @@
 	import { rootStyle } from '$lib/utils/customColors';
 
 	const handleClick = async () => {
-		isNotFound ? await goto('/', { replaceState: true }) : location.reload();
+		if (isNotFound) {
+			await goto('/', { replaceState: true });
+		} else {
+			location.reload();
+		}
 	};
 
 	let isNotFound = $derived($page.status === 404);

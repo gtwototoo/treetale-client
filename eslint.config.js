@@ -1,12 +1,10 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import perfectionistNatural from 'eslint-plugin-perfectionist/configs/recommended-natural';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
 
 export default [
-	perfectionistNatural,
 	prettier,
 	js.configs.recommended,
 	...ts.configs.recommended,
@@ -36,39 +34,6 @@ export default [
 				}
 			],
 			'no-undef': 'off',
-			'perfectionist/sort-imports': [
-				'error',
-				{
-					'custom-groups': {
-						type: {
-							svelte: ['@sveltejs/kit', 'svelte/*', 'svelte']
-						},
-
-						value: {
-							svelte: ['@sveltejs/kit', 'svelte/*', 'svelte']
-						}
-					},
-					groups: [
-						'type',
-						'svelte',
-						['builtin', 'external'],
-						'aliases',
-						'internal-type',
-						'internal',
-						['parent-type', 'sibling-type', 'index-type'],
-						['parent', 'sibling', 'index'],
-						'side-effect',
-						'style',
-						'object',
-						'unknown'
-					],
-					'internal-pattern': ['$lib/**', '$page/**'],
-					'newlines-between': 'always',
-					order: 'asc',
-					type: 'natural'
-				}
-			],
-			'perfectionist/sort-svelte-attributes': 'off',
 			'svelte/no-at-html-tags': 'off'
 		}
 	},
