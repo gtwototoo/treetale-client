@@ -7,9 +7,11 @@
 	import { correctVariableReplace } from '$lib/utils/text';
 
 	let {
-		frame
+		frame,
+		short = true
 	}: {
 		frame: Frame;
+		short?: boolean;
 	} = $props();
 </script>
 
@@ -23,7 +25,11 @@
 		/>
 	{/if}
 	<div
-		class={clm('adaptive-font clear-text line-clamp-4', !frame.text?.length && 'text-gray-500')}
+		class={clm(
+			'adaptive-font clear-text',
+			short && 'line-clamp-4',
+			!frame.text?.length && 'text-gray-500'
+		)}
 	>
 		{@html correctVariableReplace(frame.text, variablesStore.variables) || 'Без описания'}
 	</div>

@@ -4,7 +4,7 @@
 
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Share } from 'svelte-heros-v2';
-	import { Button, Icon, Tag } from 'treetale-ui';
+	import { Button, Icon } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
@@ -32,8 +32,6 @@
 
 	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
-	const percent = 12;
-	const newEnd = true;
 
 	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${resultId}`);
 
@@ -94,21 +92,7 @@
 		</p>
 	</div>
 </div>
-<div class="flex w-full flex-col gap-4">
-	<div class="flex justify-between gap-4">
-		<div class="flex gap-2">
-			<p>Концовка <span class="font-bold">№{2}</span></p>
-			{#if newEnd}
-				<Tag class="bg-green-100 bg-opacity-30 text-green-500">Новая</Tag>
-			{/if}
-		</div>
-		<p>Получило <span class="font-bold">{percent}%</span> читателей</p>
-	</div>
-	<div class="h-4 w-full overflow-hidden rounded-full bg-main-50">
-		<div class="h-full bg-main" style:width="{percent}%"></div>
-	</div>
-</div>
-<FrameMini frame={endFrame} />
+<FrameMini frame={endFrame} short={false} />
 <div class="flex gap-3 *:pointer-events-auto max-md:w-full *:max-md:flex-1">
 	<Button
 		asLink
