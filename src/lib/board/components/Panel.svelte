@@ -4,11 +4,12 @@
 	import { ChevronRight } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import Header from './Panel/Header.svelte';
-	import Tabs from './Panel/Tabs.svelte';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { clm } from '$lib/utils/classMerge';
+
+	import Header from './Panel/Header.svelte';
+	import Tabs from './Panel/Tabs.svelte';
 
 	let CurrentPanel = $derived(panelStatesStore.component);
 

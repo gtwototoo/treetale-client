@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { readonlyModeStore } from '$board/stores/index.svelte';
+
 	import AddFrameButton from './Footer/AddFrameButton.svelte';
 	import BoardStateSwitch from './Footer/BoardStateSwitch.svelte';
 	import Radar from './Footer/Radar.svelte';
-
-	import { readonlyModeStore } from '$board/stores/index.svelte';
 </script>
 
 <div

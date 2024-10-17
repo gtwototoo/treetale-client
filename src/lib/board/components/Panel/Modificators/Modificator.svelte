@@ -3,13 +3,14 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon, Input, Listbox } from 'treetale-ui';
 
-	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { variablesStore } from '$board/stores/variables.svelte';
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { ComparisonOperators, MathOperators, Modificator } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
+
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+	import { variablesStore } from '$board/stores/variables.svelte';
 
 	const symbols: {
 		logic: ComparisonOperators[];

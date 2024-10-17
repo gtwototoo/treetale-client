@@ -4,14 +4,15 @@
 	import { Tv } from 'svelte-heros-v2';
 	import { Button, Image } from 'treetale-ui';
 
-	import Choice from './Inspector/Choice.svelte';
-	import ShortDescription from './ShortDescription.svelte';
+	import { clm } from '$lib/utils/classMerge';
+	import { correctVariableReplace } from '$lib/utils/text';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { type SelectedChoices, inspectorStore } from '$board/stores/inspector.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
-	import { clm } from '$lib/utils/classMerge';
-	import { correctVariableReplace } from '$lib/utils/text';
+
+	import Choice from './Inspector/Choice.svelte';
+	import ShortDescription from './ShortDescription.svelte';
 
 	let inspectorVariables = $state(cloneDeep(variablesStore.variables));
 

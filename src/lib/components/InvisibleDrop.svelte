@@ -6,10 +6,11 @@
 		SvelteWindowAttributes
 	} from 'svelte/elements';
 
-	import DropArea from './DropArea.svelte';
+	import { validateMimeType } from '$lib/utils/inputAccept';
 
 	import { boardStateStore } from '$board/stores/index.svelte';
-	import { validateMimeType } from '$lib/utils/inputAccept';
+
+	import DropArea from './DropArea.svelte';
 
 	let {
 		accept = 'image/*',

@@ -17,7 +17,7 @@
 
 	let clonedData = $derived(cloneDeep(data));
 
-	let { author, currentVersion, endFrame, choicesCount, progressVersion, story, progressId } =
+	let { author, currentVersion, endFrame, choicesCount, progressVersion, story, resultId } =
 		$derived(clonedData);
 
 	onMount(() => {
@@ -48,7 +48,7 @@
 			class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6"
 		>
 			<EndResults
-				{progressId}
+				{resultId}
 				storyId={story.storyId}
 				{currentVersion}
 				{choicesCount}

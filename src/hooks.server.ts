@@ -1,6 +1,6 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
-
 import type { Handle, HandleServerError } from '@sveltejs/kit';
+
 import sample from 'lodash/sample';
 
 import { NOT_FOUND_VARIANTS } from '$lib/constants/notFound';

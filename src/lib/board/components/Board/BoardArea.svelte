@@ -3,14 +3,9 @@
 	import type { MouseEventHandler, TouchEventHandler } from 'svelte/elements';
 	import { on } from 'svelte/events';
 
-	import CommentBlock from './CommentBlock.svelte';
-	import ConnectionsLayer from './ConnectionsLayer.svelte';
-	import CreateText from './CreateText.svelte';
-	import FrameBlock from './FrameBlock.svelte';
-	import LineManipulators from './LineManipulators.svelte';
-	import MovingArea from './MovingArea.svelte';
-	import NewBlock from './NewBlock.svelte';
-	import WindowActions from './WindowActions.svelte';
+	import type { Coordinates } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+	import { stopPropagation } from '$lib/utils/eventsModificators';
 
 	import { type PinchEventHandler, pinch } from '$board/hooks/pinch';
 	import { boardCommentsStore } from '$board/stores/comments.svelte';
@@ -21,9 +16,15 @@
 		isAddingMode,
 		zoomCorrect
 	} from '$board/stores/index.svelte';
-	import type { Coordinates } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
-	import { stopPropagation } from '$lib/utils/eventsModificators';
+
+	import CommentBlock from './CommentBlock.svelte';
+	import ConnectionsLayer from './ConnectionsLayer.svelte';
+	import CreateText from './CreateText.svelte';
+	import FrameBlock from './FrameBlock.svelte';
+	import LineManipulators from './LineManipulators.svelte';
+	import MovingArea from './MovingArea.svelte';
+	import NewBlock from './NewBlock.svelte';
+	import WindowActions from './WindowActions.svelte';
 
 	let {
 		onclick,

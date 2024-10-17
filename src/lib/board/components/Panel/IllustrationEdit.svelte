@@ -5,11 +5,6 @@
 	import { BookOpen, Photo } from 'svelte-heros-v2';
 	import { Button, Icon, InputFile } from 'treetale-ui';
 
-	import { removeImage, saveImage } from '$board/requests/files';
-	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { readonlyModeStore } from '$board/stores/index.svelte';
-	import { storyInfoStore } from '$board/stores/info.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -17,6 +12,12 @@
 	import { ILLUSTRATIONS_FOLDER } from '$lib/constants/s3forders';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
+
+	import { removeImage, saveImage } from '$board/requests/files';
+	import { changesHistoryStore } from '$board/stores/history.svelte';
+	import { readonlyModeStore } from '$board/stores/index.svelte';
+	import { storyInfoStore } from '$board/stores/info.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
 
 	let { color, imageUrl, title } = $derived(storyInfoStore.info!);
 

@@ -2,14 +2,14 @@
 	import { Cloud, DocumentText } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import NoteRow from './Notes/Note.svelte';
-	import ShortDescription from './ShortDescription.svelte';
-
 	import { updateNotes } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
+
+	import NoteRow from './Notes/Note.svelte';
+	import ShortDescription from './ShortDescription.svelte';
 
 	let timer = $state<number>();
 	let saving = $state(false);

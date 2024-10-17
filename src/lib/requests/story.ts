@@ -1,9 +1,9 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import { fetchGet, fetchPut } from '.';
-
 import type { Searched, StoryFormat } from '$lib/types';
 import type { FetchResponse } from '$lib/types/response';
+
+import { fetchGet, fetchPut } from '.';
 
 export const addLike = async (storyId: number) => {
 	type LikeResponse = FetchResponse<{ liked: boolean }>;

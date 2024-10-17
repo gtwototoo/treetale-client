@@ -9,11 +9,11 @@
 		SvelteDocumentAttributes
 	} from 'svelte/elements';
 
-	import DashedBorder from './DropArea/DashedBorder.svelte';
-
 	import { clm } from '$lib/utils/classMerge';
 	import { preventDefault } from '$lib/utils/eventsModificators';
 	import { validateMimeType } from '$lib/utils/inputAccept';
+
+	import DashedBorder from './DropArea/DashedBorder.svelte';
 
 	let {
 		accept = 'image/*',

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import find from 'lodash/find';
 
-	import ReadFrame from './ReadFrame.svelte';
-
 	import type { Frame, ProgressChoices } from '$lib/types';
+
+	import ReadFrame from './ReadFrame.svelte';
 
 	let {
 		frames,

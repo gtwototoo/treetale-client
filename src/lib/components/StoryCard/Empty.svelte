@@ -2,9 +2,9 @@
 	import { BookOpen } from 'svelte-heros-v2';
 	import { Icon } from 'treetale-ui';
 
-	import TransparentRect from './TransparentRect.svelte';
-
 	import { clm } from '$lib/utils/classMerge';
+
+	import TransparentRect from './TransparentRect.svelte';
 
 	let {
 		class: classname

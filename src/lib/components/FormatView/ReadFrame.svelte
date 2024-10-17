@@ -5,14 +5,15 @@
 	import find from 'lodash/find';
 	import { Button } from 'treetale-ui';
 
-	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
-
-	import Choice from './ReadFrame/Choice.svelte';
-
 	import ReadCard from '$lib/components/ReadCard.svelte';
+	import { setEndProgress } from '$lib/requests/results';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Frame } from '$lib/types';
 	import { correctVariableReplace } from '$lib/utils/text';
+
+	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
+
+	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
 		class: classname,
@@ -39,8 +40,14 @@
 	};
 
 	const handleEndStory = async () => {
-		// Результат будет скорее всего в отдельном разделе бд, там должна быть скорее всего статика данных (% прошедших и т.д., кроме версии)
-		await goto(`/results/${progressId}`);
+		try {
+			const { message } = await setEndProgress(progressId);
+
+			// Результат будет скорее всего в отдельном разделе бд, там должна быть скорее всего статика данных (% прошедших и т.д., кроме версии)
+			await goto(`/results/${message.resultId}`);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	let availableChoicesCount = $derived(

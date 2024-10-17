@@ -3,6 +3,11 @@
 	import findIndex from 'lodash/findIndex';
 	import { Button } from 'treetale-ui';
 
+	import { currentThemeClass } from '$lib/stores/colors.svelte';
+	import type { Choice, Frame } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+	import { choiceModificators } from '$lib/utils/variableOperations';
+
 	import { boardFramesStore, connectionStartStore } from '$board/stores/frames.svelte';
 	import {
 		boardStateStore,
@@ -10,10 +15,6 @@
 		isViewMode,
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
-	import { currentThemeClass } from '$lib/stores/colors.svelte';
-	import type { Choice, Frame } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
-	import { choiceModificators } from '$lib/utils/variableOperations';
 
 	type HTMLContentEditable = HTMLDivElement;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ReadFrame from './ReadFrame.svelte';
-
 	import type { Frame } from '$lib/types';
+
+	import ReadFrame from './ReadFrame.svelte';
 
 	let {
 		lastFrame,

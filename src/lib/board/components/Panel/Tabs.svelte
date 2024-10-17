@@ -4,16 +4,17 @@
 	import { Cog6Tooth, DocumentText, RectangleStack, Tv, Variable } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
+	import type { PanelProps } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+
+	import { boardFramesStore } from '$board/stores/frames.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+
 	import FrameSettings from './FrameSettings.svelte';
 	import InformationSettings from './InformationSettings.svelte';
 	import Inspector from './Inspector.svelte';
 	import Notes from './Notes.svelte';
 	import Variables from './Variables.svelte';
-
-	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import type { PanelProps } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
 
 	const tabs = [
 		{

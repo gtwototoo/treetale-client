@@ -1,8 +1,8 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import { fetchDelete, fetchPost } from '.';
-
 import { type FetchResponse } from '$lib/types/response';
+
+import { fetchDelete, fetchPost } from '.';
 
 interface FileResponse {
 	fileUrl: string;

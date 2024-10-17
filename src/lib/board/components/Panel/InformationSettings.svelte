@@ -14,9 +14,13 @@
 		Popover
 	} from 'treetale-ui';
 
-	import IllustrationEdit from './IllustrationEdit.svelte';
-	import Publishing from './InformationSettings/Publishing.svelte';
-	import Shortcuts from './InformationSettings/Shortcuts.svelte';
+	import Cover from '$lib/components/StoryCard/Cover.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { STORY_FORMATS } from '$lib/constants/formats';
+	import { GENRES_LIST } from '$lib/constants/genres';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { RGB, StoryFormat } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { deleteStory, updateInfomation } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
@@ -25,13 +29,10 @@
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import { notesHighlight, variablesHighlight } from '$board/utils/editing';
-	import Cover from '$lib/components/StoryCard/Cover.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { STORY_FORMATS } from '$lib/constants/formats';
-	import { GENRES_LIST } from '$lib/constants/genres';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import type { RGB, StoryFormat } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
+
+	import IllustrationEdit from './IllustrationEdit.svelte';
+	import Publishing from './InformationSettings/Publishing.svelte';
+	import Shortcuts from './InformationSettings/Shortcuts.svelte';
 
 	let light = $state(80);
 	let saturate = $state(90);

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
+	import { clm } from '$lib/utils/classMerge';
+
 	import Logo from './Logo.svelte';
 	import LogoLinearGradient from './LogoLinearGradient.svelte';
 	import Session from './Session.svelte';
-
-	import { clm } from '$lib/utils/classMerge';
 
 	let {
 		children,

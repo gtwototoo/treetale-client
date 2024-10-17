@@ -4,13 +4,14 @@
 	import findIndex from 'lodash/findIndex';
 	import { Button, Contenteditable, FormSplit } from 'treetale-ui';
 
-	import { inspectorStore } from '$board/stores/inspector.svelte';
-	import { variablesStore } from '$board/stores/variables.svelte';
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame, LogicModificator, MathModificator, Variable } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import { checkLogic, choiceModificators, doMath } from '$lib/utils/variableOperations';
+
+	import { inspectorStore } from '$board/stores/inspector.svelte';
+	import { variablesStore } from '$board/stores/variables.svelte';
 
 	let {
 		choice,

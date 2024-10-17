@@ -2,10 +2,11 @@
 	import { Clock } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon } from 'treetale-ui';
 
-	import ShortDescription from './ShortDescription.svelte';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { clm } from '$lib/utils/classMerge';
+
+	import ShortDescription from './ShortDescription.svelte';
 </script>
 
 <ShortDescription

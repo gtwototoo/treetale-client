@@ -1,8 +1,8 @@
 <script lang="ts">
+	import type { HttpError } from '@sveltejs/kit';
 	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
-	import type { HttpError } from '@sveltejs/kit';
 	import { Button, Input } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';

@@ -4,9 +4,9 @@
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
 	import { Button, Icon, Link } from 'treetale-ui';
 
-	import ProfileAvatar from '../ProfileAvatar.svelte';
-
 	import type { User } from '$lib/types';
+
+	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let user = $derived($page.data.session as User);
 	let addLoading = $state(false);

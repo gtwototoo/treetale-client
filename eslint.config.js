@@ -23,7 +23,7 @@ export default [
 	},
 	{
 		settings: {
-			'import/core-modules': ['svelte', '$app', '$env']
+			'import/core-modules': ['svelte', '$app', '$env', '@sveltejs/kit']
 		},
 		rules: {
 			'import/order': [
@@ -33,6 +33,18 @@ export default [
 						order: 'asc',
 						caseInsensitive: true
 					},
+					pathGroups: [
+						{
+							pattern: '$lib/**',
+							group: 'parent',
+							position: 'before'
+						},
+						{
+							pattern: '$board/**',
+							group: 'parent',
+							position: 'before'
+						}
+					],
 					'newlines-between': 'always'
 				}
 			]

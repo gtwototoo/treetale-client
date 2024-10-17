@@ -4,13 +4,14 @@
 	import { XMark } from 'svelte-heros-v2';
 	import { Button, Icon, Input, type ListItemProps, Listbox } from 'treetale-ui';
 
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { Variable, VariableExpects } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
+
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import type { Variable, VariableExpects } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
 
 	let {
 		checkUpdates,

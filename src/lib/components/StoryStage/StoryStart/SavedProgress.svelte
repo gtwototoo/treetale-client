@@ -6,16 +6,16 @@
 	import { Trash } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import FrameMini from '../FrameMini.svelte';
-	import VersionTag from '../VersionTag.svelte';
-
-	import CopyButton from './CopyButton.svelte';
-
 	import { deleteProgress } from '$lib/requests/progress';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
+
+	import FrameMini from '../FrameMini.svelte';
+	import VersionTag from '../VersionTag.svelte';
+
+	import CopyButton from './CopyButton.svelte';
 
 	let {
 		choicesCount,

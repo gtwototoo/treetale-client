@@ -3,9 +3,9 @@
 	import { MusicalNote, Pause, Play, Stop } from 'svelte-heros-v2';
 	import { Button, Icon, Loading } from 'treetale-ui';
 
-	import FileUploader from './FileUploader.svelte';
-
 	import { soundStore } from '$lib/stores/sound.svelte';
+
+	import FileUploader from './FileUploader.svelte';
 
 	let {
 		class: classname,

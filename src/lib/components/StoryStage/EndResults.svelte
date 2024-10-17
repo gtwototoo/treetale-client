@@ -6,11 +6,11 @@
 	import { Share } from 'svelte-heros-v2';
 	import { Button, Icon, Tag } from 'treetale-ui';
 
-	import FrameMini from './FrameMini.svelte';
-	import VersionTag from './VersionTag.svelte';
-
 	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
+
+	import FrameMini from './FrameMini.svelte';
+	import VersionTag from './VersionTag.svelte';
 
 	let {
 		choicesCount,
@@ -18,14 +18,14 @@
 		progressVersion,
 		currentVersion,
 		storyId,
-		progressId
+		resultId
 	}: {
 		choicesCount: number;
 		endFrame: Frame;
 		progressVersion: string;
 		currentVersion: string;
 		storyId: number;
-		progressId: number;
+		resultId: number;
 	} = $props();
 
 	type CopyState = 'error' | 'success' | null;
@@ -35,7 +35,7 @@
 	const percent = 12;
 	const newEnd = true;
 
-	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${progressId}`);
+	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${resultId}`);
 
 	let copyState = $state<CopyState>(null);
 

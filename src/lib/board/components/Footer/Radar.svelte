@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { Button } from 'treetale-ui';
 
-	import { connectedWithStart } from '../methods.svelte';
+	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants/index';
+	import type { Coordinates } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { boardParamsStore, boardStateStore } from '$board/stores/index.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
-	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants/index';
-	import type { Coordinates } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
+
+	import { connectedWithStart } from '../methods.svelte';
 
 	let radar = $state<HTMLButtonElement>();
 

@@ -2,17 +2,17 @@
 	import find from 'lodash/find';
 	import { Button, Tag } from 'treetale-ui';
 
-	import ActionButtons from './StoryStart/ActionButtons.svelte';
-	import CopyButton from './StoryStart/CopyButton.svelte';
-	import SavedProgress from './StoryStart/SavedProgress.svelte';
-	import VersionTag from './VersionTag.svelte';
-
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Frame, ProgressChoices, Story, User } from '$lib/types';
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
+
+	import ActionButtons from './StoryStart/ActionButtons.svelte';
+	import CopyButton from './StoryStart/CopyButton.svelte';
+	import SavedProgress from './StoryStart/SavedProgress.svelte';
+	import VersionTag from './VersionTag.svelte';
 
 	let {
 		currentVersion,

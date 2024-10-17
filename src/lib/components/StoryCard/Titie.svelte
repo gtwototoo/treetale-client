@@ -2,9 +2,9 @@
 	import type { Selection } from 'd3-selection';
 	import { select } from 'd3-selection';
 
-	import TitleEditRect from './TitleEditRect.svelte';
-
 	import { clm } from '$lib/utils/classMerge';
+
+	import TitleEditRect from './TitleEditRect.svelte';
 
 	let {
 		color,

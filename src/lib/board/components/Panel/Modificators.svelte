@@ -5,18 +5,19 @@
 	import { Beaker } from 'svelte-heros-v2';
 	import { Button, Input } from 'treetale-ui';
 
-	import Modificator from './Modificators/Modificator.svelte';
-	import ShortDescription from './ShortDescription.svelte';
-
-	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import Logics from '$lib/components/Icons/Logics.svelte';
 	import Maths from '$lib/components/Icons/Maths.svelte';
 	import type { PanelProps } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 	import { choiceModificators } from '$lib/utils/variableOperations';
+
+	import { boardFramesStore } from '$board/stores/frames.svelte';
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+
+	import Modificator from './Modificators/Modificator.svelte';
+	import ShortDescription from './ShortDescription.svelte';
 
 	const handleAddModificator = (type: 'logic' | 'math') => {
 		const lastModificatorId = last(frame.modificators)?.modificatorId || 0;

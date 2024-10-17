@@ -4,14 +4,15 @@
 	import { Check } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
+	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { clm } from '$lib/utils/classMerge';
+	import { correctWhitespace } from '$lib/utils/text';
+
 	import { connectedWithStart } from '$board/components/methods.svelte';
 	import { publishStory, reviewRequestStory } from '$board/requests/story';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
-	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { clm } from '$lib/utils/classMerge';
-	import { correctWhitespace } from '$lib/utils/text';
 
 	let loading = $state(false);
 

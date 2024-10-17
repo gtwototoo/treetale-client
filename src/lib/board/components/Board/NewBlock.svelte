@@ -4,15 +4,16 @@
 	import { Plus } from 'svelte-heros-v2';
 	import { Icon } from 'treetale-ui';
 
-	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
-	import { boardStateStore } from '$board/stores/index.svelte';
-	import { transform } from '$board/utils/coordinatesToCss';
 	import {
 		DEFAULT_BLOCK_WIDTH,
 		DEFAULT_COMMENT_HEIGHT,
 		DEFAULT_FRAME_HEIGHT
 	} from '$lib/constants';
 	import { clm } from '$lib/utils/classMerge';
+
+	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
+	import { boardStateStore } from '$board/stores/index.svelte';
+	import { transform } from '$board/utils/coordinatesToCss';
 
 	const height =
 		boardStateStore.mode === 'addingComment' ? DEFAULT_COMMENT_HEIGHT : DEFAULT_FRAME_HEIGHT;

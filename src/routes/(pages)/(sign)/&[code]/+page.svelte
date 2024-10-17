@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import type { HttpError } from '@sveltejs/kit';
 	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
-	import type { HttpError } from '@sveltejs/kit';
 	import { Check, XMark } from 'svelte-heros-v2';
 	import { Button, Icon, Input } from 'treetale-ui';
 

@@ -2,7 +2,7 @@ import findIndex from 'lodash/findIndex';
 import last from 'lodash/last';
 import { Plus } from 'svelte-heros-v2';
 
-import FrameSettingsSvelte from './Panel/FrameSettings.svelte';
+import type { Coordinates, Frame, StartMoveParams } from '$lib/types';
 
 import { addBlockOffsetStore, movingBlockStore } from '$board/stores/blocks.svelte';
 import { boardCommentsStore } from '$board/stores/comments.svelte';
@@ -11,7 +11,8 @@ import { changesHistoryStore } from '$board/stores/history.svelte';
 import { boardStateStore, oneDirectionModeStore, zoomCorrect } from '$board/stores/index.svelte';
 import { panelStatesStore } from '$board/stores/panel.svelte';
 import { findPrevFrames } from '$board/utils/editing';
-import type { Coordinates, Frame, StartMoveParams } from '$lib/types';
+
+import FrameSettingsSvelte from './Panel/FrameSettings.svelte';
 
 export const connectedWithStart = (frameId: number) => {
 	if (frameId === 1) return false;

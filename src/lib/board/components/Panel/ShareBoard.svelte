@@ -2,11 +2,12 @@
 	import { Cloud, Link, XMark } from 'svelte-heros-v2';
 	import { Button, Icon, Input, Listbox } from 'treetale-ui';
 
-	import ShortDescription from './ShortDescription.svelte';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+
+	import ShortDescription from './ShortDescription.svelte';
 
 	let timer = $state<number>();
 	let saving = $state(false);

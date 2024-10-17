@@ -5,7 +5,7 @@ import type { FetchResponse } from '$lib/types/response.js';
 import { randomError } from '$lib/utils/random';
 
 export interface ResponseProgress {
-	progressId: number;
+	resultId: number;
 	author: {
 		subscribersCount: number;
 	} & User;
@@ -18,13 +18,8 @@ export interface ResponseProgress {
 }
 
 export const load = async ({ fetch, params }) => {
-	const progressId = +params.progressId;
-
-	if (isNaN(progressId)) {
-		randomError(404);
-	}
-
-	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/results/${progressId}`);
+	const resultId = params.resultId;
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/results/${resultId}`);
 	const { error, message } = (await res.json()) as FetchResponse<ResponseProgress>;
 
 	if (error) {

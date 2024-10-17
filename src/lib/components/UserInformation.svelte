@@ -6,9 +6,6 @@
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
 	import { Button, ColorPicker, Contenteditable, Icon, Input } from 'treetale-ui';
 
-	import InvisibleDrop from './InvisibleDrop.svelte';
-	import ProfileAvatar from './ProfileAvatar.svelte';
-
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { saveImage } from '$lib/requests/files';
@@ -21,6 +18,9 @@
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, User } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
+
+	import InvisibleDrop from './InvisibleDrop.svelte';
+	import ProfileAvatar from './ProfileAvatar.svelte';
 
 	let {
 		me,

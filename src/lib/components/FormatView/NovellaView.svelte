@@ -3,15 +3,16 @@
 
 	import { Button, Image } from 'treetale-ui';
 
-	import { enabledChoice } from '../methods.svelte';
-
-	import InterfaceViewButton from './InterfaceViewButton.svelte';
-	import Choice from './ReadFrame/Choice.svelte';
-
+	import { setEndProgress } from '$lib/requests/results';
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
 	import type { Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
+
+	import { enabledChoice } from '../methods.svelte';
+
+	import InterfaceViewButton from './InterfaceViewButton.svelte';
+	import Choice from './ReadFrame/Choice.svelte';
 
 	let {
 		lastFrame,
@@ -24,7 +25,14 @@
 	} = $props();
 
 	const handleEndStory = async () => {
-		await goto(`/results/${progressId}`);
+		try {
+			const { message } = await setEndProgress(progressId);
+
+			// Результат будет скорее всего в отдельном разделе бд, там должна быть скорее всего статика данных (% прошедших и т.д., кроме версии)
+			await goto(`/results/${message.resultId}`);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	let availableChoicesCount = $derived(

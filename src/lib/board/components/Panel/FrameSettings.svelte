@@ -13,12 +13,12 @@
 	} from 'svelte-heros-v2';
 	import { Button, Contenteditable, FormSplit, Icon, Input, Popover } from 'treetale-ui';
 
-	import ImageUploader from '../ImageUploader.svelte';
-	import { addChoice, setSelectedFrame } from '../methods.svelte';
-	import SoundUploader from '../SoundUploader.svelte';
-
-	import Choice from './FrameSettings/Choice.svelte';
-	import IllustrationPopover from './IllustrationPopover.svelte';
+	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
+	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
+	import { FRAMES_FOLDER } from '$lib/constants/s3forders';
+	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import type { Frame } from '$lib/types';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
@@ -34,12 +34,13 @@
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import { findPrevFrames, notesHighlight, variablesHighlight } from '$board/utils/editing';
-	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
-	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
-	import { FRAMES_FOLDER } from '$lib/constants/s3forders';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import type { Frame } from '$lib/types';
-	import { clm } from '$lib/utils/classMerge';
+
+	import ImageUploader from '../ImageUploader.svelte';
+	import { addChoice, setSelectedFrame } from '../methods.svelte';
+	import SoundUploader from '../SoundUploader.svelte';
+
+	import Choice from './FrameSettings/Choice.svelte';
+	import IllustrationPopover from './IllustrationPopover.svelte';
 
 	let draggedFileType = $state<string>();
 	let onePrevFrame = $state<Frame | null>(null);

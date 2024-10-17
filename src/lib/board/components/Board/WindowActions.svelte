@@ -5,7 +5,7 @@
 		SvelteWindowAttributes
 	} from 'svelte/elements';
 
-	import { nextSelectedFrame } from '../methods.svelte';
+	import { preventDefault, stopPropagation } from '$lib/utils/eventsModificators';
 
 	import { connectionStartStore } from '$board/stores/frames.svelte';
 	import { changesHistoryStore } from '$board/stores/history.svelte';
@@ -17,7 +17,8 @@
 		readonlyModeStore
 	} from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
-	import { preventDefault, stopPropagation } from '$lib/utils/eventsModificators';
+
+	import { nextSelectedFrame } from '../methods.svelte';
 
 	let {
 		board,

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
+
+	import Header from './Header.svelte';
 
 	let greenBackgroundColor = $derived(
 		contrastText(bodyBackgroundColorStore.color || DEFAULT_COLOR)

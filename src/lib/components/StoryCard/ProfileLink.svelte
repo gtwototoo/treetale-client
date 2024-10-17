@@ -5,11 +5,11 @@
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Button } from 'treetale-ui';
 
-	import ProfileAvatar from '../ProfileAvatar.svelte';
-
 	import type { User } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { collapseValue } from '$lib/utils/number';
+
+	import ProfileAvatar from '../ProfileAvatar.svelte';
 
 	let {
 		author,

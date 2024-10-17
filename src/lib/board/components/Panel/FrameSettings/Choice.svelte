@@ -5,19 +5,20 @@
 	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
 	import { Button, Contenteditable, Icon } from 'treetale-ui';
 
-	import Modificators from '../Modificators.svelte';
-
-	import { addFrame, setSelectedFrame } from '$board/components/methods.svelte';
-	import { boardFramesStore } from '$board/stores/frames.svelte';
-	import { changesHistoryStore } from '$board/stores/history.svelte';
-	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
-	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 	import { choiceModificators } from '$lib/utils/variableOperations';
+
+	import { addFrame, setSelectedFrame } from '$board/components/methods.svelte';
+	import { boardFramesStore } from '$board/stores/frames.svelte';
+	import { changesHistoryStore } from '$board/stores/history.svelte';
+	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
+	import { panelStatesStore } from '$board/stores/panel.svelte';
+
+	import Modificators from '../Modificators.svelte';
 
 	type HTMLContentEditable = HTMLDivElement;
 

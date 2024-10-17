@@ -2,11 +2,12 @@
 	import { ChatBubbleBottomCenter, RectangleStack, XMark } from 'svelte-heros-v2';
 	import { Button, FormSplit, Icon } from 'treetale-ui';
 
-	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
-	import { boardStateStore, isAddingMode, zoomCorrect } from '$board/stores/index.svelte';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Coordinates } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
+
+	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
+	import { boardStateStore, isAddingMode, zoomCorrect } from '$board/stores/index.svelte';
 
 	const disableAddFrameMode = () => {
 		boardStateStore.mode = 'view';
