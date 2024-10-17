@@ -30,6 +30,7 @@
 	} = $props();
 
 	let readCard = $state<HTMLDivElement>();
+	let loading = $state(false);
 
 	const dynamicText = (text: null | string) => {
 		if (selectedChoiceId) {
@@ -40,6 +41,8 @@
 	};
 
 	const handleEndStory = async () => {
+		loading = true;
+
 		try {
 			const { message } = await setEndProgress(progressId);
 
@@ -48,6 +51,8 @@
 		} catch (error) {
 			console.error(error);
 		}
+
+		loading = false;
 	};
 
 	let availableChoicesCount = $derived(
@@ -77,6 +82,7 @@
 					{/each}
 				{:else}
 					<Button
+						{loading}
 						onclick={handleEndStory}
 						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
 					>

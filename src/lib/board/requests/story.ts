@@ -46,6 +46,12 @@ export const publishStory = async (storyId: number) => {
 	);
 };
 
+export const unpublishStory = async (storyId: number) => {
+	return await fetchPut<FetchResponse<{ version: string }>>(
+		`${PUBLIC_TREETALE_API_URL}/stories/${storyId}/unpublish`
+	);
+};
+
 export const deleteStory = async (id: number) => {
 	try {
 		await fetchDelete(`${PUBLIC_TREETALE_API_URL}/stories/${id}`);

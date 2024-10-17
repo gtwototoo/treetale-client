@@ -24,7 +24,11 @@
 		progressId: number;
 	} = $props();
 
+	let loading = $state(false);
+
 	const handleEndStory = async () => {
+		loading = true;
+
 		try {
 			const { message } = await setEndProgress(progressId);
 
@@ -33,6 +37,8 @@
 		} catch (error) {
 			console.error(error);
 		}
+
+		loading = false;
 	};
 
 	let availableChoicesCount = $derived(
@@ -73,6 +79,7 @@
 					{/each}
 				{:else}
 					<Button
+						{loading}
 						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
 						onclick={handleEndStory}
 					>

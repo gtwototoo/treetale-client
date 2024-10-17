@@ -9,14 +9,14 @@
 	import { correctWhitespace } from '$lib/utils/text';
 
 	import { connectedWithStart } from '$board/components/methods.svelte';
-	import { publishStory, reviewRequestStory } from '$board/requests/story';
+	import { publishStory, reviewRequestStory, unpublishStory } from '$board/requests/story';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { storyInfoStore } from '$board/stores/info.svelte';
 
 	let loading = $state(false);
 
-	const switchReview = async () => {
+	const reviewRequeshHandler = async () => {
 		if (!storyInfoStore.info) return;
 
 		loading = true;
@@ -24,7 +24,7 @@
 		try {
 			await reviewRequestStory(storyInfoStore.info.storyId);
 
-			storyInfoStore.info.status = storyInfoStore.info.status === 'draft' ? 'review' : 'draft';
+			storyInfoStore.info.status = 'review';
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -32,7 +32,23 @@
 		}
 	};
 
-	const setPublishedStory = async () => {
+	const unpublishHandler = async () => {
+		if (!storyInfoStore.info) return;
+
+		loading = true;
+
+		try {
+			await unpublishStory(storyInfoStore.info.storyId);
+
+			storyInfoStore.info.status = 'draft';
+		} catch (error) {
+			console.error(error);
+		} finally {
+			loading = false;
+		}
+	};
+
+	const publishHandler = async () => {
 		if (!storyInfoStore.info) return;
 
 		loading = true;
@@ -122,7 +138,7 @@
 				class={clm('justify-center text-emerald-500', greenBackgroundColorButton)}
 				{loading}
 				disabled={requirements.some(({ value }) => !value)}
-				onclick={switchReview}
+				onclick={reviewRequeshHandler}
 			>
 				Опубликовать
 			</Button>
@@ -136,7 +152,7 @@
 				<Button
 					class={clm('justify-center', redBackgroundColorStore.color)}
 					{loading}
-					onclick={switchReview}
+					onclick={unpublishHandler}
 				>
 					Отменить модерацию
 				</Button>
@@ -149,7 +165,7 @@
 				<Button
 					class={clm('justify-center text-emerald-500', greenBackgroundColorButton)}
 					{loading}
-					onclick={setPublishedStory}
+					onclick={publishHandler}
 				>
 					Опубликовать
 				</Button>
@@ -161,7 +177,7 @@
 			<Button
 				class={clm('justify-center', redBackgroundColorStore.color)}
 				{loading}
-				onclick={switchReview}
+				onclick={unpublishHandler}
 			>
 				Отменить публикацию
 			</Button>
