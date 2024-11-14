@@ -17,7 +17,7 @@
 
 <div class="absolute inset-0 overflow-hidden rounded-inherit">
 	<div
-		class="absolute bottom-0 flex max-h-full w-full translate-y-full flex-col gap-3 bg-contrast px-4 py-10 text-center transition-transform group-hover:translate-y-0"
+		class="absolute bottom-0 flex max-h-full w-full translate-y-full flex-col gap-3 bg-contrast px-4 pb-12 pt-4 text-center transition-transform group-hover:translate-y-0"
 	>
 		<div class="clear-text overflow-hidden text-ellipsis text-base text-text max-md:text-sm">
 			{@html correctVariableReplace(description, vars) || 'Без описания'}

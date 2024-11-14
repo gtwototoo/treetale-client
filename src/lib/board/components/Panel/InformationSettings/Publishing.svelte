@@ -75,7 +75,7 @@
 		},
 		{
 			title: 'Описание',
-			value: storyInfoStore.info?.description.length
+			value: storyInfoStore.info?.description?.length
 		},
 		{
 			title: 'Теги',

@@ -28,7 +28,7 @@
 	let addLoading = $state(false);
 
 	const handleClick = async () => {
-		await goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.name}`);
+		await goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.linkName}`);
 	};
 </script>
 
