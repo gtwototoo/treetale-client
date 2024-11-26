@@ -4,7 +4,6 @@
 	import { clm } from '$lib/utils/classMerge';
 
 	import Logo from './Logo.svelte';
-	import LogoLinearGradient from './LogoLinearGradient.svelte';
 	import Session from './Session.svelte';
 
 	let {
@@ -17,8 +16,6 @@
 		right?: Snippet;
 	} = $props();
 </script>
-
-<LogoLinearGradient />
 
 <div class={clm('pointer-events-none z-10 flex w-full justify-center', classname)}>
 	<section class="flex w-full max-w-[120rem] items-center justify-between p-4 max-sm:p-3">

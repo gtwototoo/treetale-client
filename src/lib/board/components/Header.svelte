@@ -3,7 +3,6 @@
 	import { Button, FormSplit, Icon } from 'treetale-ui';
 
 	import Logo from '$lib/components/Header/Logo.svelte';
-	import LogoLinearGradient from '$lib/components/Header/LogoLinearGradient.svelte';
 	import Session from '$lib/components/Header/Session.svelte';
 	import { ICON_TYPE } from '$lib/constants';
 	import { clm } from '$lib/utils/classMerge';
@@ -36,7 +35,6 @@
 <div
 	class="pointer-events-none fixed inset-x-0 top-0 flex items-center justify-between p-4 *:pointer-events-auto max-sm:p-3 lg:mr-[24.5rem]"
 >
-	<LogoLinearGradient />
 	<Logo />
 	<div class="flex gap-3">
 		{#if readonlyModeStore.isEnabled}
