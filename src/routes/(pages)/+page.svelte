@@ -97,7 +97,7 @@
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<title>TREETALE</title>
+	<title>TREETALE (Истории, новеллы, RPG)</title>
 	<meta
 		name="description"
 		content="Бесплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных
