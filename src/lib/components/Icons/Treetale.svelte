@@ -6,7 +6,12 @@
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { contrastText } from '$lib/utils/contrast';
 
-	let { ...props }: SVGAttributes<SVGElement> = $props();
+	let {
+		maskId = 'logo-mask',
+		...props
+	}: SVGAttributes<SVGElement> & {
+		maskId?: string;
+	} = $props();
 
 	let gradientColors = $derived(
 		contrastText(bodyBackgroundColorStore.color) ? ['#5A00EC', '#AF00A9'] : ['#FF6C15', '#FDBA74']
@@ -15,7 +20,7 @@
 
 <svg {...props} fill="none" viewBox="0 0 2148 442" xmlns="http://www.w3.org/2000/svg">
 	<mask
-		id="logo-mask"
+		id={maskId}
 		width="2148"
 		height="442"
 		x="0"
@@ -42,7 +47,7 @@
 			d="M1627 442V100h93v256h138v86h-231Zm274-342v342h246v-86h-153v-38h141v-78h-141v-40h153V100h-246Z"
 		/>
 	</mask>
-	<g mask="url(#logo-mask)">
+	<g mask="url(#{maskId})">
 		<path fill={gradientColors[0]} d="m-25 0 2115-369 83 475L58 475z" />
 		<path fill={gradientColors[1]} d="M141 460 2256 91l83 475L224 935z" />
 	</g>

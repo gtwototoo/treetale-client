@@ -17,7 +17,7 @@
 	>
 		<div class="flex items-center gap-6 max-md:gap-4 max-sm:flex-col">
 			<div class="flex items-center gap-4">
-				<TreetaleShort class="h-10 w-10 max-lg:hidden" />
+				<TreetaleShort class="h-10 w-10 max-lg:hidden" maskId="footer-logo-mask" />
 				<div class="flex flex-col gap-1 max-sm:text-center">
 					<p class="font-bold uppercase">Treetale</p>
 					<p class="text-gray-700">© 2022 - {currentYear}. Все права защищены</p>
