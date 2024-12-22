@@ -1,4 +1,4 @@
-import type { Comment, Coordinates, Frame, Note, Story, Variable } from '.';
+import type { Comment, Coordinates, Frame, Note, ProgressChoices, Story, Variable } from '.';
 
 export interface StorySchema extends Story {
 	[index: string]: Coordinates | boolean | number | string | unknown[];
@@ -12,4 +12,17 @@ export interface StorySchema extends Story {
 	userId: number;
 	vars: Variable[];
 	zoom: number;
+}
+
+export interface ProgressSchema {
+	choices: ProgressChoices[];
+	progressId: number;
+	storyId: number;
+	version: string;
+	readerId: number;
+	isArchived: boolean;
+	resultId?: number;
+	endFrame?: Frame;
+	started?: number;
+	updated?: number;
 }

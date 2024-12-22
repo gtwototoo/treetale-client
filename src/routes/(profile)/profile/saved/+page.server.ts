@@ -11,7 +11,7 @@ export const load = async ({ fetch, locals }) => {
 		redirect(302, '/');
 	}
 
-	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/me/stories?type=viewed`);
+	const res = await fetch(`${PUBLIC_TREETALE_API_URL}/me/stories?type=saved`);
 	const { error, message } = (await res.json()) as FetchResponse<ResponseStories>;
 
 	if (error) {

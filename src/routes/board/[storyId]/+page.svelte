@@ -1,5 +1,6 @@
 <script lang="ts">
 	import cloneDeep from 'lodash/cloneDeep';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -30,9 +31,10 @@
 </script>
 
 <svelte:head>
-	<title>Редактирование истории</title>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
 </svelte:head>
+
+<MetaTags title="Редактирование истории" />
 
 <SvgGradient />
 <Board />

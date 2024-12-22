@@ -1,11 +1,15 @@
 <script lang="ts">
-	export let statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
+	const {
+		statistic
+	}: {
+		statistic: { id: 'likes' | 'stories' | 'users'; title: string; value: string }[];
+	} = $props();
 </script>
 
 <div class="flex select-none justify-center">
 	<div class="relative flex flex-col items-center gap-8 py-[calc(16px+2vw)] text-center">
 		<h2
-			class="text-gradient !bg-clip-text text-[calc(24px+4vw)] uppercase leading-none text-transparent"
+			class="bg-gradient-to-b from-[#FDBA74] to-[#FF6C15] !bg-clip-text text-[calc(24px+4vw)] uppercase leading-none text-transparent"
 		>
 			<p>Бесконечный</p>
 			<p>мир историй</p>
@@ -29,9 +33,3 @@
 		</div>
 	</div>
 </div>
-
-<style lang="postcss">
-	.text-gradient {
-		background: linear-gradient(to bottom, #fdba66, #fd6d71);
-	}
-</style>

@@ -6,25 +6,20 @@
 	import { Share } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
-	import type { Frame } from '$lib/types';
+	import type { Story } from '$lib/types';
+	import type { ProgressSchema } from '$lib/types/schemas';
 	import { clm } from '$lib/utils/classMerge';
 
 	import FrameMini from './FrameMini.svelte';
 	import VersionTag from './VersionTag.svelte';
 
 	const {
-		choicesCount,
-		endFrame,
-		progressVersion,
-		currentVersion,
-		storyId,
+		story,
+		progress,
 		resultId
 	}: {
-		choicesCount: number;
-		endFrame: Frame;
-		progressVersion: string;
-		currentVersion: string;
-		storyId: number;
+		story: Story;
+		progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated'> & { choicesCount: number };
 		resultId: number;
 	} = $props();
 
@@ -34,6 +29,7 @@
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
 
 	const textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${resultId}`);
+	const { choicesCount, endFrame, version } = $derived(progress);
 
 	let copyState = $state<CopyState>(null);
 
@@ -84,7 +80,11 @@
 	</div>
 	<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4">Результаты</h1>
 	<div class="flex w-full items-center gap-3 max-md:justify-between max-md:px-3">
-		<VersionTag {currentVersion} {progressVersion} displayVersion="progress" />
+		<VersionTag
+			currentVersion={story.version}
+			progressVersion={version}
+			displayVersion="progress"
+		/>
 		<p class="italic">
 			{doPluralize(choicesCount)}
 			<span class="font-medium">{choicesCount}</span>
@@ -92,13 +92,13 @@
 		</p>
 	</div>
 </div>
-<FrameMini frame={endFrame} short={false} />
+<FrameMini frame={endFrame!} short={false} />
 <div class="flex gap-3 *:pointer-events-auto max-md:w-full *:max-md:flex-1">
 	<Button
 		asLink
 		size="lg"
 		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
-		href={`/${storyId}`}
+		href={`/${story.storyId}`}
 	>
 		В начало
 	</Button>

@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 
+	import { MetaTags } from 'svelte-meta-tags';
 	import { Button } from 'treetale-ui';
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
@@ -26,8 +27,9 @@
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<title>{isNotFound ? 'Страница не найдена' : 'Произошла ошибка'}</title>
 </svelte:head>
+
+<MetaTags title={isNotFound ? 'Страница не найдена' : 'Произошла ошибка'} />
 
 {#if page.error}
 	<div class="relative flex min-h-screen w-full flex-col">

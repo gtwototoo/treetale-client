@@ -3,6 +3,7 @@
 	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 
+	import { MetaTags } from 'svelte-meta-tags';
 	import { Button, Input } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
@@ -54,8 +55,9 @@
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<title>Авторизация</title>
 </svelte:head>
+
+<MetaTags title="Авторизация" />
 
 <div class="flex size-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">

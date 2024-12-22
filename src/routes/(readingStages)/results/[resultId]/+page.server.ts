@@ -1,7 +1,8 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { Frame, Story, User } from '$lib/types/index';
+import type { Story, User } from '$lib/types/index';
 import type { FetchResponse } from '$lib/types/response.js';
+import type { ProgressSchema } from '$lib/types/schemas.js';
 import { randomError } from '$lib/utils/random';
 
 export interface ResponseProgress {
@@ -9,12 +10,9 @@ export interface ResponseProgress {
 	author: {
 		subscribersCount: number;
 	} & User;
-	currentVersion: string;
-	endFrame: Frame;
-	choicesCount: number;
-	progressVersion: string;
+	progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated'> & { choicesCount: number };
+	archived: boolean;
 	story: Story;
-	updated: number;
 }
 
 export const load = async ({ fetch, params }) => {

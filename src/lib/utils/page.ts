@@ -1,6 +1,6 @@
 import findKey from 'lodash/findKey';
 
-type TPage = 'liked' | 'moderated' | 'profile' | 'reading' | 'viewed' | 'viewing';
+type TPage = 'liked' | 'moderated' | 'profile' | 'reading' | 'saved' | 'viewing';
 
 export const getPageType = (path: string): TPage => {
 	const patterns = {

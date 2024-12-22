@@ -3,6 +3,7 @@
 	import { onMount, type Component } from 'svelte';
 
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
+	import { MetaTags } from 'svelte-meta-tags';
 	import { Button, Icon, Input, Loading } from 'treetale-ui';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
@@ -97,15 +98,15 @@
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<title>TREETALE (Истории, новеллы, RPG)</title>
-	<meta
-		name="description"
-		content="Бесплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных
+</svelte:head>
+
+<MetaTags
+	title="TREETALE (Истории, новеллы, RPG)"
+	description="Бесплатное кроссплатформенное web-приложение, созданное для просмотра и создания интерактивных
 		нелинейных историй. Все добавленные авторами истории находятся на главном экране, что
 		позволяет найти большее количество читателей, а добавление истории происходит с помощью
 		создания интуитивно понятных node-схем с описанием, иллюстрациями и вариантами выбора."
-	/>
-</svelte:head>
+/>
 
 <div class="flex grow justify-center overflow-hidden">
 	<section class="flex w-full max-w-[120rem] flex-col gap-6 py-4">

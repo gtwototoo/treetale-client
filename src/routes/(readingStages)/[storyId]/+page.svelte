@@ -7,13 +7,14 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import last from 'lodash/last';
+	import type { Book } from 'schema-dts';
+	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 
 	import CanvasView from '$lib/components/FormatView/CanvasView.svelte';
 	import FramesView from '$lib/components/FormatView/FramesView.svelte';
 	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
 	import NovellaView from '$lib/components/FormatView/NovellaView.svelte';
 	import { enabledChoice, setChoice } from '$lib/components/methods.svelte.js';
-	import StoryStage from '$lib/components/StoryStage.svelte';
 	import SvgGradient from '$lib/components/SvgGradient.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -24,10 +25,6 @@
 
 	const { data } = $props();
 
-	const clonedData = $derived(cloneDeep(data));
-	const { author, frames, choices, progressVersion, story, updated, progressId } =
-		$derived(clonedData);
-
 	// const isFullscreen = () => {
 	// 	return (
 	// 		document.fullscreenElement ||
@@ -36,8 +33,6 @@
 	// 		document.webkitIsFullScreen
 	// 	);
 	// };
-
-	let started = $state(false);
 
 	const handleKeydown: KeyboardEventHandler<Window> = (e) => {
 		const { code } = e;
@@ -67,64 +62,51 @@
 
 		actions[code]();
 	};
-
-	let lastFrame = $derived(
+	const clonedData = $derived(cloneDeep(data));
+	const { frames, choices, story, progressId, author } = $derived(clonedData);
+	const lastFrame = $derived(
 		choices.length ? find(frames, { frameId: last(choices)!.nextFrameId })! : frames?.[0]
 	);
+	const { description, genre, likes, title, color, vars, storyId, format } = $derived(story);
 
 	onMount(() => {
-		bodyBackgroundColorStore.color = story.color.length ? story.color : DEFAULT_COLOR;
-		variablesStore.variables = story.vars;
+		bodyBackgroundColorStore.color = length ? color : DEFAULT_COLOR;
+		variablesStore.variables = vars;
 	});
 
-	// let bookSchema = $derived({
-	// 	'@type': 'Book',
-	// 	abstract: description,
-	// 	bookFormat: 'EBook',
-	// 	genre,
-	// 	interactionStatistic: {
-	// 		'@type': 'InteractionCounter',
-	// 		interactionType: {
-	// 			'@type': 'LikeAction'
-	// 		},
-	// 		userInteractionCount: likes.length
-	// 	},
-	// 	name: title,
-	// 	publisher: {
-	// 		'@type': 'Person',
-	// 		name: author.name
-	// 	}
-	// } as Book);
+	let bookSchema = $derived({
+		'@type': 'Book',
+		abstract: description,
+		bookFormat: 'EBook',
+		genre,
+		interactionStatistic: {
+			'@type': 'InteractionCounter',
+			interactionType: {
+				'@type': 'LikeAction'
+			},
+			userInteractionCount: likes.length
+		},
+		name: title,
+		publisher: {
+			'@type': 'Person',
+			name: author.name
+		}
+	} as Book);
 </script>
+
+<JsonLd schema={bookSchema} />
+<MetaTags {description} {title} />
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<meta name="description" content={story.description} />
-	<title>{story.title}</title>
 </svelte:head>
 
 <svelte:window onkeydown={handleKeydown} />
 
 <SvgGradient />
 
-{#if started}
-	{#if story.format === 'novella'}
-		<NovellaView {lastFrame} storyId={story.storyId} {progressId} />
-	{:else}
-		<div
-			class={clm(
-				'pointer-events-none relative flex min-h-full w-full items-center justify-center px-4 py-20 transition-[padding]',
-				!interfaceStore.show && 'py-8'
-			)}
-		>
-			<InterfaceViewButton />
-			{#if story.format === 'canvas'}
-				<CanvasView {frames} {choices} storyId={story.storyId} {progressId} />
-			{:else}
-				<FramesView {lastFrame} storyId={story.storyId} {progressId} />
-			{/if}
-		</div>
-	{/if}
+{#if format === 'novella'}
+	<NovellaView {lastFrame} {storyId} {progressId} />
 {:else}
 	<div
 		class={clm(
@@ -133,6 +115,10 @@
 		)}
 	>
 		<InterfaceViewButton />
-		<StoryStage {story} {author} {updated} {frames} {choices} {progressVersion} />
+		{#if format === 'canvas'}
+			<CanvasView {frames} {choices} {storyId} {progressId} />
+		{:else}
+			<FramesView {lastFrame} {storyId} {progressId} />
+		{/if}
 	</div>
 {/if}

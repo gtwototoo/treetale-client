@@ -8,8 +8,13 @@
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	export let noteKey: number;
-	export let checkUpdates: () => void;
+	const {
+		noteKey,
+		checkUpdates
+	}: {
+		noteKey: number;
+		checkUpdates: () => void;
+	} = $props();
 
 	const removeNote = () => {
 		notesStore.notes.splice(noteKey, 1);

@@ -33,6 +33,11 @@
 			icon: ArchiveBox,
 			title: 'Черновик'
 		},
+		archived: {
+			color: 'text-gray-500',
+			icon: ArchiveBox,
+			title: 'Архив'
+		},
 		published: {
 			color: 'text-emerald-500',
 			icon: CheckCircle,

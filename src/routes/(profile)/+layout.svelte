@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
 
+	import { type Person } from 'schema-dts';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
+	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 	import { Button, Icon } from 'treetale-ui';
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
@@ -18,15 +20,16 @@
 
 	let user = $derived(me ? page.data.session : data.user);
 	let { statistic } = $derived(data);
-	let adminUser = $derived(me && (user.role === 'moderator' || user.role === 'admin'));
+	let { role, name, description, color } = $derived(user);
+	let adminUser = $derived(me && (role === 'moderator' || role === 'admin'));
 
-	// let userSchema = $derived({
-	// 	'@type': 'Person',
-	// 	name: user.name
-	// } as Person);
+	let userSchema = $derived({
+		'@type': 'Person',
+		name
+	} as Person);
 
 	$effect(() => {
-		bodyBackgroundColorStore.color = user.color.length ? user.color : DEFAULT_COLOR;
+		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
 	});
 
 	let tabs = [
@@ -46,17 +49,18 @@
 			name: 'Понравившиеся'
 		},
 		{
-			href: '/profile/viewed',
+			href: '/profile/saved',
 			icon: Eye,
-			name: 'Просмотренные'
+			name: 'Сохраненные'
 		}
 	];
 </script>
 
+<JsonLd schema={userSchema} />
+<MetaTags {description} title={me ? 'Профиль' : name} />
+
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<title>{me ? 'Профиль' : user.name}</title>
-	<meta name="description" content={user.description} />
 </svelte:head>
 
 <SvgGradient />

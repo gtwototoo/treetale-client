@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 
 	import { Check, XMark } from 'svelte-heros-v2';
+	import { MetaTags } from 'svelte-meta-tags';
 	import { Button, Icon, Input } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
@@ -57,8 +58,9 @@
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<title>Завершение регистрации</title>
 </svelte:head>
+
+<MetaTags title="Завершение регистрации" />
 
 <div class="flex size-full items-start justify-center">
 	<div class="flex min-h-full items-center p-4 max-sm:p-3">

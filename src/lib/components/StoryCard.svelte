@@ -32,7 +32,6 @@
 	let showModal = $state(false);
 
 	let { color, created, genre, imageUrl, likes, status, title } = $derived(story);
-
 	const edit = $derived(page.data.session && page.data.session.userId === author?.userId);
 	const icon = $derived(find(GENRES_LIST, { id: genre })?.icon || Adventure);
 	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);

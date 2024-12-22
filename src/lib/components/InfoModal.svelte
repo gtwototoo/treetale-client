@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { page } from '$app/state';
+
 	import find from 'lodash/find';
-	import { Tag } from 'svelte-heros-v2';
-	import { Modal } from 'treetale-ui';
+	import { Cog6Tooth } from 'svelte-heros-v2';
+	import { Button, Icon, Modal, Tag } from 'treetale-ui';
 
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
@@ -12,6 +14,7 @@
 
 	import LeftSide from './StoryStage/LeftSide.svelte';
 	import ActionButtons from './StoryStage/StoryStart/ActionButtons.svelte';
+	import CopyButton from './StoryStage/StoryStart/CopyButton.svelte';
 	import VersionTag from './StoryStage/VersionTag.svelte';
 
 	let {
@@ -35,18 +38,18 @@
 		version,
 		description
 	} = $derived(story);
+	let edit = $derived(page.data.session && page.data.session.userId === author?.userId);
 	const genre = $derived(find(GENRES_LIST, { id: genreId })!);
 	const format = $derived(find(STORY_FORMATS, { id: formatId })!);
 </script>
 
-<Modal bind:active class="w-full max-w-screen-lg p-12">
-	<div
-		class="flex w-full select-none flex-row items-start gap-2 max-md:flex-col max-md:items-center"
-	>
-		<LeftSide {story} {author} title={story.title} />
-		<div
-			class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6"
-		>
+<Modal
+	bind:active
+	class="flex w-full max-w-screen-lg flex-row gap-2 bg-main-10 p-12 max-md:flex-col max-md:items-center"
+>
+	<LeftSide {story} {author} title={story.title} />
+	<div class="flex h-auto w-full flex-col items-start text-text max-md:items-center xs:px-6">
+		<div class="flex w-full grow flex-col gap-6">
 			<div class="flex w-full flex-col gap-3 max-md:items-center">
 				<ActionButtons {genre} {storyId} {format} />
 				<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4 max-md:text-center">
@@ -55,12 +58,12 @@
 				<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
 					<VersionTag currentVersion={version} />
 					<p class="text-base italic">
-						Обновлено <span class="font-medium">{formatDate(story.updated)}</span>
+						Обновлено {formatDate(story.updated)}
 					</p>
 				</div>
 			</div>
 			<div class="flex flex-col gap-3">
-				<div class="clear-text adaptive-font px-2">
+				<div class="clear-text adaptive-font break-all">
 					{@html correctVariableReplace(description, variablesStore.variables) ||
 						'Без описания'}
 				</div>
@@ -74,6 +77,41 @@
 					<p class="text-sm text-gray-500 max-md:text-xs">Теги не указаны</p>
 				{/if}
 			</div>
+		</div>
+		<div class="sticky bottom-0 -mb-6 flex w-full items-center justify-between bg-main-10 py-6">
+			{#if false}
+				<!-- <SavedProgress
+					{progressVersion}
+					{updated}
+					storyId={story.storyId}
+					currentVersion={version}
+					choicesCount={choices.length}
+					{lastFrame}
+					onclick={() => null}
+				/> -->
+			{:else}
+				<div class="flex gap-3">
+					<Button
+						asLink
+						href="/{storyId}"
+						size="lg"
+						class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
+					>
+						Начать историю
+					</Button>
+					{#if edit}
+						<Button
+							asLink
+							href="/board/{storyId}"
+							size="lg"
+							class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
+						>
+							<Icon this={Cog6Tooth} class="size-6" />
+						</Button>
+					{/if}
+				</div>
+				<CopyButton {storyId} />
+			{/if}
 		</div>
 	</div>
 </Modal>

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import cloneDeep from 'lodash/cloneDeep';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
 	import EndResults from '$lib/components/StoryStage/EndResults.svelte';
@@ -15,21 +16,20 @@
 
 	const { data } = $props();
 
-	let clonedData = $derived(cloneDeep(data));
-
-	let { author, currentVersion, endFrame, choicesCount, progressVersion, story, resultId } =
-		$derived(clonedData);
+	const clonedData = $derived(cloneDeep(data));
+	const { author, progress, story, resultId } = $derived(clonedData);
+	const { description, color } = $derived(story);
 
 	onMount(() => {
-		bodyBackgroundColorStore.color = story.color.length ? story.color : DEFAULT_COLOR;
+		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
 	});
 </script>
 
 <svelte:head>
 	{@html rootStyle(bodyBackgroundColorStore.color)}
-	<meta name="description" content={story.description} />
-	<title>Результаты истории</title>
 </svelte:head>
+
+<MetaTags title="Результаты истории" {description} />
 
 <SvgGradient />
 
@@ -47,14 +47,7 @@
 		<div
 			class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6"
 		>
-			<EndResults
-				{resultId}
-				storyId={story.storyId}
-				{currentVersion}
-				{choicesCount}
-				{endFrame}
-				{progressVersion}
-			/>
+			<EndResults {resultId} {story} {progress} />
 		</div>
 	</div>
 </div>
