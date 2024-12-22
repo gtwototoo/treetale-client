@@ -15,12 +15,12 @@
 
 	const {
 		story,
-		progress,
-		resultId
+		progress
 	}: {
 		story: Story;
-		progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated'> & { choicesCount: number };
-		resultId: number;
+		progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated' | 'resultId'> & {
+			choicesCount: number;
+		};
 	} = $props();
 
 	type CopyState = 'error' | 'success' | null;
@@ -28,7 +28,7 @@
 	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
 
-	const textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${resultId}`);
+	const textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${progress.resultId}`);
 	const { choicesCount, endFrame, version } = $derived(progress);
 
 	let copyState = $state<CopyState>(null);

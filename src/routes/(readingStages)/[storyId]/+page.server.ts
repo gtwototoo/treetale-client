@@ -1,21 +1,7 @@
 import { PUBLIC_TREETALE_API_URL } from '$env/static/public';
 
-import type { Frame, ProgressChoices, Story, User } from '$lib/types/index';
-import type { FetchResponse } from '$lib/types/response.js';
+import type { FetchResponse, ResponseProgress } from '$lib/types/response.js';
 import { randomError } from '$lib/utils/random';
-
-export interface ResponseProgress {
-	progressId: number;
-	author: {
-		subscribersCount: number;
-	} & User;
-	currentVersion: string;
-	frames: Frame[];
-	choices: ProgressChoices[];
-	progressVersion: string;
-	story: Story;
-	updated: number;
-}
 
 export const load = async ({ fetch, params }) => {
 	const storyId = +params.storyId;

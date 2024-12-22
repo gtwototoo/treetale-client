@@ -59,9 +59,12 @@ const config = {
 				},
 				'.scrollbar-none::-webkit-scrollbar': {
 					display: 'none'
+				},
+				'.break-words': {
+					wordBreak: 'break-word',
+					overflowWrap: 'break-word'
 				}
 			});
-
 			matchUtilities(
 				{
 					'text-shadow': (value) => ({

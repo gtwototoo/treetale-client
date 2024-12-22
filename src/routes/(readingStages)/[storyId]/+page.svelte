@@ -63,14 +63,17 @@
 		actions[code]();
 	};
 	const clonedData = $derived(cloneDeep(data));
-	const { frames, choices, story, progressId, author } = $derived(clonedData);
+	const { story, progress, author, scopeFrames } = $derived(clonedData);
+	const { choices, progressId } = $derived(progress);
 	const lastFrame = $derived(
-		choices.length ? find(frames, { frameId: last(choices)!.nextFrameId })! : frames?.[0]
+		choices.length
+			? find(scopeFrames, { frameId: last(choices)!.nextFrameId })!
+			: scopeFrames?.[0]
 	);
 	const { description, genre, likes, title, color, vars, storyId, format } = $derived(story);
 
 	onMount(() => {
-		bodyBackgroundColorStore.color = length ? color : DEFAULT_COLOR;
+		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
 		variablesStore.variables = vars;
 	});
 
@@ -116,7 +119,7 @@
 	>
 		<InterfaceViewButton />
 		{#if format === 'canvas'}
-			<CanvasView {frames} {choices} {storyId} {progressId} />
+			<CanvasView frames={scopeFrames} {choices} {storyId} {progressId} />
 		{:else}
 			<FramesView {lastFrame} {storyId} {progressId} />
 		{/if}

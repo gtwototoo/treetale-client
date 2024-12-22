@@ -17,7 +17,7 @@
 	const { data } = $props();
 
 	const clonedData = $derived(cloneDeep(data));
-	const { author, progress, story, resultId } = $derived(clonedData);
+	const { author, progress, story } = $derived(clonedData);
 	const { description, color } = $derived(story);
 
 	onMount(() => {
@@ -47,7 +47,7 @@
 		<div
 			class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6"
 		>
-			<EndResults {resultId} {story} {progress} />
+			<EndResults {story} {progress} />
 		</div>
 	</div>
 </div>
