@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { type HeroIconComponent, Image } from 'treetale-ui';
+	import type { Component } from 'svelte';
+
+	import { Image } from 'treetale-ui';
 
 	import FileUploader from './FileUploader.svelte';
 
-	let {
+	const {
 		alt,
 		class: classname,
 		disabled = false,
@@ -16,7 +18,7 @@
 		alt?: string;
 		class?: string;
 		disabled?: boolean;
-		icon: HeroIconComponent;
+		icon: Component;
 		onloadstart?: (file: File) => void;
 		onremove?: () => void;
 		readonly?: boolean;

@@ -15,7 +15,7 @@
 
 	import DashedBorder from './DropArea/DashedBorder.svelte';
 
-	let {
+	const {
 		accept = 'image/*',
 		children,
 		class: classname,

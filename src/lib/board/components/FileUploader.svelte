@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import type { Component, Snippet } from 'svelte';
 
 	import upperFirst from 'lodash/upperFirst';
 	import { Trash } from 'svelte-heros-v2';
-	import { Button, type HeroIconComponent, Icon } from 'treetale-ui';
+	import { Button, Icon } from 'treetale-ui';
 
 	import DropArea from '$lib/components/DropArea.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -26,7 +26,7 @@
 		children: Snippet<[null | string | undefined, () => void]>;
 		class?: string;
 		disabled?: boolean;
-		icon: HeroIconComponent;
+		icon: Component;
 		mediaType: 'audio' | 'image';
 		onloadend?: (base64src: string) => void;
 		onloadstart?: (file: File) => void;

@@ -13,7 +13,7 @@
 	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { transform } from '$board/utils/coordinatesToCss';
 
-	let {
+	const {
 		comment
 	}: {
 		comment: Comment;

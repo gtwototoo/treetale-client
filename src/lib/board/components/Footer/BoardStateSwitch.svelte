@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Component } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	import {
@@ -10,7 +11,7 @@
 		Share,
 		Square3Stack3d
 	} from 'svelte-heros-v2';
-	import { Button, type HeroIconComponent, Icon } from 'treetale-ui';
+	import { Button, Icon } from 'treetale-ui';
 
 	import { connectionStartStore } from '$board/stores/frames.svelte';
 	import {
@@ -20,14 +21,14 @@
 		isBindingMode
 	} from '$board/stores/index.svelte';
 
-	const modesIcons: Record<ModeType, HeroIconComponent> = {
+	const modesIcons: Record<ModeType, Component> = {
 		addingComment: Square3Stack3d,
 		addingFrame: Square3Stack3d,
 		binding: Share,
 		view: Eye
 	};
 
-	const actionsIcons: Record<ActionType, HeroIconComponent> = {
+	const actionsIcons: Record<ActionType, Component> = {
 		connectTo: ArrowRightOnRectangle,
 		dragImage: Photo,
 		movingArea: Map,

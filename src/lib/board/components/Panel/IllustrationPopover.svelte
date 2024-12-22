@@ -6,7 +6,7 @@
 
 	import { clm } from '$lib/utils/classMerge';
 
-	let {
+	const {
 		children,
 		imageUrl
 	}: {

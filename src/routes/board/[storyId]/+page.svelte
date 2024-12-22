@@ -16,7 +16,7 @@
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 
-	let { data } = $props();
+	const { data } = $props();
 
 	let clonedData = cloneDeep(data);
 

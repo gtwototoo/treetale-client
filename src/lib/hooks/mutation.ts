@@ -1,7 +1,7 @@
 import type { ActionReturn } from 'svelte/action';
 
 interface IMutation {
-	'on:mutation': (e: CustomEvent<{ detail: MutationRecord[] }>) => void;
+	onmutation: (e: CustomEvent<{ detail: MutationRecord[] }>) => void;
 }
 
 export const mutationDetect = (node: HTMLElement): ActionReturn<null, IMutation> => {

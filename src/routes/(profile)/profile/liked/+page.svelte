@@ -4,7 +4,7 @@
 	import StoriesList from '$lib/components/StoriesList.svelte';
 	import { correctWhitespace } from '$lib/utils/text';
 
-	let { data } = $props();
+	const { data } = $props();
 </script>
 
 <StoriesList authors={data.authors} stories={data.stories}>

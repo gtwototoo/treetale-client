@@ -12,7 +12,7 @@
 	import FrameMini from './FrameMini.svelte';
 	import VersionTag from './VersionTag.svelte';
 
-	let {
+	const {
 		choicesCount,
 		endFrame,
 		progressVersion,
@@ -33,7 +33,7 @@
 	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
 
-	let textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${resultId}`);
+	const textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${resultId}`);
 
 	let copyState = $state<CopyState>(null);
 

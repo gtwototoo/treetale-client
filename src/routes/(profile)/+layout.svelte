@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
@@ -14,9 +14,9 @@
 
 	let { children, data } = $props();
 
-	const me = $page.data.session && $page.data.session.userId === data.user.userId;
+	const me = page.data.session?.userId === data.user.userId;
 
-	let user = $derived(me ? $page.data.session : data.user);
+	let user = $derived(me ? page.data.session : data.user);
 	let { statistic } = $derived(data);
 	let adminUser = $derived(me && (user.role === 'moderator' || user.role === 'admin'));
 
@@ -80,7 +80,7 @@
 											{href}
 											class={clm(
 												'justify-center text-text hover:bg-main-70',
-												$page.url.pathname === href && 'bg-main-50'
+												page.url.pathname === href && 'bg-main-50'
 											)}
 											size="lg"
 										>

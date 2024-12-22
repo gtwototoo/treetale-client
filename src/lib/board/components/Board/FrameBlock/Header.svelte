@@ -7,7 +7,7 @@
 
 	import { isBindingMode } from '$board/stores/index.svelte';
 
-	let {
+	const {
 		end,
 		frame,
 		isDragging,

@@ -6,7 +6,7 @@
 
 	import TransparentRect from './TransparentRect.svelte';
 
-	let {
+	const {
 		class: classname
 	}: {
 		class?: string;

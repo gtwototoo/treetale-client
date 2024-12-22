@@ -6,7 +6,7 @@
 	import Logo from './Logo.svelte';
 	import Session from './Session.svelte';
 
-	let {
+	const {
 		children,
 		class: classname,
 		right

@@ -15,7 +15,7 @@
 
 	import Choice from './ReadFrame/Choice.svelte';
 
-	let {
+	const {
 		class: classname,
 		frame,
 		selectedChoiceId,
@@ -55,7 +55,7 @@
 		loading = false;
 	};
 
-	let availableChoicesCount = $derived(
+	const availableChoicesCount = $derived(
 		frame.choices.filter((choice) => enabledChoice(frame.modificators, choice)).length
 	);
 

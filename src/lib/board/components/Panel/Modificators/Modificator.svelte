@@ -20,7 +20,7 @@
 		math: ['+', '-', '*', '/', '=']
 	};
 
-	let {
+	const {
 		asInput,
 		modificator,
 		onremove
@@ -49,8 +49,8 @@
 		}
 	};
 
-	let variable = $derived(find(variablesStore.variables, { name: modificator.variable }));
-	let fullModificatorOperation = $derived(
+	const variable = $derived(find(variablesStore.variables, { name: modificator.variable }));
+	const fullModificatorOperation = $derived(
 		`${modificator.variable || 'Переменная'} ${modificator.symbol} ${modificator.value || 'Значение'}`
 	);
 </script>

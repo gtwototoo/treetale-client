@@ -20,7 +20,7 @@
 
 	import { nextSelectedFrame } from '../methods.svelte';
 
-	let {
+	const {
 		board,
 		onmouseup
 	}: {

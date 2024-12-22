@@ -6,10 +6,10 @@
 
 	import type { Story, User } from '$lib/types';
 
-	import Empty from './StoryCard/Empty.svelte';
 	import StoryCard from './StoryCard.svelte';
+	import Empty from './StoryCard/Empty.svelte';
 
-	let {
+	const {
 		authors,
 		children,
 		stories

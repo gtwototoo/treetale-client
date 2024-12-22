@@ -7,29 +7,25 @@
 	import LeftSide from './StoryStage/LeftSide.svelte';
 	import StoryStart from './StoryStage/StoryStart.svelte';
 
-	let {
+	const {
 		author,
-		currentVersion,
 		frames,
 		choices,
 		progressVersion,
 		story,
-		started = $bindable(),
 		updated
 	}: {
 		author: {
 			subscribersCount: number;
 		} & User;
-		currentVersion: string;
 		frames: Frame[];
 		choices: ProgressChoices[];
 		progressVersion: string;
 		story: Story;
-		started: boolean;
 		updated: number;
 	} = $props();
 
-	let lastFrame = $derived(find(frames, { frameId: last(choices)?.nextFrameId }) as Frame);
+	const lastFrame = $derived(find(frames, { frameId: last(choices)?.nextFrameId }) as Frame);
 </script>
 
 <div
@@ -37,15 +33,6 @@
 >
 	<LeftSide {story} {author} title={story.title} />
 	<div class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6">
-		<StoryStart
-			bind:started
-			{author}
-			{lastFrame}
-			{choices}
-			{currentVersion}
-			{progressVersion}
-			{story}
-			{updated}
-		/>
+		<StoryStart {author} {lastFrame} {choices} {progressVersion} {story} {updated} />
 	</div>
 </div>

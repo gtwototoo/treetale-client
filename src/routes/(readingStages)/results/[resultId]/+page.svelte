@@ -13,7 +13,7 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors.js';
 
-	let { data } = $props();
+	const { data } = $props();
 
 	let clonedData = $derived(cloneDeep(data));
 

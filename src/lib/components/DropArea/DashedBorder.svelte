@@ -4,7 +4,7 @@
 	const width = '100%';
 	const rx = 12;
 
-	let {
+	const {
 		dragged
 	}: {
 		dragged: boolean;

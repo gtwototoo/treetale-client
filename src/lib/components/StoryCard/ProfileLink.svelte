@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Button } from 'treetale-ui';
@@ -11,7 +11,7 @@
 
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
-	let {
+	const {
 		author,
 		class: classname,
 		mobileView
@@ -23,12 +23,13 @@
 		mobileView?: boolean;
 	} = $props();
 
-	let subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
+	const subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
+
 	let base64src = $state('');
 	let addLoading = $state(false);
 
 	const handleClick = async () => {
-		await goto($page.data.session?.userId === author.userId ? '/profile' : `@${author.linkName}`);
+		await goto(page.data.session?.userId === author.userId ? '/profile' : `@${author.linkName}`);
 	};
 </script>
 

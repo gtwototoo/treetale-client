@@ -6,14 +6,14 @@
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { contrastText } from '$lib/utils/contrast';
 
-	let {
+	const {
 		maskId = 'short-logo-mask',
 		...props
 	}: SVGAttributes<SVGElement> & {
 		maskId?: string;
 	} = $props();
 
-	let gradientColors = $derived(
+	const gradientColors = $derived(
 		contrastText(bodyBackgroundColorStore.color) ? ['#5A00EC', '#AF00A9'] : ['#FF6C15', '#FDBA74']
 	);
 </script>

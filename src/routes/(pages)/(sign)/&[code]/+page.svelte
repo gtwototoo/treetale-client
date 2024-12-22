@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { HttpError } from '@sveltejs/kit';
 	import type { FormEventHandler } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
@@ -30,7 +30,7 @@
 		loading = true;
 
 		try {
-			await signUpUser(name, $page.params.code);
+			await signUpUser(name, page.params.code);
 
 			await goto('/profile', {
 				invalidateAll: true,

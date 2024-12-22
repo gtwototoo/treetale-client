@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import { Plus } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
@@ -8,7 +8,7 @@
 	import { createStory } from '$lib/requests/story';
 	import { clm } from '$lib/utils/classMerge';
 
-	let {
+	const {
 		class: classname
 	}: {
 		class?: string;
@@ -17,7 +17,7 @@
 	let loading = $state(false);
 
 	const handleClick = async () => {
-		if (!$page.data.session) {
+		if (!page.data.session) {
 			await goto('/signin');
 		}
 

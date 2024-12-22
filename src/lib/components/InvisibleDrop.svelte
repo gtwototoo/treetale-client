@@ -12,7 +12,7 @@
 
 	import DropArea from './DropArea.svelte';
 
-	let {
+	const {
 		accept = 'image/*',
 		children,
 		onchange,

@@ -9,7 +9,7 @@
 	import Likes from '../Likes.svelte';
 	import Cover from '../StoryCard/Cover.svelte';
 
-	let {
+	const {
 		author,
 		story,
 		title
@@ -21,9 +21,9 @@
 		title: string;
 	} = $props();
 
-	let { color, created, imageUrl, likes, status, storyId } = $derived(story);
-	let selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
-	let genre = $derived(find(GENRES_LIST, { id: story.genre })!);
+	const { color, created, imageUrl, likes, status, storyId } = $derived(story);
+	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
+	const genre = $derived(find(GENRES_LIST, { id: story.genre })!);
 </script>
 
 <div class="flex shrink-0 flex-col gap-3 md:sticky md:top-20 md:w-1/3">

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import { Button } from 'treetale-ui';
 
@@ -17,10 +17,10 @@
 		}
 	};
 
-	let isNotFound = $derived($page.status === 404);
+	let isNotFound = $derived(page.status === 404);
 
 	$effect(() => {
-		bodyBackgroundColorStore.color = $page.error?.color;
+		bodyBackgroundColorStore.color = page.error?.color;
 	});
 </script>
 
@@ -29,12 +29,12 @@
 	<title>{isNotFound ? 'Страница не найдена' : 'Произошла ошибка'}</title>
 </svelte:head>
 
-{#if $page.error}
+{#if page.error}
 	<div class="relative flex min-h-screen w-full flex-col">
 		<MainHeader />
 		<div class="flex size-full items-start justify-center overflow-auto">
 			<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
-				<ReadCard alt="Ошибка" src={$page.error?.img} text={$page.error?.message}>
+				<ReadCard alt="Ошибка" src={page.error?.img} text={page.error?.message}>
 					<Button
 						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main"
 						onclick={handleClick}

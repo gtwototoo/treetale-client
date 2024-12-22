@@ -14,7 +14,7 @@
 	import InterfaceViewButton from './InterfaceViewButton.svelte';
 	import Choice from './ReadFrame/Choice.svelte';
 
-	let {
+	const {
 		lastFrame,
 		storyId,
 		progressId
@@ -41,7 +41,7 @@
 		loading = false;
 	};
 
-	let availableChoicesCount = $derived(
+	const availableChoicesCount = $derived(
 		lastFrame.choices.filter((choice) => enabledChoice(lastFrame.modificators, choice)).length
 	);
 </script>

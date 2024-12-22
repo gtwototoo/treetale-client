@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import { Check } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
@@ -102,7 +102,7 @@
 
 	let showPublishButton = $derived(
 		!readonlyModeStore.isEnabled ||
-			(($page.data.session.role === 'admin' || $page.data.session.role === 'moderator') &&
+			((page.data.session.role === 'admin' || page.data.session.role === 'moderator') &&
 				storyInfoStore.info?.status !== 'draft')
 	);
 </script>
@@ -143,7 +143,7 @@
 				Опубликовать
 			</Button>
 		{:else if storyInfoStore.info?.status === 'review'}
-			{#if $page.data.session.role === 'member'}
+			{#if page.data.session.role === 'member'}
 				<p class="p-2">
 					{correctWhitespace(
 						'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории'

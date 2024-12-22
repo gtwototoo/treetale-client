@@ -63,22 +63,22 @@
 		}
 	};
 
-	let logicModificators = $derived(
+	const logicModificators = $derived(
 		choiceModificators(frame.modificators, choice.choiceId, 'logic') as LogicModificator[]
 	);
-	let mathModificators = $derived(
+	const mathModificators = $derived(
 		choiceModificators(frame.modificators, choice.choiceId, 'math') as MathModificator[]
 	);
-	let disabled = $derived(
+	const disabled = $derived(
 		!choice.frameId ||
 			!checkLogic(inspectorVariables, logicModificators) ||
 			(choice.asInput && !inputValue)
 	);
-	let onlyCorrectLogicModificators = $derived(
+	const onlyCorrectLogicModificators = $derived(
 		filter(logicModificators, (modificator) => !!(modificator.variable && modificator.value))
 	);
 
-	let yellowTextColor = $derived(
+	const yellowTextColor = $derived(
 		currentThemeClass(clm('text-yellow-200'), clm('text-yellow-500'))
 	);
 </script>

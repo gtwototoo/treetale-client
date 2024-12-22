@@ -3,7 +3,7 @@
 
 	import ReadFrame from './ReadFrame.svelte';
 
-	let {
+	const {
 		lastFrame,
 		storyId,
 		progressId

@@ -22,7 +22,7 @@
 
 	type HTMLContentEditable = HTMLDivElement;
 
-	let {
+	const {
 		choice,
 		frame
 	}: {
@@ -87,14 +87,16 @@
 		descriptionFocus();
 	};
 
-	let greenBackgroundColor = $derived(
+	const greenBackgroundColor = $derived(
 		currentThemeClass(clm('bg-emerald-800'), clm('bg-emerald-200'))
 	);
 
-	let logicModificators = $derived(
+	const logicModificators = $derived(
 		choiceModificators(frame.modificators, choice.choiceId, 'logic')
 	);
-	let mathModificators = $derived(choiceModificators(frame.modificators, choice.choiceId, 'math'));
+	const mathModificators = $derived(
+		choiceModificators(frame.modificators, choice.choiceId, 'math')
+	);
 </script>
 
 <Contenteditable

@@ -45,7 +45,7 @@
 				{alt}
 				class="h-[clamp(100px,33vw,330px)] w-full rounded-2xl bg-main-40 text-text"
 				cover
-				on:error={handleError}
+				onerror={handleError}
 				{src}
 			/>
 		{/if}

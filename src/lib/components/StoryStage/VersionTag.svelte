@@ -4,7 +4,7 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { versionCompare } from '$lib/utils/versionCompare';
 
-	let {
+	const {
 		currentVersion,
 		progressVersion,
 		displayVersion = 'current'
@@ -18,18 +18,16 @@
 	const visibleVersion = $derived(
 		displayVersion === 'progress' ? progressOrCurrentVersion : currentVersion
 	);
-</script>
-
-<Tag
-	class={clm(
-		'whitespace-nowrap bg-opacity-30',
+	const versionColor = $derived(
 		{
 			breaking: 'bg-red-100 text-red-500',
 			current: 'bg-green-100 text-green-500',
 			minor: 'bg-yellow-100 text-yellow-500',
 			archived: 'bg-gray-100 text-gray-500'
 		}[versionCompare(currentVersion, progressOrCurrentVersion)]
-	)}
->
+	);
+</script>
+
+<Tag class={clm('whitespace-nowrap bg-opacity-30', versionColor)}>
 	{visibleVersion === 'Архив' ? visibleVersion : `Версия ${visibleVersion}`}
 </Tag>

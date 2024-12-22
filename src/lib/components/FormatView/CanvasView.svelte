@@ -5,7 +5,7 @@
 
 	import ReadFrame from './ReadFrame.svelte';
 
-	let {
+	const {
 		frames,
 		choices,
 		storyId,

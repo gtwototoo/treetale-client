@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
 	import { Button, Icon, Link } from 'treetale-ui';
@@ -8,12 +8,12 @@
 
 	import ProfileAvatar from '../ProfileAvatar.svelte';
 
-	let user = $derived($page.data.session as User);
+	let user = $derived(page.data.session as User);
 	let addLoading = $state(false);
 	let base64src = $state('');
 </script>
 
-{#if $page.data.session}
+{#if page.data.session}
 	<Link href="/profile" class="pointer-events-auto">
 		<ProfileAvatar
 			bind:base64src

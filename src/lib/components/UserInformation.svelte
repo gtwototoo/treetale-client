@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { ChangeEventHandler } from 'svelte/elements';
 
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
@@ -22,7 +22,7 @@
 	import InvisibleDrop from './InvisibleDrop.svelte';
 	import ProfileAvatar from './ProfileAvatar.svelte';
 
-	let {
+	const {
 		me,
 		statistic,
 		user
@@ -31,6 +31,8 @@
 		statistic: string[][];
 		user: User;
 	} = $props();
+
+	let userState = $state(user);
 
 	let editMode = $state(false);
 	let light = $state(80);
@@ -43,7 +45,7 @@
 		loading = true;
 
 		try {
-			await unsubscribeProfile(user.userId);
+			await unsubscribeProfile(userState.userId);
 			await invalidateAll();
 		} catch (error) {
 			console.error(error);
@@ -52,11 +54,11 @@
 		}
 	};
 	const handleSubscribe = async () => {
-		if ($page.data.session && $page.data.session.userId !== user.userId) {
+		if (page.data.session && page.data.session.userId !== userState.userId) {
 			loading = true;
 
 			try {
-				await subscribeProfile(user.userId);
+				await subscribeProfile(userState.userId);
 				await invalidateAll();
 			} catch (error) {
 				console.error(error);
@@ -73,7 +75,7 @@
 	};
 
 	const cancelEdit = () => {
-		bodyBackgroundColorStore.color = user.color || DEFAULT_COLOR;
+		bodyBackgroundColorStore.color = userState.color || DEFAULT_COLOR;
 		editMode = false;
 	};
 
@@ -95,9 +97,9 @@
 
 		try {
 			await updateProfile(
-				user.linkName,
-				user.name,
-				user.description,
+				userState.linkName,
+				userState.name,
+				userState.description,
 				bodyBackgroundColorStore.color
 			);
 			await invalidateAll();
@@ -123,7 +125,7 @@
 		try {
 			const { message } = await saveImage(file, AVATARS_FOLDER);
 
-			user.imageUrl = message.fileUrl;
+			userState.imageUrl = message.fileUrl;
 		} catch (error) {
 			console.error(error);
 		}
@@ -167,8 +169,8 @@
 				bind:addLoading
 				bind:base64src
 				size="lg"
-				src={user.imageUrl}
-				alt={user.name}
+				src={userState.imageUrl}
+				alt={userState.name}
 			/>
 		</div>
 		{#if editMode}
@@ -177,7 +179,7 @@
 					placeholder="Короткая ссылка"
 					maxlength={20}
 					size="lg"
-					bind:value={user.linkName}
+					bind:value={userState.linkName}
 					class="w-full"
 				/>
 				<ColorPicker
@@ -209,7 +211,7 @@
 	</div>
 	<div class="flex w-full flex-col items-center gap-2">
 		<Contenteditable
-			bind:html={user.name}
+			bind:html={userState.name}
 			class={clm(
 				'max-w-full bg-transparent text-center text-4xl font-bold text-text',
 				!editMode && 'pointer-events-none'
@@ -217,9 +219,9 @@
 			placeholder="Псевдоним"
 			readonly={!editMode}
 		/>
-		{#if editMode || user.description}
+		{#if editMode || userState.description}
 			<Contenteditable
-				bind:html={user.description}
+				bind:html={userState.description}
 				class={clm(
 					'w-full bg-transparent text-center text-lg text-text',
 					!editMode && 'pointer-events-none'
@@ -261,7 +263,7 @@
 					Выйти
 				</Button>
 			{/if}
-		{:else if $page.data.session && $page.data.session.subscriptions.includes(user.userId)}
+		{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
 			<Button
 				class="gap-3 bg-main-50 text-text hover:bg-main-70"
 				{loading}

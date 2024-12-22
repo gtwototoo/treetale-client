@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import type { KeyboardEventHandler } from 'svelte/elements';
 
@@ -22,10 +22,10 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { rootStyle } from '$lib/utils/customColors';
 
-	let { data } = $props();
+	const { data } = $props();
 
-	let clonedData = $derived(cloneDeep(data));
-	let { author, currentVersion, frames, choices, progressVersion, story, updated, progressId } =
+	const clonedData = $derived(cloneDeep(data));
+	const { author, frames, choices, progressVersion, story, updated, progressId } =
 		$derived(clonedData);
 
 	// const isFullscreen = () => {
@@ -43,7 +43,7 @@
 		const { code } = e;
 
 		const setFastChoice = async () => {
-			if (!$page.data.session) {
+			if (!page.data.session) {
 				await goto('/signin');
 			}
 
@@ -133,15 +133,6 @@
 		)}
 	>
 		<InterfaceViewButton />
-		<StoryStage
-			bind:started
-			{story}
-			{author}
-			{updated}
-			{frames}
-			{choices}
-			{currentVersion}
-			{progressVersion}
-		/>
+		<StoryStage {story} {author} {updated} {frames} {choices} {progressVersion} />
 	</div>
 {/if}

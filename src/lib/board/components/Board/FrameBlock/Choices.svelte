@@ -10,7 +10,7 @@
 
 	import Choice from './Choice.svelte';
 
-	let {
+	const {
 		frame,
 		isDragging,
 		isSelected,

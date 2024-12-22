@@ -10,7 +10,7 @@
 
 	type CopyState = 'error' | 'success' | null;
 
-	let {
+	const {
 		class: classname,
 		storyId
 	}: {

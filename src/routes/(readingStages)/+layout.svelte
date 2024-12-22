@@ -2,7 +2,7 @@
 	import ReadingHeader from '$lib/components/Header/ReadingHeader.svelte';
 	import { fullscreenStore, interfaceStore } from '$lib/stores/reading.svelte';
 
-	let { children } = $props();
+	const { children } = $props();
 
 	const handleFullscreenChange = () => {
 		fullscreenStore.isEnabled = !!document.fullscreenElement;

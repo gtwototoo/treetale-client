@@ -13,7 +13,7 @@
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 
-	let {
+	const {
 		checkUpdates,
 		variable
 	}: {

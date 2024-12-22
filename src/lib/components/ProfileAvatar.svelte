@@ -63,11 +63,11 @@
 		addLoading = false;
 	};
 
-	let correctColor = $derived(color || DEFAULT_COLOR);
-	let colorContrast = $derived(contrastText(correctColor) ? BLACK_COLOR : WHITE_COLOR);
-	let colorText = $derived(contrastText(correctColor) ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR);
+	const correctColor = $derived(color || DEFAULT_COLOR);
+	const colorContrast = $derived(contrastText(correctColor) ? BLACK_COLOR : WHITE_COLOR);
+	const colorText = $derived(contrastText(correctColor) ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR);
 
-	let style = $derived(
+	const style = $derived(
 		[
 			`--color-contrast: ${toRGB(colorContrast)}`,
 			`--color-main: ${toRGB(correctColor)}`,

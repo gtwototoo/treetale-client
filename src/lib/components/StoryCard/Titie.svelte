@@ -6,7 +6,7 @@
 
 	import TitleEditRect from './TitleEditRect.svelte';
 
-	let {
+	const {
 		color,
 		editMode,
 		isImage,

@@ -4,7 +4,7 @@
 
 	import clamp from 'lodash/clamp';
 
-	let {
+	const {
 		children,
 		coverHeigth,
 		coverWidth,

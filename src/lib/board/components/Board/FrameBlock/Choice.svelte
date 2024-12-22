@@ -18,7 +18,7 @@
 
 	type HTMLContentEditable = HTMLDivElement;
 
-	let {
+	const {
 		choice,
 		frame,
 		isDragging,

@@ -1,18 +1,20 @@
 <script lang="ts">
+	import type { Component } from 'svelte';
+
 	import type { EmblaOptionsType } from 'embla-carousel';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import find from 'lodash/find';
 	import range from 'lodash/range';
-	import { type HeroIconComponent, Icon } from 'treetale-ui';
+	import { Icon } from 'treetale-ui';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
-	import Empty from '$lib/components/StoryCard/Empty.svelte';
 	import StoryCard from '$lib/components/StoryCard.svelte';
+	import Empty from '$lib/components/StoryCard/Empty.svelte';
 	import type { Story, User } from '$lib/types';
 	import { correctWhitespace } from '$lib/utils/text';
 
-	let {
+	const {
 		authors,
 		icon,
 		listFormat = false,
@@ -20,7 +22,7 @@
 		title
 	}: {
 		authors: ({ subscribersCount: number } & User)[];
-		icon: HeroIconComponent;
+		icon: Component;
 		listFormat?: boolean;
 		stories: Story[];
 		title: string;

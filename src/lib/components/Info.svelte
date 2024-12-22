@@ -8,7 +8,7 @@
 
 	import ProfileLink from './StoryCard/ProfileLink.svelte';
 
-	let {
+	const {
 		author,
 		class: classname,
 		created,
@@ -45,8 +45,8 @@
 		}
 	};
 
-	let currentStatus = $derived(statuses[status]);
-	let date = $derived(formatDate(created));
+	const currentStatus = $derived(statuses[status]);
+	const date = $derived(formatDate(created));
 </script>
 
 {#if author && !edit}

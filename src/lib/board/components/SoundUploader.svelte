@@ -7,7 +7,7 @@
 
 	import FileUploader from './FileUploader.svelte';
 
-	let {
+	const {
 		class: classname,
 		disabled = false,
 		onloadstart,

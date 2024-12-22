@@ -17,7 +17,7 @@
 
 	import CopyButton from './CopyButton.svelte';
 
-	let {
+	const {
 		choicesCount,
 		currentVersion,
 		lastFrame,

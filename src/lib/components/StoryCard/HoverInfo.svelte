@@ -4,7 +4,7 @@
 	import type { Variable } from '$lib/types';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	let {
+	const {
 		description,
 		tags,
 		vars

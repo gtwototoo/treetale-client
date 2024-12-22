@@ -6,7 +6,7 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	let {
+	const {
 		frame,
 		short = true
 	}: {

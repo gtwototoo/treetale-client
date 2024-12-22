@@ -14,30 +14,34 @@
 	import SavedProgress from './StoryStart/SavedProgress.svelte';
 	import VersionTag from './VersionTag.svelte';
 
-	let {
-		currentVersion,
+	const {
 		lastFrame,
 		choices,
 		progressVersion,
 		story,
-		started = $bindable(),
 		updated
 	}: {
 		author: {
 			subscribersCount: number;
 		} & User;
-		currentVersion: string;
 		lastFrame: Frame;
 		choices: ProgressChoices[];
 		progressVersion: string;
 		story: Story;
-		started: boolean;
 		updated: number;
 	} = $props();
 
-	let { description, format: formatId, genre: genreId, storyId, tags, title } = $derived(story);
-	let genre = $derived(find(GENRES_LIST, { id: genreId })!);
-	let format = $derived(find(STORY_FORMATS, { id: formatId })!);
+	const {
+		description,
+		format: formatId,
+		genre: genreId,
+		storyId,
+		tags,
+		title,
+		version
+	} = $derived(story);
+	const genre = $derived(find(GENRES_LIST, { id: genreId })!);
+	const format = $derived(find(STORY_FORMATS, { id: formatId })!);
 </script>
 
 <div class="flex w-full flex-col gap-3 max-md:items-center">
@@ -46,7 +50,7 @@
 		{title}
 	</h1>
 	<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
-		<VersionTag {currentVersion} />
+		<VersionTag currentVersion={version} />
 		<p class="text-base italic">
 			Обновлено <span class="font-medium">{formatDate(story.updated)}</span>
 		</p>
@@ -71,17 +75,16 @@
 		{progressVersion}
 		{updated}
 		storyId={story.storyId}
-		{currentVersion}
+		currentVersion={version}
 		choicesCount={choices.length}
 		{lastFrame}
-		onclick={() => (started = true)}
+		onclick={() => null}
 	/>
 {:else}
 	<div class="flex w-full items-center justify-between">
 		<Button
 			size="lg"
 			class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
-			onclick={() => (started = true)}
 		>
 			Начать историю
 		</Button>

@@ -3,7 +3,7 @@
 
 	import type { FormatValues, Genre } from '$lib/types';
 
-	let {
+	const {
 		format,
 		genre
 	}: {
@@ -12,8 +12,8 @@
 		storyId: number;
 	} = $props();
 
-	let GenreIcon = $derived(genre.icon);
-	let FormatIcon = $derived(format.icon);
+	const GenreIcon = $derived(genre.icon);
+	const FormatIcon = $derived(format.icon);
 </script>
 
 <div class="flex *:pointer-events-auto *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">

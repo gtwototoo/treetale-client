@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import without from 'lodash/without';
 	import { Heart } from 'svelte-heros-v2';
@@ -8,7 +8,7 @@
 	import { addLike } from '$lib/requests/story';
 	import { clm } from '$lib/utils/classMerge';
 
-	let {
+	const {
 		class: classname,
 		likes,
 		storyId
@@ -19,6 +19,7 @@
 	} = $props();
 
 	let loading = $state(false);
+	let likesState = $state(likes);
 
 	const handleClick = async () => {
 		loading = true;
@@ -27,9 +28,9 @@
 			const { message } = await addLike(storyId);
 
 			if (message.liked) {
-				likes = [...likes, $page.data.session.userId];
+				likesState = [...likesState, page.data.session.userId];
 			} else {
-				likes = without(likes, $page.data.session.userId);
+				likesState = without(likesState, page.data.session.userId);
 			}
 		} catch (error) {
 			console.error(error);
@@ -38,7 +39,7 @@
 		}
 	};
 
-	let isLiked = $derived(likes?.includes($page.data.session?.userId));
+	const isLiked = $derived(likesState?.includes(page.data.session?.userId));
 </script>
 
 <Button
@@ -52,5 +53,5 @@
 		this={Heart}
 		variation={isLiked ? 'solid' : 'outline'}
 	/>
-	<p class="min-w-[1rem]">{likes.length}</p>
+	<p class="min-w-[1rem]">{likesState.length}</p>
 </Button>

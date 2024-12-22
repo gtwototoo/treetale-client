@@ -1,7 +1,8 @@
+import type { Component } from 'svelte';
+
 import { diff } from 'deep-object-diff';
 import cloneDeep from 'lodash/cloneDeep';
 import { Play } from 'svelte-heros-v2';
-import type { HeroIconComponent } from 'treetale-ui';
 
 import { HISTORY_STAGES_MAX_COUNT } from '$lib/constants';
 import type { Frame } from '$lib/types';
@@ -12,7 +13,7 @@ import { boardEventsStore } from './index.svelte';
 
 interface Change {
 	difference: Diff;
-	icon: HeroIconComponent;
+	icon: Component;
 	title: string;
 }
 
@@ -30,7 +31,7 @@ const getChangesHistory = () => {
 		});
 	};
 
-	const add = (title: string, icon: HeroIconComponent) => {
+	const add = (title: string, icon: Component) => {
 		stages = stages.slice(0, currentId + 1);
 		const difference = diff(initial, cloneDeep(boardFramesStore.frames)) as Diff;
 		const hasChanges = Object.keys(diff(difference, stages[currentId].difference)).length;

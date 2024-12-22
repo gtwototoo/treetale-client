@@ -26,7 +26,7 @@
 	import NewBlock from './NewBlock.svelte';
 	import WindowActions from './WindowActions.svelte';
 
-	let {
+	const {
 		onclick,
 		onmousedown,
 		onmousemove,

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import find from 'lodash/find';
 	import { Heart } from 'svelte-heros-v2';
-	import { Icon, Link } from 'treetale-ui';
+	import { Icon } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
@@ -14,10 +14,10 @@
 
 	import Adventure from './Icons/Genres/Adventure.svelte';
 	import Info from './Info.svelte';
+	import InfoModal from './InfoModal.svelte';
 	import Cover from './StoryCard/Cover.svelte';
-	import HoverInfo from './StoryCard/HoverInfo.svelte';
 
-	let {
+	const {
 		author,
 		class: classname,
 		story
@@ -29,16 +29,18 @@
 		story: Story;
 	} = $props();
 
-	let { color, created, description, genre, imageUrl, likes, status, storyId, tags, title, vars } =
-		$derived(story);
+	let showModal = $state(false);
 
-	let edit = $derived($page.data.session && $page.data.session.userId === author?.userId);
-	let icon = $derived(find(GENRES_LIST, { id: genre })?.icon || Adventure);
-	let selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
-	let isLiked = $derived(likes?.includes($page.data.session?.userId));
+	let { color, created, genre, imageUrl, likes, status, title } = $derived(story);
+
+	const edit = $derived(page.data.session && page.data.session.userId === author?.userId);
+	const icon = $derived(find(GENRES_LIST, { id: genre })?.icon || Adventure);
+	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
+	const isLiked = $derived(likes?.includes(page.data.session?.userId));
 </script>
 
-<Link href={`${edit ? '/board' : ''}/${storyId}`} class="group relative shrink-0 rounded-2xl">
+<InfoModal {story} {author} bind:active={showModal} />
+<button class="group relative shrink-0 rounded-2xl" onclick={() => (showModal = true)}>
 	<div class="contents rounded-inherit" style={generateMainColors(selectedColor)}>
 		<Cover {imageUrl} {title} {icon} color={selectedColor} class={classname} />
 		<Info
@@ -62,9 +64,8 @@
 				{collapseValue(likes.length)}
 			</p>
 		</div>
-		<HoverInfo {tags} {vars} {description} />
 	</div>
-</Link>
+</button>
 
 <style lang="postcss">
 	:global(.animate-card) {

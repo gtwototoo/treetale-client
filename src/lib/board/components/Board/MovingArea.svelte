@@ -6,7 +6,7 @@
 
 	let position = $derived(transform(boardStateStore.offset, boardStateStore.zoom / 100));
 
-	let {
+	const {
 		children
 	}: {
 		children: Snippet;

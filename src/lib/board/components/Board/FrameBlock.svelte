@@ -21,7 +21,7 @@
 	import Choices from './FrameBlock/Choices.svelte';
 	import Header from './FrameBlock/Header.svelte';
 
-	let {
+	const {
 		frame
 	}: {
 		frame: Frame;

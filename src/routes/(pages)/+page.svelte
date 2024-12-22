@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { page } from '$app/state';
+	import { onMount, type Component } from 'svelte';
 
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
-	import { Button, type HeroIconComponent, Icon, Input, Loading } from 'treetale-ui';
+	import { Button, Icon, Input, Loading } from 'treetale-ui';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Category from '$lib/components/Category.svelte';
@@ -18,7 +18,7 @@
 	import { rootStyle } from '$lib/utils/customColors';
 	import { correctWhitespace } from '$lib/utils/text';
 
-	let { data } = $props();
+	const { data } = $props();
 
 	let value = $state('');
 	let searchedGenres = $state<string[]>([]);
@@ -27,13 +27,13 @@
 	let loading = $state(false);
 	let timer = $state<number>();
 
-	const genresSearchParams = $page.url.searchParams.get('genres')?.split(',');
-	const formatSearchParams = $page.url.searchParams.get('format');
-	const stringSearchParams = $page.url.searchParams.get('string');
+	const genresSearchParams = page.url.searchParams.get('genres')?.split(',');
+	const formatSearchParams = page.url.searchParams.get('format');
+	const stringSearchParams = page.url.searchParams.get('string');
 
 	bodyBackgroundColorStore.color = DEFAULT_COLOR;
 
-	const icons: Record<string, HeroIconComponent> = {
+	const icons: Record<string, Component> = {
 		dark_theme: Moon,
 		light_theme: Sun,
 		news: RocketLaunch

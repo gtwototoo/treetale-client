@@ -1,17 +1,17 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import type { Component, Snippet } from 'svelte';
 
-	import { type HeroIconComponent, Icon } from 'treetale-ui';
+	import { Icon } from 'treetale-ui';
 
 	import { correctWhitespace } from '$lib/utils/text';
 
-	let {
+	const {
 		children,
 		icon,
 		text
 	}: {
 		children?: Snippet;
-		icon: HeroIconComponent;
+		icon: Component;
 		text?: string;
 	} = $props();
 </script>
