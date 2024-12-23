@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Trash } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
 	import { deleteProgress } from '$lib/requests/progress';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import type { Frame } from '$lib/types';
+	import type { Frame, Story } from '$lib/types';
+	import type { ResponseProgress } from '$lib/types/response';
 	import { clm } from '$lib/utils/classMerge';
+	import { contrastText } from '$lib/utils/contrast';
 	import { formatDate } from '$lib/utils/date';
 
 	import FrameMini from '../FrameMini.svelte';
@@ -18,21 +18,15 @@
 	import CopyButton from './CopyButton.svelte';
 
 	const {
-		choicesCount,
-		currentVersion,
+		progress,
 		lastFrame,
-		onclick,
-		progressVersion,
-		storyId,
-		updated
+		story,
+		ondelete
 	}: {
-		choicesCount: number;
-		currentVersion: string;
+		progress: ResponseProgress['progress'];
 		lastFrame: Frame;
-		onclick: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
-		progressVersion: string;
-		storyId: number;
-		updated: number;
+		story: Story;
+		ondelete?: () => void;
 	} = $props();
 
 	let loading = $state(false);
@@ -44,20 +38,33 @@
 		loading = true;
 
 		try {
-			await deleteProgress(storyId);
-
+			await deleteProgress(story.storyId);
 			await invalidateAll();
 		} catch (error) {
 			console.error(error);
 		}
 
 		loading = false;
+
+		ondelete?.();
 	};
+
+	const { choices, version, updated } = $derived(progress);
+	const choicesCount = $derived(choices.length);
+	const redBackgroundColor = $derived(
+		contrastText(story.color)
+			? clm('bg-red-900 hover:bg-red-800 text-red-500')
+			: clm('bg-red-100 hover:bg-red-200 text-red-500')
+	);
 </script>
 
 <div class="flex w-full flex-col gap-6">
 	<div class="flex items-center gap-3 max-md:justify-between max-md:px-3">
-		<VersionTag {currentVersion} {progressVersion} displayVersion="progress" />
+		<VersionTag
+			currentVersion={story.version}
+			progressVersion={version}
+			displayVersion="progress"
+		/>
 		<p class="italic">
 			{doPluralize(choicesCount)}
 			<span class="font-medium">{choicesCount}</span>
@@ -68,10 +75,7 @@
 	<div class="flex justify-between">
 		<div class="flex items-center gap-3 overflow-hidden">
 			<Button
-				class={clm(
-					redBackgroundColorStore.color,
-					'pointer-events-auto justify-center px-2.5 py-1 text-red-500'
-				)}
+				class={clm(redBackgroundColor, 'pointer-events-auto justify-center px-2.5 py-1')}
 				onclick={handleDelete}
 				{loading}
 			>
@@ -79,15 +83,16 @@
 			</Button>
 			<div class="flex flex-col overflow-hidden text-sm">
 				<p class="truncate">Дата прохождения:</p>
-				<p>{formatDate(updated)}</p>
+				<p>{formatDate(updated!)}</p>
 			</div>
 		</div>
 		<div class="flex items-center gap-2">
-			<CopyButton {storyId} class="max-xs:hidden" />
+			<CopyButton storyId={story.storyId} class="max-xs:hidden" />
 			<Button
+				asLink
 				size="lg"
+				href="/{story.storyId}"
 				class="adaptive-font pointer-events-auto bg-main-70 font-medium hover:bg-main"
-				{onclick}
 			>
 				Продолжить
 			</Button>

@@ -1,15 +1,19 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { onMount } from 'svelte';
 
 	import find from 'lodash/find';
+	import last from 'lodash/last';
 	import { Cog6Tooth } from 'svelte-heros-v2';
 	import { Button, Icon, Modal, Tag } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
+	import { getProgress } from '$lib/requests/progress';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Story, User } from '$lib/types';
+	import type { ResponseProgress } from '$lib/types/response';
 	import { generateMainColors } from '$lib/utils/customColors';
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
@@ -17,6 +21,7 @@
 	import LeftSide from './StoryStage/LeftSide.svelte';
 	import ActionButtons from './StoryStage/StoryStart/ActionButtons.svelte';
 	import CopyButton from './StoryStage/StoryStart/CopyButton.svelte';
+	import SavedProgress from './StoryStage/StoryStart/SavedProgress.svelte';
 	import VersionTag from './StoryStage/VersionTag.svelte';
 
 	let {
@@ -30,6 +35,8 @@
 			subscribersCount: number;
 		};
 	} = $props();
+
+	let progressInfo = $state<ResponseProgress | null>(null);
 
 	const {
 		genre: genreId,
@@ -45,11 +52,23 @@
 	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
 	const genre = $derived(find(GENRES_LIST, { id: genreId })!);
 	const format = $derived(find(STORY_FORMATS, { id: formatId })!);
+	const { progress, scopeFrames } = $derived(progressInfo || ({} as ResponseProgress));
+	const lastFrame = $derived(
+		progress?.choices.length
+			? find(scopeFrames, { frameId: last(progress.choices)!.nextFrameId })!
+			: scopeFrames?.[0]
+	);
+
+	onMount(async () => {
+		const { message } = await getProgress(storyId);
+
+		progressInfo = message;
+	});
 </script>
 
 <Modal
 	bind:active
-	class="flex w-full max-w-screen-lg flex-row gap-2 bg-main-10 p-12 max-md:flex-col max-md:items-center"
+	class="flex w-full max-w-screen-lg flex-row gap-2 bg-main-10 p-12 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
 >
 	<div style={generateMainColors(selectedColor)} class="contents rounded-inherit">
 		<div class="absolute inset-0 -z-[1] rounded-inherit bg-main-10"></div>
@@ -87,16 +106,13 @@
 			<div
 				class="sticky bottom-0 -mb-6 flex w-full items-center justify-between bg-main-10 py-6"
 			>
-				{#if false}
-					<!-- <SavedProgress
-					{progressVersion}
-					{updated}
-					storyId={story.storyId}
-					currentVersion={version}
-					choicesCount={choices.length}
-					{lastFrame}
-					onclick={() => null}
-				/> -->
+				{#if progress && progress.version !== '0'}
+					<SavedProgress
+						{progress}
+						{story}
+						{lastFrame}
+						ondelete={() => (progressInfo = null)}
+					/>
 				{:else}
 					<div class="flex gap-3">
 						<Button

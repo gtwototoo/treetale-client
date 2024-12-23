@@ -7,7 +7,7 @@
 	import { Button, Icon } from 'treetale-ui';
 
 	import type { Story } from '$lib/types';
-	import type { ProgressSchema } from '$lib/types/schemas';
+	import type { ResponseResults } from '$lib/types/response';
 	import { clm } from '$lib/utils/classMerge';
 
 	import FrameMini from './FrameMini.svelte';
@@ -18,20 +18,15 @@
 		progress
 	}: {
 		story: Story;
-		progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated' | 'resultId'> & {
-			choicesCount: number;
-		};
+		progress: ResponseResults['progress'];
 	} = $props();
 
 	type CopyState = 'error' | 'success' | null;
 
+	let copyState = $state<CopyState>(null);
+
 	const doPluralize = pluralize('Сделан', 'Сделано', 'Сделано');
 	const choicesPluralize = pluralize('выбор', 'выбора', 'выборов');
-
-	const textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${progress.resultId}`);
-	const { choicesCount, endFrame, version } = $derived(progress);
-
-	let copyState = $state<CopyState>(null);
 
 	const copyText = async (value: string): Promise<boolean> => {
 		let success = true;
@@ -50,6 +45,10 @@
 	const handleCopyLink = async () => {
 		copyState = (await copyText(textForCopy)) ? 'success' : 'error';
 	};
+
+	const textForCopy = $derived(`${PUBLIC_TREETALE_CLIENT_URL}/results/${progress.resultId}`);
+	const { choices, endFrame, version } = $derived(progress);
+	const choicesCount = $derived(choices.length);
 
 	$effect(() => {
 		if (copyState) {

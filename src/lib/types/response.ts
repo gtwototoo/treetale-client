@@ -26,8 +26,5 @@ export interface ResponseProgress extends Progress {
 }
 
 export interface ResponseResults extends Progress {
-	scopeFrames: Frame[];
-	progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated' | 'resultId'> & {
-		choicesCount: number;
-	};
+	progress: Pick<ProgressSchema, 'endFrame' | 'version' | 'updated' | 'resultId' | 'choices'>;
 }
