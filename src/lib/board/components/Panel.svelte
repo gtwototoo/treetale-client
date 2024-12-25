@@ -25,11 +25,11 @@
 </script>
 
 <div
-	class="pointer-events-none absolute right-0 z-10 flex min-h-full p-1 text-text max-xs:w-full max-xs:items-end max-xs:px-0"
+	class="pointer-events-none z-10 flex min-h-full justify-end p-1 text-text max-xs:w-full max-xs:items-end max-xs:px-0"
 >
 	<div
 		class={clm(
-			'pointer-events-auto relative flex w-96 flex-col rounded-2xl bg-contrast transition-transform max-xs:w-full xs:min-h-full',
+			'pointer-events-auto relative flex w-96 shrink-0 flex-col rounded-2xl bg-contrast transition-transform max-xs:w-full xs:min-h-full',
 			!panelStatesStore.show &&
 				'max-lg:absolute max-xs:bottom-16 max-xs:translate-y-full max-lg:xs:right-1 max-lg:xs:translate-x-full'
 		)}
