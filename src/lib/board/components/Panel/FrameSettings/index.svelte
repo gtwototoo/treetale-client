@@ -35,12 +35,12 @@
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import { findPrevFrames, notesHighlight, variablesHighlight } from '$board/utils/editing';
 
-	import ImageUploader from '../ImageUploader.svelte';
-	import { addChoice, setSelectedFrame } from '../methods.svelte';
-	import SoundUploader from '../SoundUploader.svelte';
+	import ImageUploader from '../../ImageUploader.svelte';
+	import { addChoice, setSelectedFrame } from '../../methods.svelte';
+	import SoundUploader from '../../SoundUploader.svelte';
+	import IllustrationPopover from '../IllustrationPopover.svelte';
 
-	import Choice from './FrameSettings/Choice.svelte';
-	import IllustrationPopover from './IllustrationPopover.svelte';
+	import Choice from './Choice.svelte';
 
 	let draggedFileType = $state<string>();
 	let onePrevFrame = $state<Frame | null>(null);
@@ -251,7 +251,7 @@
 				value={`${Math.round(y)}`}
 			/>
 		</FormSplit>
-		<Button onclick={setToCoordinates} class="p-2 text-text hover:bg-contrast-7">
+		<Button onclick={setToCoordinates} class="bg-main-30 p-2 text-text hover:bg-main-50">
 			<Icon this={CursorArrowRipple} class="size-6" />
 		</Button>
 	</div>
@@ -272,7 +272,7 @@
 						/>
 						{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
 							<Button
-								class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+								class="justify-center bg-main-20 text-text hover:bg-main-40"
 								disabled={panelStatesStore.editMode}
 								onclick={addPrevImage}
 							>
@@ -286,14 +286,14 @@
 						{#snippet button({ onclick })}
 							<Button
 								class={clm(
-									'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
+									'w-full flex-col justify-center gap-1 bg-main-20 text-text hover:bg-main-40',
 									soundUrl && 'text-emerald-500'
 								)}
 								size="lg"
 								{onclick}
 							>
-								<Icon class="size-8" this={MusicalNote} variation="solid" />
-								<p class="text-xs">{soundUrl ? `Звук ${frameId}` : 'Звук'}</p>
+								<Icon class="size-10 text-main" this={MusicalNote} variation="solid" />
+								<p class="text-xs">{soundUrl ? `Мелодия ${frameId}` : 'Мелодия'}</p>
 							</Button>
 						{/snippet}
 						<div class="flex w-96 flex-col p-4">
@@ -355,7 +355,7 @@
 			{/if}
 			{#if !panelStatesStore.editMode}
 				<Button
-					class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+					class="justify-center bg-contrast-7 text-text hover:bg-contrast-9"
 					onclick={() => addChoice(frame)}
 				>
 					Добавить вариант

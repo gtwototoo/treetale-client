@@ -6,12 +6,11 @@
 	import { Share } from 'svelte-heros-v2';
 	import { Button, Icon } from 'treetale-ui';
 
+	import FrameMini from '$lib/components/FrameMini.svelte';
+	import VersionTag from '$lib/components/VersionTag.svelte';
 	import type { Story } from '$lib/types';
 	import type { ResponseResults } from '$lib/types/response';
 	import { clm } from '$lib/utils/classMerge';
-
-	import FrameMini from './FrameMini.svelte';
-	import VersionTag from './VersionTag.svelte';
 
 	const {
 		story,
@@ -64,7 +63,7 @@
 </script>
 
 <div class="flex w-full flex-col gap-3 max-md:items-center">
-	<div class="flex *:gap-3 *:rounded-full *:pl-4 hover:*:bg-main-50">
+	<div class="flex *:gap-3 *:rounded-full *:bg-main-30 *:pl-4 hover:*:bg-main-50">
 		<Button size="lg" onclick={handleCopyLink} class="pointer-events-auto">
 			<Icon
 				this={Share}

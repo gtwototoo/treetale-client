@@ -19,7 +19,7 @@
 	{#snippet button({ onclick })}
 		<Button
 			class={clm(
-				'w-full flex-col justify-center gap-1 bg-contrast-9 text-text hover:bg-contrast-7',
+				'w-full flex-col justify-center gap-1 bg-main-20 text-text hover:bg-main-40',
 				imageUrl && 'p-1'
 			)}
 			size="lg"
@@ -38,7 +38,7 @@
 					{/snippet}
 				</Image>
 			{:else}
-				<Icon class="size-8" this={Photo} variation="solid" />
+				<Icon class="size-10 text-main" this={Photo} variation="solid" />
 				<p class="text-xs">Иллюстрация</p>
 			{/if}
 		</Button>

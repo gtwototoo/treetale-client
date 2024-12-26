@@ -87,7 +87,7 @@
 			</div>
 		</div>
 		<div class="flex items-center gap-2">
-			<CopyButton storyId={story.storyId} class="max-xs:hidden" />
+			<CopyButton storyId={story.storyId} class="max-xs:hidden" short />
 			<Button
 				asLink
 				size="lg"

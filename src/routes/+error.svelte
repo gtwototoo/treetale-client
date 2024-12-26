@@ -7,8 +7,7 @@
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { rootStyle } from '$lib/utils/customColors';
+	import RootStyles from '$lib/components/RootStyles.svelte';
 
 	const handleClick = async () => {
 		if (isNotFound) {
@@ -19,16 +18,9 @@
 	};
 
 	let isNotFound = $derived(page.status === 404);
-
-	$effect(() => {
-		bodyBackgroundColorStore.color = page.error?.color;
-	});
 </script>
 
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
-
+<RootStyles init={page.error?.color} />
 <MetaTags title={isNotFound ? 'Страница не найдена' : 'Произошла ошибка'} />
 
 {#if page.error}

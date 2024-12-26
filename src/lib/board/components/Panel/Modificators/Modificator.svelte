@@ -1,7 +1,7 @@
 <script lang="ts">
 	import find from 'lodash/find';
 	import { XMark } from 'svelte-heros-v2';
-	import { Button, FormSplit, Icon, Input, Listbox } from 'treetale-ui';
+	import { Button, Icon, Input, Listbox } from 'treetale-ui';
 
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -58,7 +58,6 @@
 {#snippet inputValue()}
 	{#if variable?.expect === 'Логика'}
 		<Listbox
-			size="sm"
 			align="inset"
 			bind:value={modificator.value}
 			onchange={boardEventsStore.save}
@@ -68,45 +67,39 @@
 			readonly={readonlyModeStore.isEnabled}
 		/>
 	{:else}
-		<FormSplit>
-			<Input
-				size="sm"
-				bind:value={modificator.value}
-				class={clm(
-					'flex-1 bg-contrast-4',
-					asInput &&
-						modificator.value === '{input}' &&
-						'bg-violet-500/30 text-violet-500 hover:bg-violet-500/40'
-				)}
-				maxlength={32}
-				oninput={boardEventsStore.save}
-				number={variable?.expect === 'Число'}
-				placeholder="Значение"
-				disabled={!modificator.variable}
-				readonly={readonlyModeStore.isEnabled}
-			/>
-			{#if modificator.type === 'math' && asInput && !modificator.value && variable?.expect === 'Строка'}
-				<Button
-					size="sm"
-					class="bg-contrast-9 text-text hover:bg-contrast-7"
-					onclick={() => (modificator.value = '{input}')}
-				>
-					<Icon this={AsInput} class="size-4" />
-				</Button>
-			{/if}
-		</FormSplit>
+		<Input
+			bind:value={modificator.value}
+			class={clm(
+				'flex-1',
+				asInput &&
+					modificator.value === '{input}' &&
+					'bg-violet-500/30 text-violet-500 hover:bg-violet-500/40'
+			)}
+			maxlength={32}
+			oninput={boardEventsStore.save}
+			number={variable?.expect === 'Число'}
+			placeholder="Значение"
+			disabled={!modificator.variable}
+			readonly={readonlyModeStore.isEnabled}
+		>
+			{#snippet right()}
+				{#if modificator.type === 'math' && asInput && !modificator.value && modificator.variable && variable?.expect === 'Строка'}
+					<Button
+						size="sm"
+						class="bg-main-30 text-text hover:bg-main-50"
+						onclick={() => (modificator.value = '{input}')}
+					>
+						<Icon this={AsInput} class="size-4" />
+					</Button>
+				{/if}
+			{/snippet}
+		</Input>
 	{/if}
 {/snippet}
 
 {#if panelStatesStore.editMode}
 	<div class="flex gap-1">
-		<Input
-			placeholder="Значение"
-			size="sm"
-			readonly
-			class="w-full"
-			value={fullModificatorOperation}
-		/>
+		<Input placeholder="Значение" readonly class="w-full" value={fullModificatorOperation} />
 		<Button size="sm" class={redBackgroundColorStore.color} onclick={onremove}>
 			<Icon class="size-4" this={XMark} />
 		</Button>
@@ -114,7 +107,6 @@
 {:else}
 	<div class="grid grid-cols-[1fr,max-content,1fr] gap-1">
 		<Listbox
-			size="sm"
 			align="inset"
 			bind:value={modificator.variable}
 			class="flex-1"
@@ -125,7 +117,6 @@
 		/>
 		<Listbox
 			align="inset"
-			size="sm"
 			classlist={clm('*:*:justify-center')}
 			bind:value={modificator.symbol as string}
 			list={symbols[modificator.type]}
@@ -135,8 +126,7 @@
 		>
 			{#snippet children({ onclick, value })}
 				<Button
-					size="sm"
-					class="w-8 justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+					class="w-8 justify-center bg-main-30 text-text hover:bg-main-50"
 					disabled={variable?.expect !== 'Число'}
 					{onclick}
 				>

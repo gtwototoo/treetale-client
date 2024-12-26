@@ -6,7 +6,7 @@
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
 
-	import ProfileLink from './StoryCard/ProfileLink.svelte';
+	import UserBadge from './UserBadge.svelte';
 
 	const {
 		author,
@@ -14,7 +14,8 @@
 		created,
 		edit,
 		mobileView,
-		status
+		status,
+		isButton
 	}: {
 		author?: {
 			subscribersCount: number;
@@ -25,6 +26,7 @@
 		mobileView?: boolean;
 		selectedColor: RGB;
 		status: StoryStatus;
+		isButton?: boolean;
 	} = $props();
 
 	const statuses = {
@@ -55,7 +57,7 @@
 </script>
 
 {#if author && !edit}
-	<ProfileLink {author} class={classname} {mobileView} />
+	<UserBadge {author} class={classname} {mobileView} {isButton} />
 {:else}
 	<div
 		class={clm('flex items-center overflow-hidden p-1 text-sm', currentStatus.color, classname)}

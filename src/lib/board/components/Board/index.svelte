@@ -9,11 +9,9 @@
 		DEFAULT_COMMENT_HEIGHT,
 		DEFAULT_FRAME_HEIGHT
 	} from '$lib/constants';
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Comment, Coordinates, Frame, StartMoveParams } from '$lib/types/index';
 
-	import InformationSettings from '$board/components/Panel/InformationSettings.svelte';
+	import InformationSettings from '$board/components/Panel/InformationSettings/index.svelte';
 	import { addBlockOffsetStore, movingBlockStore } from '$board/stores/blocks.svelte';
 	import { boardCommentsStore } from '$board/stores/comments.svelte';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
@@ -26,10 +24,8 @@
 		readonlyModeStore,
 		zoomCorrect
 	} from '$board/stores/index.svelte';
-	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	import BoardArea from './Board/BoardArea.svelte';
 	import {
 		addComment,
 		addFrame,
@@ -37,7 +33,9 @@
 		movingArea,
 		movingBlock,
 		startMoveArea
-	} from './methods.svelte';
+	} from '../methods.svelte';
+
+	import BoardArea from './BoardArea.svelte';
 
 	let startOffset = $state<Coordinates>({ x: 0, y: 0 });
 	let startMoveData = $state<StartMoveParams>({
@@ -194,12 +192,6 @@
 			isEdit: true,
 			title: 'Основная информация'
 		});
-	});
-
-	$effect(() => {
-		bodyBackgroundColorStore.color = storyInfoStore.info?.color?.length
-			? storyInfoStore.info.color
-			: DEFAULT_COLOR;
 	});
 </script>
 

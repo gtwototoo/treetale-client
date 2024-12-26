@@ -12,7 +12,7 @@ import { boardStateStore, oneDirectionModeStore, zoomCorrect } from '$board/stor
 import { panelStatesStore } from '$board/stores/panel.svelte';
 import { findPrevFrames } from '$board/utils/editing';
 
-import FrameSettingsSvelte from './Panel/FrameSettings.svelte';
+import FrameSettingsSvelte from './Panel/FrameSettings/index.svelte';
 
 export const connectedWithStart = (frameId: number) => {
 	if (frameId === 1) return false;

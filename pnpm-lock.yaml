@@ -131,8 +131,8 @@ devDependencies:
     specifier: ^3.4.17
     version: 3.4.17
   treetale-ui:
-    specifier: ^0.2.9
-    version: 0.2.9(svelte@5.15.0)
+    specifier: ^0.3.8
+    version: 0.3.8(svelte@5.15.0)
   tslib:
     specifier: ^2.8.1
     version: 2.8.1
@@ -3325,8 +3325,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /treetale-ui@0.2.9(svelte@5.15.0):
-    resolution: {integrity: sha512-38+XLjiLAoof7w9/1oi0iQrWY2meU0R8PQ5Jd35x2BSrZmfLxhkZQn0bOdCj5IvBiEExZfdUTMmeBLhYfxixJA==}
+  /treetale-ui@0.3.8(svelte@5.15.0):
+    resolution: {integrity: sha512-K0p7BDo/WJa+AVL5X9KWMCzgNu/MObuLnvZttrcU1A7l+GlurP9eFcSvYCbV+51zA6UGCgxhQXz6eoKcpGoEGQ==}
     peerDependencies:
       svelte: ^5.15.0
     dependencies:

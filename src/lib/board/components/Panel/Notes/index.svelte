@@ -8,8 +8,9 @@
 	import { notesStore } from '$board/stores/notes.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	import NoteRow from './Notes/Note.svelte';
-	import ShortDescription from './ShortDescription.svelte';
+	import ShortDescription from '../ShortDescription.svelte';
+
+	import NoteRow from './Note.svelte';
 
 	let timer = $state<number>();
 	let saving = $state(false);
@@ -57,7 +58,7 @@
 		<NoteRow {checkUpdates} noteKey={key} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button class="justify-center bg-contrast-9 text-text hover:bg-contrast-7" onclick={addNote}>
+		<Button class="justify-center bg-contrast-7 text-text hover:bg-contrast-9" onclick={addNote}>
 			Добавить заметку
 		</Button>
 	{/if}

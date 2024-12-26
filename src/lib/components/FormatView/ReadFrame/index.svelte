@@ -11,9 +11,9 @@
 	import type { Frame } from '$lib/types';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	import { enabledChoice, updateCurrentVarsValues } from '../methods.svelte';
+	import { enabledChoice, updateCurrentVarsValues } from '../../methods.svelte';
 
-	import Choice from './ReadFrame/Choice.svelte';
+	import Choice from './Choice.svelte';
 
 	const {
 		class: classname,

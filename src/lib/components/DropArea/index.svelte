@@ -13,7 +13,7 @@
 	import { preventDefault } from '$lib/utils/eventsModificators';
 	import { validateMimeType } from '$lib/utils/inputAccept';
 
-	import DashedBorder from './DropArea/DashedBorder.svelte';
+	import DashedBorder from './DashedBorder.svelte';
 
 	const {
 		accept = 'image/*',

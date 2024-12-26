@@ -14,13 +14,15 @@
 	const {
 		author,
 		class: classname,
-		mobileView
+		mobileView,
+		isButton = true
 	}: {
 		author: {
 			subscribersCount: number;
 		} & User;
 		class?: string;
 		mobileView?: boolean;
+		isButton?: boolean;
 	} = $props();
 
 	const subscribersPluralize = pluralize('читатель', 'читателя', 'читателей');
@@ -33,7 +35,7 @@
 	};
 </script>
 
-<Button class={clm('min-w-0 rounded-full p-1', classname)} onclick={handleClick}>
+{#snippet userInfo()}
 	<ProfileAvatar
 		bind:base64src
 		bind:addLoading
@@ -52,4 +54,14 @@
 			{subscribersPluralize(author.subscribersCount)}
 		</p>
 	</div>
-</Button>
+{/snippet}
+
+{#if isButton}
+	<Button class={clm('min-w-0 rounded-full p-1', classname)} onclick={handleClick}>
+		{@render userInfo()}
+	</Button>
+{:else}
+	<div class={clm('flex min-w-0 items-center whitespace-nowrap rounded-full p-1', classname)}>
+		{@render userInfo()}
+	</div>
+{/if}

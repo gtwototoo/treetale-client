@@ -1,37 +1,25 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	import cloneDeep from 'lodash/cloneDeep';
 	import { MetaTags } from 'svelte-meta-tags';
 
 	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
-	import EndResults from '$lib/components/StoryStage/EndResults.svelte';
-	import LeftSide from '$lib/components/StoryStage/LeftSide.svelte';
-	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import LeftSide from '$lib/components/LeftSide/index.svelte';
+	import RootStyles from '$lib/components/RootStyles.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors.js';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte.js';
 	import { interfaceStore } from '$lib/stores/reading.svelte';
 	import { clm } from '$lib/utils/classMerge';
-	import { rootStyle } from '$lib/utils/customColors.js';
+
+	import EndResults from './EndResults.svelte';
 
 	const { data } = $props();
 
 	const clonedData = $derived(cloneDeep(data));
 	const { author, progress, story } = $derived(clonedData);
 	const { description, color } = $derived(story);
-
-	onMount(() => {
-		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
-	});
 </script>
 
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
-
 <MetaTags title="Результаты истории" {description} />
-
-<SvgGradient />
+<RootStyles init={color || DEFAULT_COLOR} />
 
 <div
 	class={clm(

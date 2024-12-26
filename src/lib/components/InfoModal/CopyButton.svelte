@@ -12,10 +12,12 @@
 
 	const {
 		class: classname,
-		storyId
+		storyId,
+		short = false
 	}: {
 		class?: string;
 		storyId: number;
+		short?: boolean;
 	} = $props();
 
 	let copyState = $state<CopyState>(null);
@@ -68,8 +70,10 @@
 			copyState === 'error' && 'text-red-500'
 		)}
 	/>
-	<div class={clm('flex flex-col items-start text-xs max-xs:hidden', classname)}>
-		<p class="text-base leading-4">Ссылка</p>
-		<p>на историю</p>
-	</div>
+	{#if !short}
+		<div class={clm('flex flex-col items-start text-xs max-xs:hidden', classname)}>
+			<p class="text-base leading-4">Ссылка</p>
+			<p>на историю</p>
+		</div>
+	{/if}
 </Button>

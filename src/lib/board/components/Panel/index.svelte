@@ -8,8 +8,8 @@
 
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	import Header from './Panel/Header.svelte';
-	import Tabs from './Panel/Tabs.svelte';
+	import Header from './Header.svelte';
+	import Tabs from './Tabs.svelte';
 
 	let CurrentPanel = $derived(panelStatesStore.component);
 

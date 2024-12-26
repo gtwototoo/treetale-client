@@ -16,8 +16,9 @@
 	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	import Modificator from './Modificators/Modificator.svelte';
-	import ShortDescription from './ShortDescription.svelte';
+	import ShortDescription from '../ShortDescription.svelte';
+
+	import Modificator from './Modificator.svelte';
 
 	const handleAddModificator = (type: 'logic' | 'math') => {
 		const lastModificatorId = last(frame.modificators)?.modificatorId || 0;
@@ -57,9 +58,9 @@
 		)}
 	</div>
 </ShortDescription>
-<div class="flex flex-col rounded-lg bg-contrast-2 p-2 text-sm">
+<div class="flex flex-col rounded-lg bg-contrast-2 px-2 text-sm">
 	<Button
-		class="group justify-between p-0 pl-2"
+		class="group justify-between py-3 pl-1 pr-0"
 		disabled={readonlyModeStore.isEnabled}
 		onclick={() => (choice.asInput = !choice.asInput)}
 	>
@@ -81,7 +82,7 @@
 		</div>
 	</Button>
 	{#if choice.asInput}
-		<p class="mt-2 pl-2 text-left text-xs">
+		<p class="border-t border-contrast-6 pl-2 pt-2 text-left text-xs">
 			Чтобы применить введеное в поле значение, нужно задать значение
 			<span class="font-medium text-violet-500">
 				{`{input}`}
@@ -99,9 +100,7 @@
 {#if logicModificators.length || mathModificators.length}
 	<div class="flex w-full flex-col gap-1">
 		{#if logicModificators.length}
-			<div
-				class="flex items-center justify-between border-b border-contrast-5 px-4 py-2 text-sm"
-			>
+			<div class="flex items-center justify-between px-3 py-2 text-sm">
 				Условия появления
 				<Logics class="h-4 w-auto text-orange-500/50" />
 			</div>
@@ -113,9 +112,7 @@
 			{/each}
 		{/if}
 		{#if mathModificators.length}
-			<div
-				class="flex items-center justify-between border-b border-contrast-5 px-4 py-2 text-sm"
-			>
+			<div class="flex items-center justify-between px-3 py-2 text-sm">
 				Изменение переменных
 				<Maths class="h-4 w-auto text-blue-500/50" />
 			</div>
@@ -134,13 +131,13 @@
 {#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
 	<div class="flex gap-2 *:flex-1">
 		<Button
-			class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+			class="justify-center bg-main-30 text-text hover:bg-main-50"
 			onclick={() => handleAddModificator('logic')}
 		>
 			Условие
 		</Button>
 		<Button
-			class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+			class="justify-center bg-main-30 text-text hover:bg-main-50"
 			onclick={() => handleAddModificator('math')}
 		>
 			Операция

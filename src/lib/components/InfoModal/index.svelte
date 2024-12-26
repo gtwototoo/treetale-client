@@ -18,11 +18,12 @@
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
 
-	import LeftSide from './StoryStage/LeftSide.svelte';
-	import ActionButtons from './StoryStage/StoryStart/ActionButtons.svelte';
-	import CopyButton from './StoryStage/StoryStart/CopyButton.svelte';
-	import SavedProgress from './StoryStage/StoryStart/SavedProgress.svelte';
-	import VersionTag from './StoryStage/VersionTag.svelte';
+	import LeftSide from '../LeftSide/index.svelte';
+	import VersionTag from '../VersionTag.svelte';
+
+	import ActionButtons from './ActionButtons.svelte';
+	import CopyButton from './CopyButton.svelte';
+	import SavedProgress from './SavedProgress.svelte';
 
 	let {
 		active = $bindable(),
@@ -49,7 +50,7 @@
 		description
 	} = $derived(story);
 	const edit = $derived(page.data.session && page.data.session.userId === author?.userId);
-	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
+	const selectedColor = $derived(color || DEFAULT_COLOR);
 	const genre = $derived(find(GENRES_LIST, { id: genreId })!);
 	const format = $derived(find(STORY_FORMATS, { id: formatId })!);
 	const { progress, scopeFrames } = $derived(progressInfo || ({} as ResponseProgress));

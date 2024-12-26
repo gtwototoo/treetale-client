@@ -11,8 +11,9 @@
 	import { type SelectedChoices, inspectorStore } from '$board/stores/inspector.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 
-	import Choice from './Inspector/Choice.svelte';
-	import ShortDescription from './ShortDescription.svelte';
+	import ShortDescription from '../ShortDescription.svelte';
+
+	import Choice from './Choice.svelte';
 
 	let inspectorVariables = $state(cloneDeep(variablesStore.variables));
 
@@ -71,7 +72,7 @@
 		{/if}
 	</div>
 </div>
-<Button onclick={clearChoices} class="justify-center bg-contrast-9 hover:bg-contrast-7">
+<Button onclick={clearChoices} class="justify-center bg-main-30 hover:bg-main-50">
 	Сбросить все выборы
 </Button>
 <div class="flex flex-col gap-3 text-sm">

@@ -18,7 +18,7 @@
 	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	import Modificators from '../Modificators.svelte';
+	import Modificators from '../Modificators/index.svelte';
 
 	type HTMLContentEditable = HTMLDivElement;
 
@@ -112,10 +112,10 @@
 		<Button
 			size="sm"
 			class={clm(
-				'bg-contrast-9 text-text',
+				'bg-main-30 text-text',
 				logicModificators.length || mathModificators.length
 					? 'text-white hover:opacity-70'
-					: 'hover:bg-contrast-7',
+					: 'hover:bg-main-50',
 				logicModificators.length && 'bg-orange-500',
 				mathModificators.length && 'bg-blue-500',
 				mathModificators.length &&
@@ -136,7 +136,7 @@
 			<Button
 				disabled={!choice.frameId}
 				size="sm"
-				class="bg-contrast-9 text-text hover:bg-contrast-7"
+				class="bg-main-30 text-text hover:bg-main-50"
 				onclick={gotoChoiceToFrame}
 			>
 				<Icon class="size-4" this={ChevronRight} />

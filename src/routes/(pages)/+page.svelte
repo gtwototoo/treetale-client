@@ -8,16 +8,14 @@
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Category from '$lib/components/Category.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import MainStatistic from '$lib/components/MainStatistic.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { searchStories } from '$lib/requests/story';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Searched, StoryFormat } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
-	import { rootStyle } from '$lib/utils/customColors';
 	import { correctWhitespace } from '$lib/utils/text';
+
+	import Footer from './Footer.svelte';
+	import MainStatistic from './MainStatistic.svelte';
 
 	const { data } = $props();
 
@@ -31,9 +29,6 @@
 	const genresSearchParams = page.url.searchParams.get('genres')?.split(',');
 	const formatSearchParams = page.url.searchParams.get('format');
 	const stringSearchParams = page.url.searchParams.get('string');
-
-	bodyBackgroundColorStore.color = DEFAULT_COLOR;
-
 	const icons: Record<string, Component> = {
 		dark_theme: Moon,
 		light_theme: Sun,
@@ -95,10 +90,6 @@
 		}
 	});
 </script>
-
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
 
 <MetaTags
 	title="TREETALE (Истории, новеллы, RPG)"

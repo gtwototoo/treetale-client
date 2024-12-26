@@ -7,12 +7,10 @@
 	import { Button, Icon } from 'treetale-ui';
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
-	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import RootStyles from '$lib/components/RootStyles.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { clm } from '$lib/utils/classMerge';
-	import { rootStyle } from '$lib/utils/customColors';
 
 	let { children, data } = $props();
 
@@ -27,10 +25,6 @@
 		'@type': 'Person',
 		name
 	} as Person);
-
-	$effect(() => {
-		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
-	});
 
 	let tabs = [
 		{
@@ -58,12 +52,7 @@
 
 <JsonLd schema={userSchema} />
 <MetaTags {description} title={me ? 'Профиль' : name} />
-
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
-
-<SvgGradient />
+<RootStyles init={color || DEFAULT_COLOR} />
 
 <div class="relative flex size-full flex-col">
 	<MainHeader />

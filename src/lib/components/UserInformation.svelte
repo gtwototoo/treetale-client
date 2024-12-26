@@ -150,7 +150,7 @@
 
 <div
 	class={clm(
-		'screen-lg screen-xl screen-hd screen-sm sticky top-8 z-10 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9 transition-colors',
+		'screen-lg screen-xl screen-hd screen-sm sticky top-8 z-10 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9',
 		editMode ? 'bg-contrast' : 'bg-transparent'
 	)}
 >
@@ -213,8 +213,8 @@
 		<Contenteditable
 			bind:html={userState.name}
 			class={clm(
-				'max-w-full bg-transparent text-center text-4xl font-bold text-text',
-				!editMode && 'pointer-events-none'
+				'w-full bg-transparent text-center text-4xl font-bold text-text',
+				!editMode && 'pointer-events-none ring-0'
 			)}
 			placeholder="Псевдоним"
 			readonly={!editMode}

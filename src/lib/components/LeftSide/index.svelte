@@ -5,9 +5,10 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import type { Story, User } from '$lib/types';
 
-	import Info from '../Info.svelte';
-	import Likes from '../Likes.svelte';
+	import AuthorInfo from '../AuthorInfo/index.svelte';
 	import Cover from '../StoryCard/Cover.svelte';
+
+	import Likes from './Likes.svelte';
 
 	const {
 		author,
@@ -22,13 +23,13 @@
 	} = $props();
 
 	const { color, created, imageUrl, likes, status, storyId } = $derived(story);
-	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
+	const selectedColor = $derived(color || DEFAULT_COLOR);
 	const genre = $derived(find(GENRES_LIST, { id: story.genre })!);
 </script>
 
 <div class="flex shrink-0 flex-col gap-3 md:sticky md:top-20 md:w-1/3">
 	<div class="flex gap-3 *:pointer-events-auto">
-		<Info
+		<AuthorInfo
 			{author}
 			{created}
 			edit={false}

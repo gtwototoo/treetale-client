@@ -10,12 +10,10 @@
 	import { Button, Icon, Input } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import RootStyles from '$lib/components/RootStyles.svelte';
 	import { signUpUser } from '$lib/requests/user';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { FetchResponse } from '$lib/types/response';
 	import { clm } from '$lib/utils/classMerge';
-	import { rootStyle } from '$lib/utils/customColors';
 
 	let name = $state('');
 	let loading = $state(false);
@@ -52,14 +50,9 @@
 	};
 
 	let disabled = $derived(!name);
-
-	bodyBackgroundColorStore.color = DEFAULT_COLOR;
 </script>
 
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
-
+<RootStyles />
 <MetaTags title="Завершение регистрации" />
 
 <div class="flex size-full items-start justify-center">

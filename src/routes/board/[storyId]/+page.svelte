@@ -5,14 +5,13 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import { MetaTags } from 'svelte-meta-tags';
 
-	import SvgGradient from '$lib/components/SvgGradient.svelte';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { rootStyle } from '$lib/utils/customColors';
+	import RootStyles from '$lib/components/RootStyles.svelte';
+	import { DEFAULT_COLOR } from '$lib/constants/colors.js';
 
-	import Board from '$board/components/Board.svelte';
-	import Footer from '$board/components/Footer.svelte';
+	import Board from '$board/components/Board/index.svelte';
+	import Footer from '$board/components/Footer/index.svelte';
 	import Header from '$board/components/Header.svelte';
-	import Panel from '$board/components/Panel.svelte';
+	import Panel from '$board/components/Panel/index.svelte';
 	import { boardCommentsStore } from '$board/stores/comments.svelte.js';
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { boardParamsStore, boardStateStore } from '$board/stores/index.svelte';
@@ -44,6 +43,8 @@
 	onMount(() => {
 		const viewport = window.visualViewport || window;
 
+		viewportHeight = window.innerHeight;
+
 		viewport.addEventListener('resize', (e) => {
 			viewportHeight = (e.target as VisualViewport).height;
 			document.body.classList.add('fixed');
@@ -60,13 +61,9 @@
 	});
 </script>
 
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
-
 <MetaTags title="Редактирование истории" />
+<RootStyles init={storyInfoStore.info?.color || DEFAULT_COLOR} />
 
-<SvgGradient />
 <Board />
 {#if boardParamsStore.width}
 	<Panel />

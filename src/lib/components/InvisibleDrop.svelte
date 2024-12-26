@@ -10,7 +10,7 @@
 
 	import { boardStateStore } from '$board/stores/index.svelte';
 
-	import DropArea from './DropArea.svelte';
+	import DropArea from './DropArea/index.svelte';
 
 	const {
 		accept = 'image/*',

@@ -2,11 +2,11 @@
 	import { DocumentText } from 'svelte-heros-v2';
 	import { Button, Icon, Link } from 'treetale-ui';
 
-	import Mastercard from './Icons/Mastercard.svelte';
-	import Mir from './Icons/Mir.svelte';
-	import Telegram from './Icons/Telegram.svelte';
-	import TreetaleShort from './Icons/TreetaleShort.svelte';
-	import Visa from './Icons/Visa.svelte';
+	import Mastercard from '$lib/components/Icons/Mastercard.svelte';
+	import Mir from '$lib/components/Icons/Mir.svelte';
+	import Telegram from '$lib/components/Icons/Telegram.svelte';
+	import TreetaleShort from '$lib/components/Icons/TreetaleShort.svelte';
+	import Visa from '$lib/components/Icons/Visa.svelte';
 
 	const currentYear = new Date().getFullYear();
 </script>

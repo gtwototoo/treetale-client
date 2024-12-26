@@ -12,10 +12,11 @@
 	import { generateMainColors } from '$lib/utils/customColors';
 	import { collapseValue } from '$lib/utils/number';
 
-	import Adventure from './Icons/Genres/Adventure.svelte';
-	import Info from './Info.svelte';
-	import InfoModal from './InfoModal.svelte';
-	import Cover from './StoryCard/Cover.svelte';
+	import AuthorInfo from '../AuthorInfo/index.svelte';
+	import Adventure from '../Icons/Genres/Adventure.svelte';
+	import InfoModal from '../InfoModal/index.svelte';
+
+	import Cover from './Cover.svelte';
 
 	const {
 		author,
@@ -34,7 +35,7 @@
 	let { color, created, genre, imageUrl, likes, status, title } = $derived(story);
 	const edit = $derived(page.data.session && page.data.session.userId === author?.userId);
 	const icon = $derived(find(GENRES_LIST, { id: genre })?.icon || Adventure);
-	const selectedColor = $derived(color.length ? color : DEFAULT_COLOR);
+	const selectedColor = $derived(color || DEFAULT_COLOR);
 	const isLiked = $derived(likes?.includes(page.data.session?.userId));
 </script>
 
@@ -42,13 +43,14 @@
 <button class="group relative shrink-0 rounded-2xl" onclick={() => (showModal = true)}>
 	<div class="contents rounded-inherit" style={generateMainColors(selectedColor)}>
 		<Cover {imageUrl} {title} {icon} color={selectedColor} class={classname} />
-		<Info
+		<AuthorInfo
 			{author}
 			{created}
 			{edit}
 			{status}
 			{selectedColor}
 			mobileView
+			isButton={false}
 			class="pointer-events-none absolute -left-1 -top-1 z-[1] rounded-full rounded-br-none bg-main-50"
 		/>
 		<div

@@ -16,8 +16,8 @@
 	} = $props();
 </script>
 
-<div class="flex select-none items-start gap-4 text-sm">
-	<div class="rounded-lg bg-contrast-2 p-3">
+<div class="flex select-none items-start gap-2 text-sm">
+	<div class="p-2">
 		<Icon class="size-6 text-text/50" this={icon} />
 	</div>
 	{#if children}

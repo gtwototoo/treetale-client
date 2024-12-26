@@ -10,11 +10,11 @@
 	import { boardFramesStore } from '$board/stores/frames.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	import FrameSettings from './FrameSettings.svelte';
-	import InformationSettings from './InformationSettings.svelte';
-	import Inspector from './Inspector.svelte';
-	import Notes from './Notes.svelte';
-	import Variables from './Variables.svelte';
+	import FrameSettings from './FrameSettings/index.svelte';
+	import InformationSettings from './InformationSettings/index.svelte';
+	import Inspector from './Inspector/index.svelte';
+	import Notes from './Notes/index.svelte';
+	import Variables from './Variables/index.svelte';
 
 	const tabs = [
 		{

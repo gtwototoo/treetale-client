@@ -15,13 +15,11 @@
 	import InterfaceViewButton from '$lib/components/FormatView/InterfaceViewButton.svelte';
 	import NovellaView from '$lib/components/FormatView/NovellaView.svelte';
 	import { enabledChoice, setChoice } from '$lib/components/methods.svelte.js';
-	import SvgGradient from '$lib/components/SvgGradient.svelte';
+	import RootStyles from '$lib/components/RootStyles.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import { interfaceStore } from '$lib/stores/reading.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import { clm } from '$lib/utils/classMerge';
-	import { rootStyle } from '$lib/utils/customColors';
 
 	const { data } = $props();
 
@@ -73,7 +71,6 @@
 	const { description, genre, likes, title, color, vars, storyId, format } = $derived(story);
 
 	onMount(() => {
-		bodyBackgroundColorStore.color = color.length ? color : DEFAULT_COLOR;
 		variablesStore.variables = vars;
 	});
 
@@ -100,13 +97,9 @@
 <JsonLd schema={bookSchema} />
 <MetaTags {description} {title} />
 
-<svelte:head>
-	{@html rootStyle(bodyBackgroundColorStore.color)}
-</svelte:head>
+<RootStyles init={color || DEFAULT_COLOR} />
 
 <svelte:window onkeydown={handleKeydown} />
-
-<SvgGradient />
 
 {#if format === 'novella'}
 	<NovellaView {lastFrame} {storyId} {progressId} />

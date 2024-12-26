@@ -20,7 +20,7 @@
 	import CommentBlock from './CommentBlock.svelte';
 	import ConnectionsLayer from './ConnectionsLayer.svelte';
 	import CreateText from './CreateText.svelte';
-	import FrameBlock from './FrameBlock.svelte';
+	import FrameBlock from './FrameBlock/index.svelte';
 	import LineManipulators from './LineManipulators.svelte';
 	import MovingArea from './MovingArea.svelte';
 	import NewBlock from './NewBlock.svelte';

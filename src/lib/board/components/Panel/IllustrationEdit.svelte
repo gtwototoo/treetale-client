@@ -87,7 +87,7 @@
 	</Button>
 {:else if !imageUrl && !readonlyModeStore.isEnabled}
 	<InputFile
-		class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+		class="justify-center bg-contrast-7 text-text hover:bg-contrast-9"
 		onchange={handleChange}
 	>
 		Добавить иллюстрацию

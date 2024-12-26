@@ -10,8 +10,9 @@
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 	import { variablesStore } from '$board/stores/variables.svelte';
 
-	import ShortDescription from './ShortDescription.svelte';
-	import VariableRow from './Variables/Variable.svelte';
+	import ShortDescription from '../ShortDescription.svelte';
+
+	import VariableRow from './Variable.svelte';
 
 	let timer = $state<number>();
 	let saving = $state(false);
@@ -65,7 +66,7 @@
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
 		<Button
-			class="justify-center bg-contrast-9 text-text hover:bg-contrast-7"
+			class="justify-center bg-contrast-7 text-text hover:bg-contrast-9"
 			onclick={addVariable}
 		>
 			Добавить переменную

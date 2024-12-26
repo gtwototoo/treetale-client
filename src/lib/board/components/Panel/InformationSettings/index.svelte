@@ -18,7 +18,7 @@
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
-	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { bodyBackgroundColorStore, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, StoryFormat } from '$lib/types';
 	import { clm } from '$lib/utils/classMerge';
 
@@ -30,9 +30,10 @@
 	import { variablesStore } from '$board/stores/variables.svelte';
 	import { notesHighlight, variablesHighlight } from '$board/utils/editing';
 
-	import IllustrationEdit from './IllustrationEdit.svelte';
-	import Publishing from './InformationSettings/Publishing.svelte';
-	import Shortcuts from './InformationSettings/Shortcuts.svelte';
+	import IllustrationEdit from '../IllustrationEdit.svelte';
+
+	import Publishing from './Publishing.svelte';
+	import Shortcuts from './Shortcuts.svelte';
 
 	let light = $state(80);
 	let saturate = $state(90);
@@ -44,6 +45,7 @@
 		if (!storyInfoStore.info) return;
 
 		storyInfoStore.info.color = color;
+		bodyBackgroundColorStore.color = storyInfoStore.info.color;
 
 		checkUpdates();
 	};

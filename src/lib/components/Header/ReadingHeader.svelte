@@ -6,7 +6,7 @@
 
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
 
-	import Header from './Header.svelte';
+	import Header from './index.svelte';
 
 	let fullscreenSupport = false;
 

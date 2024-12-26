@@ -16,10 +16,10 @@
 	import { transform } from '$board/utils/coordinatesToCss';
 	import { createConnections } from '$board/utils/editing';
 
-	import { connectedWithStart, setSelectedFrame } from '../methods.svelte';
+	import { connectedWithStart, setSelectedFrame } from '../../methods.svelte';
 
-	import Choices from './FrameBlock/Choices.svelte';
-	import Header from './FrameBlock/Header.svelte';
+	import Choices from './Choices.svelte';
+	import Header from './Header.svelte';
 
 	const {
 		frame

@@ -9,8 +9,8 @@
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import StoriesList from '$lib/components/StoriesList.svelte';
-	import StoryCard from '$lib/components/StoryCard.svelte';
 	import Empty from '$lib/components/StoryCard/Empty.svelte';
+	import StoryCard from '$lib/components/StoryCard/index.svelte';
 	import type { Story, User } from '$lib/types';
 	import { correctWhitespace } from '$lib/utils/text';
 
