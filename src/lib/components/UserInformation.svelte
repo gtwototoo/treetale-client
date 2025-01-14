@@ -4,7 +4,7 @@
 	import type { ChangeEventHandler } from 'svelte/elements';
 
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
-	import { Button, ColorPicker, Contenteditable, Icon, Input } from 'treetale-ui';
+	import { Button, ColorPicker, Contenteditable, Icon, Input, Modal } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -33,7 +33,7 @@
 	} = $props();
 
 	let userState = $state(user);
-
+	let exitModal = $state(false);
 	let editMode = $state(false);
 	let light = $state(80);
 	let saturate = $state(90);
@@ -160,7 +160,7 @@
 			<p>Перетащите сюда изображение, чтобы заменить текущую аватарку</p>
 		</InvisibleDrop>
 	{/if}
-	<div class="flex flex-col items-center gap-2">
+	<div class="flex w-full max-w-96 flex-col items-center justify-center gap-2">
 		<div class="p-6">
 			<ProfileAvatar
 				onchange={handleChange}
@@ -174,7 +174,7 @@
 			/>
 		</div>
 		{#if editMode}
-			<div class="flex w-full gap-3 py-5">
+			<div class="flex gap-3 py-5 lg:w-full">
 				<Input
 					placeholder="Короткая ссылка"
 					maxlength={20}
@@ -197,7 +197,7 @@
 				</ColorPicker>
 			</div>
 		{:else}
-			<div class="flex w-full gap-2 rounded-xl bg-main-30 p-4 text-text">
+			<div class="flex gap-2 rounded-xl bg-main-30 p-4 text-text">
 				{#each statistic as [count, title] (title)}
 					<div class="flex w-24 flex-col items-center">
 						<p class="text-3xl font-bold">
@@ -209,9 +209,10 @@
 			</div>
 		{/if}
 	</div>
-	<div class="flex w-full flex-col items-center gap-2">
+	<div class="flex w-full max-w-96 flex-col items-center gap-2">
 		<Contenteditable
 			bind:html={userState.name}
+			size="lg"
 			class={clm(
 				'w-full bg-transparent text-center text-4xl font-bold text-text',
 				!editMode && 'pointer-events-none ring-0'
@@ -221,16 +222,17 @@
 		/>
 		{#if editMode || userState.description}
 			<Contenteditable
+				size="lg"
 				bind:html={userState.description}
 				class={clm(
 					'w-full bg-transparent text-center text-lg text-text',
-					!editMode && 'pointer-events-none'
+					!editMode && 'pointer-events-none ring-0'
 				)}
 				placeholder="Добавьте описание"
 				readonly={!editMode}
 			/>
 		{:else}
-			<p class="px-4 text-lg/10 text-text/50">Описание отсутствует</p>
+			<p class="px-4 text-lg leading-[3.25rem] text-text/50">Описание отсутствует</p>
 		{/if}
 	</div>
 	<div class="flex gap-2">
@@ -257,11 +259,33 @@
 				</Button>
 				<Button
 					class="bg-main-50 text-red-500 hover:bg-main-70"
-					onclick={handleSignOut}
+					onclick={() => (exitModal = true)}
 					size="lg"
 				>
 					Выйти
 				</Button>
+				<Modal
+					bind:active={exitModal}
+					class="flex flex-col items-center gap-8 bg-main-30 p-8 text-text"
+				>
+					<p>Вы действительно хотите выйти из профиля?</p>
+					<div class="flex gap-2">
+						<Button
+							class="justify-center bg-main-50 text-text hover:bg-main-70"
+							size="lg"
+							onclick={() => (exitModal = false)}
+						>
+							Отмена
+						</Button>
+						<Button
+							class="justify-center bg-main-50 text-red-500 hover:bg-main-70"
+							size="lg"
+							onclick={handleSignOut}
+						>
+							Выйти
+						</Button>
+					</div>
+				</Modal>
 			{/if}
 		{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
 			<Button

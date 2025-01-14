@@ -82,7 +82,7 @@
 		</div>
 	</Button>
 	{#if choice.asInput}
-		<p class="border-t border-contrast-6 pl-2 pt-2 text-left text-xs">
+		<p class="border-t border-contrast-6 py-2 pl-2 text-left text-xs">
 			Чтобы применить введеное в поле значение, нужно задать значение
 			<span class="font-medium text-violet-500">
 				{`{input}`}

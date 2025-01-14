@@ -96,7 +96,7 @@
 	let greenBackgroundColorButton = $derived(
 		currentThemeClass(
 			clm('bg-emerald-700 hover:bg-emerald-800'),
-			clm('bg-emerald-200 hover:bg-emerald-100')
+			clm('bg-emerald-300 hover:bg-emerald-100')
 		)
 	);
 
