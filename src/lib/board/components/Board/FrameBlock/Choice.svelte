@@ -108,9 +108,9 @@
 
 <Button
 	class={clm(
-		'gap-4 bg-contrast-5',
+		'bg-contrast-5 gap-4',
 		text ? 'text-text' : 'text-gray-400',
-		disabled && 'pointer-events-none !bg-contrast',
+		disabled && '!bg-contrast pointer-events-none',
 		isSelectedBindingChoice && greenGroupHoverBackgroundColor,
 		isBindingMode() &&
 			clm(

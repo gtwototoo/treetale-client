@@ -57,13 +57,13 @@
 		<ReadCard
 			alt="Авторизация"
 			src="/img/writer.png"
-			text={'Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением (Возможно в "Спам")'}
+			text="Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением (Возможно в &quot;Спам&quot;)"
 		>
 			<form class="flex w-full flex-col gap-3" method="POST" onsubmit={handleSignIn}>
 				<Input
 					bind:value
 					oninput={() => (result = null)}
-					class="adaptive-font adaptive-padding w-full bg-contrast hover:bg-main-10"
+					class="adaptive-font adaptive-padding bg-contrast hover:bg-main-10 w-full"
 					focusClass="bg-main-10"
 					type="email"
 					placeholder="Почта или логин"
@@ -71,7 +71,7 @@
 				{#if result !== null}
 					<div
 						class={clm(
-							'adaptive-font adaptive-padding flex w-full select-none items-center gap-3 rounded-lg',
+							'adaptive-font adaptive-padding flex w-full items-center gap-3 rounded-lg select-none',
 							result.error ? 'bg-red-200 text-red-500' : 'bg-emerald-200 text-emerald-500'
 						)}
 						in:fade
@@ -80,7 +80,7 @@
 					</div>
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
+						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main w-full"
 						{disabled}
 						{loading}
 						type="submit"
@@ -95,6 +95,6 @@
 
 <style lang="postcss">
 	.message {
-		@apply pointer-events-none absolute top-full mt-8 w-full select-none text-center text-xs;
+		@apply pointer-events-none absolute top-full mt-8 w-full text-center text-xs select-none;
 	}
 </style>

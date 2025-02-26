@@ -65,16 +65,16 @@
 >
 	{#if editMode}
 		<div
-			class="absolute box-content cursor-move bg-contrast/20 px-5 py-3 ring-1 ring-contrast"
+			class="bg-contrast/20 ring-contrast absolute box-content cursor-move px-5 py-3 ring-1"
 			style="width: {sizes?.width}px; height: {sizes?.height}px; top: {(sizes?.y || 0) - 12}px"
 			onmousedown={handleMouseDown}
 			role="button"
 			tabindex="0"
 		>
-			<div class="dot -left-1 -top-1 cursor-nwse-resize"></div>
+			<div class="dot -top-1 -left-1 cursor-nwse-resize"></div>
 			<div class="dot -bottom-1 -left-1 cursor-nesw-resize"></div>
-			<div class="dot -right-1 -top-1 cursor-nesw-resize"></div>
-			<div class="dot -bottom-1 -right-1 cursor-nwse-resize"></div>
+			<div class="dot -top-1 -right-1 cursor-nesw-resize"></div>
+			<div class="dot -right-1 -bottom-1 cursor-nwse-resize"></div>
 		</div>
 	{/if}
 	{@render children()}
@@ -82,6 +82,6 @@
 
 <style lang="postcss">
 	.dot {
-		@apply absolute size-2 rounded-full bg-contrast;
+		@apply bg-contrast absolute size-2 rounded-full;
 	}
 </style>

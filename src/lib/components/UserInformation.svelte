@@ -150,13 +150,13 @@
 
 <div
 	class={clm(
-		'screen-lg screen-xl screen-hd screen-sm sticky top-8 z-10 flex w-[36rem] shrink-0 select-none flex-col items-center gap-12 rounded-3xl p-9',
+		'screen-lg screen-xl screen-hd screen-sm sticky top-8 z-10 flex w-[36rem] shrink-0 flex-col items-center gap-12 rounded-3xl p-9 select-none',
 		editMode ? 'bg-contrast' : 'bg-transparent'
 	)}
 >
 	{#if editMode}
 		<InvisibleDrop onchange={handleDrop}>
-			<Icon class="h-24 w-auto *:fill-gradient" this={UserIcon} variation="solid" />
+			<Icon class="*:fill-gradient h-24 w-auto" this={UserIcon} variation="solid" />
 			<p>Перетащите сюда изображение, чтобы заменить текущую аватарку</p>
 		</InvisibleDrop>
 	{/if}
@@ -197,7 +197,7 @@
 				</ColorPicker>
 			</div>
 		{:else}
-			<div class="flex gap-2 rounded-xl bg-main-30 p-4 text-text">
+			<div class="bg-main-30 text-text flex gap-2 rounded-xl p-4">
 				{#each statistic as [count, title] (title)}
 					<div class="flex w-24 flex-col items-center">
 						<p class="text-3xl font-bold">
@@ -214,7 +214,7 @@
 			bind:html={userState.name}
 			size="lg"
 			class={clm(
-				'w-full bg-transparent text-center text-4xl font-bold text-text',
+				'text-text w-full bg-transparent text-center text-4xl font-bold',
 				!editMode && 'pointer-events-none ring-0'
 			)}
 			placeholder="Псевдоним"
@@ -225,14 +225,14 @@
 				size="lg"
 				bind:html={userState.description}
 				class={clm(
-					'w-full bg-transparent text-center text-lg text-text',
+					'text-text w-full bg-transparent text-center text-lg',
 					!editMode && 'pointer-events-none ring-0'
 				)}
 				placeholder="Добавьте описание"
 				readonly={!editMode}
 			/>
 		{:else}
-			<p class="px-4 text-lg leading-[3.25rem] text-text/50">Описание отсутствует</p>
+			<p class="text-text/50 px-4 text-lg leading-[3.25rem]">Описание отсутствует</p>
 		{/if}
 	</div>
 	<div class="flex gap-2">
@@ -246,7 +246,7 @@
 				>
 					Сохранить
 				</Button>
-				<Button class="bg-main-50 text-red-500 hover:bg-main-70" onclick={cancelEdit} size="lg">
+				<Button class="bg-main-50 hover:bg-main-70 text-red-500" onclick={cancelEdit} size="lg">
 					Отмена
 				</Button>
 			{:else}
@@ -258,7 +258,7 @@
 					Редактировать
 				</Button>
 				<Button
-					class="bg-main-50 text-red-500 hover:bg-main-70"
+					class="bg-main-50 hover:bg-main-70 text-red-500"
 					onclick={() => (exitModal = true)}
 					size="lg"
 				>
@@ -266,19 +266,19 @@
 				</Button>
 				<Modal
 					bind:active={exitModal}
-					class="flex flex-col items-center gap-8 bg-main-30 p-8 text-text"
+					class="bg-main-30 text-text flex flex-col items-center gap-8 p-8"
 				>
 					<p>Вы действительно хотите выйти из профиля?</p>
 					<div class="flex gap-2">
 						<Button
-							class="justify-center bg-main-50 text-text hover:bg-main-70"
+							class="bg-main-50 text-text hover:bg-main-70 justify-center"
 							size="lg"
 							onclick={() => (exitModal = false)}
 						>
 							Отмена
 						</Button>
 						<Button
-							class="justify-center bg-main-50 text-red-500 hover:bg-main-70"
+							class="bg-main-50 hover:bg-main-70 justify-center text-red-500"
 							size="lg"
 							onclick={handleSignOut}
 						>
@@ -289,7 +289,7 @@
 			{/if}
 		{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
 			<Button
-				class="gap-3 bg-main-50 text-text hover:bg-main-70"
+				class="bg-main-50 text-text hover:bg-main-70 gap-3"
 				{loading}
 				onclick={handleUnsubscribe}
 				size="lg"
@@ -299,7 +299,7 @@
 			</Button>
 		{:else}
 			<Button
-				class="gap-3 bg-main-50 text-text hover:bg-main-70"
+				class="bg-main-50 text-text hover:bg-main-70 gap-3"
 				{loading}
 				onclick={handleSubscribe}
 				size="lg"

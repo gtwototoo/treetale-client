@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.postcss';
+	import '../app.css';
 	import '../fonts/RobotoSlab.css';
 	import SvgGradient from './SvgGradient.svelte';
 

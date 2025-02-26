@@ -52,9 +52,9 @@
 	icon={Link}
 	text="Вы можете поделиться рабочей областью с другими пользователями с помощью специальной ссылки, либо пригласить их, добавив в список ниже"
 />
-<Button class="justify-center bg-main-30 text-text hover:bg-main-50">Скопировать ссылку</Button>
+<Button class="bg-main-30 text-text hover:bg-main-50 justify-center">Скопировать ссылку</Button>
 <div class="flex flex-col gap-2">
-	{#each users as user, key}
+	{#each users as user, index (index)}
 		<Input
 			bind:value={user.email}
 			disabled={panelStatesStore.editMode}
@@ -67,7 +67,7 @@
 				{#if panelStatesStore.editMode}
 					<Button
 						class={redBackgroundColorStore.color}
-						onclick={() => removeShareUser(key)}
+						onclick={() => removeShareUser(index)}
 						size="sm"
 					>
 						<Icon this={XMark} class="size-4" />
@@ -87,13 +87,13 @@
 		</Input>
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button class="justify-center bg-main-30 text-text hover:bg-main-50" onclick={addSharedUser}>
+		<Button class="bg-main-30 text-text hover:bg-main-50 justify-center" onclick={addSharedUser}>
 			Добавить пользователя
 		</Button>
 	{/if}
 </div>
 {#if !readonlyModeStore.isEnabled}
-	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+	<div class="pointer-events-none flex justify-center text-xs text-gray-500 select-none">
 		{#if saving}
 			<Icon class="h-4 animate-pulse text-gray-600" this={Cloud} />
 		{:else}

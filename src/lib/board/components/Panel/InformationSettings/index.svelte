@@ -144,11 +144,11 @@
 				{#snippet button({ onclick })}
 					<Button
 						disabled={panelStatesStore.editMode}
-						class="size-full flex-col justify-center gap-3 bg-main-20 text-text hover:bg-main-40"
+						class="bg-main-20 text-text hover:bg-main-40 size-full flex-col justify-center gap-3"
 						{onclick}
 						size="lg"
 					>
-						<CurrentStoryFormatIcon class="h-12 w-auto text-main" />
+						<CurrentStoryFormatIcon class="text-main h-12 w-auto" />
 						<p class="text-xs">{format.title}</p>
 					</Button>
 				{/snippet}
@@ -157,11 +157,11 @@
 						<Button
 							onclick={() => switchFormat(id)}
 							class={clm(
-								'gap-3 whitespace-normal p-2 hover:bg-main-40',
+								'hover:bg-main-40 gap-3 p-2 whitespace-normal',
 								id === storyInfoStore.info?.format && 'bg-main-20'
 							)}
 						>
-							<FormatIcon class="h-auto w-24 shrink-0 text-main" />
+							<FormatIcon class="text-main h-auto w-24 shrink-0" />
 							<div class="flex flex-col items-start gap-1 text-left">
 								<p class="text-base font-medium">{title}</p>
 								<p class="text-xs">{description}</p>
@@ -174,11 +174,11 @@
 				{#snippet button({ onclick })}
 					<Button
 						disabled={panelStatesStore.editMode}
-						class="size-full flex-col justify-center gap-3 bg-main-20 text-text hover:bg-main-40"
+						class="bg-main-20 text-text hover:bg-main-40 size-full flex-col justify-center gap-3"
 						{onclick}
 						size="lg"
 					>
-						<CurrentGenreIcon class="size-10 text-main" />
+						<CurrentGenreIcon class="text-main size-10" />
 						<p class="text-xs">{genre.title}</p>
 					</Button>
 				{/snippet}
@@ -187,11 +187,11 @@
 						<Button
 							onclick={() => switchGenre(id)}
 							class={clm(
-								'min-w-20 flex-1 flex-col gap-1 text-text hover:bg-main-40',
+								'text-text hover:bg-main-40 min-w-20 flex-1 flex-col gap-1',
 								id === storyInfoStore.info?.genre && 'bg-main-20'
 							)}
 						>
-							<GenreIcon class="size-7 text-main" />
+							<GenreIcon class="text-main size-7" />
 							<p class="text-xs">{title}</p>
 						</Button>
 					{/each}
@@ -208,11 +208,11 @@
 				{#snippet children({ onclick })}
 					<Button
 						disabled={panelStatesStore.editMode}
-						class="size-full flex-col justify-center gap-3 bg-main-20 text-text hover:bg-main-40"
+						class="bg-main-20 text-text hover:bg-main-40 size-full flex-col justify-center gap-3"
 						{onclick}
 						size="lg"
 					>
-						<Icon class="size-10 text-main" this={PaintBrush} variation="solid" />
+						<Icon class="text-main size-10" this={PaintBrush} variation="solid" />
 						<p class="text-xs">Цвет темы</p>
 					</Button>
 				{/snippet}
@@ -268,7 +268,7 @@
 		<Publishing />
 	{/if}
 	{#if !readonlyModeStore.isEnabled}
-		<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+		<div class="pointer-events-none flex justify-center text-xs text-gray-500 select-none">
 			{#if saving}
 				<Icon class="size-4 animate-pulse text-gray-600" this={Cloud} />
 			{:else}

@@ -53,15 +53,15 @@
 	icon={Tv}
 	text="Просмотр истории со стороны читателя, а также отладка связей, модификаторов и вариантов выбора"
 />
-<div class="flex select-none flex-col gap-2 rounded-lg bg-contrast-2 p-2 text-center text-sm">
+<div class="bg-contrast-2 flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none">
 	<p class="py-2">Переменные</p>
 	<div class="flex flex-col gap-2">
 		{#if inspectorVariables.length}
-			{#each inspectorVariables as variable}
+			{#each inspectorVariables as variable (variable.name)}
 				{#if variable.name}
-					<div class="flex justify-between gap-4 *:break-all *:text-left">
+					<div class="flex justify-between gap-4 *:text-left *:break-all">
 						<p class="px-2 py-1">{variable.name}</p>
-						<div class="rounded-lg bg-main-70 px-2 py-1">
+						<div class="bg-main-70 rounded-lg px-2 py-1">
 							{variable.value || '-'}
 						</div>
 					</div>
@@ -72,22 +72,22 @@
 		{/if}
 	</div>
 </div>
-<Button onclick={clearChoices} class="justify-center bg-main-30 hover:bg-main-50">
+<Button onclick={clearChoices} class="bg-main-30 hover:bg-main-50 justify-center">
 	Сбросить все выборы
 </Button>
 <div class="flex flex-col gap-3 text-sm">
-	{#each frames as frame, index}
+	{#each frames as frame, index (frame.frameId)}
 		{@const text = correctVariableReplace(frame.text, inspectorVariables)}
-		<div class="relative flex flex-col items-center gap-2 rounded-xl bg-contrast-3 p-2">
+		<div class="bg-contrast-3 relative flex flex-col items-center gap-2 rounded-xl p-2">
 			{#if frame.imageUrl}
 				<Image
 					alt="Изображение блока"
-					class="h-48 w-full rounded-lg !bg-main/30 text-text"
+					class="!bg-main/30 text-text h-48 w-full rounded-lg"
 					cover
 					src={frame.imageUrl}
 				/>
 			{/if}
-			<p class={clm('break-all px-3 py-1', !text && 'text-gray-400')}>
+			<p class={clm('px-3 py-1 break-all', !text && 'text-gray-400')}>
 				{@html text || 'Описание блока'}
 			</p>
 			{#if frame.choices.length}

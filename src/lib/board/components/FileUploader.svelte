@@ -72,7 +72,7 @@
 	{#if !(readonly || disabled)}
 		<Button
 			size="sm"
-			class={clm('absolute right-1 top-1 z-10', redBackgroundColorStore.color)}
+			class={clm('absolute top-1 right-1 z-10', redBackgroundColorStore.color)}
 			onclick={handleRemove}
 		>
 			<Icon class="size-4" this={Trash} />
@@ -87,17 +87,17 @@
 	{:else if !(readonly || disabled)}
 		<DropArea
 			onchange={handleChange}
-			class="relative rounded-inherit bg-main-20"
+			class="rounded-inherit bg-main-20 relative"
 			accept={mediaType + '/*'}
 		>
-			<Icon class="h-20 w-auto *:fill-gradient" this={icon} variation="solid" />
+			<Icon class="*:fill-gradient h-20 w-auto" this={icon} variation="solid" />
 			<p>Нажмите тут или перетащите сюда {mediaName}</p>
 		</DropArea>
 	{:else}
 		<Button
-			class="pointer-events-none size-full flex-col justify-center gap-2 !whitespace-normal rounded-inherit bg-contrast-9 !p-6"
+			class="rounded-inherit bg-contrast-9 pointer-events-none size-full flex-col justify-center gap-2 !p-6 !whitespace-normal"
 		>
-			<Icon class="h-24 w-auto *:fill-gradient" this={icon} variation="solid" />
+			<Icon class="*:fill-gradient h-24 w-auto" this={icon} variation="solid" />
 			<p>{upperFirst(mediaName)} отсутствует</p>
 		</Button>
 	{/if}

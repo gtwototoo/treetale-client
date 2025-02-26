@@ -22,14 +22,14 @@
 
 {#if stories.length}
 	<div
-		class="grid w-full items-start justify-center gap-4 p-4 grid-cols-fit-60 max-md:grid-cols-fit-40 max-sm:gap-2 max-sm:p-2"
+		class="grid-cols-fit-60 max-md:grid-cols-fit-40 grid w-full items-start justify-center gap-4 p-4 max-sm:gap-2 max-sm:p-2"
 	>
-		{#each stories as story}
+		{#each stories as story (story.storyId)}
 			{@const author = find(authors, { userId: story.userId })}
 			<StoryCard {author} {story} />
 		{/each}
 		{#if stories.length < 8}
-			{#each range(8 - stories.length) as _}
+			{#each range(8 - stories.length) as index (index)}
 				<Empty />
 			{/each}
 		{/if}

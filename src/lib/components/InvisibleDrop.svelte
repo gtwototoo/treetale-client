@@ -69,7 +69,7 @@
 {#if visibleFile && !blockFile}
 	<DropArea
 		{accept}
-		class="absolute rounded-2xl bg-contrast"
+		class="bg-contrast absolute rounded-2xl"
 		{...props}
 		onchange={handleChange}
 		onvisibilitychange={() => (visibleFile = false)}

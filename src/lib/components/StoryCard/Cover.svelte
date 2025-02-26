@@ -50,12 +50,12 @@
 		{#if imageUrl && !errorImage}
 			<Image
 				alt={title || 'Иллюстрация истории'}
-				class="absolute size-full rounded-inherit"
+				class="rounded-inherit absolute size-full"
 				cover
 				onerror={handleError}
 				src={imageUrl}
 			/>
-			<GenreIcon class={clm('absolute right-4 top-4 h-auto w-1/6 opacity-70', iconColor)} />
+			<GenreIcon class={clm('absolute top-4 right-4 h-auto w-1/6 opacity-70', iconColor)} />
 		{:else}
 			<div class="absolute top-0 flex h-1/2 w-full items-center justify-center">
 				<GenreIcon class={clm('h-1/2 w-auto', iconColor)} />

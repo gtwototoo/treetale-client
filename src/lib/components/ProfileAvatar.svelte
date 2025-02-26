@@ -88,12 +88,12 @@
 	>
 		{#if editMode}
 			<div
-				class="absolute bottom-0 right-0 z-[3] rounded-full bg-contrast p-1"
+				class="bg-contrast absolute right-0 bottom-0 z-[3] rounded-full p-1"
 				in:fade={{ duration: 150 }}
 			>
 				{#if src}
 					<Button
-						class="rounded-full bg-red-200 p-3 text-text"
+						class="text-text rounded-full bg-red-200 p-3"
 						loading={removeLoading}
 						onclick={preRemoveImage}
 					>
@@ -101,7 +101,7 @@
 					</Button>
 				{:else}
 					<InputFile
-						class="rounded-full bg-main-50 p-3 text-text hover:bg-main-70"
+						class="bg-main-50 text-text hover:bg-main-70 rounded-full p-3"
 						disabled={addLoading}
 						{onchange}
 					>

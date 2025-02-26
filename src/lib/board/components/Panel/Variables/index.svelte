@@ -61,12 +61,12 @@
 	</div>
 </ShortDescription>
 <div class="flex flex-col gap-2">
-	{#each variablesStore.variables as variable}
+	{#each variablesStore.variables as variable (variable.name)}
 		<VariableRow {checkUpdates} {variable} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
 		<Button
-			class="justify-center bg-contrast-7 text-text hover:bg-contrast-9"
+			class="bg-contrast-7 text-text hover:bg-contrast-9 justify-center"
 			onclick={addVariable}
 		>
 			Добавить переменную
@@ -74,7 +74,7 @@
 	{/if}
 </div>
 {#if !readonlyModeStore.isEnabled}
-	<div class="pointer-events-none flex select-none justify-center text-xs text-gray-500">
+	<div class="pointer-events-none flex justify-center text-xs text-gray-500 select-none">
 		{#if saving}
 			<Icon class="h-4 animate-pulse text-gray-600" this={Cloud} />
 		{:else}

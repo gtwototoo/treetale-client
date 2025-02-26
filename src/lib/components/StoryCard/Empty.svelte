@@ -14,9 +14,9 @@
 </script>
 
 <div class={clm('relative', classname)}>
-	<div class="absolute inset-0 flex items-center justify-center rounded-3xl bg-main-30">
+	<div class="bg-main-30 absolute inset-0 flex items-center justify-center rounded-3xl">
 		<Icon
-			class="absolute h-1/3 w-auto text-main-50 transition-colors"
+			class="text-main-50 absolute h-1/3 w-auto transition-colors"
 			variation="solid"
 			this={BookOpen}
 		/>

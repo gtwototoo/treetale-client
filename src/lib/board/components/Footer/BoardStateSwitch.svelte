@@ -44,11 +44,11 @@
 
 <Button
 	size="lg"
-	class="z-10 gap-3 bg-main-70 pl-4 text-text hover:bg-main-90 max-sm:px-3"
+	class="bg-main-70 text-text hover:bg-main-90 z-10 gap-3 pl-4 max-sm:px-3"
 	onclick={switchConnectionMode}
 >
 	{#if boardStateStore.action}
-		<div class="absolute -left-4 -top-4 rounded-full bg-contrast p-2" in:fly={{ y: 10 }}>
+		<div class="bg-contrast absolute -top-4 -left-4 rounded-full p-2" in:fly={{ y: 10 }}>
 			<Icon class="size-5" this={actionsIcons[boardStateStore.action]} />
 		</div>
 	{/if}

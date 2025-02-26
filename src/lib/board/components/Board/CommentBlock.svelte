@@ -49,7 +49,7 @@
 	ontouchstart={handleMouseDown}
 	onmousedown={handleMouseDown}
 	class={clm(
-		'absolute z-[100000] w-64 rounded-lg bg-main-40 p-2 text-text',
+		'bg-main-40 text-text absolute z-[100000] w-64 rounded-lg p-2',
 		!readonlyModeStore.isEnabled && 'cursor-move'
 	)}
 	onmouseenter={() => (hovered = true)}
@@ -65,7 +65,7 @@
 	{#if hovered}
 		<Button
 			class={clm(
-				'absolute -right-2.5 -top-2.5 rounded-full p-2 text-red-500',
+				'absolute -top-2.5 -right-2.5 rounded-full p-2 text-red-500',
 				redBackgroundColorStore.color
 			)}
 			size="sm"

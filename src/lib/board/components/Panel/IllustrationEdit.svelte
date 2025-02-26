@@ -69,7 +69,7 @@
 </script>
 
 <InvisibleDrop onchange={handleDrop}>
-	<Icon this={BookOpen} variation="solid" class="h-24 w-auto *:fill-gradient" />
+	<Icon this={BookOpen} variation="solid" class="*:fill-gradient h-24 w-auto" />
 	<p>Перетащите сюда изображение, чтобы заменить текущее в блоке</p>
 </InvisibleDrop>
 <div class="flex justify-center">
@@ -87,7 +87,7 @@
 	</Button>
 {:else if !imageUrl && !readonlyModeStore.isEnabled}
 	<InputFile
-		class="justify-center bg-contrast-7 text-text hover:bg-contrast-9"
+		class="bg-contrast-7 text-text hover:bg-contrast-9 justify-center"
 		onchange={handleChange}
 	>
 		Добавить иллюстрацию

@@ -35,7 +35,7 @@
 			edit={false}
 			{status}
 			{selectedColor}
-			class="grow bg-main-50 hover:bg-main-70"
+			class="bg-main-50 hover:bg-main-70 grow"
 		/>
 		<Likes {likes} {storyId} class="rounded-full pr-4" />
 	</div>

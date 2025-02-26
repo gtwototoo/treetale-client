@@ -71,7 +71,7 @@
 				{#if result !== null}
 					<div
 						class={clm(
-							'adaptive-font adaptive-padding flex w-full select-none items-center gap-3 rounded-lg',
+							'adaptive-font adaptive-padding flex w-full items-center gap-3 rounded-lg select-none',
 							result.error ? 'bg-red-200 text-red-500' : 'bg-emerald-200 text-emerald-500'
 						)}
 						in:fade
@@ -81,7 +81,7 @@
 					</div>
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding w-full bg-main-70 text-text hover:bg-main"
+						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main w-full"
 						{disabled}
 						{loading}
 						type="submit"

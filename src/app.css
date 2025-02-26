@@ -1,10 +1,7 @@
-/* Write your global styles here, in PostCSS syntax */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 body {
-	@apply flex w-full items-start justify-end overflow-auto bg-main-20;
+	@apply bg-main-20 flex w-full items-start justify-end overflow-auto;
 }
 body > div {
 	@apply contents;
@@ -35,14 +32,14 @@ svg {
 }
 
 .plug {
-	@apply flex select-none flex-col items-center justify-center py-10 text-center text-text;
+	@apply text-text flex flex-col items-center justify-center py-10 text-center select-none;
 }
 .plug > p {
 	@apply max-w-xs;
 }
 
 .header-button {
-	@apply gap-3 max-xs:!px-3;
+	@apply max-xs:!px-3 gap-3;
 }
 .header-button > p {
 	@apply max-md:hidden;
@@ -55,7 +52,7 @@ svg {
 	@apply text-[clamp(20px,2.8vw,30px)] leading-snug;
 }
 .adaptive-padding {
-	@apply !px-8 !py-4 max-hd:!px-6 max-hd:!py-3;
+	@apply max-hd:!px-6 max-hd:!py-3 !px-8 !py-4;
 }
 
 .bindPoint {
@@ -69,7 +66,7 @@ svg {
 }
 .rightBindPoint:after,
 .leftBindPoint:after {
-	@apply absolute -inset-0.5 -z-[1] rounded-full from-transparent from-50% to-main to-50% content-[''] group-hover:to-text;
+	@apply to-main group-hover:to-text absolute -inset-0.5 -z-[1] rounded-full from-transparent from-50% to-50% content-[''];
 }
 .rightBindPoint:after {
 	@apply bg-gradient-to-r;

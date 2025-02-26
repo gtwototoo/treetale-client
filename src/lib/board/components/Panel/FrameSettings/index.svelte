@@ -219,7 +219,7 @@
 {#if frame}
 	<InvisibleDrop accept="image/*,audio/*" ondragstart={handleDragStart} onchange={handleDrop}>
 		<Icon
-			class="h-24 w-auto *:fill-gradient"
+			class="*:fill-gradient h-24 w-auto"
 			this={draggedFileType === 'image' ? RectangleStack : MusicalNote}
 			variation="solid"
 		/>
@@ -251,7 +251,7 @@
 				value={`${Math.round(y)}`}
 			/>
 		</FormSplit>
-		<Button onclick={setToCoordinates} class="bg-main-30 p-2 text-text hover:bg-main-50">
+		<Button onclick={setToCoordinates} class="bg-main-30 text-text hover:bg-main-50 p-2">
 			<Icon this={CursorArrowRipple} class="size-6" />
 		</Button>
 	</div>
@@ -272,7 +272,7 @@
 						/>
 						{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
 							<Button
-								class="justify-center bg-main-20 text-text hover:bg-main-40"
+								class="bg-main-20 text-text hover:bg-main-40 justify-center"
 								disabled={panelStatesStore.editMode}
 								onclick={addPrevImage}
 							>
@@ -286,13 +286,13 @@
 						{#snippet button({ onclick })}
 							<Button
 								class={clm(
-									'w-full flex-col justify-center gap-1 bg-main-20 text-text hover:bg-main-40',
+									'bg-main-20 text-text hover:bg-main-40 w-full flex-col justify-center gap-1',
 									soundUrl && 'text-emerald-500'
 								)}
 								size="lg"
 								{onclick}
 							>
-								<Icon class="size-10 text-main" this={MusicalNote} variation="solid" />
+								<Icon class="text-main size-10" this={MusicalNote} variation="solid" />
 								<p class="text-xs">{soundUrl ? `Мелодия ${frameId}` : 'Мелодия'}</p>
 							</Button>
 						{/snippet}
@@ -333,7 +333,7 @@
 	</FormSplit>
 	{#if onePrevFrame !== null}
 		<Button
-			class="justify-center gap-4 bg-contrast-9 pl-3 text-text hover:bg-contrast-7"
+			class="bg-contrast-9 text-text hover:bg-contrast-7 justify-center gap-4 pl-3"
 			onclick={gotoPrevFrame}
 		>
 			<Icon class="absolute left-3 size-5" this={ArrowLeft} />
@@ -355,7 +355,7 @@
 			{/if}
 			{#if !panelStatesStore.editMode}
 				<Button
-					class="justify-center bg-contrast-7 text-text hover:bg-contrast-9"
+					class="bg-contrast-7 text-text hover:bg-contrast-9 justify-center"
 					onclick={() => addChoice(frame)}
 				>
 					Добавить вариант

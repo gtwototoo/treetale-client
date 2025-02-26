@@ -76,14 +76,14 @@
 >
 	{#if soundStore.sound}
 		<div
-			class="flex size-full select-none items-center justify-center rounded-lg bg-contrast-3 text-sm/6"
+			class="bg-contrast-3 flex size-full items-center justify-center rounded-lg text-sm/6 select-none"
 		>
 			{#await preload(soundStore.sound)}
 				<Icon class="size-5" this={Loading} />
 			{:then}
 				{#if soundStore.playing}
 					<Button
-						class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+						class="bg-contrast-9 text-text hover:bg-contrast-7 w-20 flex-col gap-1"
 						onclick={handlePlay}
 					>
 						<Icon class="size-8" variation="solid" this={Play} />
@@ -92,14 +92,14 @@
 				{:else}
 					<div class="flex gap-2">
 						<Button
-							class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+							class="bg-contrast-9 text-text hover:bg-contrast-7 w-20 flex-col gap-1"
 							onclick={handlePause}
 						>
 							<Icon class="size-8" variation="solid" this={Pause} />
 							<p class="text-xs">Пауза</p>
 						</Button>
 						<Button
-							class="w-20 flex-col gap-1 bg-contrast-9 text-text hover:bg-contrast-7"
+							class="bg-contrast-9 text-text hover:bg-contrast-7 w-20 flex-col gap-1"
 							onclick={handleStop}
 						>
 							<Icon class="size-8" variation="solid" this={Stop} />
@@ -107,11 +107,11 @@
 						</Button>
 					</div>
 				{/if}
-				<div class="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+				<div class="absolute right-3 bottom-3 left-3 flex items-center gap-2">
 					<p class="w-5 shrink-0 text-center">{Math.round(soundStore.seek)}</p>
-					<div class="h-2 w-full overflow-hidden rounded-full bg-contrast">
+					<div class="bg-contrast h-2 w-full overflow-hidden rounded-full">
 						<div
-							class="h-full bg-main"
+							class="bg-main h-full"
 							style={`width: ${soundStore.seek / (soundStore.sound.duration() / 100)}%`}
 						></div>
 					</div>

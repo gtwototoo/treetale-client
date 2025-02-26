@@ -15,11 +15,11 @@
 	} = $props();
 </script>
 
-<div class="flex w-full flex-col gap-4 border-l-2 border-main px-2">
+<div class="border-main flex w-full flex-col gap-4 border-l-2 px-2">
 	{#if frame.imageUrl}
 		<Image
 			alt="Иллюстрация"
-			class="h-48 w-full rounded-xl bg-main-40 text-text"
+			class="bg-main-40 text-text h-48 w-full rounded-xl"
 			cover
 			src={frame.imageUrl}
 		/>

@@ -24,7 +24,7 @@
 
 {#if isBindingMode()}
 	<div>
-		{#each createLineRemoveButtons(boardFramesStore.frames) as { fromChoiceId, fromFrameId, x, y }}
+		{#each createLineRemoveButtons(boardFramesStore.frames) as { fromChoiceId, fromFrameId, x, y } (`${fromFrameId}-${x}:${y}`)}
 			<div class="absolute flex size-0 items-center justify-center" style={transform({ x, y })}>
 				<Button
 					class={clm(redBackgroundColorStore.color, 'min-h-0 rounded-full p-2')}

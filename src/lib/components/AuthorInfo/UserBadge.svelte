@@ -45,7 +45,7 @@
 		src={author.imageUrl}
 		class={clm(mobileView && 'max-sm:size-8')}
 	/>
-	<div class={clm('ml-2 mr-5 overflow-hidden text-left text-text', mobileView && 'max-md:hidden')}>
+	<div class={clm('text-text mr-5 ml-2 overflow-hidden text-left', mobileView && 'max-md:hidden')}>
 		<p class="truncate text-base/5 font-medium">
 			{author.name}
 		</p>
@@ -61,7 +61,7 @@
 		{@render userInfo()}
 	</Button>
 {:else}
-	<div class={clm('flex min-w-0 items-center whitespace-nowrap rounded-full p-1', classname)}>
+	<div class={clm('flex min-w-0 items-center rounded-full p-1 whitespace-nowrap', classname)}>
 		{@render userInfo()}
 	</div>
 {/if}

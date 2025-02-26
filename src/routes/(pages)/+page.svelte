@@ -104,12 +104,12 @@
 		<MainStatistic statistic={data.statistic} />
 		{#if data.categories.length}
 			<div class="flex w-full flex-col items-center gap-4 px-4">
-				<h1 class="adaptive-font-upper w-full select-none text-center leading-tight text-text">
+				<h1 class="adaptive-font-upper text-text w-full text-center leading-tight select-none">
 					Список историй
 				</h1>
 				<Input
 					bind:value
-					class="adaptive-font-upper w-full max-w-2xl bg-white p-4 hover:bg-main-10"
+					class="adaptive-font-upper hover:bg-main-10 w-full max-w-2xl bg-white p-4"
 					oninput={handleInput}
 					placeholder="Поиск"
 					size="lg"
@@ -124,10 +124,10 @@
 				<div
 					class="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3 max-md:gap-1"
 				>
-					{#each GENRES_LIST as { icon: GenreIcon, id, title }}
+					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
 						<Button
 							class={clm(
-								'h-20 w-24 flex-col justify-center gap-1 bg-main-50 py-0 hover:bg-main-70 max-md:h-16 max-sm:flex-1',
+								'bg-main-50 hover:bg-main-70 h-20 w-24 flex-col justify-center gap-1 py-0 max-md:h-16 max-sm:flex-1',
 								searchedGenres.includes(id) && 'bg-main'
 							)}
 							onclick={() => switchGenre(id)}
@@ -148,7 +148,7 @@
 					title="Результаты поиска"
 				/>
 			{:else}
-				{#each data.categories as { id, stories, title }}
+				{#each data.categories as { id, stories, title } (id)}
 					<Category authors={data.authors} icon={icons[id] || Star} {stories} {title} />
 				{/each}
 			{/if}
@@ -159,7 +159,7 @@
 						'Историй не найдено, но вы можете добавить свою уникальную историю'
 					)}
 				</p>
-				<AddStoryButton class="gap-3 bg-main-50 text-text hover:bg-main-70" />
+				<AddStoryButton class="bg-main-50 text-text hover:bg-main-70 gap-3" />
 			</div>
 		{/if}
 	</section>

@@ -38,7 +38,7 @@
 	<Logo />
 	<div class="flex gap-3">
 		{#if readonlyModeStore.isEnabled}
-			<div class="select-none rounded-xl bg-contrast/10 px-6 py-3 text-base text-text">
+			<div class="bg-contrast/10 text-text rounded-xl px-6 py-3 text-base select-none">
 				Режим просмотра
 			</div>
 		{:else}
@@ -70,7 +70,7 @@
 			<Button
 				size="lg"
 				class={clm(
-					'-mr-6 rounded-full bg-contrast px-3 text-text',
+					'bg-contrast text-text -mr-6 rounded-full px-3',
 					panelStatesStore.id === 'share' && 'bg-main-50'
 				)}
 				onclick={handleClick}

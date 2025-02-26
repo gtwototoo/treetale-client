@@ -24,7 +24,7 @@
 </script>
 
 <svg
-	class="absolute h-auto w-auto select-none bg-transparent fill-none stroke-text stroke-2"
+	class="stroke-text absolute h-auto w-auto bg-transparent fill-none stroke-2 select-none"
 	{...svgData}
 >
 	{#each paths as path (path.connectId)}

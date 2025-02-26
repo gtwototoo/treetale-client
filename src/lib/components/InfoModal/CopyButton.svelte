@@ -60,7 +60,7 @@
 <Button
 	size="lg"
 	onclick={handleCopyLink}
-	class="pointer-events-auto gap-2 px-4 font-normal hover:bg-main-50"
+	class="hover:bg-main-50 pointer-events-auto gap-2 px-4 font-normal"
 >
 	<Icon
 		this={DocumentDuplicate}
@@ -71,7 +71,7 @@
 		)}
 	/>
 	{#if !short}
-		<div class={clm('flex flex-col items-start text-xs max-xs:hidden', classname)}>
+		<div class={clm('max-xs:hidden flex flex-col items-start text-xs', classname)}>
 			<p class="text-base leading-4">Ссылка</p>
 			<p>на историю</p>
 		</div>

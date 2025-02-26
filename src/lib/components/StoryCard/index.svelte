@@ -41,7 +41,7 @@
 
 <InfoModal {story} {author} bind:active={showModal} />
 <button class="group relative shrink-0 rounded-2xl" onclick={() => (showModal = true)}>
-	<div class="contents rounded-inherit" style={generateMainColors(selectedColor)}>
+	<div class="rounded-inherit contents" style={generateMainColors(selectedColor)}>
 		<Cover {imageUrl} {title} {icon} color={selectedColor} class={classname} />
 		<AuthorInfo
 			{author}
@@ -51,10 +51,10 @@
 			{selectedColor}
 			mobileView
 			isButton={false}
-			class="pointer-events-none absolute -left-1 -top-1 z-[1] rounded-full rounded-br-none bg-main-50"
+			class="bg-main-50 pointer-events-none absolute -top-1 -left-1 z-[1] rounded-full rounded-br-none"
 		/>
 		<div
-			class="absolute -bottom-1 -right-1 z-[1] flex items-center gap-1 rounded-full rounded-tl-none bg-main-70 p-2 pr-4 text-text max-sm:pr-2"
+			class="bg-main-70 text-text absolute -right-1 -bottom-1 z-[1] flex items-center gap-1 rounded-full rounded-tl-none p-2 pr-4 max-sm:pr-2"
 		>
 			<Icon
 				class={clm('size-7 max-sm:size-5', isLiked && 'text-red-500')}
@@ -70,7 +70,7 @@
 
 <style lang="postcss">
 	:global(.animate-card) {
-		@apply from-50% to-100% bg-[length:100%_200%] bg-[0_-100%] transition-[background-position,transform];
+		@apply bg-[0_-100%] from-50% to-100% bg-[length:100%_200%] transition-[background-position,transform];
 	}
 	:global(.animate-card:hover) {
 		@apply bg-[0_-110%];

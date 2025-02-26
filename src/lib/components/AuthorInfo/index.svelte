@@ -67,7 +67,7 @@
 			this={currentStatus.icon}
 		/>
 		<div
-			class={clm('ml-2 mr-5 overflow-hidden text-left text-text', mobileView && 'max-md:hidden')}
+			class={clm('text-text mr-5 ml-2 overflow-hidden text-left', mobileView && 'max-md:hidden')}
 		>
 			<p class="truncate text-base/5 font-medium">
 				{currentStatus.title}

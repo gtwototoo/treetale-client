@@ -69,12 +69,12 @@
 
 <Modal
 	bind:active
-	class="flex w-full max-w-screen-lg flex-row gap-2 bg-main-10 p-12 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
+	class="bg-main-10 flex w-full max-w-screen-lg flex-row gap-2 p-12 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
 >
-	<div style={generateMainColors(selectedColor)} class="contents rounded-inherit">
-		<div class="absolute inset-0 -z-[1] rounded-inherit bg-main-10"></div>
+	<div style={generateMainColors(selectedColor)} class="rounded-inherit contents">
+		<div class="rounded-inherit bg-main-10 absolute inset-0 -z-[1]"></div>
 		<LeftSide {story} {author} title={story.title} />
-		<div class="flex h-auto w-full flex-col items-start text-text max-md:items-center xs:px-6">
+		<div class="text-text xs:px-6 flex h-auto w-full flex-col items-start max-md:items-center">
 			<div class="flex w-full grow flex-col gap-6">
 				<div class="flex w-full flex-col gap-3 max-md:items-center">
 					<ActionButtons {genre} {storyId} {format} />
@@ -89,14 +89,14 @@
 					</div>
 				</div>
 				<div class="flex flex-col gap-4">
-					<div class="clear-text adaptive-font break-words px-2">
+					<div class="clear-text adaptive-font px-2 break-words">
 						{@html correctVariableReplace(description, variablesStore.variables) ||
 							'Без описания'}
 					</div>
 					{#if tags.length}
 						<div class="flex flex-wrap gap-2 max-md:gap-1">
-							{#each tags as tag}
-								<Tag class="rounded-full bg-main-40 px-4 text-base text-text">{tag}</Tag>
+							{#each tags as tag (tag)}
+								<Tag class="bg-main-40 text-text rounded-full px-4 text-base">{tag}</Tag>
 							{/each}
 						</div>
 					{:else}
@@ -105,7 +105,7 @@
 				</div>
 			</div>
 			<div
-				class="sticky bottom-0 -mb-6 flex w-full items-center justify-between bg-main-10 py-6"
+				class="bg-main-10 sticky bottom-0 -mb-6 flex w-full items-center justify-between py-6"
 			>
 				{#if progress && progress.version !== '0'}
 					<SavedProgress
@@ -120,7 +120,7 @@
 							asLink
 							href="/{storyId}"
 							size="lg"
-							class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
+							class="adaptive-font bg-main-70 hover:bg-main pointer-events-auto justify-center font-medium"
 						>
 							Начать историю
 						</Button>
@@ -129,7 +129,7 @@
 								asLink
 								href="/board/{storyId}"
 								size="lg"
-								class="adaptive-font pointer-events-auto justify-center bg-main-70 font-medium hover:bg-main"
+								class="adaptive-font bg-main-70 hover:bg-main pointer-events-auto justify-center font-medium"
 							>
 								<Icon this={Cog6Tooth} class="size-6" />
 							</Button>

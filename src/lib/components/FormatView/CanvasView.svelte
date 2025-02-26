@@ -25,8 +25,8 @@
 		selectedChoiceId={choices?.[0]?.choiceId}
 		{progressId}
 	/>
-	{#each choices as { nextFrameId }, key}
+	{#each choices as { nextFrameId, choiceId }, index (choiceId)}
 		{@const frame = find(frames, { frameId: nextFrameId })!}
-		<ReadFrame {frame} {storyId} selectedChoiceId={choices[key + 1]?.choiceId} {progressId} />
+		<ReadFrame {frame} {storyId} selectedChoiceId={choices[index + 1]?.choiceId} {progressId} />
 	{/each}
 </div>

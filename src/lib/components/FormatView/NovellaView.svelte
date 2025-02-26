@@ -49,7 +49,7 @@
 <div class="pointer-events-none size-full">
 	<InterfaceViewButton />
 	{#if lastFrame.imageUrl}
-		<Image alt="Иллюстрация" class="size-full text-text" cover src={lastFrame.imageUrl} />
+		<Image alt="Иллюстрация" class="text-text size-full" cover src={lastFrame.imageUrl} />
 	{/if}
 	<div
 		class={clm(
@@ -58,7 +58,7 @@
 		)}
 	>
 		<div
-			class="pointer-events-auto flex max-h-52 w-full max-w-7xl flex-col gap-4 overflow-auto rounded-xl bg-contrast p-4 text-text"
+			class="bg-contrast text-text pointer-events-auto flex max-h-52 w-full max-w-7xl flex-col gap-4 overflow-auto rounded-xl p-4"
 		>
 			<div
 				class={clm(
@@ -80,7 +80,7 @@
 				{:else}
 					<Button
 						{loading}
-						class="adaptive-font adaptive-padding pointer-events-auto bg-main-70 font-medium text-text hover:bg-main"
+						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main pointer-events-auto font-medium"
 						onclick={handleEndStory}
 					>
 						Завершить историю

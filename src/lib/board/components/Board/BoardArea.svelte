@@ -152,7 +152,7 @@
 <div
 	bind:this={board}
 	class={clm(
-		'fixed inset-0 size-full select-none overflow-hidden',
+		'fixed inset-0 size-full overflow-hidden select-none',
 		boardStateStore.action === 'movingArea' && 'cursor-grabbing',
 		boardStateStore.action === 'movingBlock' && 'cursor-move'
 	)}

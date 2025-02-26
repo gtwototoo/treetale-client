@@ -29,11 +29,11 @@
 >
 	<InterfaceViewButton />
 	<div
-		class="flex w-full max-w-screen-lg select-none flex-row items-start gap-2 max-md:flex-col max-md:items-center"
+		class="flex w-full max-w-screen-lg flex-row items-start gap-2 select-none max-md:flex-col max-md:items-center"
 	>
 		<LeftSide {story} {author} title="Результаты" />
 		<div
-			class="flex h-auto w-full flex-col items-start gap-6 text-text max-md:items-center xs:px-6"
+			class="text-text xs:px-6 flex h-auto w-full flex-col items-start gap-6 max-md:items-center"
 		>
 			<EndResults {story} {progress} />
 		</div>

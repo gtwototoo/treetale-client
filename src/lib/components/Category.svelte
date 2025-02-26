@@ -35,7 +35,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-	<div class="flex select-none items-center gap-4 py-3 pl-12 max-sm:py-2 max-sm:pl-6">
+	<div class="flex items-center gap-4 py-3 pl-12 select-none max-sm:py-2 max-sm:pl-6">
 		<Icon class="size-8 max-sm:h-6 max-sm:w-6" this={icon} />
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
@@ -46,7 +46,7 @@
 					'Историй по вашему запросу не найдено, а значит вы можете добавить свою уникальную историю'
 				)}
 			</p>
-			<AddStoryButton class="gap-3 bg-main-50 text-text hover:bg-main-70" />
+			<AddStoryButton class="bg-main-50 text-text hover:bg-main-70 gap-3" />
 		</StoriesList>
 	{:else}
 		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>
@@ -56,7 +56,7 @@
 					<StoryCard class="slider-card" {author} {story} />
 				{/each}
 				{#if stories.length < 6}
-					{#each range(6 - stories.length) as _}
+					{#each range(6 - stories.length) as index (index)}
 						<Empty class="slider-card" />
 					{/each}
 				{/if}
@@ -66,7 +66,9 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../app.css";
+
 	:global(.slider-card) {
-		@apply w-[30vw] min-w-48 max-w-[21.25rem] shrink-0 select-none;
+		@apply w-[30vw] max-w-[21.25rem] min-w-48 shrink-0 select-none;
 	}
 </style>

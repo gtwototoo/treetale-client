@@ -42,7 +42,7 @@
 	<Image
 		{alt}
 		{base64src}
-		class="size-full rounded-inherit bg-main/30 text-text"
+		class="rounded-inherit bg-main/30 text-text size-full"
 		cover
 		onload={() => (base64src = '')}
 		{src}

@@ -5,7 +5,7 @@
 	import TreetaleShort from '../Icons/TreetaleShort.svelte';
 </script>
 
-<Link class="pointer-events-auto select-none px-2 md:px-4" href="/">
+<Link class="pointer-events-auto px-2 select-none md:px-4" href="/">
 	<Treetale class="h-7 w-auto max-sm:hidden" />
 	<TreetaleShort class="h-8 w-auto sm:hidden" />
 </Link>

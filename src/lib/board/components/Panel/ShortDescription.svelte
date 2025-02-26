@@ -16,9 +16,9 @@
 	} = $props();
 </script>
 
-<div class="flex select-none items-start gap-2 text-sm">
+<div class="flex items-start gap-2 text-sm select-none">
 	<div class="p-2">
-		<Icon class="size-6 text-text/50" this={icon} />
+		<Icon class="text-text/50 size-6" this={icon} />
 	</div>
 	{#if children}
 		{@render children()}

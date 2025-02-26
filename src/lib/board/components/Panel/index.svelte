@@ -25,13 +25,13 @@
 </script>
 
 <div
-	class="pointer-events-none z-10 flex min-h-full justify-end p-1 text-text max-xs:w-full max-xs:items-end max-xs:px-0"
+	class="text-text max-xs:w-full max-xs:items-end max-xs:px-0 pointer-events-none z-10 flex min-h-full justify-end p-1"
 >
 	<div
 		class={clm(
-			'pointer-events-auto relative flex w-96 shrink-0 flex-col rounded-2xl bg-contrast transition-transform max-xs:w-full xs:min-h-full',
+			'bg-contrast max-xs:w-full xs:min-h-full pointer-events-auto relative flex w-96 shrink-0 flex-col rounded-2xl transition-transform',
 			!panelStatesStore.show &&
-				'max-lg:absolute max-xs:bottom-16 max-xs:translate-y-full max-lg:xs:right-1 max-lg:xs:translate-x-full'
+				'max-xs:bottom-16 max-xs:translate-y-full max-lg:xs:right-1 max-lg:xs:translate-x-full max-lg:absolute'
 		)}
 	>
 		<Tabs />
@@ -43,7 +43,7 @@
 		</div>
 		<div class="sticky bottom-24">
 			<Button
-				class="absolute bottom-full right-full rounded-r-none bg-contrast p-3 pr-1 text-text lg:hidden"
+				class="bg-contrast text-text absolute right-full bottom-full rounded-r-none p-3 pr-1 lg:hidden"
 				onclick={() => (panelStatesStore.show = !panelStatesStore.show)}
 			>
 				<Icon

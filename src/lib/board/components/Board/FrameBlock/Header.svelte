@@ -35,7 +35,7 @@
 
 <Button
 	class={clm(
-		'justify-between text-text',
+		'text-text justify-between',
 		start && 'text-emerald-500',
 		end && 'text-blue-500',
 		isBindingMode() ? '!bg-main-60' : '!bg-contrast-5'

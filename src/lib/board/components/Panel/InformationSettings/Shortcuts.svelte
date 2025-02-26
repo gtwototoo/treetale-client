@@ -18,16 +18,16 @@
 	];
 </script>
 
-<div class="flex select-none flex-col gap-2 rounded-lg bg-contrast-2 p-2 pl-4 text-center text-sm">
+<div class="bg-contrast-2 flex flex-col gap-2 rounded-lg p-2 pl-4 text-center text-sm select-none">
 	<p class="py-2">Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
-		{#each shortcuts as { keys, readonly, text }}
+		{#each shortcuts as { keys, readonly, text }, index (index)}
 			{#if !readonlyModeStore.isEnabled || readonly}
 				<div class="flex items-center justify-between">
 					<p>{text}</p>
 					<div class="flex gap-1 font-bold">
-						{#each keys as key}
-							<div class="min-w-[1.75rem] rounded-lg bg-main-70 px-2 py-1">{key}</div>
+						{#each keys as key (key)}
+							<div class="bg-main-70 min-w-[1.75rem] rounded-lg px-2 py-1">{key}</div>
 						{/each}
 					</div>
 				</div>

@@ -78,21 +78,21 @@
 
 <div
 	class={clm(
-		'z-10 flex items-center gap-2 rounded-full bg-main-20 text-sm ring-2 ring-main-20',
+		'bg-main-20 ring-main-20 z-10 flex items-center gap-2 rounded-full text-sm ring-2',
 		boardStateStore.action ? 'blind' : 'pointer-events-auto'
 	)}
 >
 	<Button
 		bind:ref={radar!}
-		class="size-12 items-center justify-center rounded-full bg-contrast p-0"
+		class="bg-contrast size-12 items-center justify-center rounded-full p-0"
 		onclick={setDefaultCoordinates}
 	>
-		<div class="size-4 rounded-full bg-contrast-5"></div>
+		<div class="bg-contrast-5 size-4 rounded-full"></div>
 		{#if radar}
 			{#each boardFramesStore.frames as { choices, frameId, x, y } (frameId)}
 				<div
 					class={clm(
-						'absolute h-2.5 w-2.5 shrink-0 rounded-full bg-text',
+						'bg-text absolute h-2.5 w-2.5 shrink-0 rounded-full',
 						frameId === 1 && 'z-10 bg-emerald-500',
 						connectedWithStart(frameId) && !choices.length && 'bg-blue-500'
 					)}
@@ -101,7 +101,7 @@
 			{/each}
 		{/if}
 	</Button>
-	<div class="mr-4 flex select-none flex-col whitespace-nowrap text-text">
+	<div class="text-text mr-4 flex flex-col whitespace-nowrap select-none">
 		<p>{formattedOffset.x}, {formattedOffset.y}</p>
 		<p>{formattedZoom}x</p>
 	</div>

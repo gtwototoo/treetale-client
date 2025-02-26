@@ -92,7 +92,7 @@
 				asLink
 				size="lg"
 				href="/{story.storyId}"
-				class="adaptive-font pointer-events-auto bg-main-70 font-medium hover:bg-main"
+				class="adaptive-font bg-main-70 hover:bg-main pointer-events-auto font-medium"
 			>
 				Продолжить
 			</Button>

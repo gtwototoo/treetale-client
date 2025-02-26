@@ -17,14 +17,14 @@
 </script>
 
 <div
-	class="flex gap-3 *:pointer-events-auto *:gap-3 *:rounded-full *:bg-main-20 *:pl-4 hover:*:bg-main-50"
+	class="*:bg-main-20 hover:*:bg-main-50 flex gap-3 *:pointer-events-auto *:gap-3 *:rounded-full *:pl-4"
 >
 	<Button asLink size="lg" href="/?genres={genre.id}">
-		<GenreIcon class="size-6 text-main" />
+		<GenreIcon class="text-main size-6" />
 		<p>{genre.title}</p>
 	</Button>
 	<Button asLink size="lg" href="/?format={format.id}">
-		<FormatIcon class="size-6 text-main" />
+		<FormatIcon class="text-main size-6" />
 		<p>{format.title}</p>
 	</Button>
 </div>

@@ -63,7 +63,7 @@
 </script>
 
 <div class="flex w-full flex-col gap-3 max-md:items-center">
-	<div class="flex *:gap-3 *:rounded-full *:bg-main-30 *:pl-4 hover:*:bg-main-50">
+	<div class="*:bg-main-30 hover:*:bg-main-50 flex *:gap-3 *:rounded-full *:pl-4">
 		<Button size="lg" onclick={handleCopyLink} class="pointer-events-auto">
 			<Icon
 				this={Share}
@@ -95,7 +95,7 @@
 	<Button
 		asLink
 		size="lg"
-		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
+		class="adaptive-font bg-main-70 hover:bg-main justify-center font-medium"
 		href={`/${story.storyId}`}
 	>
 		В начало
@@ -104,7 +104,7 @@
 		asLink
 		href="/"
 		size="lg"
-		class="adaptive-font justify-center bg-main-70 font-medium hover:bg-main"
+		class="adaptive-font bg-main-70 hover:bg-main justify-center font-medium"
 	>
 		На главную
 	</Button>

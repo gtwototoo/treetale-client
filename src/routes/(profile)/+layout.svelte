@@ -61,18 +61,18 @@
 		<div class="flex size-full flex-col items-center gap-5">
 			{#if me}
 				<table
-					class="sticky top-0 z-10 -ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1 bg-main-20 py-3"
+					class="bg-main-20 sticky top-0 z-10 -ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1 py-3"
 				>
 					<tbody>
 						<tr>
-							{#each tabs as { href, icon, name }}
+							{#each tabs as { href, icon, name } (href)}
 								{#if href !== '/profile/moderated' || adminUser}
 									<td>
 										<Button
 											asLink
 											{href}
 											class={clm(
-												'justify-center text-text hover:bg-main-70',
+												'text-text hover:bg-main-70 justify-center',
 												page.url.pathname === href && 'bg-main-50'
 											)}
 											size="lg"

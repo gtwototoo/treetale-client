@@ -94,13 +94,13 @@
 		bind:clientHeight={frame.height}
 		{style}
 		class={clm(
-			'group absolute z-10 flex w-64 select-none flex-col items-stretch gap-3 rounded-lg bg-contrast p-2 text-sm/4 text-text ring-2 ring-main',
-			!readonlyModeStore.isEnabled && 'cursor-move hover:ring-text',
-			isDragging && '!ring-4 ring-text',
+			'group bg-contrast text-text ring-main absolute z-10 flex w-64 flex-col items-stretch gap-3 rounded-lg p-2 text-sm/4 ring-2 select-none',
+			!readonlyModeStore.isEnabled && 'hover:ring-text cursor-move',
+			isDragging && 'ring-text !ring-4',
 			isSelected && 'ring-text',
 			isBindingMode() && 'bg-main-20',
 			isSelectedBindingChoice &&
-				clm(greenHoverBackgroundColor, 'cursor-pointer !bg-contrast hover:ring-green-500')
+				clm(greenHoverBackgroundColor, '!bg-contrast cursor-pointer hover:ring-green-500')
 		)}
 		onkeydown={preventDefault}
 		onclick={createConnection}
@@ -120,13 +120,13 @@
 			{#if imageUrl}
 				<Image
 					alt="Изображение блока"
-					class="h-36 w-full rounded-lg !bg-main/30 text-text"
+					class="!bg-main/30 text-text h-36 w-full rounded-lg"
 					cover
 					src={frame.imageUrl}
 				/>
 			{/if}
 			<div class={clm('flex h-20 items-center px-4 text-center', !text && 'text-gray-400')}>
-				<div class="line-clamp-5 w-full break-words text-left">
+				<div class="line-clamp-5 w-full text-left break-words">
 					{@html text || 'Описание блока'}
 				</div>
 			</div>

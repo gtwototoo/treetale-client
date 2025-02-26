@@ -110,7 +110,7 @@
 {#if showPublishButton}
 	<div
 		class={clm(
-			'flex select-none flex-col gap-2 rounded-lg p-2 text-center text-sm',
+			'flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none',
 			storyInfoStore.info?.status === 'review'
 				? clm('text-orange-500', orangeBackgroundColor)
 				: clm('text-emerald-500', greenBackgroundColor)
@@ -118,7 +118,7 @@
 	>
 		{#if storyInfoStore.info?.status === 'draft'}
 			<div class="grid grid-cols-2 gap-2 p-2">
-				{#each requirements as requirement}
+				{#each requirements as requirement, index (index)}
 					<div class="flex items-center gap-2">
 						<div
 							class={clm(

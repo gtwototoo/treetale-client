@@ -88,7 +88,7 @@
 		class={clm(
 			inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId &&
 				yellowTextColor,
-			'flex-col items-start justify-center gap-1 bg-contrast-9 hover:bg-contrast-7'
+			'bg-contrast-9 hover:bg-contrast-7 flex-col items-start justify-center gap-1'
 		)}
 		{disabled}
 		onclick={handleClick}
@@ -101,7 +101,7 @@
 					.join(' и ')}
 			</p>
 		{/if}
-		<div class="w-full whitespace-normal break-words text-left">
+		<div class="w-full text-left break-words whitespace-normal">
 			{@html correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
 		</div>
 		{#if mathModificators.length}
@@ -122,7 +122,7 @@
 	<FormSplit vertical>
 		<Contenteditable
 			bind:html={inputValue}
-			class="flex-1 bg-contrast-7 hover:bg-contrast-5"
+			class="bg-contrast-7 hover:bg-contrast-5 flex-1"
 			placeholder={choice.inputText}
 		/>
 		{@render button()}

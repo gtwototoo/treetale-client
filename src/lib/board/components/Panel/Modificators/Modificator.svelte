@@ -126,7 +126,7 @@
 		>
 			{#snippet children({ onclick, value })}
 				<Button
-					class="w-8 justify-center bg-main-30 text-text hover:bg-main-50"
+					class="bg-main-30 text-text hover:bg-main-50 w-8 justify-center"
 					disabled={variable?.expect !== 'Число'}
 					{onclick}
 				>

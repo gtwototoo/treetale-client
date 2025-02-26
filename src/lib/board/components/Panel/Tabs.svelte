@@ -68,7 +68,7 @@
 	{#each tabs as { component, icon, id, props } (id)}
 		<Button
 			size="lg"
-			class={clm('justify-center px-0 text-text hover:bg-main-70', isActive(id) && 'bg-main-50')}
+			class={clm('text-text hover:bg-main-70 justify-center px-0', isActive(id) && 'bg-main-50')}
 			onclick={() => setPanel(id, component, props)}
 		>
 			<Icon class="size-6" this={icon} />

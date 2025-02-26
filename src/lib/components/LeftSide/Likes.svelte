@@ -44,7 +44,7 @@
 
 <Button
 	class={clm(
-		'gap-2 bg-main-50 px-4 pr-6 text-text hover:bg-main-70 hover:text-red-500',
+		'bg-main-50 text-text hover:bg-main-70 gap-2 px-4 pr-6 hover:text-red-500',
 		classname
 	)}
 	{loading}
