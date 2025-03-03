@@ -1,35 +1,40 @@
+import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
+import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
-
 import svelteConfig from './svelte.config.js';
+const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
-export default [
-	prettier,
+export default ts.config(
+	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...svelte.configs.recommended,
-	importPlugin.flatConfigs['warnings'],
-	importPlugin.flatConfigs['typescript'],
+	prettier,
+	...svelte.configs['flat/prettier'],
 	{
-		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		languageOptions: {
 			globals: {
 				...globals.browser,
 				...globals.node
-			},
-			parserOptions: {
-				projectService: true,
-				extraFileExtensions: ['.svelte'],
-				parser: ts.parser,
-				svelteConfig
 			}
 		}
 	},
 	{
+		rules: {
+			'@typescript-eslint/adjacent-overload-signatures': 'off',
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '_'
+				}
+			],
+			'no-undef': 'off',
+			'svelte/no-at-html-tags': 'off'
+		},
 		settings: {
 			'import/core-modules': ['svelte', '$app', '$env', '@sveltejs/kit']
 		},
@@ -59,32 +64,16 @@ export default [
 		}
 	},
 	{
+		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
+		ignores: ['**/*.cjs', 'eslint.config.js', 'svelte.config.js'],
+
 		languageOptions: {
-			globals: {
-				...globals.browser,
-				...globals.node
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: ['.svelte'],
+				parser: ts.parser,
+				svelteConfig
 			}
-		},
-		rules: {
-			'@typescript-eslint/adjacent-overload-signatures': 'off',
-			'@typescript-eslint/no-unused-vars': [
-				'error',
-				{
-					argsIgnorePattern: '_'
-				}
-			],
-			'no-undef': 'off',
-			'svelte/no-at-html-tags': 'off'
 		}
-	},
-	{
-		ignores: [
-			'**/*.cjs',
-			'**/.DS_Store',
-			'**/node_modules',
-			'**/build',
-			'**/.svelte-kit',
-			'**/pnpm-lock.yaml'
-		]
 	}
-];
+);

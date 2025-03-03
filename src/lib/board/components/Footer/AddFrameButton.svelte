@@ -48,7 +48,7 @@
 	<FormSplit>
 		<Button
 			class={clm(
-				'max-xs:w-16 w-32 justify-center text-emerald-500 max-sm:w-24',
+				'max-fd:w-16 w-32 justify-center text-emerald-500 max-sm:w-24',
 				greenBackgroundColor
 			)}
 			onclick={({ x, y }) => enableAddMode({ x, y }, 'frame')}
@@ -59,7 +59,7 @@
 		</Button>
 		<Button
 			class={clm(
-				'max-xs:w-16 w-32 justify-center text-emerald-500 max-sm:w-24',
+				'max-fd:w-16 w-32 justify-center text-emerald-500 max-sm:w-24',
 				greenBackgroundColor
 			)}
 			onclick={({ x, y }) => enableAddMode({ x, y }, 'comment')}

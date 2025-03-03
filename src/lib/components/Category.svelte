@@ -46,7 +46,7 @@
 					'Историй по вашему запросу не найдено, а значит вы можете добавить свою уникальную историю'
 				)}
 			</p>
-			<AddStoryButton class="bg-main-50 text-text hover:bg-main-70 gap-3" />
+			<AddStoryButton class="bg-main-500 text-text hover:bg-main-700 gap-3" />
 		</StoriesList>
 	{:else}
 		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>

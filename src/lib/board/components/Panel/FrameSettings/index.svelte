@@ -251,7 +251,7 @@
 				value={`${Math.round(y)}`}
 			/>
 		</FormSplit>
-		<Button onclick={setToCoordinates} class="bg-main-30 text-text hover:bg-main-50 p-2">
+		<Button onclick={setToCoordinates} class="bg-main-300 text-text hover:bg-main-500 p-2">
 			<Icon this={CursorArrowRipple} class="size-6" />
 		</Button>
 	</div>
@@ -272,7 +272,7 @@
 						/>
 						{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
 							<Button
-								class="bg-main-20 text-text hover:bg-main-40 justify-center"
+								class="bg-main-200 text-text hover:bg-main-400 justify-center"
 								disabled={panelStatesStore.editMode}
 								onclick={addPrevImage}
 							>
@@ -286,7 +286,7 @@
 						{#snippet button({ onclick })}
 							<Button
 								class={clm(
-									'bg-main-20 text-text hover:bg-main-40 w-full flex-col justify-center gap-1',
+									'bg-main-200 text-text hover:bg-main-400 w-full flex-col justify-center gap-1',
 									soundUrl && 'text-emerald-500'
 								)}
 								size="lg"
@@ -333,7 +333,7 @@
 	</FormSplit>
 	{#if onePrevFrame !== null}
 		<Button
-			class="bg-contrast-9 text-text hover:bg-contrast-7 justify-center gap-4 pl-3"
+			class="bg-contrast-900 text-text hover:bg-contrast-700 justify-center gap-4 pl-3"
 			onclick={gotoPrevFrame}
 		>
 			<Icon class="absolute left-3 size-5" this={ArrowLeft} />
@@ -355,7 +355,7 @@
 			{/if}
 			{#if !panelStatesStore.editMode}
 				<Button
-					class="bg-contrast-7 text-text hover:bg-contrast-9 justify-center"
+					class="bg-contrast-700 text-text hover:bg-contrast-900 justify-center"
 					onclick={() => addChoice(frame)}
 				>
 					Добавить вариант

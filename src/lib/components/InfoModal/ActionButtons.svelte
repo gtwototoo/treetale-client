@@ -17,7 +17,7 @@
 </script>
 
 <div
-	class="*:bg-main-20 hover:*:bg-main-50 flex gap-3 *:pointer-events-auto *:gap-3 *:rounded-full *:pl-4"
+	class="*:bg-main-200 *:hover:bg-main-500 flex gap-3 *:pointer-events-auto *:gap-3 *:rounded-full *:pl-4"
 >
 	<Button asLink size="lg" href="/?genres={genre.id}">
 		<GenreIcon class="text-main size-6" />

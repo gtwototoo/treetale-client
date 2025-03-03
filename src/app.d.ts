@@ -1,6 +1,3 @@
-/// <reference types="@sveltejs/kit" />
-/// <reference types="svelte-gestures" />
-
 import type { IUser, TRGB } from './lib/types';
 
 import '@total-typescript/ts-reset';

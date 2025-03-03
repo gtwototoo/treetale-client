@@ -190,14 +190,14 @@
 					{saturate}
 				>
 					{#snippet children({ onclick })}
-						<Button class="bg-main-70 text-text hover:bg-main" {onclick} size="lg">
+						<Button class="bg-main-700 text-text hover:bg-main" {onclick} size="lg">
 							Цвет
 						</Button>
 					{/snippet}
 				</ColorPicker>
 			</div>
 		{:else}
-			<div class="bg-main-30 text-text flex gap-2 rounded-xl p-4">
+			<div class="bg-main-300 text-text flex gap-2 rounded-xl p-4">
 				{#each statistic as [count, title] (title)}
 					<div class="flex w-24 flex-col items-center">
 						<p class="text-3xl font-bold">
@@ -239,26 +239,26 @@
 		{#if me}
 			{#if editMode}
 				<Button
-					class="bg-main-50 text-text hover:bg-main-70"
+					class="bg-main-500 text-text hover:bg-main-700"
 					{loading}
 					onclick={saveProfile}
 					size="lg"
 				>
 					Сохранить
 				</Button>
-				<Button class="bg-main-50 hover:bg-main-70 text-red-500" onclick={cancelEdit} size="lg">
+				<Button class="bg-main-500 hover:bg-main-700 text-red-500" onclick={cancelEdit} size="lg">
 					Отмена
 				</Button>
 			{:else}
 				<Button
-					class="bg-main-50 text-text hover:bg-main-70"
+					class="bg-main-500 text-text hover:bg-main-700"
 					onclick={() => (editMode = true)}
 					size="lg"
 				>
 					Редактировать
 				</Button>
 				<Button
-					class="bg-main-50 hover:bg-main-70 text-red-500"
+					class="bg-main-500 hover:bg-main-700 text-red-500"
 					onclick={() => (exitModal = true)}
 					size="lg"
 				>
@@ -266,19 +266,19 @@
 				</Button>
 				<Modal
 					bind:active={exitModal}
-					class="bg-main-30 text-text flex flex-col items-center gap-8 p-8"
+					class="bg-main-300 text-text flex flex-col items-center gap-8 p-8"
 				>
 					<p>Вы действительно хотите выйти из профиля?</p>
 					<div class="flex gap-2">
 						<Button
-							class="bg-main-50 text-text hover:bg-main-70 justify-center"
+							class="bg-main-500 text-text hover:bg-main-700 justify-center"
 							size="lg"
 							onclick={() => (exitModal = false)}
 						>
 							Отмена
 						</Button>
 						<Button
-							class="bg-main-50 hover:bg-main-70 justify-center text-red-500"
+							class="bg-main-500 hover:bg-main-700 justify-center text-red-500"
 							size="lg"
 							onclick={handleSignOut}
 						>
@@ -289,7 +289,7 @@
 			{/if}
 		{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
 			<Button
-				class="bg-main-50 text-text hover:bg-main-70 gap-3"
+				class="bg-main-500 text-text hover:bg-main-700 gap-3"
 				{loading}
 				onclick={handleUnsubscribe}
 				size="lg"
@@ -299,7 +299,7 @@
 			</Button>
 		{:else}
 			<Button
-				class="bg-main-50 text-text hover:bg-main-70 gap-3"
+				class="bg-main-500 text-text hover:bg-main-700 gap-3"
 				{loading}
 				onclick={handleSubscribe}
 				size="lg"
@@ -312,11 +312,13 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../app.css";
+	
 	.screen-hd {
-		@apply max-hd:w-[30rem];
+		@apply max-2xl:w-[30rem];
 	}
 	.screen-xl {
-		@apply max-hd:gap-10 max-xl:w-[24rem] max-xl:p-6;
+		@apply max-2xl:gap-10 max-xl:w-[24rem] max-xl:p-6;
 	}
 	.screen-lg {
 		@apply max-lg:relative max-lg:top-0 max-lg:w-full max-lg:gap-8;

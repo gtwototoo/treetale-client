@@ -87,7 +87,7 @@
 	{:else if !(readonly || disabled)}
 		<DropArea
 			onchange={handleChange}
-			class="rounded-inherit bg-main-20 relative"
+			class="rounded-inherit bg-main-200 relative"
 			accept={mediaType + '/*'}
 		>
 			<Icon class="*:fill-gradient h-20 w-auto" this={icon} variation="solid" />
@@ -95,7 +95,7 @@
 		</DropArea>
 	{:else}
 		<Button
-			class="rounded-inherit bg-contrast-9 pointer-events-none size-full flex-col justify-center gap-2 !p-6 !whitespace-normal"
+			class="rounded-inherit bg-contrast-900 pointer-events-none size-full flex-col justify-center gap-2 !p-6 !whitespace-normal"
 		>
 			<Icon class="*:fill-gradient h-24 w-auto" this={icon} variation="solid" />
 			<p>{upperFirst(mediaName)} отсутствует</p>

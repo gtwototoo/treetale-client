@@ -86,7 +86,7 @@
 				{#if modificator.type === 'math' && asInput && !modificator.value && modificator.variable && variable?.expect === 'Строка'}
 					<Button
 						size="sm"
-						class="bg-main-30 text-text hover:bg-main-50"
+						class="bg-main-300 text-text hover:bg-main-500"
 						onclick={() => (modificator.value = '{input}')}
 					>
 						<Icon this={AsInput} class="size-4" />
@@ -126,7 +126,7 @@
 		>
 			{#snippet children({ onclick, value })}
 				<Button
-					class="bg-main-30 text-text hover:bg-main-50 w-8 justify-center"
+					class="bg-main-300 text-text hover:bg-main-500 w-8 justify-center"
 					disabled={variable?.expect !== 'Число'}
 					{onclick}
 				>

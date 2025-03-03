@@ -81,6 +81,8 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	.dot {
 		@apply bg-contrast absolute size-2 rounded-full;
 	}

@@ -144,7 +144,7 @@
 				{#snippet button({ onclick })}
 					<Button
 						disabled={panelStatesStore.editMode}
-						class="bg-main-20 text-text hover:bg-main-40 size-full flex-col justify-center gap-3"
+						class="bg-main-200 text-text hover:bg-main-400 size-full flex-col justify-center gap-3"
 						{onclick}
 						size="lg"
 					>
@@ -157,8 +157,8 @@
 						<Button
 							onclick={() => switchFormat(id)}
 							class={clm(
-								'hover:bg-main-40 gap-3 p-2 whitespace-normal',
-								id === storyInfoStore.info?.format && 'bg-main-20'
+								'hover:bg-main-400 gap-3 p-2 whitespace-normal',
+								id === storyInfoStore.info?.format && 'bg-main-200'
 							)}
 						>
 							<FormatIcon class="text-main h-auto w-24 shrink-0" />
@@ -174,7 +174,7 @@
 				{#snippet button({ onclick })}
 					<Button
 						disabled={panelStatesStore.editMode}
-						class="bg-main-20 text-text hover:bg-main-40 size-full flex-col justify-center gap-3"
+						class="bg-main-200 text-text hover:bg-main-400 size-full flex-col justify-center gap-3"
 						{onclick}
 						size="lg"
 					>
@@ -187,8 +187,8 @@
 						<Button
 							onclick={() => switchGenre(id)}
 							class={clm(
-								'text-text hover:bg-main-40 min-w-20 flex-1 flex-col gap-1',
-								id === storyInfoStore.info?.genre && 'bg-main-20'
+								'text-text hover:bg-main-400 min-w-20 flex-1 flex-col gap-1',
+								id === storyInfoStore.info?.genre && 'bg-main-200'
 							)}
 						>
 							<GenreIcon class="text-main size-7" />
@@ -208,7 +208,7 @@
 				{#snippet children({ onclick })}
 					<Button
 						disabled={panelStatesStore.editMode}
-						class="bg-main-20 text-text hover:bg-main-40 size-full flex-col justify-center gap-3"
+						class="bg-main-200 text-text hover:bg-main-400 size-full flex-col justify-center gap-3"
 						{onclick}
 						size="lg"
 					>

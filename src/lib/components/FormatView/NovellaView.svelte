@@ -80,7 +80,7 @@
 				{:else}
 					<Button
 						{loading}
-						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main pointer-events-auto font-medium"
+						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main pointer-events-auto font-medium"
 						onclick={handleEndStory}
 					>
 						Завершить историю

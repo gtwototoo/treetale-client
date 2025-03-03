@@ -25,13 +25,13 @@
 </script>
 
 <div
-	class="text-text max-xs:w-full max-xs:items-end max-xs:px-0 pointer-events-none z-10 flex min-h-full justify-end p-1"
+	class="text-text max-fd:w-full max-fd:items-end max-fd:px-0 pointer-events-none z-10 flex min-h-full justify-end p-1"
 >
 	<div
 		class={clm(
-			'bg-contrast max-xs:w-full xs:min-h-full pointer-events-auto relative flex w-96 shrink-0 flex-col rounded-2xl transition-transform',
+			'bg-contrast max-fd:w-full fd:min-h-full pointer-events-auto relative flex w-96 shrink-0 flex-col rounded-2xl transition-transform',
 			!panelStatesStore.show &&
-				'max-xs:bottom-16 max-xs:translate-y-full max-lg:xs:right-1 max-lg:xs:translate-x-full max-lg:absolute'
+				'max-fd:bottom-16 max-fd:translate-y-full max-lg:fd:right-1 max-lg:fd:translate-x-full max-lg:absolute'
 		)}
 	>
 		<Tabs />

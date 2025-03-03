@@ -88,7 +88,7 @@
 		class={clm(
 			inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId &&
 				yellowTextColor,
-			'bg-contrast-9 hover:bg-contrast-7 flex-col items-start justify-center gap-1'
+			'bg-contrast-900 hover:bg-contrast-700 flex-col items-start justify-center gap-1'
 		)}
 		{disabled}
 		onclick={handleClick}
@@ -122,7 +122,7 @@
 	<FormSplit vertical>
 		<Contenteditable
 			bind:html={inputValue}
-			class="bg-contrast-7 hover:bg-contrast-5 flex-1"
+			class="bg-contrast-700 hover:bg-contrast-500 flex-1"
 			placeholder={choice.inputText}
 		/>
 		{@render button()}

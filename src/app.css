@@ -1,17 +1,70 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+	--breakpoint-fd: 30rem;
+	--breakpoint-2xl: 100rem;
+	--breakpoint-3xl: 120rem;
+}
+
+@theme inline {
+	--color-contrast-100: var(--color-contrast-100);
+	--color-contrast-200: var(--color-contrast-200);
+	--color-contrast-300: var(--color-contrast-300);
+	--color-contrast-400: var(--color-contrast-400);
+	--color-contrast-500: var(--color-contrast-500);
+	--color-contrast-600: var(--color-contrast-600);
+	--color-contrast-700: var(--color-contrast-700);
+	--color-contrast-800: var(--color-contrast-800);
+	--color-contrast-900: var(--color-contrast-900);
+	--color-main-100: var(--color-main-100);
+	--color-main-200: var(--color-main-200);
+	--color-main-300: var(--color-main-300);
+	--color-main-400: var(--color-main-400);
+	--color-main-500: var(--color-main-500);
+	--color-main-600: var(--color-main-600);
+	--color-main-700: var(--color-main-700);
+	--color-main-800: var(--color-main-800);
+	--color-main-900: var(--color-main-900);
+	--color-contrast: var(--color-contrast);
+	--color-main: var(--color-main);
+	--color-text: var(--color-text);
+	--radius-inherit: inherit;
+	--line-height-0: 0;
+}
+
+@layer base {
+	h1 {
+		@apply text-5xl font-bold;
+	}
+	h2 {
+		@apply text-xl font-extrabold;
+	}
+	svg {
+		@apply size-5;
+	}
+}
+
+
+@utility grid-cols-fit-* {
+	grid-template-columns: repeat(auto-fit, minmax(--value(integer)rem, 1fr));
+  }
+@utility break-words {
+	word-break: break-word
+	overflowWrap: break-word
+}
+@utility fill-gradient {
+	fill: var(--fill-gradient)
+}
+@utility bind-point {
+	@apply absolute size-6 !bg-inherit;
+}
 
 body {
-	@apply bg-main-20 flex w-full items-start justify-end overflow-auto;
+	@apply bg-main-200 flex w-full items-start justify-end overflow-auto;
 }
 body > div {
 	@apply contents;
-}
-
-h1 {
-	@apply text-5xl font-bold;
-}
-h2 {
-	@apply text-xl font-extrabold;
 }
 
 * {
@@ -21,10 +74,6 @@ h2 {
 
 .clear-text * {
 	font-size: inherit !important;
-}
-
-svg {
-	@apply size-5;
 }
 
 .blind {
@@ -39,7 +88,7 @@ svg {
 }
 
 .header-button {
-	@apply max-xs:!px-3 gap-3;
+	@apply max-fd:!px-3 gap-3;
 }
 .header-button > p {
 	@apply max-md:hidden;
@@ -52,17 +101,14 @@ svg {
 	@apply text-[clamp(20px,2.8vw,30px)] leading-snug;
 }
 .adaptive-padding {
-	@apply max-hd:!px-6 max-hd:!py-3 !px-8 !py-4;
+	@apply max-2xl:!px-6 max-2xl:!py-3 !px-8 !py-4;
 }
 
-.bindPoint {
-	@apply absolute size-6 !bg-inherit;
-}
 .rightBindPoint {
-	@apply bindPoint left-full -ml-1 rounded-r-full;
+	@apply bind-point left-full -ml-1 rounded-r-full;
 }
 .leftBindPoint {
-	@apply bindPoint right-full -mr-1 rounded-l-full;
+	@apply bind-point right-full -mr-1 rounded-l-full;
 }
 .rightBindPoint:after,
 .leftBindPoint:after {

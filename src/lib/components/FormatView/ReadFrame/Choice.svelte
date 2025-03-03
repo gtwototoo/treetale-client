@@ -34,16 +34,16 @@
 	let loadingChoice = $derived(loadingStore.choiceId === choice.choiceId);
 </script>
 
-<FormSplit vertical class={clm(choice.asInput && 'bg-main-60 ring-main-60 rounded-lg ring-2')}>
+<FormSplit vertical class={clm(choice.asInput && 'bg-main-600 ring-main-600 rounded-lg ring-2')}>
 	{#if choice.asInput}
 		<Contenteditable
-			class="adaptive-font adaptive-padding bg-main-20 hover:bg-main-40 pointer-events-auto"
-			focusClass="bg-main-40"
+			class="adaptive-font adaptive-padding bg-main-200 hover:bg-main-400 pointer-events-auto"
+			focusClass="bg-main-400"
 			placeholder={choice.inputText || 'Ввод текста'}
 		/>
 	{/if}
 	<Button
-		class="adaptive-padding adaptive-font bg-main-70 text-text hover:bg-main pointer-events-auto text-left whitespace-normal"
+		class="adaptive-padding adaptive-font bg-main-700 text-text hover:bg-main pointer-events-auto text-left whitespace-normal"
 		onclick={selectChoice}
 		loading={loadingFrame && loadingChoice}
 		disabled={loadingFrame && !loadingChoice}

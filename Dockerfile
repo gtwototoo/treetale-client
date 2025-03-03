@@ -1,27 +1,27 @@
-FROM node:20-alpine AS deps
-WORKDIR /app
-RUN npm install --global pnpm
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+FROM oven/bun:1 AS base
+WORKDIR /usr/src/app
 
-FROM node:20-alpine AS builder
-WORKDIR /app
-RUN npm install --global pnpm
-COPY --from=deps /app/node_modules ./node_modules
-COPY . ./
-RUN pnpm build
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lockb /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-FROM node:20-alpine AS runner
-WORKDIR /app
-RUN npm install --global pnpm
+RUN mkdir -p /temp/prod
+COPY package.json bun.lockb /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
+
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
+RUN bun run build
+ 
+FROM base AS release
 ENV NODE_ENV production
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 sveltejs
-COPY --from=builder --chown=sveltejs:nodejs /app/build ./build
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.env ./
-COPY --from=builder /app/.env.production ./
-COPY --from=builder /app/package.json ./
-USER sveltejs
-CMD pnpm start
+COPY --from=install /temp/prod/node_modules ./node_modules
+COPY --from=prerelease /usr/src/app/build ./build
+COPY --from=prerelease /usr/src/app/.env.production ./
+COPY --from=prerelease /usr/src/app/package.json ./
+
+USER bun
+EXPOSE 5173/tcp
+CMD ["bun", "start"]

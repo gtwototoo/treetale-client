@@ -33,7 +33,7 @@
 	>
 		<LeftSide {story} {author} title="Результаты" />
 		<div
-			class="text-text xs:px-6 flex h-auto w-full flex-col items-start gap-6 max-md:items-center"
+			class="text-text fd:px-6 flex h-auto w-full flex-col items-start gap-6 max-md:items-center"
 		>
 			<EndResults {story} {progress} />
 		</div>

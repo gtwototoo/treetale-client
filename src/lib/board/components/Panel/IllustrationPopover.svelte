@@ -19,7 +19,7 @@
 	{#snippet button({ onclick })}
 		<Button
 			class={clm(
-				'bg-main-20 text-text hover:bg-main-40 w-full flex-col justify-center gap-1',
+				'bg-main-200 text-text hover:bg-main-400 w-full flex-col justify-center gap-1',
 				imageUrl && 'p-1'
 			)}
 			size="lg"

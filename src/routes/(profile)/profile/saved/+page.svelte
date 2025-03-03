@@ -14,7 +14,7 @@
 		)}
 	</p>
 
-	<Button asLink href="/" class="bg-main-50 text-text hover:bg-main-70" size="lg">
+	<Button asLink href="/" class="bg-main-500 text-text hover:bg-main-700" size="lg">
 		Смотреть все истории
 	</Button>
 </StoriesList>

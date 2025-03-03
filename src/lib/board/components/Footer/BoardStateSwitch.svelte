@@ -44,7 +44,7 @@
 
 <Button
 	size="lg"
-	class="bg-main-70 text-text hover:bg-main-90 z-10 gap-3 pl-4 max-sm:px-3"
+	class="bg-main-700 text-text hover:bg-main-900 z-10 gap-3 pl-4 max-sm:px-3"
 	onclick={switchConnectionMode}
 >
 	{#if boardStateStore.action}

@@ -112,10 +112,10 @@
 		<Button
 			size="sm"
 			class={clm(
-				'bg-main-30 text-text',
+				'bg-main-300 text-text',
 				logicModificators.length || mathModificators.length
 					? 'text-white hover:opacity-70'
-					: 'hover:bg-main-50',
+					: 'hover:bg-main-500',
 				logicModificators.length && 'bg-orange-500',
 				mathModificators.length && 'bg-blue-500',
 				mathModificators.length &&
@@ -136,7 +136,7 @@
 			<Button
 				disabled={!choice.frameId}
 				size="sm"
-				class="bg-main-30 text-text hover:bg-main-50"
+				class="bg-main-300 text-text hover:bg-main-500"
 				onclick={gotoChoiceToFrame}
 			>
 				<Icon class="size-4" this={ChevronRight} />

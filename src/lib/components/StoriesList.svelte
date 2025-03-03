@@ -22,7 +22,7 @@
 
 {#if stories.length}
 	<div
-		class="grid-cols-fit-60 max-md:grid-cols-fit-40 grid w-full items-start justify-center gap-4 p-4 max-sm:gap-2 max-sm:p-2"
+		class="grid-cols-fit-15 max-md:grid-cols-fit-10 grid w-full items-start justify-center gap-4 p-4 max-sm:gap-2 max-sm:p-2"
 	>
 		{#each stories as story (story.storyId)}
 			{@const author = find(authors, { userId: story.userId })}

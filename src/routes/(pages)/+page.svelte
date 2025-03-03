@@ -109,7 +109,7 @@
 				</h1>
 				<Input
 					bind:value
-					class="adaptive-font-upper hover:bg-main-10 w-full max-w-2xl bg-white p-4"
+					class="adaptive-font-upper hover:bg-main-100 w-full max-w-2xl bg-white p-4"
 					oninput={handleInput}
 					placeholder="Поиск"
 					size="lg"
@@ -127,7 +127,7 @@
 					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
 						<Button
 							class={clm(
-								'bg-main-50 hover:bg-main-70 h-20 w-24 flex-col justify-center gap-1 py-0 max-md:h-16 max-sm:flex-1',
+								'bg-main-500 hover:bg-main-700 h-20 w-24 flex-col justify-center gap-1 py-0 max-md:h-16 max-sm:flex-1',
 								searchedGenres.includes(id) && 'bg-main'
 							)}
 							onclick={() => switchGenre(id)}
@@ -159,7 +159,7 @@
 						'Историй не найдено, но вы можете добавить свою уникальную историю'
 					)}
 				</p>
-				<AddStoryButton class="bg-main-50 text-text hover:bg-main-70 gap-3" />
+				<AddStoryButton class="bg-main-500 text-text hover:bg-main-700 gap-3" />
 			</div>
 		{/if}
 	</section>

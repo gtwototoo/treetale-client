@@ -25,7 +25,7 @@
 	</Link>
 {:else}
 	<Link href="/signin" class="pointer-events-auto">
-		<Button class="bg-main-40 text-text hover:bg-contrast gap-3" size="lg">
+		<Button class="bg-main-400 text-text hover:bg-contrast gap-3" size="lg">
 			<Icon class="size-6" this={ArrowLeftOnRectangle} />
 			<p>Войти</p>
 		</Button>

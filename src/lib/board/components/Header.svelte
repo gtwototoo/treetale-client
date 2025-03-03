@@ -71,7 +71,7 @@
 				size="lg"
 				class={clm(
 					'bg-contrast text-text -mr-6 rounded-full px-3',
-					panelStatesStore.id === 'share' && 'bg-main-50'
+					panelStatesStore.id === 'share' && 'bg-main-500'
 				)}
 				onclick={handleClick}
 			>

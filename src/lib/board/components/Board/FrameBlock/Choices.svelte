@@ -28,7 +28,7 @@
 		<Choice {choice} {frame} {isDragging} {isSelected} {isSelectedBindingChoice} />
 	{/each}
 	<Button
-		class="bg-contrast-5 text-text"
+		class="bg-contrast-500 text-text"
 		disabled={(isBindingMode() && !!connectionStartStore.frameId) || readonlyModeStore.isEnabled}
 		onclick={() => addChoice(frame)}
 		onmousedown={stopPropagation}

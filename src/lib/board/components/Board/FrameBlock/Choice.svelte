@@ -135,7 +135,7 @@
 			'p-1',
 			toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint',
 			(isSelected || isDragging) && 'after:to-text',
-			isSelectedBindingChoice && 'group-hover:after:to-green-500',
+			isSelectedBindingChoice && 'after:group-hover:to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
 	>

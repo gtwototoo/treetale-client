@@ -64,11 +64,11 @@
 	};
 </script>
 
-<div class={clm('flex gap-1 p-3 pb-0 *:flex-1', !panelStatesStore.show && 'max-xs:hidden')}>
+<div class={clm('flex gap-1 p-3 pb-0 *:flex-1', !panelStatesStore.show && 'max-fd:hidden')}>
 	{#each tabs as { component, icon, id, props } (id)}
 		<Button
 			size="lg"
-			class={clm('text-text hover:bg-main-70 justify-center px-0', isActive(id) && 'bg-main-50')}
+			class={clm('text-text hover:bg-main-700 justify-center px-0', isActive(id) && 'bg-main-500')}
 			onclick={() => setPanel(id, component, props)}
 		>
 			<Icon class="size-6" this={icon} />

@@ -98,7 +98,7 @@
 			!readonlyModeStore.isEnabled && 'hover:ring-text cursor-move',
 			isDragging && 'ring-text !ring-4',
 			isSelected && 'ring-text',
-			isBindingMode() && 'bg-main-20',
+			isBindingMode() && 'bg-main-200',
 			isSelectedBindingChoice &&
 				clm(greenHoverBackgroundColor, '!bg-contrast cursor-pointer hover:ring-green-500')
 		)}

@@ -38,7 +38,7 @@
 		'text-text justify-between',
 		start && 'text-emerald-500',
 		end && 'text-blue-500',
-		isBindingMode() ? '!bg-main-60' : '!bg-contrast-5'
+		isBindingMode() ? '!bg-main-600' : '!bg-contrast-500'
 	)}
 	onclick={hideFrame}
 >
@@ -51,7 +51,7 @@
 		class={clm(
 			'leftBindPoint',
 			(isSelected || isDragging) && 'after:to-text',
-			isSelectedBindingChoice && 'group-hover:after:to-green-500',
+			isSelectedBindingChoice && 'after:group-hover:to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
 	></div>
@@ -60,7 +60,7 @@
 			class={clm(
 				'rightBindPoint',
 				(isSelected || isDragging) && 'after:to-text',
-				isSelectedBindingChoice && 'group-hover:after:to-green-500',
+				isSelectedBindingChoice && 'after:group-hover:to-green-500',
 				isDragging && 'after:-inset-1'
 			)}
 		></div>

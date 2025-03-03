@@ -63,8 +63,8 @@
 				<Input
 					bind:value
 					oninput={() => (result = null)}
-					class="adaptive-font adaptive-padding bg-contrast hover:bg-main-10 w-full"
-					focusClass="bg-main-10"
+					class="adaptive-font adaptive-padding bg-contrast hover:bg-main-100 w-full"
+					focusClass="bg-main-100"
 					type="email"
 					placeholder="Почта или логин"
 				/>
@@ -80,7 +80,7 @@
 					</div>
 				{:else}
 					<Button
-						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main w-full"
+						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main w-full"
 						{disabled}
 						{loading}
 						type="submit"
@@ -94,6 +94,8 @@
 </div>
 
 <style lang="postcss">
+	@reference "../../../../app.css";
+
 	.message {
 		@apply pointer-events-none absolute top-full mt-8 w-full text-center text-xs select-none;
 	}

@@ -58,7 +58,7 @@
 		)}
 	</div>
 </ShortDescription>
-<div class="bg-contrast-2 flex flex-col rounded-lg px-2 text-sm">
+<div class="bg-contrast-200 flex flex-col rounded-lg px-2 text-sm">
 	<Button
 		class="group justify-between py-3 pr-0 pl-1"
 		disabled={readonlyModeStore.isEnabled}
@@ -69,8 +69,8 @@
 			class={clm(
 				'w-9 rounded-full p-0.5',
 				choice.asInput
-					? 'bg-main group-hover:bg-main-70'
-					: 'bg-contrast-9 group-hover:bg-contrast-7'
+					? 'bg-main group-hover:bg-main-700'
+					: 'bg-contrast-900 group-hover:bg-contrast-700'
 			)}
 		>
 			<div
@@ -82,7 +82,7 @@
 		</div>
 	</Button>
 	{#if choice.asInput}
-		<p class="border-contrast-6 border-t py-2 pl-2 text-left text-xs">
+		<p class="border-contrast-600 border-t py-2 pl-2 text-left text-xs">
 			Чтобы применить введеное в поле значение, нужно задать значение
 			<span class="font-medium text-violet-500">
 				{`{input}`}
@@ -131,13 +131,13 @@
 {#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
 	<div class="flex gap-2 *:flex-1">
 		<Button
-			class="bg-main-30 text-text hover:bg-main-50 justify-center"
+			class="bg-main-300 text-text hover:bg-main-500 justify-center"
 			onclick={() => handleAddModificator('logic')}
 		>
 			Условие
 		</Button>
 		<Button
-			class="bg-main-30 text-text hover:bg-main-50 justify-center"
+			class="bg-main-300 text-text hover:bg-main-500 justify-center"
 			onclick={() => handleAddModificator('math')}
 		>
 			Операция

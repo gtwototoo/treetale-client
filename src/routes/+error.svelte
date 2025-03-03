@@ -30,7 +30,7 @@
 			<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
 				<ReadCard alt="Ошибка" src={page.error?.img} text={page.error?.message}>
 					<Button
-						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main"
+						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main"
 						onclick={handleClick}
 					>
 						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}

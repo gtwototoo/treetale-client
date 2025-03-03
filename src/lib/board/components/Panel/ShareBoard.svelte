@@ -52,7 +52,7 @@
 	icon={Link}
 	text="Вы можете поделиться рабочей областью с другими пользователями с помощью специальной ссылки, либо пригласить их, добавив в список ниже"
 />
-<Button class="bg-main-30 text-text hover:bg-main-50 justify-center">Скопировать ссылку</Button>
+<Button class="bg-main-300 text-text hover:bg-main-500 justify-center">Скопировать ссылку</Button>
 <div class="flex flex-col gap-2">
 	{#each users as user, index (index)}
 		<Input
@@ -87,7 +87,7 @@
 		</Input>
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button class="bg-main-30 text-text hover:bg-main-50 justify-center" onclick={addSharedUser}>
+		<Button class="bg-main-300 text-text hover:bg-main-500 justify-center" onclick={addSharedUser}>
 			Добавить пользователя
 		</Button>
 	{/if}

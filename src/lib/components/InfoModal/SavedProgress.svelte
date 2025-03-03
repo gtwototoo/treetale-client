@@ -87,12 +87,12 @@
 			</div>
 		</div>
 		<div class="flex items-center gap-2">
-			<CopyButton storyId={story.storyId} class="max-xs:hidden" short />
+			<CopyButton storyId={story.storyId} class="max-fd:hidden" short />
 			<Button
 				asLink
 				size="lg"
 				href="/{story.storyId}"
-				class="adaptive-font bg-main-70 hover:bg-main pointer-events-auto font-medium"
+				class="adaptive-font bg-main-700 hover:bg-main pointer-events-auto font-medium"
 			>
 				Продолжить
 			</Button>

@@ -28,6 +28,6 @@
 	);
 </script>
 
-<Tag class={clm('bg-opacity-30 whitespace-nowrap', versionColor)}>
+<Tag class={clm('whitespace-nowrap', versionColor)}>
 	{visibleVersion === 'Архив' ? visibleVersion : `Версия ${visibleVersion}`}
 </Tag>

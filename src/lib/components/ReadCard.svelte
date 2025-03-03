@@ -43,7 +43,7 @@
 		{#if src && !errorLoad}
 			<Image
 				{alt}
-				class="bg-main-40 text-text h-[clamp(100px,33vw,330px)] w-full rounded-2xl"
+				class="bg-main-400 text-text h-[clamp(100px,33vw,330px)] w-full rounded-2xl"
 				cover
 				onerror={handleError}
 				{src}

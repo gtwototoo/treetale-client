@@ -26,7 +26,7 @@
 	{#if panelStatesStore.props?.isEdit && !readonlyModeStore.isEnabled}
 		<Button
 			class={clm(
-				'bg-contrast-7 hover:bg-contrast-9 z-[2] px-2.5 py-2',
+				'bg-contrast-700 hover:bg-contrast-900 z-[2] px-2.5 py-2',
 				panelStatesStore.editMode && 'text-red-500'
 			)}
 			onclick={() => (panelStatesStore.editMode = !panelStatesStore.editMode)}
@@ -38,7 +38,7 @@
 	{/if}
 	{#if panelStatesStore.props?.isSubpanel}
 		<Button
-			class="bg-contrast-7 hover:bg-contrast-9 w-full justify-center !px-2"
+			class="bg-contrast-700 hover:bg-contrast-900 w-full justify-center !px-2"
 			onclick={panelStatesStore.goBack}
 		>
 			<Icon this={ChevronLeft} class="absolute left-3 size-5" />
@@ -49,8 +49,8 @@
 			{#snippet children({ onclick })}
 				<Button
 					class={clm(
-						'bg-contrast-7 hover:bg-contrast-9 w-full justify-center !px-2',
-						(!isFramePanel || !framesList) && '!bg-opacity-20 pointer-events-none'
+						'bg-contrast-700 hover:bg-contrast-900 w-full justify-center !px-2',
+						(!isFramePanel || !framesList) && '!bg-contrast-200 pointer-events-none'
 					)}
 					{onclick}
 				>
@@ -60,10 +60,10 @@
 		</Listbox>
 	{/if}
 	<Button
-		class="bg-contrast-7 hover:bg-contrast-9 xs:hidden px-2.5 py-2"
+		class="bg-contrast-700 hover:bg-contrast-900 fd:hidden px-2.5 py-2"
 		onclick={() => (panelStatesStore.show = !panelStatesStore.show)}
 	>
 		<Icon class={clm('size-5', !panelStatesStore.show && 'rotate-180')} this={ChevronDown} />
 	</Button>
-	<div class="max-xs:hidden w-10 shrink-0"></div>
+	<div class="max-fd:hidden w-10 shrink-0"></div>
 </div>

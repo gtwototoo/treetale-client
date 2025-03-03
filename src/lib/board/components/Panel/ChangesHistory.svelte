@@ -16,7 +16,7 @@
 <FormSplit vertical>
 	{#each changesHistoryStore.stages as { icon, title }, index (index)}
 		<Button
-			class={clm('bg-main-30 text-text hover:bg-main-50 gap-4', {
+			class={clm('bg-main-300 text-text hover:bg-main-500 gap-4', {
 				'opacity-60': index > changesHistoryStore.currentId
 			})}
 			onclick={() => changesHistoryStore.to(index)}

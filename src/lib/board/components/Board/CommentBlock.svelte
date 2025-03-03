@@ -49,7 +49,7 @@
 	ontouchstart={handleMouseDown}
 	onmousedown={handleMouseDown}
 	class={clm(
-		'bg-main-40 text-text absolute z-[100000] w-64 rounded-lg p-2',
+		'bg-main-400 text-text absolute z-[100000] w-64 rounded-lg p-2',
 		!readonlyModeStore.isEnabled && 'cursor-move'
 	)}
 	onmouseenter={() => (hovered = true)}

@@ -9,7 +9,7 @@
 	const currentYear = new Date().getFullYear();
 </script>
 
-<div class="border-main-60 mx-6 flex justify-center border-t">
+<div class="border-main-600 mx-6 flex justify-center border-t">
 	<section
 		class="flex w-full max-w-[120rem] items-center gap-6 px-0 py-6 text-sm select-none max-md:flex-col max-md:items-start max-md:gap-4"
 	>
@@ -20,7 +20,7 @@
 				<p class="text-gray-700">© 2022 - {currentYear}. Все права защищены</p>
 			</div>
 		</div>
-		<div class="max-xs:flex-col flex gap-6 max-md:gap-4">
+		<div class="max-fd:flex-col flex gap-6 max-md:gap-4">
 			<div class="flex flex-col gap-2">
 				<Link
 					class="flex gap-2 text-gray-600 transition-colors hover:text-black"

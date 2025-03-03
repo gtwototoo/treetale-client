@@ -12,7 +12,7 @@
 		{correctWhitespace('У данного пользователя пока нету ни одной опубликованной истории')}
 	</p>
 
-	<Button href="/" class="bg-main-50 text-text hover:bg-main-70" size="lg">
+	<Button href="/" class="bg-main-500 text-text hover:bg-main-700" size="lg">
 		Смотреть все истории
 	</Button>
 </StoriesList>

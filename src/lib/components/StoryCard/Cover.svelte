@@ -33,9 +33,9 @@
 	};
 
 	const gradientBackgroundColor = $derived(
-		contrastText(color) ? clm('from-main to-main-50') : clm('from-main-70 to-main')
+		contrastText(color) ? clm('from-main to-main-500') : clm('from-main-700 to-main')
 	);
-	const iconColor = $derived(contrastText(color) ? clm('text-main-60') : clm('text-main'));
+	const iconColor = $derived(contrastText(color) ? clm('text-main-600') : clm('text-main'));
 	const textFillColor = $derived(contrastText(color) ? clm('fill-white') : clm('fill-black'));
 	const GenreIcon = $derived(icon);
 </script>

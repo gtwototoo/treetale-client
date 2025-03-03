@@ -51,10 +51,10 @@
 			{selectedColor}
 			mobileView
 			isButton={false}
-			class="bg-main-50 pointer-events-none absolute -top-1 -left-1 z-[1] rounded-full rounded-br-none"
+			class="bg-main-500 pointer-events-none absolute -top-1 -left-1 z-[1] rounded-full rounded-br-none"
 		/>
 		<div
-			class="bg-main-70 text-text absolute -right-1 -bottom-1 z-[1] flex items-center gap-1 rounded-full rounded-tl-none p-2 pr-4 max-sm:pr-2"
+			class="bg-main-700 text-text absolute -right-1 -bottom-1 z-[1] flex items-center gap-1 rounded-full rounded-tl-none p-2 pr-4 max-sm:pr-2"
 		>
 			<Icon
 				class={clm('size-7 max-sm:size-5', isLiked && 'text-red-500')}
@@ -69,6 +69,8 @@
 </button>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	:global(.animate-card) {
 		@apply bg-[0_-100%] from-50% to-100% bg-[length:100%_200%] transition-[background-position,transform];
 	}

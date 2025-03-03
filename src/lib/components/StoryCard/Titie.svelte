@@ -97,8 +97,10 @@
 </TitleEditRect>
 
 <style lang="postcss">
+	@reference "../../../app.css";
+
 	text {
 		paint-order: stroke;
-		@apply stroke-main-80 stroke-[.5rem];
+		@apply stroke-main-800 stroke-[.5rem];
 	}
 </style>

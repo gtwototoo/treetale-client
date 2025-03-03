@@ -76,14 +76,14 @@
 >
 	{#if soundStore.sound}
 		<div
-			class="bg-contrast-3 flex size-full items-center justify-center rounded-lg text-sm/6 select-none"
+			class="bg-contrast-300 flex size-full items-center justify-center rounded-lg text-sm/6 select-none"
 		>
 			{#await preload(soundStore.sound)}
 				<Icon class="size-5" this={Loading} />
 			{:then}
 				{#if soundStore.playing}
 					<Button
-						class="bg-contrast-9 text-text hover:bg-contrast-7 w-20 flex-col gap-1"
+						class="bg-contrast-900 text-text hover:bg-contrast-700 w-20 flex-col gap-1"
 						onclick={handlePlay}
 					>
 						<Icon class="size-8" variation="solid" this={Play} />
@@ -92,14 +92,14 @@
 				{:else}
 					<div class="flex gap-2">
 						<Button
-							class="bg-contrast-9 text-text hover:bg-contrast-7 w-20 flex-col gap-1"
+							class="bg-contrast-900 text-text hover:bg-contrast-700 w-20 flex-col gap-1"
 							onclick={handlePause}
 						>
 							<Icon class="size-8" variation="solid" this={Pause} />
 							<p class="text-xs">Пауза</p>
 						</Button>
 						<Button
-							class="bg-contrast-9 text-text hover:bg-contrast-7 w-20 flex-col gap-1"
+							class="bg-contrast-900 text-text hover:bg-contrast-700 w-20 flex-col gap-1"
 							onclick={handleStop}
 						>
 							<Icon class="size-8" variation="solid" this={Stop} />

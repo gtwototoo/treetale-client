@@ -53,7 +53,7 @@
 	icon={Tv}
 	text="Просмотр истории со стороны читателя, а также отладка связей, модификаторов и вариантов выбора"
 />
-<div class="bg-contrast-2 flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none">
+<div class="bg-contrast-200 flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none">
 	<p class="py-2">Переменные</p>
 	<div class="flex flex-col gap-2">
 		{#if inspectorVariables.length}
@@ -61,7 +61,7 @@
 				{#if variable.name}
 					<div class="flex justify-between gap-4 *:text-left *:break-all">
 						<p class="px-2 py-1">{variable.name}</p>
-						<div class="bg-main-70 rounded-lg px-2 py-1">
+						<div class="bg-main-700 rounded-lg px-2 py-1">
 							{variable.value || '-'}
 						</div>
 					</div>
@@ -72,13 +72,13 @@
 		{/if}
 	</div>
 </div>
-<Button onclick={clearChoices} class="bg-main-30 hover:bg-main-50 justify-center">
+<Button onclick={clearChoices} class="bg-main-300 hover:bg-main-500 justify-center">
 	Сбросить все выборы
 </Button>
 <div class="flex flex-col gap-3 text-sm">
 	{#each frames as frame, index (frame.frameId)}
 		{@const text = correctVariableReplace(frame.text, inspectorVariables)}
-		<div class="bg-contrast-3 relative flex flex-col items-center gap-2 rounded-xl p-2">
+		<div class="bg-contrast-300 relative flex flex-col items-center gap-2 rounded-xl p-2">
 			{#if frame.imageUrl}
 				<Image
 					alt="Изображение блока"

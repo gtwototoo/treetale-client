@@ -68,7 +68,7 @@
 	<ReadCard bind:readCard class={classname} src={frame.imageUrl} text={dynamicText(frame.text)}>
 		{#if selectedChoiceId !== undefined}
 			{@const choice = find(frame.choices, { choiceId: selectedChoiceId })!}
-			<div class="adaptive-font adaptive-padding bg-main-30 text-text rounded-lg text-left">
+			<div class="adaptive-font adaptive-padding bg-main-300 text-text rounded-lg text-left">
 				{@html correctVariableReplace(choice.text, variablesStore.variables) ||
 					'Неожиданный поворот'}
 			</div>
@@ -84,7 +84,7 @@
 					<Button
 						{loading}
 						onclick={handleEndStory}
-						class="adaptive-font adaptive-padding bg-main-70 text-text hover:bg-main pointer-events-auto font-medium"
+						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main pointer-events-auto font-medium"
 					>
 						Завершить историю
 					</Button>
@@ -93,7 +93,7 @@
 		{/if}
 		{#if availableChoicesCount === 1 && selectedChoiceId === undefined}
 			<div class="text-text flex items-center gap-1 opacity-50">
-				<div class="bg-main-70 min-w-[1.75rem] rounded-lg px-2 py-1 font-bold">ПРОБЕЛ</div>
+				<div class="bg-main-700 min-w-[1.75rem] rounded-lg px-2 py-1 font-bold">ПРОБЕЛ</div>
 				<p>- Далее</p>
 			</div>
 		{/if}
