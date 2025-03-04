@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 
 import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
@@ -22,16 +22,12 @@ export default ts.config(
 	importPlugin.flatConfigs['warnings'],
 	importPlugin.flatConfigs['typescript'],
 	{
-		languageOptions: {
-			globals: {
-				...globals.browser,
-				...globals.node
-			}
-		}
-	},
-	{
 		settings: {
-			'import/core-modules': ['svelte', '$app', '$env', '@sveltejs/kit']
+			'import/core-modules': ['svelte', '$app', '$env', '@sveltejs/kit'],
+			'import/parsers': {
+				'typescript-eslint/parser': ['.ts', '.tsx', '.cts', '.mts'],
+				espree: ['.js', 'jsx', '.cjs', '.mjs']
+			}
 		},
 		rules: {
 			'@typescript-eslint/adjacent-overload-signatures': 'off',
@@ -65,13 +61,14 @@ export default ts.config(
 					'newlines-between': 'always'
 				}
 			]
-		}
-	},
-	{
+		},
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		ignores: ['**/*.cjs', 'eslint.config.js', 'svelte.config.js'],
-
 		languageOptions: {
+			globals: {
+				...globals.browser,
+				...globals.node
+			},
 			parserOptions: {
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
