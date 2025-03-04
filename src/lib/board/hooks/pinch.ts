@@ -147,16 +147,12 @@ function setPointerControls(
 		const removepointerupHandler = addEventListener(node, 'pointerup', (e: PointerEvent) => {
 			onup(e);
 		});
-		const removepointerleaveHandler = addEventListener(
-			node,
-			'pointerleave',
-			(e: PointerEvent) => {
-				activeEvents = [];
-				removeEventHandlers();
-				dispatch(node, gestureName, e, activeEvents, 'up');
-				onUpCallback?.(activeEvents, e);
-			}
-		);
+		const removepointerleaveHandler = addEventListener(node, 'pointerleave', (e: PointerEvent) => {
+			activeEvents = [];
+			removeEventHandlers();
+			dispatch(node, gestureName, e, activeEvents, 'up');
+			onUpCallback?.(activeEvents, e);
+		});
 	}
 
 	const removePointerdownHandler = addEventListener(node, 'pointerdown', handlePointerdown);

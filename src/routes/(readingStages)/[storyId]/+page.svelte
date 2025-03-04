@@ -64,9 +64,7 @@
 	const { story, progress, author, scopeFrames } = $derived(clonedData);
 	const { choices, progressId } = $derived(progress);
 	const lastFrame = $derived(
-		choices.length
-			? find(scopeFrames, { frameId: last(choices)!.nextFrameId })!
-			: scopeFrames?.[0]
+		choices.length ? find(scopeFrames, { frameId: last(choices)!.nextFrameId })! : scopeFrames?.[0]
 	);
 	const { description, genre, likes, title, color, vars, storyId, format } = $derived(story);
 

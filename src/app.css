@@ -45,16 +45,15 @@
 	}
 }
 
-
 @utility grid-cols-fit-* {
-	grid-template-columns: repeat(auto-fit, minmax(--value(integer)rem, 1fr));
-  }
+	grid-template-columns: repeat(auto-fit, minmax(--value(integer) rem, 1fr));
+}
 @utility break-words {
-	word-break: break-word
-	overflowWrap: break-word
+	word-break: break-word;
+	overflow-wrap: break-word;
 }
 @utility fill-gradient {
-	fill: var(--fill-gradient)
+	fill: var(--fill-gradient);
 }
 @utility bind-point {
 	@apply absolute size-6 !bg-inherit;
@@ -101,7 +100,7 @@ body > div {
 	@apply text-[clamp(20px,2.8vw,30px)] leading-snug;
 }
 .adaptive-padding {
-	@apply max-2xl:!px-6 max-2xl:!py-3 !px-8 !py-4;
+	@apply !px-8 !py-4 max-2xl:!px-6 max-2xl:!py-3;
 }
 
 .rightBindPoint {

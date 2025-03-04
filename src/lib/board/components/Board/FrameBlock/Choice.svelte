@@ -36,9 +36,7 @@
 
 	const choiceFocus = (choiceId: number) => {
 		const choiceKey = findIndex(frame.choices, { choiceId });
-		const choiceInputs = document
-			.getElementById('choices')
-			?.querySelectorAll('[contenteditable]');
+		const choiceInputs = document.getElementById('choices')?.querySelectorAll('[contenteditable]');
 
 		if (!choiceInputs) {
 			return;
@@ -88,9 +86,7 @@
 	let selfConnect = $derived(
 		connectionStartStore.frameId === frame.frameId && connectionStartStore.choiceId === choiceId
 	);
-	let disabled = $derived(
-		isBindingMode() && connectionStartStore.frameId !== null && !selfConnect
-	);
+	let disabled = $derived(isBindingMode() && connectionStartStore.frameId !== null && !selfConnect);
 
 	let greenHoverBackgroundColor = $derived(
 		currentThemeClass(clm('hover:bg-emerald-800'), clm('hover:bg-emerald-200'))

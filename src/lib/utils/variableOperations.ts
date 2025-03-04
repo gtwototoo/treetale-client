@@ -73,11 +73,7 @@ export const checkLogic = (variables: Variable[], logicModificators: LogicModifi
 
 			const { expect, value: firstValue } = variable;
 
-			return doLogic(
-				correctToType(firstValue, expect),
-				symbol,
-				correctToType(secondValue, expect)
-			);
+			return doLogic(correctToType(firstValue, expect), symbol, correctToType(secondValue, expect));
 		})
 		.every((isVisible) => isVisible);
 };

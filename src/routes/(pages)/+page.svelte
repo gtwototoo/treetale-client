@@ -121,9 +121,7 @@
 						/>
 					{/snippet}
 				</Input>
-				<div
-					class="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3 max-md:gap-1"
-				>
+				<div class="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3 max-md:gap-1">
 					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
 						<Button
 							class={clm(
@@ -155,9 +153,7 @@
 		{:else}
 			<div class="plug flex-grow gap-8">
 				<p>
-					{correctWhitespace(
-						'Историй не найдено, но вы можете добавить свою уникальную историю'
-					)}
+					{correctWhitespace('Историй не найдено, но вы можете добавить свою уникальную историю')}
 				</p>
 				<AddStoryButton class="bg-main-500 text-text hover:bg-main-700 gap-3" />
 			</div>

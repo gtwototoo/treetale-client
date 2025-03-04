@@ -190,9 +190,7 @@
 					{saturate}
 				>
 					{#snippet children({ onclick })}
-						<Button class="bg-main-700 text-text hover:bg-main" {onclick} size="lg">
-							Цвет
-						</Button>
+						<Button class="bg-main-700 text-text hover:bg-main" {onclick} size="lg">Цвет</Button>
 					{/snippet}
 				</ColorPicker>
 			</div>
@@ -313,7 +311,7 @@
 
 <style lang="postcss">
 	@reference "../../app.css";
-	
+
 	.screen-hd {
 		@apply max-2xl:w-[30rem];
 	}

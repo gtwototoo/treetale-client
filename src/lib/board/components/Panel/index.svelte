@@ -46,10 +46,7 @@
 				class="bg-contrast text-text absolute right-full bottom-full rounded-r-none p-3 pr-1 lg:hidden"
 				onclick={() => (panelStatesStore.show = !panelStatesStore.show)}
 			>
-				<Icon
-					this={ChevronRight}
-					class={clm('size-6', !panelStatesStore.show && 'rotate-180')}
-				/>
+				<Icon this={ChevronRight} class={clm('size-6', !panelStatesStore.show && 'rotate-180')} />
 			</Button>
 		</div>
 	</div>

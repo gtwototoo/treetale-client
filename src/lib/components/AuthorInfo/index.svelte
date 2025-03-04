@@ -59,9 +59,7 @@
 {#if author && !edit}
 	<UserBadge {author} class={classname} {mobileView} {isButton} />
 {:else}
-	<div
-		class={clm('flex items-center overflow-hidden p-1 text-sm', currentStatus.color, classname)}
-	>
+	<div class={clm('flex items-center overflow-hidden p-1 text-sm', currentStatus.color, classname)}>
 		<Icon
 			class={clm('box-content size-8 shrink-0 p-1', mobileView && 'max-sm:size-6')}
 			this={currentStatus.icon}

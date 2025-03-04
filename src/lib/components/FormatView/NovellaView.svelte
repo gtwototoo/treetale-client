@@ -63,9 +63,7 @@
 			<div
 				class={clm(
 					'adaptive-padding',
-					lastFrame.text && lastFrame.text.length > 50
-						? 'adaptive-font'
-						: 'adaptive-font-upper'
+					lastFrame.text && lastFrame.text.length > 50 ? 'adaptive-font' : 'adaptive-font-upper'
 				)}
 			>
 				{@html correctWhitespace(lastFrame.text!) || 'Пустота...'}

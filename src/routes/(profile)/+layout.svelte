@@ -6,12 +6,11 @@
 	import { JsonLd, MetaTags } from 'svelte-meta-tags';
 	import { Button, Icon } from 'treetale-ui';
 
-	import MainHeader from '$lib/components/Header/MainHeader.svelte';
+	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
 	import RootStyles from '$lib/components/RootStyles.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { clm } from '$lib/utils/classMerge';
-	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
 
 	let { children, data } = $props();
 

@@ -1,20 +1,26 @@
+import { fileURLToPath } from 'node:url';
+
 import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
+import importPlugin from 'eslint-plugin-import';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
-import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
+
 import svelteConfig from './svelte.config.js';
+
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
 export default ts.config(
 	includeIgnoreFile(gitignorePath),
 	js.configs.recommended,
-	...ts.configs.recommended,
-	...svelte.configs.recommended,
+	ts.configs.recommended,
 	prettier,
+	...svelte.configs.recommended,
 	...svelte.configs['flat/prettier'],
+	importPlugin.flatConfigs['warnings'],
+	importPlugin.flatConfigs['typescript'],
 	{
 		languageOptions: {
 			globals: {
@@ -24,6 +30,9 @@ export default ts.config(
 		}
 	},
 	{
+		settings: {
+			'import/core-modules': ['svelte', '$app', '$env', '@sveltejs/kit']
+		},
 		rules: {
 			'@typescript-eslint/adjacent-overload-signatures': 'off',
 			'@typescript-eslint/no-unused-vars': [
@@ -33,12 +42,7 @@ export default ts.config(
 				}
 			],
 			'no-undef': 'off',
-			'svelte/no-at-html-tags': 'off'
-		},
-		settings: {
-			'import/core-modules': ['svelte', '$app', '$env', '@sveltejs/kit']
-		},
-		rules: {
+			'svelte/no-at-html-tags': 'off',
 			'import/order': [
 				'warn',
 				{

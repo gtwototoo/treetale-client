@@ -224,8 +224,8 @@
 			variation="solid"
 		/>
 		<p>
-			Перетащите сюда {draggedFileType === 'image' ? 'изображение' : 'звук'}, чтобы заменить его
-			или добавить
+			Перетащите сюда {draggedFileType === 'image' ? 'изображение' : 'звук'}, чтобы заменить его или
+			добавить
 		</p>
 	</InvisibleDrop>
 	<div class="flex gap-2">
@@ -346,10 +346,7 @@
 		{/each}
 		{#if !readonlyModeStore.isEnabled}
 			{#if panelStatesStore.editMode && frameId !== 1}
-				<Button
-					class={clm('justify-center', redBackgroundColorStore.color)}
-					onclick={removeFrame}
-				>
+				<Button class={clm('justify-center', redBackgroundColorStore.color)} onclick={removeFrame}>
 					Удалить блок
 				</Button>
 			{/if}

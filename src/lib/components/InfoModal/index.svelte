@@ -90,8 +90,7 @@
 				</div>
 				<div class="flex flex-col gap-4">
 					<div class="clear-text adaptive-font px-2 break-words">
-						{@html correctVariableReplace(description, variablesStore.variables) ||
-							'Без описания'}
+						{@html correctVariableReplace(description, variablesStore.variables) || 'Без описания'}
 					</div>
 					{#if tags.length}
 						<div class="flex flex-wrap gap-2 max-md:gap-1">
@@ -104,16 +103,9 @@
 					{/if}
 				</div>
 			</div>
-			<div
-				class="bg-main-100 sticky bottom-0 -mb-6 flex w-full items-center justify-between py-6"
-			>
+			<div class="bg-main-100 sticky bottom-0 -mb-6 flex w-full items-center justify-between py-6">
 				{#if progress && progress.version !== '0'}
-					<SavedProgress
-						{progress}
-						{story}
-						{lastFrame}
-						ondelete={() => (progressInfo = null)}
-					/>
+					<SavedProgress {progress} {story} {lastFrame} ondelete={() => (progressInfo = null)} />
 				{:else}
 					<div class="flex gap-3">
 						<Button

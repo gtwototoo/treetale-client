@@ -18,7 +18,9 @@
 	];
 </script>
 
-<div class="bg-contrast-200 flex flex-col gap-2 rounded-lg p-2 pl-4 text-center text-sm select-none">
+<div
+	class="bg-contrast-200 flex flex-col gap-2 rounded-lg p-2 pl-4 text-center text-sm select-none"
+>
 	<p class="py-2">Горячие клавиши</p>
 	<div class="flex flex-col gap-2">
 		{#each shortcuts as { keys, readonly, text }, index (index)}
