@@ -2,6 +2,7 @@
 @plugin '@tailwindcss/typography';
 
 @theme {
+	--font-roboto-slab: 'Roboto Slab', 'serif';
 	--breakpoint-fd: 30rem;
 	--breakpoint-2xl: 100rem;
 	--breakpoint-3xl: 120rem;
@@ -45,8 +46,9 @@
 	}
 }
 
-@utility grid-cols-fit-* {
-	grid-template-columns: repeat(auto-fit, minmax(--value(integer) rem, 1fr));
+@utility grid-fit-* {
+	/* prettier-ignore */
+	grid-template-columns: repeat(auto-fit, minmax(--value(integer)rem, 1fr));
 }
 @utility break-words {
 	word-break: break-word;
@@ -60,7 +62,7 @@
 }
 
 body {
-	@apply bg-main-200 flex w-full items-start justify-end overflow-auto;
+	@apply bg-main-200 font-roboto-slab flex w-full items-start justify-end overflow-auto;
 }
 body > div {
 	@apply contents;
