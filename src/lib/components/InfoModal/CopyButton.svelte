@@ -11,13 +11,9 @@
 	type CopyState = 'error' | 'success' | null;
 
 	const {
-		class: classname,
-		storyId,
-		short = false
+		storyId
 	}: {
-		class?: string;
 		storyId: number;
-		short?: boolean;
 	} = $props();
 
 	let copyState = $state<CopyState>(null);
@@ -29,8 +25,7 @@
 			await window.navigator.clipboard.writeText(value);
 		} catch (error) {
 			console.error(error);
-
-			success = true;
+			success = false;
 		}
 
 		return success;
@@ -58,22 +53,17 @@
 </script>
 
 <Button
-	size="lg"
+	size="sm"
 	onclick={handleCopyLink}
-	class="hover:bg-main-500 pointer-events-auto gap-2 px-4 font-normal"
+	class="hover:bg-main-300 bg-main-200 pointer-events-auto gap-1 py-1 pl-1 font-normal"
 >
 	<Icon
 		this={DocumentDuplicate}
 		class={clm(
-			'size-8 transition-colors',
+			'size-4 transition-colors',
 			copyState === 'success' && 'text-green-500',
 			copyState === 'error' && 'text-red-500'
 		)}
 	/>
-	{#if !short}
-		<div class={clm('max-fd:hidden flex flex-col items-start text-xs', classname)}>
-			<p class="text-base leading-4">Ссылка</p>
-			<p>на историю</p>
-		</div>
-	{/if}
+	<p>Ссылка</p>
 </Button>

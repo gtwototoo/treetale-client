@@ -2,10 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 
-	import { Plus } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { PlusCircle } from 'svelte-heros-v2';
+	import { Icon } from 'treetale-ui';
 
 	import { createStory } from '$lib/requests/story';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	const {
@@ -35,7 +37,11 @@
 	};
 </script>
 
-<Button class={clm('text-text', classname)} {loading} onclick={handleClick} size="lg">
-	<Icon class="size-6" this={Plus} />
+<Button
+	class={clm(button.type.primary, button.size.lg, 'gap-3 pl-4', classname)}
+	{loading}
+	onclick={handleClick}
+>
+	<Icon class="size-6" this={PlusCircle} />
 	<p class="mr-1">Добавить историю</p>
 </Button>

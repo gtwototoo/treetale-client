@@ -35,8 +35,10 @@
 </script>
 
 <div class="flex h-full flex-col">
-	<div class="flex items-center gap-4 py-3 pl-12 select-none max-sm:py-2 max-sm:pl-6">
-		<Icon class="size-8 max-sm:h-6 max-sm:w-6" this={icon} />
+	<div class="flex items-center gap-3 py-2 pl-8 select-none max-sm:py-1 max-sm:pl-4">
+		<div class="bg-main-400 rounded-full p-2">
+			<Icon class="size-6 max-sm:size-5" this={icon} />
+		</div>
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>
 	{#if listFormat}
@@ -46,7 +48,7 @@
 					'Историй по вашему запросу не найдено, а значит вы можете добавить свою уникальную историю'
 				)}
 			</p>
-			<AddStoryButton class="bg-main-500 text-text hover:bg-main-700 gap-3" />
+			<AddStoryButton />
 		</StoriesList>
 	{:else}
 		<div class="p-4 max-sm:p-3" use:emblaCarouselSvelte={{ options, plugins: [] }}>

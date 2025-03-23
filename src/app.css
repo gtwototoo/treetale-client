@@ -4,8 +4,10 @@
 @theme {
 	--font-roboto-slab: 'Roboto Slab', 'serif';
 	--breakpoint-fd: 30rem;
+	--radius-inherit: inherit;
 	--breakpoint-2xl: 100rem;
 	--breakpoint-3xl: 120rem;
+	--line-height-0: 0;
 }
 
 @theme inline {
@@ -30,19 +32,21 @@
 	--color-contrast: var(--color-contrast);
 	--color-main: var(--color-main);
 	--color-text: var(--color-text);
-	--radius-inherit: inherit;
-	--line-height-0: 0;
 }
 
 @layer base {
 	h1 {
-		@apply text-5xl font-bold;
+		@apply text-5xl font-medium;
 	}
 	h2 {
-		@apply text-xl font-extrabold;
+		@apply text-xl font-medium;
 	}
 	svg {
 		@apply size-5;
+	}
+	* {
+		@apply no-underline !outline-none;
+		-webkit-tap-highlight-color: transparent;
 	}
 }
 
@@ -66,11 +70,6 @@ body {
 }
 body > div {
 	@apply contents;
-}
-
-* {
-	@apply no-underline !outline-none;
-	-webkit-tap-highlight-color: transparent;
 }
 
 .clear-text * {

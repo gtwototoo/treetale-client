@@ -43,16 +43,13 @@
 </script>
 
 <Button
-	class={clm(
-		'bg-main-500 text-text hover:bg-main-700 gap-2 px-4 pr-6 hover:text-red-500',
-		classname
-	)}
+	class={clm('text-text gap-2 bg-red-100 py-2 pr-5 pl-3 hover:bg-red-200', classname)}
 	{loading}
 	onclick={handleClick}
 	size="lg"
 >
 	<Icon
-		class={clm('size-6 text-red-500 *:stroke-2')}
+		class={clm('size-8 text-red-500 *:stroke-2')}
 		this={Heart}
 		variation={isLiked ? 'solid' : 'outline'}
 	/>

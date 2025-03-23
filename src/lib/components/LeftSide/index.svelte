@@ -8,8 +8,6 @@
 	import AuthorInfo from '../AuthorInfo/index.svelte';
 	import Cover from '../StoryCard/Cover.svelte';
 
-	import Likes from './Likes.svelte';
-
 	const {
 		author,
 		story,
@@ -22,23 +20,20 @@
 		title: string;
 	} = $props();
 
-	const { color, created, imageUrl, likes, status, storyId } = $derived(story);
+	const { color, created, imageUrl, status } = $derived(story);
 	const selectedColor = $derived(color || DEFAULT_COLOR);
 	const genre = $derived(find(GENRES_LIST, { id: story.genre })!);
 </script>
 
 <div class="flex shrink-0 flex-col gap-3 md:sticky md:top-20 md:w-1/3">
-	<div class="flex gap-3 *:pointer-events-auto">
-		<AuthorInfo
-			{author}
-			{created}
-			edit={false}
-			{status}
-			{selectedColor}
-			class="bg-main-500 hover:bg-main-700 grow"
-		/>
-		<Likes {likes} {storyId} class="rounded-full pr-4" />
-	</div>
+	<AuthorInfo
+		{author}
+		{created}
+		edit={false}
+		{status}
+		{selectedColor}
+		class="bg-main-200 hover:bg-main-300 grow"
+	/>
 	<Cover
 		{imageUrl}
 		{title}

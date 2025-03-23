@@ -1,20 +1,30 @@
 <script lang="ts">
 	import { page } from '$app/state';
 
-	import { ArrowLeftOnRectangle } from 'svelte-heros-v2';
-	import { Button, Icon, Link } from 'treetale-ui';
+	import { UserCircle } from 'svelte-heros-v2';
+	import { Icon } from 'treetale-ui';
 
 	import type { User } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	import ProfileAvatar from '../ProfileAvatar.svelte';
+
+	import AuthModal from './AuthModal.svelte';
 
 	let user = $derived(page.data.session as User);
 	let addLoading = $state(false);
 	let base64src = $state('');
+	let active = $state(false);
 </script>
 
 {#if page.data.session}
-	<Link href="/profile" class="pointer-events-auto">
+	<Button
+		asLink
+		href="/profile"
+		class={clm(button.type.primary, 'pointer-events-auto rounded-full')}
+	>
 		<ProfileAvatar
 			bind:base64src
 			bind:addLoading
@@ -22,12 +32,14 @@
 			color={user.color}
 			src={user.imageUrl}
 		/>
-	</Link>
+	</Button>
 {:else}
-	<Link href="/signin" class="pointer-events-auto">
-		<Button class="bg-main-400 text-text hover:bg-contrast gap-3" size="lg">
-			<Icon class="size-6" this={ArrowLeftOnRectangle} />
-			<p>Войти</p>
-		</Button>
-	</Link>
+	<Button
+		class={clm(button.size.lg, button.type.primary, 'gap-3 pl-4')}
+		onclick={() => (active = true)}
+	>
+		<Icon class="size-6" this={UserCircle} />
+		<p>Войти</p>
+	</Button>
+	<AuthModal bind:active />
 {/if}

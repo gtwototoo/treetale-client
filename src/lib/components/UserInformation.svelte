@@ -4,7 +4,7 @@
 	import type { ChangeEventHandler } from 'svelte/elements';
 
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
-	import { Button, ColorPicker, Contenteditable, Icon, Input, Modal } from 'treetale-ui';
+	import { ColorPicker, Icon, Modal } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -17,6 +17,10 @@
 	} from '$lib/requests/user';
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, User } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import Contenteditable from '$lib/ui/Contenteditable.svelte';
+	import Input from '$lib/ui/Input.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import InvisibleDrop from './InvisibleDrop.svelte';
@@ -150,8 +154,8 @@
 
 <div
 	class={clm(
-		'screen-lg screen-xl screen-hd screen-sm sticky top-8 z-10 flex w-[36rem] shrink-0 flex-col items-center gap-12 rounded-3xl p-9 select-none',
-		editMode ? 'bg-contrast' : 'bg-transparent'
+		'screen-lg screen-xl screen-hd screen-sm ring-main-500 sticky top-8 z-10 flex w-[36rem] shrink-0 flex-col items-center gap-8 rounded-3xl p-8 ring-1 select-none',
+		editMode ? 'bg-contrast' : 'bg-main-300'
 	)}
 >
 	{#if editMode}
@@ -178,9 +182,8 @@
 				<Input
 					placeholder="Короткая ссылка"
 					maxlength={20}
-					size="lg"
 					bind:value={userState.linkName}
-					class="w-full"
+					class={clm(button.size.lg, 'w-full')}
 				/>
 				<ColorPicker
 					color={bodyBackgroundColorStore.color}
@@ -190,12 +193,15 @@
 					{saturate}
 				>
 					{#snippet children({ onclick })}
-						<Button class="bg-main-700 text-text hover:bg-main" {onclick} size="lg">Цвет</Button>
+						<Button
+							class={clm(button.type.primary, button.size.lg, 'hover:bg-main hover:ring-main')}
+							{onclick}>Цвет</Button
+						>
 					{/snippet}
 				</ColorPicker>
 			</div>
 		{:else}
-			<div class="bg-main-300 text-text flex gap-2 rounded-xl p-4">
+			<div class="divide-main-700 text-text flex divide-x rounded-xl p-4">
 				{#each statistic as [count, title] (title)}
 					<div class="flex w-24 flex-col items-center">
 						<p class="text-3xl font-bold">
@@ -210,21 +216,21 @@
 	<div class="flex w-full max-w-96 flex-col items-center gap-2">
 		<Contenteditable
 			bind:html={userState.name}
-			size="lg"
 			class={clm(
-				'text-text w-full bg-transparent text-center text-4xl font-bold',
-				!editMode && 'pointer-events-none ring-0'
+				button.size.lg,
+				'w-full text-center text-4xl font-bold',
+				!editMode && 'pointer-events-none bg-transparent ring-0'
 			)}
 			placeholder="Псевдоним"
 			readonly={!editMode}
 		/>
 		{#if editMode || userState.description}
 			<Contenteditable
-				size="lg"
 				bind:html={userState.description}
 				class={clm(
-					'text-text w-full bg-transparent text-center text-lg',
-					!editMode && 'pointer-events-none ring-0'
+					button.size.lg,
+					'w-full text-center text-lg',
+					!editMode && 'pointer-events-none bg-transparent ring-0'
 				)}
 				placeholder="Добавьте описание"
 				readonly={!editMode}
@@ -236,48 +242,44 @@
 	<div class="flex gap-2">
 		{#if me}
 			{#if editMode}
-				<Button
-					class="bg-main-500 text-text hover:bg-main-700"
-					{loading}
-					onclick={saveProfile}
-					size="lg"
-				>
+				<Button class={clm(button.type.primary, button.size.lg)} {loading} onclick={saveProfile}>
 					Сохранить
 				</Button>
-				<Button class="bg-main-500 hover:bg-main-700 text-red-500" onclick={cancelEdit} size="lg">
+				<Button
+					class={clm(button.type.primary, button.size.lg, 'text-red-500')}
+					onclick={cancelEdit}
+				>
 					Отмена
 				</Button>
 			{:else}
-				<Button
-					class="bg-main-500 text-text hover:bg-main-700"
-					onclick={() => (editMode = true)}
-					size="lg"
-				>
+				<Button class={clm(button.type.primary, button.size.lg)} onclick={() => (editMode = true)}>
 					Редактировать
 				</Button>
 				<Button
-					class="bg-main-500 hover:bg-main-700 text-red-500"
+					class={clm(
+						button.type.primary,
+						button.size.lg,
+						'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
+					)}
 					onclick={() => (exitModal = true)}
-					size="lg"
 				>
 					Выйти
 				</Button>
-				<Modal
-					bind:active={exitModal}
-					class="bg-main-300 text-text flex flex-col items-center gap-8 p-8"
-				>
+				<Modal bind:active={exitModal} class="text-text flex flex-col items-center gap-8 p-8">
 					<p>Вы действительно хотите выйти из профиля?</p>
 					<div class="flex gap-2">
 						<Button
-							class="bg-main-500 text-text hover:bg-main-700 justify-center"
-							size="lg"
+							class={clm(button.type.primary, button.size.lg)}
 							onclick={() => (exitModal = false)}
 						>
 							Отмена
 						</Button>
 						<Button
-							class="bg-main-500 hover:bg-main-700 justify-center text-red-500"
-							size="lg"
+							class={clm(
+								button.type.primary,
+								button.size.lg,
+								'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
+							)}
 							onclick={handleSignOut}
 						>
 							Выйти
@@ -286,22 +288,12 @@
 				</Modal>
 			{/if}
 		{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
-			<Button
-				class="bg-main-500 text-text hover:bg-main-700 gap-3"
-				{loading}
-				onclick={handleUnsubscribe}
-				size="lg"
-			>
+			<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleUnsubscribe}>
 				<Icon class="size-6" this={UserMinus} />
 				<p class="mr-1">Отписаться</p>
 			</Button>
 		{:else}
-			<Button
-				class="bg-main-500 text-text hover:bg-main-700 gap-3"
-				{loading}
-				onclick={handleSubscribe}
-				size="lg"
-			>
+			<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleSubscribe}>
 				<Icon class="size-6" this={UserPlus} />
 				<p class="mr-1">Подписаться</p>
 			</Button>

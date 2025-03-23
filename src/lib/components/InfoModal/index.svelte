@@ -47,6 +47,7 @@
 		title,
 		version,
 		color,
+		likes,
 		description
 	} = $derived(story);
 	const edit = $derived(page.data.session && page.data.session.userId === author?.userId);
@@ -69,19 +70,30 @@
 
 <Modal
 	bind:active
-	class="bg-main-100 flex w-full max-w-screen-lg flex-row gap-2 p-12 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
+	class="flex w-full max-w-screen-lg flex-row gap-8 p-8 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
 >
 	<div style={generateMainColors(selectedColor)} class="rounded-inherit contents">
 		<div class="rounded-inherit bg-main-100 absolute inset-0 -z-[1]"></div>
-		<LeftSide {story} {author} title={story.title} />
-		<div class="text-text fd:px-6 flex h-auto w-full flex-col items-start max-md:items-center">
-			<div class="flex w-full grow flex-col gap-6">
-				<div class="flex w-full flex-col gap-3 max-md:items-center">
-					<ActionButtons {genre} {storyId} {format} />
-					<h1 class="text-[clamp(32px,5vw,56px)] leading-tight max-md:pb-4 max-md:text-center">
+		<LeftSide {story} {author} {title} />
+		<div class="text-text flex h-auto w-full flex-col items-start max-md:items-center">
+			<ActionButtons {genre} {storyId} {format} {likes} />
+			<div class="flex grow flex-col justify-between gap-2">
+				<div class="mt-4 flex flex-col gap-2">
+					<h1 class="text-[clamp(32px,5vw,56px)] leading-none max-md:pb-4 max-md:text-center">
 						{title || 'Без названия'}
 					</h1>
-					<div class="flex w-full gap-3 max-md:justify-between max-md:px-3">
+					<div class="flex w-full gap-3 max-md:px-3">
+						{#if edit}
+							<Button
+								asLink
+								size="sm"
+								href="/board/{storyId}"
+								class="bg-main-200 hover:bg-main-300 pointer-events-auto"
+							>
+								<Icon this={Cog6Tooth} class="size-4" />
+							</Button>
+						{/if}
+						<CopyButton {storyId} />
 						<VersionTag currentVersion={version} />
 						<p class="text-base italic">
 							Обновлено {formatDate(story.updated)}
@@ -102,34 +114,19 @@
 						<p class="text-sm text-gray-500 max-md:text-xs">Теги не указаны</p>
 					{/if}
 				</div>
-			</div>
-			<div class="bg-main-100 sticky bottom-0 -mb-6 flex w-full items-center justify-between py-6">
 				{#if progress && progress.version !== '0'}
 					<SavedProgress {progress} {story} {lastFrame} ondelete={() => (progressInfo = null)} />
 				{:else}
-					<div class="flex gap-3">
-						<Button
-							asLink
-							href="/{storyId}"
-							size="lg"
-							class="adaptive-font bg-main-700 hover:bg-main pointer-events-auto justify-center font-medium"
-						>
-							Начать историю
-						</Button>
-						{#if edit}
-							<Button
-								asLink
-								href="/board/{storyId}"
-								size="lg"
-								class="adaptive-font bg-main-700 hover:bg-main pointer-events-auto justify-center font-medium"
-							>
-								<Icon this={Cog6Tooth} class="size-6" />
-							</Button>
-						{/if}
-					</div>
-					<CopyButton {storyId} />
+					<Button
+						asLink
+						href="/{storyId}"
+						size="lg"
+						class="adaptive-font bg-main-200 hover:bg-main-300 pointer-events-auto font-medium"
+					>
+						Начать историю
+					</Button>
 				{/if}
 			</div>
 		</div>
-	</div>
-</Modal>
+	</div></Modal
+>

@@ -9,7 +9,7 @@
 <div class="flex justify-center select-none">
 	<div class="relative flex flex-col items-center gap-8 py-[calc(16px+2vw)] text-center">
 		<h2
-			class="bg-gradient-to-b from-[#FDBA74] to-[#FF6C15] !bg-clip-text text-[calc(24px+4vw)] leading-none text-transparent uppercase"
+			class="bg-gradient-to-b from-[#FDBA74] to-[#FF6C15] !bg-clip-text text-[calc(24px+4vw)] leading-none font-extrabold text-transparent uppercase"
 		>
 			<p>Бесконечный</p>
 			<p>мир историй</p>

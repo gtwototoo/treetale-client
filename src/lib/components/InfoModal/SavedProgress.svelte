@@ -15,8 +15,6 @@
 	import FrameMini from '../FrameMini.svelte';
 	import VersionTag from '../VersionTag.svelte';
 
-	import CopyButton from './CopyButton.svelte';
-
 	const {
 		progress,
 		lastFrame,
@@ -86,16 +84,13 @@
 				<p>{formatDate(updated!)}</p>
 			</div>
 		</div>
-		<div class="flex items-center gap-2">
-			<CopyButton storyId={story.storyId} class="max-fd:hidden" short />
-			<Button
-				asLink
-				size="lg"
-				href="/{story.storyId}"
-				class="adaptive-font bg-main-700 hover:bg-main pointer-events-auto font-medium"
-			>
-				Продолжить
-			</Button>
-		</div>
+		<Button
+			asLink
+			size="lg"
+			href="/{story.storyId}"
+			class="adaptive-font bg-main-700 hover:bg-main pointer-events-auto font-medium"
+		>
+			Продолжить
+		</Button>
 	</div>
 </div>

@@ -57,11 +57,11 @@
 {/snippet}
 
 {#if isButton}
-	<Button class={clm('min-w-0 rounded-full p-1', classname)} onclick={handleClick}>
+	<Button class={clm('min-w-0 p-1', classname)} size="lg" onclick={handleClick}>
 		{@render userInfo()}
 	</Button>
 {:else}
-	<div class={clm('flex min-w-0 items-center rounded-full p-1 whitespace-nowrap', classname)}>
+	<div class={clm('flex min-w-0 items-center p-1 whitespace-nowrap', classname)}>
 		{@render userInfo()}
 	</div>
 {/if}
