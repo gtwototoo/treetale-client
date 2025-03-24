@@ -163,7 +163,7 @@
 		left && 'pl-1',
 		right && 'pr-1',
 		focused && clm('bg-main-100', focusClass),
-		disabled ? 'cursor-default' : 'hover:bg-main-10',
+		disabled ? 'cursor-default' : 'hover:bg-main-100',
 		classname
 	)}
 	{id}

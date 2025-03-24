@@ -70,3 +70,11 @@
 	</div>
 	<TransparentRect />
 </div>
+
+<style lang="postcss">
+	@reference "../../../app.css";
+
+	.animate-card {
+		@apply from-50% to-100% bg-[length:100%_200%] bg-[0%_-100%] transition-[background-position,transform] hover:bg-[0%_-120%];
+	}
+</style>

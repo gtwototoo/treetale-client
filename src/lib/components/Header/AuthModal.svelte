@@ -4,12 +4,13 @@
 	import { fade } from 'svelte/transition';
 
 	import { Envelope } from 'svelte-heros-v2';
-	import { Icon, Image, Modal } from 'treetale-ui';
+	import { Icon, Image } from 'treetale-ui';
 
 	import { signInUser } from '$lib/requests/user';
 	import type { FetchResponse } from '$lib/types/response';
 	import Button from '$lib/ui/Button.svelte';
 	import Input from '$lib/ui/Input.svelte';
+	import Modal from '$lib/ui/Modal.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
@@ -61,7 +62,7 @@
 
 <Modal
 	bind:active
-	class="bg-main-100 flex w-full max-w-screen-lg flex-row gap-8 p-8 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
+	class="flex w-full max-w-screen-lg flex-row gap-8 p-8 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
 >
 	<Image
 		alt="Авторизация"

@@ -4,12 +4,14 @@
 	import { type Person } from 'schema-dts';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import { JsonLd, MetaTags } from 'svelte-meta-tags';
-	import { Button, Icon } from 'treetale-ui';
+	import { Icon } from 'treetale-ui';
 
 	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
 	import RootStyles from '$lib/components/RootStyles.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets.js';
 	import { clm } from '$lib/utils/classMerge';
 
 	let { children, data } = $props();
@@ -56,12 +58,14 @@
 
 <div class="relative flex size-full flex-col">
 	<ProfileHeader />
-	<div class="screen-sm screen-hd screen-lg screen-xl flex grow items-start gap-6 p-16">
+	<div class="screen-sm screen-hd screen-lg screen-xl flex grow gap-4 p-4">
 		<UserInformation {me} {statistic} {user} />
-		<div class="flex size-full flex-col items-center gap-5">
+		<div
+			class="ring-main-500 bg-contrast flex size-full h-auto flex-col items-center rounded-3xl p-2 ring-1"
+		>
 			{#if me}
 				<table
-					class="bg-main-200 sticky top-0 z-10 -ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1 py-3"
+					class="bg-contrast/90 sticky top-2 z-10 w-full table-fixed border-separate border-spacing-x-2 rounded-3xl py-2"
 				>
 					<tbody>
 						<tr>
@@ -72,10 +76,13 @@
 											asLink
 											{href}
 											class={clm(
-												'text-text hover:bg-main-700 justify-center',
-												page.url.pathname === href && 'bg-main-500'
+												button.type.primary,
+												button.size.lg,
+												page.url.pathname === href
+													? 'bg-main-500'
+													: 'bg-transparent ring-transparent',
+												'justify-center'
 											)}
-											size="lg"
 										>
 											<Icon class="hidden size-6 max-sm:block" this={icon} />
 											<p class="max-sm:hidden">{name}</p>
@@ -97,12 +104,6 @@
 <style lang="postcss">
 	@reference "../../app.css";
 
-	.screen-hd {
-		@apply max-2xl:p-12;
-	}
-	.screen-xl {
-		@apply max-xl:gap-6 max-xl:p-10;
-	}
 	.screen-lg {
 		@apply max-lg:flex-col max-lg:items-center;
 	}

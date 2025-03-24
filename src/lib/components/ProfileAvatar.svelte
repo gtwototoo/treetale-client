@@ -3,20 +3,16 @@
 	import { fade } from 'svelte/transition';
 
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
-	import { Avatar, Button, Icon, InputFile } from 'treetale-ui';
+	import { Icon, InputFile } from 'treetale-ui';
 
-	import {
-		BLACK_COLOR,
-		BLACK_TEXT_COLOR,
-		DEFAULT_COLOR,
-		WHITE_COLOR,
-		WHITE_TEXT_COLOR
-	} from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage } from '$lib/requests/files';
 	import type { RGB } from '$lib/types';
-	import { contrastText } from '$lib/utils/contrast';
-	import { toRGB } from '$lib/utils/customColors';
+	import Avatar from '$lib/ui/Avatar.svelte';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
+	import { generateMainColors } from '$lib/utils/customColors';
 
 	let {
 		addLoading = $bindable(),
@@ -26,17 +22,15 @@
 		color,
 		editMode = false,
 		onchange,
-		size = 'base',
 		src
 	}: {
 		addLoading: boolean;
 		alt: string;
 		base64src: string;
 		class?: string;
-		color: RGB | null;
+		color: RGB;
 		editMode?: boolean;
 		onchange?: ChangeEventHandler<HTMLInputElement>;
-		size?: 'base' | 'lg' | 'sm';
 		src?: null | string;
 	} = $props();
 
@@ -62,30 +56,10 @@
 		base64src = '';
 		addLoading = false;
 	};
-
-	const correctColor = $derived(color || DEFAULT_COLOR);
-	const colorContrast = $derived(contrastText(correctColor) ? BLACK_COLOR : WHITE_COLOR);
-	const colorText = $derived(contrastText(correctColor) ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR);
-
-	const style = $derived(
-		[
-			`--color-contrast: ${toRGB(colorContrast)}`,
-			`--color-main: ${toRGB(correctColor)}`,
-			`--color-text: ${toRGB(colorText)}`
-		].join(';')
-	);
 </script>
 
-<div class="contents" {style}>
-	<Avatar
-		{alt}
-		color={DEFAULT_COLOR}
-		{base64src}
-		onload={loadHandler}
-		{size}
-		{src}
-		class={classname}
-	>
+<div class="contents" style={generateMainColors(color)}>
+	<Avatar {alt} {base64src} onload={loadHandler} {src} class={classname}>
 		{#if editMode}
 			<div
 				class="bg-contrast absolute right-0 bottom-0 z-[3] rounded-full p-1"
@@ -101,7 +75,7 @@
 					</Button>
 				{:else}
 					<InputFile
-						class="bg-main-500 text-text hover:bg-main-700 rounded-full p-3"
+						class={clm(button.type.primary, 'rounded-full p-3')}
 						disabled={addLoading}
 						{onchange}
 					>

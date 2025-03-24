@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Button } from 'treetale-ui';
-
 	import type { FormatValues, Genre } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	import Likes from '../LeftSide/Likes.svelte';
 
@@ -23,12 +24,20 @@
 
 <div class="flex w-full justify-between gap-3">
 	<div class="*:bg-main-200 *:hover:bg-main-300 flex gap-3 *:pointer-events-auto *:gap-3 *:pl-4">
-		<Button asLink size="lg" href="/?genres={genre.id}">
-			<GenreIcon class="text-main size-6" />
+		<Button
+			asLink
+			class={clm(button.type.primary, button.size.lg, 'py-2 !pl-3')}
+			href="/?genres={genre.id}"
+		>
+			<GenreIcon class="text-main size-8" />
 			<p>{genre.title}</p>
 		</Button>
-		<Button asLink size="lg" href="/?format={format.id}">
-			<FormatIcon class="text-main size-6" />
+		<Button
+			asLink
+			class={clm(button.type.primary, button.size.lg, 'py-2 !pl-3')}
+			href="/?format={format.id}"
+		>
+			<FormatIcon class="text-main size-8" />
 			<p>{format.title}</p>
 		</Button>
 	</div>

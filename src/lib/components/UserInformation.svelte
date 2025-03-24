@@ -4,7 +4,7 @@
 	import type { ChangeEventHandler } from 'svelte/elements';
 
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
-	import { ColorPicker, Icon, Modal } from 'treetale-ui';
+	import { ColorPicker, Icon } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -20,6 +20,7 @@
 	import Button from '$lib/ui/Button.svelte';
 	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import Input from '$lib/ui/Input.svelte';
+	import Modal from '$lib/ui/Modal.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
@@ -154,8 +155,8 @@
 
 <div
 	class={clm(
-		'screen-lg screen-xl screen-hd screen-sm ring-main-500 sticky top-8 z-10 flex w-[36rem] shrink-0 flex-col items-center gap-8 rounded-3xl p-8 ring-1 select-none',
-		editMode ? 'bg-contrast' : 'bg-main-300'
+		'screen-lg screen-xl screen-hd screen-sm ring-main-500 sticky top-8 z-10 flex w-[36rem] shrink-0 flex-col items-center gap-8 self-start rounded-3xl p-8 ring-1 select-none',
+		editMode ? 'bg-contrast' : 'bg-main-200'
 	)}
 >
 	{#if editMode}
@@ -172,9 +173,9 @@
 				{editMode}
 				bind:addLoading
 				bind:base64src
-				size="lg"
 				src={userState.imageUrl}
 				alt={userState.name}
+				class="size-56 text-6xl"
 			/>
 		</div>
 		{#if editMode}
@@ -265,7 +266,7 @@
 				>
 					Выйти
 				</Button>
-				<Modal bind:active={exitModal} class="text-text flex flex-col items-center gap-8 p-8">
+				<Modal bind:active={exitModal} class="flex flex-col items-center gap-8 p-8">
 					<p>Вы действительно хотите выйти из профиля?</p>
 					<div class="flex gap-2">
 						<Button

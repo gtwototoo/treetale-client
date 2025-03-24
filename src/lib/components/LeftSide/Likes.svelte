@@ -3,9 +3,11 @@
 
 	import without from 'lodash/without';
 	import { Heart } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Icon } from 'treetale-ui';
 
 	import { addLike } from '$lib/requests/story';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	const {
@@ -43,15 +45,15 @@
 </script>
 
 <Button
-	class={clm('text-text gap-2 bg-red-100 py-2 pr-5 pl-3 hover:bg-red-200', classname)}
+	class={clm(
+		button.type.primary,
+		button.size.lg,
+		'gap-2 bg-red-500/10 py-2 !pl-2 ring-red-500/30 hover:bg-red-500/20',
+		classname
+	)}
 	{loading}
 	onclick={handleClick}
-	size="lg"
 >
-	<Icon
-		class={clm('size-8 text-red-500 *:stroke-2')}
-		this={Heart}
-		variation={isLiked ? 'solid' : 'outline'}
-	/>
-	<p class="min-w-[1rem]">{likesState.length}</p>
+	<Icon class={clm('size-8 text-red-500')} this={Heart} variation={isLiked ? 'solid' : 'outline'} />
+	<p>{likesState.length}</p>
 </Button>
