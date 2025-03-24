@@ -2,9 +2,10 @@
 	import type { Component } from 'svelte';
 
 	import { Cog6Tooth, DocumentText, RectangleStack, Tv, Variable } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import type { PanelProps } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';

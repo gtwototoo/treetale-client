@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { DocumentText } from 'svelte-heros-v2';
-	import { Icon, Link } from 'treetale-ui';
 
 	import Telegram from '$lib/components/Icons/Telegram.svelte';
 	import TreetaleShort from '$lib/components/Icons/TreetaleShort.svelte';
 	import Vk from '$lib/components/Icons/VK.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Link from '$lib/ui/Link.svelte';
 
 	const currentYear = new Date().getFullYear();
 </script>

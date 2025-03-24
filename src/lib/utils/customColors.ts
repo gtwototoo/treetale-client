@@ -12,7 +12,7 @@ import { contrastText } from './contrast';
 
 export const varColors = (extend: Record<string, RGB> = {}) => {
 	return Object.entries(extend)
-		.map(([key, value]) => `--${key}:rgb(${value.join(' ')})`)
+		.map(([key, value]) => `--${key}:${toRGB(value)}`)
 		.join(';');
 };
 
@@ -69,5 +69,5 @@ export const rootStyle = (mainColor?: RGB, additionalStyles?: Record<string, str
 };
 
 export const toRGB = (color: RGB) => {
-	return `rgb(${color.join(', ')})`;
+	return `rgb(${color.join(' ')})`;
 };

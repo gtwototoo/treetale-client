@@ -8,7 +8,6 @@
 		ColorPicker,
 		Contenteditable,
 		FormSplit,
-		Icon,
 		Input,
 		InputTags,
 		Popover
@@ -20,6 +19,7 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { bodyBackgroundColorStore, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, StoryFormat } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { deleteStory, updateInfomation } from '$board/requests/story';

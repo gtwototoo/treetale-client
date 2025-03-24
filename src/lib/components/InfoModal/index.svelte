@@ -5,7 +5,7 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 	import { Cog6Tooth } from 'svelte-heros-v2';
-	import { Button, Icon, Tag } from 'treetale-ui';
+	import { Button, Tag } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { STORY_FORMATS } from '$lib/constants/formats';
@@ -14,6 +14,7 @@
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Story, User } from '$lib/types';
 	import type { ResponseProgress } from '$lib/types/response';
+	import Icon from '$lib/ui/Icon.svelte';
 	import Modal from '$lib/ui/Modal.svelte';
 	import { generateMainColors } from '$lib/utils/customColors';
 	import { formatDate } from '$lib/utils/date';

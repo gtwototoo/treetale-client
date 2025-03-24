@@ -1,10 +1,10 @@
 <script lang="ts">
 	import find from 'lodash/find';
 	import { Share } from 'svelte-heros-v2';
-	import { Image } from 'treetale-ui';
 
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import type { Frame } from '$lib/types';
+	import Image from '$lib/ui/Image.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { preventDefault } from '$lib/utils/eventsModificators';
 

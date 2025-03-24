@@ -3,11 +3,13 @@
 	import { page } from '$app/state';
 
 	import { MetaTags } from 'svelte-meta-tags';
-	import { Button } from 'treetale-ui';
 
 	import MainHeader from '$lib/components/Header/MainHeader.svelte';
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import RootStyles from '$lib/components/RootStyles.svelte';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	const handleClick = async () => {
 		if (isNotFound) {
@@ -30,7 +32,7 @@
 			<div class="flex min-h-full w-full items-center justify-center px-4 py-20 max-sm:px-3">
 				<ReadCard alt="Ошибка" src={page.error?.img} text={page.error?.message}>
 					<Button
-						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main"
+						class={clm(button.type.primary, button.size.lg, 'adaptive-font adaptive-padding')}
 						onclick={handleClick}
 					>
 						{isNotFound ? 'Вернуться в начало' : 'Попытаться еще'}

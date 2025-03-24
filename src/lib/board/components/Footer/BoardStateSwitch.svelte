@@ -11,7 +11,9 @@
 		Share,
 		Square3Stack3d
 	} from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
+
+	import Icon from '$lib/ui/Icon.svelte';
 
 	import { connectionStartStore } from '$board/stores/frames.svelte';
 	import {

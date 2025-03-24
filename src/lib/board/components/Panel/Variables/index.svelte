@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Cloud, Variable } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
+	import Icon from '$lib/ui/Icon.svelte';
 	import { correctWhitespace } from '$lib/utils/text';
 
 	import { updateVars } from '$board/requests/story';

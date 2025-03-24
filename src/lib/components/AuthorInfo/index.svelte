@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { ArchiveBox, Check, Clock } from 'svelte-heros-v2';
-	import { Icon } from 'treetale-ui';
 
 	import type { RGB, StoryStatus, User } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
 

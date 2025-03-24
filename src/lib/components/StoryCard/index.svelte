@@ -3,11 +3,11 @@
 
 	import find from 'lodash/find';
 	import { Heart } from 'svelte-heros-v2';
-	import { Icon } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import type { Story, User } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { generateMainColors } from '$lib/utils/customColors';
 	import { collapseValue } from '$lib/utils/number';

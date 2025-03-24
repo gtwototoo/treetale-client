@@ -1,10 +1,11 @@
 <script lang="ts">
 	import reject from 'lodash/reject';
 	import { Trash, XMark } from 'svelte-heros-v2';
-	import { Button, Contenteditable, Icon } from 'treetale-ui';
+	import { Button, Contenteditable } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Comment } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { movingBlockStore } from '$board/stores/blocks.svelte';

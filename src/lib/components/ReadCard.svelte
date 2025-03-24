@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	import { Image } from 'treetale-ui';
-
+	import Image from '$lib/ui/Image.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 

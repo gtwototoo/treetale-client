@@ -2,9 +2,12 @@
 	import { onMount } from 'svelte';
 
 	import { ArrowsPointingIn, ArrowsPointingOut } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
 
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
+	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	import Header from './index.svelte';
 
@@ -46,9 +49,8 @@
 <Header class="fixed">
 	{#if fullscreenSupport}
 		<Button
-			class="header-button bg-main-500 text-text hover:bg-main-700"
+			class={clm(button.type.primary, button.size.lg, 'header-button')}
 			onclick={handleFulscreen}
-			size="lg"
 		>
 			<Icon
 				class="size-6"

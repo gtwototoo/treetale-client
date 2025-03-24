@@ -4,7 +4,6 @@
 
 	import { MagnifyingGlass, Moon, RocketLaunch, Star, Sun } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
-	import { Icon, Loading } from 'treetale-ui';
 
 	import AddStoryButton from '$lib/components/AddStoryButton.svelte';
 	import Category from '$lib/components/Category.svelte';
@@ -12,8 +11,10 @@
 	import { searchStories } from '$lib/requests/story';
 	import type { Searched, StoryFormat } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
 	import { button } from '$lib/ui/presets';
+	import Loading from '$lib/ui/svg/Loading.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 

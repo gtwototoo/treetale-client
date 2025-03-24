@@ -4,8 +4,9 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { DocumentDuplicate } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	type CopyState = 'error' | 'success' | null;

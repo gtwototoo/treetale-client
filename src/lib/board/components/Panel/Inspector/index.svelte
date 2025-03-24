@@ -2,8 +2,9 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import { Tv } from 'svelte-heros-v2';
-	import { Button, Image } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
+	import Image from '$lib/ui/Image.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 

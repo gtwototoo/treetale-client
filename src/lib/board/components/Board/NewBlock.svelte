@@ -2,13 +2,13 @@
 	import { onDestroy } from 'svelte';
 
 	import { Plus } from 'svelte-heros-v2';
-	import { Icon } from 'treetale-ui';
 
 	import {
 		DEFAULT_BLOCK_WIDTH,
 		DEFAULT_COMMENT_HEIGHT,
 		DEFAULT_FRAME_HEIGHT
 	} from '$lib/constants';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';

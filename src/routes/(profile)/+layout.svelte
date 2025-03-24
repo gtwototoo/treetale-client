@@ -4,13 +4,13 @@
 	import { type Person } from 'schema-dts';
 	import { Clock, Eye, Heart, Pencil } from 'svelte-heros-v2';
 	import { JsonLd, MetaTags } from 'svelte-meta-tags';
-	import { Icon } from 'treetale-ui';
 
 	import ProfileHeader from '$lib/components/Header/ProfileHeader.svelte';
 	import RootStyles from '$lib/components/RootStyles.svelte';
 	import UserInformation from '$lib/components/UserInformation.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { button } from '$lib/ui/presets.js';
 	import { clm } from '$lib/utils/classMerge';
 

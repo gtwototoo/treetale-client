@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { MusicalNote } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { isBindingMode } from '$board/stores/index.svelte';

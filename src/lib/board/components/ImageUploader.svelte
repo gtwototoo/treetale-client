@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Component } from 'svelte';
 
-	import { Image } from 'treetale-ui';
+	import Image from '$lib/ui/Image.svelte';
 
 	import FileUploader from './FileUploader.svelte';
 

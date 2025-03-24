@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { ChevronDown, ChevronLeft, PencilSquare } from 'svelte-heros-v2';
-	import { Button, Icon, Listbox } from 'treetale-ui';
+	import { Button, Listbox } from 'treetale-ui';
 
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';

@@ -4,12 +4,14 @@
 
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Share } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
 
 	import FrameMini from '$lib/components/FrameMini.svelte';
 	import VersionTag from '$lib/components/VersionTag.svelte';
 	import type { Story } from '$lib/types';
 	import type { ResponseResults } from '$lib/types/response';
+	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	const {
@@ -64,7 +66,10 @@
 
 <div class="flex w-full flex-col gap-3 max-md:items-center">
 	<div class="*:bg-main-300 *:hover:bg-main-500 flex *:gap-3 *:rounded-full *:pl-4">
-		<Button size="lg" onclick={handleCopyLink} class="pointer-events-auto">
+		<Button
+			onclick={handleCopyLink}
+			class={clm(button.size.lg, button.type.primary, 'pointer-events-auto')}
+		>
 			<Icon
 				this={Share}
 				class={clm(
@@ -91,21 +96,15 @@
 	</div>
 </div>
 <FrameMini frame={endFrame!} short={false} />
-<div class="flex gap-3 *:pointer-events-auto max-md:w-full *:max-md:flex-1">
+<div class="flex gap-3 *:pointer-events-auto *:justify-center max-md:w-full *:max-md:flex-1">
 	<Button
 		asLink
-		size="lg"
-		class="adaptive-font bg-main-700 hover:bg-main justify-center font-medium"
-		href={`/${story.storyId}`}
+		class={clm(button.size.lg, button.type.primary, 'adaptive-font')}
+		href="/{story.storyId}"
 	>
 		В начало
 	</Button>
-	<Button
-		asLink
-		href="/"
-		size="lg"
-		class="adaptive-font bg-main-700 hover:bg-main justify-center font-medium"
-	>
+	<Button asLink href="/" class={clm(button.size.lg, button.type.primary, 'adaptive-font')}>
 		На главную
 	</Button>
 </div>

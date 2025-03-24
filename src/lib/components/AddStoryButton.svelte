@@ -3,10 +3,10 @@
 	import { page } from '$app/state';
 
 	import { PlusCircle } from 'svelte-heros-v2';
-	import { Icon } from 'treetale-ui';
 
 	import { createStory } from '$lib/requests/story';
 	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 

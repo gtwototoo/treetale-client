@@ -2,11 +2,12 @@
 	import { page } from '$app/state';
 
 	import { UserCircle } from 'svelte-heros-v2';
-	import { Icon, Link } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import type { User } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Link from '$lib/ui/Link.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 

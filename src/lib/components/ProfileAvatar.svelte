@@ -3,13 +3,14 @@
 	import { fade } from 'svelte/transition';
 
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
-	import { Icon, InputFile } from 'treetale-ui';
+	import { InputFile } from 'treetale-ui';
 
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage } from '$lib/requests/files';
 	import type { RGB } from '$lib/types';
 	import Avatar from '$lib/ui/Avatar.svelte';
 	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { generateMainColors } from '$lib/utils/customColors';

@@ -4,7 +4,7 @@
 	import type { ChangeEventHandler } from 'svelte/elements';
 
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
-	import { ColorPicker, Icon } from 'treetale-ui';
+	import { ColorPicker } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -19,6 +19,7 @@
 	import type { RGB, User } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
 	import Contenteditable from '$lib/ui/Contenteditable.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
 	import Modal from '$lib/ui/Modal.svelte';
 	import { button } from '$lib/ui/presets';
@@ -239,66 +240,69 @@
 		{:else}
 			<p class="text-text/50 px-4 text-lg leading-[3.25rem]">Описание отсутствует</p>
 		{/if}
-	</div>
-	<div class="flex gap-2">
-		{#if me}
-			{#if editMode}
-				<Button class={clm(button.type.primary, button.size.lg)} {loading} onclick={saveProfile}>
-					Сохранить
-				</Button>
-				<Button
-					class={clm(button.type.primary, button.size.lg, 'text-red-500')}
-					onclick={cancelEdit}
-				>
-					Отмена
+		<div class="mt-4 flex gap-2">
+			{#if me}
+				{#if editMode}
+					<Button class={clm(button.type.primary, button.size.lg)} {loading} onclick={saveProfile}>
+						Сохранить
+					</Button>
+					<Button
+						class={clm(button.type.primary, button.size.lg, 'text-red-500')}
+						onclick={cancelEdit}
+					>
+						Отмена
+					</Button>
+				{:else}
+					<Button
+						class={clm(button.type.primary, button.size.lg)}
+						onclick={() => (editMode = true)}
+					>
+						Редактировать
+					</Button>
+					<Button
+						class={clm(
+							button.type.primary,
+							button.size.lg,
+							'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
+						)}
+						onclick={() => (exitModal = true)}
+					>
+						Выйти
+					</Button>
+					<Modal bind:active={exitModal} class="flex flex-col items-center gap-8 p-8">
+						<p>Вы действительно хотите выйти из профиля?</p>
+						<div class="flex gap-2">
+							<Button
+								class={clm(button.type.primary, button.size.lg)}
+								onclick={() => (exitModal = false)}
+							>
+								Отмена
+							</Button>
+							<Button
+								class={clm(
+									button.type.primary,
+									button.size.lg,
+									'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
+								)}
+								onclick={handleSignOut}
+							>
+								Выйти
+							</Button>
+						</div>
+					</Modal>
+				{/if}
+			{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
+				<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleUnsubscribe}>
+					<Icon class="size-6" this={UserMinus} />
+					<p class="mr-1">Отписаться</p>
 				</Button>
 			{:else}
-				<Button class={clm(button.type.primary, button.size.lg)} onclick={() => (editMode = true)}>
-					Редактировать
+				<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleSubscribe}>
+					<Icon class="size-6" this={UserPlus} />
+					<p class="mr-1">Подписаться</p>
 				</Button>
-				<Button
-					class={clm(
-						button.type.primary,
-						button.size.lg,
-						'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
-					)}
-					onclick={() => (exitModal = true)}
-				>
-					Выйти
-				</Button>
-				<Modal bind:active={exitModal} class="flex flex-col items-center gap-8 p-8">
-					<p>Вы действительно хотите выйти из профиля?</p>
-					<div class="flex gap-2">
-						<Button
-							class={clm(button.type.primary, button.size.lg)}
-							onclick={() => (exitModal = false)}
-						>
-							Отмена
-						</Button>
-						<Button
-							class={clm(
-								button.type.primary,
-								button.size.lg,
-								'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
-							)}
-							onclick={handleSignOut}
-						>
-							Выйти
-						</Button>
-					</div>
-				</Modal>
 			{/if}
-		{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
-			<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleUnsubscribe}>
-				<Icon class="size-6" this={UserMinus} />
-				<p class="mr-1">Отписаться</p>
-			</Button>
-		{:else}
-			<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleSubscribe}>
-				<Icon class="size-6" this={UserPlus} />
-				<p class="mr-1">Подписаться</p>
-			</Button>
-		{/if}
+		</div>
 	</div>
 </div>
 
@@ -306,12 +310,12 @@
 	@reference "../../app.css";
 
 	.screen-hd {
-		@apply max-2xl:w-[30rem];
+		@apply max-2xl:w-[30rem] max-2xl:gap-10;
 	}
 	.screen-xl {
-		@apply max-2xl:gap-10 max-xl:w-[24rem] max-xl:p-6;
+		@apply max-xl:w-[24rem] max-xl:p-6;
 	}
 	.screen-lg {
-		@apply max-lg:relative max-lg:top-0 max-lg:w-full max-lg:gap-8;
+		@apply max-lg:relative max-lg:top-0 max-lg:w-full max-lg:flex-row max-lg:gap-8;
 	}
 </style>

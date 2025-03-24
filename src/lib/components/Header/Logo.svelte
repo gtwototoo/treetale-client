@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Link } from 'treetale-ui';
+	import Link from '$lib/ui/Link.svelte';
 
 	import Treetale from '../Icons/Treetale.svelte';
 	import TreetaleShort from '../Icons/TreetaleShort.svelte';

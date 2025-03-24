@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Cloud, DocumentText } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
+
+	import Icon from '$lib/ui/Icon.svelte';
 
 	import { updateNotes } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';

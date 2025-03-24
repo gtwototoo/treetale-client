@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { Component } from 'svelte';
 
-	import { Image } from 'treetale-ui';
-
 	import type { RGB } from '$lib/types';
+	import Image from '$lib/ui/Image.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
 

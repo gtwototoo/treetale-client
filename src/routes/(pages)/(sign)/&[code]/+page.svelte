@@ -7,12 +7,13 @@
 
 	import { Check, XMark } from 'svelte-heros-v2';
 	import { MetaTags } from 'svelte-meta-tags';
-	import { Button, Icon, Input } from 'treetale-ui';
+	import { Button, Input } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import RootStyles from '$lib/components/RootStyles.svelte';
 	import { signUpUser } from '$lib/requests/user';
 	import type { FetchResponse } from '$lib/types/response';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	let name = $state('');

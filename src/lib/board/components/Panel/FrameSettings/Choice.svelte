@@ -3,12 +3,13 @@
 	import findIndex from 'lodash/findIndex';
 	import reject from 'lodash/reject';
 	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
-	import { Button, Contenteditable, Icon } from 'treetale-ui';
+	import { Button, Contenteditable } from 'treetale-ui';
 
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { choiceModificators } from '$lib/utils/variableOperations';
 

@@ -3,11 +3,12 @@
 
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Trash } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import { deleteProgress } from '$lib/requests/progress';
 	import type { Frame, Story } from '$lib/types';
 	import type { ResponseProgress } from '$lib/types/response';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
 	import { formatDate } from '$lib/utils/date';

@@ -4,11 +4,12 @@
 	import { fade } from 'svelte/transition';
 
 	import { Envelope } from 'svelte-heros-v2';
-	import { Icon, Image } from 'treetale-ui';
 
 	import { signInUser } from '$lib/requests/user';
 	import type { FetchResponse } from '$lib/types/response';
 	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Image from '$lib/ui/Image.svelte';
 	import Input from '$lib/ui/Input.svelte';
 	import Modal from '$lib/ui/Modal.svelte';
 	import { button } from '$lib/ui/presets';

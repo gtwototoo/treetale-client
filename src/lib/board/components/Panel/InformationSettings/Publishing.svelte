@@ -2,9 +2,10 @@
 	import { page } from '$app/state';
 
 	import { Check } from 'svelte-heros-v2';
-	import { Button, Icon } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 

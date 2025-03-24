@@ -1,9 +1,11 @@
 <script lang="ts">
 	import type { Howl } from 'howler';
 	import { MusicalNote, Pause, Play, Stop } from 'svelte-heros-v2';
-	import { Button, Icon, Loading } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import { soundStore } from '$lib/stores/sound.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Loading from '$lib/ui/svg/Loading.svelte';
 
 	import FileUploader from './FileUploader.svelte';
 

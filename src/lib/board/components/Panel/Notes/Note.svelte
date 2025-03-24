@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { XMark } from 'svelte-heros-v2';
-	import { Button, Contenteditable, FormSplit, Icon, InputTags } from 'treetale-ui';
+	import { Button, Contenteditable, FormSplit, InputTags } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { notesStore } from '$board/stores/notes.svelte';

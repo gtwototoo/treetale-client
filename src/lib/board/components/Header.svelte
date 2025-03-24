@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { ArrowUturnLeft, ArrowUturnRight, Cloud, Link as LinkIcon } from 'svelte-heros-v2';
-	import { Button, FormSplit, Icon } from 'treetale-ui';
+	import { Button, FormSplit } from 'treetale-ui';
 
 	import Logo from '$lib/components/Header/Logo.svelte';
 	import Session from '$lib/components/Header/Session.svelte';
 	import { ICON_TYPE } from '$lib/constants';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { changesHistoryStore } from '$board/stores/history.svelte';
