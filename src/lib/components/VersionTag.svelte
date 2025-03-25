@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Tag } from 'treetale-ui';
-
 	import { clm } from '$lib/utils/classMerge';
 	import { versionCompare } from '$lib/utils/versionCompare';
 
@@ -28,6 +26,6 @@
 	);
 </script>
 
-<Tag class={clm('whitespace-nowrap', versionColor)}>
+<div class={clm('rounded-lg px-3 py-1.5 text-sm whitespace-nowrap select-none', versionColor)}>
 	{visibleVersion === 'Архив' ? visibleVersion : `Версия ${visibleVersion}`}
-</Tag>
+</div>

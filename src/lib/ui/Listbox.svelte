@@ -19,7 +19,8 @@
 		value,
 		onchange,
 		sameWidth = true,
-		placement = 'bottom'
+		placement = 'bottom',
+		hideArrow = false
 	}: {
 		options: ChildrenSnippetProps[];
 		class?: string;
@@ -30,6 +31,7 @@
 		onchange?: (value: string) => void;
 		sameWidth?: boolean;
 		placement?: Placement;
+		hideArrow?: boolean;
 	} = $props();
 
 	let select = new Select<string>({
@@ -47,21 +49,18 @@
 <Button
 	{...select.trigger}
 	inert={false}
-	class={clm(
-		button.type.primary,
-		button.size.base,
-		'justify-center gap-1',
-		(disabled || readonly) && 'pointer-events-none',
-		classname
-	)}
+	disabled={disabled || readonly}
+	class={clm(button.type.primary, button.size.base, 'justify-center gap-1', classname)}
 >
 	<p>{select.value || placeholder}</p>
-	<Icon class="size-4" this={ChevronDown} />
+	{#if !(disabled || readonly) && !hideArrow}
+		<Icon class="size-4" this={ChevronDown} />
+	{/if}
 </Button>
 
 <div {...select.content} class="bg-contrast rounded-xl p-1 shadow-md">
 	<FormSplit vertical>
-		{#each options as { onclick, value } (value)}
+		{#each options as { onclick, value }, key (key)}
 			{@const { onclick: baseOnClick, ...other } = select.getOption(value)}
 			<Button
 				{...other}

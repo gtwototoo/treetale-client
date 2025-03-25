@@ -3,12 +3,13 @@
 
 	import { pluralize } from 'pluralize-ru-ts';
 	import { Trash } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import { deleteProgress } from '$lib/requests/progress';
 	import type { Frame, Story } from '$lib/types';
 	import type { ResponseProgress } from '$lib/types/response';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { contrastText } from '$lib/utils/contrast';
 	import { formatDate } from '$lib/utils/date';
@@ -52,12 +53,12 @@
 	const choicesCount = $derived(choices.length);
 	const redBackgroundColor = $derived(
 		contrastText(story.color)
-			? clm('bg-red-900 hover:bg-red-800 text-red-500')
-			: clm('bg-red-100 hover:bg-red-200 text-red-500')
+			? clm('bg-red-900 hover:bg-red-800 text-red-500 ring-red-700')
+			: clm('bg-red-100 hover:bg-red-200 text-red-500 ring-red-300')
 	);
 </script>
 
-<div class="flex w-full flex-col gap-6">
+<div class="flex w-full flex-col gap-3">
 	<div class="flex items-center gap-3 max-md:justify-between max-md:px-3">
 		<VersionTag
 			currentVersion={story.version}
@@ -72,9 +73,14 @@
 	</div>
 	<FrameMini frame={lastFrame} />
 	<div class="flex justify-between">
-		<div class="flex items-center gap-3 overflow-hidden">
+		<div class="flex items-center gap-3">
 			<Button
-				class={clm(redBackgroundColor, 'pointer-events-auto justify-center px-2.5 py-1')}
+				class={clm(
+					button.type.primary,
+					button.size.base,
+					'adaptive-font p-2.5',
+					redBackgroundColor
+				)}
 				onclick={handleDelete}
 				{loading}
 			>
@@ -87,9 +93,8 @@
 		</div>
 		<Button
 			asLink
-			size="lg"
 			href="/{story.storyId}"
-			class="adaptive-font bg-main-700 hover:bg-main pointer-events-auto font-medium"
+			class={clm(button.type.primary, button.size.lg, 'adaptive-font')}
 		>
 			Продолжить
 		</Button>

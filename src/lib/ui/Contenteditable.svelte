@@ -160,8 +160,6 @@
 <div
 	class={clm(
 		'ring-main-500 text-text relative flex min-h-[2.5rem] shrink-0 cursor-text items-end gap-2 text-left break-words ring-1',
-		left && 'pl-1',
-		right && 'pr-1',
 		focused && clm('bg-main-100', focusClass),
 		disabled ? 'cursor-default' : 'hover:bg-main-100',
 		classname

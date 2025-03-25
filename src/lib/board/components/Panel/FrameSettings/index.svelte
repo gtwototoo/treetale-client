@@ -11,15 +11,17 @@
 		RectangleStack,
 		Trash
 	} from 'svelte-heros-v2';
-	import { Button, Contenteditable, Input, Popover } from 'treetale-ui';
+	import { Contenteditable, Input, Popover } from 'treetale-ui';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
 	import { FRAMES_FOLDER } from '$lib/constants/s3forders';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Frame } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
@@ -253,11 +255,14 @@
 				value={`${Math.round(y)}`}
 			/>
 		</FormSplit>
-		<Button onclick={setToCoordinates} class="bg-main-300 text-text hover:bg-main-500 p-2">
+		<Button
+			class={clm(buttonPresets.type.primary, buttonPresets.size.base, 'px-2')}
+			onclick={setToCoordinates}
+		>
 			<Icon this={CursorArrowRipple} class="size-6" />
 		</Button>
 	</div>
-	<table class="-ml-1 w-[calc(100%+0.5rem)] table-fixed border-separate border-spacing-x-1">
+	<table class="-ml-2 w-[calc(100%+1rem)] table-fixed border-separate border-spacing-x-2">
 		<tbody>
 			<tr>
 				<td>
@@ -274,7 +279,7 @@
 						/>
 						{#if !imageUrl && onePrevFrame?.imageUrl && !readonlyModeStore.isEnabled}
 							<Button
-								class="bg-main-200 text-text hover:bg-main-400 justify-center"
+								class={clm(buttonPresets.type.primary, buttonPresets.size.lg, 'justify-center')}
 								disabled={panelStatesStore.editMode}
 								onclick={addPrevImage}
 							>
@@ -288,14 +293,15 @@
 						{#snippet button({ onclick })}
 							<Button
 								class={clm(
-									'bg-main-200 text-text hover:bg-main-400 w-full flex-col justify-center gap-1',
+									buttonPresets.type.primary,
+									buttonPresets.size.lg,
+									'w-full flex-col justify-center',
 									soundUrl && 'text-emerald-500'
 								)}
-								size="lg"
 								{onclick}
 							>
 								<Icon class="text-main size-10" this={MusicalNote} variation="solid" />
-								<p class="text-xs">{soundUrl ? `Мелодия ${frameId}` : 'Мелодия'}</p>
+								<p class="text-sm">{soundUrl ? `Мелодия ${frameId}` : 'Мелодия'}</p>
 							</Button>
 						{/snippet}
 						<div class="flex w-96 flex-col p-4">

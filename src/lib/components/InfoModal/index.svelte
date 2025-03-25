@@ -5,7 +5,6 @@
 	import find from 'lodash/find';
 	import last from 'lodash/last';
 	import { Cog6Tooth } from 'svelte-heros-v2';
-	import { Button, Tag } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { STORY_FORMATS } from '$lib/constants/formats';
@@ -14,8 +13,11 @@
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Story, User } from '$lib/types';
 	import type { ResponseProgress } from '$lib/types/response';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Modal from '$lib/ui/Modal.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 	import { generateMainColors } from '$lib/utils/customColors';
 	import { formatDate } from '$lib/utils/date';
 	import { correctVariableReplace } from '$lib/utils/text';
@@ -79,19 +81,14 @@
 	<div class="text-text flex h-auto w-full flex-col items-start max-md:items-center">
 		<ActionButtons {genre} {storyId} {format} {likes} />
 		<div class="flex grow flex-col justify-between gap-2">
-			<div class="mt-4 flex flex-col gap-2">
+			<div class="mt-4 flex flex-col gap-3">
 				<h1 class="text-[clamp(32px,5vw,56px)] leading-none max-md:pb-4 max-md:text-center">
 					{title || 'Без названия'}
 				</h1>
-				<div class="flex w-full gap-3 max-md:px-3">
+				<div class="flex w-full items-center gap-2">
 					{#if edit}
-						<Button
-							asLink
-							size="sm"
-							href="/board/{storyId}"
-							class="bg-main-200 hover:bg-main-300 pointer-events-auto"
-						>
-							<Icon this={Cog6Tooth} class="size-4" />
+						<Button asLink href="/board/{storyId}" class={clm(button.type.primary, button.size.sm)}>
+							<Icon this={Cog6Tooth} class="size-5" />
 						</Button>
 					{/if}
 					<CopyButton {storyId} />
@@ -108,7 +105,9 @@
 				{#if tags.length}
 					<div class="flex flex-wrap gap-2 max-md:gap-1">
 						{#each tags as tag (tag)}
-							<Tag class="bg-main-400 text-text rounded-full px-4 text-base">{tag}</Tag>
+							<div class="bg-main-300 text-text rounded-full px-4 py-1.5 text-base select-none">
+								{tag}
+							</div>
 						{/each}
 					</div>
 				{:else}
@@ -121,8 +120,7 @@
 				<Button
 					asLink
 					href="/{storyId}"
-					size="lg"
-					class="adaptive-font bg-main-200 hover:bg-main-300 pointer-events-auto font-medium"
+					class={clm(button.type.primary, button.size.lg, 'adaptive-font')}
 				>
 					Начать историю
 				</Button>

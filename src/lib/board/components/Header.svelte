@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { ArrowUturnLeft, ArrowUturnRight, Cloud, Link as LinkIcon } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import Logo from '$lib/components/Header/Logo.svelte';
 	import Session from '$lib/components/Header/Session.svelte';
 	import { ICON_TYPE } from '$lib/constants';
+	import Button from '$lib/ui/Button.svelte';
 	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { changesHistoryStore } from '$board/stores/history.svelte';
@@ -51,28 +52,27 @@
 			/>
 			<FormSplit>
 				<Button
-					class="header-button bg-contrast text-text"
+					class={clm(button.type.primary, button.size.lg, 'px-4')}
 					disabled={changesHistoryStore.currentId === 0}
 					onclick={changesHistoryStore.undo}
 					onholdclick={historySwitch}
-					size="lg"
 				>
 					<Icon this={ArrowUturnLeft} />
 				</Button>
 				<Button
-					class="header-button bg-contrast text-text"
+					class={clm(button.type.primary, button.size.lg, 'px-4')}
 					disabled={changesHistoryStore.currentId + 1 >= changesHistoryStore.stages.length}
 					onclick={changesHistoryStore.redo}
 					onholdclick={historySwitch}
-					size="lg"
 				>
 					<Icon this={ArrowUturnRight} />
 				</Button>
 			</FormSplit>
 			<Button
-				size="lg"
 				class={clm(
-					'bg-contrast text-text -mr-6 rounded-full px-3',
+					button.type.primary,
+					button.size.lg,
+					'-mr-6 rounded-full px-3',
 					panelStatesStore.id === 'share' && 'bg-main-500'
 				)}
 				onclick={handleClick}

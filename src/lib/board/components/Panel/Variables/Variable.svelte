@@ -68,7 +68,7 @@
 	>
 		{#snippet right()}
 			<Button
-				class={clm(button.size.sm, button.type.primary, redBackgroundColorStore.color, 'p-1.5')}
+				class={clm(button.size.sm, button.type.primary, redBackgroundColorStore.color, 'px-1.5')}
 				onclick={removeVariable}
 			>
 				<Icon this={XMark} class="size-5" />
@@ -97,7 +97,7 @@
 						variable.expect = value as VariableExpects;
 						checkUpdates();
 					}}
-					class={clm(button.size.sm, 'py-1 text-sm/6')}
+					class={clm(button.size.sm, 'text-sm')}
 					value={variable.expect}
 					options={types.map(({ value }) => ({ value }))}
 					placeholder="Тип"

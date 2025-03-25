@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { Cloud, DocumentText } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { updateNotes } from '$board/requests/story';
 	import { readonlyModeStore } from '$board/stores/index.svelte';
@@ -60,10 +62,7 @@
 		<NoteRow {checkUpdates} noteKey={key} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button
-			class="bg-contrast-700 text-text hover:bg-contrast-900 justify-center"
-			onclick={addNote}
-		>
+		<Button class={clm(button.type.primary, button.size.base, 'justify-center')} onclick={addNote}>
 			Добавить заметку
 		</Button>
 	{/if}

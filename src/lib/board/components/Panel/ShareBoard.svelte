@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Cloud, Link, XMark } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
 	import Listbox from '$lib/ui/Listbox.svelte';
@@ -57,13 +57,15 @@
 	icon={Link}
 	text="Вы можете поделиться рабочей областью с другими пользователями с помощью специальной ссылки, либо пригласить их, добавив в список ниже"
 />
-<Button class="bg-main-300 text-text hover:bg-main-500 justify-center">Скопировать ссылку</Button>
+<Button class={clm(button.type.primary, button.size.base, 'justify-center')}>
+	Скопировать ссылку
+</Button>
 <div class="flex flex-col gap-2">
 	{#each users as user, index (index)}
 		<Input
 			bind:value={user.email}
 			disabled={panelStatesStore.editMode}
-			class={clm(button.size.base)}
+			class={clm(button.size.base, 'py-1 pr-1')}
 			maxlength={15}
 			oninput={checkUpdates}
 			placeholder="Почта"
@@ -72,18 +74,22 @@
 			{#snippet right()}
 				{#if panelStatesStore.editMode}
 					<Button
-						class={redBackgroundColorStore.color}
+						class={clm(
+							button.type.primary,
+							button.size.sm,
+							redBackgroundColorStore.color,
+							'px-1.5'
+						)}
 						onclick={() => removeShareUser(index)}
-						size="sm"
 					>
-						<Icon this={XMark} class="size-4" />
+						<Icon this={XMark} class="size-5" />
 					</Button>
 				{:else}
 					<Listbox
 						value={user.role}
 						options={[{ value: 'Просмотр' }, { value: 'Редактирование' }]}
 						onchange={checkUpdates}
-						class="shrink-0"
+						class={clm(button.size.sm, 'shrink-0 text-sm')}
 						placeholder="Права"
 						placement="bottom-end"
 						readonly={readonlyModeStore.isEnabled}
@@ -94,7 +100,10 @@
 		</Input>
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
-		<Button class="bg-main-300 text-text hover:bg-main-500 justify-center" onclick={addSharedUser}>
+		<Button
+			class={clm(button.type.primary, button.size.base, 'justify-center')}
+			onclick={addSharedUser}
+		>
 			Добавить пользователя
 		</Button>
 	{/if}

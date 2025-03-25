@@ -2,10 +2,12 @@
 	import type { Snippet } from 'svelte';
 
 	import { Photo } from 'svelte-heros-v2';
-	import { Button, Popover } from 'treetale-ui';
+	import { Popover } from 'treetale-ui';
 
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Image from '$lib/ui/Image.svelte';
+	import { button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	const {
@@ -21,10 +23,11 @@
 	{#snippet button({ onclick })}
 		<Button
 			class={clm(
-				'bg-main-200 text-text hover:bg-main-400 w-full flex-col justify-center gap-1',
+				buttonPresets.type.primary,
+				buttonPresets.size.lg,
+				'w-full flex-col justify-center',
 				imageUrl && 'p-1'
 			)}
-			size="lg"
 			{onclick}
 		>
 			{#if imageUrl}
@@ -41,7 +44,7 @@
 				</Image>
 			{:else}
 				<Icon class="text-main size-10" this={Photo} variation="solid" />
-				<p class="text-xs">Иллюстрация</p>
+				<p class="text-sm">Иллюстрация</p>
 			{/if}
 		</Button>
 	{/snippet}

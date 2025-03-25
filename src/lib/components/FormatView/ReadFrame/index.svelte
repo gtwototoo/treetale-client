@@ -3,12 +3,14 @@
 	import { onMount } from 'svelte';
 
 	import find from 'lodash/find';
-	import { Button } from 'treetale-ui';
 
 	import ReadCard from '$lib/components/ReadCard.svelte';
 	import { setEndProgress } from '$lib/requests/results';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Frame } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 
 	import { enabledChoice, updateCurrentVarsValues } from '../../methods.svelte';
@@ -84,7 +86,11 @@
 					<Button
 						{loading}
 						onclick={handleEndStory}
-						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main pointer-events-auto font-medium"
+						class={clm(
+							button.type.primary,
+							button.size.lg,
+							'adaptive-font adaptive-padding pointer-events-auto'
+						)}
 					>
 						Завершить историю
 					</Button>

@@ -23,10 +23,10 @@
 </script>
 
 <div class="flex w-full justify-between gap-3">
-	<div class="*:bg-main-200 *:hover:bg-main-300 flex gap-3 *:pointer-events-auto *:gap-3 *:pl-4">
+	<div class="flex gap-3 *:gap-3">
 		<Button
 			asLink
-			class={clm(button.type.primary, button.size.lg, 'py-2 !pl-3')}
+			class={clm(button.type.primary, button.size.lg, 'py-2 pl-3')}
 			href="/?genres={genre.id}"
 		>
 			<GenreIcon class="text-main size-8" />
@@ -34,12 +34,12 @@
 		</Button>
 		<Button
 			asLink
-			class={clm(button.type.primary, button.size.lg, 'py-2 !pl-3')}
+			class={clm(button.type.primary, button.size.lg, 'py-2 pl-3')}
 			href="/?format={format.id}"
 		>
 			<FormatIcon class="text-main size-8" />
 			<p>{format.title}</p>
 		</Button>
 	</div>
-	<Likes {likes} {storyId} class="pointer-events-auto pr-4" />
+	<Likes {likes} {storyId} class="pr-4" />
 </div>

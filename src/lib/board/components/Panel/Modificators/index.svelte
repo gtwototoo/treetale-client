@@ -9,6 +9,7 @@
 	import Maths from '$lib/components/Icons/Maths.svelte';
 	import type { PanelProps } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 	import { choiceModificators } from '$lib/utils/variableOperations';
@@ -132,13 +133,13 @@
 {#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}
 	<div class="flex gap-2 *:flex-1">
 		<Button
-			class="bg-main-300 text-text hover:bg-main-500 justify-center"
+			class={clm(button.type.primary, button.size.base, 'justify-center')}
 			onclick={() => handleAddModificator('logic')}
 		>
 			Условие
 		</Button>
 		<Button
-			class="bg-main-300 text-text hover:bg-main-500 justify-center"
+			class={clm(button.type.primary, button.size.base, 'justify-center')}
 			onclick={() => handleAddModificator('math')}
 		>
 			Операция

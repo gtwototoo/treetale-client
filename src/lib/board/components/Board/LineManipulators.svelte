@@ -31,8 +31,9 @@
 				<Button
 					class={clm(
 						button.type.primary,
+						button.size.sm,
 						redBackgroundColorStore.color,
-						'min-h-0 rounded-full p-1.5'
+						'rounded-full px-1.5'
 					)}
 					onclick={() => removeConnection(fromFrameId, fromChoiceId)}
 				>

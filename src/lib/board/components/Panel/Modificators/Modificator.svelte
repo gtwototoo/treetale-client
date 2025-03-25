@@ -123,6 +123,7 @@
 			options={symbols[modificator.type].map((value) => ({ value }))}
 			placeholder=""
 			class="w-8"
+			hideArrow
 			sameWidth={false}
 			onchange={(value) => {
 				modificator.symbol = value as Modificator['symbol'];

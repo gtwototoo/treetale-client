@@ -47,8 +47,8 @@
 	class={clm(
 		'relative flex items-center whitespace-nowrap select-none',
 		loading && '!text-transparent *:invisible',
-		inactive && 'pointer-events-none cursor-default opacity-40',
-		classname
+		classname,
+		inactive && 'bg-main-100 ring-main-200 pointer-events-none cursor-default'
 	)}
 	onclick={handleClick}
 	onholdclick={handleHoldClick}

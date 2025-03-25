@@ -4,9 +4,10 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 
 	import { DocumentDuplicate } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	type CopyState = 'error' | 'success' | null;
@@ -53,18 +54,14 @@
 	});
 </script>
 
-<Button
-	size="sm"
-	onclick={handleCopyLink}
-	class="hover:bg-main-300 bg-main-200 pointer-events-auto gap-1 py-1 pl-1 font-normal"
->
+<Button onclick={handleCopyLink} class={clm(button.type.primary, button.size.sm, 'gap-1.5 pl-1.5')}>
 	<Icon
 		this={DocumentDuplicate}
 		class={clm(
-			'size-4 transition-colors',
+			'size-5 transition-colors',
 			copyState === 'success' && 'text-green-500',
 			copyState === 'error' && 'text-red-500'
 		)}
 	/>
-	<p>Ссылка</p>
+	<p class="text-sm">Ссылка</p>
 </Button>
