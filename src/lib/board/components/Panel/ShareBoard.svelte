@@ -1,8 +1,13 @@
 <script lang="ts">
 	import { Cloud, Link, XMark } from 'svelte-heros-v2';
-	import { Button, Icon, Input, Listbox } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Input from '$lib/ui/Input.svelte';
+	import Listbox from '$lib/ui/Listbox.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { readonlyModeStore } from '$board/stores/index.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -58,6 +63,7 @@
 		<Input
 			bind:value={user.email}
 			disabled={panelStatesStore.editMode}
+			class={clm(button.size.base)}
 			maxlength={15}
 			oninput={checkUpdates}
 			placeholder="Почта"
@@ -74,13 +80,14 @@
 					</Button>
 				{:else}
 					<Listbox
-						size="sm"
-						align="right"
-						bind:value={user.role}
-						list={['Просмотр', 'Редактирование']}
+						value={user.role}
+						options={[{ value: 'Просмотр' }, { value: 'Редактирование' }]}
 						onchange={checkUpdates}
+						class="shrink-0"
 						placeholder="Права"
+						placement="bottom-end"
 						readonly={readonlyModeStore.isEnabled}
+						sameWidth={false}
 					/>
 				{/if}
 			{/snippet}

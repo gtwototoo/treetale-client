@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Button, FormSplit } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
+	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import { stopPropagation } from '$lib/utils/eventsModificators';
 
 	import { addChoice } from '$board/components/methods.svelte';

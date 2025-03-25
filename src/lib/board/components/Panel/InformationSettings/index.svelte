@@ -3,15 +3,7 @@
 
 	import find from 'lodash/find';
 	import { Cloud, PaintBrush } from 'svelte-heros-v2';
-	import {
-		Button,
-		ColorPicker,
-		Contenteditable,
-		FormSplit,
-		Input,
-		InputTags,
-		Popover
-	} from 'treetale-ui';
+	import { Button, ColorPicker, Contenteditable, Input, InputTags, Popover } from 'treetale-ui';
 
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -19,6 +11,7 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { bodyBackgroundColorStore, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, StoryFormat } from '$lib/types';
+	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 

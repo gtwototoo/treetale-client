@@ -64,6 +64,7 @@
 		"vitest": "^3.0.7"
 	},
 	"dependencies": {
-		"dotenv": "^16.4.7"
+		"dotenv": "^16.4.7",
+		"melt": "^0.20.2"
 	}
 }

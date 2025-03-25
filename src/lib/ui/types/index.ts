@@ -22,8 +22,18 @@ export interface IconProps {
 	ariaLabel?: string;
 }
 
-export interface ListItemProps {
+export interface ChildrenSnippetProps {
 	onclick?: () => void;
 	icon?: Component;
-	title: string;
+	value: string;
 }
+
+type AlignedPlacement = `${Side}-${Alignment}`;
+type Alignment = 'start' | 'end';
+type Side = 'top' | 'right' | 'bottom' | 'left';
+
+export type Placement = Prettify<Side | AlignedPlacement>;
+
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & {};

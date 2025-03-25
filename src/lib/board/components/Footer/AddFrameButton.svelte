@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { ChatBubbleBottomCenter, RectangleStack, XMark } from 'svelte-heros-v2';
-	import { Button, FormSplit } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Coordinates } from '$lib/types';
+	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 

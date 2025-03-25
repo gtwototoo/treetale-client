@@ -3,7 +3,7 @@
 
 	import find from 'lodash/find';
 	import { BookOpen, Photo } from 'svelte-heros-v2';
-	import { Button, Icon, InputFile } from 'treetale-ui';
+	import { Button, InputFile } from 'treetale-ui';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
@@ -11,6 +11,7 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { ILLUSTRATIONS_FOLDER } from '$lib/constants/s3forders';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { removeImage, saveImage } from '$board/requests/files';

@@ -4,7 +4,6 @@
 @theme {
 	--font-roboto-slab: 'Roboto Slab', 'serif';
 	--breakpoint-fd: 30rem;
-	--radius-inherit: inherit;
 	--breakpoint-2xl: 100rem;
 	--breakpoint-3xl: 120rem;
 	--line-height-0: 0;
@@ -48,6 +47,10 @@
 		@apply no-underline !outline-none;
 		-webkit-tap-highlight-color: transparent;
 	}
+}
+
+@utility rounded-inherit {
+	border-radius: inherit;
 }
 
 @utility grid-fit-* {

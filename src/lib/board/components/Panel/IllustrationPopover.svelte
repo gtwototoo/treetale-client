@@ -2,8 +2,10 @@
 	import type { Snippet } from 'svelte';
 
 	import { Photo } from 'svelte-heros-v2';
-	import { Button, Icon, Image, Popover } from 'treetale-ui';
+	import { Button, Popover } from 'treetale-ui';
 
+	import Icon from '$lib/ui/Icon.svelte';
+	import Image from '$lib/ui/Image.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	const {

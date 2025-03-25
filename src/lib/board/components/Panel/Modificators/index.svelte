@@ -3,11 +3,12 @@
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
 	import { Beaker } from 'svelte-heros-v2';
-	import { Button, Input } from 'treetale-ui';
+	import { Input } from 'treetale-ui';
 
 	import Logics from '$lib/components/Icons/Logics.svelte';
 	import Maths from '$lib/components/Icons/Maths.svelte';
 	import type { PanelProps } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 	import { choiceModificators } from '$lib/utils/variableOperations';
@@ -69,7 +70,7 @@
 			class={clm(
 				'w-9 rounded-full p-0.5',
 				choice.asInput
-					? 'bg-main group-hover:bg-main-700'
+					? 'bg-main-700 group-hover:bg-main'
 					: 'bg-contrast-900 group-hover:bg-contrast-700'
 			)}
 		>

@@ -11,13 +11,15 @@
 		RectangleStack,
 		Trash
 	} from 'svelte-heros-v2';
-	import { Button, Contenteditable, FormSplit, Icon, Input, Popover } from 'treetale-ui';
+	import { Button, Contenteditable, Input, Popover } from 'treetale-ui';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
 	import { FRAMES_FOLDER } from '$lib/constants/s3forders';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Frame } from '$lib/types';
+	import FormSplit from '$lib/ui/FormSplit.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';

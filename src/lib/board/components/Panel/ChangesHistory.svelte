@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Clock } from 'svelte-heros-v2';
-	import { Button, FormSplit } from 'treetale-ui';
+	import { Button } from 'treetale-ui';
 
+	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 

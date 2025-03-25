@@ -2,10 +2,11 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import filter from 'lodash/filter';
 	import findIndex from 'lodash/findIndex';
-	import { Button, Contenteditable, FormSplit } from 'treetale-ui';
+	import { Button, Contenteditable } from 'treetale-ui';
 
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame, LogicModificator, MathModificator, Variable } from '$lib/types';
+	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import { checkLogic, choiceModificators, doMath } from '$lib/utils/variableOperations';

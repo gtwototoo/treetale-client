@@ -62,7 +62,7 @@
 	</div>
 </ShortDescription>
 <div class="flex flex-col gap-2">
-	{#each variablesStore.variables as variable (variable.name)}
+	{#each variablesStore.variables as variable, key (key)}
 		<VariableRow {checkUpdates} {variable} />
 	{/each}
 	{#if !panelStatesStore.editMode && !readonlyModeStore.isEnabled}

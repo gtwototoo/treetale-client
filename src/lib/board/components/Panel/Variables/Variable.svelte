@@ -2,10 +2,15 @@
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { XMark } from 'svelte-heros-v2';
-	import { Button, Icon, Input, type ListItemProps, Listbox } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Variable, VariableExpects } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Input from '$lib/ui/Input.svelte';
+	import Listbox from '$lib/ui/Listbox.svelte';
+	import { button } from '$lib/ui/presets';
+	import type { ChildrenSnippetProps } from '$lib/ui/types';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';
@@ -22,17 +27,17 @@
 	} = $props();
 
 	type Expects = {
-		title: VariableExpects;
-	} & ListItemProps;
+		value: VariableExpects;
+	} & ChildrenSnippetProps;
 
 	const types: Expects[] = [
-		{ title: 'Строка' },
-		{ title: 'Число' },
+		{ value: 'Строка' },
+		{ value: 'Число' },
 		{
 			onclick: () => {
 				if (!['Да', 'Нет'].includes(variable.value)) variable.value = 'Да';
 			},
-			title: 'Логика'
+			value: 'Логика'
 		}
 	];
 
@@ -57,21 +62,28 @@
 
 {#if panelStatesStore.editMode}
 	<Input
-		value={`${variable.name || 'Переменная'} = ${variable.value || 'значение'}`}
+		class={clm(button.size.base, 'w-full py-1 pr-1')}
+		value={`${variable.name || 'переменная'} = ${variable.value || 'значение'}`}
 		disabled
-		class="w-full"
 	>
 		{#snippet right()}
-			<Button class={redBackgroundColorStore.color} onclick={removeVariable} size="sm">
-				<Icon this={XMark} class="size-4" />
+			<Button
+				class={clm(button.size.sm, button.type.primary, redBackgroundColorStore.color, 'p-1.5')}
+				onclick={removeVariable}
+			>
+				<Icon this={XMark} class="size-5" />
 			</Button>
 		{/snippet}
 	</Input>
 {:else}
-	<div class="flex gap-1">
+	<div class="flex gap-2">
 		<Input
 			bind:value={variable.name}
-			class={clm('shrink-0', panelStatesStore.editMode ? 'grow' : 'w-[13rem]')}
+			class={clm(
+				button.size.base,
+				'shrink-0 py-1 pr-1',
+				panelStatesStore.editMode ? 'grow' : 'w-[13rem]'
+			)}
 			disabled={panelStatesStore.editMode}
 			maxlength={15}
 			oninput={checkUpdates}
@@ -80,11 +92,14 @@
 		>
 			{#snippet right()}
 				<Listbox
-					size="sm"
-					align="right"
-					bind:value={variable.expect}
-					list={types}
-					onchange={checkUpdates}
+					placement="bottom-end"
+					onchange={(value) => {
+						variable.expect = value as VariableExpects;
+						checkUpdates();
+					}}
+					class={clm(button.size.sm, 'py-1 text-sm/6')}
+					value={variable.expect}
+					options={types.map(({ value }) => ({ value }))}
 					placeholder="Тип"
 					readonly={readonlyModeStore.isEnabled}
 				/>
@@ -92,18 +107,20 @@
 		</Input>
 		{#if variable.expect === 'Логика'}
 			<Listbox
-				align="inset"
-				bind:value={variable.value}
-				class="w-full !rounded-none !rounded-r-lg"
-				list={[{ title: 'Да' }, { title: 'Нет' }]}
-				onchange={checkUpdates}
+				value={variable.value}
+				class="w-full"
+				options={[{ value: 'Да' }, { value: 'Нет' }]}
+				onchange={(value) => {
+					variable.value = value;
+					checkUpdates();
+				}}
 				placeholder="Значение"
 				readonly={readonlyModeStore.isEnabled}
 			/>
 		{:else}
 			<Input
 				bind:value={variable.value}
-				class="w-full"
+				class={clm(button.size.base, 'w-full')}
 				maxlength={32}
 				number={variable.expect !== 'Строка'}
 				oninput={checkUpdates}

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import find from 'lodash/find';
 	import { XMark } from 'svelte-heros-v2';
-	import { Button, Icon, Input, Listbox } from 'treetale-ui';
+	import { Button, Input } from 'treetale-ui';
 
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { ComparisonOperators, MathOperators, Modificator } from '$lib/types';
+	import Icon from '$lib/ui/Icon.svelte';
+	import Listbox from '$lib/ui/Listbox.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { boardEventsStore, readonlyModeStore } from '$board/stores/index.svelte';
@@ -58,11 +60,13 @@
 {#snippet inputValue()}
 	{#if variable?.expect === 'Логика'}
 		<Listbox
-			align="inset"
-			bind:value={modificator.value}
-			onchange={boardEventsStore.save}
+			value={modificator.value}
+			onchange={(value) => {
+				modificator.value = value;
+				boardEventsStore.save();
+			}}
 			class="flex-1"
-			list={['Да', 'Нет']}
+			options={[{ value: 'Да' }, { value: 'Нет' }]}
 			placeholder="Значение"
 			readonly={readonlyModeStore.isEnabled}
 		/>
@@ -105,35 +109,27 @@
 		</Button>
 	</div>
 {:else}
-	<div class="grid grid-cols-[1fr,max-content,1fr] gap-1">
+	<div class="grid grid-cols-[1fr_max-content_1fr] gap-1">
 		<Listbox
-			align="inset"
-			bind:value={modificator.variable}
+			value={modificator.variable}
 			class="flex-1"
-			list={variablesStore.variables.map(({ name }) => name)}
+			options={variablesStore.variables.map(({ name }) => ({ value: name }))}
 			onchange={handleChange}
 			placeholder="Переменная"
 			readonly={readonlyModeStore.isEnabled}
 		/>
 		<Listbox
-			align="inset"
-			classlist={clm('*:*:justify-center')}
-			bind:value={modificator.symbol as string}
-			list={symbols[modificator.type]}
+			value={modificator.symbol as string}
+			options={symbols[modificator.type].map((value) => ({ value }))}
 			placeholder=""
-			onchange={boardEventsStore.save}
+			class="w-8"
+			sameWidth={false}
+			onchange={(value) => {
+				modificator.symbol = value as Modificator['symbol'];
+				boardEventsStore.save();
+			}}
 			readonly={readonlyModeStore.isEnabled}
-		>
-			{#snippet children({ onclick, value })}
-				<Button
-					class="bg-main-300 text-text hover:bg-main-500 w-8 justify-center"
-					disabled={variable?.expect !== 'Число'}
-					{onclick}
-				>
-					{value}
-				</Button>
-			{/snippet}
-		</Listbox>
+		/>
 		{@render inputValue()}
 	</div>
 {/if}

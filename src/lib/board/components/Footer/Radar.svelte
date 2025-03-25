@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { Button } from 'treetale-ui';
-
 	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants/index';
 	import type { Coordinates } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';

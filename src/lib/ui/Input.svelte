@@ -100,8 +100,6 @@
 		erroredValue && 'bg-red-500/10',
 		focused && clm('bg-main-100', focusClass),
 		disabled ? 'cursor-default' : 'hover:bg-main-100',
-		left && 'pl-1',
-		right && 'pr-1',
 		classname
 	)}
 	onkeydown={handleKeydown}
