@@ -8,7 +8,7 @@
 	import Picker from './Picker.svelte';
 
 	type ColorPickerProps = {
-		children: Snippet<[{ onclick: () => void; color?: RGB }]>;
+		button: Snippet<[{ color?: RGB }]>;
 		class?: string;
 		disabled?: boolean;
 	} & Pick<
@@ -25,14 +25,14 @@
 		color = [0, 0, 0],
 		disabled = false,
 		class: classname,
-		children
+		button
 	}: ColorPickerProps = $props();
 
 	let active = $state(false);
 </script>
 
 <Button onclick={() => (active = true)} class={classname} {disabled}>
-	{@render children({ onclick: () => (active = !active), color })}
+	{@render button({ color })}
 </Button>
 <Modal bind:active>
 	<Picker bind:color bind:light bind:saturate {disabled} {lightRange} {onchange} {saturateRange} />

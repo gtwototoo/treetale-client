@@ -22,7 +22,7 @@
 	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
 	import Modal from '$lib/ui/Modal.svelte';
-	import { button } from '$lib/ui/presets';
+	import { button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import InvisibleDrop from './InvisibleDrop.svelte';
@@ -185,14 +185,21 @@
 					placeholder="Короткая ссылка"
 					maxlength={20}
 					bind:value={userState.linkName}
-					class={clm(button.size.lg, 'w-full')}
+					class={clm(buttonPresets.size.lg, 'w-full')}
 				/>
-				<ColorPicker color={bodyBackgroundColorStore.color} {light} onchange={setColor} {saturate}>
-					{#snippet children({ onclick })}
-						<Button
-							class={clm(button.type.primary, button.size.lg, 'hover:bg-main hover:ring-main')}
-							{onclick}>Цвет</Button
-						>
+				<ColorPicker
+					class={clm(
+						buttonPresets.type.primary,
+						buttonPresets.size.lg,
+						'hover:bg-main hover:ring-main'
+					)}
+					color={bodyBackgroundColorStore.color}
+					{light}
+					onchange={setColor}
+					{saturate}
+				>
+					{#snippet button()}
+						Цвет
 					{/snippet}
 				</ColorPicker>
 			</div>
@@ -213,7 +220,7 @@
 		<Contenteditable
 			bind:html={userState.name}
 			class={clm(
-				button.size.lg,
+				buttonPresets.size.lg,
 				'w-full text-center text-4xl font-bold',
 				!editMode && 'pointer-events-none bg-transparent ring-0'
 			)}
@@ -224,7 +231,7 @@
 			<Contenteditable
 				bind:html={userState.description}
 				class={clm(
-					button.size.lg,
+					buttonPresets.size.lg,
 					'w-full text-center text-lg',
 					!editMode && 'pointer-events-none bg-transparent ring-0'
 				)}
@@ -237,26 +244,30 @@
 		<div class="mt-4 flex gap-2">
 			{#if me}
 				{#if editMode}
-					<Button class={clm(button.type.primary, button.size.lg)} {loading} onclick={saveProfile}>
+					<Button
+						class={clm(buttonPresets.type.primary, buttonPresets.size.lg)}
+						{loading}
+						onclick={saveProfile}
+					>
 						Сохранить
 					</Button>
 					<Button
-						class={clm(button.type.primary, button.size.lg, 'text-red-500')}
+						class={clm(buttonPresets.type.primary, buttonPresets.size.lg, 'text-red-500')}
 						onclick={cancelEdit}
 					>
 						Отмена
 					</Button>
 				{:else}
 					<Button
-						class={clm(button.type.primary, button.size.lg)}
+						class={clm(buttonPresets.type.primary, buttonPresets.size.lg)}
 						onclick={() => (editMode = true)}
 					>
 						Редактировать
 					</Button>
 					<Button
 						class={clm(
-							button.type.primary,
-							button.size.lg,
+							buttonPresets.type.primary,
+							buttonPresets.size.lg,
 							'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
 						)}
 						onclick={() => (exitModal = true)}
@@ -267,15 +278,15 @@
 						<p>Вы действительно хотите выйти из профиля?</p>
 						<div class="flex gap-2">
 							<Button
-								class={clm(button.type.primary, button.size.lg)}
+								class={clm(buttonPresets.type.primary, buttonPresets.size.lg)}
 								onclick={() => (exitModal = false)}
 							>
 								Отмена
 							</Button>
 							<Button
 								class={clm(
-									button.type.primary,
-									button.size.lg,
+									buttonPresets.type.primary,
+									buttonPresets.size.lg,
 									'bg-red-500/5 text-red-500 ring-red-500/20 hover:bg-red-500/10'
 								)}
 								onclick={handleSignOut}
@@ -286,12 +297,20 @@
 					</Modal>
 				{/if}
 			{:else if page.data.session && page.data.session.subscriptions.includes(userState.userId)}
-				<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleUnsubscribe}>
+				<Button
+					class={clm(buttonPresets.type.primary, 'gap-3')}
+					{loading}
+					onclick={handleUnsubscribe}
+				>
 					<Icon class="size-6" this={UserMinus} />
 					<p class="mr-1">Отписаться</p>
 				</Button>
 			{:else}
-				<Button class={clm(button.type.primary, 'gap-3')} {loading} onclick={handleSubscribe}>
+				<Button
+					class={clm(buttonPresets.type.primary, 'gap-3')}
+					{loading}
+					onclick={handleSubscribe}
+				>
 					<Icon class="size-6" this={UserPlus} />
 					<p class="mr-1">Подписаться</p>
 				</Button>

@@ -3,7 +3,6 @@
 
 	import find from 'lodash/find';
 	import { Cloud, PaintBrush } from 'svelte-heros-v2';
-	import { Popover } from 'treetale-ui';
 
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -18,6 +17,7 @@
 	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
 	import InputTags from '$lib/ui/InputTags.svelte';
+	import Popover from '$lib/ui/Popover.svelte';
 	import { button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
@@ -138,23 +138,20 @@
 
 {#if storyInfoStore.info}
 	<div class="flex gap-2">
-		<div class="flex w-28 shrink-0 flex-col gap-2 *:h-1/3">
-			<Popover align="center" placeholder="Формат" readonly={readonlyModeStore.isEnabled}>
-				{#snippet button({ onclick })}
-					<Button
-						class={clm(
-							buttonPresets.type.primary,
-							buttonPresets.size.lg,
-							'size-full flex-col justify-center gap-3'
-						)}
-						disabled={panelStatesStore.editMode}
-						{onclick}
-					>
-						<CurrentStoryFormatIcon class="text-main h-12 w-auto" />
-						<p class="text-sm">{format.title}</p>
-					</Button>
+		<div class="flex w-28 shrink-0 flex-col gap-2">
+			<Popover
+				disabled={readonlyModeStore.isEnabled}
+				class={clm(
+					buttonPresets.type.primary,
+					buttonPresets.size.lg,
+					'size-full h-1/3 flex-col justify-center gap-3'
+				)}
+			>
+				{#snippet button()}
+					<CurrentStoryFormatIcon class="text-main h-10 w-auto" />
+					<p class="text-sm">{format.title}</p>
 				{/snippet}
-				<div class="flex w-96 flex-wrap gap-1 p-2">
+				<div class="flex w-96 flex-wrap gap-2 p-2">
 					{#each STORY_FORMATS as { description, icon: FormatIcon, id, title } (id)}
 						<Button
 							onclick={() => switchFormat(id)}
@@ -174,20 +171,17 @@
 					{/each}
 				</div>
 			</Popover>
-			<Popover align="center" placeholder="Жанр" readonly={readonlyModeStore.isEnabled}>
-				{#snippet button({ onclick })}
-					<Button
-						class={clm(
-							buttonPresets.type.primary,
-							buttonPresets.size.lg,
-							'size-full flex-col justify-center gap-3'
-						)}
-						disabled={panelStatesStore.editMode}
-						{onclick}
-					>
-						<CurrentGenreIcon class="text-main size-10" />
-						<p class="text-sm">{genre.title}</p>
-					</Button>
+			<Popover
+				disabled={readonlyModeStore.isEnabled}
+				class={clm(
+					buttonPresets.type.primary,
+					buttonPresets.size.lg,
+					'size-full h-1/3 flex-col justify-center gap-3'
+				)}
+			>
+				{#snippet button()}
+					<CurrentGenreIcon class="text-main size-10" />
+					<p class="text-sm">{genre.title}</p>
 				{/snippet}
 				<div class="flex w-96 flex-wrap gap-2 p-2">
 					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
@@ -212,20 +206,15 @@
 				onchange={setColor}
 				disabled={readonlyModeStore.isEnabled}
 				{saturate}
+				class={clm(
+					buttonPresets.type.primary,
+					buttonPresets.size.lg,
+					'size-full h-1/3 flex-col justify-center gap-3'
+				)}
 			>
-				{#snippet children({ onclick })}
-					<Button
-						class={clm(
-							buttonPresets.type.primary,
-							buttonPresets.size.lg,
-							'size-full flex-col justify-center gap-3'
-						)}
-						disabled={panelStatesStore.editMode}
-						{onclick}
-					>
-						<Icon class="text-main size-10" this={PaintBrush} variation="solid" />
-						<p class="text-sm">Цвет темы</p>
-					</Button>
+				{#snippet button()}
+					<Icon class="text-main size-10" this={PaintBrush} variation="solid" />
+					<p class="text-sm">Цвет темы</p>
 				{/snippet}
 			</ColorPicker>
 		</div>

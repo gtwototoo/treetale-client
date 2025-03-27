@@ -11,7 +11,6 @@
 		RectangleStack,
 		Trash
 	} from 'svelte-heros-v2';
-	import { Popover } from 'treetale-ui';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
@@ -23,6 +22,7 @@
 	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
+	import Popover from '$lib/ui/Popover.svelte';
 	import { button, button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
@@ -291,22 +291,19 @@
 					</IllustrationPopover>
 				</td>
 				<td>
-					<Popover align="left">
-						{#snippet button({ onclick })}
-							<Button
-								class={clm(
-									buttonPresets.type.primary,
-									buttonPresets.size.lg,
-									'w-full flex-col justify-center',
-									soundUrl && 'text-emerald-500'
-								)}
-								{onclick}
-							>
-								<Icon class="text-main size-10" this={MusicalNote} variation="solid" />
-								<p class="text-sm">{soundUrl ? `Мелодия ${frameId}` : 'Мелодия'}</p>
-							</Button>
+					<Popover
+						class={clm(
+							buttonPresets.type.primary,
+							buttonPresets.size.lg,
+							'w-full flex-col justify-center',
+							soundUrl && 'text-emerald-500'
+						)}
+					>
+						{#snippet button()}
+							<Icon class="text-main size-10" this={MusicalNote} variation="solid" />
+							<p>{soundUrl ? `Мелодия ${frameId}` : 'Мелодия'}</p>
 						{/snippet}
-						<div class="flex w-96 flex-col p-4">
+						<div class="flex w-96 flex-col p-2">
 							<SoundUploader
 								disabled={panelStatesStore.editMode}
 								readonly={readonlyModeStore.isEnabled}

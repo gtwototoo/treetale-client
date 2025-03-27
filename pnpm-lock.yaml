@@ -126,9 +126,6 @@ importers:
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.15
-      treetale-ui:
-        specifier: ^0.3.8
-        version: 0.3.8(svelte@5.25.3)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -2319,11 +2316,6 @@ packages:
   tr46@5.1.0:
     resolution: {integrity: sha512-IUWnUK7ADYR5Sl1fZlO1INDUhVhatWl7BtJWsIhwJ0UAK7ilzzIa8uIqOO/aYVWHZPJkKbEL+362wrzoeRF7bw==}
     engines: {node: '>=18'}
-
-  treetale-ui@0.3.8:
-    resolution: {integrity: sha512-K0p7BDo/WJa+AVL5X9KWMCzgNu/MObuLnvZttrcU1A7l+GlurP9eFcSvYCbV+51zA6UGCgxhQXz6eoKcpGoEGQ==}
-    peerDependencies:
-      svelte: ^5.15.0
 
   ts-api-utils@2.1.0:
     resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
@@ -4710,10 +4702,6 @@ snapshots:
   tr46@5.1.0:
     dependencies:
       punycode: 2.3.1
-
-  treetale-ui@0.3.8(svelte@5.25.3):
-    dependencies:
-      svelte: 5.25.3
 
   ts-api-utils@2.1.0(typescript@5.8.2):
     dependencies:
