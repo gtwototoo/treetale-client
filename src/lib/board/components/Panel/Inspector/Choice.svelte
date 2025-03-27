@@ -2,11 +2,13 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import filter from 'lodash/filter';
 	import findIndex from 'lodash/findIndex';
-	import { Button, Contenteditable } from 'treetale-ui';
 
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame, LogicModificator, MathModificator, Variable } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import FormSplit from '$lib/ui/FormSplit.svelte';
+	import { button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 	import { checkLogic, choiceModificators, doMath } from '$lib/utils/variableOperations';
@@ -87,9 +89,11 @@
 {#snippet button()}
 	<Button
 		class={clm(
+			buttonPresets.type.primary,
+			buttonPresets.size.base,
 			inspectorStore.selectedChoices[frameIndex]?.choice.choiceId === choice.choiceId &&
 				yellowTextColor,
-			'bg-contrast-900 hover:bg-contrast-700 flex-col items-start justify-center gap-1'
+			'flex-col items-start justify-center gap-1'
 		)}
 		{disabled}
 		onclick={handleClick}
@@ -123,7 +127,7 @@
 	<FormSplit vertical>
 		<Contenteditable
 			bind:html={inputValue}
-			class="bg-contrast-700 hover:bg-contrast-500 flex-1"
+			class={clm(buttonPresets.size.base, 'flex-1', disabled && 'ring-main-200')}
 			placeholder={choice.inputText}
 		/>
 		{@render button()}

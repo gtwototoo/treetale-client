@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { MusicalNote } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import type { Frame } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
-
-	import { isBindingMode } from '$board/stores/index.svelte';
 
 	const {
 		end,
@@ -36,10 +35,11 @@
 
 <Button
 	class={clm(
-		'text-text justify-between',
+		button.size.base,
+		button.type.primary,
+		'justify-between py-3',
 		start && 'text-emerald-500',
-		end && 'text-blue-500',
-		isBindingMode() ? '!bg-main-600' : '!bg-contrast-500'
+		end && 'text-blue-500'
 	)}
 	onclick={hideFrame}
 >
@@ -50,18 +50,18 @@
 
 	<div
 		class={clm(
-			'leftBindPoint',
-			(isSelected || isDragging) && 'after:to-text',
-			isSelectedBindingChoice && 'after:group-hover:to-green-500',
+			'left-bind-point',
+			(isSelected || isDragging) && 'after:!to-text',
+			isSelectedBindingChoice && 'group-hover:after:!to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
 	></div>
 	{#if hidden && hasConnections}
 		<div
 			class={clm(
-				'rightBindPoint',
-				(isSelected || isDragging) && 'after:to-text',
-				isSelectedBindingChoice && 'after:group-hover:to-green-500',
+				'right-bind-point',
+				(isSelected || isDragging) && 'after:!to-text',
+				isSelectedBindingChoice && 'group-hover:after:!to-green-500',
 				isDragging && 'after:-inset-1'
 			)}
 		></div>

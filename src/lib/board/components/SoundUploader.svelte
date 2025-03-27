@@ -1,11 +1,13 @@
 <script lang="ts">
 	import type { Howl } from 'howler';
 	import { MusicalNote, Pause, Play, Stop } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import { soundStore } from '$lib/stores/sound.svelte';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import Loading from '$lib/ui/svg/Loading.svelte';
+	import { clm } from '$lib/utils/classMerge';
 
 	import FileUploader from './FileUploader.svelte';
 
@@ -85,7 +87,7 @@
 			{:then}
 				{#if soundStore.playing}
 					<Button
-						class="bg-contrast-900 text-text hover:bg-contrast-700 w-20 flex-col gap-1"
+						class={clm(button.size.base, button.type.primary, 'w-20 flex-col gap-1')}
 						onclick={handlePlay}
 					>
 						<Icon class="size-8" variation="solid" this={Play} />
@@ -94,14 +96,14 @@
 				{:else}
 					<div class="flex gap-2">
 						<Button
-							class="bg-contrast-900 text-text hover:bg-contrast-700 w-20 flex-col gap-1"
+							class={clm(button.size.base, button.type.primary, 'w-20 flex-col gap-1')}
 							onclick={handlePause}
 						>
 							<Icon class="size-8" variation="solid" this={Pause} />
 							<p class="text-xs">Пауза</p>
 						</Button>
 						<Button
-							class="bg-contrast-900 text-text hover:bg-contrast-700 w-20 flex-col gap-1"
+							class={clm(button.size.base, button.type.primary, 'w-20 flex-col gap-1')}
 							onclick={handleStop}
 						>
 							<Icon class="size-8" variation="solid" this={Stop} />

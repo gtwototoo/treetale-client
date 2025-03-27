@@ -145,7 +145,7 @@
 
 {#snippet placeholderElement()}
 	{#if placeholder && isEmpty}
-		<p class="w-full whitespace-nowrap text-gray-400">{placeholder}</p>
+		<p class="text-text/50 w-full whitespace-nowrap">{placeholder}</p>
 	{/if}
 {/snippet}
 
@@ -174,7 +174,7 @@
 	<div
 		class={clm(
 			'relative w-full self-center overflow-hidden',
-			disabled && 'pointer-events-none opacity-40'
+			disabled && 'pointer-events-none opacity-50'
 		)}
 	>
 		<div

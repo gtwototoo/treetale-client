@@ -3,7 +3,7 @@
 
 	import find from 'lodash/find';
 	import { Cloud, PaintBrush } from 'svelte-heros-v2';
-	import { Button, ColorPicker, Contenteditable, Input, InputTags, Popover } from 'treetale-ui';
+	import { Popover } from 'treetale-ui';
 
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
@@ -11,8 +11,14 @@
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { bodyBackgroundColorStore, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, StoryFormat } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import ColorPicker from '$lib/ui/ColorPicker.svelte';
+	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import Input from '$lib/ui/Input.svelte';
+	import InputTags from '$lib/ui/InputTags.svelte';
+	import { button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { deleteStory, updateInfomation } from '$board/requests/story';
@@ -136,13 +142,16 @@
 			<Popover align="center" placeholder="Формат" readonly={readonlyModeStore.isEnabled}>
 				{#snippet button({ onclick })}
 					<Button
+						class={clm(
+							buttonPresets.type.primary,
+							buttonPresets.size.lg,
+							'size-full flex-col justify-center gap-3'
+						)}
 						disabled={panelStatesStore.editMode}
-						class="bg-main-200 text-text hover:bg-main-400 size-full flex-col justify-center gap-3"
 						{onclick}
-						size="lg"
 					>
 						<CurrentStoryFormatIcon class="text-main h-12 w-auto" />
-						<p class="text-xs">{format.title}</p>
+						<p class="text-sm">{format.title}</p>
 					</Button>
 				{/snippet}
 				<div class="flex w-96 flex-wrap gap-1 p-2">
@@ -150,8 +159,10 @@
 						<Button
 							onclick={() => switchFormat(id)}
 							class={clm(
-								'hover:bg-main-400 gap-3 p-2 whitespace-normal',
-								id === storyInfoStore.info?.format && 'bg-main-200'
+								buttonPresets.type.primary,
+								buttonPresets.size.base,
+								'gap-3 whitespace-normal',
+								id === storyInfoStore.info?.format && 'bg-main-300'
 							)}
 						>
 							<FormatIcon class="text-main h-auto w-24 shrink-0" />
@@ -166,22 +177,27 @@
 			<Popover align="center" placeholder="Жанр" readonly={readonlyModeStore.isEnabled}>
 				{#snippet button({ onclick })}
 					<Button
+						class={clm(
+							buttonPresets.type.primary,
+							buttonPresets.size.lg,
+							'size-full flex-col justify-center gap-3'
+						)}
 						disabled={panelStatesStore.editMode}
-						class="bg-main-200 text-text hover:bg-main-400 size-full flex-col justify-center gap-3"
 						{onclick}
-						size="lg"
 					>
 						<CurrentGenreIcon class="text-main size-10" />
-						<p class="text-xs">{genre.title}</p>
+						<p class="text-sm">{genre.title}</p>
 					</Button>
 				{/snippet}
-				<div class="flex w-96 flex-wrap gap-1 p-2">
+				<div class="flex w-96 flex-wrap gap-2 p-2">
 					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
 						<Button
 							onclick={() => switchGenre(id)}
 							class={clm(
-								'text-text hover:bg-main-400 min-w-20 flex-1 flex-col gap-1',
-								id === storyInfoStore.info?.genre && 'bg-main-200'
+								buttonPresets.type.primary,
+								buttonPresets.size.base,
+								'min-w-20 flex-1 flex-col gap-1',
+								id === storyInfoStore.info?.genre && 'bg-main-300'
 							)}
 						>
 							<GenreIcon class="text-main size-7" />
@@ -194,24 +210,26 @@
 				color={storyInfoStore.info?.color || DEFAULT_COLOR}
 				{light}
 				onchange={setColor}
-				align="center"
-				readonly={readonlyModeStore.isEnabled}
+				disabled={readonlyModeStore.isEnabled}
 				{saturate}
 			>
 				{#snippet children({ onclick })}
 					<Button
+						class={clm(
+							buttonPresets.type.primary,
+							buttonPresets.size.lg,
+							'size-full flex-col justify-center gap-3'
+						)}
 						disabled={panelStatesStore.editMode}
-						class="bg-main-200 text-text hover:bg-main-400 size-full flex-col justify-center gap-3"
 						{onclick}
-						size="lg"
 					>
 						<Icon class="text-main size-10" this={PaintBrush} variation="solid" />
-						<p class="text-xs">Цвет темы</p>
+						<p class="text-sm">Цвет темы</p>
 					</Button>
 				{/snippet}
 			</ColorPicker>
 		</div>
-		<Button onclick={handleOpenIllustrationPanel} class="p-0">
+		<Button onclick={handleOpenIllustrationPanel}>
 			<Cover
 				imageUrl={storyInfoStore.info.imageUrl}
 				title={storyInfoStore.info.title}
@@ -223,7 +241,7 @@
 	<FormSplit vertical>
 		<Input
 			bind:value={storyInfoStore.info.title}
-			class="w-full"
+			class={clm(buttonPresets.size.base)}
 			disabled={panelStatesStore.editMode}
 			oninput={checkUpdates}
 			maxlength={25}
@@ -231,6 +249,7 @@
 			readonly={readonlyModeStore.isEnabled}
 		/>
 		<Contenteditable
+			class={clm(buttonPresets.size.base)}
 			bind:html={storyInfoStore.info.description}
 			disabled={panelStatesStore.editMode}
 			oninput={checkUpdates}
@@ -239,6 +258,7 @@
 			readonly={readonlyModeStore.isEnabled}
 		/>
 		<InputTags
+			class={clm(buttonPresets.size.base, 'p-1')}
 			bind:tags={storyInfoStore.info.tags}
 			disabled={panelStatesStore.editMode}
 			lowerCase
@@ -246,13 +266,18 @@
 			maxcount={10}
 			onadd={checkUpdates}
 			onremove={checkUpdates}
-			placeholder={storyInfoStore.info?.tags.length ? '' : 'Теги'}
+			placeholder="Теги"
 			readonly={readonlyModeStore.isEnabled}
 		/>
 	</FormSplit>
 	{#if panelStatesStore.editMode}
 		<Button
-			class={clm('justify-center', redBackgroundColorStore.color)}
+			class={clm(
+				buttonPresets.type.primary,
+				buttonPresets.size.base,
+				'justify-center',
+				redBackgroundColorStore.color
+			)}
 			onclick={handleDeleteStory}
 		>
 			Удалить историю

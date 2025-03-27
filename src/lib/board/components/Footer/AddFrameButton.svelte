@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { ChatBubbleBottomCenter, RectangleStack, XMark } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Coordinates } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { addBlockOffsetStore } from '$board/stores/blocks.svelte';
@@ -23,25 +24,21 @@
 
 	let greenBackgroundColor = $derived(
 		currentThemeClass(
-			clm('bg-emerald-900 hover:bg-emerald-800'),
-			clm('bg-emerald-100 hover:bg-emerald-200')
+			clm('bg-emerald-900 hover:bg-emerald-800 ring-emerald-700'),
+			clm('bg-emerald-100 hover:bg-emerald-200 ring-emerald-300')
 		)
-	);
-
-	let redHoverBackgroundColor = $derived(
-		currentThemeClass(clm('hover:bg-red-800'), clm('hover:bg-red-200'))
 	);
 </script>
 
 {#if isAddingMode()}
 	<Button
 		class={clm(
+			button.type.primary,
+			button.size.lg,
 			'w-64 justify-center max-sm:w-24',
-			redBackgroundColorStore.color,
-			redHoverBackgroundColor
+			redBackgroundColorStore.color
 		)}
 		onclick={disableAddFrameMode}
-		size="lg"
 	>
 		<Icon class="size-6 sm:hidden" this={XMark} />
 		<p class="max-sm:hidden">Отмена</p>
@@ -50,22 +47,24 @@
 	<FormSplit>
 		<Button
 			class={clm(
+				button.type.primary,
+				button.size.lg,
 				'max-fd:w-16 w-32 justify-center text-emerald-500 max-sm:w-24',
 				greenBackgroundColor
 			)}
 			onclick={({ x, y }) => enableAddMode({ x, y }, 'frame')}
-			size="lg"
 		>
 			<Icon class="size-6 sm:hidden" this={RectangleStack} />
 			<p class="max-sm:hidden">Блок</p>
 		</Button>
 		<Button
 			class={clm(
+				button.type.primary,
+				button.size.lg,
 				'max-fd:w-16 w-32 justify-center text-emerald-500 max-sm:w-24',
 				greenBackgroundColor
 			)}
 			onclick={({ x, y }) => enableAddMode({ x, y }, 'comment')}
-			size="lg"
 		>
 			<Icon class="size-6 sm:hidden" this={ChatBubbleBottomCenter} />
 			<p class="max-sm:hidden">Заметка</p>

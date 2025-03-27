@@ -1,10 +1,11 @@
 <script lang="ts">
 	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
-	import { Button } from 'treetale-ui';
 
 	import { currentThemeClass } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { choiceModificators } from '$lib/utils/variableOperations';
 
@@ -89,32 +90,34 @@
 	let disabled = $derived(isBindingMode() && connectionStartStore.frameId !== null && !selfConnect);
 
 	let greenHoverBackgroundColor = $derived(
-		currentThemeClass(clm('hover:bg-emerald-800'), clm('hover:bg-emerald-200'))
+		currentThemeClass(
+			clm('hover:bg-emerald-950 hover:ring-emerald-700'),
+			clm('hover:bg-emerald-200 hover:ring-emerald-400')
+		)
 	);
 	let greenBackgroundColor = $derived(
-		currentThemeClass(clm('bg-emerald-800'), clm('bg-emerald-200'))
+		currentThemeClass(
+			clm('bg-emerald-900 ring-emerald-700 hover:bg-red-800 hover:ring-red-900'),
+			clm('bg-emerald-100 ring-emerald-300 hover:bg-red-200 hover:ring-red-400')
+		)
 	);
-	let greenGroupHoverBackgroundColor = $derived(
-		currentThemeClass(clm('group-hover:!bg-emerald-800'), clm('group-hover:!bg-emerald-200'))
-	);
-	let orangeBackgroundColor = $derived(
-		currentThemeClass(clm('bg-orange-800'), clm('bg-orange-200'))
+	let bindingClasses = $derived(
+		isBindingMode() &&
+			clm(
+				greenHoverBackgroundColor,
+				connectionStartStore.frameId !== null && selfConnect && greenBackgroundColor
+			)
 	);
 </script>
 
 <Button
 	class={clm(
-		'bg-contrast-5 gap-4',
-		text ? 'text-text' : 'text-gray-400',
+		button.size.base,
+		button.type.primary,
+		'py-3',
+		!text && 'text-gray-400',
 		disabled && '!bg-contrast pointer-events-none',
-		isSelectedBindingChoice && greenGroupHoverBackgroundColor,
-		isBindingMode() &&
-			clm(
-				'bg-contrast-5',
-				greenHoverBackgroundColor,
-				toFrameId && orangeBackgroundColor,
-				connectionStartStore.frameId !== null && selfConnect && greenBackgroundColor
-			)
+		bindingClasses
 	)}
 	onclick={handleClick}
 	onmousedown={handleMouseDown}
@@ -129,9 +132,9 @@
 	<div
 		class={clm(
 			'p-1',
-			toFrame && toFrame.x < frame.x ? 'leftBindPoint' : 'rightBindPoint',
-			(isSelected || isDragging) && 'after:to-text',
-			isSelectedBindingChoice && 'after:group-hover:to-green-500',
+			toFrame && toFrame.x < frame.x ? 'left-bind-point' : 'right-bind-point',
+			(isSelected || isDragging) && 'after:!to-text',
+			isSelectedBindingChoice && 'group-hover:after:!to-green-500',
 			isDragging && 'after:-inset-1'
 		)}
 	>

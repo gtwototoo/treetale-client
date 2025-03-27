@@ -3,11 +3,12 @@
 
 	import upperFirst from 'lodash/upperFirst';
 	import { Trash } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import DropArea from '$lib/components/DropArea/index.svelte';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	let {
@@ -72,11 +73,15 @@
 {#snippet removeButton()}
 	{#if !(readonly || disabled)}
 		<Button
-			size="sm"
-			class={clm('absolute top-1 right-1 z-10', redBackgroundColorStore.color)}
+			class={clm(
+				button.type.primary,
+				button.size.sm,
+				'absolute top-1 right-1 z-10 px-1.5',
+				redBackgroundColorStore.color
+			)}
 			onclick={handleRemove}
 		>
-			<Icon class="size-4" this={Trash} />
+			<Icon class="size-5" this={Trash} />
 		</Button>
 	{/if}
 {/snippet}
@@ -96,7 +101,11 @@
 		</DropArea>
 	{:else}
 		<Button
-			class="rounded-inherit bg-contrast-900 pointer-events-none size-full flex-col justify-center gap-2 !p-6 !whitespace-normal"
+			class={clm(
+				button.type.primary,
+				button.size.lg,
+				'rounded-inherit pointer-events-none size-full flex-col justify-center gap-2 whitespace-normal'
+			)}
 		>
 			<Icon class="*:fill-gradient h-24 w-auto" this={icon} variation="solid" />
 			<p>{upperFirst(mediaName)} отсутствует</p>

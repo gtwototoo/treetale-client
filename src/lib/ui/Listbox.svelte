@@ -50,11 +50,11 @@
 	{...select.trigger}
 	inert={false}
 	disabled={disabled || readonly}
-	class={clm(button.type.primary, button.size.base, 'justify-center gap-1', classname)}
+	class={clm(button.type.primary, button.size.base, 'gap-1.5', classname)}
 >
-	<p>{select.value || placeholder}</p>
+	<p class="mr-5">{select.value || placeholder}</p>
 	{#if !(disabled || readonly) && !hideArrow}
-		<Icon class="size-4" this={ChevronDown} />
+		<Icon class="absolute right-3 size-4 *:stroke-2" this={ChevronDown} />
 	{/if}
 </Button>
 

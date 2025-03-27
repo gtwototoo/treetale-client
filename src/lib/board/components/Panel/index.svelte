@@ -2,9 +2,10 @@
 	import { onDestroy } from 'svelte';
 
 	import { ChevronRight } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { panelStatesStore } from '$board/stores/panel.svelte';
@@ -44,7 +45,10 @@
 		</div>
 		<div class="sticky bottom-24">
 			<Button
-				class="bg-contrast text-text absolute right-full bottom-full rounded-r-none p-3 pr-1 lg:hidden"
+				class={clm(
+					button.size.base,
+					'bg-contrast text-text absolute right-full bottom-full rounded-r-none py-3 pr-1 lg:hidden'
+				)}
 				onclick={() => (panelStatesStore.show = !panelStatesStore.show)}
 			>
 				<Icon this={ChevronRight} class={clm('size-6', !panelStatesStore.show && 'rotate-180')} />

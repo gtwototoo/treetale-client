@@ -3,12 +3,12 @@
 	import findIndex from 'lodash/findIndex';
 	import last from 'lodash/last';
 	import { Beaker } from 'svelte-heros-v2';
-	import { Input } from 'treetale-ui';
 
 	import Logics from '$lib/components/Icons/Logics.svelte';
 	import Maths from '$lib/components/Icons/Maths.svelte';
 	import type { PanelProps } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
+	import Input from '$lib/ui/Input.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
@@ -60,7 +60,7 @@
 		)}
 	</div>
 </ShortDescription>
-<div class="bg-contrast-200 flex flex-col rounded-lg px-2 text-sm">
+<div class="bg-contrast-200 flex flex-col rounded-lg px-2">
 	<Button
 		class="group justify-between py-3 pr-0 pl-1"
 		disabled={readonlyModeStore.isEnabled}
@@ -84,9 +84,9 @@
 		</div>
 	</Button>
 	{#if choice.asInput}
-		<p class="border-contrast-600 border-t py-2 pl-2 text-left text-xs">
+		<p class="border-contrast-600 border-t py-2 pl-2 text-left text-sm">
 			Чтобы применить введеное в поле значение, нужно задать значение
-			<span class="font-medium text-violet-500">
+			<span class="text-violet-500">
 				{`{input}`}
 			</span> в любое поле изменения переменной с типом «Строка»
 		</p>
@@ -94,6 +94,7 @@
 </div>
 {#if choice.asInput}
 	<Input
+		class={clm(button.size.base, 'w-full')}
 		placeholder="Надпись внутри поля ввода"
 		bind:value={choice.inputText}
 		oninput={boardEventsStore.save}

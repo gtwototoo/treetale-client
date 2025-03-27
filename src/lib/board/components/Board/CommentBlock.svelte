@@ -1,11 +1,13 @@
 <script lang="ts">
 	import reject from 'lodash/reject';
 	import { Trash, XMark } from 'svelte-heros-v2';
-	import { Button, Contenteditable } from 'treetale-ui';
 
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Comment } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { movingBlockStore } from '$board/stores/blocks.svelte';
@@ -50,29 +52,30 @@
 	ontouchstart={handleMouseDown}
 	onmousedown={handleMouseDown}
 	class={clm(
-		'bg-main-400 text-text absolute z-[100000] w-64 rounded-lg p-2',
+		'bg-main-300 ring-main hover:ring-text absolute z-[100000] w-64 rounded-lg p-2 ring-2',
 		!readonlyModeStore.isEnabled && 'cursor-move'
 	)}
 	onmouseenter={() => (hovered = true)}
 	onmouseleave={() => (hovered = false)}
 >
 	<Contenteditable
+		class={clm(button.size.base)}
 		bind:html={comment.text}
 		oninput={boardEventsStore.save}
 		maxlength={1500}
-		class="!bg-transparent"
 		placeholder="Текст заметки"
 	/>
 	{#if hovered}
 		<Button
 			class={clm(
-				'absolute -top-2.5 -right-2.5 rounded-full p-2 text-red-500',
+				button.type.primary,
+				button.size.sm,
+				'absolute -top-2.5 -right-2.5 rounded-full px-1.5',
 				redBackgroundColorStore.color
 			)}
-			size="sm"
 			onclick={removeComment}
 		>
-			<Icon this={XMark} class="size-4" />
+			<Icon this={XMark} class="size-5" />
 		</Button>
 	{/if}
 </div>

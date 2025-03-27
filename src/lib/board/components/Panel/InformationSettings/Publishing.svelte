@@ -2,10 +2,11 @@
 	import { page } from '$app/state';
 
 	import { Check } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 
@@ -96,8 +97,8 @@
 	);
 	let greenBackgroundColorButton = $derived(
 		currentThemeClass(
-			clm('bg-emerald-700 hover:bg-emerald-800'),
-			clm('bg-emerald-300 hover:bg-emerald-100')
+			clm('bg-emerald-950 hover:bg-emerald-900 text-emerald-500 ring-emerald-800'),
+			clm('bg-emerald-100 hover:bg-emerald-200 text-emerald-500 ring-emerald-300')
 		)
 	);
 
@@ -111,14 +112,14 @@
 {#if showPublishButton}
 	<div
 		class={clm(
-			'flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none',
+			'flex flex-col gap-2 rounded-lg p-2 text-center select-none',
 			storyInfoStore.info?.status === 'review'
 				? clm('text-orange-500', orangeBackgroundColor)
 				: clm('text-emerald-500', greenBackgroundColor)
 		)}
 	>
 		{#if storyInfoStore.info?.status === 'draft'}
-			<div class="grid grid-cols-2 gap-2 p-2">
+			<div class="grid grid-cols-2 gap-2 p-2 text-sm">
 				{#each requirements as requirement, index (index)}
 					<div class="flex items-center gap-2">
 						<div
@@ -136,7 +137,12 @@
 				{/each}
 			</div>
 			<Button
-				class={clm('justify-center text-emerald-500', greenBackgroundColorButton)}
+				class={clm(
+					button.size.base,
+					button.type.primary,
+					greenBackgroundColorButton,
+					'justify-center'
+				)}
 				{loading}
 				disabled={requirements.some(({ value }) => !value)}
 				onclick={reviewRequeshHandler}
@@ -145,26 +151,36 @@
 			</Button>
 		{:else if storyInfoStore.info?.status === 'review'}
 			{#if page.data.session.role === 'member'}
-				<p class="p-2">
+				<p class="p-2 text-sm">
 					{correctWhitespace(
 						'История находится на модерации. Проверка занимает обычно от часа до суток в зависимости от размера созданной или измененной истории'
 					)}
 				</p>
 				<Button
-					class={clm('justify-center', redBackgroundColorStore.color)}
+					class={clm(
+						button.size.base,
+						button.type.primary,
+						redBackgroundColorStore.color,
+						'justify-center'
+					)}
 					{loading}
 					onclick={unpublishHandler}
 				>
 					Отменить модерацию
 				</Button>
 			{:else}
-				<p class="p-2">
+				<p class="p-2 text-sm">
 					{correctWhitespace(
 						'Перед тем как опубликовать историю, проверьте историю на наличие грамматических ошибок, логики связей и на наличие неприемлемого контента'
 					)}
 				</p>
 				<Button
-					class={clm('justify-center text-emerald-500', greenBackgroundColorButton)}
+					class={clm(
+						button.size.base,
+						button.type.primary,
+						greenBackgroundColorButton,
+						'justify-center'
+					)}
 					{loading}
 					onclick={publishHandler}
 				>
@@ -172,11 +188,16 @@
 				</Button>
 			{/if}
 		{:else if storyInfoStore.info?.status === 'published'}
-			<p class="p-2">
+			<p class="p-2 text-sm">
 				{correctWhitespace(`История опубликована (Версия ${storyInfoStore.info.version})`)}
 			</p>
 			<Button
-				class={clm('justify-center', redBackgroundColorStore.color)}
+				class={clm(
+					button.size.base,
+					button.type.primary,
+					redBackgroundColorStore.color,
+					'justify-center'
+				)}
 				{loading}
 				onclick={unpublishHandler}
 			>

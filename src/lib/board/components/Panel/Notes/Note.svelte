@@ -33,7 +33,7 @@
 	<Contenteditable
 		bind:html={notesStore.notes[noteKey].text}
 		oninput={checkUpdates}
-		class={clm(button.size.base)}
+		class={clm(button.size.base, panelStatesStore.editMode && 'py-1 pr-1')}
 		placeholder="Текст заметки"
 		disabled={panelStatesStore.editMode}
 		readonly={readonlyModeStore.isEnabled}
@@ -50,6 +50,7 @@
 		{/snippet}
 	</Contenteditable>
 	<InputTags
+		class={clm(button.size.base, 'w-full p-1')}
 		bind:tags={notesStore.notes[noteKey].tags}
 		onadd={checkUpdates}
 		onremove={checkUpdates}

@@ -11,9 +11,11 @@
 		Share,
 		Square3Stack3d
 	} from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
+	import { clm } from '$lib/utils/classMerge';
 
 	import { connectionStartStore } from '$board/stores/frames.svelte';
 	import {
@@ -45,8 +47,7 @@
 </script>
 
 <Button
-	size="lg"
-	class="bg-main-700 text-text hover:bg-main-900 z-10 gap-3 pl-4 max-sm:px-3"
+	class={clm(button.type.primary, button.size.lg, 'z-10 gap-3 pl-4 max-sm:px-3')}
 	onclick={switchConnectionMode}
 >
 	{#if boardStateStore.action}

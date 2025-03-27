@@ -3,7 +3,6 @@
 	import { fade } from 'svelte/transition';
 
 	import { PencilSquare, Trash } from 'svelte-heros-v2';
-	import { InputFile } from 'treetale-ui';
 
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage } from '$lib/requests/files';
@@ -75,13 +74,14 @@
 						<Icon class="size-6 text-red-500" this={Trash} />
 					</Button>
 				{:else}
-					<InputFile
+					<Button
+						asFileLoader
 						class={clm(button.type.primary, 'rounded-full p-3')}
 						disabled={addLoading}
 						{onchange}
 					>
 						<Icon class="size-6" this={PencilSquare} />
-					</InputFile>
+					</Button>
 				{/if}
 			</div>
 		{/if}

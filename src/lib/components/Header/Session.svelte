@@ -20,7 +20,7 @@
 	let base64src = $state('');
 	let active = $state(false);
 
-	const correctColor = $derived(user.color || DEFAULT_COLOR);
+	const correctColor = $derived(user?.color || DEFAULT_COLOR);
 </script>
 
 {#if page.data.session}

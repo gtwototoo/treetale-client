@@ -2,10 +2,11 @@
 	import type { Component } from 'svelte';
 
 	import { Cog6Tooth, DocumentText, RectangleStack, Tv, Variable } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
 	import type { PanelProps } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { boardFramesStore } from '$board/stores/frames.svelte';
@@ -68,8 +69,12 @@
 <div class={clm('flex gap-1 p-3 pb-0 *:flex-1', !panelStatesStore.show && 'max-fd:hidden')}>
 	{#each tabs as { component, icon, id, props } (id)}
 		<Button
-			size="lg"
-			class={clm('text-text hover:bg-main-700 justify-center px-0', isActive(id) && 'bg-main-500')}
+			class={clm(
+				button.size.lg,
+				button.type.primary,
+				'justify-center px-0',
+				isActive(id) ? 'bg-main-500' : 'bg-transparent ring-transparent'
+			)}
 			onclick={() => setPanel(id, component, props)}
 		>
 			<Icon class="size-6" this={icon} />

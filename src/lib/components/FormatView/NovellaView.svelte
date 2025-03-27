@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { Button } from 'treetale-ui';
-
 	import { setEndProgress } from '$lib/requests/results';
 	import { fullscreenStore } from '$lib/stores/reading.svelte';
 	import type { Frame } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
 	import Image from '$lib/ui/Image.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctWhitespace } from '$lib/utils/text';
 
@@ -79,7 +79,11 @@
 				{:else}
 					<Button
 						{loading}
-						class="adaptive-font adaptive-padding bg-main-700 text-text hover:bg-main pointer-events-auto font-medium"
+						class={clm(
+							button.size.lg,
+							button.type.primary,
+							'adaptive-font adaptive-padding pointer-events-auto'
+						)}
 						onclick={handleEndStory}
 					>
 						Завершить историю

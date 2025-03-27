@@ -15,6 +15,7 @@
 
 	import Button from './Button.svelte';
 	import Icon from './Icon.svelte';
+	import { button } from './presets';
 
 	let {
 		class: classname,
@@ -87,6 +88,8 @@
 	};
 
 	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+		if (disabled) return;
+
 		ref?.focus();
 
 		onclick?.(e);
@@ -129,14 +132,15 @@
 			addTag(value);
 		}
 	};
+
+	const inactive = $derived(readonly || disabled);
 </script>
 
 <div
 	class={clm(
-		'ring-main-500 text-text hover:bg-main-100 flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-1 overflow-hidden rounded-lg py-1 ring-1',
+		'ring-main-500 text-text flex min-h-[2.5rem] cursor-text flex-wrap items-center gap-1 overflow-hidden ring-1',
 		focused && 'bg-main-100',
-		tags.length ? 'px-1' : 'px-3',
-		disabled && 'pointer-events-none cursor-default opacity-40',
+		disabled ? 'cursor-default' : 'hover:bg-main-100',
 		classname
 	)}
 	onkeydown={handleKeydown}
@@ -146,18 +150,25 @@
 >
 	{#each tags as tag, key (key)}
 		<div
-			class="bg-main-200 hover:bg-main-300 inline-flex items-center rounded-sm text-sm select-none"
+			class={clm(
+				button.type.primary,
+				disabled && 'bg-main-100 ring-main-200 pointer-events-none',
+				'inline-flex rounded-sm text-sm select-none'
+			)}
 		>
-			<p class={clm('leading-8', readonly ? 'px-3' : 'pl-2')}>{tag}</p>
-			{#if !readonly}
-				<Button class="p-2 hover:text-red-600" onclick={() => removeTag(key)}>
+			<p class={clm('leading-8', inactive ? 'px-4' : 'pl-2')}>{tag}</p>
+			{#if !inactive}
+				<Button class="px-1 hover:text-red-600" onclick={() => removeTag(key)}>
 					<Icon class="size-4 max-h-full *:stroke-2" this={XMark} />
 				</Button>
 			{/if}
 		</div>
 	{/each}
 	<input
-		class={clm('w-full grow bg-transparent py-1 placeholder:select-none', tags.length && 'ml-1')}
+		class={clm(
+			'grow bg-transparent px-2 py-1 placeholder:select-none',
+			disabled && 'pointer-events-none opacity-50'
+		)}
 		bind:value
 		bind:this={ref}
 		onblur={() => (focused = false)}

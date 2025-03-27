@@ -66,6 +66,9 @@
 }
 @utility bind-point {
 	@apply absolute size-6 !bg-inherit;
+	&:after {
+		@apply to-main group-hover:to-text absolute -inset-0.5 -z-[1] rounded-full from-transparent from-50% to-50% content-[''];
+	}
 }
 
 body {
@@ -107,19 +110,9 @@ body > div {
 	@apply !px-8 !py-4 max-2xl:!px-6 max-2xl:!py-3;
 }
 
-.rightBindPoint {
-	@apply bind-point left-full -ml-1 rounded-r-full;
+.right-bind-point {
+	@apply bind-point left-full -ml-1 rounded-r-full after:bg-gradient-to-r;
 }
-.leftBindPoint {
-	@apply bind-point right-full -mr-1 rounded-l-full;
-}
-.rightBindPoint:after,
-.leftBindPoint:after {
-	@apply to-main group-hover:to-text absolute -inset-0.5 -z-[1] rounded-full from-transparent from-50% to-50% content-[''];
-}
-.rightBindPoint:after {
-	@apply bg-gradient-to-r;
-}
-.leftBindPoint:after {
-	@apply bg-gradient-to-l;
+.left-bind-point {
+	@apply bind-point right-full -mr-1 rounded-l-full after:bg-gradient-to-l;
 }

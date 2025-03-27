@@ -3,13 +3,15 @@
 	import findIndex from 'lodash/findIndex';
 	import reject from 'lodash/reject';
 	import { Beaker, ChevronRight, Plus, XMark } from 'svelte-heros-v2';
-	import { Button, Contenteditable } from 'treetale-ui';
 
 	import AsInput from '$lib/components/Icons/AsInput.svelte';
 	import { DEFAULT_BLOCK_WIDTH, DEFAULT_FRAME_HEIGHT } from '$lib/constants';
 	import { currentThemeClass, redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Choice, Frame } from '$lib/types';
+	import Button from '$lib/ui/Button.svelte';
+	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { choiceModificators } from '$lib/utils/variableOperations';
 
@@ -89,7 +91,10 @@
 	};
 
 	const greenBackgroundColor = $derived(
-		currentThemeClass(clm('bg-emerald-800'), clm('bg-emerald-200'))
+		currentThemeClass(
+			clm('bg-emerald-800 text-emerald-500 ring-emerald-700'),
+			clm('bg-emerald-200 text-emerald-500 ring-emerald-300')
+		)
 	);
 
 	const logicModificators = $derived(
@@ -98,11 +103,12 @@
 	const mathModificators = $derived(
 		choiceModificators(frame.modificators, choice.choiceId, 'math')
 	);
+	const hasAllModificators = $derived(logicModificators.length && mathModificators.length);
 </script>
 
 <Contenteditable
 	bind:html={choice.text}
-	class="shrink grow"
+	class={clm(button.size.base, 'p-1')}
 	disabled={panelStatesStore.editMode}
 	oninput={boardEventsStore.save}
 	maxlength={100}
@@ -111,44 +117,44 @@
 >
 	{#snippet left()}
 		<Button
-			size="sm"
 			class={clm(
-				'bg-main-300 text-text',
-				logicModificators.length || mathModificators.length
-					? 'text-white hover:opacity-70'
-					: 'hover:bg-main-500',
-				logicModificators.length && 'bg-orange-500',
-				mathModificators.length && 'bg-blue-500',
-				mathModificators.length &&
-					logicModificators.length &&
-					'bg-gradient-to-br from-orange-500 from-50% to-blue-500 to-50%'
+				button.size.sm,
+				button.type.primary,
+				'px-1.5',
+				hasAllModificators
+					? 'bg-gradient-to-br from-orange-500/30 to-blue-500/30 text-violet-500 ring-violet-500/50 hover:from-orange-500/40 hover:to-blue-500/40'
+					: logicModificators.length
+						? 'bg-orange-500/20 text-orange-500 ring-orange-500/50 hover:bg-orange-500/30'
+						: mathModificators.length &&
+							'bg-blue-500/20 text-blue-500 ring-blue-500/50 hover:bg-blue-500/30'
 			)}
 			onclick={handleOpenModificatorsPanel}
 		>
-			<Icon this={choice.asInput ? AsInput : Beaker} class="size-4" />
+			<Icon this={choice.asInput ? AsInput : Beaker} class="size-5" />
 		</Button>
 	{/snippet}
 	{#snippet right()}
 		{#if panelStatesStore.editMode}
-			<Button size="sm" class={redBackgroundColorStore.color} onclick={removeChoice}>
-				<Icon this={XMark} class="size-4" />
+			<Button
+				class={clm(button.size.sm, button.type.primary, redBackgroundColorStore.color, 'px-1.5')}
+				onclick={removeChoice}
+			>
+				<Icon this={XMark} class="size-5" />
 			</Button>
 		{:else if choice.frameId || readonlyModeStore.isEnabled}
 			<Button
 				disabled={!choice.frameId}
-				size="sm"
-				class="bg-main-300 text-text hover:bg-main-500"
+				class={clm(button.size.sm, button.type.primary, 'px-1.5')}
 				onclick={gotoChoiceToFrame}
 			>
-				<Icon class="size-4" this={ChevronRight} />
+				<Icon class="size-5" this={ChevronRight} />
 			</Button>
 		{:else}
 			<Button
-				size="sm"
-				class={clm(greenBackgroundColor, 'text-emerald-500')}
+				class={clm(button.size.sm, button.type.primary, greenBackgroundColor, 'px-1.5')}
 				onclick={addFrameFromChoice}
 			>
-				<Icon class="size-4" this={Plus} />
+				<Icon class="size-5" this={Plus} />
 			</Button>
 		{/if}
 	{/snippet}

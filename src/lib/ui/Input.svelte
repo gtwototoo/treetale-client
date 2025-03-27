@@ -77,6 +77,8 @@
 	};
 
 	const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+		if (disabled) return;
+
 		ref?.focus();
 		onclick?.(e);
 	};
@@ -110,8 +112,8 @@
 	{@render left?.()}
 	<input
 		class={clm(
-			'inherit-align w-full bg-transparent text-inherit placeholder:select-none',
-			disabled && 'pointer-events-none opacity-40'
+			'w-full bg-transparent [text-align:inherit] text-inherit placeholder:select-none',
+			disabled && 'pointer-events-none opacity-50'
 		)}
 		bind:this={ref}
 		bind:value

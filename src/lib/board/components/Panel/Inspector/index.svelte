@@ -2,9 +2,10 @@
 	import cloneDeep from 'lodash/cloneDeep';
 	import find from 'lodash/find';
 	import { Tv } from 'svelte-heros-v2';
-	import { Button } from 'treetale-ui';
 
+	import Button from '$lib/ui/Button.svelte';
 	import Image from '$lib/ui/Image.svelte';
+	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 	import { correctVariableReplace } from '$lib/utils/text';
 
@@ -58,7 +59,7 @@
 	<p class="py-2">Переменные</p>
 	<div class="flex flex-col gap-2">
 		{#if inspectorVariables.length}
-			{#each inspectorVariables as variable (variable.name)}
+			{#each inspectorVariables as variable, key (key)}
 				{#if variable.name}
 					<div class="flex justify-between gap-4 *:text-left *:break-all">
 						<p class="px-2 py-1">{variable.name}</p>
@@ -73,7 +74,7 @@
 		{/if}
 	</div>
 </div>
-<Button onclick={clearChoices} class="bg-main-300 hover:bg-main-500 justify-center">
+<Button onclick={clearChoices} class={clm(button.type.primary, button.size.base, 'justify-center')}>
 	Сбросить все выборы
 </Button>
 <div class="flex flex-col gap-3 text-sm">
@@ -92,7 +93,7 @@
 				{@html text || 'Описание блока'}
 			</p>
 			{#if frame.choices.length}
-				<div class="flex w-full flex-col gap-1">
+				<div class="flex w-full flex-col gap-2 text-base">
 					{#each frame.choices as choice (choice.choiceId)}
 						<Choice {choice} {frame} frameIndex={index} bind:inspectorVariables />
 					{/each}

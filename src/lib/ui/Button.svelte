@@ -2,6 +2,7 @@
 	import type {
 		HTMLAnchorAttributes,
 		HTMLButtonAttributes,
+		HTMLInputAttributes,
 		MouseEventHandler
 	} from 'svelte/elements';
 
@@ -17,20 +18,29 @@
 		loading = false,
 		class: classname,
 		asLink = false,
+		asFileLoader = false,
+		accept = 'image/*',
 		ref = $bindable(),
 		children,
 		onclick,
+		onchange,
 		...props
 	}: {
 		asLink?: boolean;
+		asFileLoader?: boolean;
 		onholdclick?: MouseEventHandler<HTMLButtonElement>;
 		ref?: HTMLButtonElement | HTMLAnchorElement;
+		accept?: string;
 		loading?: boolean;
-	} & HTMLButtonAttributes &
-		HTMLAnchorAttributes = $props();
+		onchange?: HTMLInputAttributes['onchange'];
+	} & Omit<HTMLButtonAttributes, 'onchange'> &
+		Omit<HTMLAnchorAttributes, 'onchange'> = $props();
+
+	let fileInput = $state<HTMLInputElement>();
 
 	const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
 		if (inactive) return;
+		if (asFileLoader) fileInput?.click();
 		onclick?.(e);
 	};
 
@@ -45,10 +55,10 @@
 <svelte:element
 	this={asLink ? 'a' : 'button'}
 	class={clm(
-		'relative flex items-center whitespace-nowrap select-none',
+		'relative flex cursor-pointer items-center whitespace-nowrap select-none',
 		loading && '!text-transparent *:invisible',
 		classname,
-		inactive && 'bg-main-100 ring-main-200 pointer-events-none cursor-default'
+		inactive && 'bg-main-100 ring-main-400 pointer-events-none cursor-default'
 	)}
 	onclick={handleClick}
 	onholdclick={handleHoldClick}
@@ -60,6 +70,9 @@
 >
 	{@render children?.()}
 	{@render loadingState()}
+	{#if asFileLoader}
+		<input {accept} bind:this={fileInput} class="hidden" {onchange} type="file" />
+	{/if}
 </svelte:element>
 
 {#snippet loadingState()}

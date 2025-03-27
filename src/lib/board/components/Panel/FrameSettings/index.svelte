@@ -11,7 +11,7 @@
 		RectangleStack,
 		Trash
 	} from 'svelte-heros-v2';
-	import { Contenteditable, Input, Popover } from 'treetale-ui';
+	import { Popover } from 'treetale-ui';
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import { DEFAULT_BLOCK_WIDTH } from '$lib/constants';
@@ -19,9 +19,11 @@
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { Frame } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
+	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import FormSplit from '$lib/ui/FormSplit.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
-	import { button as buttonPresets } from '$lib/ui/presets';
+	import Input from '$lib/ui/Input.svelte';
+	import { button, button as buttonPresets } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
 
 	import { removeImage, removeSound, saveImage, saveSound } from '$board/requests/files';
@@ -235,7 +237,7 @@
 	<div class="flex gap-2">
 		<FormSplit class="w-full">
 			<Input
-				class="flex-1 !text-center"
+				class={clm(button.size.base, 'flex-1 text-center')}
 				number
 				oninput={setX}
 				max={10000}
@@ -245,7 +247,7 @@
 				value={`${Math.round(x)}`}
 			/>
 			<Input
-				class="flex-1 !text-center"
+				class={clm(button.size.base, 'flex-1 text-center')}
 				number
 				oninput={setY}
 				max={10000}
@@ -321,6 +323,7 @@
 	</table>
 	<FormSplit vertical>
 		<Input
+			class={clm(button.size.base)}
 			bind:value={frame.title}
 			disabled={panelStatesStore.editMode}
 			maxlength={200}
@@ -329,6 +332,7 @@
 			readonly={readonlyModeStore.isEnabled}
 		/>
 		<Contenteditable
+			class={clm(button.size.base)}
 			bind:html={frame.text!}
 			disabled={panelStatesStore.editMode}
 			bind:ref={descriptionElement}
@@ -341,11 +345,11 @@
 	</FormSplit>
 	{#if onePrevFrame !== null}
 		<Button
-			class="bg-contrast-900 text-text hover:bg-contrast-700 justify-center gap-4 pl-3"
+			class={clm(button.size.base, button.type.primary, 'justify-center')}
 			onclick={gotoPrevFrame}
 		>
 			<Icon class="absolute left-3 size-5" this={ArrowLeft} />
-			К предыдущему блоку
+			<p class="mx-6 truncate">К предыдущему блоку</p>
 		</Button>
 	{/if}
 	<div class="flex flex-col gap-2" id="choices">
@@ -354,13 +358,21 @@
 		{/each}
 		{#if !readonlyModeStore.isEnabled}
 			{#if panelStatesStore.editMode && frameId !== 1}
-				<Button class={clm('justify-center', redBackgroundColorStore.color)} onclick={removeFrame}>
+				<Button
+					class={clm(
+						button.size.base,
+						button.type.primary,
+						'justify-center',
+						redBackgroundColorStore.color
+					)}
+					onclick={removeFrame}
+				>
 					Удалить блок
 				</Button>
 			{/if}
 			{#if !panelStatesStore.editMode}
 				<Button
-					class="bg-contrast-700 text-text hover:bg-contrast-900 justify-center"
+					class={clm(button.size.base, button.type.primary, 'justify-center')}
 					onclick={() => addChoice(frame)}
 				>
 					Добавить вариант

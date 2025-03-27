@@ -6,6 +6,7 @@ export const autoWidth = (node: HTMLInputElement, overrideValue: string) => {
 
 		element.style.visibility = 'hidden';
 		element.style.position = 'absolute';
+		element.className = node.className;
 		element.innerHTML = node.value;
 
 		node.parentElement.insertBefore(element, node);

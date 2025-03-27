@@ -67,13 +67,15 @@
 >
 	<Image
 		alt="Авторизация"
-		class="bg-main-400 h-[32rem] w-[22rem] rounded-2xl object-cover"
+		class="bg-main-400 h-[32rem] w-[22rem] shrink-0 rounded-2xl object-cover"
 		cover
 		src="/img/writer.png"
 	/>
-	<div class="flex flex-col justify-between gap-4">
-		<p class="text-4xl font-medium">Авторизация</p>
-		<p>
+	<div class="flex flex-col justify-between gap-4 md:mt-4">
+		<h1 class="text-[clamp(32px,5vw,56px)] leading-none max-md:pb-4 max-md:text-center">
+			Авторизация
+		</h1>
+		<p class="adaptive-font px-2 break-words">
 			Войдите или зарегистрируйтесь - к вам на почту придет письмо с подтверждением (Возможно в
 			&quot;Спам&quot;)
 		</p>
@@ -99,6 +101,7 @@
 				<Button
 					class={clm(
 						button.type.primary,
+						button.size.lg,
 						'adaptive-font adaptive-padding w-full gap-4 rounded-xl !pl-4'
 					)}
 					{disabled}

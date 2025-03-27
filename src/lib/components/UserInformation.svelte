@@ -4,7 +4,6 @@
 	import type { ChangeEventHandler } from 'svelte/elements';
 
 	import { User as UserIcon, UserMinus, UserPlus } from 'svelte-heros-v2';
-	import { ColorPicker } from 'treetale-ui';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
@@ -18,6 +17,7 @@
 	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
 	import type { RGB, User } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
+	import ColorPicker from '$lib/ui/ColorPicker.svelte';
 	import Contenteditable from '$lib/ui/Contenteditable.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import Input from '$lib/ui/Input.svelte';
@@ -187,13 +187,7 @@
 					bind:value={userState.linkName}
 					class={clm(button.size.lg, 'w-full')}
 				/>
-				<ColorPicker
-					color={bodyBackgroundColorStore.color}
-					{light}
-					onchange={setColor}
-					align="right"
-					{saturate}
-				>
+				<ColorPicker color={bodyBackgroundColorStore.color} {light} onchange={setColor} {saturate}>
 					{#snippet children({ onclick })}
 						<Button
 							class={clm(button.type.primary, button.size.lg, 'hover:bg-main hover:ring-main')}
