@@ -9,6 +9,7 @@
 
 	import Button from './Button.svelte';
 	import Modal from './Modal.svelte';
+	import { button as buttonPresets } from './presets';
 	import Range from './Range.svelte';
 
 	type ColorPickerProps = {
@@ -23,16 +24,22 @@
 
 	let {
 		onchange,
-		saturateRange = [10, 90],
-		lightRange = [20, 80],
+		saturateRange = [0, 100],
+		lightRange = [0, 100],
 		color,
 		disabled = false,
 		class: classname,
 		button
 	}: ColorPickerProps = $props();
 
-	let [hue, saturate, light] = $state(rgbToHsl(color));
+	const initColor = color;
+	const initHsl = rgbToHsl(initColor);
+
+	let [hue, saturate, light] = $state(initHsl);
 	let active = $state(false);
+
+	light = 50;
+	saturate = 100;
 
 	const handleClick = (e: MouseEvent, newHue: number) => {
 		if (disabled || !(e.target instanceof HTMLButtonElement)) return;
@@ -42,6 +49,15 @@
 		const newColor = stringToRgb(e.target.style.background);
 
 		onchange?.(newColor);
+	};
+
+	const handleReset = () => {
+		const [newHue, newSaturate, newLight] = initHsl;
+		hue = newHue;
+		saturate = newSaturate;
+		light = newLight;
+
+		onchange?.(initColor);
 	};
 </script>
 
@@ -70,7 +86,10 @@
 				<div class="size-4 rounded-full bg-blue-100 ring-1 ring-blue-200"></div>
 				<Range
 					value={saturate}
-					onchange={(value) => (saturate = value)}
+					onchange={(value) => {
+						saturate = value;
+						light = value;
+					}}
 					class="min-w-0 grow"
 					max={saturateRange[1]}
 					min={saturateRange[0]}
@@ -93,5 +112,11 @@
 				></button>
 			{/each}
 		</div>
+		<Button
+			class={clm(buttonPresets.size.base, buttonPresets.type.primary, 'justify-center')}
+			onclick={handleReset}
+		>
+			Сбросить цвет
+		</Button>
 	</div>
 </Modal>
