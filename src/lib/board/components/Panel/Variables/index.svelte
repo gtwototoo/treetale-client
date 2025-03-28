@@ -1,4 +1,5 @@
 <script lang="ts">
+	import last from 'lodash/last';
 	import { Cloud, Variable } from 'svelte-heros-v2';
 
 	import Button from '$lib/ui/Button.svelte';
@@ -22,7 +23,9 @@
 	let saveInfo = $state('Ожидание изменений');
 
 	const addVariable = () => {
+		const newId = (last(variablesStore.variables)?.id || 0) + 1;
 		variablesStore.variables.push({
+			id: newId,
 			expect: 'Строка',
 			name: '',
 			value: ''

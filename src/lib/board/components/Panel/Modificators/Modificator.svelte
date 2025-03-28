@@ -35,14 +35,15 @@
 	} = $props();
 
 	const handleChange = (value: string) => {
-		selectVariable(value);
+		const id = find(variablesStore.variables, { name: value })!.id; // Временно!
+		selectVariable(id);
 		boardEventsStore.save();
 	};
 
-	const selectVariable = (name: string) => {
-		const { expect } = find(variablesStore.variables, { name })!;
+	const selectVariable = (id: number) => {
+		const { expect } = find(variablesStore.variables, { id })!;
 
-		modificator.variable = name;
+		modificator.variableId = id;
 
 		if (expect === 'Логика') {
 			if (!['Да', 'Нет'].includes(modificator.value)) {
@@ -55,16 +56,19 @@
 		}
 	};
 
-	const variable = $derived(find(variablesStore.variables, { name: modificator.variable }));
+	const variable = $derived(
+		modificator.variableId !== null
+			? find(variablesStore.variables, { id: modificator.variableId })
+			: null
+	);
 	const fullModificatorOperation = $derived(
-		`${modificator.variable || 'Переменная'} ${modificator.symbol} ${modificator.value || 'Значение'}`
+		`${variable?.name || 'Переменная'} ${modificator.symbol} ${modificator.value || 'Значение'}`
 	);
 	const isFieldForInputVar = $derived(
-		modificator.type === 'math' &&
-			asInput &&
-			!modificator.value &&
-			modificator.variable &&
-			variable?.expect === 'Строка'
+		modificator.type === 'math' && asInput && !modificator.value && variable?.expect === 'Строка'
+	);
+	const onlyFilledVariables = $derived(
+		variablesStore.variables.filter((variable) => variable.name)
 	);
 </script>
 
@@ -96,7 +100,7 @@
 			oninput={boardEventsStore.save}
 			number={variable?.expect === 'Число'}
 			placeholder="Значение"
-			disabled={!modificator.variable}
+			disabled={!variable}
 			readonly={readonlyModeStore.isEnabled}
 		>
 			{#snippet right()}
@@ -131,11 +135,11 @@
 		{/snippet}
 	</Input>
 {:else}
-	<div class="grid grid-cols-[1fr_max-content_1fr] gap-1">
+	<div class="grid grid-cols-[1fr_max-content_1fr] gap-2">
 		<Listbox
-			value={modificator.variable}
+			value={variable?.name}
 			class="flex-1"
-			options={variablesStore.variables.map(({ name }) => ({ value: name }))}
+			options={onlyFilledVariables.map(({ name }) => ({ value: name }))}
 			onchange={handleChange}
 			placeholder="Переменная"
 			readonly={readonlyModeStore.isEnabled}

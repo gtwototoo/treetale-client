@@ -34,8 +34,6 @@
 	import Publishing from './Publishing.svelte';
 	import Shortcuts from './Shortcuts.svelte';
 
-	let light = $state(80);
-	let saturate = $state(90);
 	let timer = $state<number>();
 	let saving = $state(false);
 	let saveInfo = $state('Ожидание изменений');
@@ -202,10 +200,8 @@
 			</Popover>
 			<ColorPicker
 				color={storyInfoStore.info?.color || DEFAULT_COLOR}
-				{light}
 				onchange={setColor}
 				disabled={readonlyModeStore.isEnabled}
-				{saturate}
 				class={clm(
 					buttonPresets.type.primary,
 					buttonPresets.size.lg,

@@ -23,15 +23,15 @@
 	import Modificator from './Modificator.svelte';
 
 	const handleAddModificator = (type: 'logic' | 'math') => {
-		const lastModificatorId = last(frame.modificators)?.modificatorId || 0;
+		const newModificatorId = (last(frame.modificators)?.modificatorId || 0) + 1;
 
 		frame.modificators.push({
 			choiceId,
-			modificatorId: lastModificatorId + 1,
+			modificatorId: newModificatorId,
 			symbol: '=',
 			type,
 			value: '',
-			variable: ''
+			variableId: null
 		});
 
 		boardEventsStore.save();
@@ -101,7 +101,7 @@
 	/>
 {/if}
 {#if logicModificators.length || mathModificators.length}
-	<div class="flex w-full flex-col gap-1">
+	<div class="flex w-full flex-col gap-2">
 		{#if logicModificators.length}
 			<div class="flex items-center justify-between px-3 py-2 text-sm">
 				Условия появления

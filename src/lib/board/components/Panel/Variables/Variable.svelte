@@ -1,5 +1,4 @@
 <script lang="ts">
-	import find from 'lodash/find';
 	import findIndex from 'lodash/findIndex';
 	import { XMark } from 'svelte-heros-v2';
 
@@ -41,20 +40,18 @@
 		}
 	];
 
-	const removeVariableFromModificators = (name: string) => {
+	const removeVariableFromModificators = (id: number) => {
 		for (const frame of boardFramesStore.frames) {
-			if (find(frame.modificators, { variable: name })) {
-				frame.modificators = frame.modificators.filter(({ variable }) => variable !== name);
-			}
+			frame.modificators = frame.modificators.filter(({ variableId }) => variableId !== id);
 		}
 	};
 
 	const removeVariable = () => {
-		const variableIndex = findIndex(variablesStore.variables, (v) => v.name === variable.name);
+		const variableIndex = findIndex(variablesStore.variables, ({ id }) => id === variable.id);
 
 		variablesStore.variables.splice(variableIndex, 1);
 
-		removeVariableFromModificators(variable.name);
+		removeVariableFromModificators(variable.id);
 
 		checkUpdates();
 	};
@@ -63,7 +60,7 @@
 {#if panelStatesStore.editMode}
 	<Input
 		class={clm(button.size.base, 'w-full py-1 pr-1')}
-		value={`${variable.name || 'переменная'} = ${variable.value || 'значение'}`}
+		value={`[${variable.id || 0}] ${variable.name || 'переменная'} = ${variable.value || 'значение'}`}
 		disabled
 	>
 		{#snippet right()}

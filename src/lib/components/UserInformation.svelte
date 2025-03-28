@@ -41,8 +41,6 @@
 	let userState = $state(user);
 	let exitModal = $state(false);
 	let editMode = $state(false);
-	let light = $state(80);
-	let saturate = $state(90);
 	let loading = $state(false);
 	let base64src = $state<string>('');
 	let addLoading = $state(false);
@@ -194,9 +192,7 @@
 						'hover:bg-main hover:ring-main'
 					)}
 					color={bodyBackgroundColorStore.color}
-					{light}
 					onchange={setColor}
-					{saturate}
 				>
 					{#snippet button()}
 						Цвет

@@ -12,7 +12,7 @@ import { contrastText } from './contrast';
 
 export const varColors = (extend: Record<string, RGB> = {}) => {
 	return Object.entries(extend)
-		.map(([key, value]) => `--${key}:${toRGB(value)}`)
+		.map(([key, value]) => `--${key}:${rgbToString(value)}`)
 		.join(';');
 };
 
@@ -55,6 +55,50 @@ export const alphaToRgb = (rgb: RGB, alpha: number, backColor: RGB = [255, 255, 
 	}) as RGB;
 };
 
+export const stringToRgb = (colorString: string) => {
+	return colorString
+		.replace(/rgb\((\d*), (\d*), (\d*)\)/, '$1 $2 $3')
+		.split(' ')
+		.map((v) => +v) as RGB;
+};
+
+export const rgbToHsl = (rgb: RGB) => {
+	rgb = rgb.map((color) => color / 255) as RGB;
+	let hsl = [0, 0, 0];
+
+	const max = Math.max(...rgb);
+	const min = Math.min(...rgb);
+
+	hsl = hsl.map(() => (max + min) / 2);
+
+	if (max == min) {
+		hsl[0] = 0;
+		hsl[1] = 0;
+	} else {
+		const difference = max - min;
+
+		hsl[1] = hsl[2] > 0.5 ? difference / (2 - max - min) : difference / (max + min);
+
+		switch (max) {
+			case rgb[0]:
+				hsl[0] = (rgb[1] - rgb[2]) / difference + (rgb[1] < rgb[2] ? 6 : 0);
+				break;
+			case rgb[1]:
+				hsl[0] = (rgb[2] - rgb[0]) / difference + 2;
+				break;
+			case rgb[2]:
+				hsl[0] = (rgb[0] - rgb[1]) / difference + 4;
+				break;
+		}
+
+		hsl[0] = hsl[0] * 0.6;
+	}
+
+	hsl = hsl.map((value) => Math.round(value * 100));
+
+	return hsl;
+};
+
 export const rootStyle = (mainColor?: RGB, additionalStyles?: Record<string, string>) => {
 	const styles = [];
 
@@ -68,6 +112,6 @@ export const rootStyle = (mainColor?: RGB, additionalStyles?: Record<string, str
 	return `<${'style'} type="text/css">:root{${styles}}</style>`;
 };
 
-export const toRGB = (color: RGB) => {
+export const rgbToString = (color: RGB) => {
 	return `rgb(${color.join(' ')})`;
 };

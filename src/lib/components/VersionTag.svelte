@@ -18,10 +18,10 @@
 	);
 	const versionColor = $derived(
 		{
-			breaking: 'bg-red-100 text-red-500',
-			current: 'bg-green-100 text-green-500',
-			minor: 'bg-yellow-100 text-yellow-500',
-			archived: 'bg-gray-100 text-gray-500'
+			breaking: 'bg-red-500/30 text-red-500',
+			current: 'bg-emerald-500/30 text-emerald-500',
+			minor: 'bg-yellow-500/30 text-yellow-500',
+			archived: 'bg-gray-500/30 text-gray-500'
 		}[versionCompare(currentVersion, progressOrCurrentVersion)]
 	);
 </script>

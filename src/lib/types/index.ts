@@ -107,12 +107,13 @@ export interface Modificator<T = ComparisonOperators | MathOperators> {
 	symbol: T;
 	type: 'logic' | 'math';
 	value: string;
-	variable: string;
+	variableId: number | null;
 }
 
 export type VariableExpects = 'Логика' | 'Строка' | 'Число';
 
 export interface Variable {
+	id: number;
 	expect: VariableExpects;
 	name: string;
 	value: string;

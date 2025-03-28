@@ -53,7 +53,8 @@
 
 			if (mathModificators.length) {
 				for (const modificator of mathModificators) {
-					const variableId = findIndex(inspectorVariables, { name: modificator.variable });
+					if (!modificator.variableId) continue;
+					const variableId = findIndex(inspectorVariables, { id: modificator.variableId });
 					const firstValue = inspectorVariables[variableId].value;
 
 					inspectorVariables[variableId].value = doMath(
@@ -78,7 +79,10 @@
 			(choice.asInput && !inputValue)
 	);
 	const onlyCorrectLogicModificators = $derived(
-		filter(logicModificators, (modificator) => !!(modificator.variable && modificator.value))
+		filter(logicModificators, (modificator) => !!(modificator.variableId && modificator.value))
+	);
+	const onlyCorrectMathModificators = $derived(
+		filter(mathModificators, (modificator) => !!(modificator.variableId && modificator.value))
 	);
 
 	const yellowTextColor = $derived(
@@ -102,20 +106,20 @@
 			<p class="text-xs text-orange-500">
 				Условие:
 				{onlyCorrectLogicModificators
-					.map(({ symbol, value, variable }) => `${variable} ${symbol} ${value}`)
+					.map(({ symbol, value, variableId }) => `[${variableId}] ${symbol} ${value}`)
 					.join(' и ')}
 			</p>
 		{/if}
 		<div class="w-full text-left break-words whitespace-normal">
 			{@html correctVariableReplace(choice.text, inspectorVariables) || 'Вариант выбора'}
 		</div>
-		{#if mathModificators.length}
+		{#if onlyCorrectMathModificators.length}
 			<p class="text-xs text-blue-500">
 				Изменения:
-				{mathModificators
+				{onlyCorrectMathModificators
 					.map(
-						({ symbol, value, variable }) =>
-							`${variable} ${symbol} ${choice.asInput && value === '{input}' ? inputValue : value}`
+						({ symbol, value, variableId }) =>
+							`[${variableId}] ${symbol} ${choice.asInput && value === '{input}' ? inputValue : value}`
 					)
 					.join(' и ')}
 			</p>
