@@ -19,6 +19,7 @@
 	--color-contrast-700: var(--color-contrast-700);
 	--color-contrast-800: var(--color-contrast-800);
 	--color-contrast-900: var(--color-contrast-900);
+
 	--color-main-100: var(--color-main-100);
 	--color-main-200: var(--color-main-200);
 	--color-main-300: var(--color-main-300);
@@ -28,6 +29,7 @@
 	--color-main-700: var(--color-main-700);
 	--color-main-800: var(--color-main-800);
 	--color-main-900: var(--color-main-900);
+
 	--color-contrast: var(--color-contrast);
 	--color-main: var(--color-main);
 	--color-text: var(--color-text);

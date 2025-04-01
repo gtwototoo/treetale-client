@@ -125,7 +125,7 @@
 						<div
 							class={clm(
 								'size-5 rounded-full p-1',
-								requirement.value ? greenBackgroundColorButton : 'bg-contrast'
+								requirement.value ? 'bg-emerald-500/30' : 'bg-contrast'
 							)}
 						>
 							{#if requirement.value}

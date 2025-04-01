@@ -1,11 +1,17 @@
 <script>
+	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { theme } from '$lib/stores/colors.svelte';
 	import { rootStyle } from '$lib/utils/customColors';
 </script>
 
 <svelte:head>
-	{@html rootStyle(undefined, {
-		'fill-gradient': 'url(#light-gradient)'
-	})}
+	{@html rootStyle(
+		DEFAULT_COLOR,
+		{
+			'fill-gradient': 'url(#light-gradient)'
+		},
+		theme.type
+	)}
 </svelte:head>
 
 <svg aria-hidden="true" class="invisible absolute bg-transparent" height="0" width="0">

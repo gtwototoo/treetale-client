@@ -10,6 +10,7 @@
 	import { STORY_FORMATS } from '$lib/constants/formats';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { getProgress } from '$lib/requests/progress';
+	import { theme } from '$lib/stores/colors.svelte';
 	import { variablesStore } from '$lib/stores/variables.svelte';
 	import type { Story, User } from '$lib/types';
 	import type { ResponseProgress } from '$lib/types/response';
@@ -75,7 +76,7 @@
 <Modal
 	bind:active
 	class="flex w-full max-w-screen-lg flex-row gap-8 p-8 max-md:m-0 max-md:mt-20 max-md:flex-col max-md:items-center max-md:rounded-b-none max-md:p-6"
-	customRootStyle={generateMainColors(selectedColor)}
+	customRootStyle={generateMainColors(selectedColor, theme.type)}
 >
 	<LeftSide {story} {author} {title} />
 	<div class="text-text flex h-auto w-full flex-col items-start max-md:items-center">

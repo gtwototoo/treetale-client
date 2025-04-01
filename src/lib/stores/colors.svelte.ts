@@ -1,26 +1,40 @@
 import { DEFAULT_COLOR } from '$lib/constants/colors';
 import { clm } from '$lib/utils/classMerge';
-import { contrastText } from '$lib/utils/contrast';
+
+const getTheme = () => {
+	let _type = $state<'light' | 'dark'>('light');
+
+	return {
+		get type() {
+			return _type;
+		},
+		set type(value) {
+			_type = value;
+		}
+	};
+};
+
+export const theme = getTheme();
 
 export const currentThemeClass = (blackThemeClass: string, whiteThemeClass: string) => {
-	return contrastText(bodyBackgroundColorStore.color) ? blackThemeClass : whiteThemeClass;
+	return theme.type === 'dark' ? blackThemeClass : whiteThemeClass;
 };
 
 const getBodyBackgroundColor = () => {
-	let color = $state(DEFAULT_COLOR);
+	let _color = $state(DEFAULT_COLOR);
 
 	return {
 		get color() {
-			return color;
+			return _color;
 		},
 		set color(value) {
-			color = value;
+			_color = value;
 		}
 	};
 };
 
 const getRedBackgroundColor = () => {
-	const color = $derived(
+	const _color = $derived(
 		currentThemeClass(
 			clm('bg-red-900 hover:bg-red-800 text-red-500 ring-red-700'),
 			clm('bg-red-100 hover:bg-red-200 text-red-500 ring-red-300')
@@ -29,7 +43,7 @@ const getRedBackgroundColor = () => {
 
 	return {
 		get color() {
-			return color;
+			return _color;
 		}
 	};
 };

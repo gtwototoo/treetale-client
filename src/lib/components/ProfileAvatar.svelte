@@ -6,6 +6,7 @@
 
 	import { AVATARS_FOLDER } from '$lib/constants/s3forders';
 	import { removeImage } from '$lib/requests/files';
+	import { theme } from '$lib/stores/colors.svelte';
 	import type { RGB } from '$lib/types';
 	import Avatar from '$lib/ui/Avatar.svelte';
 	import Button from '$lib/ui/Button.svelte';
@@ -58,7 +59,7 @@
 	};
 </script>
 
-<div class="contents" style={generateMainColors(color)}>
+<div class="contents" style={generateMainColors(color, theme.type)}>
 	<Avatar {alt} {base64src} onload={loadHandler} {src} class={classname}>
 		{#if editMode}
 			<div

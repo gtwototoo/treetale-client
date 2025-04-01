@@ -3,8 +3,7 @@
 <script lang="ts">
 	import type { SVGAttributes } from 'svelte/elements';
 
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
-	import { contrastText } from '$lib/utils/contrast';
+	import { theme } from '$lib/stores/colors.svelte';
 
 	const {
 		maskId = 'short-logo-mask',
@@ -14,7 +13,7 @@
 	} = $props();
 
 	const gradientColors = $derived(
-		contrastText(bodyBackgroundColorStore.color) ? ['#5A00EC', '#AF00A9'] : ['#FF6C15', '#FDBA74']
+		theme.type === 'dark' ? ['#5A00EC', '#AF00A9'] : ['#FF6C15', '#FDBA74']
 	);
 </script>
 

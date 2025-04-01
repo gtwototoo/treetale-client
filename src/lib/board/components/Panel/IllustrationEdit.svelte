@@ -6,7 +6,6 @@
 
 	import InvisibleDrop from '$lib/components/InvisibleDrop.svelte';
 	import Cover from '$lib/components/StoryCard/Cover.svelte';
-	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
 	import { ILLUSTRATIONS_FOLDER } from '$lib/constants/s3forders';
 	import { redBackgroundColorStore } from '$lib/stores/colors.svelte';
@@ -21,7 +20,7 @@
 	import { storyInfoStore } from '$board/stores/info.svelte';
 	import { panelStatesStore } from '$board/stores/panel.svelte';
 
-	let { color, imageUrl, title } = $derived(storyInfoStore.info!);
+	let { imageUrl, title } = $derived(storyInfoStore.info!);
 
 	const handleDrop = (files: File[]) => {
 		const file = files[0];
@@ -75,13 +74,7 @@
 	<p>Перетащите сюда изображение, чтобы заменить текущее в блоке</p>
 </InvisibleDrop>
 <div class="flex justify-center">
-	<Cover
-		icon={genre.icon}
-		{title}
-		color={color || DEFAULT_COLOR}
-		{imageUrl}
-		editMode={panelStatesStore.editMode}
-	/>
+	<Cover icon={genre.icon} {title} {imageUrl} editMode={panelStatesStore.editMode} />
 </div>
 {#if imageUrl}
 	<Button

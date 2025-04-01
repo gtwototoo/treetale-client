@@ -1,24 +1,21 @@
 <script lang="ts">
 	import type { Component } from 'svelte';
 
-	import type { RGB } from '$lib/types';
+	import { theme } from '$lib/stores/colors.svelte';
 	import Image from '$lib/ui/Image.svelte';
 	import { clm } from '$lib/utils/classMerge';
-	import { contrastText } from '$lib/utils/contrast';
 
 	import Titie from './Titie.svelte';
 	import TransparentRect from './TransparentRect.svelte';
 
 	const {
 		class: classname,
-		color,
 		editMode,
 		icon,
 		imageUrl,
 		title
 	}: {
 		class?: string;
-		color: RGB;
 		editMode?: boolean;
 		icon: Component;
 		imageUrl: null | string;
@@ -32,10 +29,10 @@
 	};
 
 	const gradientBackgroundColor = $derived(
-		contrastText(color) ? clm('from-main to-main-500') : clm('from-main-700 to-main')
+		theme.type === 'dark' ? clm('from-main to-main-800') : clm('from-main-500 to-main')
 	);
-	const iconColor = $derived(contrastText(color) ? clm('text-main-600') : clm('text-main'));
-	const textFillColor = $derived(contrastText(color) ? clm('fill-white') : clm('fill-black'));
+	const iconColor = $derived(theme.type === 'dark' ? clm('text-main-600') : clm('text-main'));
+	const textFillColor = $derived(theme.type === 'dark' ? clm('fill-white') : clm('fill-black'));
 	const GenreIcon = $derived(icon);
 </script>
 

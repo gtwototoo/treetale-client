@@ -5,13 +5,13 @@
 	import { Trash } from 'svelte-heros-v2';
 
 	import { deleteProgress } from '$lib/requests/progress';
+	import { theme } from '$lib/stores/colors.svelte';
 	import type { Frame, Story } from '$lib/types';
 	import type { ResponseProgress } from '$lib/types/response';
 	import Button from '$lib/ui/Button.svelte';
 	import Icon from '$lib/ui/Icon.svelte';
 	import { button } from '$lib/ui/presets';
 	import { clm } from '$lib/utils/classMerge';
-	import { contrastText } from '$lib/utils/contrast';
 	import { formatDate } from '$lib/utils/date';
 
 	import FrameMini from '../FrameMini.svelte';
@@ -52,7 +52,7 @@
 	const { choices, version, updated } = $derived(progress);
 	const choicesCount = $derived(choices.length);
 	const redBackgroundColor = $derived(
-		contrastText(story.color)
+		theme.type === 'dark'
 			? clm('bg-red-900 hover:bg-red-800 text-red-500 ring-red-700')
 			: clm('bg-red-100 hover:bg-red-200 text-red-500 ring-red-300')
 	);

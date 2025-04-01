@@ -7,7 +7,7 @@
 		class: classname,
 		min,
 		max,
-		value,
+		value = $bindable(),
 		onchange
 	}: {
 		class?: string;
@@ -22,6 +22,10 @@
 		min,
 		value,
 		onValueChange: (value) => onchange?.(value!)
+	});
+
+	$effect(() => {
+		if (value) slider.value = value;
 	});
 </script>
 

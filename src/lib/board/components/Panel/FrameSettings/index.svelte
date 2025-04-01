@@ -318,28 +318,26 @@
 			</tr>
 		</tbody>
 	</table>
-	<FormSplit vertical>
-		<Input
-			class={clm(button.size.base)}
-			bind:value={frame.title}
-			disabled={panelStatesStore.editMode}
-			maxlength={200}
-			oninput={boardEventsStore.save}
-			placeholder="Название блока"
-			readonly={readonlyModeStore.isEnabled}
-		/>
-		<Contenteditable
-			class={clm(button.size.base)}
-			bind:html={frame.text!}
-			disabled={panelStatesStore.editMode}
-			bind:ref={descriptionElement}
-			oninput={boardEventsStore.save}
-			maxlength={1500}
-			pattern={updatePattern}
-			placeholder="Описание блока"
-			readonly={readonlyModeStore.isEnabled}
-		/>
-	</FormSplit>
+	<Input
+		class={clm(button.size.base)}
+		bind:value={frame.title}
+		disabled={panelStatesStore.editMode}
+		maxlength={200}
+		oninput={boardEventsStore.save}
+		placeholder="Название блока"
+		readonly={readonlyModeStore.isEnabled}
+	/>
+	<Contenteditable
+		class={clm(button.size.base)}
+		bind:html={frame.text!}
+		disabled={panelStatesStore.editMode}
+		bind:ref={descriptionElement}
+		oninput={boardEventsStore.save}
+		maxlength={1500}
+		pattern={updatePattern}
+		placeholder="Описание блока"
+		readonly={readonlyModeStore.isEnabled}
+	/>
 	{#if onePrevFrame !== null}
 		<Button
 			class={clm(button.size.base, button.type.primary, 'justify-center')}

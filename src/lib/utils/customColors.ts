@@ -8,43 +8,41 @@ import {
 } from '$lib/constants/colors';
 import type { RGB } from '$lib/types';
 
-import { contrastText } from './contrast';
-
-export const varColors = (extend: Record<string, RGB> = {}) => {
-	return Object.entries(extend)
-		.map(([key, value]) => `--${key}:${rgbToString(value)}`)
-		.join(';');
-};
-
 export const varStyles = (extend: Record<string, string> = {}) => {
 	return Object.entries(extend)
 		.map(([key, value]) => `--${key}:${value}`)
 		.join(';');
 };
 
-export const generateMainColors = (color: RGB) => {
-	const contrast = contrastText(color);
+export const generateMainColors = (color: RGB, theme: 'dark' | 'light') => {
+	// const contrast = contrastText(color);
+	const isDark = theme === 'dark';
+	const backColor = isDark ? BLACK_COLOR : WHITE_COLOR;
 
 	const additionalColors: Record<string, RGB> = {
-		'color-contrast': contrast ? BLACK_COLOR : WHITE_COLOR,
+		'color-contrast': isDark ? BLACK_COLOR : WHITE_COLOR,
 		'color-main': color,
-		'color-text': contrast ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR
+		'color-text': isDark ? WHITE_TEXT_COLOR : BLACK_TEXT_COLOR
 	};
 
 	for (const i of range(9)) {
 		additionalColors[`color-contrast-${(i + 1) * 100}`] = alphaToRgb(
-			contrast ? WHITE_COLOR : BLACK_COLOR,
-			(+i + 1) / 100,
-			contrast ? BLACK_COLOR : WHITE_COLOR
-		);
-		additionalColors[`color-main-${(i + 1) * 100}`] = alphaToRgb(
-			color,
+			isDark ? WHITE_COLOR : BLACK_COLOR,
 			(+i + 1) / 10,
-			contrast ? BLACK_COLOR : WHITE_COLOR
+			backColor
 		);
+		additionalColors[`color-main-${(i + 1) * 100}`] = alphaToRgb(color, (+i + 1) / 10, backColor);
 	}
 
-	return varColors(additionalColors);
+	console.log(additionalColors);
+
+	const additionalColorsStrings: Record<string, string> = {};
+
+	for (const [key, value] of Object.entries(additionalColors)) {
+		additionalColorsStrings[key] = rgbToString(value);
+	}
+
+	return varStyles(additionalColorsStrings);
 };
 
 export const alphaToRgb = (rgb: RGB, alpha: number, backColor: RGB = [255, 255, 255]) => {
@@ -99,11 +97,15 @@ export const rgbToHsl = (rgb: RGB) => {
 	return hsl;
 };
 
-export const rootStyle = (mainColor?: RGB, additionalStyles?: Record<string, string>) => {
+export const rootStyle = (
+	mainColor: RGB,
+	additionalStyles: Record<string, string>,
+	theme: 'dark' | 'light'
+) => {
 	const styles = [];
 
 	if (mainColor) {
-		styles.push(generateMainColors(mainColor));
+		styles.push(generateMainColors(mainColor, theme));
 	}
 	if (additionalStyles) {
 		styles.push(varStyles(additionalStyles));

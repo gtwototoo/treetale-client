@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
-	import { bodyBackgroundColorStore } from '$lib/stores/colors.svelte';
+	import { bodyBackgroundColorStore, theme } from '$lib/stores/colors.svelte';
 	import type { RGB } from '$lib/types';
 	import { rootStyle } from '$lib/utils/customColors';
 
@@ -20,5 +20,5 @@
 </script>
 
 <svelte:head>
-	{@html rootStyle(currentColor)}
+	{@html rootStyle(currentColor, {}, theme.type)}
 </svelte:head>

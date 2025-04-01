@@ -4,6 +4,7 @@
 	import { pluralize } from 'pluralize-ru-ts';
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
+	import { theme } from '$lib/stores/colors.svelte';
 	import type { User } from '$lib/types';
 	import Button from '$lib/ui/Button.svelte';
 	import { button } from '$lib/ui/presets';
@@ -47,7 +48,7 @@
 		src={author.imageUrl}
 		class={clm('size-10', mobileView && 'max-sm:size-8')}
 	/>
-	<div class={clm('mr-5 ml-2 overflow-hidden text-left', mobileView && 'max-md:hidden')}>
+	<div class={clm('text-text mr-5 ml-2 overflow-hidden text-left', mobileView && 'max-md:hidden')}>
 		<p class="truncate text-base/5 font-medium">
 			{author.name}
 		</p>
@@ -58,7 +59,7 @@
 	</div>
 {/snippet}
 
-<div class="contents" style={generateMainColors(correctColor)}>
+<div class="contents" style={generateMainColors(correctColor, theme.type)}>
 	{#if isButton}
 		<Button
 			class={clm(button.type.primary, button.size.lg, 'min-w-0 p-1', classname)}

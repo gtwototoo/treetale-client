@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ArchiveBox, Check, Clock } from 'svelte-heros-v2';
 
-	import type { RGB, StoryStatus, User } from '$lib/types';
+	import type { StoryStatus, User } from '$lib/types';
 	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
 	import { formatDate } from '$lib/utils/date';
@@ -24,19 +24,18 @@
 		created: number;
 		edit: boolean;
 		mobileView?: boolean;
-		selectedColor: RGB;
 		status: StoryStatus;
 		isButton?: boolean;
 	} = $props();
 
 	const statuses = {
 		draft: {
-			color: clm('bg-gray-500/20 ring-gray-500/50 text-gray-500'),
+			color: clm('bg-contrast-700/20 ring-contrast-700/50 text-contrast-700'),
 			icon: ArchiveBox,
 			title: 'Черновик'
 		},
 		archived: {
-			color: clm('bg-gray-500/20 ring-gray-500/50 text-gray-500'),
+			color: clm('bg-contrast-700/20 ring-contrast-700/50 text-contrast-700'),
 			icon: ArchiveBox,
 			title: 'Архив'
 		},

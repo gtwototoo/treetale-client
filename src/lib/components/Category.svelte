@@ -35,9 +35,9 @@
 </script>
 
 <div class="flex h-full flex-col gap-3">
-	<div class="flex items-center gap-3 pl-8 select-none max-sm:pl-4">
-		<div class="bg-main-400 rounded-full p-2">
-			<Icon class="size-6 max-sm:size-5" this={icon} />
+	<div class="text-text flex items-center gap-3 pl-8 select-none max-sm:pl-4">
+		<div class="bg-main-200 rounded-full p-2">
+			<Icon class="text-main size-6 max-sm:size-5" this={icon} />
 		</div>
 		<h2 class="text-2xl max-md:text-xl">{title}</h2>
 	</div>

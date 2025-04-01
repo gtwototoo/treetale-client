@@ -6,6 +6,7 @@
 
 	import { DEFAULT_COLOR } from '$lib/constants/colors';
 	import { GENRES_LIST } from '$lib/constants/genres';
+	import { theme } from '$lib/stores/colors.svelte';
 	import type { Story, User } from '$lib/types';
 	import Icon from '$lib/ui/Icon.svelte';
 	import { clm } from '$lib/utils/classMerge';
@@ -41,14 +42,13 @@
 
 <InfoModal {story} {author} bind:active={showModal} />
 <button class="group relative shrink-0 rounded-2xl" onclick={() => (showModal = true)}>
-	<div class="rounded-inherit contents" style={generateMainColors(selectedColor)}>
-		<Cover {imageUrl} {title} {icon} color={selectedColor} class={classname} />
+	<div class="rounded-inherit contents" style={generateMainColors(selectedColor, theme.type)}>
+		<Cover {imageUrl} {title} {icon} class={classname} />
 		<AuthorInfo
 			{author}
 			{created}
 			{edit}
 			{status}
-			{selectedColor}
 			mobileView
 			isButton={false}
 			class="bg-main-500 pointer-events-none absolute -top-1 -left-1 z-[1] rounded-full rounded-br-none"

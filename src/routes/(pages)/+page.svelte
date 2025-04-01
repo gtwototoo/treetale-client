@@ -113,7 +113,7 @@
 				>
 					{#snippet left()}
 						<Icon
-							class="pointer-events-none mr-4 size-8 shrink-0 text-gray-800 *:stroke-2 max-md:mr-1 max-md:size-6"
+							class="text-contrast-400 pointer-events-none mr-4 size-8 shrink-0 *:stroke-2 max-md:mr-1 max-md:size-6"
 							this={loading ? Loading : MagnifyingGlass}
 						/>
 					{/snippet}

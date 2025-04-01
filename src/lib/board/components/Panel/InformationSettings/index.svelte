@@ -219,20 +219,19 @@
 				imageUrl={storyInfoStore.info.imageUrl}
 				title={storyInfoStore.info.title}
 				icon={CurrentGenreIcon}
-				color={storyInfoStore.info.color}
 			/>
 		</Button>
 	</div>
+	<Input
+		bind:value={storyInfoStore.info.title}
+		class={clm(buttonPresets.size.base)}
+		disabled={panelStatesStore.editMode}
+		oninput={checkUpdates}
+		maxlength={25}
+		placeholder="Название"
+		readonly={readonlyModeStore.isEnabled}
+	/>
 	<FormSplit vertical>
-		<Input
-			bind:value={storyInfoStore.info.title}
-			class={clm(buttonPresets.size.base)}
-			disabled={panelStatesStore.editMode}
-			oninput={checkUpdates}
-			maxlength={25}
-			placeholder="Название"
-			readonly={readonlyModeStore.isEnabled}
-		/>
 		<Contenteditable
 			class={clm(buttonPresets.size.base)}
 			bind:html={storyInfoStore.info.description}
