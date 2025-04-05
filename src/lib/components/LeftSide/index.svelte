@@ -24,6 +24,6 @@
 </script>
 
 <div class="flex shrink-0 flex-col gap-3 md:sticky md:top-20 md:w-1/3">
-	<AuthorInfo {author} {created} edit={false} {status} class="bg-main-200 hover:bg-main-300 grow" />
+	<AuthorInfo {author} {created} edit={false} {status} class="bg-main-200 hover:bg-main-300" />
 	<Cover {imageUrl} {title} icon={genre.icon} class="w-auto shrink-0 self-start max-md:w-full" />
 </div>

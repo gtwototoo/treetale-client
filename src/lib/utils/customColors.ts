@@ -34,8 +34,6 @@ export const generateMainColors = (color: RGB, theme: 'dark' | 'light') => {
 		additionalColors[`color-main-${(i + 1) * 100}`] = alphaToRgb(color, (+i + 1) / 10, backColor);
 	}
 
-	console.log(additionalColors);
-
 	const additionalColorsStrings: Record<string, string> = {};
 
 	for (const [key, value] of Object.entries(additionalColors)) {

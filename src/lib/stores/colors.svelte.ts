@@ -1,14 +1,17 @@
 import { DEFAULT_COLOR } from '$lib/constants/colors';
 import { clm } from '$lib/utils/classMerge';
 
+export type Theme = 'light' | 'dark';
+
 const getTheme = () => {
-	let _type = $state<'light' | 'dark'>('light');
+	let _type = $state<Theme>('dark');
 
 	return {
 		get type() {
 			return _type;
 		},
 		set type(value) {
+			window.localStorage.setItem('theme', value);
 			_type = value;
 		}
 	};

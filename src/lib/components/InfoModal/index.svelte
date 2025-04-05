@@ -81,7 +81,7 @@
 	<LeftSide {story} {author} {title} />
 	<div class="text-text flex h-auto w-full flex-col items-start max-md:items-center">
 		<ActionButtons {genre} {storyId} {format} {likes} />
-		<div class="flex w-full grow flex-col justify-between gap-2">
+		<div class="flex w-full grow flex-col justify-between gap-14">
 			<div class="mt-4 flex flex-col gap-3">
 				<h1 class="text-[clamp(32px,5vw,56px)] leading-none max-md:pb-4 max-md:text-center">
 					{title || 'Без названия'}

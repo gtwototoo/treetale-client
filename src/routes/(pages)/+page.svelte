@@ -118,7 +118,7 @@
 						/>
 					{/snippet}
 				</Input>
-				<div class="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3 max-md:gap-1">
+				<div class="flex w-full max-w-2xl flex-wrap items-center justify-center gap-3 max-md:gap-2">
 					{#each GENRES_LIST as { icon: GenreIcon, id, title } (id)}
 						<Button
 							class={clm(
