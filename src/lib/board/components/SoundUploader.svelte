@@ -80,7 +80,7 @@
 >
 	{#if soundStore.sound}
 		<div
-			class="bg-contrast-300 flex size-full items-center justify-center rounded-lg text-sm/6 select-none"
+			class="bg-main-300 flex size-full items-center justify-center rounded-lg text-sm/6 select-none"
 		>
 			{#await preload(soundStore.sound)}
 				<Icon class="size-5" this={Loading} />

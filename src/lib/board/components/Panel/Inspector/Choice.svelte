@@ -131,7 +131,7 @@
 	<FormSplit vertical>
 		<Contenteditable
 			bind:html={inputValue}
-			class={clm(buttonPresets.size.base, 'flex-1', disabled && 'ring-main-200')}
+			class={clm(buttonPresets.size.base, 'flex-1', disabled && 'ring-main-300')}
 			placeholder={choice.inputText}
 		/>
 		{@render button()}

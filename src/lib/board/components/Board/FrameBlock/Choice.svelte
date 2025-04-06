@@ -90,20 +90,18 @@
 	let disabled = $derived(isBindingMode() && connectionStartStore.frameId !== null && !selfConnect);
 
 	let greenHoverBackgroundColor = $derived(
-		currentThemeClass(
-			clm('hover:bg-emerald-950 hover:ring-emerald-700'),
-			clm('hover:bg-emerald-200 hover:ring-emerald-400')
-		)
+		currentThemeClass(clm('hover:bg-emerald-950'), clm('hover:bg-emerald-200'))
 	);
 	let greenBackgroundColor = $derived(
 		currentThemeClass(
-			clm('bg-emerald-900 ring-emerald-700 hover:bg-red-800 hover:ring-red-900'),
-			clm('bg-emerald-100 ring-emerald-300 hover:bg-red-200 hover:ring-red-400')
+			clm('bg-emerald-900 ring-emerald-700 hover:bg-red-800 hover:ring-red-500/50'),
+			clm('bg-emerald-100 ring-emerald-300 hover:bg-red-200 hover:ring-red-500/50')
 		)
 	);
 	let bindingClasses = $derived(
 		isBindingMode() &&
 			clm(
+				'hover:ring-emerald-500/50',
 				greenHoverBackgroundColor,
 				connectionStartStore.frameId !== null && selfConnect && greenBackgroundColor
 			)
@@ -112,6 +110,7 @@
 
 <Button
 	class={clm(
+		'group/button',
 		button.size.base,
 		button.type.primary,
 		'py-3',
@@ -131,15 +130,18 @@
 	{/if}
 	<div
 		class={clm(
-			'p-1',
-			toFrame && toFrame.x < frame.x ? 'left-bind-point' : 'right-bind-point',
+			'group-hover/block:after:!to-text flex items-center justify-center group-hover/button:!border-emerald-500/50',
+			toFrame && toFrame.x < frame.x ? 'left-bind-point ml-1' : 'right-bind-point ml-1',
 			(isSelected || isDragging) && 'after:!to-text',
-			isSelectedBindingChoice && 'group-hover:after:!to-green-500',
-			isDragging && 'after:-inset-1'
+			isSelectedBindingChoice && 'after:!to-emerald-500',
+			isDragging && 'after:!-inset-1.25',
+			connectionStartStore.frameId !== null &&
+				selfConnect &&
+				'!border-emerald-500/50 group-hover/button:!border-red-500/50'
 		)}
 	>
 		{#if !toFrame}
-			<div class="size-full rounded-full bg-red-500"></div>
+			<div class="size-3 rounded-full bg-red-500"></div>
 		{/if}
 	</div>
 </Button>

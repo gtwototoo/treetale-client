@@ -60,9 +60,9 @@
 		)}
 	</div>
 </ShortDescription>
-<div class="bg-contrast-200 flex flex-col rounded-lg px-2">
+<div class="bg-main-200 flex flex-col rounded-lg px-2">
 	<Button
-		class="group justify-between py-3 pr-0 pl-1"
+		class="group/input justify-between py-3 pr-0 pl-1"
 		disabled={readonlyModeStore.isEnabled}
 		onclick={() => (choice.asInput = !choice.asInput)}
 	>
@@ -71,20 +71,20 @@
 			class={clm(
 				'w-9 rounded-full p-0.5',
 				choice.asInput
-					? 'bg-main-700 group-hover:bg-main'
-					: 'bg-contrast-900 group-hover:bg-contrast-700'
+					? 'bg-main-700 group-hover/input:bg-main-600'
+					: 'bg-main-400 group-hover/input:bg-main-600'
 			)}
 		>
 			<div
 				class={clm(
-					'rounded-inherit bg-contrast size-4 transition-transform',
+					'rounded-inherit bg-text size-4 transition-transform',
 					choice.asInput && 'translate-x-full'
 				)}
 			></div>
 		</div>
 	</Button>
 	{#if choice.asInput}
-		<p class="border-contrast-600 border-t py-2 pl-2 text-left text-sm">
+		<p class="border-main-400 border-t py-2 pl-2 text-left text-sm">
 			Чтобы применить введеное в поле значение, нужно задать значение
 			<span class="text-violet-500">
 				{`{input}`}

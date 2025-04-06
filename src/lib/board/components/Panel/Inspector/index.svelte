@@ -55,7 +55,7 @@
 	icon={Tv}
 	text="Просмотр истории со стороны читателя, а также отладка связей, модификаторов и вариантов выбора"
 />
-<div class="bg-contrast-200 flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none">
+<div class="bg-main-100 flex flex-col gap-2 rounded-lg p-2 text-center text-sm select-none">
 	<p class="py-2">Переменные</p>
 	<div class="flex flex-col gap-2">
 		{#if inspectorVariables.length}
@@ -80,7 +80,7 @@
 <div class="flex flex-col gap-3 text-sm">
 	{#each frames as frame, index (frame.frameId)}
 		{@const text = correctVariableReplace(frame.text, inspectorVariables)}
-		<div class="bg-contrast-300 relative flex flex-col items-center gap-2 rounded-xl p-2">
+		<div class="bg-main-200 relative flex flex-col gap-2 rounded-xl p-2">
 			{#if frame.imageUrl}
 				<Image
 					alt="Изображение блока"
@@ -93,7 +93,7 @@
 				{@html text || 'Описание блока'}
 			</p>
 			{#if frame.choices.length}
-				<div class="flex w-full flex-col gap-2 text-base">
+				<div class="flex w-full flex-col gap-3 text-base">
 					{#each frame.choices as choice (choice.choiceId)}
 						<Choice {choice} {frame} frameIndex={index} bind:inspectorVariables />
 					{/each}
@@ -102,7 +102,7 @@
 				<p class="p-2 text-gray-400">Варианты выбора отсутствуют</p>
 			{/if}
 			{#if index !== frames.length - 1}
-				<div class="absolute top-full h-3 w-0.5 bg-yellow-300"></div>
+				<div class="absolute top-full h-3 w-0.5 self-center bg-yellow-300"></div>
 			{/if}
 		</div>
 	{/each}

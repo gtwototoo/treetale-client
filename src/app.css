@@ -67,9 +67,9 @@
 	fill: var(--fill-gradient);
 }
 @utility bind-point {
-	@apply absolute size-6 !bg-inherit;
+	@apply border-main-500 absolute h-6.5 w-5.5 border !bg-inherit;
 	&:after {
-		@apply to-main group-hover:to-text absolute -inset-0.5 -z-[1] rounded-full from-transparent from-50% to-50% content-[''];
+		@apply to-main absolute -inset-0.75 -z-[1] rounded-full from-transparent from-50% to-50% content-[''];
 	}
 }
 
@@ -113,8 +113,8 @@ body > div {
 }
 
 .right-bind-point {
-	@apply bind-point left-full -ml-1 rounded-r-full after:bg-gradient-to-r;
+	@apply bind-point left-full -ml-px rounded-r-full border-l-0 after:-ml-0.75 after:bg-gradient-to-r;
 }
 .left-bind-point {
-	@apply bind-point right-full -mr-1 rounded-l-full after:bg-gradient-to-l;
+	@apply bind-point right-full -mr-px rounded-l-full border-r-0 after:-mr-0.75 after:bg-gradient-to-l;
 }

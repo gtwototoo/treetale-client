@@ -50,19 +50,19 @@
 
 	<div
 		class={clm(
-			'left-bind-point',
+			'left-bind-point group-hover/block:after:!to-text',
 			(isSelected || isDragging) && 'after:!to-text',
-			isSelectedBindingChoice && 'group-hover:after:!to-green-500',
-			isDragging && 'after:-inset-1'
+			isSelectedBindingChoice && 'after:!to-emerald-500',
+			isDragging && 'after:!-inset-1.25'
 		)}
 	></div>
 	{#if hidden && hasConnections}
 		<div
 			class={clm(
-				'right-bind-point',
+				'right-bind-point group-hover/block:after:!to-text',
 				(isSelected || isDragging) && 'after:!to-text',
-				isSelectedBindingChoice && 'group-hover:after:!to-green-500',
-				isDragging && 'after:-inset-1'
+				isSelectedBindingChoice && 'after:!to-emerald-500',
+				isDragging && 'after:!-inset-1.25'
 			)}
 		></div>
 	{/if}

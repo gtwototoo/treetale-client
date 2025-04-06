@@ -94,7 +94,7 @@
 		bind:clientHeight={frame.height}
 		{style}
 		class={clm(
-			'group bg-contrast text-text ring-main absolute z-10 flex w-64 flex-col items-stretch gap-3 rounded-lg p-2 text-sm/4 ring-2 select-none',
+			'group/block bg-contrast text-text ring-main absolute z-10 flex w-64 flex-col items-stretch gap-3 rounded-lg p-2 text-sm/4 ring-2 select-none',
 			!readonlyModeStore.isEnabled && 'hover:ring-text cursor-move',
 			isDragging && 'ring-text !ring-4',
 			isSelected && 'ring-text',

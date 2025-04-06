@@ -41,7 +41,7 @@
 </script>
 
 <InfoModal {story} {author} bind:active={showModal} />
-<button class="group relative shrink-0 rounded-2xl" onclick={() => (showModal = true)}>
+<button class="relative shrink-0 rounded-2xl" onclick={() => (showModal = true)}>
 	<div class="rounded-inherit contents" style={generateMainColors(selectedColor, theme.type)}>
 		<Cover {imageUrl} {title} {icon} class={classname} />
 		<AuthorInfo

@@ -51,10 +51,7 @@
 		</Button>
 	{:else}
 		<Listbox
-			class={clm(
-				'w-full min-w-0 justify-center *:truncate',
-				(!isFramePanel || !framesList) && 'bg-contrast-200'
-			)}
+			class="w-full min-w-0 justify-center *:truncate"
 			options={framesList}
 			placeholder={panelStatesStore.props?.title}
 			disabled={!isFramePanel || !framesList}

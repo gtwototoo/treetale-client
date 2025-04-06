@@ -237,7 +237,7 @@
 		{:else}
 			<p class="text-text/50 px-4 text-lg leading-[3.25rem]">Описание отсутствует</p>
 		{/if}
-		<div class="mt-4 flex gap-2">
+		<div class="mt-4 flex gap-3">
 			{#if me}
 				{#if editMode}
 					<Button

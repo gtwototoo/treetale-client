@@ -13,7 +13,7 @@
 
 <svg
 	class={clm(
-		'rounded-inherit stroke-contrast group-hover:stroke-main absolute left-0 size-full stroke-2 transition-colors',
+		'rounded-inherit stroke-contrast group-hover/drop:stroke-main absolute left-0 size-full stroke-2 transition-colors',
 		dragged && '!stroke-main'
 	)}
 	{rx}

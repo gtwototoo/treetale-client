@@ -86,7 +86,7 @@
 		class="bg-contrast size-12 items-center justify-center rounded-full p-0"
 		onclick={setDefaultCoordinates}
 	>
-		<div class="bg-contrast-500 size-4 rounded-full"></div>
+		<div class="bg-main-200 size-4 rounded-full"></div>
 		{#if radar}
 			{#each boardFramesStore.frames as { choices, frameId, x, y } (frameId)}
 				<div
