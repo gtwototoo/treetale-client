@@ -64,10 +64,10 @@ export const choiceModificators = (
 
 export const checkLogic = (variables: Variable[], logicModificators: LogicModificator[]) => {
 	return logicModificators
-		.map(({ symbol, value: secondValue, variable: name }) => {
-			if (!name) return true;
+		.map(({ symbol, value: secondValue, variableId }) => {
+			if (!variableId) return true;
 
-			const variable = find(variables, { name })!;
+			const variable = find(variables, { id: variableId });
 
 			if (!variable) return true;
 
