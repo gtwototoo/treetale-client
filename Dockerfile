@@ -16,7 +16,6 @@ COPY . .
 RUN bun run build
  
 FROM base AS release
-ENV NODE_ENV production
 COPY --from=install /temp/prod/node_modules ./node_modules
 COPY --from=prerelease /usr/src/app/build ./build
 COPY --from=prerelease /usr/src/app/.env.production ./
