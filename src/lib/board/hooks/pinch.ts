@@ -218,6 +218,7 @@ export function pinch<R extends ParametersSwitch<PinchParameters> = undefined>(
 	function onMove(activeEvents: PointerEvent[]) {
 		if (activeEvents.length === 2) {
 			const curDistance = getPointersDistance(activeEvents);
+			pinchCenter = getCenterOfTwoPoints(node, activeEvents);
 
 			if (prevDistance !== undefined && curDistance !== prevDistance) {
 				const scale = curDistance / initDistance;

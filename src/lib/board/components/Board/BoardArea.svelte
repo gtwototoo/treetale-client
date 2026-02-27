@@ -47,10 +47,20 @@
 		onzoom?: (args: { offset: Coordinates; zoom: number }) => void;
 	} = $props();
 
-	let startPinch = $state(0);
+	let pinchStartScale = $state<number | null>(null);
+	let pinchStartZoom = $state(100);
 	let board = $state<HTMLDivElement>();
 
+	const resetPinch = () => {
+		pinchStartScale = null;
+		pinchStartZoom = boardStateStore.zoom;
+	};
+
 	const handleTouchMove: TouchEventHandler<HTMLDivElement> = (e) => {
+		if (e.touches.length > 1) {
+			e.preventDefault();
+		}
+
 		const { clientX: x, clientY: y } = e.touches[0];
 
 		onmousemove?.({ x, y });
@@ -63,6 +73,10 @@
 	};
 
 	const handleTouchStart: TouchEventHandler<HTMLDivElement> = (e) => {
+		if (e.touches.length >= 2) {
+			resetPinch();
+		}
+
 		const { clientX: x, clientY: y } = e.touches[0];
 
 		onmousedown?.({
@@ -94,11 +108,15 @@
 
 	const handlePinch: PinchEventHandler = (e) => {
 		const { x, y } = e.detail.center;
-		const upscale = e.detail.scale - startPinch > 0;
 
-		setZoom({ x, y }, upscale);
+		if (pinchStartScale === null) {
+			pinchStartScale = e.detail.scale;
+			pinchStartZoom = boardStateStore.zoom;
+		}
 
-		startPinch = e.detail.scale;
+		const nextZoom = pinchStartZoom * (e.detail.scale / pinchStartScale);
+
+		setZoom({ x, y }, nextZoom);
 	};
 
 	const handleWheel = (e: WheelEvent) => {
@@ -107,22 +125,19 @@
 		const { x, y } = e;
 		const upscale = e.deltaY < 0;
 
-		setZoom({ x, y }, upscale);
+		setZoom({ x, y }, boardStateStore.zoom + (upscale ? 5 : -5));
 	};
 
-	const setZoom = (coords: Coordinates, upscale: boolean) => {
+	const setZoom = (coords: Coordinates, nextZoom: number) => {
 		const { x, y } = coords;
 		const zoomedCoords = zoomCorrect({ x, y });
+		const clampedZoom = Math.max(10, Math.min(300, Math.round(nextZoom)));
 
-		if (upscale) {
-			if (boardStateStore.zoom < 300) {
-				boardStateStore.zoom += 5;
-			}
-		} else {
-			if (boardStateStore.zoom > 10) {
-				boardStateStore.zoom -= 5;
-			}
+		if (clampedZoom === boardStateStore.zoom) {
+			return;
 		}
+
+		boardStateStore.zoom = clampedZoom;
 
 		boardStateStore.offset = {
 			x: Math.round(x - zoomedCoords.x * (boardStateStore.zoom / 100)),
@@ -130,6 +145,14 @@
 		};
 
 		onzoom?.({ offset: boardStateStore.offset, zoom: boardStateStore.zoom });
+	};
+
+	const handleTouchEnd: TouchEventHandler<HTMLDivElement> = (e) => {
+		if (e.touches.length < 2) {
+			resetPinch();
+		}
+
+		onmouseup?.();
 	};
 
 	onMount(() => {
@@ -161,7 +184,8 @@
 	onmousedown={handleMouseDown}
 	onmousemove={handleMouseMove}
 	onpinch={handlePinch}
-	ontouchend={onmouseup}
+	ontouchcancel={handleTouchEnd}
+	ontouchend={handleTouchEnd}
 	ontouchmove={handleTouchMove}
 	ontouchstart={handleTouchStart}
 	role="treegrid"
